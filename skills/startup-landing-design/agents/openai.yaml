@@ -1,0 +1,4 @@
+interface:
+  display_name: "Startup Landing Design"
+  short_description: "Build distinctive pages from product-specific decisions"
+  default_prompt: "Use $startup-landing-design to design, implement and visually verify an original landing page for my product."

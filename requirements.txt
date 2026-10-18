@@ -1,0 +1,2 @@
+jsonschema==4.26.0
+skills-ref==0.1.1

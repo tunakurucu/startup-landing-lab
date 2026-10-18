@@ -1,0 +1,25 @@
+import {test,expect} from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+import {mkdirSync,writeFileSync} from 'node:fs';
+const routes=['/','/references','/skill','/demos','/reference/resend','/demo/relayline','/demo/sidequest','/demo/ledger'];
+for(const size of [{width:1440,height:900},{width:768,height:1024},{width:390,height:844}]){
+ test.describe(`${size.width}px`,()=>{
+  test.use({viewport:size});
+  for(const route of routes){test(`${route} renders without overflow and has accessible structure`,async({page})=>{
+   const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('#'+route);await expect(page.locator('h1')).toHaveCount(1);
+   await expect(page.locator('footer')).toBeVisible();
+   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBeTruthy();
+   expect(errors).toEqual([]);
+   const a11y=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+   expect(a11y.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))).toEqual([]);
+   mkdirSync('docs/screenshots',{recursive:true});const slug=route==='/'?'home':route.slice(1).replaceAll('/','-');await page.screenshot({path:`docs/screenshots/${slug}-${size.width}.png`,fullPage:true});
+  })}
+ })
+}
+test('reference filters combine and reset, including empty state',async({page})=>{await page.goto('#/references');await expect(page.getByRole('status')).toHaveText('8 of 8 records');await page.getByLabel('Company evidence').selectOption('verified-yc');await expect(page.getByRole('status')).toHaveText('6 of 8 records');await page.getByLabel('Find a reference').fill('nothing matches');await expect(page.getByRole('heading',{name:'No matching records.'})).toBeVisible();await page.getByRole('button',{name:'Reset filters'}).click();await expect(page.getByRole('status')).toHaveText('8 of 8 records');await page.getByLabel('Design family').selectOption('workflow-theater');await expect(page.getByRole('status')).toHaveText('2 of 8 records')});
+test('mobile navigation and reference route work',async({page})=>{await page.setViewportSize({width:390,height:844});await page.goto('#/');await page.getByRole('button',{name:'Menu +'}).click();await page.getByRole('link',{name:'Field guide',exact:true}).click();await expect(page).toHaveURL(/#\/references$/);await page.getByRole('link',{name:'Resend ↗',exact:true}).click();await expect(page.getByRole('heading',{level:1})).toContainText('Resend');await expect(page.getByText('Where evidence ends.',{exact:true})).toBeVisible()});
+test('trace explorer changes state and downloads honest data',async({page})=>{await page.goto('#/demo/relayline');await page.getByRole('button',{name:'Try a trace'}).click();await page.getByLabel('Invalid signature').check();await page.getByRole('button',{name:/Action.*Review configuration/}).click();await expect(page.getByRole('status')).toContainText('Correct credentials');const dl=page.waitForEvent('download');await page.getByRole('button',{name:'Download sample trace'}).click();expect((await dl).suggestedFilename()).toBe('relayline-example-trace.json')});
+test('Sidequest deals a new brief and exports it',async({page})=>{await page.goto('#/demo/sidequest');await expect(page.getByRole('heading',{name:'A tiny moon café'})).toBeVisible();await page.getByRole('button',{name:'Another little idea'}).click();await expect(page.getByRole('heading',{name:'A record shop for ghosts'})).toBeVisible();const dl=page.waitForEvent('download');await page.getByRole('button',{name:'Keep this brief'}).click();expect((await dl).suggestedFilename()).toBe('my-sidequest.txt')});
+test('Fieldwork switches workflow and compares handoffs',async({page})=>{await page.goto('#/demo/ledger');await page.getByLabel('Choose a workflow').selectOption('onboarding');await expect(page.getByRole('heading',{name:'Client onboarding'})).toBeVisible();await expect(page.getByText('Alex · Operations',{exact:true})).toBeVisible();await page.getByLabel('Show the structured handoff').uncheck();await expect(page.getByText('Owner: unclear',{exact:false})).toBeVisible();await page.getByLabel('Show the structured handoff').check();const dl=page.waitForEvent('download');await page.getByRole('button',{name:'Download the structured brief'}).click();expect((await dl).suggestedFilename()).toBe('fieldwork-sample-handoff.txt')});
+test('reduced motion leaves content visible and removes transitions',async({page})=>{await page.emulateMedia({reducedMotion:'reduce'});await page.goto('#/demo/sidequest');await expect(page.locator('h1')).toBeVisible();expect(await page.locator('.sq-play').evaluate(e=>getComputedStyle(e).transitionDuration)).toBe('0s');});
+test('all navigation destinations are meaningful',async({page})=>{await page.goto('#/');const hrefs=await page.locator('a').evaluateAll(as=>as.map(a=>a.getAttribute('href')));expect(hrefs.filter(h=>!h||h==='#')).toEqual([]);writeFileSync('test-results/link-inventory.json',JSON.stringify(hrefs,null,2));});
