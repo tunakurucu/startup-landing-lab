@@ -1,0 +1,375 @@
+[
+  {
+    "id": "posthog",
+    "name": "PostHog",
+    "url": "https://www.posthog.com",
+    "category": "Analytics",
+    "archetype": "expressive-world",
+    "yc_status": "verified-yc",
+    "batch": "W20",
+    "verification_url": "https://www.ycombinator.com/companies/posthog",
+    "geography_evidence": "https://www.ycombinator.com/companies/posthog",
+    "inspected_on": "2026-10-18",
+    "coverage": "partial-desktop",
+    "viewports": {
+      "desktop": "1363 \u00d7 936: rendered inspection",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "A product suite presented as a place to explore, rather than a stack of interchangeable cards.",
+    "observations": {
+      "hero": "A desktop-like shell surrounds a central window. Navigation icons sit on both sides; the introduction and signup panel share a row.",
+      "typography": "Bold compact sans-serif headings; body text stays conversational. Colored inline highlights reinforce key terms.",
+      "visual_system": "Green illustrated environment, translucent pale window, orange beveled actions and vividly colored story tabs.",
+      "page_sequence": "Introduction \u2192 illustrative product tabs \u2192 tool inventory \u2192 customers \u2192 data warehouse \u2192 pricing \u2192 company rationale \u2192 reading \u2192 deliberately playful closing CTA.",
+      "interaction": "Clicked Ship with PostHog. The selected tab and product story changed, with sample inbox reports replacing the earlier assistant story. A pause control was present but not tested.",
+      "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
+    },
+    "interpretation": {
+      "principles": [
+        "Give a broad suite a navigable mental model.",
+        "Let expressive brand elements organize information instead of merely decorating it.",
+        "Identify illustrative data as illustrative."
+      ],
+      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "risks": "Desktop chrome competes for attention; nested scrolling needs separate mobile and keyboard testing."
+    },
+    "limitations": [
+      "Single browser, single inspection date; homepage content can change.",
+      "Exact font names, animation timing and implementation libraries were not verified.",
+      "Tablet, mobile and reduced-motion behavior remain unverified.",
+      "Only selected regions were visually inspected; section sequence also uses rendered DOM. This is not a complete deep audit."
+    ],
+    "sources": [
+      "https://www.posthog.com",
+      "https://www.ycombinator.com/companies/posthog",
+      "https://www.ycombinator.com/companies/posthog"
+    ]
+  },
+  {
+    "id": "resend",
+    "name": "Resend",
+    "url": "https://resend.com",
+    "category": "Developer tools",
+    "archetype": "typographic-technical",
+    "yc_status": "verified-yc",
+    "batch": "W23",
+    "verification_url": "https://www.ycombinator.com/companies/resend",
+    "geography_evidence": null,
+    "inspected_on": "2026-10-18",
+    "coverage": "partial-desktop",
+    "viewports": {
+      "desktop": "1363 \u00d7 936: rendered inspection",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "Editorial type and generous silence make developer infrastructure feel carefully authored.",
+    "observations": {
+      "hero": "Left-aligned, two-line serif headline on black. Two actions sit below a short explanation; the right side remains largely open.",
+      "typography": "High-contrast display serif paired with plain sans-serif body and monospace code. Exact families unverified.",
+      "visual_system": "Black surfaces, white display text, subtle lighting and finely outlined code panels; restrained colored highlights.",
+      "page_sequence": "Hero \u2192 customer strip \u2192 integration/code chooser \u2192 test mode \u2192 webhooks \u2192 editor \u2192 audience tools \u2192 React email preview \u2192 deliverability \u2192 dashboard tabs \u2192 testimonials \u2192 CTA/footer.",
+      "interaction": "Clicked the Python tab. Both language and nested example tabs reported selected Python, and the rendered snippet changed to Python. No email was sent.",
+      "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
+    },
+    "interpretation": {
+      "principles": [
+        "Make technical adoption concrete with a short, relevant integration example.",
+        "A quiet hero can precede dense functional explanation.",
+        "Use typographic contrast to create identity without obscuring product meaning."
+      ],
+      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "risks": "Some body text appears subdued against black. Hero visual was sparse in this browser; no conclusion about missing assets."
+    },
+    "limitations": [
+      "Single browser, single inspection date; homepage content can change.",
+      "Exact font names, animation timing and implementation libraries were not verified.",
+      "Tablet, mobile and reduced-motion behavior remain unverified.",
+      "Only selected regions were visually inspected; section sequence also uses rendered DOM. This is not a complete deep audit."
+    ],
+    "sources": [
+      "https://resend.com",
+      "https://www.ycombinator.com/companies/resend"
+    ]
+  },
+  {
+    "id": "onlook",
+    "name": "Onlook",
+    "url": "https://onlook.com/",
+    "category": "Creative software",
+    "archetype": "canvas-first",
+    "yc_status": "verified-yc",
+    "batch": "W25",
+    "verification_url": "https://www.ycombinator.com/companies/onlook",
+    "geography_evidence": "https://www.ycombinator.com/companies/onlook",
+    "inspected_on": "2026-10-18",
+    "coverage": "partial-desktop",
+    "viewports": {
+      "desktop": "1363 \u00d7 936: rendered inspection",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "A visual engineering tool explains itself through the language of a working canvas.",
+    "observations": {
+      "hero": "Centered lightweight sans-serif statement; paired design/demo actions lead into a large editor canvas.",
+      "typography": "Large lightweight sans-serif display and muted body text. The long FAQ uses a spacious split heading-and-question layout.",
+      "visual_system": "Near-black and dark gray surfaces, thin rules, broad editor imagery and restrained white actions.",
+      "page_sequence": "Hero \u2192 canvas \u2192 code-aware design features \u2192 workflow capabilities \u2192 stack compatibility \u2192 community \u2192 FAQ \u2192 final action/footer.",
+      "interaction": "Clicked the free-version FAQ question. aria-expanded changed to true. The hero showed \u201cError loading scene\u201d in this browser; the intended scene was not evaluated.",
+      "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
+    },
+    "interpretation": {
+      "principles": [
+        "Present the workspace as the product\u2019s explanatory medium.",
+        "Demonstrate continuity between visual editing and real code.",
+        "Keep essential messaging and actions usable when a rich scene fails."
+      ],
+      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "risks": "The observed hero scene failure makes this an instructive resilience case, not an unqualified quality endorsement."
+    },
+    "limitations": [
+      "Single browser, single inspection date; homepage content can change.",
+      "Exact font names, animation timing and implementation libraries were not verified.",
+      "Tablet, mobile and reduced-motion behavior remain unverified.",
+      "Only selected regions were visually inspected; section sequence also uses rendered DOM. This is not a complete deep audit."
+    ],
+    "sources": [
+      "https://onlook.com/",
+      "https://www.ycombinator.com/companies/onlook",
+      "https://www.ycombinator.com/companies/onlook"
+    ]
+  },
+  {
+    "id": "mercury",
+    "name": "Mercury",
+    "url": "https://mercury.com/",
+    "category": "Fintech",
+    "archetype": "immersive-editorial",
+    "yc_status": "not-verified",
+    "batch": null,
+    "verification_url": null,
+    "geography_evidence": "https://research.contrary.com/report/mercury",
+    "inspected_on": "2026-10-18",
+    "coverage": "partial-desktop",
+    "viewports": {
+      "desktop": "1363 \u00d7 936: rendered inspection",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "A cinematic opening connects business finance to the world the founder wants to build.",
+    "observations": {
+      "hero": "Centered statement and signup/demo actions sit over a landscape with a desk in the foreground. A financial-service disclaimer is visible at the bottom.",
+      "typography": "Clean sans-serif rather than an assumed editorial serif. Medium-weight heading contrasts with lighter supporting copy.",
+      "visual_system": "Landscape imagery, muted sky tones, dark navy product regions and electric blue primary actions.",
+      "page_sequence": "Immersive hero \u2192 product categories \u2192 customer proof \u2192 onboarding and capability explanations \u2192 company narrative/news \u2192 business/personal actions \u2192 legal footnotes.",
+      "interaction": "Opened Products. A large multicolumn menu exposed banking, cards, payments and intelligence categories. No account application or demo transaction was submitted.",
+      "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
+    },
+    "interpretation": {
+      "principles": [
+        "Pair an aspirational opening with concrete product explanation.",
+        "Keep material product qualifications close to the promise.",
+        "Give a broad offer a navigable category structure."
+      ],
+      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "risks": "Foreground text competes with the landscape. Navigation overlay obscured some lower-page review; full-page and responsive inspection still needed."
+    },
+    "limitations": [
+      "Single browser, single inspection date; homepage content can change.",
+      "Exact font names, animation timing and implementation libraries were not verified.",
+      "Tablet, mobile and reduced-motion behavior remain unverified.",
+      "Only selected regions were visually inspected; section sequence also uses rendered DOM. This is not a complete deep audit."
+    ],
+    "sources": [
+      "https://mercury.com/",
+      "https://research.contrary.com/report/mercury"
+    ]
+  },
+  {
+    "id": "linear",
+    "name": "Linear",
+    "url": "https://linear.app/",
+    "category": "Operations",
+    "archetype": "workflow-theater",
+    "yc_status": "not-verified",
+    "batch": null,
+    "verification_url": null,
+    "geography_evidence": "https://linear.app/careers/b4a7764e-c680-4bdf-9956-dc78f2ca94d5",
+    "inspected_on": "2026-10-18",
+    "coverage": "partial-desktop",
+    "viewports": {
+      "desktop": "1363 \u00d7 936: rendered inspection",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "Product context occupies the space that generic homepages fill with decoration.",
+    "observations": {
+      "hero": "Large left-aligned sans-serif statement followed by a broad issue-management interface with an agent conversation layered alongside it.",
+      "typography": "Large regular sans-serif heading, subdued supporting copy and compact interface labels.",
+      "visual_system": "Near-black canvas, subtle gray dividers, broad UI panels and limited accent color.",
+      "page_sequence": "Hero/product interface \u2192 rationale \u2192 intake \u2192 planning \u2192 AI/automations \u2192 building/review \u2192 changelog \u2192 closing CTA/footer.",
+      "interaction": "Opened Product menu and observed grouped workflow destinations. Escape returned visible keyboard focus to the trigger. App-like hero controls were not functionally verified.",
+      "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
+    },
+    "interpretation": {
+      "principles": [
+        "Use a recognizable work artifact to make the product concrete.",
+        "Organize page architecture around the lifecycle of work.",
+        "Limit visual accents so product state carries emphasis."
+      ],
+      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "risks": "A rich hero can imply more interactivity than exists. Do not copy controls unless they have useful behavior."
+    },
+    "limitations": [
+      "Single browser, single inspection date; homepage content can change.",
+      "Exact font names, animation timing and implementation libraries were not verified.",
+      "Tablet, mobile and reduced-motion behavior remain unverified.",
+      "Only selected regions were visually inspected; section sequence also uses rendered DOM. This is not a complete deep audit."
+    ],
+    "sources": [
+      "https://linear.app/",
+      "https://linear.app/careers/b4a7764e-c680-4bdf-9956-dc78f2ca94d5"
+    ]
+  },
+  {
+    "id": "firecrawl",
+    "name": "Firecrawl",
+    "url": "https://www.firecrawl.dev",
+    "category": "Infrastructure",
+    "archetype": "functional-entrance",
+    "yc_status": "verified-yc",
+    "batch": "S22",
+    "verification_url": "https://www.ycombinator.com/companies/firecrawl",
+    "geography_evidence": "https://www.ycombinator.com/companies/firecrawl",
+    "inspected_on": "2026-10-18",
+    "coverage": "desktop-audit",
+    "viewports": {
+      "desktop": "1363 \u00d7 936: rendered inspection",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "A technical API turns its main operation into the homepage entrance.",
+    "observations": {
+      "hero": "Centered headline, orange emphasis and an operation field with Search/Scrape/Map/Crawl controls; output preview follows immediately.",
+      "typography": "Confident sans-serif display with monospace metadata and code; ordinary body copy explains the operation.",
+      "visual_system": "Pale ruled grid, orange actions, small technical markers, code/output surfaces and a saturated orange narrative interruption.",
+      "page_sequence": "Hero/operation preview \u2192 customer strip \u2192 API/code samples \u2192 agent setup \u2192 performance claims \u2192 capability grid \u2192 use cases \u2192 library narrative \u2192 community \u2192 CTA \u2192 FAQ/footer.",
+      "interaction": "Clicked Scrape. The action destination changed to a scrape-mode playground URL and the preview displayed structured output. No remote scrape was submitted.",
+      "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
+    },
+    "interpretation": {
+      "principles": [
+        "Show the shape of input and output before listing features.",
+        "Let technical affordances become a visual motif.",
+        "Interrupt long neutral sections with one purposeful color field."
+      ],
+      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "risks": "Benchmark claims belong to the company and were not independently validated. Pale microtext and extensive scrolling deserve accessibility checks."
+    },
+    "limitations": [
+      "Single browser, single inspection date; homepage content can change.",
+      "Exact font names, animation timing and implementation libraries were not verified.",
+      "Tablet, mobile and reduced-motion behavior remain unverified.",
+      "Full-page composition and selected interaction states inspected on desktop; this does not imply responsive verification."
+    ],
+    "sources": [
+      "https://www.firecrawl.dev",
+      "https://www.ycombinator.com/companies/firecrawl",
+      "https://www.ycombinator.com/companies/firecrawl"
+    ]
+  },
+  {
+    "id": "raycast",
+    "name": "Raycast",
+    "url": "https://raycast.com",
+    "category": "Productivity",
+    "archetype": "workflow-theater",
+    "yc_status": "verified-yc",
+    "batch": "W20",
+    "verification_url": "https://www.ycombinator.com/companies/raycast",
+    "geography_evidence": "https://www.ycombinator.com/companies/raycast",
+    "inspected_on": "2026-10-18",
+    "coverage": "desktop-audit",
+    "viewports": {
+      "desktop": "1363 \u00d7 936: rendered inspection",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "A small recurring command surface makes a large productivity suite feel coherent.",
+    "observations": {
+      "hero": "Centered short headline and download action against black, followed by a launcher demonstration.",
+      "typography": "Bold compact sans-serif headings, short body copy and monospace installation metadata.",
+      "visual_system": "Dark canvas, floating product surfaces, red and blue accents, framed extension panels and generous vertical gaps.",
+      "page_sequence": "Hero \u2192 launcher preview \u2192 rationale \u2192 extension gallery \u2192 AI tools \u2192 professional proof \u2192 automation \u2192 notes \u2192 community \u2192 developer tools \u2192 final download/footer.",
+      "interaction": "Full-page composition inspected. A workflow button seen during initial load could not be located after hydration, so its behavior is not verified. Download actions were not activated.",
+      "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
+    },
+    "interpretation": {
+      "principles": [
+        "Use one interaction grammar across many capabilities.",
+        "Alternate overview and close-up product views.",
+        "Make platform requirements visible near the action."
+      ],
+      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "risks": "Initial-load and hydrated controls differed in this browser. Large blank intervals in a full-page capture may include unrevealed scroll content; do not infer animation implementation."
+    },
+    "limitations": [
+      "Single browser, single inspection date; homepage content can change.",
+      "Exact font names, animation timing and implementation libraries were not verified.",
+      "Tablet, mobile and reduced-motion behavior remain unverified.",
+      "Full-page composition and selected interaction states inspected on desktop; this does not imply responsive verification."
+    ],
+    "sources": [
+      "https://raycast.com",
+      "https://www.ycombinator.com/companies/raycast",
+      "https://www.ycombinator.com/companies/raycast"
+    ]
+  },
+  {
+    "id": "stripe",
+    "name": "Stripe",
+    "url": "http://stripe.com",
+    "category": "Fintech",
+    "archetype": "editorial-platform",
+    "yc_status": "verified-yc",
+    "batch": "S09",
+    "verification_url": "https://www.ycombinator.com/companies/stripe",
+    "geography_evidence": "https://www.ycombinator.com/companies/stripe",
+    "inspected_on": "2026-10-18",
+    "coverage": "desktop-audit",
+    "viewports": {
+      "desktop": "1363 \u00d7 936: rendered inspection",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "Enterprise breadth is organized through business models and implementation paths.",
+    "observations": {
+      "hero": "A broad left-aligned typographic statement overlays a colorful diagonal field; signup actions and a logo strip form a clear lower boundary.",
+      "typography": "Large regular sans-serif statement with differences in text tone inside the same paragraph.",
+      "visual_system": "White base, precise thin rules, purple actions and a large multicolor diagonal visual.",
+      "page_sequence": "Hero \u2192 business-model solutions \u2192 global scale \u2192 customer segments/cases \u2192 developer infrastructure \u2192 news \u2192 CTA/footer.",
+      "interaction": "Opened Products. The expanded navigation grouped payment capabilities and revealed individual product destinations. Solution demonstrations were not tested.",
+      "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
+    },
+    "interpretation": {
+      "principles": [
+        "Structure a broad platform by customer decisions.",
+        "Use a large visual field to create direction without enclosing every sentence in a card.",
+        "Separate business narrative from developer integration detail."
+      ],
+      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "risks": "This mature platform\u2019s breadth is inappropriate for a narrow early-stage product. Homepage claims were observed, not independently verified."
+    },
+    "limitations": [
+      "Single browser, single inspection date; homepage content can change.",
+      "Exact font names, animation timing and implementation libraries were not verified.",
+      "Tablet, mobile and reduced-motion behavior remain unverified.",
+      "Full-page composition and the expanded navigation were inspected on desktop. Some scroll-triggered visuals remained blank in the full-page capture; their behavior is unverified."
+    ],
+    "sources": [
+      "http://stripe.com",
+      "https://www.ycombinator.com/companies/stripe",
+      "https://www.ycombinator.com/companies/stripe"
+    ]
+  }
+]
