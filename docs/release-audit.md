@@ -10,4 +10,6 @@ Local release review, 2026-10-18:
 - GitHub Actions uses read-only repository access for builds and pull requests. Only the Pages deployment job receives pages:write and id-token:write. Checkout does not persist credentials. No pull_request_target trigger.
 - MIT license covers original code and writing. Third-party dependencies retain their licenses. Attribution and non-affiliation disclaimer are included.
 
-Remaining release gates are operational: complete source upload, public visibility, successful hosted CI and verified Pages deployment. The current partial GitHub repository should not be presented as the complete product.
+The complete 78-file source tree was uploaded to `main` without replacing earlier GitHub history. Hosted Validate run `39162154778` passed, including 31 browser checks. Publish gallery run `39162154905` built and deployed successfully after the build job gained `pages: read` access. The live gallery and all three demo routes were opened and their interactions checked at https://tunakurucu.github.io/startup-landing-lab/.
+
+At this review, the repository remains private because GitHub requires the owner's Mobile confirmation for the visibility change. The Pages site itself is public. Do not describe the repository as public until GitHub reports that setting has changed.

@@ -4,7 +4,7 @@
 
 I kept seeing startup pages that could have belonged to any company. I built this field guide to study the decisions behind memorable ones, then test those ideas on three very different products.
 
-[Install the skill](docs/installation.md) · [Read the research](research/README.md)
+[Explore the live field guide](https://tunakurucu.github.io/startup-landing-lab/) · [Install the skill](docs/installation.md) · [Read the research](research/README.md)
 
 ![The Startup Landing Lab field guide](docs/screenshots/home-1440.png)
 
@@ -38,9 +38,9 @@ The workflow: understand the product → select reference principles → commit 
 
 | Demo | Direction | Working behavior |
 | --- | --- | --- |
-| Relayline | Light technical instrument | Inspect failure scenarios and event steps; export sample JSON |
-| Sidequest | Playful creative ritual | Deal an original three-part brief; keep it as a text file |
-| Fieldwork | Editorial operations | Compare structured/informal handoffs; export the working brief |
+| [Relayline](https://tunakurucu.github.io/startup-landing-lab/#/demo/relayline) | Light technical instrument | Inspect failure scenarios and event steps; export sample JSON |
+| [Sidequest](https://tunakurucu.github.io/startup-landing-lab/#/demo/sidequest) | Playful creative ritual | Deal an original three-part brief; keep it as a text file |
+| [Fieldwork](https://tunakurucu.github.io/startup-landing-lab/#/demo/ledger) | Editorial operations | Compare structured/informal handoffs; export the working brief |
 
 All three are fictional brands with original code and copy. There are no fabricated customers, financial claims or testimonials. [Design decisions and diversity review](docs/demo-decisions.md).
 
