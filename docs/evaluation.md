@@ -51,8 +51,8 @@ Research is smaller than the initial 12–15 deep-audit aspiration: eight record
 
 No complete screen-reader test, cross-browser matrix, production service behavior, conversion study or external-client automatic activation test was performed. The demos are local simulations, not production startup services.
 
-Performance measurements and public deployment status are recorded separately in the release handoff once measured. Do not infer a passing Lighthouse score from the build or axe checks.
+Public deployment status is recorded in [the release audit](release-audit.md). Do not infer a passing Lighthouse score from the build or axe checks.
 
 ## Publication and performance limits
 
-The cloud browser became unavailable during repository upload. The GitHub connection returns 404 for the new private repository. Complete source publication, GitHub Actions execution, public visibility and Pages deployment remain unverified. Lighthouse was attempted but could not obtain Chrome’s debugging port; no Lighthouse score is reported. The final dependency audit reports zero vulnerabilities. Final rerun output is retained in validation-final.txt.
+The complete source is published in the public repository. GitHub Actions Validate and Pages deployment succeeded, and the live homepage and all three demos were opened and interacted with. See [the release audit](release-audit.md) for the hosted run IDs and visibility confirmation. Lighthouse was attempted locally but could not obtain Chrome’s debugging port; no Lighthouse score is reported. The final dependency audit reports zero vulnerabilities. Final rerun output is retained in validation-final.txt.
