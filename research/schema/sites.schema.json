@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "url",
+      "category",
+      "archetype",
+      "inspected_on",
+      "summary",
+      "yc_status",
+      "batch",
+      "verification_url",
+      "geography_evidence",
+      "coverage",
+      "viewports",
+      "observations",
+      "interpretation",
+      "limitations",
+      "sources"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1
+      },
+      "url": {
+        "type": "string",
+        "minLength": 1
+      },
+      "category": {
+        "type": "string",
+        "minLength": 1
+      },
+      "archetype": {
+        "type": "string",
+        "minLength": 1
+      },
+      "inspected_on": {
+        "type": "string",
+        "minLength": 1
+      },
+      "summary": {
+        "type": "string",
+        "minLength": 1
+      },
+      "yc_status": {
+        "enum": [
+          "verified-yc",
+          "not-verified"
+        ]
+      },
+      "batch": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "verification_url": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "geography_evidence": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "coverage": {
+        "enum": [
+          "desktop-audit",
+          "partial-desktop"
+        ]
+      },
+      "viewports": {
+        "type": "object",
+        "required": [
+          "desktop",
+          "tablet",
+          "mobile"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "desktop": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tablet": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mobile": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "observations": {
+        "type": "object",
+        "required": [
+          "hero",
+          "typography",
+          "visual_system",
+          "page_sequence",
+          "interaction",
+          "accessibility"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "hero": {
+            "type": "string",
+            "minLength": 1
+          },
+          "typography": {
+            "type": "string",
+            "minLength": 1
+          },
+          "visual_system": {
+            "type": "string",
+            "minLength": 1
+          },
+          "page_sequence": {
+            "type": "string",
+            "minLength": 1
+          },
+          "interaction": {
+            "type": "string",
+            "minLength": 1
+          },
+          "accessibility": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "interpretation": {
+        "type": "object",
+        "required": [
+          "principles",
+          "fit",
+          "risks"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "principles": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "fit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "risks": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "limitations": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "sources": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "string",
+          "pattern": "^https?://"
+        }
+      }
+    },
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "yc_status": {
+              "const": "verified-yc"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "verification_url": {
+              "type": "string",
+              "pattern": "^https://www\\.ycombinator\\.com/companies/[a-z0-9-]+$"
+            },
+            "batch": {
+              "type": "string",
+              "pattern": "^[WSPFX][0-9]{2}$"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

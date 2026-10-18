@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "website",
+      "category",
+      "archetype",
+      "archetype_status",
+      "reason",
+      "verified_on",
+      "yc_status",
+      "batch",
+      "verification_url",
+      "audit_id",
+      "geography_evidence"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1
+      },
+      "website": {
+        "type": "string",
+        "minLength": 1
+      },
+      "category": {
+        "type": "string",
+        "minLength": 1
+      },
+      "archetype": {
+        "type": "string",
+        "minLength": 1
+      },
+      "archetype_status": {
+        "type": "string",
+        "minLength": 1
+      },
+      "reason": {
+        "type": "string",
+        "minLength": 1
+      },
+      "verified_on": {
+        "type": "string",
+        "minLength": 1
+      },
+      "yc_status": {
+        "enum": [
+          "verified-yc",
+          "not-verified"
+        ]
+      },
+      "batch": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "location": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "verification_url": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "audit_id": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "geography_evidence": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "ycdc_status": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "city": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "country": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "yc_status": {
+              "const": "verified-yc"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "verification_url": {
+              "type": "string",
+              "pattern": "^https://www\\.ycombinator\\.com/companies/[a-z0-9-]+$"
+            },
+            "batch": {
+              "type": "string",
+              "pattern": "^[WSPFX][0-9]{2}$"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
