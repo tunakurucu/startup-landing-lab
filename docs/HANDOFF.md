@@ -1,8 +1,8 @@
-# Maintainer handoff · v0.2 in progress
+# Maintainer handoff · v0.2.0
 
 Public repo: `tunakurucu/startup-landing-lab`. Live gallery: https://tunakurucu.github.io/startup-landing-lab/. Both GitHub Actions workflows (Validate, Publish gallery) must be green on every push to `main`.
 
-## Published state
+## Before v0.2.0
 
 | Commit | What it added |
 | --- | --- |
@@ -11,16 +11,25 @@ Public repo: `tunakurucu/startup-landing-lab`. Live gallery: https://tunakurucu.
 | `af3992e` | Gate wired into CI (`tests/browser/skill-gate.spec.ts`, fixme until fonts land); `check-page.mjs` waits for the SPA route; recipes de-templated. Gate baseline recorded in `docs/evaluation.md`: all four routes fail only `type_system`. |
 | `2caa98d` | `evals/`: three raw briefs, `assertions.json`, `run.md` with honest first-run results (2/7, 2/7, 1/7). |
 
-## v0.2 remaining work
+## v0.2.0 (released 2026-10-19)
 
-- [ ] Fonts: self-host OFL `.woff2` + `OFL.txt` under `gallery/public/fonts/`; remove Arial/Georgia/Courier stacks; all routes pass `type_system`; enable the gate tests.
-- [ ] Motion: contracted interactions on all three demos (transform/opacity only, reduced-motion keeps state); contracts recorded in `docs/demo-decisions.md`.
-- [ ] Structure: change the section grammar of one demo; update the diversity table so it is true of architecture, not only mood.
-- [ ] Stress: 320 px, 200 % zoom, longest headline, empty widget states.
-- [ ] Screenshots: 12 total (home, references, skill, three demos × 1440 and 390). The 60-file set is retired.
-- [ ] Release: README counts and evals table, repo topics, `v0.2.0` tag, this file updated.
+| Commit | What it added |
+| --- | --- |
+| `e9a4ff1` | Neutral handoff and eval wording. |
+| `b551372` | Five SIL-OFL families self-hosted with license texts; Arial/Georgia/Courier removed; `check-page.mjs` counts every rendering family; gate tests enabled and passing on all four routes; 12 screenshots replace 60. |
+| `c6de11b` | Motion contracts on all three demos (translate/scale only; reduced motion removes all and hides nothing); eight contract tests. |
+| `e2ec091` | Relayline restructured: the trace explorer is the hero, separate try-it section removed; empty inspector state; 320 px and 2x-scale stress spec; honest diversity review. |
+| `5b9b358`, `29fb448` | Test hardening: polling instead of fixed waits; Sidequest deal no longer runs on first paint (axe caught text mid-fade). |
 
-Deferred to v0.3: numeric research measurements (`scripts/measure.mjs`, `measurements` schema object); structural wireframe thumbnails; prerendered routes for crawlers; re-running the three evals after the gate and font fixes.
+Browser suite: 85 tests, green locally on repeated runs and in CI.
+
+## v0.3 plan
+
+1. **Fix the early stop.** All three eval agents stopped before render, post-gate and revision. Make those steps produce required files and make "done" conditional on them; re-run the three briefs.
+2. **Cross-check against reference skills** (Impeccable, Emil Kowalski's skills, Vercel web-design-guidelines, gstack design-review, Matt Pocock's grill-me, Anthropic skill-creator) and fold missing checkable rules into the detector and recipes.
+3. **Research expansion:** 2026 YC / a16z / Pear candidates with source links, ~30 deep audits with measured numbers (`scripts/measure.mjs`, `measurements` schema object), so recipe values can move from *recommended* to *observed*. Needs a browser with open web access.
+4. Structural wireframe thumbnails from each record's page sequence; prerendered routes for crawlers and link previews.
+5. Client rows in `evals/run.md`: the same briefs in Claude Code, Codex and Cursor, with and without the skill.
 
 ## How to continue
 

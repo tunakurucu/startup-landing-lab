@@ -41,7 +41,7 @@ Codex and Cursor document `.agents/skills/`. Claude Code uses `.claude/skills/`.
 
 > Use startup-landing-design to build a landing page for my developer API. Choose an appropriate visual direction, make the product understandable through an original local demo, then inspect and refine the mobile layout.
 
-The workflow: understand the product → select reference principles → commit to art direction → build the narrative and functional artifact → inspect → critique → revise.
+The workflow: understand the product → select reference principles → compare two hero structures and pass a pre-build gate → build from the archetype's recipe → render at three widths and run the checker → critique → make one structural revision. The agent leaves a filled `DESIGN-RECORD.md` beside the page.
 
 [Read the skill](skills/startup-landing-design/SKILL.md) or try [consumer and B2B prompts](docs/installation.md).
 
@@ -49,11 +49,15 @@ The workflow: understand the product → select reference principles → commit 
 
 | Demo | Direction | Working behavior |
 | --- | --- | --- |
-| [Relayline](https://tunakurucu.github.io/startup-landing-lab/#/demo/relayline) | Light technical instrument | Inspect failure scenarios and event steps; export sample JSON |
-| [Sidequest](https://tunakurucu.github.io/startup-landing-lab/#/demo/sidequest) | Playful creative ritual | Deal an original three-part brief; keep it as a text file |
-| [Fieldwork](https://tunakurucu.github.io/startup-landing-lab/#/demo/ledger) | Editorial operations | Compare structured/informal handoffs; export the working brief |
+| Demo | Direction | Type | Working behavior |
+| --- | --- | --- | --- |
+| [Relayline](https://tunakurucu.github.io/startup-landing-lab/#/demo/relayline) | Technical instrument: the working trace *is* the hero | Inter, IBM Plex Mono | Switch failure scenarios, inspect each attempt, export sample JSON |
+| [Sidequest](https://tunakurucu.github.io/startup-landing-lab/#/demo/sidequest) | Playful creative ritual | Bricolage Grotesque, Instrument Serif italic | Deal an original three-part brief; keep it as a text file |
+| [Fieldwork](https://tunakurucu.github.io/startup-landing-lab/#/demo/ledger) | Editorial operations | Instrument Serif, IBM Plex Sans | Compare structured and informal handoffs; export the working brief |
 
-All three are fictional brands with original code and copy. There are no fabricated customers, financial claims or testimonials. [Design decisions and diversity review](docs/demo-decisions.md).
+All three pass the skill's own gate (`check-page.mjs`, 7/7 on every route), use self-hosted open-licence type, and carry motion written as contracts — trigger, purpose, fallback, duration — that reduced-motion removes without hiding anything. Fictional brands, original code and copy, no fabricated customers, figures or testimonials. [Design decisions, motion contracts and an honest diversity review](docs/demo-decisions.md).
+
+![Relayline at desktop width: the trace explorer is the hero](docs/screenshots/demo-relayline-1440.png)
 
 ## Research you can inspect
 
@@ -62,6 +66,10 @@ All three are fictional brands with original code and copy. There are no fabrica
 Reference-site mobile, tablet and reduced-motion behavior remain unverified. This is a focused first edition, not exhaustive research or a ranking. [Method, evidence and limitations](research/README.md).
 
 The gallery uses original abstract composition studies and links to source websites. It does not redistribute third-party screenshots or assets.
+
+## Does the skill work?
+
+Partly, and the repo says so. Three raw product briefs in [`evals/`](evals/run.md) were given to isolated agents with only the skill folder. Each picked an archetype and compared hero variants; none finished the render, post-build gate and revision steps (2/7, 2/7, 1/7 assertions). That early stop is the main thing v0.3 fixes. Runs inside Claude Code, Codex and Cursor are still to be added; the protocol to add one is in the same file.
 
 ## Run and validate
 
@@ -83,7 +91,7 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-67 browser checks cover desktop/tablet/mobile routes, axe checks, filters, navigation, demo controls, downloads and reduced motion. See [the evaluation](docs/evaluation.md) for what actually ran and what did not. [Architecture](docs/architecture.md) explains the single-source data flow and hash routing for Pages.
+85 browser checks cover every route at 1440/768/390 with axe, the skill's own gate on home and all demos, each motion contract with and without reduced motion, 320 px stress, filters, navigation, demo controls and downloads. See [the evaluation](docs/evaluation.md) for what actually ran and what did not. [Architecture](docs/architecture.md) explains the single-source data flow and hash routing for Pages.
 
 ## Help improve it
 
