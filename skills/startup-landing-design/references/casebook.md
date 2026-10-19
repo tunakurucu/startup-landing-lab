@@ -158,3 +158,87 @@ Transfer: Use a single clear action when the product is still collecting interes
 
 Avoid/limit: The page leaves product reality, availability and proof largely unanswered. A phone render and capability statements are not evidence of a functioning device.
 
+## Airweave · typographic-technical
+
+https://airweave.ai/ · desktop-audit
+
+A dark developer page moves from a restrained promise into an editable-feeling API example and a three-step retrieval model.
+
+Observed: A centered Build smarter agents statement, YC badge and two actions sit on a dark blue-to-warm gradient. A wide code panel takes over the lower half of the first screen, with Python selected beside cURL and Node. Clicked cURL in the hero example. The selected language changed from Python and the visible snippet changed to cURL requests. No API request, account signup or pricing purchase was made.
+
+Transfer: Let a representative integration example answer the first technical adoption question. Use one small system diagram to explain where infrastructure sits. Keep the free-start and assisted-demo paths distinct.
+
+Avoid/limit: The quiet supporting copy appeared faint in an early render and needs contrast review. The roundup praised a previous snapshot; its judgment is not automatically transferable to the current site.
+
+## Normal · typographic-technical
+
+https://normal.ai/ · desktop-audit
+
+A spare research-lab page uses a moving single-sentence subject and faint construction lines instead of a long sales funnel.
+
+Observed: Small N mark and three links sit above a two-column introduction: an applied research lab for hardware design on the left, and a changing list of what it helps build on the right. A huge outline wordmark and very fine drafting guides occupy the empty center. Clicked the All systems normal control. Its accessible state expanded and revealed a copyable founders@normal.ai address. The rotating industry word changed between observed frames; its interval was not measured.
+
+Transfer: Use extreme brevity when the intended next action is a conversation or hiring inquiry. Make a few changing words do the job of a broad industry list. Let a quiet visual system support a technical research identity.
+
+Avoid/limit: This page provides almost no method, product proof or direct buyer path on the homepage. The roundup called an older Normal Factory site blocky; the current redirect to normal.ai is a different, much quieter design.
+
+## AnswerThis · editorial-platform
+
+https://answerthis.io/ · desktop-audit
+
+A long research-workflow page builds a case from citation anxiety to a five-stage product tour and institutional reassurance.
+
+Observed: Centered navy two-line Scientific AI headline on white, a YC badge, berry-colored Start For Free action, user avatars and a wide video panel. The video showed a buffering state in the inspected opening. Opened the Features navigation menu. It revealed descriptive links to Writer, Library, Search Results, Literature Review and other capabilities. The video was buffering at the first capture; no research query or account creation was attempted.
+
+Transfer: Sequence a complex platform around the researcher’s actual workflow. Make citation and verification doubts explicit early. Keep institutional security and collaboration information available after the individual workflow story.
+
+Avoid/limit: Dense claims and a long page can outrun first-screen clarity. Company-reported paper counts, researcher counts and compliance language were observed, not independently verified. The roundup praised the 2025 page, which may differ from today’s design.
+
+## Pingo · expressive-world
+
+https://pingo.ai/ · desktop-audit
+
+A conversation-first learning story turns a broad language promise into specific short exchanges and a direct app-download action.
+
+Observed: An airy white hero centers Finally. Someone to speak with., a brief learning promise and two store buttons. A small colored mark and blue Get the app action frame the top navigation. Clicked Next languages in the horizontal chooser, then expanded the first FAQ. The FAQ disclosed an explanation and reported expanded state; the chooser was operated but the amount of horizontal displacement was not measured.
+
+Transfer: Show a few realistic exchange fragments to demonstrate an abstract conversational promise. Keep the immediate action aligned with a mobile app. Answer beginner, advanced and voice-data questions near the final download prompt.
+
+Avoid/limit: Conversation snippets are curated examples, not a live product test. The roundup praised the older colorful page; the current site is notably more restrained. User counts and ratings are company-presented claims.
+
+## Cactus · expressive-world
+
+https://www.oncactus.com/ · desktop-audit
+
+A trade-specific revenue story mixes job-site footage, a cactus character and a loss calculator around a demo call.
+
+Observed: A white translucent left panel promises an AI revenue engine built for trades over a rotating job-site video backdrop. The narrow webinar strip and top-bar demo action remain visible. Selected a hero carousel indicator and observed its selected slide change; automatic rotation also advanced the slide during inspection. No call, form submission or calculator assumption validation was made.
+
+Transfer: Use imagery and language from the buyer’s actual work environment. Turn a broad automation promise into missed-call, follow-up and CRM work. Show calculator assumptions beside any output and avoid presenting estimates as measured outcomes.
+
+Avoid/limit: The calculator output and several ROI statistics are company-provided claims; they were not validated. Automatic video and carousel motion can distract and needs separate accessibility review. The older praise was for a prior page snapshot.
+
+## Interfere · workflow-theater
+
+https://interfere.com/ · desktop-audit
+
+A large incident workspace makes the progression from an unseen bug to a source-linked fix visible beneath a spare hero.
+
+Observed: White, left-anchored Ship software that never breaks statement faces a compact right-side explanation and two actions. A broad incident interface with inbox, timeline and code finding follows immediately; a soft pink-blue halo sits behind it. Opened the Product menu. It expanded into four audience-specific destinations for engineers, designers, product managers and support. The incident workspace was inspected as a visual product example, not operated as a live application.
+
+Transfer: Use one coherent incident example from detection through resolution. Make the product interface carry proof before a generic feature list. Offer role-specific entry points without splitting the central story.
+
+Avoid/limit: The absolute claim never breaks exceeds what a homepage can establish. DesignMunk is a curated design feature, not evidence of product performance or conversion.
+
+## Toothy AI · workflow-theater
+
+https://toothy.ai/ · desktop-audit
+
+A dental revenue page pairs a plain financial promise with two changeable insurance-work examples and careful pricing caveats.
+
+Observed: Left-aligned Stop letting insurance slow your revenue statement, three checkmarked benefits and demo/learn actions face a verification or billing process panel on the right. Clicked Billing in the hero, replacing the verification timeline with billing tasks and collection/aging tiles. Clicked Billing & Collections in pricing; the selected tab and tier descriptions changed. No clinic details or demo request were submitted.
+
+Transfer: Show a concrete before-to-after work trace for a complex service. Keep plan scope and pricing variability next to the buying action. Place privacy and human handoff information within the buyer journey.
+
+Avoid/limit: The page reports time saved and collection ratios without independent verification here. Awesomic’s case study is the design vendor’s promotional account of an earlier redesign; the current site was reviewed separately.
+
