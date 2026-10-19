@@ -96,14 +96,14 @@ The other 64 checks run automatically in `check-page.mjs`. Answer each of these 
 | MO-08 | Staggers stay between 30 and 80ms and never block input. | | |
 | MO-09 | Every animation has a written contract: trigger, purpose, fallback, duration, easing. | | |
 | MO-10 | Text that must be read moves into place rather than fading in. | | |
-| MB-06 | Dense artifacts are recomposed for phones, not shrunk. | | |
+| MB-06 | Dense artifacts are recomposed for phones, not shrunk or removed. | | |
 | MB-07 | Fixed or full-bleed elements respect safe-area insets. | | |
 | AX-12 | Results of local actions are announced (aria-live or role=status). | | |
 | HP-01 | No customer logos or testimonials that were not supplied and verified. | | |
 | HP-02 | Every number has a source or is labelled illustrative. | | |
-| HP-03 | Illustrative interfaces say so on the page. | | |
-| HP-04 | The primary action leads somewhere real or produces a visible local result. | | |
-| PR-01 | Every screenshot listed as evidence was opened, is not blank and is the width it claims. | | |
+| HP-03 | Illustrative interfaces and code are labelled right beside them, not in a separate disclaimer section. | | |
+| HP-04 | Every action reaches what its label promises (install, docs, a real page or a visible local result). | | |
+| PR-01 | Every screenshot listed was opened, is not blank and is the width it claims, and the signature artifact was captured in each of its states. | | |
 | PR-02 | One structural revision was made after rendering, with before and after evidence and the hero rescored. | | |
 | PR-03 | Every decorative element left on the page has a named job; ones without a job were removed and are listed. | | |
 | PR-04 | The status line is DONE only if nothing above is unverified or unavailable; otherwise it names what is. | | |

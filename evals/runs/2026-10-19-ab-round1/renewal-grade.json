@@ -1,0 +1,41 @@
+{
+  "A": {
+    "scores": {"clarity": 8, "fit": 7, "distinctiveness": 6, "proof": 8, "craft": 8, "mobile": 7, "honesty": 7, "interaction": 8},
+    "evidence": {
+      "clarity": "1440-top: headline 'Decide before the contract renews itself' plus a sample card showing owner, notice deadline, next decision and trail makes the product and buyer clear above the fold.",
+      "fit": "All four elements are present and the page is calm, but the eyebrow says 'FOR SMALL IN-HOUSE LEGAL TEAMS', which picks the buyer the client has not chosen; outside counsel only appear in an FAQ answer and a checklist line.",
+      "distinctiveness": "Cream-and-green SaaS layout with an eyebrow, a 4-column 'Four things' strip, a numbered 3-step 'How it works' and an FAQ accordion. Swap the copy and it fits any B2B tool.",
+      "proof": "'A renewal list you can use right here': five sample contracts sorted by notice deadline with status pills. Clicking one shows its detail, decision chips plus a note add a trail entry, and 'Add a contract' computes the deadline (Jan 15 minus 45 days = Dec 1) and persists after reload.",
+      "craft": "Clean rhythm and consistent cards at 1440, but the dates in the detail panel switch to the serif face (Oct 4, 2026) while the other values are sans, and the hero card repeats the example just below it.",
+      "mobile": "390 stacks cleanly, the header CTA shortens to 'Consultation' and tapping a contract scrolls to its detail (2532 to 3233). But the page runs to 6495px, and the hero card plus the 4-item strip make the reader scroll a long way before reaching the tool.",
+      "honesty": "Samples are labelled and 'Nothing you type leaves this page' is true. The form, though, asks for name and work email and only after submit says 'not connected to an inbox yet', with no up-front notice and no address to send the copied details to.",
+      "interaction": "Selecting, adding, deciding (the Office lease moved to 'Decided: Give notice'), reset and validation ('Please add your name, a valid work email and your team') all worked with no console errors. It teaches how the trail builds up."
+    },
+    "problems": [
+      "The eyebrow commits to 'in-house legal teams' even though the client has not chosen between outside counsel and in-house legal ops, so the page answers a question the brief left open.",
+      "The consultation form collects name and work email, then reveals it was never connected and gives no email or calendar link to send the 'Copy details' text to, so the primary action dead-ends after asking for PII.",
+      "The structure is generic (feature strip, 3-step how-it-works, FAQ accordion), and the static hero card duplicates the interactive example, which makes the page long and template-like, especially at 390px."
+    ]
+  },
+  "B": {
+    "scores": {"clarity": 8, "fit": 8, "distinctiveness": 7, "proof": 7, "craft": 7, "mobile": 8, "honesty": 8, "interaction": 8},
+    "evidence": {
+      "clarity": "1440-top: 'Know who decides each renewal, and by when.' next to a record showing Status / Owner / Notice deadline (red, 'clause 14.2') / Next decision plus a deadline timeline. Product and job are clear in five seconds.",
+      "fit": "Owner, notice deadline, next decision and review trail are all on the first record. Copy says 'small legal teams' without picking a buyer, and the form's first question (in-house / outside counsel / other) lets the client learn who the buyer is. The calculator is the local example.",
+      "distinctiveness": "Reads like a legal record rather than a SaaS template: a clause-cited deadline, a 4-step lifecycle stepper, a term timeline and a 'What we can show you, and what we can't yet' section. The grey and system-sans body text still looks plain.",
+      "proof": "The stepper takes one contract from 'Clause read' to 'Notice handled', and the trail and next decision update at each step. But step 4's trail says notice was sent 'under clause 22' while every other line cites clause 14.2, an inconsistency a legal buyer will spot.",
+      "craft": "Strong serif headline hierarchy, but on step 3 the timeline label is clipped off the card ('oday in the sample · 16 Nov'), and below the hero CTAs and beside the form the left column is large and empty.",
+      "mobile": "At 390 the horizontal timeline becomes a vertical list (24 Nov / 2 Dec / 31 Jan), the stepper becomes a 2x2 grid, the Menu opens and closes after a link tap, and there is no horizontal scroll. The page is a tighter 5325px.",
+      "honesty": "Labelled 'Sample record · fictional contract · as of …'. There is a can/can't section (no quotes, no savings figure, no certification), and submitting says 'Request prepared — not sent… nothing has left your browser'. Nothing is disclosed before submit, and 'None are approved for publication' reads like an internal note.",
+      "interaction": "Tabs work with the arrow keys. The decision radios rewrite the trail ('Decision: do not renew…') and the next step. The calculator handles a past deadline ('passed 48 days ago'), month units and empty input. But the decision radios stay editable on step 4 and the consult output has no destination."
+    },
+    "problems": [
+      "The sample record contradicts itself (clause 14.2 throughout, 'clause 22' in the step-4 trail entry), and the timeline 'Today in the sample' label clips off the card on step 3. On a page whose whole pitch is precise record-keeping, both are credibility bugs.",
+      "The consultation form collects no contact details and gives no email or booking link, so 'Copy the request text' leaves the visitor with text and nowhere to send it. The action is honest but goes nowhere.",
+      "The 'What we can show you, and what we can't yet' copy ('None are approved for publication', 'We have not measured one') reads like the client's constraints pasted onto the page. It is honest but self-undermining, and a client may not want those gaps spelled out to buyers."
+    ]
+  },
+  "preference": "B",
+  "confidence": "medium",
+  "reason": "B follows the brief more closely: it stays neutral on the undecided buyer and uses the form's first question to learn it, it walks one contract through owner, deadline, decision and trail with a working date calculator, and it handles the missing proof and endpoint openly. A has the more polished desktop and a richer sandbox, but it names a buyer the client has not chosen, uses a stock SaaS structure, and asks for name and email before admitting nothing is sent."
+}

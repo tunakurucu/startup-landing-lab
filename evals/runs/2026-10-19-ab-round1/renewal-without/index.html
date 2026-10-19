@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ledgerlight: contract renewals for small legal teams</title>
+  <meta name="description" content="Ledgerlight keeps each contract's owner, notice deadline, next decision and review trail in one place, so small in-house legal teams decide before a contract renews on its own.">
+  <link rel="icon" href="mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="#top" aria-label="Ledgerlight home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="26" height="26" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M9 11h14M9 16h9M9 21h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="22.5" cy="20.5" r="3" class="brand-dot"/>
+        </svg>
+        <span>Ledgerlight</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="nav">
+          <li><a href="#example">Example</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#questions">Questions</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn-small header-cta" href="#consult"><span class="long">Request a consultation</span><span class="short" aria-hidden="true">Consultation</span></a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Contract renewals for small in-house legal teams</p>
+          <h1>Decide before the contract renews itself.</h1>
+          <p class="lede">Ledgerlight gives every contract one owner, a notice deadline you can see coming, the next decision that has to be made, and a written trail of how it was made.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#consult">Request a consultation</a>
+            <a class="btn btn-quiet" href="#example">Try the working example</a>
+          </div>
+          <p class="hero-note">The example below runs in your browser on sample contracts. Nothing you type leaves this page.</p>
+        </div>
+
+        <figure class="hero-card" aria-labelledby="hero-card-cap">
+          <figcaption id="hero-card-cap" class="card-cap">
+            <span>Sample contract</span>
+            <span class="pill soon" data-hero="status">Notice due soon</span>
+          </figcaption>
+          <h2 class="card-title" data-hero="name">Office lease, 3rd floor</h2>
+          <dl class="facts">
+            <div>
+              <dt>Owner</dt>
+              <dd data-hero="owner">Sam K. · Facilities</dd>
+            </div>
+            <div>
+              <dt>Notice deadline</dt>
+              <dd><span data-hero="deadline">180 days before renewal</span> <span class="muted" data-hero="countdown"></span></dd>
+            </div>
+            <div class="span-2">
+              <dt>Next decision</dt>
+              <dd data-hero="decision">Exercise the renewal option, or give notice to vacate?</dd>
+            </div>
+          </dl>
+          <div class="trail-mini">
+            <p class="trail-label">Review trail</p>
+            <ol data-hero="trail">
+              <li><span class="t-what">Lease uploaded; renewal option and 180-day notice clause confirmed</span></li>
+              <li><span class="t-what">Headcount plan requested from Finance</span></li>
+              <li><span class="t-what">Two comparable spaces toured</span></li>
+            </ol>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- FOUR THINGS -->
+    <section class="band" aria-labelledby="four-h">
+      <div class="wrap">
+        <h2 id="four-h" class="section-h">Four things, for every contract, always visible</h2>
+        <ul class="four">
+          <li>
+            <h3>Owner</h3>
+            <p>One named person is responsible for each renewal. Not a shared inbox, not “legal.”</p>
+          </li>
+          <li>
+            <h3>Notice deadline</h3>
+            <p>The renewal date minus the notice period, worked out for you. That is the date that actually matters.</p>
+          </li>
+          <li>
+            <h3>Next decision</h3>
+            <p>Written as a question someone can answer: renew, renegotiate, reduce, or let it end.</p>
+          </li>
+          <li>
+            <h3>Review trail</h3>
+            <p>Who looked at what, and when. So the next renewal starts from a record instead of memory.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- EXAMPLE -->
+    <section class="example" id="example" aria-labelledby="example-h">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">Working example</p>
+          <h2 id="example-h" class="section-h">A renewal list you can use right here</h2>
+          <p>Five sample contracts, with dates set relative to today. Select one to see its owner, deadline, decision and trail. Add your own contract or record a decision to see how the trail builds. Everything is kept in this browser only.</p>
+        </div>
+
+        <div class="tracker">
+          <div class="list-pane">
+            <div class="list-head">
+              <h3 class="pane-h">Renewals by notice deadline</h3>
+              <span class="muted small" id="today-label"></span>
+            </div>
+            <ul class="contract-list" id="contract-list" aria-label="Contracts, sorted by notice deadline">
+              <li class="noscript-msg">Turn on JavaScript to use the example.</li>
+            </ul>
+
+            <details class="add" id="add-details">
+              <summary>Add a contract</summary>
+              <form id="add-form" class="stack" novalidate>
+                <div class="field">
+                  <label for="f-name">Contract</label>
+                  <input id="f-name" name="name" required maxlength="80" placeholder="e.g. Translation services MSA">
+                </div>
+                <div class="field">
+                  <label for="f-owner">Owner</label>
+                  <input id="f-owner" name="owner" required maxlength="60" placeholder="Name and team">
+                </div>
+                <div class="row-2">
+                  <div class="field">
+                    <label for="f-renewal">Renewal or end date</label>
+                    <input id="f-renewal" name="renewal" type="date" required>
+                  </div>
+                  <div class="field">
+                    <label for="f-notice">Notice period (days)</label>
+                    <input id="f-notice" name="notice" type="number" min="0" max="730" step="1" required value="30" inputmode="numeric">
+                  </div>
+                </div>
+                <div class="field check">
+                  <input id="f-auto" name="auto" type="checkbox" checked>
+                  <label for="f-auto">Renews automatically unless notice is given</label>
+                </div>
+                <div class="field">
+                  <label for="f-decision">Next decision</label>
+                  <input id="f-decision" name="decision" required maxlength="140" placeholder="e.g. Renew as is, or ask for a shorter term?">
+                </div>
+                <p class="form-error" id="add-error" role="alert" hidden></p>
+                <div class="form-actions">
+                  <button class="btn btn-small" type="submit">Add to list</button>
+                  <button class="btn btn-small btn-quiet" type="button" id="reset-demo">Reset sample data</button>
+                </div>
+              </form>
+            </details>
+          </div>
+
+          <article class="detail-pane" id="detail" aria-live="polite" aria-labelledby="d-name">
+            <p class="muted">Select a contract to see its details.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW -->
+    <section class="how band" id="how" aria-labelledby="how-h">
+      <div class="wrap">
+        <h2 id="how-h" class="section-h">How a renewal moves through Ledgerlight</h2>
+        <ol class="steps">
+          <li>
+            <span class="step-n" aria-hidden="true">1</span>
+            <div>
+              <h3>Record the terms that drive the date</h3>
+              <p>Renewal or end date, notice period, and whether it renews on its own. The notice deadline follows from those.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-n" aria-hidden="true">2</span>
+            <div>
+              <h3>Name an owner and the next decision</h3>
+              <p>The owner sees the deadline coming and knows what they are being asked to decide, well before the window closes.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-n" aria-hidden="true">3</span>
+            <div>
+              <h3>Keep the trail as you go</h3>
+              <p>Each review, request and decision is noted with a date and a name, so the reasoning is still there next year.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- QUESTIONS -->
+    <section class="questions" id="questions" aria-labelledby="q-h">
+      <div class="wrap narrow">
+        <h2 id="q-h" class="section-h">Questions worth asking first</h2>
+        <div class="qa">
+          <details>
+            <summary>Who is Ledgerlight for?</summary>
+            <p>Small legal teams that own a company's contracts, often one to a handful of people who also do everything else. If you are outside counsel tracking renewals on behalf of clients, we would like to hear how you do it today; mention it in your request.</p>
+          </details>
+          <details>
+            <summary>Is the example on this page the product?</summary>
+            <p>It is a working sketch of the core idea: owner, notice deadline, next decision and review trail. It runs in your browser on sample data and stores nothing anywhere else. The consultation is where we look at your actual contracts and workflow.</p>
+          </details>
+          <details>
+            <summary>What security or compliance commitments can you make?</summary>
+            <p>We are not going to list certifications here. Bring your security and data-handling questions to the consultation and we will answer them directly, including anything we cannot yet commit to.</p>
+          </details>
+          <details>
+            <summary>What should I bring to a consultation?</summary>
+            <p>A rough count of the contracts you track, how you track them now (spreadsheet, calendar reminders, a contract system, memory), and one renewal that went worse than it should have.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONSULT -->
+    <section class="consult band" id="consult" aria-labelledby="consult-h">
+      <div class="wrap consult-grid">
+        <div>
+          <p class="eyebrow">Consultation</p>
+          <h2 id="consult-h" class="section-h">Talk through your next renewals</h2>
+          <p>Tell us a little about your team and what is coming up. A consultation is a conversation about how your renewals are handled today and whether Ledgerlight fits.</p>
+          <ul class="ticks">
+            <li>Bring one real renewal, if you have one</li>
+            <li>Ask your data-handling and security questions directly</li>
+            <li>Outside counsel are welcome to ask too</li>
+          </ul>
+        </div>
+
+        <form id="consult-form" class="consult-form stack" novalidate data-endpoint="">
+          <div class="row-2">
+            <div class="field">
+              <label for="c-name">Your name</label>
+              <input id="c-name" name="name" autocomplete="name" required maxlength="80">
+            </div>
+            <div class="field">
+              <label for="c-email">Work email</label>
+              <input id="c-email" name="email" type="email" autocomplete="email" required maxlength="120">
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label for="c-role">Your team</label>
+              <select id="c-role" name="team" required>
+                <option value="">Choose one</option>
+                <option>In-house legal</option>
+                <option>Legal operations</option>
+                <option>Outside counsel</option>
+                <option>Finance or procurement</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="c-count">Contracts you track</label>
+              <select id="c-count" name="contracts">
+                <option value="">Not sure</option>
+                <option>Under 50</option>
+                <option>50 to 200</option>
+                <option>200 to 1,000</option>
+                <option>Over 1,000</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="c-msg">What is renewing next? <span class="muted">(optional)</span></label>
+            <textarea id="c-msg" name="message" rows="3" maxlength="1000" placeholder="e.g. Three software subscriptions in Q1, and a lease with a long notice period"></textarea>
+          </div>
+          <p class="form-error" id="consult-error" role="alert" hidden></p>
+          <button class="btn" type="submit">Request a consultation</button>
+          <div class="consult-result" id="consult-result" tabindex="-1" hidden></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <span class="brand brand-foot">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="26" height="26" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M9 11h14M9 16h9M9 21h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="22.5" cy="20.5" r="3" class="brand-dot"/>
+        </svg>
+        Ledgerlight
+      </span>
+      <p class="muted small">All contracts, people and dates on this page are samples for illustration.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

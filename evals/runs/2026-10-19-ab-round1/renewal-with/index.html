@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f3f5f6">
+<title>Ledgerlight — contract renewal records for small legal teams</title>
+<meta name="description" content="Ledgerlight keeps one record per contract: who owns the renewal, the notice deadline, the next decision and a review trail.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="wordmark" href="#top" aria-label="Ledgerlight, back to top">Ledgerlight</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <a href="#record">Sample record</a>
+      <a href="#check">Check your dates</a>
+      <a href="#scope">What we can show</a>
+      <a class="nav-cta" href="#consult">Request a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 id="hero-title">Know who decides each renewal, and by when.</h1>
+        <p class="lede">Ledgerlight gives small legal teams one record per contract: who owns the renewal, the notice deadline read from the clause, the next decision, and a review trail of who decided what.</p>
+        <div class="actions">
+          <a class="button" href="#consult">Request a consultation</a>
+          <a class="button button-quiet" href="#check">Check your own notice deadline</a>
+        </div>
+        <p class="aside-note">The renewal record on this page is a fictional sample you can step through. No customer data is used on this page.</p>
+      </div>
+
+      <article class="record" id="record" aria-labelledby="record-title">
+        <p class="record-tag">Sample record · fictional contract · <span data-f="asof">as of 22 Oct 2026</span></p>
+        <p class="record-title" id="record-title">Kestrel Print Services — managed print agreement</p>
+        <p class="record-sub">Term ends 31 Jan 2027 · renews for 12 months unless notice is given</p>
+
+        <div class="stepper">
+          <p class="stepper-label" id="stepper-label">Step through this renewal</p>
+          <div class="step-list" role="tablist" aria-labelledby="stepper-label">
+            <button type="button" role="tab" id="tab-1" aria-controls="record-body" aria-selected="false" tabindex="-1" data-step="1"><span class="n">1</span> Clause read</button>
+            <button type="button" role="tab" id="tab-2" aria-controls="record-body" aria-selected="true" data-step="2"><span class="n">2</span> Owner assigned</button>
+            <button type="button" role="tab" id="tab-3" aria-controls="record-body" aria-selected="false" tabindex="-1" data-step="3"><span class="n">3</span> Decision made</button>
+            <button type="button" role="tab" id="tab-4" aria-controls="record-body" aria-selected="false" tabindex="-1" data-step="4"><span class="n">4</span> Notice handled</button>
+          </div>
+        </div>
+
+        <div class="record-body" id="record-body" role="tabpanel" aria-labelledby="tab-2">
+          <p class="step-explain" data-f="explain">The owner is named and has a date to decide by, two weeks before notice is due.</p>
+          <fieldset class="decision" hidden>
+            <legend>Dana decides to</legend>
+            <label><input type="radio" name="decision" value="renew"> Renew as is</label>
+            <label><input type="radio" name="decision" value="renegotiate" checked> Renegotiate</label>
+            <label><input type="radio" name="decision" value="terminate"> Give notice and leave</label>
+          </fieldset>
+          <dl class="fields">
+            <div><dt>Status</dt><dd class="status" data-f="status">Decision due 18 Nov</dd></div>
+            <div><dt>Owner</dt><dd data-f="owner">Dana Ortiz, legal operations</dd></div>
+            <div><dt>Notice deadline</dt><dd class="deadline">Wed 2 Dec 2026 <span>60 days before term end · clause 14.2</span></dd></div>
+            <div><dt>Next decision</dt><dd data-f="next">Renew, renegotiate or give notice — Dana, by 18 Nov</dd></div>
+          </dl>
+          <ol class="ruler" aria-label="Notice window for this contract">
+            <li class="r-today" data-f="today" style="--at:3"><time datetime="2026-10-22">22 Oct</time> <span>Today in the sample</span></li>
+            <li class="r-deadline" style="--at:42"><time datetime="2026-12-02">2 Dec</time> <span>Last day to give notice</span></li>
+            <li class="r-end" style="--at:100"><time datetime="2027-01-31">31 Jan</time> <span>Term ends</span></li>
+          </ol>
+          <div class="trail">
+            <p class="trail-head">Review trail</p>
+            <ol data-f="trail">
+              <li><time datetime="2026-10-19">19 Oct</time><p>Clause 14.2 read: 60 days’ written notice before 31 Jan 2027 avoids a 12-month renewal. Notice deadline set to 2 Dec.</p><span class="who">Priya Raman, paralegal</span></li>
+              <li><time datetime="2026-10-21">21 Oct</time><p>Owner assigned: Dana Ortiz. Decision due 18 Nov, two weeks before the deadline.</p><span class="who">Priya Raman</span></li>
+              <li><time datetime="2026-10-22">22 Oct</time><p>Note: the vendor’s last price change was at the 2025 renewal.</p><span class="who">Dana Ortiz</span></li>
+            </ol>
+          </div>
+          <p class="sr-only" role="status" aria-live="polite" id="record-status"></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="check" id="check" aria-labelledby="check-title">
+    <div class="wrap check-grid">
+      <div class="section-head">
+        <h2 id="check-title">Count back from your own contract</h2>
+        <p>Type the date your current term ends and the notice period from the renewal clause. The page works out the last day to give notice. It runs only in your browser and does not read or store your contract.</p>
+        <p class="caveat">Counted in calendar days. If your clause uses business days, or needs notice to be <em>received</em> by the deadline, leave more room and have counsel read the wording.</p>
+      </div>
+      <form class="checker" id="checker" novalidate>
+        <div class="inputs">
+          <label class="field"><span>Current term ends</span><input type="date" id="term-end" name="term-end" value="2027-03-31" required></label>
+          <div class="field field-pair">
+            <label for="notice-n"><span>Notice period</span></label>
+            <div class="pair">
+              <input type="number" id="notice-n" name="notice-n" min="0" max="730" value="90" inputmode="numeric">
+              <select id="notice-unit" name="notice-unit" aria-label="Notice period unit">
+                <option value="days" selected>days</option>
+                <option value="months">months</option>
+              </select>
+            </div>
+          </div>
+          <label class="field"><span>Start the review this many days earlier</span><input type="number" id="buffer" name="buffer" min="0" max="365" value="21" inputmode="numeric"></label>
+        </div>
+        <div class="result" role="status" aria-live="polite" id="check-result">
+          <dl class="fields">
+            <div><dt>Last day to give notice</dt><dd class="deadline" id="out-deadline">Thu 31 Dec 2026</dd></div>
+            <div><dt>Start the review by</dt><dd id="out-review">Thu 10 Dec 2026</dd></div>
+            <div><dt>From today</dt><dd id="out-left">73 days left to give notice (from 19 Oct 2026)</dd></div>
+          </dl>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="scope" id="scope" aria-labelledby="scope-title">
+    <div class="wrap scope-grid">
+      <h2 id="scope-title">What we can show you, and what we can’t yet</h2>
+      <ul class="scope-list">
+        <li><strong>No customer quotes or logos.</strong> None are approved for publication, so the sample record is the evidence on this page.</li>
+        <li><strong>No savings figure.</strong> We have not measured one we can stand behind, so we don’t print one.</li>
+        <li><strong>Security questions belong in the consultation.</strong> Ask where contract data is kept and who can see it; we won’t point to a certification we don’t hold.</li>
+        <li><strong>The clause is still read by lawyers.</strong> Ledgerlight keeps the record of the deadline and the decision; interpreting the wording stays with your team.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="consult" id="consult" aria-labelledby="consult-title">
+    <div class="wrap consult-grid">
+      <div class="section-head">
+        <h2 id="consult-title">Request a consultation</h2>
+        <p>Tell us what kind of team you are and what you want to look at. We’ll go through the record with one of your own renewal clauses.</p>
+      </div>
+      <form class="consult-form" id="consult-form" novalidate>
+        <fieldset>
+          <legend>Your team</legend>
+          <label><input type="radio" name="team" value="In-house legal or legal operations" checked> In-house legal or legal operations</label>
+          <label><input type="radio" name="team" value="Outside counsel tracking client contracts"> Outside counsel tracking client contracts</label>
+          <label><input type="radio" name="team" value="Another kind of team"> Another kind of team</label>
+        </fieldset>
+        <label class="field"><span>Contracts that renew in a typical year</span>
+          <select name="volume">
+            <option>Fewer than 50</option>
+            <option selected>50 to 200</option>
+            <option>200 to 1,000</option>
+            <option>More than 1,000</option>
+            <option>Not sure</option>
+          </select>
+        </label>
+        <fieldset>
+          <legend>What to look at together</legend>
+          <label><input type="checkbox" name="topic" value="our notice clauses" checked> Our notice clauses</label>
+          <label><input type="checkbox" name="topic" value="who owns each renewal"> Who owns each renewal</label>
+          <label><input type="checkbox" name="topic" value="moving off a spreadsheet"> Moving off a spreadsheet</label>
+          <label><input type="checkbox" name="topic" value="security and where data is kept"> Security and where data is kept</label>
+        </fieldset>
+        <button class="button" type="submit">Request a consultation</button>
+        <div class="consult-result" role="status" aria-live="polite" id="consult-result"></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="wordmark wordmark-foot">Ledgerlight</p>
+      <p>Renewal records for small legal teams.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="#record">Sample record</a>
+      <a href="#check">Check your dates</a>
+      <a href="#scope">What we can show</a>
+      <a href="#consult">Request a consultation</a>
+    </nav>
+    <p class="foot-note">The contract, people and dates in the records on this page are fictional samples. © 2026 Ledgerlight.</p>
+  </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "A": {
+    "scores": {"clarity": 8, "fit": 5, "distinctiveness": 7, "proof": 5, "craft": 8, "mobile": 6, "honesty": 8, "interaction": 8},
+    "evidence": {
+      "clarity": "Condensed headline 'Get slow work out of the request. Know where it went.' plus 'open-source job queue for Node' and a live timeline make the product clear on the first 1440 screen; the audience is only implied.",
+      "fit": "Lifecycle coverage is excellent (3 scenarios, a 5-state reference table, a 'What this page doesn't claim' block), but there is no npm install, repo or code anywhere. The 'safe local example' is a browser model labelled 'not Drumbeat itself', and 'Read the lifecycle docs' only scrolls to an on-page table (#docs).",
+      "distinctiveness": "Condensed grotesk display type, a Gantt-style attempt timeline with 'wait 2 s / wait 4 s' spans and a per-attempt ledger feel made for a queue, not lifted from a template.",
+      "proof": "Everything is a self-declared model ('Illustrative model running in your browser · not Drumbeat itself'). There is no line of real Drumbeat code or output, so the page describes the library rather than showing it.",
+      "craft": "Tight hierarchy at 1440: the hero splits cleanly, and the trace card, ledger and reference table align on one grid. One flaw: on the 'Runs out of attempts' end state the 'failed' tag crowds the #4 marker at the 16 s edge.",
+      "mobile": "No overflow at 390, and the scenarios stack as full-width buttons, but the timeline chart (the page's best visual) is removed entirely. That leaves stat text and a very long ledger and table (a 6340 px page).",
+      "honesty": "Unusually careful: timings, IDs and log format are all labelled illustrative, and it says outright that no benchmarks exist. Calling an in-page table 'the lifecycle docs' slightly oversells it.",
+      "interaction": "Scenario radios and Previous/Next/Back to enqueue all worked. Stepping 'Runs out of attempts' to event 10 of 10 showed waits doubling 2/4/8 s and state reaching failed at 15.55 s, with the ledger in sync."
+    },
+    "problems": [
+      "No install path at all: no npm command, no package name to copy, no GitHub/npm link. The brief's goal ('consider installing the package') has no destination.",
+      "The 'safe example that works locally' is a browser animation, not code a developer can run. An experienced engineer never sees Drumbeat's API.",
+      "'Read the lifecycle docs' and 'Read the job ledger' both just scroll the same page; with no external docs link, the two primary CTAs are effectively internal anchors dressed as docs."
+    ]
+  },
+  "B": {
+    "scores": {"clarity": 9, "fit": 8, "distinctiveness": 6, "proof": 8, "craft": 7, "mobile": 8, "honesty": 7, "interaction": 8},
+    "evidence": {
+      "clarity": "The first screen has 'OPEN-SOURCE JOB QUEUE FOR NODE', 'Know where every background job is.', the five state names in the subhead, a copyable 'npm install drumbeat', 'No server, account or API key', and a labelled job record.",
+      "fit": "Covers every brief item: a state machine through retrying/failed, a runnable one-file MemoryStore example with expected output and a 'change calls < 3 to < 5 to see failed' variant, an install command, 'No throughput numbers on this page', and a solo-vs-teams split ('Start with one app...'). The docs/ link is not shipped.",
+      "distinctiveness": "Cream background, orange mono eyebrows, a dark code block and card grid read as a familiar dev-tool template; the state diagram and job-record card are the only product-specific elements.",
+      "proof": "It shows real usage: install, the retry-demo.mjs source, the run command and the exact expected console output, plus a job record with timings, so the library looks like it works rather than being described.",
+      "craft": "Clean type and spacing, but at 1440 there is ~200 px of dead space under the hero before 'THE LIFECYCLE', and the eyebrow-plus-headline rhythm repeats in every section.",
+      "mobile": "No page overflow at 390. The state diagram scales down with readable nodes, the stat grid stays 2-up, code scrolls inside its own pre, and the hero install chip and docs button stack cleanly.",
+      "honesty": "The hero record is labelled 'Illustrative record' and the simulator 'Runs in this page only', with no fake proof. However, 'Read the docs' (nav, hero, footer) goes to docs/, which does not exist and gave a browser error page when clicked.",
+      "interaction": "The install copy worked (toast 'Copied to clipboard', clipboard contained 'npm install drumbeat'). The simulator's Worker claims / Handler throws / Wait buttons walked the job through backoff of 200 then 400 ms to failed at 720 ms and offered 'Enqueue a new job', with the graph edge and log updating."
+    },
+    "problems": [
+      "The primary CTA 'Read the docs' goes to docs/, which is missing from the deliverable, so the one action the client cares about most fails as shipped.",
+      "The code example presents a specific API (Queue, MemoryStore, define, drained, job.lastError) and exact output as fact. If any name differs from the real package the credibility play backfires, and the expected 'completed' line omits lastError even though the code would print it if it persists.",
+      "The visual language is generic dev-tool (eyebrow labels, cream plus mono, card grids). Apart from the state diagram it could be any SaaS library's page, and the hero has a large empty band beneath it at desktop."
+    ]
+  },
+  "preference": "B",
+  "confidence": "medium",
+  "reason": "B delivers what the brief literally asks for: a runnable no-server local example, an install command, a lifecycle through retry and failure, and an explicit no-benchmarks note, while A never shows a line of code or how to install. A is the more distinctive and carefully hedged page, but B's broken docs/ link is a one-line fix, whereas A's missing install path is a structural gap."
+}

@@ -1,0 +1,14 @@
+{
+ "queue": {
+  "A": "with",
+  "B": "without"
+ },
+ "gift": {
+  "A": "without",
+  "B": "with"
+ },
+ "renewal": {
+  "A": "without",
+  "B": "with"
+ }
+}

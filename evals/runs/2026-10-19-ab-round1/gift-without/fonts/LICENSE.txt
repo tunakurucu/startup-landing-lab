@@ -1,0 +1,10 @@
+Lora (Lora-Variable.woff, Lora-Italic-Variable.woff)
+
+Copyright 2011 The Lora Project Authors (https://github.com/cyrealtype/Lora-Cyrillic),
+with Reserved Font Name "Lora".
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+The full license text is available at https://openfontlicense.org
+
+The files in this folder are Latin subsets of the original Lora variable fonts,
+converted to WOFF for self-hosting. No other changes were made.

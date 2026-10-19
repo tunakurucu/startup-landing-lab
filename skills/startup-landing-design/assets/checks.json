@@ -701,7 +701,7 @@
  },
  {
   "id": "MB-06",
-  "check": "Dense artifacts are recomposed for phones, not shrunk.",
+  "check": "Dense artifacts are recomposed for phones, not shrunk or removed.",
   "verify": "shot",
   "severity": "block",
   "credit": [
@@ -893,7 +893,7 @@
  },
  {
   "id": "HP-03",
-  "check": "Illustrative interfaces say so on the page.",
+  "check": "Illustrative interfaces and code are labelled right beside them, not in a separate disclaimer section.",
   "verify": "shot",
   "severity": "block",
   "credit": [
@@ -902,7 +902,7 @@
  },
  {
   "id": "HP-04",
-  "check": "The primary action leads somewhere real or produces a visible local result.",
+  "check": "Every action reaches what its label promises (install, docs, a real page or a visible local result).",
   "verify": "record",
   "severity": "block",
   "credit": [
@@ -911,7 +911,7 @@
  },
  {
   "id": "PR-01",
-  "check": "Every screenshot listed as evidence was opened, is not blank and is the width it claims.",
+  "check": "Every screenshot listed was opened, is not blank and is the width it claims, and the signature artifact was captured in each of its states.",
   "verify": "record",
   "severity": "block",
   "credit": [

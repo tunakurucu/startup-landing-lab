@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drumbeat: background jobs for Node</title>
+<meta name="description" content="Drumbeat is an open-source job queue for Node. Move slow work out of the request and see each job's state from enqueue through retry or failure.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="#top" aria-label="Drumbeat home">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="14" width="4" height="4" rx="2"/><rect x="9" y="14" width="4" height="4" rx="2"/><rect x="18" y="14" width="4" height="4" rx="2"/><rect x="26" y="12" width="4" height="8" rx="2" class="brand__beat"/></svg>
+      <span>Drumbeat</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav__links">
+        <li><a href="#lifecycle">Lifecycle</a></li>
+        <li><a href="#try">Try it</a></li>
+        <li><a href="#tradeoffs">Tradeoffs</a></li>
+        <li><a class="nav__docs" href="docs/">Docs</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow">Open-source job queue for Node</p>
+      <h1>Know where every background job is.</h1>
+      <p class="lede">Drumbeat moves slow work out of the request. Each job carries its state (queued, active, retrying, completed or failed) along with its attempt count and the error that put it there.</p>
+      <div class="cta">
+        <a class="btn btn--primary" href="docs/">Read the docs</a>
+        <button class="btn btn--install" type="button" data-copy="npm install drumbeat" aria-label="Copy install command: npm install drumbeat">
+          <span class="btn__prompt" aria-hidden="true">$</span> npm install drumbeat
+          <span class="btn__hint" aria-hidden="true">copy</span>
+        </button>
+      </div>
+      <p class="hero__note">The <a href="#try">local example</a> runs in memory. No server, account or API key.</p>
+    </div>
+
+    <figure class="record" aria-labelledby="record-cap">
+      <figcaption id="record-cap" class="record__head">
+        <span class="mono">job j_7f3a · resize-image</span>
+        <span class="tag tag--completed">completed</span>
+      </figcaption>
+
+      <div class="track" aria-hidden="true">
+        <div class="track__line"></div>
+        <span class="beat beat--queued" style="--x:0%"></span>
+        <span class="beat beat--fail" style="--x:6%"></span>
+        <span class="gap" style="--a:6%;--b:34%">200ms</span>
+        <span class="beat beat--fail" style="--x:34%"></span>
+        <span class="gap" style="--a:34%;--b:90%">400ms</span>
+        <span class="beat beat--done" style="--x:90%"></span>
+      </div>
+
+      <ol class="log">
+        <li><span class="t">0.000</span><span class="s s--queued">queued</span><span class="m">enqueued from POST /uploads</span></li>
+        <li><span class="t">0.012</span><span class="s s--active">active</span><span class="m">attempt 1 of 3</span></li>
+        <li><span class="t">0.040</span><span class="s s--retrying">retrying</span><span class="m">Error: ECONNRESET · next in 200ms</span></li>
+        <li><span class="t">0.240</span><span class="s s--queued">queued</span><span class="m">backoff elapsed</span></li>
+        <li><span class="t">0.241</span><span class="s s--active">active</span><span class="m">attempt 2 of 3</span></li>
+        <li><span class="t">0.268</span><span class="s s--retrying">retrying</span><span class="m">Error: ECONNRESET · next in 400ms</span></li>
+        <li><span class="t">0.668</span><span class="s s--queued">queued</span><span class="m">backoff elapsed</span></li>
+        <li><span class="t">0.669</span><span class="s s--active">active</span><span class="m">attempt 3 of 3</span></li>
+        <li><span class="t">0.703</span><span class="s s--completed">completed</span><span class="m">result stored · 34ms</span></li>
+      </ol>
+      <p class="record__foot">Illustrative record. Times in seconds since enqueue.</p>
+    </figure>
+  </div>
+</section>
+
+<!-- LIFECYCLE -->
+<section class="section" id="lifecycle" aria-labelledby="lifecycle-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow">The lifecycle</p>
+      <h2 id="lifecycle-h">Five states, and only one at a time.</h2>
+      <p class="section__lede">A job is always in exactly one state. Step one through it below: make the handler throw, watch the backoff double, and run out of attempts to see where a failed job ends up.</p>
+    </div>
+
+    <div class="sim" data-sim>
+      <div class="sim__diagram">
+        <svg viewBox="0 0 480 250" role="img" aria-labelledby="diag-title diag-desc" class="diagram">
+          <title id="diag-title">Drumbeat job state diagram</title>
+          <desc id="diag-desc">Queued moves to active when a worker claims the job. Active moves to completed when the handler returns, to retrying when it throws with attempts left, and to failed when it throws with none left. Retrying returns to queued when the backoff elapses.</desc>
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" class="arrowhead"/>
+            </marker>
+          </defs>
+          <g class="edges">
+            <path data-edge="claim" d="M112 110 H188" marker-end="url(#arrow)"/>
+            <path data-edge="return" d="M292 100 L368 58" marker-end="url(#arrow)"/>
+            <path data-edge="fail" d="M292 120 L368 162" marker-end="url(#arrow)"/>
+            <path data-edge="retry" d="M240 132 V188" marker-end="url(#arrow)"/>
+            <path data-edge="due" d="M188 210 H60 V134" marker-end="url(#arrow)"/>
+          </g>
+          <g class="edge-labels">
+            <text x="150" y="100" text-anchor="middle">claimed</text>
+            <text transform="translate(330 79) rotate(-29)" y="-7" text-anchor="middle">returns</text>
+            <text transform="translate(330 141) rotate(29)" y="16" text-anchor="middle">none left</text>
+            <text x="232" y="166" text-anchor="end">throws, retries left</text>
+            <text x="124" y="230" text-anchor="middle">backoff elapses</text>
+          </g>
+          <g class="nodes">
+            <g class="node" data-node="queued"><rect x="10" y="90" width="102" height="42" rx="21"/><text x="61" y="116" text-anchor="middle">queued</text></g>
+            <g class="node" data-node="active"><rect x="190" y="90" width="102" height="42" rx="21"/><text x="241" y="116" text-anchor="middle">active</text></g>
+            <g class="node" data-node="completed"><rect x="370" y="22" width="102" height="42" rx="21"/><text x="421" y="48" text-anchor="middle">completed</text></g>
+            <g class="node" data-node="failed"><rect x="370" y="156" width="102" height="42" rx="21"/><text x="421" y="182" text-anchor="middle">failed</text></g>
+            <g class="node" data-node="retrying"><rect x="190" y="190" width="102" height="42" rx="21"/><text x="241" y="216" text-anchor="middle">retrying</text></g>
+          </g>
+        </svg>
+      </div>
+
+      <div class="sim__panel">
+        <dl class="inspect" aria-label="Job inspector">
+          <div><dt>state</dt><dd><span class="tag" data-out="state">queued</span></dd></div>
+          <div><dt>attempt</dt><dd class="mono" data-out="attempt">0 of 3</dd></div>
+          <div><dt>next run</dt><dd class="mono" data-out="next">when a worker is free</dd></div>
+          <div><dt>last error</dt><dd class="mono" data-out="error">none</dd></div>
+        </dl>
+
+        <div class="sim__actions" data-actions role="group" aria-label="Simulator actions"></div>
+
+        <div class="sim__log">
+          <p class="sim__log-head"><span>events</span><span class="mono" data-out="clock">t = 0ms</span></p>
+          <ol class="log log--sim" data-log aria-live="polite"></ol>
+        </div>
+        <p class="sim__note">Runs in this page only. Policy shown: 3 attempts, exponential backoff starting at 200ms.</p>
+      </div>
+    </div>
+
+    <div class="states">
+      <div class="state"><span class="tag tag--queued">queued</span><p>Stored and waiting for a worker. A retried job returns here when its backoff ends.</p></div>
+      <div class="state"><span class="tag tag--active">active</span><p>Claimed by one worker. Your handler is running and the attempt counter has been incremented.</p></div>
+      <div class="state"><span class="tag tag--retrying">retrying</span><p>The handler threw with attempts remaining. The error is kept and the next run time is set.</p></div>
+      <div class="state"><span class="tag tag--completed">completed</span><p>The handler returned. Terminal. The return value is kept with the job.</p></div>
+      <div class="state"><span class="tag tag--failed">failed</span><p>The last allowed attempt threw. Terminal. The job and its error stay put until you act on them.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRY IT -->
+<section class="section section--alt" id="try" aria-labelledby="try-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow">Try it locally</p>
+      <h2 id="try-h">One file. No Redis, no account, no API key.</h2>
+      <p class="section__lede">This example uses the in-memory store, so nothing leaves your machine and nothing persists after the process exits. The handler fails on purpose twice, then succeeds, so you can watch a retry happen.</p>
+    </div>
+
+    <ol class="steps">
+      <li class="step">
+        <div class="step__label"><span class="step__n">1</span>Make a scratch folder and install</div>
+        <div class="code">
+          <div class="code__bar"><span>terminal</span><button class="code__copy" type="button" data-copy-from="c1">Copy</button></div>
+<pre id="c1"><code>mkdir drumbeat-demo &amp;&amp; cd drumbeat-demo
+npm init -y &amp;&amp; npm install drumbeat</code></pre>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step__label"><span class="step__n">2</span>Save this as <code class="inline">retry-demo.mjs</code></div>
+        <div class="code">
+          <div class="code__bar"><span>retry-demo.mjs</span><button class="code__copy" type="button" data-copy-from="c2">Copy</button></div>
+<pre id="c2"><code data-lang="js">// Runs entirely in memory. Nothing is sent anywhere.
+import { Queue, MemoryStore } from 'drumbeat';
+
+const queue = new Queue({ store: new MemoryStore() });
+
+let calls = 0;
+queue.define('flaky', async (job) =&gt; {
+  calls += 1;
+  // Simulate a transient error on the first two attempts.
+  if (calls &lt; 3) throw new Error(`simulated failure ${calls}`);
+  return { ok: true, input: job.data };
+}, { attempts: 3, backoff: { type: 'exponential', delay: 200 } });
+
+for (const event of ['active', 'retrying', 'completed', 'failed']) {
+  queue.on(event, (job) =&gt; {
+    console.log(event.padEnd(10), `attempt ${job.attempt}/${job.maxAttempts}`,
+      job.lastError?.message ?? '');
+  });
+}
+
+await queue.start();
+await queue.enqueue('flaky', { n: 1 });
+await queue.drained();
+await queue.stop();</code></pre>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step__label"><span class="step__n">3</span>Run it</div>
+        <div class="code">
+          <div class="code__bar"><span>terminal</span><button class="code__copy" type="button" data-copy-from="c3">Copy</button></div>
+<pre id="c3"><code>node retry-demo.mjs</code></pre>
+        </div>
+        <div class="code code--out">
+          <div class="code__bar"><span>expected output</span></div>
+<pre><code>active     attempt 1/3
+retrying   attempt 1/3 simulated failure 1
+active     attempt 2/3
+retrying   attempt 2/3 simulated failure 2
+active     attempt 3/3
+completed  attempt 3/3</code></pre>
+        </div>
+        <p class="step__tip">Change <code class="inline">calls &lt; 3</code> to <code class="inline">calls &lt; 5</code> and run it again. The third attempt throws and the job ends in <span class="tag tag--failed tag--sm">failed</span>.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- TRADEOFFS -->
+<section class="section" id="tradeoffs" aria-labelledby="trade-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow">Before you adopt it</p>
+      <h2 id="trade-h">What to plan for.</h2>
+      <p class="section__lede">A queue changes how failures show up in your system. These are the behaviours worth designing around on day one.</p>
+    </div>
+
+    <div class="notes">
+      <article class="note">
+        <h3>Handlers can run more than once</h3>
+        <p>If a worker dies mid-attempt, the job is retried. Write handlers so a repeat is harmless: check before you charge, upsert instead of insert.</p>
+      </article>
+      <article class="note">
+        <h3>The memory store is for development</h3>
+        <p>It makes the example above work with zero setup, and it loses every job on restart. Use a persistent store in production; the docs list which ones are supported.</p>
+      </article>
+      <article class="note">
+        <h3>Retry policy lives with the job</h3>
+        <p>Attempts and backoff are set where you define a job, so a payment webhook and a thumbnail resize can fail differently.</p>
+      </article>
+      <article class="note">
+        <h3>Failed jobs wait for you</h3>
+        <p>A failed job keeps its data and last error. Nothing re-runs it automatically. You inspect it, fix the cause, and re-enqueue.</p>
+      </article>
+      <article class="note note--wide">
+        <h3>No throughput numbers on this page</h3>
+        <p>We haven't published benchmarks, so we won't quote jobs per second. Throughput depends on your store, payload size and handler. Measure on your own workload before you size workers.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FIT -->
+<section class="section section--alt" id="fit" aria-labelledby="fit-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow">Where to start</p>
+      <h2 id="fit-h">Start with one app. Read further before you run it for many.</h2>
+    </div>
+    <div class="paths">
+      <div class="path">
+        <h3>Adding jobs to your app</h3>
+        <p>Run the local example, then move one slow call (an email, an export, a webhook) behind <code class="inline">enqueue</code>. Keep the memory store until you deploy.</p>
+        <a class="link" href="#try">Run the example <span aria-hidden="true">&rarr;</span></a>
+      </div>
+      <div class="path">
+        <h3>Running queues for other teams</h3>
+        <p>Read the lifecycle and failure-handling docs first. Decide who owns failed jobs, which events you export to your monitoring, and which store you will operate.</p>
+        <a class="link" href="docs/">Read the docs <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" aria-labelledby="final-h">
+  <div class="wrap final__inner">
+    <h2 id="final-h">Read the docs, then decide.</h2>
+    <p>Drumbeat is open source. The docs cover every state, event and retry option shown on this page.</p>
+    <div class="cta cta--center">
+      <a class="btn btn--primary" href="docs/">Read the docs</a>
+      <button class="btn btn--install" type="button" data-copy="npm install drumbeat" aria-label="Copy install command: npm install drumbeat">
+        <span class="btn__prompt" aria-hidden="true">$</span> npm install drumbeat
+        <span class="btn__hint" aria-hidden="true">copy</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <span class="brand brand--sm"><svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="14" width="4" height="4" rx="2"/><rect x="9" y="14" width="4" height="4" rx="2"/><rect x="18" y="14" width="4" height="4" rx="2"/><rect x="26" y="12" width="4" height="8" rx="2" class="brand__beat"/></svg>Drumbeat</span>
+    <ul class="footer__links">
+      <li><a href="docs/">Docs</a></li>
+      <li><a href="#lifecycle">Lifecycle</a></li>
+      <li><a href="#try">Local example</a></li>
+    </ul>
+    <p class="footer__meta">Open-source background jobs for Node.</p>
+  </div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite" data-toast></div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Drumbeat · background jobs for Node</title>
+<meta name="description" content="Drumbeat is an open-source job queue for Node. Move slow work out of the request and follow each job from enqueue through retry or failure.">
+<meta name="theme-color" content="#f2f3f5">
+<link rel="icon" href="mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap head-row">
+    <a class="wordmark" href="#top" aria-label="Drumbeat, back to top">
+      <svg class="mark" viewBox="0 0 40 20" width="40" height="20" aria-hidden="true" focusable="false"><rect x="1" y="3" width="3" height="14"/><rect x="7" y="3" width="3" height="14"/><rect x="15" y="3" width="3" height="14"/><rect x="28" y="3" width="3" height="14"/></svg>
+      <span>Drumbeat</span>
+    </a>
+    <nav aria-label="Page sections">
+      <ul class="nav">
+        <li><a href="#trace">Ledger</a></li>
+        <li><a href="#docs">Lifecycle</a></li>
+        <li><a href="#limits">Limits</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero-copy">
+        <h1 id="hero-title">Get slow work out of the request. Know where it went.</h1>
+        <div class="hero-side">
+          <p class="lede">Drumbeat is an open-source job queue for Node. Your handler enqueues the email, export or webhook and answers right away; the job then runs, waits to retry or fails in states you can follow from start to finish.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#docs">Read the lifecycle docs</a>
+            <a class="btn btn-quiet" href="#trace">Read the job ledger</a>
+          </div>
+        </div>
+      </div>
+
+      <figure class="rail" aria-labelledby="rail-cap">
+        <figcaption id="rail-cap" class="rail-cap">
+          <span class="rail-title">One job, step by step</span>
+          <span class="model-note">Illustrative model running in your browser · not Drumbeat itself · 4 attempts, 2 s backoff doubling</span>
+        </figcaption>
+
+        <div class="controls">
+          <fieldset class="scenarios">
+            <legend>Scenario</legend>
+            <label><input type="radio" name="scenario" value="first"><span>Succeeds first try</span></label>
+            <label><input type="radio" name="scenario" value="recovers" checked><span>Recovers on attempt 3</span></label>
+            <label><input type="radio" name="scenario" value="exhausts"><span>Runs out of attempts</span></label>
+          </fieldset>
+          <div class="stepper">
+            <button type="button" class="btn-step" id="step-prev" aria-disabled="false">Previous event</button>
+            <button type="button" class="btn-step btn-step-main" id="step-next" aria-disabled="true">Next event</button>
+            <button type="button" class="btn-step" id="step-restart">Back to enqueue</button>
+            <span class="step-count" id="step-count">Event 8 of 8</span>
+          </div>
+        </div>
+
+        <div class="rail-h" id="rail-h"><!--prerender:railH--><div class="axis" aria-hidden="true"><span class="tick" style="--x:0.000%"><span>0 s</span></span><span class="tick" style="--x:12.500%"><span>2 s</span></span><span class="tick" style="--x:25.000%"><span>4 s</span></span><span class="tick" style="--x:37.500%"><span>6 s</span></span><span class="tick" style="--x:50.000%"><span>8 s</span></span><span class="tick" style="--x:62.500%"><span>10 s</span></span><span class="tick" style="--x:75.000%"><span>12 s</span></span><span class="tick" style="--x:87.500%"><span>14 s</span></span><span class="tick" style="--x:100.000%"><span>16 s</span></span></div><div class="lanes"><div class="lane"><span class="lane-name">request</span><div class="lane-track"><span class="req-bar" style="--x:0%;--w:0.025%"></span><span class="lane-note" style="--x:0.025%">answered at 4 ms, job still queued</span></div></div><div class="lane"><span class="lane-name">job 0412</span><div class="lane-track"><span class="seg seg-queued" style="--x:0%;--w:0.188%"></span><span class="seg seg-attempt s-failed" style="--x:0.188%;--w:2.375%"><span class="seg-num">#1</span></span><span class="seg seg-wait" style="--x:2.563%;--w:12.500%"><span class="wait-label">wait 2 s</span></span><span class="seg seg-attempt s-failed" style="--x:15.063%;--w:2.375%"><span class="seg-num">#2</span></span><span class="seg seg-wait" style="--x:17.438%;--w:25.000%"><span class="wait-label">wait 4 s</span></span><span class="seg seg-attempt s-done" style="--x:42.438%;--w:3.500%"><span class="seg-num">#3</span></span><span class="flag s-done" style="--x:45.938%">done</span></div></div><div class="playhead-track" aria-hidden="true"><span class="playhead" style="--x:45.938"></span></div></div><!--/prerender:railH--></div>
+
+        <dl class="readout" id="readout"><!--prerender:readout--><div><dt>Time</dt><dd>7.35 s</dd></div><div><dt>State</dt><dd><span class="chip s-done">done</span></dd></div><div><dt>Attempt</dt><dd>3 of 4</dd></div><div><dt>Next run</dt><dd>—</dd></div><div><dt>Last error</dt><dd>ECONNRESET from mail provider</dd></div><!--/prerender:readout--></dl>
+        <p class="trace-status" id="trace-status" role="status" aria-live="polite"><!--prerender:status-->Recovers on attempt 3, event 8 of 8 at 7.35 s: Attempt 3 completed. Job state: done.<!--/prerender:status--></p>
+
+        <div class="ledger-wrap" id="trace">
+          <div class="ledger-intro">
+            <h2 id="ledger-title">One job ID on every attempt.</h2>
+            <p>The same trace as a ledger you can read line by line. Each retry keeps job 0412, so the second error sits under the first instead of looking like a new job. Every line answers which attempt, what it threw, when it runs again and the state it leaves the job in.</p>
+            <p class="small">The line format is this page’s model, not Drumbeat’s log output.</p>
+          </div>
+          <ol class="ledger" id="ledger" aria-labelledby="ledger-title"><!--prerender:ledger--><li class="row"><span class="c-t">0.000 s</span><span class="c-id">job 0412</span><span class="c-ev"><strong>Enqueued send-receipt as job 0412</strong><span class="c-detail">Payload { order: &quot;ord_1042&quot;, to: &quot;buyer@shop.example&quot; }</span></span><span class="c-state"><span class="chip s-queued">queued</span></span></li><li class="row"><span class="c-t">0.004 s</span><span class="c-id">request</span><span class="c-ev"><strong>Request answered</strong><span class="c-detail">The checkout handler returned 202 without waiting for the email.</span></span><span class="c-state"><span class="chip s-queued">queued</span></span></li><li class="row"><span class="c-t">0.030 s</span><span class="c-id">job 0412 · #1</span><span class="c-ev"><strong>Attempt 1 of 4 started</strong><span class="c-detail">A worker picked up job 0412.</span></span><span class="c-state"><span class="chip s-running">running</span></span></li><li class="row"><span class="c-t">0.410 s</span><span class="c-id">job 0412 · #1</span><span class="c-ev"><strong>Attempt 1 threw SMTP 451: temporary local error</strong><span class="c-detail">Attempt 2 scheduled for 2.41 s, after waiting 2 s.</span></span><span class="c-state"><span class="chip s-waiting">waiting to retry</span></span></li><li class="gap" style="--gap:44px"><span>waits 2 s</span></li><li class="row"><span class="c-t">2.41 s</span><span class="c-id">job 0412 · #2</span><span class="c-ev"><strong>Attempt 2 of 4 started</strong><span class="c-detail">A worker picked up job 0412.</span></span><span class="c-state"><span class="chip s-running">running</span></span></li><li class="row"><span class="c-t">2.79 s</span><span class="c-id">job 0412 · #2</span><span class="c-ev"><strong>Attempt 2 threw ECONNRESET from mail provider</strong><span class="c-detail">Attempt 3 scheduled for 6.79 s, after waiting 4 s.</span></span><span class="c-state"><span class="chip s-waiting">waiting to retry</span></span></li><li class="gap" style="--gap:68px"><span>waits 4 s</span></li><li class="row"><span class="c-t">6.79 s</span><span class="c-id">job 0412 · #3</span><span class="c-ev"><strong>Attempt 3 of 4 started</strong><span class="c-detail">A worker picked up job 0412.</span></span><span class="c-state"><span class="chip s-running">running</span></span></li><li class="row is-current" aria-current="step"><span class="c-t">7.35 s</span><span class="c-id">job 0412 · #3</span><span class="c-ev"><strong>Attempt 3 completed</strong><span class="c-detail">Receipt handed to the mail provider. Job 0412 is done.</span></span><span class="c-state"><span class="chip s-done">done</span></span></li><!--/prerender:ledger--></ol>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="ref-sec" id="docs" aria-labelledby="ref-title">
+    <div class="wrap">
+      <div class="ref-head">
+        <h2 id="ref-title">Lifecycle reference</h2>
+        <p>Five states, and what moves a job between them. Read this before you write a handler: the last column is what to check when a job stops where you didn’t expect.</p>
+        <p class="path" aria-label="Transitions"><code>queued → running → done</code><code>running → waiting to retry → running</code><code>running → failed</code></p>
+      </div>
+      <div class="ref-table" role="table" aria-label="Job states">
+        <div class="ref-row ref-th" role="row">
+          <span role="columnheader">State</span><span role="columnheader">A job enters when</span><span role="columnheader">It leaves when</span><span role="columnheader">What to check</span>
+        </div>
+        <div class="ref-row" role="row">
+          <span role="rowheader"><span class="chip s-queued">queued</span></span>
+          <span role="cell">Your code enqueues it. The request can answer straight away.</span>
+          <span role="cell">A worker picks it up.</span>
+          <span role="cell">How long jobs sit here. A growing wait means work arrives faster than workers take it.</span>
+        </div>
+        <div class="ref-row" role="row">
+          <span role="rowheader"><span class="chip s-running">running</span></span>
+          <span role="cell">A worker starts an attempt and calls your handler.</span>
+          <span role="cell">The handler resolves, or throws.</span>
+          <span role="cell">That the handler is safe to run twice. A retry repeats the whole attempt, so send-once side effects need a guard.</span>
+        </div>
+        <div class="ref-row" role="row">
+          <span role="rowheader"><span class="chip s-waiting">waiting to retry</span></span>
+          <span role="cell">An attempt throws and attempts remain.</span>
+          <span role="cell">Its backoff wait passes and it runs again.</span>
+          <span role="cell">The last error and the next run time. Waits grow each time, so a stuck dependency gets room to recover.</span>
+        </div>
+        <div class="ref-row" role="row">
+          <span role="rowheader"><span class="chip s-done">done</span></span>
+          <span role="cell">An attempt resolves.</span>
+          <span role="cell">It doesn’t; done is final.</span>
+          <span role="cell">Nothing, unless the handler resolved without doing its work.</span>
+        </div>
+        <div class="ref-row" role="row">
+          <span role="rowheader"><span class="chip s-failed">failed</span></span>
+          <span role="cell">The last allowed attempt throws.</span>
+          <span role="cell">It doesn’t on its own; failed is final.</span>
+          <span role="cell">Every attempt’s error, the cause, and whether to enqueue the work again once it is fixed.</span>
+        </div>
+      </div>
+      <p class="small ref-note">These are the states this page models. Option names, defaults and exact state names belong to Drumbeat’s API reference; check them there before you depend on them.</p>
+    </div>
+  </section>
+
+  <section class="limits-sec" id="limits" aria-labelledby="limits-title">
+    <div class="wrap limits-grid">
+      <div>
+        <h2 id="limits-title">What this page doesn’t claim</h2>
+        <ul class="limits">
+          <li><strong>Throughput.</strong> No benchmarks have been published, so there are no jobs-per-second figures here. Measure with your own handlers and storage.</li>
+          <li><strong>The timings.</strong> 4 ms, 2 s, 4 s and four attempts are example values for the model, chosen to make the rhythm visible.</li>
+          <li><strong>The trace itself.</strong> It runs in your browser with no server, account or API key, and sends nothing anywhere. It shows the lifecycle, not the library executing.</li>
+        </ul>
+      </div>
+      <div class="checklists">
+        <h3>Before you install</h3>
+        <div class="check-cols">
+          <div>
+            <h4>If it runs inside your own app</h4>
+            <ul>
+              <li>Which of your handlers can safely run twice</li>
+              <li>How many attempts each kind of job deserves</li>
+              <li>Where you will look when a job is failed</li>
+            </ul>
+          </div>
+          <div>
+            <h4>If you run it for other teams</h4>
+            <ul>
+              <li>How you will see queue depth and time spent queued</li>
+              <li>What alerts on failed jobs, and who it pages</li>
+              <li>What happens to running jobs during a deploy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="close-sec" aria-labelledby="close-title">
+    <div class="wrap close-row">
+      <h2 id="close-title">Start with the five states.</h2>
+      <div class="actions">
+        <a class="btn btn-primary" href="#docs">Read the lifecycle docs</a>
+        <a class="btn btn-quiet" href="#trace">Read the job ledger</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-row">
+    <p><strong>Drumbeat</strong> is an open-source background job queue for Node.</p>
+    <ul class="foot-links">
+      <li><a href="#top">Trace</a></li>
+      <li><a href="#trace">Ledger</a></li>
+      <li><a href="#docs">Lifecycle reference</a></li>
+      <li><a href="#limits">Limits</a></li>
+      <li><a href="fonts/LICENSES.txt">Font licences</a></li>
+    </ul>
+    <p class="small">Job IDs, payloads, errors and timings on this page are illustrative. The trace runs in your browser and makes no network requests.</p>
+  </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Poolday · Go in on one gift together</title>
+<meta name="description" content="Poolday is an early idea for friends buying one present together: one person starts the gift, everyone adds what they can, and the organizer sees what's still needed.">
+<meta name="theme-color" content="#2a1130">
+<link rel="icon" href="poolday-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="poolday.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head" id="top">
+  <div class="wrap head-row">
+    <a class="brand" href="#top" aria-label="Poolday, back to top">
+      <svg class="brand-mark" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><path d="M6 9.5 13.5 3h12.5v26H13.5L6 22.5z" fill="#FFF9F2"/><circle cx="12" cy="16" r="2.6" fill="#2A1130"/><path d="M18 11h5M18 16h5M18 21h3" stroke="#2A1130" stroke-width="2" stroke-linecap="round"/></svg>
+      <span>Poolday</span>
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <a href="#how">How a pool runs</a>
+      <a href="#scope">What's not decided</a>
+      <a class="nav-cta" href="#start">Start a practice pool</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 id="hero-title">Go in on one gift, together.</h1>
+        <p class="lede">Poolday is for friends buying a single present as a group. One of you starts the gift, everyone else adds what they can, and the organizer always sees what’s still needed, so nobody fronts the whole thing and chases people for weeks.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#start">Start a practice pool</a>
+          <a class="text-link" href="#how">See how a pool runs</a>
+        </div>
+        <p class="hero-note">Poolday is an early idea. Everything on this page runs in your browser tab: no sign-up, no card details, no money moves.</p>
+      </div>
+
+      <div class="hero-artifact" id="start">
+        <div class="modes" role="group" aria-label="Try Poolday in this tab">
+          <button class="mode" type="button" data-mode="example" aria-pressed="true">Add to Maya’s gift</button>
+          <button class="mode" type="button" data-mode="start" aria-pressed="false">Start a practice pool</button>
+        </div>
+        <p class="artifact-label" data-mode-label>You’re one of Maya’s friends. Sign the tag and add what you can.</p>
+        <article class="tag" id="example" aria-label="Gift tag">
+          <svg class="tag-string" viewBox="0 0 40 68" width="40" height="68" aria-hidden="true"><path d="M20 66 C 6 46, 34 24, 12 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+          <span class="tag-hole" aria-hidden="true"></span>
+          <div class="tag-body">
+            <div class="pool-view" data-pool-view>
+              <p class="tag-for"><span class="tag-k">For</span> <strong data-for>Maya</strong>, <span data-occ>turning 30 on Saturday</span></p>
+              <h2 class="tag-gift" data-gift>The ceramic pour-over set she keeps sending everyone links to</h2>
+              <div class="ribbon">
+                <div class="ribbon-track" aria-hidden="true"><span class="ribbon-fill" data-fill></span></div>
+                <dl class="ribbon-figures">
+                  <div><dt>Gift price</dt><dd data-price>$180</dd></div>
+                  <div><dt>In so far</dt><dd data-in>$100</dd></div>
+                  <div class="need" data-need-box><dt data-need-label>Still needed</dt><dd data-need>$80</dd></div>
+                </dl>
+              </div>
+              <ol class="signatures" data-sigs aria-label="Who has added">
+                <li><span class="sig-name">Jonah</span><span class="sig-note">Started this. Happy 30th, M!</span><span class="sig-amt">$40</span></li>
+                <li><span class="sig-name">Priya</span><span class="sig-note">For all the mornings you made us coffee</span><span class="sig-amt">$35</span></li>
+                <li><span class="sig-name">Sam</span><span class="sig-note">in!!</span><span class="sig-amt">$25</span></li>
+              </ol>
+
+              <form class="sign-line" data-add-form novalidate>
+                <p class="sign-title" data-sign-title>Your line on the tag</p>
+                <div class="field f-name">
+                  <label for="ex-name">Your name</label>
+                  <input id="ex-name" name="name" type="text" autocomplete="off" maxlength="24" placeholder="e.g. Alex">
+                </div>
+                <fieldset class="field amounts">
+                  <legend>Add</legend>
+                  <div class="chips">
+                    <label class="chip"><input type="radio" name="amount" value="10"><span>$10</span></label>
+                    <label class="chip"><input type="radio" name="amount" value="20" checked><span>$20</span></label>
+                    <label class="chip"><input type="radio" name="amount" value="40"><span>$40</span></label>
+                    <label class="chip"><input type="radio" name="amount" value="other"><span>Other</span></label>
+                    <label class="other-amt" for="ex-other"><span class="sr">Other amount in dollars</span><span class="cur" aria-hidden="true">$</span><input id="ex-other" name="other" type="number" inputmode="decimal" min="1" max="2000" step="1" placeholder="15"></label>
+                  </div>
+                </fieldset>
+                <div class="field f-note">
+                  <label for="ex-note"><span data-note-label>A line for Maya</span> <span class="opt">(optional)</span></label>
+                  <input id="ex-note" name="note" type="text" maxlength="60" autocomplete="off" placeholder="Happy birthday!">
+                </div>
+                <div class="sign-actions">
+                  <button class="btn btn-ink" type="submit" data-add-btn>Add to Maya’s gift</button>
+                  <button class="btn-quiet" type="button" data-reset>Reset example</button>
+                </div>
+              </form>
+              <p class="tag-foot" data-foot>Example pool. Maya, Jonah, Priya and Sam are made up, and so are the amounts.</p>
+            </div>
+
+            <form class="start-form" data-start-form novalidate hidden>
+              <p class="sign-title">A new tag. Fill in a real occasion if you have one coming up.</p>
+              <div class="field">
+                <label for="st-for">Who’s it for?</label>
+                <input id="st-for" name="for" type="text" maxlength="24" autocomplete="off" placeholder="e.g. Dan">
+              </div>
+              <div class="field">
+                <label for="st-occ">What’s the occasion? <span class="opt">(optional)</span></label>
+                <input id="st-occ" name="occasion" type="text" maxlength="40" autocomplete="off" placeholder="e.g. leaving for Lisbon">
+              </div>
+              <div class="field span">
+                <label for="st-gift">The gift</label>
+                <input id="st-gift" name="gift" type="text" maxlength="70" autocomplete="off" placeholder="e.g. a proper rain jacket">
+              </div>
+              <div class="field">
+                <label for="st-price">Price, in dollars</label>
+                <input id="st-price" name="price" type="number" inputmode="decimal" min="1" max="10000" step="1" placeholder="240">
+              </div>
+              <div class="field">
+                <label for="st-own">Your own share <span class="opt">(optional)</span></label>
+                <input id="st-own" name="own" type="number" inputmode="decimal" min="0" max="10000" step="1" placeholder="40">
+              </div>
+              <div class="field span">
+                <label for="st-name">Your name</label>
+                <input id="st-name" name="organizer" type="text" maxlength="24" autocomplete="off" placeholder="e.g. Rosa">
+              </div>
+              <div class="sign-actions">
+                <button class="btn btn-ink" type="submit">Make the tag</button>
+                <button class="btn-quiet" type="button" data-back>Cancel</button>
+              </div>
+            </form>
+            <p class="status" role="status" aria-live="polite" data-status></p>
+          </div>
+        </article>
+
+        <div class="organizer" data-organizer hidden>
+          <div class="org-block">
+            <h3>The message you’d send</h3>
+            <p class="msg-box" data-msg></p>
+            <div class="msg-actions">
+              <button class="btn-line" type="button" data-copy>Copy message</button>
+              <p class="status small" role="status" aria-live="polite" data-copy-status></p>
+            </div>
+          </div>
+          <div class="org-block">
+            <h3>What you’d keep an eye on</h3>
+            <p><strong data-need-2></strong> still needed. If you ask
+              <label class="inline-num" for="st-friends"><span class="sr">number of friends</span><input id="st-friends" type="number" min="1" max="40" step="1" value="4"></label>
+              friends and they all add the same, that’s <strong data-each></strong> each. In a pool people add what they can, so treat that as a suggestion for the message.</p>
+            <button class="btn-quiet on-plum" type="button" data-restart>Start a different tag</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="how-head">
+        <h2 id="how-title">How a pool runs</h2>
+        <p>Three moments, in order. The same gift tag is the thing everyone looks at; the money question never turns into a group-chat thread.</p>
+      </div>
+      <ol class="steps">
+        <li class="step">
+          <span class="step-n" aria-hidden="true">1</span>
+          <h3>Someone starts the gift</h3>
+          <p>The organizer names who it’s for, what the present is and what it costs. Nobody has to pay it all upfront.</p>
+          <div class="mini mini-start" aria-hidden="true">
+            <span class="mini-for">For Maya · turning 30</span>
+            <span class="mini-gift">Ceramic pour-over set</span>
+            <span class="mini-bar"><i style="transform:scaleX(0)"></i></span>
+            <span class="mini-row"><b>$0</b> in · <b>$180</b> to go</span>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-n" aria-hidden="true">2</span>
+          <h3>Friends add what they can</h3>
+          <p>One link goes into the group chat. Each friend opens it, adds an amount that works for them and leaves a line for the card.</p>
+          <div class="mini mini-msg" aria-hidden="true">
+            <span class="msg-who">Jonah, in the “Maya’s 30th” group chat</span>
+            <span class="msg-text">Going in on the pour-over set for Maya. Add what you can, it’s $180 total. poolday.example/maya-30</span>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-n" aria-hidden="true">3</span>
+          <h3>The organizer sees what’s left</h3>
+          <p>The tag always shows how much is in and how much is still needed, so the organizer knows whether to nudge, top up, or just go and buy it.</p>
+          <div class="mini mini-left" aria-hidden="true">
+            <span class="mini-for">For Maya · 5 friends in</span>
+            <span class="mini-bar"><i style="transform:scaleX(.78)"></i></span>
+            <span class="mini-row"><b>$140</b> in · <b class="hl">$40 still needed</b></span>
+          </div>
+        </li>
+      </ol>
+      <p class="how-foot">The link and message above are illustrative; <span class="nowrap">poolday.example</span> is a reserved example address, not a live page.</p>
+    </div>
+  </section>
+
+  <section class="scope" id="scope" aria-labelledby="scope-title">
+    <div class="wrap scope-wrap">
+      <h2 id="scope-title">What’s not decided yet</h2>
+      <p>Poolday hasn’t run a real pool. There are no reviews to show and no totals to report, so this page doesn’t pretend otherwise. A few things are still open, and they matter:</p>
+      <ul class="open-list">
+        <li><strong>How the money moves.</strong> Who holds it, when it’s paid out and to whom isn’t settled, which is why no example here asks for a card.</li>
+        <li><strong>Who sees which amounts.</strong> The example shows everyone’s amount on the tag. Whether friends see each other’s, or only the organizer does, is undecided.</li>
+        <li><strong>Fees.</strong> Not set. There is no pricing on this page because there isn’t any yet.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <div class="foot-main">
+      <p class="foot-line">One present. Everyone who wants to be in on it, is.</p>
+      <a class="btn btn-primary" href="#start">Start a practice pool</a>
+    </div>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="#example">Add to the example gift</a>
+      <a href="#how">How a pool runs</a>
+      <a href="#scope">What’s not decided</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <p class="foot-small">Poolday is an early product idea, not a payment service. Names and amounts on this page are examples. Fonts: Bricolage Grotesque and Lora, both under the SIL Open Font License (<a href="fonts/OFL-bricolage-grotesque.txt">licence</a>, <a href="fonts/OFL-lora.txt">licence</a>).</p>
+  </div>
+</footer>
+
+<script src="poolday.js"></script>
+</body>
+</html>

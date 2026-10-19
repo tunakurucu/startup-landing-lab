@@ -118,7 +118,7 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | MB-03 | Every other control is at least 24px tall. | auto | block | GST VWG |
 | MB-04 | Inputs use at least 16px text, so phones do not zoom on focus. | auto | warn | EK VWG |
 | MB-05 | If the nav collapses on phones, a working menu control replaces it. | auto | block | GST |
-| MB-06 | Dense artifacts are recomposed for phones, not shrunk. | shot | block | SLL |
+| MB-06 | Dense artifacts are recomposed for phones, not shrunk or removed. | shot | block | SLL |
 | MB-07 | Fixed or full-bleed elements respect safe-area insets. | code | warn | VWG EK |
 | MB-08 | At 200% zoom (720px at 2×) the page still has no horizontal scroll. | auto | warn | VWG |
 
@@ -154,14 +154,14 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | --- | --- | --- | --- | --- |
 | HP-01 | No customer logos or testimonials that were not supplied and verified. | record | block | SLL GST |
 | HP-02 | Every number has a source or is labelled illustrative. | record | block | SLL |
-| HP-03 | Illustrative interfaces say so on the page. | shot | block | SLL |
-| HP-04 | The primary action leads somewhere real or produces a visible local result. | record | block | SLL |
+| HP-03 | Illustrative interfaces and code are labelled right beside them, not in a separate disclaimer section. | shot | block | SLL |
+| HP-04 | Every action reaches what its label promises (install, docs, a real page or a visible local result). | record | block | SLL |
 
 ## Process
 
 | ID | Check | Verify | Severity | Credit |
 | --- | --- | --- | --- | --- |
-| PR-01 | Every screenshot listed as evidence was opened, is not blank and is the width it claims. | record | block | IMP |
+| PR-01 | Every screenshot listed was opened, is not blank and is the width it claims, and the signature artifact was captured in each of its states. | record | block | IMP |
 | PR-02 | One structural revision was made after rendering, with before and after evidence and the hero rescored. | record | block | SLL GST |
 | PR-03 | Every decorative element left on the page has a named job; ones without a job were removed and are listed. | record | warn | MT |
 | PR-04 | The status line is DONE only if nothing above is unverified or unavailable; otherwise it names what is. | record | block | GST IMP ASC |

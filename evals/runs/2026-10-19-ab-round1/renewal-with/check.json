@@ -1,0 +1,524 @@
+{
+  "status": "ran",
+  "target": "http://127.0.0.1:47391/index.html",
+  "checked_on": "2026-10-19",
+  "checks": [
+    {
+      "id": "HR-01",
+      "check": "The headline and primary action are visible without scrolling at 1440×900 and 390×844.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "at": "390×844",
+        "h1_top": 101,
+        "first_action_top": -64
+      }
+    },
+    {
+      "id": "TY-01",
+      "check": "Exactly one h1.",
+      "severity": "block",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "id": "TY-02",
+      "check": "Heading levels never skip (no h1 → h3).",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "TY-03",
+      "check": "The h1 and the first h2 are each at least 1.25× the body size.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "h1_to_body": 2.02,
+        "h2_to_body": 1.6
+      }
+    },
+    {
+      "id": "TY-04",
+      "check": "At least two font weights carry the hierarchy.",
+      "severity": "block",
+      "pass": true,
+      "detail": [
+        400,
+        700
+      ]
+    },
+    {
+      "id": "TY-05",
+      "check": "Headline letter-spacing is no tighter than −0.04em.",
+      "severity": "block",
+      "pass": true,
+      "detail": "-0.012em"
+    },
+    {
+      "id": "TY-06",
+      "check": "Text above 14px is not tracked wider than 0.12em, and no paragraph is set in all caps.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "wideTracked": [],
+        "allCapsParagraphs": 0
+      }
+    },
+    {
+      "id": "TY-07",
+      "check": "Body text is at least 16px on phones.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "19px"
+    },
+    {
+      "id": "TY-08",
+      "check": "No readable text below 11px.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "TY-10",
+      "check": "Body line-height is at least 1.35.",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "TY-11",
+      "check": "Weights under 400 appear only at 28px and up; smaller text is 400 or heavier.",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "LY-01",
+      "check": "No horizontal scroll at 390px.",
+      "severity": "block",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "LY-03",
+      "check": "No text is cut off by its container.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "LY-04",
+      "check": "Body text keeps at least 12px from the screen edge on phones.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "MO-02",
+      "check": "After loading and one scroll, no text is still invisible.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "share": "0%",
+        "sample": []
+      }
+    },
+    {
+      "id": "MO-03",
+      "check": "No transition: all.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "MB-01",
+      "check": "The viewport meta never disables zoom.",
+      "severity": "block",
+      "pass": true,
+      "detail": "width=device-width, initial-scale=1"
+    },
+    {
+      "id": "MB-02",
+      "check": "Header, nav and boxed buttons are at least 44px tall.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "MB-03",
+      "check": "Every other control is at least 24px tall.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "MB-04",
+      "check": "Inputs use at least 16px text, so phones do not zoom on focus.",
+      "severity": "warn",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "id": "AX-01",
+      "check": "Every link and button has an accessible name.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-02",
+      "check": "Every image has alt text, empty only when decorative.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-03",
+      "check": "Decorative SVGs are hidden from assistive tech; meaningful ones are labelled.",
+      "severity": "warn",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "id": "AX-05",
+      "check": "Nothing is clickable without being a link or button.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-06",
+      "check": "Every form control has a label.",
+      "severity": "block",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "id": "AX-07",
+      "check": "The page has a main landmark.",
+      "severity": "warn",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "AX-08",
+      "check": "The html element declares a language.",
+      "severity": "block",
+      "pass": true,
+      "detail": "en"
+    },
+    {
+      "id": "AX-09",
+      "check": "No script errors or console errors while loading.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-10",
+      "check": "Links point somewhere real: no empty href, \"#\" or missing anchor or file.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "empty": [],
+        "missing_anchor": [],
+        "missing_file": []
+      }
+    },
+    {
+      "id": "AX-11",
+      "check": "No broken images.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "PF-01",
+      "check": "Images declare width and height, or an aspect-ratio.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 unsized"
+    },
+    {
+      "id": "PF-02",
+      "check": "Images below the first screen load lazily.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 eager below the fold"
+    },
+    {
+      "id": "MB-05",
+      "check": "If the nav collapses on phones, a working menu control replaces it.",
+      "severity": "block",
+      "pass": true,
+      "detail": "menu control reveals the navigation"
+    },
+    {
+      "id": "AX-04",
+      "check": "Every focusable control looks different when focused from the keyboard.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "CO-01",
+      "check": "Text meets WCAG AA contrast (4.5:1, or 3:1 for large text).",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "HR-04",
+      "check": "A headline above about 6.5rem is the signature of the page and keeps each line to three words or fewer.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "h1_px": 64,
+        "words": 8,
+        "lines": 4
+      }
+    },
+    {
+      "id": "HR-05",
+      "check": "The primary action names what the visitor will do, not \"Get started\" or \"Learn more\" alone.",
+      "severity": "warn",
+      "pass": true,
+      "detail": [
+        "skip to content",
+        "request a consultation"
+      ]
+    },
+    {
+      "id": "PS-06",
+      "check": "There is one primary action, worded the same wherever it appears.",
+      "severity": "warn",
+      "pass": true,
+      "detail": [
+        "skip to content",
+        "request a consultation"
+      ]
+    },
+    {
+      "id": "TY-09",
+      "check": "Body paragraphs stay under about 80 characters per line.",
+      "severity": "warn",
+      "pass": true,
+      "detail": [
+        46,
+        51
+      ]
+    },
+    {
+      "id": "TY-12",
+      "check": "A display face that is everywhere (Inter, Space Grotesk, Fraunces, Roboto, Poppins, Montserrat) has a stated reason.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "LL Display"
+    },
+    {
+      "id": "LY-05",
+      "check": "Sections do not all share one padding; spacing changes where the reading task changes.",
+      "severity": "warn",
+      "pass": true,
+      "detail": [
+        160,
+        192,
+        128,
+        160
+      ]
+    },
+    {
+      "id": "LY-06",
+      "check": "No boxed card sits inside another boxed card.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 nested card(s)"
+    },
+    {
+      "id": "LY-08",
+      "check": "In-page anchor targets are not hidden under a sticky header.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 anchor target(s) under the sticky header"
+    },
+    {
+      "id": "LY-09",
+      "check": "A footer exists and holds real destinations.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "footer": true,
+        "links": 4
+      }
+    },
+    {
+      "id": "CO-02",
+      "check": "No gradient-filled text.",
+      "severity": "warn",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "id": "CO-03",
+      "check": "No coloured glow or halo used as decoration.",
+      "severity": "warn",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "id": "CO-04",
+      "check": "Depth does not come from a hairline border plus a wide soft shadow on every surface.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 surfaces"
+    },
+    {
+      "id": "CO-05",
+      "check": "The ground colour is chosen from where the product is used; cream with a serif display needs a reason.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "cream_ground": false,
+        "serif_display": true,
+        "face": "LL Display"
+      }
+    },
+    {
+      "id": "CO-07",
+      "check": "The theme-color meta matches the page background.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "meta": "#f3f5f6",
+        "top_background": [
+          243,
+          245,
+          246
+        ]
+      }
+    },
+    {
+      "id": "TT-01",
+      "check": "No row of three equal cards with short adjective headings standing in for a product explanation.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 row(s) of adjective cards"
+    },
+    {
+      "id": "TT-02",
+      "check": "No icon tile stacked above every card heading.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 row(s) of icon-topped cards"
+    },
+    {
+      "id": "TT-03",
+      "check": "No small tracked-caps label above nearly every section heading.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 of 3 h2s have a tracked-caps label above"
+    },
+    {
+      "id": "TT-05",
+      "check": "No thick coloured stripe down one side of cards or callouts.",
+      "severity": "warn",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "id": "TT-06",
+      "check": "No pulsing dot, blinking cursor or marquee on content that is not live.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 small infinite animation(s)"
+    },
+    {
+      "id": "TT-07",
+      "check": "No stock marketing verbs (seamless, supercharge, unleash, revolutionize, cutting-edge, next-gen).",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "TT-08",
+      "check": "No grid, dot or stripe background used as filler.",
+      "severity": "warn",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "id": "MO-05",
+      "check": "Nothing large loops forever without a way to pause it.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "large_loops": 0,
+        "pause_control": false
+      }
+    },
+    {
+      "id": "MO-04",
+      "check": "Only transform, translate, scale, rotate and opacity animate; never layout properties.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "keyframes": [],
+        "transitions": 0
+      }
+    },
+    {
+      "id": "MO-06",
+      "check": "Overshoot or bounce easing appears only in playful archetypes; entrances never start from scale(0) or ease in.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "overshoot": [],
+        "from_scale_0": [],
+        "ease_in_entrances": 0
+      }
+    },
+    {
+      "id": "PF-03",
+      "check": "Web fonts use font-display: swap (or optional).",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "PF-04",
+      "check": "The first load transfers under about 2.5 MB.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0.10 MB"
+    },
+    {
+      "id": "LY-02",
+      "check": "No horizontal scroll at 320px.",
+      "severity": "block",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "MB-08",
+      "check": "At 200% zoom (720px at 2×) the page still has no horizontal scroll.",
+      "severity": "warn",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "MO-01",
+      "check": "With reduced motion, nothing moves and nothing is hidden.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "running": 0,
+        "hidden": 0
+      }
+    }
+  ],
+  "failures": [],
+  "warnings": [],
+  "not_run": [],
+  "summary": "64 passed, 0 block failures, 0 warnings, 0 not run, of 64 automatic checks"
+}

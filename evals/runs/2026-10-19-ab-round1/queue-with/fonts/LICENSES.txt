@@ -1,0 +1,7 @@
+Self-hosted font subsets (Latin basic + typographic punctuation), made with fontTools pyftsubset.
+
+heros-cn-bold.woff: TeX Gyre Heros Cn Bold, (c) GUST e-foundry. Licensed under the GUST Font License (http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt).
+
+dejavu-sans-mono.woff: DejaVu Sans Mono. Bitstream Vera Fonts Copyright (c) 2003 Bitstream, Inc.; DejaVu changes are in the public domain. Licensed under the Bitstream Vera / DejaVu font licence (https://dejavu-fonts.github.io/License.html).
+
+Both subsets were renamed internally ("Drumbeat Display Cn", "Drumbeat Mono") because the licences ask modified versions not to use the original reserved names. Original copyright and licence notices are retained in the font files.

@@ -43,4 +43,25 @@ The evaluator listed 28 places where the instructions were unclear or overclaime
 
 Still open from the report: dating an interaction and its measurement separately in each casebook entry, and a way to mark the primary action explicitly.
 
+## v0.3: blind A/B, round 1 (2026-10-19, skill at `ec80c9c`)
+
+Six fresh agents built the three briefs, each once with the skill and once without (same model, same rules: one static page, no network, no invented proof). A separate grader per brief saw only the two pages labelled A and B, the brief, and screenshots at 1440, 768 and 390, operated both pages, and scored eight criteria from 1 to 10. Outputs, grades and the A/B key: [runs/2026-10-19-ab-round1](runs/2026-10-19-ab-round1/).
+
+| Brief | Preferred (blind) | With skill /80 | Without /80 | Confidence |
+| --- | --- | --- | --- | --- |
+| gift (Poolday) | with skill | 66 | 60 | medium |
+| renewal (Ledgerlight) | with skill | 61 | 59 | medium |
+| queue (Drumbeat) | without skill | 55 | 61 | medium |
+
+![Queue: without and with the skill](runs/2026-10-19-ab-round1/queue-compare.jpg)
+
+What the skill did better: product shown working in the first screen, every illustrative element labelled, and three pages that look like three different companies. The three no-skill pages share one template (cream ground, small coloured caps label, headline left, card right, two buttons). On the skill's own 64 automatic checks the skill pages had no failures and the no-skill pages had two to five block failures each; those checks are the skill's, so that comparison is not neutral.
+
+Where it lost, and why:
+- **Queue:** no install command and no code at all, and a "docs" button that scrolled the page. The cause was a rule added earlier the same day ("show a labelled local model rather than inventing integration code").
+- **Disclaimer sections** ("What's not decided yet", "What we can show, and what we can't") read to graders as internal notes pasted onto a homepage.
+- **Craft** scored lower in two of three: dead space in the first screen, a label clipped in one interactive state.
+
+Fixed before round 2: complete the conversion path (install command and an example marked `illustrative API` when the real API is unknown; no button that claims a destination it does not reach); honesty beside the claim, never a section about what the company lacks; operate and screenshot the signature artifact in every state; phones recompose the artifact rather than remove it.
+
 To add a client row: install only the skill folder into a fresh project in that client, run one brief with the skill and once without it, and preserve prompts, pages, records, rendered screenshots and graded assertions. Compare product fit and output diversity as well as the mechanical checks. Three trials cannot establish a general performance claim.

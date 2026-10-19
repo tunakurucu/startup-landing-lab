@@ -1,0 +1,41 @@
+{
+  "A": {
+    "scores": {"clarity": 9, "fit": 7, "distinctiveness": 6, "proof": 7, "craft": 8, "mobile": 8, "honesty": 7, "interaction": 8},
+    "evidence": {
+      "clarity": "1440 first screen: 'One good gift, from all of you.' plus a subhead that says exactly who it's for, and a labelled example pool card for Ama's 30th with a $45-to-go bar; you know what it is in under five seconds.",
+      "fit": "Warm cream, serif italics and card notes ('From me and Biscuit') feel like an occasion, but the demo's dark 'What the organizer sees' panel of three stat tiles ($110 / 2 of 6 / ~$28 each) is a small finance dashboard, and the primary 'Start a pool' only scrolls to a demo.",
+      "distinctiveness": "The gift-tag hero card with its string is a nice idea, but the occasion ribbon strip, three numbered 'How it works' cards, a 'present, not an invoice' list, FAQ accordion and red closing CTA band are stock SaaS template sections.",
+      "proof": "A real working demo exists, but it sits in the third section (scrollY ~1437 at 1440). The hero card is static and doesn't match the demo: the hero shows $135 from 4 people and the demo opens at $70 from 2.",
+      "craft": "Clean hierarchy, consistent Lora/sans pairing, generous spacing; the 12.5px 'Example pool' labels and the 32px 'Remove' links are small, and the closer band's two yellow vertical bars look arbitrary.",
+      "mobile": "390px: no overflow, full-width stacked CTAs, form fields single-column; but the demo makes you get through 8 stacked inputs before you see the pool update (an inline 'See the pool' link softens this).",
+      "honesty": "'Sample names and amounts, for illustration' and 'Nothing is charged' are clear, but the nav, hero and closer all say 'Start a pool' as if it were live, and the closer only drops you into the browser demo. The FAQ's 'the full app is on its way' is vague.",
+      "interaction": "Add sample friend, add/remove, editing the price or name live-updates the card, organizer stats and group-chat message; over-funding shows 'Covered, $745 extra'; reset gives a blank pool with a sensible empty state. Copy gave no visible feedback in my test."
+    },
+    "problems": [
+      "The primary CTA 'Start a pool' (nav, hero, closer) promises a real product but only scrolls to an in-page demo; the client asked for a sensible main action and this one quietly overpromises.",
+      "The most convincing thing on the page, the working demo, is buried in section three behind generic how-it-works cards. The hero example is static and its numbers ($135, 4 people) contradict the demo's starting state ($70, 2 people).",
+      "Section kit is templated (occasion ribbon, 3 feature cards, FAQ accordion, coloured CTA band), and the dark organizer stat-tile panel slides back toward the 'finance dashboard' look the client explicitly didn't want."
+    ]
+  },
+  "B": {
+    "scores": {"clarity": 8, "fit": 8, "distinctiveness": 8, "proof": 9, "craft": 7, "mobile": 8, "honesty": 9, "interaction": 9},
+    "evidence": {
+      "clarity": "1440 first screen: 'Go in on one gift, together.' with a plain explanatory paragraph and a live gift tag for Maya ($180 / $100 / $80 still needed). It's clear, though the idiomatic headline needs the paragraph to land.",
+      "fit": "The occasion is the hero object: a die-cut tag with personal lines ('For all the mornings you made us coffee'), working with no card details right in the first screen. The CTA 'Start a practice pool' honestly resolves the client's undecided main action. Deep plum plus yellow reads more evening party than warm gift.",
+      "distinctiveness": "The die-cut tilted tag with a string, specific copy ('the ceramic pour-over set she keeps sending everyone links to'), and how-it-works steps illustrated with mini tag/chat snippets feel made for this product, not dropped into a template.",
+      "proof": "The product works in the hero. Friend mode: signing Alex for $20 updates the tag to $60 still needed. Organizer mode: building a tag for Dan produces the group-chat message, an example link and a per-friend split.",
+      "craft": "Strong Bricolage display type and confident hierarchy, but at 1440 the left column runs out around y=700 while the tall tag runs to about y=1180, leaving a dead plum void. The tag pushes its form below the fold, and the footer is cluttered with font-licence links.",
+      "mobile": "390px: proper Menu/Close drawer, the tag reflows (the stats stack, 'Still needed $60' gets its own row), chips and inputs are full-width with 40px+ targets, and nothing overflows; the tag itself starts below the first screen.",
+      "honesty": "Says 'Poolday is an early idea… no money moves', labels the made-up names under the tag, flags poolday.example as a reserved example address, and a 'What's not decided yet' section admits there are no reviews, totals or fees. Over-price says 'what happens to extra isn't decided yet'.",
+      "interaction": "Empty name gives 'Add a name first, so Maya knows who signed'; Other amount, over-price, reset and Cancel all behave. The hero CTA switches to organizer mode and focuses 'Who's it for?'; Copy falls back to 'Message selected…'; the friends-count input re-computes the split."
+    },
+    "problems": [
+      "The 'What's not decided' nav item and section put internal open questions (who holds money, fees) in a visitor's face. That's honest, but a client may see it as undermining confidence on the homepage itself.",
+      "The desktop hero is unbalanced: the very tall tag leaves a large empty plum area under the left-column CTA and pushes the sign-the-tag form below the fold. The dark plum and mustard palette is more nightclub than birthday.",
+      "'Start a practice pool' as the only main action is self-deprecating: there is no capture (waitlist/notify) for someone who actually has an occasion coming up. Footer font-licence links and a ceil-rounded '$33.34 each' are small polish misses."
+    ]
+  },
+  "preference": "B",
+  "confidence": "medium",
+  "reason": "B puts a working, emotionally specific gift tag at the top of the page in two roles, friend and organizer, so a visitor proves the idea to themselves on the first screen without payment details and with every illustrative thing labelled. A is warmer and more polished, but it buries its demo below template sections, contradicts its own hero numbers, and labels a demo 'Start a pool' as if the product were live."
+}

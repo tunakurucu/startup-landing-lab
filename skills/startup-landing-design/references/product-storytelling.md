@@ -8,4 +8,4 @@ Consumer example: starting material → playful choice → visible creation. The
 
 B2B example: unclear handoff → explicit owner and decision → review history. Trust comes from explaining control and limitations, not invented enterprise logos.
 
-At each section ask what the visitor now knows that they did not know above. Delete sections that repeat the same claim. Put qualifications next to relevant promises. Use real attributed proof only when supplied or verified. Otherwise use product behavior and honest scope.
+At each section ask what the visitor now knows that they did not know above. Delete sections that repeat the same claim. Put qualifications next to relevant promises, never in a separate section about what the company lacks or has not decided. Use real attributed proof only when supplied or verified. Otherwise use product behavior and honest scope.

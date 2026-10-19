@@ -18,7 +18,7 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 | Layout **recommended** | Max content 1280px; hero 5/7 split or open statement over full-width artifact; desktop section padding 88–144px, mobile 56–80px. Density: open promise → dense proof → quiet qualification → active example → short CTA. |
 | Color/material | Light or dark according to product positioning; one signal accent for live state. Thin rules, code syntax and deliberate whitespace carry depth before shadow. |
 | Artifact | A locally operable integration trace: for example, switch language or failure mode and see the code or the result change. What is required is that the visitor operates it and sees the product's real behaviour; the exact control is a choice. Label simulation. |
-| Section sequence | Promise → runnable shape of input/output → failure/recovery explanation → constraints → action. Delete a generic three-benefit grid first. |
+| Section sequence | Promise → runnable shape of input/output → install command and first code example → failure/recovery explanation → technical limits the engineer must plan around → docs and install. Delete a generic three-benefit grid first. |
 | Mobile | Stack statement and instrument; show one current step with a readable detail. Keep code inside its own horizontally scrollable labelled region. |
 | Evidence | Resend: observed integration tab changed snippet (desktop, 2026-10-18). Airweave: observed cURL tab changed snippet (desktop, 2026-10-19). Scale, grid and timings here are recommendations, not observed values. |
 
