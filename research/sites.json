@@ -12,7 +12,7 @@
     "inspected_on": "2026-10-18",
     "coverage": "partial-desktop",
     "viewports": {
-      "desktop": "1363 \u00d7 936: rendered inspection",
+      "desktop": "1363 × 936: rendered inspection",
       "tablet": "not inspected",
       "mobile": "not inspected"
     },
@@ -21,7 +21,7 @@
       "hero": "A desktop-like shell surrounds a central window. Navigation icons sit on both sides; the introduction and signup panel share a row.",
       "typography": "Bold compact sans-serif headings; body text stays conversational. Colored inline highlights reinforce key terms.",
       "visual_system": "Green illustrated environment, translucent pale window, orange beveled actions and vividly colored story tabs.",
-      "page_sequence": "Introduction \u2192 illustrative product tabs \u2192 tool inventory \u2192 customers \u2192 data warehouse \u2192 pricing \u2192 company rationale \u2192 reading \u2192 deliberately playful closing CTA.",
+      "page_sequence": "Introduction → illustrative product tabs → tool inventory → customers → data warehouse → pricing → company rationale → reading → deliberately playful closing CTA.",
       "interaction": "Clicked Ship with PostHog. The selected tab and product story changed, with sample inbox reports replacing the earlier assistant story. A pause control was present but not tested.",
       "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
     },
@@ -31,7 +31,7 @@
         "Let expressive brand elements organize information instead of merely decorating it.",
         "Identify illustrative data as illustrative."
       ],
-      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "fit": "Choose this approach only if it explains the audience’s actual evaluation task.",
       "risks": "Desktop chrome competes for attention; nested scrolling needs separate mobile and keyboard testing."
     },
     "limitations": [
@@ -57,19 +57,19 @@
     "verification_url": "https://www.ycombinator.com/companies/resend",
     "geography_evidence": null,
     "inspected_on": "2026-10-18",
-    "coverage": "partial-desktop",
+    "coverage": "desktop-audit",
     "viewports": {
-      "desktop": "1363 \u00d7 936: rendered inspection",
+      "desktop": "1363 × 936: rendered inspection",
       "tablet": "not inspected",
       "mobile": "not inspected"
     },
-    "summary": "Editorial type and generous silence make developer infrastructure feel carefully authored.",
+    "summary": "Editorial type and generous silence open a long, increasingly concrete product tour for developer email infrastructure.",
     "observations": {
-      "hero": "Left-aligned, two-line serif headline on black. Two actions sit below a short explanation; the right side remains largely open.",
+      "hero": "At 1363 × 936, a left-aligned two-line serif headline moves from bright white to gray on black; Get started and Documentation sit beneath the brief explanation. A faint light ray gives the largely open right side a focal point. A slim navigation bar stays at the top while scrolling.",
       "typography": "High-contrast display serif paired with plain sans-serif body and monospace code. Exact families unverified.",
-      "visual_system": "Black surfaces, white display text, subtle lighting and finely outlined code panels; restrained colored highlights.",
-      "page_sequence": "Hero \u2192 customer strip \u2192 integration/code chooser \u2192 test mode \u2192 webhooks \u2192 editor \u2192 audience tools \u2192 React email preview \u2192 deliverability \u2192 dashboard tabs \u2192 testimonials \u2192 CTA/footer.",
-      "interaction": "Clicked the Python tab. Both language and nested example tabs reported selected Python, and the rendered snippet changed to Python. No email was sent.",
+      "visual_system": "Black surfaces, white display text, subtle lighting and finely outlined code panels. The integration chapter uses a large envelope symbol and a centered gradient-accented heading before the language chooser. Wide negative space alternates with dense product windows, making the change in information density intentional.",
+      "page_sequence": "Full-page desktop scan: open hero → customer logos → integration code window → paired Test mode and Modular webhooks → Editor demo → contacts and analytics pair → React Email code and preview → deliverability grid → single testimonial → dashboard controls → testimonial carousel → large serif closing statement and footer. The page is roughly 12,352 px tall in this captured viewport; the exact length depends on browser rendering.",
+      "interaction": "Clicked Python in the integration code chooser. The main language and nested example tabs both selected Python, and the visible snippet changed to Python. The dashboard tabs and testimonial carousel were seen in the full-page capture but were not operated. No email was sent.",
       "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
     },
     "interpretation": {
@@ -78,14 +78,14 @@
         "A quiet hero can precede dense functional explanation.",
         "Use typographic contrast to create identity without obscuring product meaning."
       ],
-      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
-      "risks": "Some body text appears subdued against black. Hero visual was sparse in this browser; no conclusion about missing assets."
+      "fit": "Choose this approach only if it explains the audience’s actual evaluation task.",
+      "risks": "Some body text appears subdued against black. The long sequence and dense product windows demand careful small-screen pacing. A full-page capture does not establish the behavior of unclicked tabs or carousels."
     },
     "limitations": [
       "Single browser, single inspection date; homepage content can change.",
       "Exact font names, animation timing and implementation libraries were not verified.",
       "Tablet, mobile and reduced-motion behavior remain unverified.",
-      "Only selected regions were visually inspected; section sequence also uses rendered DOM. This is not a complete deep audit."
+      "Hero, middle and footer regions plus a full-page desktop capture were visually inspected; the Python control was operated. Other interactive controls, keyboard and assistive-technology behavior were not tested."
     ],
     "sources": [
       "https://resend.com",
@@ -105,7 +105,7 @@
     "inspected_on": "2026-10-18",
     "coverage": "partial-desktop",
     "viewports": {
-      "desktop": "1363 \u00d7 936: rendered inspection",
+      "desktop": "1363 × 936: rendered inspection",
       "tablet": "not inspected",
       "mobile": "not inspected"
     },
@@ -114,17 +114,17 @@
       "hero": "Centered lightweight sans-serif statement; paired design/demo actions lead into a large editor canvas.",
       "typography": "Large lightweight sans-serif display and muted body text. The long FAQ uses a spacious split heading-and-question layout.",
       "visual_system": "Near-black and dark gray surfaces, thin rules, broad editor imagery and restrained white actions.",
-      "page_sequence": "Hero \u2192 canvas \u2192 code-aware design features \u2192 workflow capabilities \u2192 stack compatibility \u2192 community \u2192 FAQ \u2192 final action/footer.",
-      "interaction": "Clicked the free-version FAQ question. aria-expanded changed to true. The hero showed \u201cError loading scene\u201d in this browser; the intended scene was not evaluated.",
+      "page_sequence": "Hero → canvas → code-aware design features → workflow capabilities → stack compatibility → community → FAQ → final action/footer.",
+      "interaction": "Clicked the free-version FAQ question. aria-expanded changed to true. The hero showed “Error loading scene” in this browser; the intended scene was not evaluated.",
       "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
     },
     "interpretation": {
       "principles": [
-        "Present the workspace as the product\u2019s explanatory medium.",
+        "Present the workspace as the product’s explanatory medium.",
         "Demonstrate continuity between visual editing and real code.",
         "Keep essential messaging and actions usable when a rich scene fails."
       ],
-      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "fit": "Choose this approach only if it explains the audience’s actual evaluation task.",
       "risks": "The observed hero scene failure makes this an instructive resilience case, not an unqualified quality endorsement."
     },
     "limitations": [
@@ -152,7 +152,7 @@
     "inspected_on": "2026-10-18",
     "coverage": "partial-desktop",
     "viewports": {
-      "desktop": "1363 \u00d7 936: rendered inspection",
+      "desktop": "1363 × 936: rendered inspection",
       "tablet": "not inspected",
       "mobile": "not inspected"
     },
@@ -161,7 +161,7 @@
       "hero": "Centered statement and signup/demo actions sit over a landscape with a desk in the foreground. A financial-service disclaimer is visible at the bottom.",
       "typography": "Clean sans-serif rather than an assumed editorial serif. Medium-weight heading contrasts with lighter supporting copy.",
       "visual_system": "Landscape imagery, muted sky tones, dark navy product regions and electric blue primary actions.",
-      "page_sequence": "Immersive hero \u2192 product categories \u2192 customer proof \u2192 onboarding and capability explanations \u2192 company narrative/news \u2192 business/personal actions \u2192 legal footnotes.",
+      "page_sequence": "Immersive hero → product categories → customer proof → onboarding and capability explanations → company narrative/news → business/personal actions → legal footnotes.",
       "interaction": "Opened Products. A large multicolumn menu exposed banking, cards, payments and intelligence categories. No account application or demo transaction was submitted.",
       "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
     },
@@ -171,7 +171,7 @@
         "Keep material product qualifications close to the promise.",
         "Give a broad offer a navigable category structure."
       ],
-      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "fit": "Choose this approach only if it explains the audience’s actual evaluation task.",
       "risks": "Foreground text competes with the landscape. Navigation overlay obscured some lower-page review; full-page and responsive inspection still needed."
     },
     "limitations": [
@@ -198,7 +198,7 @@
     "inspected_on": "2026-10-18",
     "coverage": "partial-desktop",
     "viewports": {
-      "desktop": "1363 \u00d7 936: rendered inspection",
+      "desktop": "1363 × 936: rendered inspection",
       "tablet": "not inspected",
       "mobile": "not inspected"
     },
@@ -207,7 +207,7 @@
       "hero": "Large left-aligned sans-serif statement followed by a broad issue-management interface with an agent conversation layered alongside it.",
       "typography": "Large regular sans-serif heading, subdued supporting copy and compact interface labels.",
       "visual_system": "Near-black canvas, subtle gray dividers, broad UI panels and limited accent color.",
-      "page_sequence": "Hero/product interface \u2192 rationale \u2192 intake \u2192 planning \u2192 AI/automations \u2192 building/review \u2192 changelog \u2192 closing CTA/footer.",
+      "page_sequence": "Hero/product interface → rationale → intake → planning → AI/automations → building/review → changelog → closing CTA/footer.",
       "interaction": "Opened Product menu and observed grouped workflow destinations. Escape returned visible keyboard focus to the trigger. App-like hero controls were not functionally verified.",
       "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
     },
@@ -217,7 +217,7 @@
         "Organize page architecture around the lifecycle of work.",
         "Limit visual accents so product state carries emphasis."
       ],
-      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "fit": "Choose this approach only if it explains the audience’s actual evaluation task.",
       "risks": "A rich hero can imply more interactivity than exists. Do not copy controls unless they have useful behavior."
     },
     "limitations": [
@@ -244,7 +244,7 @@
     "inspected_on": "2026-10-18",
     "coverage": "desktop-audit",
     "viewports": {
-      "desktop": "1363 \u00d7 936: rendered inspection",
+      "desktop": "1363 × 936: rendered inspection",
       "tablet": "not inspected",
       "mobile": "not inspected"
     },
@@ -253,7 +253,7 @@
       "hero": "Centered headline, orange emphasis and an operation field with Search/Scrape/Map/Crawl controls; output preview follows immediately.",
       "typography": "Confident sans-serif display with monospace metadata and code; ordinary body copy explains the operation.",
       "visual_system": "Pale ruled grid, orange actions, small technical markers, code/output surfaces and a saturated orange narrative interruption.",
-      "page_sequence": "Hero/operation preview \u2192 customer strip \u2192 API/code samples \u2192 agent setup \u2192 performance claims \u2192 capability grid \u2192 use cases \u2192 library narrative \u2192 community \u2192 CTA \u2192 FAQ/footer.",
+      "page_sequence": "Hero/operation preview → customer strip → API/code samples → agent setup → performance claims → capability grid → use cases → library narrative → community → CTA → FAQ/footer.",
       "interaction": "Clicked Scrape. The action destination changed to a scrape-mode playground URL and the preview displayed structured output. No remote scrape was submitted.",
       "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
     },
@@ -263,7 +263,7 @@
         "Let technical affordances become a visual motif.",
         "Interrupt long neutral sections with one purposeful color field."
       ],
-      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "fit": "Choose this approach only if it explains the audience’s actual evaluation task.",
       "risks": "Benchmark claims belong to the company and were not independently validated. Pale microtext and extensive scrolling deserve accessibility checks."
     },
     "limitations": [
@@ -291,7 +291,7 @@
     "inspected_on": "2026-10-18",
     "coverage": "desktop-audit",
     "viewports": {
-      "desktop": "1363 \u00d7 936: rendered inspection",
+      "desktop": "1363 × 936: rendered inspection",
       "tablet": "not inspected",
       "mobile": "not inspected"
     },
@@ -300,7 +300,7 @@
       "hero": "Centered short headline and download action against black, followed by a launcher demonstration.",
       "typography": "Bold compact sans-serif headings, short body copy and monospace installation metadata.",
       "visual_system": "Dark canvas, floating product surfaces, red and blue accents, framed extension panels and generous vertical gaps.",
-      "page_sequence": "Hero \u2192 launcher preview \u2192 rationale \u2192 extension gallery \u2192 AI tools \u2192 professional proof \u2192 automation \u2192 notes \u2192 community \u2192 developer tools \u2192 final download/footer.",
+      "page_sequence": "Hero → launcher preview → rationale → extension gallery → AI tools → professional proof → automation → notes → community → developer tools → final download/footer.",
       "interaction": "Full-page composition inspected. A workflow button seen during initial load could not be located after hydration, so its behavior is not verified. Download actions were not activated.",
       "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
     },
@@ -310,7 +310,7 @@
         "Alternate overview and close-up product views.",
         "Make platform requirements visible near the action."
       ],
-      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
+      "fit": "Choose this approach only if it explains the audience’s actual evaluation task.",
       "risks": "Initial-load and hydrated controls differed in this browser. Large blank intervals in a full-page capture may include unrevealed scroll content; do not infer animation implementation."
     },
     "limitations": [
@@ -338,7 +338,7 @@
     "inspected_on": "2026-10-18",
     "coverage": "desktop-audit",
     "viewports": {
-      "desktop": "1363 \u00d7 936: rendered inspection",
+      "desktop": "1363 × 936: rendered inspection",
       "tablet": "not inspected",
       "mobile": "not inspected"
     },
@@ -347,7 +347,7 @@
       "hero": "A broad left-aligned typographic statement overlays a colorful diagonal field; signup actions and a logo strip form a clear lower boundary.",
       "typography": "Large regular sans-serif statement with differences in text tone inside the same paragraph.",
       "visual_system": "White base, precise thin rules, purple actions and a large multicolor diagonal visual.",
-      "page_sequence": "Hero \u2192 business-model solutions \u2192 global scale \u2192 customer segments/cases \u2192 developer infrastructure \u2192 news \u2192 CTA/footer.",
+      "page_sequence": "Hero → business-model solutions → global scale → customer segments/cases → developer infrastructure → news → CTA/footer.",
       "interaction": "Opened Products. The expanded navigation grouped payment capabilities and revealed individual product destinations. Solution demonstrations were not tested.",
       "accessibility": "Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed."
     },
@@ -357,8 +357,8 @@
         "Use a large visual field to create direction without enclosing every sentence in a card.",
         "Separate business narrative from developer integration detail."
       ],
-      "fit": "Choose this approach only if it explains the audience\u2019s actual evaluation task.",
-      "risks": "This mature platform\u2019s breadth is inappropriate for a narrow early-stage product. Homepage claims were observed, not independently verified."
+      "fit": "Choose this approach only if it explains the audience’s actual evaluation task.",
+      "risks": "This mature platform’s breadth is inappropriate for a narrow early-stage product. Homepage claims were observed, not independently verified."
     },
     "limitations": [
       "Single browser, single inspection date; homepage content can change.",
