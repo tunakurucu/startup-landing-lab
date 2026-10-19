@@ -186,6 +186,290 @@
           "type": "string",
           "pattern": "^https?://"
         }
+      },
+      "measurements": {
+        "type": "object",
+        "description": "Computed-style measurements from scripts/measure.mjs. Numbers only; families are the first family in each computed font stack, not verified font identities. Animation counts are animations running at that moment, not a full motion inventory.",
+        "required": [
+          "measured_on",
+          "desktop"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "measured_on": {
+            "type": "string"
+          },
+          "desktop": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+              "width",
+              "h1_px",
+              "body_px",
+              "section_count",
+              "horizontal_overflow",
+              "reduced_motion_rule"
+            ],
+            "properties": {
+              "width": {
+                "type": "integer"
+              },
+              "h1_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "h1_weight": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "h1_tracking_em": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "h1_line_height": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "h1_family": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "display_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "body_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "body_line_height": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "body_measure_ch": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "families": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "content_width_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "nav_height_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "sticky_nav": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "hero_height_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "section_count": {
+                "type": "integer"
+              },
+              "page_height_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "horizontal_overflow": {
+                "type": "boolean"
+              },
+              "reduced_motion_rule": {
+                "enum": [
+                  "observed",
+                  "not_observed",
+                  "unverified"
+                ]
+              },
+              "animations_on_load": {
+                "type": "integer"
+              },
+              "animations_after_scroll": {
+                "type": "integer"
+              },
+              "has_video": {
+                "type": "boolean"
+              },
+              "has_canvas": {
+                "type": "boolean"
+              },
+              "dark_background": {
+                "type": "boolean"
+              }
+            }
+          },
+          "mobile": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+              "width",
+              "h1_px",
+              "body_px",
+              "section_count",
+              "horizontal_overflow",
+              "reduced_motion_rule"
+            ],
+            "properties": {
+              "width": {
+                "type": "integer"
+              },
+              "h1_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "h1_weight": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "h1_tracking_em": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "h1_line_height": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "h1_family": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "display_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "body_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "body_line_height": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "body_measure_ch": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "families": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "content_width_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "nav_height_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "sticky_nav": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "hero_height_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "section_count": {
+                "type": "integer"
+              },
+              "page_height_px": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "horizontal_overflow": {
+                "type": "boolean"
+              },
+              "reduced_motion_rule": {
+                "enum": [
+                  "observed",
+                  "not_observed",
+                  "unverified"
+                ]
+              },
+              "animations_on_load": {
+                "type": "integer"
+              },
+              "animations_after_scroll": {
+                "type": "integer"
+              },
+              "has_video": {
+                "type": "boolean"
+              },
+              "has_canvas": {
+                "type": "boolean"
+              },
+              "dark_background": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
       }
     },
     "allOf": [
