@@ -32,6 +32,21 @@ Hypothesis: an editorial working brief makes ownership more credible than abstra
 
 Implemented artifact: two workflow examples, structured/informal comparison and a downloadable brief. People are sample characters. The illustrative quote is labelled, not presented as customer proof. Mobile turns the horizontal handoff into a vertical reading sequence.
 
+## Motion contracts
+
+Every animation in the three demos is listed here in the form the skill asks for. Only the individual `translate` / `scale` properties animate, so base transforms (card tilts, the character's rotation) are untouched. Opacity animates in one place, the user-triggered card deal: a first version also faded text in, and axe correctly flagged the reduced contrast mid-animation, so text now moves without fading. Under `prefers-reduced-motion: reduce` the stylesheet removes every animation and transition and the scroll reveals are never applied; every state and all content stay visible. Essential copy never waits for motion. `tests/browser/motion.spec.ts` checks each contract with motion allowed and with it reduced.
+
+| Demo | Trigger | State change and purpose | Static fallback | Duration / easing |
+| --- | --- | --- | --- | --- |
+| Relayline | Page load, once | Hero trace nodes scale in received → failed → retried → delivered, so the event's history reads as a sequence before the copy explains it | Complete trace visible at first paint | 7 × 250 ms, 150 ms stagger, 1.15 s total, ease-out |
+| Relayline | Choose a scenario or step | Inspector content rises in to mark that the detail changed | Immediate replacement | 200 ms ease-out; row colour 150 ms |
+| Sidequest | Page load, once | Sticker and paper character pop in; nonessential scene, orients the eye | Visible at first paint | 400 ms, spring-like `cubic-bezier(.22,1.35,.36,1)`, 100 / 200 ms delay |
+| Sidequest | "Another little idea" | Three cards deal in with a stagger; the heading's word and the field colour follow, as a response to an explicit choice | Final cards and colour immediately | 360 ms deal, 90 ms stagger, same spring curve; field 350 ms ease |
+| Fieldwork | Scroll into view | Process strip columns then arrows, chapter numeral, field note and the three principles slide up into place in reading order; nothing fades, so text keeps full contrast throughout | Nothing moves without JavaScript or under reduced motion | 450 ms `cubic-bezier(.2,.7,.2,1)` translate, 100–400 ms delays |
+| Fieldwork | Change workflow or toggle structure | The brief rises in to signal a new document | Immediate replacement | 220 ms ease-out |
+
+Not animated, deliberately: headlines, body copy, navigation, the gallery's own pages, and anything on hover only.
+
 ## Diversity review
 
 | Dimension | Relayline | Sidequest | Fieldwork |
