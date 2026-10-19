@@ -16,7 +16,9 @@ try {
   const result=await page.evaluate(()=>{
     const all=[...document.querySelectorAll('*')];
     const headings=[...document.querySelectorAll('h1,h2,h3,h4,h5,h6')];
-    const families=[...new Set([document.body, ...headings, ...document.querySelectorAll('code,nav,button')].map(el=>getComputedStyle(el).fontFamily.split(',')[0].replace(/['"]/g,'').trim()).filter(Boolean))];
+    // Count the families actually rendering text anywhere on the page, not only on a few tags.
+    const hasOwnText=el=>[...el.childNodes].some(n=>n.nodeType===3 && n.textContent.trim());
+    const families=[...new Set(all.filter(hasOwnText).map(el=>getComputedStyle(el).fontFamily.split(',')[0].replace(/['"]/g,'').trim()).filter(Boolean))];
     const accessibleName=el=>el.getAttribute('aria-label')?.trim()||el.getAttribute('title')?.trim()||el.innerText?.trim()||el.querySelector('img[alt]')?.getAttribute('alt')?.trim()||'';
     const nameless=all.filter(el=>el.matches('a,button') && !accessibleName(el)).map(el=>el.outerHTML.slice(0,160));
     const badLinks=[...document.querySelectorAll('a')].filter(a=>{

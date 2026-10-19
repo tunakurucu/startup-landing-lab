@@ -11,7 +11,20 @@ Production build served with `vite preview`; `check-page.mjs` used its 390px vie
 | Sidequest | PASS | **FAIL** | PASS | PASS | PASS | PASS | PASS |
 | Fieldwork (`#/demo/ledger`) | PASS | **FAIL** | PASS | PASS | PASS | PASS | PASS |
 
-The CSS only declares Arial, Georgia and Courier New. The gate test is marked `fixme` until the self-hosted font block; it must be enabled with that block.
+At that point the CSS declared only Arial, Georgia and Courier New.
+
+### After the type pass (2026-10-19)
+
+Five SIL-OFL families are self-hosted under `gallery/public/fonts/` with their license texts (Inter, IBM Plex Mono, IBM Plex Sans, Bricolage Grotesque, Instrument Serif; Latin subsets, variable where the upstream ships one, 232 KB total). No external font requests. `check-page.mjs` was also corrected: it previously sampled `body`, headings, `code`, `nav` and `button` only, which missed faces used on other elements; it now counts every family rendering text on the page.
+
+| Route | Result | Families in use |
+| --- | --- | --- |
+| Home | 7/7 pass | Inter, IBM Plex Mono, Instrument Serif |
+| Relayline | 7/7 pass | Inter, IBM Plex Mono |
+| Sidequest | 7/7 pass | Bricolage Grotesque, Instrument Serif, Inter, IBM Plex Mono |
+| Fieldwork | 7/7 pass | Instrument Serif, IBM Plex Sans, IBM Plex Mono |
+
+The four gate tests in `tests/browser/skill-gate.spec.ts` are enabled and run in CI. Browser suite: 71 passed. axe: zero violations across 60 route/viewport combinations.
 
 Original build evaluation: 2026-10-18. Research extension: 2026-10-19. This is a qualitative engineering/design assessment, not a calibrated benchmark or a conversion study.
 

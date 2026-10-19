@@ -1,6 +1,8 @@
 import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import {mkdirSync,writeFileSync} from 'node:fs';
+// Twelve committed screenshots: six routes at desktop and phone width. Every route is still tested at all three sizes.
+const SHOT_ROUTES=new Set(['/','/references','/skill','/demo/relayline','/demo/sidequest','/demo/ledger']);
 const routes=['/','/references','/skill','/demos','/reference/resend','/reference/lightsprint','/reference/palette','/reference/sherpa','/reference/nori','/reference/cyclon','/reference/airweave','/reference/normal','/reference/answerthis','/reference/pingo','/reference/cactus','/reference/interfere','/reference/toothy','/demo/relayline','/demo/sidequest','/demo/ledger'];
 for(const size of [{width:1440,height:900},{width:768,height:1024},{width:390,height:844}]){
  test.describe(`${size.width}px`,()=>{
@@ -12,7 +14,7 @@ for(const size of [{width:1440,height:900},{width:768,height:1024},{width:390,he
    expect(errors).toEqual([]);
    const a11y=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
    expect(a11y.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))).toEqual([]);
-   mkdirSync('docs/screenshots',{recursive:true});const slug=route==='/'?'home':route.slice(1).replaceAll('/','-');await page.screenshot({path:`docs/screenshots/${slug}-${size.width}.png`,fullPage:true});
+   if(SHOT_ROUTES.has(route)&&(size.width===1440||size.width===390)){mkdirSync('docs/screenshots',{recursive:true});const slug=route==='/'?'home':route.slice(1).replaceAll('/','-');await page.screenshot({path:`docs/screenshots/${slug}-${size.width}.png`,fullPage:true});}
   })}
  })
 }
