@@ -1,0 +1,59 @@
+{
+ "A": {
+  "scores": {
+   "clarity": 8,
+   "fit": 8,
+   "distinctiveness": 8,
+   "proof": 9,
+   "craft": 7,
+   "mobile": 8,
+   "honesty": 8,
+   "interaction": 8
+  },
+  "evidence": {
+   "clarity": "1440-top: 'One present, from all of you.' plus a one-sentence explainer and a live gift tag for Ines's pottery class make the product obvious; no eyebrow naming occasions, and the plum-on-plum hero takes a beat to read as celebratory.",
+   "fit": "A working sample pool with an add form sits in the hero, labelled 'runs only in your browser', with 'No sign-up and no payment details' under the CTAs. The CTA pair is 'Start a sample pool' / 'See how a pool runs'. The full-bleed dark plum reads more evening-formal than party.",
+   "distinctiveness": "Notched gift-tag cards, a ribbon tail that ties into a bow when the pool fills, the 'Monday to Saturday' story strip and the 'Friends see the notes. Only the organizer sees the numbers.' section are product-specific ideas, not template blocks.",
+   "proof": "The product runs in the first screen: Friend's view vs Tom's view toggles amounts on and off, adding Alex moves the bar to $185 with '$55 to go', and filling it ties the bow with 'ribbon tied'.",
+   "craft": "Bricolage/Source Sans pairing and the tag shape are strong, but at 1440 there is about 300px of dead plum under the left hero column. The '))' squiggle beside the bar is an unexplained glyph until the pool fills, and three heavy dark bands make the page feel weighty.",
+   "mobile": "At 390 the hero stacks cleanly with a full-width CTA, the tag reflows to name/amount on separate lines with the note below, the organizer view shows amounts right-aligned, and nothing scrolls sideways (scrollWidth 390). The only small target is the 32px 'Reset sample'.",
+   "honesty": "Every tag is labelled 'Sample pool \u00b7 runs only in your browser' or 'Your sample pool \u00b7 nothing leaves this page', the CTA says 'sample', and there are no fake reviews or stats. The copy 'In the app you'd share this pool' implies an app exists without saying whether it does.",
+   "interaction": "The view toggle teaches the privacy model, overpaying is capped ('That's more than the $55 still needed' with an 'Add $55 instead' button), 'Copy a nudge' copies real text, and the builder adds pretend friends. But the builder's grey placeholders (Dana, $300, Kim) look like filled values, so a first 'Start a sample pool' click throws four errors."
+  },
+  "problems": [
+   "The builder traps first-time users: placeholders look like pre-filled data, and the draft tag beside them shows 'Started by Kim \u00b7 $300 total \u00b7 $50' while the fields are actually empty. Pressing 'Start a sample pool' as presented returns four red errors, and an empty 'Your own share' showing '$ 50' silently becomes $0.",
+   "The palette fights the brief's 'human occasion': three full-bleed dark plum bands with yellow buttons feel sombre and nightclub-ish rather than birthday-warm. At 1440 the hero's left column leaves a large empty block under the CTAs.",
+   "Two different 'sample pools' (Ines in the hero, the builder at the bottom) and a hero CTA that jumps past the live demo to a form can confuse. The page never says whether Poolday is available or what a real 'start' would lead to."
+  ]
+ },
+ "B": {
+  "scores": {
+   "clarity": 9,
+   "fit": 8,
+   "distinctiveness": 6,
+   "proof": 7,
+   "craft": 8,
+   "mobile": 7,
+   "honesty": 8,
+   "interaction": 7
+  },
+  "evidence": {
+   "clarity": "1440-top: the eyebrow 'For birthdays, send-offs, and everything in between', the headline 'One good gift, from all of you.', a plain explainer, a tilted 'Example pool' tag with avatars and notes, and an occasion strip (Birthdays to Get-well-soons) make it instantly legible.",
+   "fit": "The warm cream, avatars, handwritten-feeling italic notes and 'It's a present, not an invoice.' hit the human-occasion brief, and the demo says 'Nothing is charged and nothing is sent anywhere'. But 'Start a pool' and 'See how it works' both just scroll down the page.",
+   "distinctiveness": "The cream background, Lora italic accent, terracotta pill buttons, three numbered 'How it works' cards, FAQ accordion and a full-width CTA band are a widely seen warm-template recipe. The gift-tag hero card is the only specific touch.",
+   "proof": "The hero card is a static picture, and the working demo starts about 1437px down at desktop and about 2421px down at 390. When it arrives it shows a real organizer panel (Still needed / Who's in 2 of 6 / ~$28 each) and a generated group-chat message.",
+   "craft": "The type hierarchy is confident and the spacing even. The tilted tag with its string is charming and the dark organizer panel contrasts well. However, the hero tag ($135, 4 people) and the demo tag ($70, 2 people) show the same pool in two unexplained states.",
+   "mobile": "At 390 the CTAs go full-width and the type scales well, but the hero card falls below the fold and the demo sits about 3 screens down. Adding a friend updates a card off-screen; a 'See the pool' link only partly makes up for it.",
+   "honesty": "Labelled 'Sample names and amounts, for illustration.' and 'Your pool \u00b7 Example', and the FAQ admits 'still early\u2026 the full app is on its way'. A 'Start a pool' CTA (also in the header and closing band) that only opens a demo slightly overpromises.",
+   "interaction": "Add to the pool, Add a sample friend, Remove, Copy (real clipboard text) and Start over all work, and inputs focus correctly. But it accepted Max $500 against a $25 gap ('$475 to spare \u2014 enough for a card, wrapping, or cake'), and with group size 3 and 5 contributors it showed 'Who's in 5 of 5' without saying anything."
+  },
+  "problems": [
+   "The proof is buried: the first screen's pool is a static image, and the only interactive example is about 1.6 screens down on desktop and about 3 screens down on a phone. On mobile, each 'Add to the pool' updates a card the user can't see.",
+   "The demo's logic is careless for a money-adjacent product: one friend can put in $500 against a $25 gap and it celebrates the overage, and group size is silently overridden by the contributor count. A real organizer would immediately ask 'who gets the extra $475?'",
+   "It looks like a generic warm-serif startup template (cream, Lora italics, three numbered cards, FAQ accordion, terracotta CTA band), and every 'Start a pool' button leads to a demo, not a start. The page has no point of view beyond tidy execution."
+  ]
+ },
+ "preference": "A",
+ "confidence": "medium",
+ "reason": "A puts a working, labelled sample pool in the first screen and uses it to teach a real product idea: friends see notes, the organizer sees the numbers, overpaying is capped, and the bow ties when the pool fills. B is more polished and warmer but keeps its demo far down the page and lets a $500 overpayment through. B's warmth and polish do not outweigh A's in-hero working demo, distinct concept and tighter interaction logic, even though A's sombre palette and placeholder-trap builder are real faults."
+}

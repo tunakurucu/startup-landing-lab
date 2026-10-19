@@ -8,7 +8,7 @@
 // The other 36 checks need eyes: they are answered in DESIGN-RECORD.md and enforced by verify-record.mjs.
 import {launch, load, Unavailable} from './browser.mjs';
 import {resolve} from 'node:path';
-import {existsSync, readFileSync} from 'node:fs';
+import {existsSync, readFileSync, statSync} from 'node:fs';
 import {pathToFileURL, fileURLToPath} from 'node:url';
 
 const input = process.argv[2];
@@ -303,11 +303,19 @@ try {
     });
     check('MO-04', !css.layoutKeyframes.length && !css.layoutTransitions, {keyframes: css.layoutKeyframes, transitions: css.layoutTransitions});
     check('MO-06', !css.overshoot.length && !css.fromZero.length && !css.easeInAnim, {overshoot: css.overshoot, from_scale_0: css.fromZero, ease_in_entrances: css.easeInAnim});
-    if (!css.faces && css.opaqueSheets) notRun('PF-03', 'font rules are in cross-origin stylesheets');
-    else check('PF-03', css.badDisplay.length === 0, css.badDisplay);
-    const bytes = await p.evaluate(() => [...performance.getEntriesByType('navigation'), ...performance.getEntriesByType('resource')].reduce((n, e) => n + (e.transferSize || e.encodedBodySize || 0), 0));
-    if (url.startsWith('file:')) notRun('PF-04', 'transfer size is not reported for file:// pages');
-    else check('PF-04', bytes < 2.5e6, `${(bytes / 1e6).toFixed(2)} MB`);
+    // A page opened from disk hides its stylesheets' rules and transfer sizes from the page, so read the files instead.
+    const fileOf = u => { try { return u.startsWith('file:') ? fileURLToPath(u.split('#')[0].split('?')[0]) : null; } catch { return null; } };
+    if (!css.faces && css.opaqueSheets) {
+      const hrefs = await p.evaluate(() => [...document.styleSheets].map(s => s.href).filter(Boolean));
+      const local = hrefs.map(fileOf).filter(f => f && existsSync(f));
+      if (local.length) {
+        const blocks = local.flatMap(f => readFileSync(f, 'utf8').match(/@font-face\s*{[^}]*}/g) || []);
+        check('PF-03', blocks.every(b => /font-display\s*:\s*(swap|optional|fallback)/.test(b)), `${blocks.length} @font-face rules read from disk`);
+      } else notRun('PF-03', 'font rules are in cross-origin stylesheets');
+    } else check('PF-03', css.badDisplay.length === 0, css.badDisplay);
+    const entries = await p.evaluate(() => [...performance.getEntriesByType('navigation'), ...performance.getEntriesByType('resource')].map(e => ({name: e.name, size: e.transferSize || e.encodedBodySize || 0})));
+    const bytes = entries.reduce((n, e) => { const f = fileOf(e.name); return n + (f && existsSync(f) ? statSync(f).size : e.size); }, 0);
+    check('PF-04', bytes < 2.5e6, `${(bytes / 1e6).toFixed(2)} MB${url.startsWith('file:') ? ' (file sizes on disk)' : ''}`);
     await c.close();
   }
   // ======================= 320 px and 200 % zoom =======================

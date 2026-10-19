@@ -1,0 +1,6 @@
+Fonts bundled with this page (all under the SIL Open Font License 1.1, see OFL-1.1.txt):
+
+- Lora-Variable.ttf, Lora-Italic-Variable.ttf: unmodified copies.
+  Copyright 2011 The Lora Project Authors (https://github.com/cyrealtype/Lora-Cyrillic), with Reserved Font Name "Lora".
+- Inter-Regular/Medium/SemiBold.subset.woff: Latin subsets of Inter.
+  Copyright 2016 The Inter Project Authors.

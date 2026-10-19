@@ -1,0 +1,59 @@
+{
+ "A": {
+  "scores": {
+   "clarity": 8,
+   "fit": 7,
+   "distinctiveness": 5,
+   "proof": 8,
+   "craft": 6,
+   "mobile": 7,
+   "honesty": 7,
+   "interaction": 9
+  },
+  "evidence": {
+   "clarity": "First screen at 1440 says 'Contract renewals for small in-house legal teams' plus 'Decide before the contract renews itself', and the sample card next to it shows owner, deadline, decision and trail, so it is clear in about 5 seconds.",
+   "fit": "Covers all four fields in the hero card and the working list, and the tone is calm. But the eyebrow commits to 'in-house legal teams' when the client hasn't chosen a buyer; outside counsel only appears in an FAQ answer and a consult tick-list line.",
+   "distinctiveness": "Cream and forest-green palette, four-column 'Four things' row, three numbered steps and an FAQ accordion: the standard calm-SaaS template layout. Only the renewal list is specific to this product.",
+   "proof": "'A renewal list you can use right here': five sample contracts with deadlines relative to today, status pills (window closed / due in 10d / on track) and a detail pane, so the product logic is visibly working.",
+   "craft": "Clean spacing and hierarchy, but the headings use a system serif stack (Iowan/Charter/Georgia) that rendered as a Times-like default here. The hero H1 looks unstyled, and the body text is low-contrast grey.",
+   "mobile": "Nothing overflows at 390 (scrollWidth 390), the CTAs stack full width, the header shrinks to a 'Consultation' pill and tapping a contract scrolls to its detail. But the list rows get dense with three-part meta lines, and the four-feature section turns into a long text stack.",
+   "honesty": "Sample data is labelled in the footer and the example intro, and the FAQ refuses to list certifications. But the consult button says 'Request a consultation' and only after submitting reveals 'not connected to an inbox yet, so nothing was submitted'.",
+   "interaction": "Selecting rows, adding Renew/Renegotiate trail entries (the status pill changes to 'Decided: Renegotiate' and the row re-sorts), 'Add a contract' with validation, 'Reset sample data' and localStorage persistence across reload all worked with no console errors."
+  },
+  "problems": [
+   "It picks the buyer for the client: 'small in-house legal teams' in the hero eyebrow, though the client said they haven't decided. Outside counsel gets one line in a list.",
+   "The consultation CTA looks like a real submit and only admits after the click that nothing was sent. The page should say this before the visitor fills in the form.",
+   "Visually generic: system-font serif, beige/green SaaS palette, feature row, numbered steps and FAQ. Remove the logo and it could be any calm B2B template."
+  ]
+ },
+ "B": {
+  "scores": {
+   "clarity": 8,
+   "fit": 9,
+   "distinctiveness": 8,
+   "proof": 8,
+   "craft": 8,
+   "mobile": 8,
+   "honesty": 9,
+   "interaction": 7
+  },
+  "evidence": {
+   "clarity": "The 1440 hero 'No contract renews without a decision.' plus the subline naming owner, last day to give notice, open decision and reviews, beside a full sample record. It never names a buyer type in the hero, so it says slightly less about who it's for.",
+   "fit": "The hero record shows owner, 'Waiting on', notice deadline with days left, next decision and a review trail table. A dedicated 'same record, whichever side of the contract you work on' table answers the undecided in-house vs outside counsel question directly.",
+   "distinctiveness": "The annotated \u00a714.2 clause, with underlined phrases footnoted to the renewal term, decision, deadline and trail, and the timeline bar with review window, notice deadline and renewal marker, feel built for contract renewals rather than taken from a template.",
+   "proof": "The four-step stepper (Logged / In review / Decided / Notice sent) changes owner, waiting-on, days left, the timeline's 'Today' marker and the trail rows. It shows a renewal moving through the product, but it is scripted, not your data.",
+   "craft": "Lora/Inter pairing, a strong serif H1, a tight two-column record grid and a well-made timeline legend. Minor issues: a long text-heavy middle, and Lora is blocked by CORS when the page is opened from file://, so it falls back locally.",
+   "mobile": "At 390 the nav becomes a working Menu/Close drawer, the record grid becomes a single column, the in-house vs outside-counsel table reflows into labelled stacks and the stepper tabs stay tappable. All of it is deliberate, not just shrunk.",
+   "honesty": "Labelled 'Sample record \u00b7 fictional contract and people' and 'Sample clause, written for this page'. Next to the submit button, before it is clicked, it says 'This page can't send requests yet\u2026 nothing leaves your browser', and the button reads 'Prepare my request'.",
+   "interaction": "The stepper, arrow-key tab focus, live calculator (days or months, weekend rollback, 'Passed N days ago' warning, empty-field error) and prepare/copy request all work. But the calculator takes 5000 months and returns 'Monday 31 May 1610' with no upper-bound check, and you cannot add your own contract or trail entry."
+  },
+  "problems": [
+   "The 'locally usable example' is a date calculator plus a scripted stepper. You can't put in your own contract and watch the owner, decision and trail fill in, which is the product's actual promise.",
+   "The hero record uses a fictional 'Today \u00b7 1 Dec' and '30 days left' while the calculator uses the real date (19 Oct), so two different 'todays' appear on one page. The calculator also accepts absurd notice periods (5000 months gives a date in 1610).",
+   "It's long and text-heavy: clause explainer, in-house/outside-counsel table and calculator copy all compete before the CTA, and there are no secondary CTAs between sections. Self-hosted Lora fails under file:// (CORS), so a client opening the file locally sees fallback type."
+  ]
+ },
+ "preference": "B",
+ "confidence": "medium",
+ "reason": "B meets the brief's hard constraints more faithfully: it addresses the undecided buyer head-on instead of choosing in-house, it says the consultation can't be sent before the visitor commits, and its clause-to-record annotation and timeline look made for contract renewals. A has the stronger hands-on demo, but it is wrapped in a generic template and an unrequested buyer decision, which a demanding client would notice first."
+}

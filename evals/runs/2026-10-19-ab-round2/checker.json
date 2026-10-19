@@ -1,0 +1,81 @@
+{
+ "queue-with2": {
+  "summary": "62 passed, 0 block failures, 0 warnings, 2 not run, of 64 automatic checks",
+  "failures": [],
+  "warnings": []
+ },
+ "queue-without": {
+  "summary": "55 passed, 5 block failures, 2 warnings, 2 not run, of 64 automatic checks",
+  "failures": [
+   "LY-04",
+   "MB-02",
+   "AX-10",
+   "MB-05",
+   "CO-01"
+  ],
+  "warnings": [
+   "LY-06",
+   "TT-03"
+  ]
+ },
+ "gift-with2": {
+  "summary": "62 passed, 0 block failures, 0 warnings, 2 not run, of 64 automatic checks",
+  "failures": [],
+  "warnings": []
+ },
+ "gift-without": {
+  "summary": "55 passed, 2 block failures, 5 warnings, 2 not run, of 64 automatic checks",
+  "failures": [
+   "MB-02",
+   "MB-05"
+  ],
+  "warnings": [
+   "LY-08",
+   "LY-09",
+   "TT-05",
+   "TT-08",
+   "MO-04"
+  ]
+ },
+ "renewal-without": {
+  "summary": "53 passed, 5 block failures, 4 warnings, 2 not run, of 64 automatic checks",
+  "failures": [
+   "TY-03",
+   "MB-02",
+   "AX-01",
+   "MB-05",
+   "AX-04"
+  ],
+  "warnings": [
+   "LY-06",
+   "LY-08",
+   "LY-09",
+   "TT-05"
+  ]
+ },
+ "renewal-with2": {
+  "summary": "61 passed, 1 block failures, 0 warnings, 2 not run, of 64 automatic checks",
+  "failures": [
+   "AX-09"
+  ],
+  "warnings": []
+ },
+ "practice-without": {
+  "summary": "56 passed, 2 block failures, 4 warnings, 2 not run, of 64 automatic checks",
+  "failures": [
+   "MB-02",
+   "MB-05"
+  ],
+  "warnings": [
+   "LY-06",
+   "LY-08",
+   "LY-09",
+   "TT-05"
+  ]
+ },
+ "practice-with2": {
+  "summary": "62 passed, 0 block failures, 0 warnings, 2 not run, of 64 automatic checks",
+  "failures": [],
+  "warnings": []
+ }
+}

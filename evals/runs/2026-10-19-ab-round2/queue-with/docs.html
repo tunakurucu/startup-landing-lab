@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Drumbeat docs — job lifecycle guide</title>
+<meta name="description" content="How a Drumbeat job moves from enqueue through retry to completed or failed: states, retry policy, events and the memory store.">
+<meta name="theme-color" content="#f1f2f4">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="index.html" aria-label="Drumbeat home">
+      <svg viewBox="0 0 30 18" aria-hidden="true"><rect x="0" y="2" width="3" height="14" rx="1" fill="#1746cf"/><rect x="6" y="2" width="3" height="14" rx="1" fill="#1746cf"/><rect x="14" y="2" width="3" height="14" rx="1" fill="#1746cf"/><rect x="27" y="2" width="3" height="14" rx="1" fill="#16693a"/></svg>
+      Drumbeat
+    </a>
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html#trace">Job trace</a></li>
+        <li><a href="index.html#example">Local example</a></li>
+        <li><a href="index.html#states">States</a></li>
+        <li><a href="index.html#retries">Retry planner</a></li>
+        <li><a class="nav-docs" href="docs.html" aria-current="page">Docs</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="docs-main">
+  <div class="wrap">
+    <nav class="docs-toc" aria-label="On this page">
+      <ul>
+        <li><a href="#install">Install</a></li>
+        <li><a href="#first-job">Your first job</a></li>
+        <li><a href="#states">States</a></li>
+        <li><a href="#retries">Retry policy</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#memory">The memory store</a></li>
+        <li><a href="#handlers">Writing handlers</a></li>
+      </ul>
+    </nav>
+    <article class="docs-body">
+      <div class="draft-note">Lifecycle guide · code uses an illustrative API; check names against the package’s README for your version</div>
+      <h1>How a Drumbeat job moves</h1>
+      <p>Drumbeat runs work that shouldn’t block a request (sending a receipt, calling a webhook, resizing an image) as a job. This guide follows one job from the moment you add it to the moment it is completed or failed, and shows how to read its state at every step.</p>
+
+      <h2 id="install">Install</h2>
+      <pre><code>npm install drumbeat</code></pre>
+      <p>Drumbeat is a Node package. Everything in this guide runs in one Node process with the memory store, so you need no Redis, server, account or API key to follow along.</p>
+
+      <h2 id="first-job">Your first job</h2>
+      <p>Create a queue, define a handler for a job name, then add a job with its data and a retry policy.</p>
+<pre><code>import { createQueue } from 'drumbeat';
+
+const queue = createQueue({ store: 'memory' });
+
+queue.define('send-receipt', async (job) =&gt; {
+  // call your mail provider here; return whatever should be stored as the result
+  return { sentTo: job.data.to };
+});
+
+await queue.add('send-receipt', { to: 'ada@shop.example' }, {
+  attempts: 3,
+  backoff: { type: 'exponential', delay: 1000 },
+});</code></pre>
+      <p><code>add()</code> returns as soon as the job is saved as <code>queued</code>. Call it from a request handler and the response does not wait for the work.</p>
+
+      <h2 id="states">States</h2>
+      <p>A job is in exactly one state at a time. Retries reuse the same job: its ID, data and history carry through every attempt.</p>
+      <div class="table-scroll" role="region" aria-label="Job states" tabindex="0">
+        <table>
+          <thead><tr><th scope="col">State</th><th scope="col">Meaning</th><th scope="col">Leaves when</th></tr></thead>
+          <tbody>
+            <tr><td><span class="state s-queued">queued</span></td><td>Saved, waiting for a worker.</td><td>A worker picks it up → <code>active</code>.</td></tr>
+            <tr><td><span class="state s-active">active</span></td><td>The handler is running one attempt.</td><td>Returns → <code>completed</code>. Throws with attempts left → <code>retrying</code>. Throws on the last attempt → <code>failed</code>.</td></tr>
+            <tr><td><span class="state s-retrying">retrying</span></td><td>Waiting out the backoff delay after an attempt threw. The error is recorded.</td><td>The delay passes → <code>active</code>.</td></tr>
+            <tr><td><span class="state s-completed">completed</span></td><td>The handler returned; its value is the job’s result.</td><td>Final.</td></tr>
+            <tr><td><span class="state s-failed">failed</span></td><td>The last allowed attempt threw. The final error is kept.</td><td>Final, unless you retry it by hand.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="retries">Retry policy</h2>
+      <p><code>attempts</code> counts the first run, so <code>attempts: 3</code> means one run and up to two retries. <code>backoff</code> sets the wait before each retry:</p>
+      <ul>
+        <li><code>{ type: 'fixed', delay }</code> waits <code>delay</code> milliseconds every time.</li>
+        <li><code>{ type: 'exponential', delay }</code> waits <code>delay × 2^(n−1)</code> before attempt <code>n+1</code>: with <code>delay: 1000</code>, that is 1 s, 2 s, 4 s and so on.</li>
+      </ul>
+      <p>The wait comes on top of your handler’s own run time. To see the full schedule for a policy before you ship it, use the <a href="index.html#retries">retry planner</a>.</p>
+
+      <h2 id="events">Events</h2>
+      <p>Every state change emits <code>job:state</code>. Forward it to the logs or metrics your team already watches.</p>
+<pre><code>queue.on('job:state', (e) =&gt; {
+  // e.id, e.name, e.state, e.attempt, e.error, e.elapsed
+  logger.info({ job: e.id, name: e.name, state: e.state, attempt: e.attempt, err: e.error?.message });
+});</code></pre>
+      <p>Because a retried job keeps its ID, filtering your logs by <code>job</code> shows every attempt of one job in order.</p>
+
+      <h2 id="memory">The memory store</h2>
+      <p><code>store: 'memory'</code> keeps jobs inside the Node process. It is meant for local runs and tests: when the process exits, every job in it is gone, including jobs waiting to retry. Don’t put production traffic on it.</p>
+
+      <h2 id="handlers">Writing handlers</h2>
+      <ul>
+        <li><strong>Make them safe to run twice.</strong> An attempt can do its work and still throw (a timeout after the email went out). Use <code>job.id</code> as the idempotency key you send to providers.</li>
+        <li><strong>Throw to retry, return to finish.</strong> A thrown error schedules the next attempt if one is left; a returned value completes the job.</li>
+        <li><strong>Set a ceiling.</strong> A failed job with its last error is something you can alert on; endless retries hide the fault.</li>
+      </ul>
+      <p><a class="button" href="index.html#example">Run the local example</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Drumbeat · open-source background jobs for Node.js</p>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#example">Local example</a></li>
+      <li><a href="#states">Job states</a></li>
+      <li><a href="#retries">Retry policy</a></li>
+    </ul>
+  </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

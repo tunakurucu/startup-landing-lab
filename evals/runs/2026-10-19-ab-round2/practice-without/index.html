@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Halfstep: practise the bars that need it</title>
+  <meta name="description" content="For adults coming back to the piano. Record a run-through on your phone and Halfstep shows which bars to practise, and how slowly. Join the beta waitlist.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="Halfstep home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="currentColor"/><rect x="7" y="6" width="9" height="20" rx="2" fill="#FBF7F0"/><rect x="17" y="6" width="9" height="20" rx="2" fill="#FBF7F0"/><rect x="13" y="6" width="7" height="12" rx="1.5" fill="#E8A53A"/></svg>
+        <span>Halfstep</span>
+      </a>
+      <nav class="header-nav" aria-label="Main">
+        <a href="#try">Try the example</a>
+        <a href="#how">How it works</a>
+        <a class="btn btn-small" href="#join">Join the beta</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">For adults coming back to the piano</p>
+          <h1>Play it through once. Practise the bars that need&nbsp;it.</h1>
+          <p class="lede">Prop your phone on the music stand and record a run-through. Halfstep shows you the few bars worth slowing down for, and how slow to go, so your practice time goes where it helps.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#join">Join the beta waitlist</a>
+            <a class="btn btn-ghost" href="#try">Try an example <span aria-hidden="true">&darr;</span></a>
+          </div>
+          <p class="hero-note">The example works right here. No upload, no sign-up.</p>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="phone">
+            <div class="phone-screen">
+              <p class="ph-kicker">Today&rsquo;s practice</p>
+              <p class="ph-title">Minuet in G</p>
+              <div class="ph-map">
+                <span></span><span></span><span class="f"></span><span></span>
+                <span></span><span></span><span class="f"></span><span></span>
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span class="f"></span><span></span>
+              </div>
+              <p class="ph-sum"><strong>13 of 16</strong> bars steady</p>
+              <ul class="ph-plan">
+                <li><span class="ph-bars">Bars 3&ndash;4</span><span class="ph-tempo"><svg class="qn" viewBox="0 0 10 16" role="img" aria-label="quarter note"><ellipse cx="4.2" cy="12.4" rx="3.7" ry="2.7" transform="rotate(-22 4.2 12.4)"/><rect x="6.7" y="0.8" width="1.3" height="11.6" rx=".5"/></svg>&thinsp;=&thinsp;76</span></li>
+                <li><span class="ph-bars">Bars 6&ndash;7</span><span class="ph-tempo"><svg class="qn" viewBox="0 0 10 16" role="img" aria-label="quarter note"><ellipse cx="4.2" cy="12.4" rx="3.7" ry="2.7" transform="rotate(-22 4.2 12.4)"/><rect x="6.7" y="0.8" width="1.3" height="11.6" rx=".5"/></svg>&thinsp;=&thinsp;80</span></li>
+                <li><span class="ph-bars">Bars 14&ndash;15</span><span class="ph-tempo"><svg class="qn" viewBox="0 0 10 16" role="img" aria-label="quarter note"><ellipse cx="4.2" cy="12.4" rx="3.7" ry="2.7" transform="rotate(-22 4.2 12.4)"/><rect x="6.7" y="0.8" width="1.3" height="11.6" rx=".5"/></svg>&thinsp;=&thinsp;72</span></li>
+              </ul>
+            </div>
+          </div>
+          <p class="hero-visual-cap">Illustration of the app</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMO -->
+    <section class="demo-section" id="try" aria-labelledby="try-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Try it</p>
+          <h2 id="try-title">Here&rsquo;s what a run-through turns into</h2>
+          <p>Below is a sample take of the <em>Minuet in G</em> (right hand), played the way a lot of us play after a few years away: mostly fine, with a few wobbles. Listen to it, then see the practice map Halfstep would give you.</p>
+        </div>
+
+        <div class="demo" id="demo">
+          <div class="demo-top">
+            <div class="demo-player">
+              <button class="play-btn" id="play-take" type="button" aria-describedby="take-meta">
+                <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+                <svg class="i-stop" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5" fill="currentColor"/></svg>
+                <span class="play-label">Play the sample take</span>
+              </button>
+              <div class="take-info">
+                <p class="take-title">Minuet in G &middot; right hand &middot; bars 1&ndash;16</p>
+                <p class="take-meta" id="take-meta">Sample recording, about 30 seconds. Synthesized in your browser.</p>
+                <div class="progress" aria-hidden="true"><span id="progress-fill"></span></div>
+              </div>
+            </div>
+            <button class="btn btn-ghost btn-small" id="show-map" type="button">Skip to the practice map</button>
+          </div>
+
+          <div class="demo-body">
+            <div class="map-wrap">
+              <div class="map-head">
+                <p class="map-title">Your piece, bar by bar</p>
+                <ul class="legend" id="legend" hidden>
+                  <li><span class="sw sw-steady"></span>Steady</li>
+                  <li><span class="sw sw-focus"></span>Worth a slower pass</li>
+                </ul>
+              </div>
+              <div class="bar-map" id="bar-map" role="group" aria-label="Bars 1 to 16"></div>
+              <p class="map-hint" id="map-hint">Each dot is a note as it was played. Gaps and bunching show where the timing moved.</p>
+            </div>
+
+            <aside class="panel" id="panel" aria-live="polite">
+              <div class="panel-intro" id="panel-intro">
+                <p class="panel-kicker">Waiting for the take</p>
+                <h3>Press play to hear it, or skip straight to the map.</h3>
+                <p>When it&rsquo;s done, the bars that held steady stay calm and the ones worth a slower pass are marked, each with a tempo to start from.</p>
+              </div>
+              <div class="panel-result" id="panel-result" hidden>
+                <p class="summary" id="summary"><strong>13 of 16 bars came out steady.</strong> Three short spots are worth a slower pass.</p>
+                <ol class="plan" id="plan"></ol>
+                <div class="detail" id="detail"></div>
+              </div>
+            </aside>
+          </div>
+          <p class="demo-disclaimer">This is a pre-made example to show the idea: the take and the practice map are fixed, not a live analysis.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">How it works</p>
+          <h2 id="how-title">Three steps, about as long as the piece</h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <div class="step-art" aria-hidden="true">
+              <svg viewBox="0 0 120 80"><rect x="40" y="6" width="40" height="68" rx="8" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="60" cy="34" r="10" fill="#E8A53A"/><circle cx="60" cy="34" r="17" fill="none" stroke="#E8A53A" stroke-width="2" opacity=".45"/><rect x="52" y="60" width="16" height="3" rx="1.5" fill="currentColor"/></svg>
+            </div>
+            <h3>Record a run-through</h3>
+            <p>Set your phone on the music stand and play the piece, or the part you&rsquo;re working on, the way you&rsquo;d play it for a friend. Stops and restarts are fine.</p>
+          </li>
+          <li>
+            <div class="step-art" aria-hidden="true">
+              <svg viewBox="0 0 120 80"><g fill="#CFE3DA"><rect x="10" y="14" width="22" height="22" rx="5"/><rect x="36" y="14" width="22" height="22" rx="5"/><rect x="88" y="14" width="22" height="22" rx="5"/><rect x="10" y="44" width="22" height="22" rx="5"/><rect x="62" y="44" width="22" height="22" rx="5"/><rect x="88" y="44" width="22" height="22" rx="5"/></g><g fill="#F6D9A6"><rect x="62" y="14" width="22" height="22" rx="5"/><rect x="36" y="44" width="22" height="22" rx="5"/></g></svg>
+            </div>
+            <h3>See your practice map</h3>
+            <p>Every bar gets a calm &ldquo;steady&rdquo; or a gentle &ldquo;worth a slower pass.&rdquo; Most of your piece will be the first kind. That&rsquo;s the point.</p>
+          </li>
+          <li>
+            <div class="step-art" aria-hidden="true">
+              <svg viewBox="0 0 120 80"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 66h22V52h22V38h22V24h26"/></g><circle cx="14" cy="66" r="5" fill="#E8A53A"/><circle cx="106" cy="24" r="5" fill="#23574B"/></svg>
+            </div>
+            <h3>Practise slow, then climb</h3>
+            <p>Each spot comes with a tempo to start at and the steps back up to your own. Loop it until it feels easy, then take the next step.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- TONE -->
+    <section class="tone" aria-labelledby="tone-title">
+      <div class="wrap tone-grid">
+        <div>
+          <p class="eyebrow">Made for coming back</p>
+          <h2 id="tone-title">A practice partner, not an examiner</h2>
+          <p class="tone-lede">You already know how to practise. What&rsquo;s hard after a break is knowing <em>where</em> to spend twenty minutes. Halfstep answers that one question and gets out of the way.</p>
+        </div>
+        <ul class="tone-list">
+          <li>
+            <h3>No marks, no grades</h3>
+            <p>You get a map of your piece, not a score out of 100. Steady bars are the default, not a reward.</p>
+          </li>
+          <li>
+            <h3>Slow is a step, not a setback</h3>
+            <p>A slower tempo is where a spot starts, with a clear way back up to the speed you want.</p>
+          </li>
+          <li>
+            <h3>Your piece, your phone</h3>
+            <p>Record the piece you&rsquo;re actually working on, on the phone you already have, at whatever piano you play.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" aria-labelledby="faq-title">
+      <div class="wrap faq-inner">
+        <h2 id="faq-title">Questions</h2>
+        <details>
+          <summary>Can I use Halfstep yet?</summary>
+          <p>Not yet. We&rsquo;re getting a beta ready. Join the waitlist and we&rsquo;ll email you when there&rsquo;s a place for you.</p>
+        </details>
+        <details>
+          <summary>Is the example on this page a real analysis?</summary>
+          <p>No. It&rsquo;s a fixed example we put together to show what Halfstep gives you: the sample take is synthesized in your browser and the practice map is pre-written. Your own recordings will get their own map.</p>
+        </details>
+        <details>
+          <summary>I teach adult students. Is this for me?</summary>
+          <p>We&rsquo;re starting with players, and we&rsquo;d really like to hear from teachers too. Choose &ldquo;I teach piano&rdquo; when you join the waitlist and we&rsquo;ll get in touch.</p>
+        </details>
+        <details>
+          <summary>What will you do with my email?</summary>
+          <p>Use it to contact you about the Halfstep beta. That&rsquo;s it.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- JOIN -->
+    <section class="join" id="join" aria-labelledby="join-title">
+      <div class="wrap join-inner">
+        <div class="join-copy">
+          <h2 id="join-title">Pick the piano back up with us</h2>
+          <p>Join the beta waitlist and we&rsquo;ll let you know when you can try Halfstep on your own playing.</p>
+        </div>
+        <!-- Set data-endpoint to the waitlist URL (POST, JSON body) to go live. See NOTES.md. -->
+        <form class="join-form" id="join-form" data-endpoint="" novalidate>
+          <label class="field-label" for="email">Email</label>
+          <div class="field-row">
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required aria-describedby="form-status">
+            <button class="btn" type="submit">Join the beta waitlist</button>
+          </div>
+          <fieldset class="role">
+            <legend>I&rsquo;m&hellip;</legend>
+            <label><input type="radio" name="role" value="player" checked> coming back to piano</label>
+            <label><input type="radio" name="role" value="teacher"> a piano teacher</label>
+          </fieldset>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>&copy; 2026 Halfstep</p>
+      <p class="footer-small">The sample take is a synthesized performance of the Minuet in G major, BWV Anh.&nbsp;114 (public domain).</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

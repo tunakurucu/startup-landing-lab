@@ -64,4 +64,23 @@ Where it lost, and why:
 
 Fixed before round 2: complete the conversion path (install command and an example marked `illustrative API` when the real API is unknown; no button that claims a destination it does not reach); honesty beside the claim, never a section about what the company lacks; operate and screenshot the signature artifact in every state; phones recompose the artifact rather than remove it.
 
+## v0.3: blind A/B, round 2 (2026-10-19, skill at `b94f92d`)
+
+The three with-skill pages were rebuilt with the fixed skill and compared against the same round-1 no-skill pages, plus a fourth brief neither side had seen ([practice](briefs/practice.md), built both ways). New A/B order, new graders, same rubric. Outputs, grades and key: [runs/2026-10-19-ab-round2](runs/2026-10-19-ab-round2/) (in `mapping.json`, `with2` is the rebuilt skill page).
+
+| Brief | Preferred (blind) | With skill /80 | Without /80 | Confidence |
+| --- | --- | --- | --- | --- |
+| queue (Drumbeat) | with skill | 63 | 61 | medium |
+| gift (Poolday) | with skill | 64 | 60 | medium |
+| renewal (Ledgerlight) | with skill | 65 | 57 | medium |
+| practice (Halfstep, holdout) | with skill | 62 | 57 | medium |
+
+By criterion, summed over four briefs (with / without): clarity 32/34, fit 33/29, distinctiveness 32/23, proof 33/29, craft 30/29, mobile 30/29, honesty 33/29, interaction 31/33.
+
+The same no-skill pages scored within two points of their round-1 scores under different graders (queue 61 and 61, gift 60 and 60, renewal 59 and 57), which suggests the graders are reasonably consistent.
+
+Graders' remaining complaints about the skill pages: an "illustrative API, confirm names" label that made a developer tool look unsure of itself; a heading font that failed to load when the page was opened from disk; a truncated form label; heavy dark sections on a celebratory page. Fixed after this round, not yet re-tested: the example label is stated once and the names to confirm go in the record, and the checker now runs all 64 checks on pages opened from disk, so builders no longer move to a local server, which is how the font failure went unnoticed.
+
+Limits: n = 4 pairs; builders and graders are agents from one model family; three of the four briefs were the ones the fixes targeted.
+
 To add a client row: install only the skill folder into a fresh project in that client, run one brief with the skill and once without it, and preserve prompts, pages, records, rendered screenshots and graded assertions. Compare product fit and output diversity as well as the mechanical checks. Three trials cannot establish a general performance claim.

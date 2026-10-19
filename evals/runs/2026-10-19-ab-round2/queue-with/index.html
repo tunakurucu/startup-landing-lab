@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Drumbeat — background jobs for Node you can follow to the last retry</title>
+<meta name="description" content="Drumbeat is an open-source job queue for Node. Move slow work out of the request and always know whether a job is queued, running, waiting to retry, completed or failed.">
+<meta name="theme-color" content="#f1f2f4">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="index.html" aria-label="Drumbeat home">
+      <svg viewBox="0 0 30 18" aria-hidden="true"><rect x="0" y="2" width="3" height="14" rx="1" fill="#1746cf"/><rect x="6" y="2" width="3" height="14" rx="1" fill="#1746cf"/><rect x="14" y="2" width="3" height="14" rx="1" fill="#1746cf"/><rect x="27" y="2" width="3" height="14" rx="1" fill="#16693a"/></svg>
+      Drumbeat
+    </a>
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="#trace">Job trace</a></li>
+        <li><a href="#example">Local example</a></li>
+        <li><a href="#states">States</a></li>
+        <li><a href="#retries">Retry planner</a></li>
+        <li><a class="nav-docs" href="docs.html">Docs</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero-head">
+        <p class="eyebrow">drumbeat · open-source job queue for Node.js</p>
+        <h1 id="hero-title">Follow every job from enqueue to its last retry.</h1>
+      </div>
+      <div class="hero-copy">
+        <p class="lede">Move work that shouldn’t block a request (receipts, webhooks, image resizes) into Drumbeat. <strong>Each job keeps one ID and one history across every attempt</strong>, so you can always say whether it is queued, running, waiting to retry, completed or failed, and why.</p>
+        <div class="hero-actions">
+          <a class="button" href="docs.html">Read the docs</a>
+          <a class="text-link" href="#example">Run the local example ↓</a>
+        </div>
+        <div class="install">
+          <code id="install-hero"><span class="prompt" aria-hidden="true">$</span>npm install drumbeat</code>
+          <button class="ghost" type="button" data-copy="install-hero" data-status="status-hero">Copy</button>
+        </div>
+        <p class="copy-status" id="status-hero" role="status" aria-live="polite"></p>
+      </div>
+
+      <section class="trace" id="trace" aria-label="Job trace simulation">
+        <div class="trace-top">
+          <p class="trace-name">job_8f3c2a · send-receipt</p>
+          <p class="tag">Simulated in your browser · illustrative timings</p>
+        </div>
+        <fieldset class="scenarios">
+          <legend>What happens to the job’s SMTP call?</legend>
+          <button type="button" class="scenario-btn" data-scenario="first" aria-pressed="false">Works first time</button>
+          <button type="button" class="scenario-btn" data-scenario="once" aria-pressed="true">Fails once</button>
+          <button type="button" class="scenario-btn" data-scenario="exhaust" aria-pressed="false">Fails every time</button>
+        </fieldset>
+        <div class="beat" aria-hidden="true">
+          <div class="beat-axis">
+            <div class="beat-marks"><!-- trace-beat:start --><div class="beat-line"></div><div class="beat-run s-failed" style="left:0.05%;width:82.63%"></div><div class="beat-tick" style="left:0.05%"><span>#1 ✕</span></div><div class="beat-tick is-failed is-end" style="left:82.68%"></div><div class="beat-gap" style="left:82.68%;width:16.53%"><span>1 s backoff</span></div><div class="beat-run s-completed" style="left:99.21%;width:0.79%"></div><div class="beat-tick flip" style="left:99.21%"><span>#2 ✓</span></div><div class="beat-tick is-completed is-end" style="left:100.00%"></div><!-- trace-beat:end --></div>
+            <div class="beat-clip"><div class="playhead" style="--x: 82.68%"></div></div>
+          </div>
+          <div class="beat-scale"><span>+0.000 s</span><span class="beat-end">+6.051 s</span></div>
+        </div>
+        <div class="trace-body">
+          <ol class="events" aria-label="Events for this job, oldest first"><!-- trace-events:start --><li><button type="button" class="event-btn" data-index="0"><span class="t">+0.000 s</span><span class="state s-queued">queued</span><span class="desc">Added by POST /checkout. The request responds without waiting.</span></button></li><li><button type="button" class="event-btn" data-index="1"><span class="t">+0.003 s</span><span class="state s-active">active</span><span class="desc">Attempt 1 of 3 starts in a worker.</span></button></li><li><button type="button" class="event-btn" data-index="2" aria-current="step"><span class="t">+5.003 s</span><span class="state s-retrying">retrying</span><span class="desc">Attempt 1 threw ETIMEDOUT after 5 s. Two attempts left; the next starts in 1 s.</span></button></li><li><button type="button" class="event-btn" data-index="3"><span class="t">+6.003 s</span><span class="state s-active">active</span><span class="desc">Attempt 2 of 3 starts with the same job ID and data.</span></button></li><li><button type="button" class="event-btn" data-index="4"><span class="t">+6.051 s</span><span class="state s-completed">completed</span><span class="desc">Handler returned on attempt 2. The job is done.</span></button></li><!-- trace-events:end --></ol>
+          <div class="snapshot">
+            <p class="snapshot-title" aria-live="polite">The job as it was at +5.003 s (retrying)</p>
+            <dl><!-- trace-snap:start --><dt>id</dt><dd>job_8f3c2a</dd><dt>name</dt><dd>send-receipt</dd><dt>state</dt><dd><span class="state s-retrying">retrying</span></dd><dt>attempt</dt><dd>1 of 3</dd><dt>data</dt><dd>{ to: 'ada@shop.example' }</dd><dt>next run</dt><dd>+6.003 s</dd><dt>last error</dt><dd>ETIMEDOUT smtp.example:587</dd><dt>result</dt><dd>—</dd><!-- trace-snap:end --></dl>
+            <p class="snapshot-note">Same ID from start to finish. The attempt-1 error stays in the history after attempt 2 succeeds.</p>
+          </div>
+        </div>
+        <p class="trace-foot">Policy in this trace: 3 attempts, exponential backoff from 1 s. Pick a scenario, then any event, to see the job at that moment.</p>
+      </section>
+    </div>
+  </section>
+
+  <section class="example" id="example" aria-labelledby="example-title">
+    <div class="wrap">
+      <div>
+        <h2 id="example-title">Run it on your laptop first</h2>
+        <p class="section-lede">One file, one Node process. The memory store needs no Redis, no server, no account and no API key, and nothing leaves your machine. The script fails its first attempt on purpose so you can watch a retry happen.</p>
+        <ol class="steps">
+          <li>
+            <p>Install the package in any folder with a <code>package.json</code>.</p>
+            <div class="install">
+              <code id="install-example"><span class="prompt" aria-hidden="true">$</span>npm install drumbeat</code>
+              <button class="ghost" type="button" data-copy="install-example" data-status="status-example">Copy</button>
+            </div>
+            <p class="copy-status" id="status-example" role="status" aria-live="polite"></p>
+          </li>
+          <li><p>Save the script as <code>retry-demo.mjs</code>.</p></li>
+          <li><p>Run <code>node retry-demo.mjs</code>. Each line is one state change of the same job.</p></li>
+        </ol>
+      </div>
+      <div class="code-panel">
+        <div class="code-head">
+          <p class="code-file">retry-demo.mjs</p>
+          <p class="code-tag">Illustrative API: confirm names in the docs</p>
+          <button class="ghost" type="button" data-copy="code-demo" data-status="status-code">Copy code</button>
+        </div>
+<pre tabindex="0" role="region" aria-label="Example script, retry-demo.mjs"><code id="code-demo"><span class="tok-c">// One Node process. No Redis, no server, no account, no API key.</span>
+<span class="tok-k">import</span> { createQueue } <span class="tok-k">from</span> <span class="tok-s">'drumbeat'</span>;
+
+<span class="tok-k">const</span> queue = createQueue({ store: <span class="tok-s">'memory'</span> });
+
+<span class="tok-k">let</span> calls = <span class="tok-n">0</span>;
+queue.define(<span class="tok-s">'send-receipt'</span>, <span class="tok-k">async</span> (job) =&gt; {
+  calls += <span class="tok-n">1</span>;
+  <span class="tok-c">// Nothing is sent: a real handler would call your mail provider here.</span>
+  <span class="tok-k">if</span> (calls === <span class="tok-n">1</span>) <span class="tok-k">throw new</span> Error(<span class="tok-s">'SMTP timeout (simulated)'</span>);
+  <span class="tok-k">return</span> { sentTo: job.data.to };
+});
+
+queue.on(<span class="tok-s">'job:state'</span>, (e) =&gt; {
+  console.log(e.elapsed, e.id, e.state, e.detail ?? <span class="tok-s">''</span>);
+});
+
+<span class="tok-k">await</span> queue.add(<span class="tok-s">'send-receipt'</span>, { to: <span class="tok-s">'ada@shop.example'</span> }, {
+  attempts: <span class="tok-n">3</span>,
+  backoff: { type: <span class="tok-s">'exponential'</span>, delay: <span class="tok-n">500</span> },
+});
+
+<span class="tok-k">await</span> queue.drain(); <span class="tok-c">// resolves when nothing is queued, active or retrying</span></code></pre>
+        <p class="code-copy-status" id="status-code" role="status" aria-live="polite"></p>
+        <div class="code-head out-head">
+          <p class="code-file">$ node retry-demo.mjs</p>
+          <p class="code-tag">Expected output · timings illustrative</p>
+        </div>
+<pre class="out" tabindex="0" role="region" aria-label="Expected output of the example"><code>+0ms    job_1  queued
++1ms    job_1  <span class="o-active">active</span>     attempt 1/3
++2ms    job_1  <span class="o-retrying">retrying</span>   SMTP timeout (simulated) · next in 500ms
++503ms  job_1  <span class="o-active">active</span>     attempt 2/3
++504ms  job_1  <span class="o-completed">completed</span>  { sentTo: 'ada@shop.example' }</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="states" id="states" aria-labelledby="states-title">
+    <div class="wrap">
+      <div class="states-head">
+        <h2 id="states-title">Five states, and what moves a job between them</h2>
+        <p class="section-lede">A job is always in exactly one of these. Retries never create a new job, so its ID, data and history carry through.</p>
+      </div>
+      <dl class="state-list">
+        <div class="state-row">
+          <dt><span class="state s-queued">queued</span></dt>
+          <dd class="what">Saved and waiting for a worker. Your request has already moved on.</dd>
+          <dd class="moves">in: <b>add()</b><br>out: worker picks it up → <b>active</b></dd>
+        </div>
+        <div class="state-row">
+          <dt><span class="state s-active">active</span></dt>
+          <dd class="what">Your handler is running one attempt. The attempt number is on the job.</dd>
+          <dd class="moves">out: handler returns → <b>completed</b><br>out: throws, attempts left → <b>retrying</b><br>out: throws, none left → <b>failed</b></dd>
+        </div>
+        <div class="state-row">
+          <dt><span class="state s-retrying">retrying</span></dt>
+          <dd class="what">The last attempt threw and more are allowed. The job waits out its backoff delay with the error recorded.</dd>
+          <dd class="moves">out: delay passes → <b>active</b>, same ID</dd>
+        </div>
+        <div class="state-row">
+          <dt><span class="state s-completed">completed</span></dt>
+          <dd class="what">The handler returned. Its return value is the job’s result; earlier errors stay in the history.</dd>
+          <dd class="moves">final</dd>
+        </div>
+        <div class="state-row">
+          <dt><span class="state s-failed">failed</span></dt>
+          <dd class="what">The last allowed attempt threw. Nothing else is scheduled; the job keeps its final error so you can alert on it or retry it by hand.</dd>
+          <dd class="moves">final</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="planner" id="retries" aria-labelledby="retries-title">
+    <div class="wrap">
+      <div>
+        <h2 id="retries-title">Decide how long a job may keep trying</h2>
+        <p class="section-lede">Pick a policy and see when each attempt would start if every one fails, and when the job is marked failed. Worked out in your browser from the formula below.</p>
+        <fieldset class="policy" id="policy">
+          <legend>Retry policy</legend>
+          <div class="field">
+            <label for="p-attempts">Attempts, including the first</label>
+            <select id="p-attempts">
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+              <option value="5" selected>5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="p-base">Base delay</label>
+            <select id="p-base">
+              <option value="250">250 ms</option><option value="500">500 ms</option><option value="1000" selected>1 s</option>
+              <option value="5000">5 s</option><option value="30000">30 s</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="p-strategy">Backoff</label>
+            <select id="p-strategy">
+              <option value="exponential" selected>Exponential (doubles each time)</option>
+              <option value="fixed">Fixed (same every time)</option>
+            </select>
+          </div>
+          <p class="formula">delay before attempt n+1 = base × 2^(n−1) (exponential) or base (fixed). Illustrative policy shape; no jitter.</p>
+        </fieldset>
+      </div>
+      <div class="plan" role="region" aria-label="Retry schedule for the chosen policy">
+        <div class="beat" aria-hidden="true">
+          <div class="beat-axis" id="plan-beat"><!-- plan-beat:start --><div class="beat-line"></div><div class="beat-tick" style="left:0.00%"><span>#1</span></div><div class="beat-gap" style="left:0.00%;width:6.67%"></div><div class="beat-tick" style="left:6.67%"><span>#2</span></div><div class="beat-gap" style="left:6.67%;width:13.33%"></div><div class="beat-tick" style="left:20.00%"><span>#3</span></div><div class="beat-gap" style="left:20.00%;width:26.67%"><span>4 s</span></div><div class="beat-tick" style="left:46.67%"><span>#4</span></div><div class="beat-gap" style="left:46.67%;width:53.33%"><span>8 s</span></div><div class="beat-tick is-failed flip" style="left:100.00%"><span>#5</span></div><!-- plan-beat:end --></div>
+          <div class="beat-scale"><span>+0 s</span><span id="plan-end">+15 s</span></div>
+        </div>
+        <ol class="plan-list" id="plan-list"><!-- plan-list:start --><li><span>attempt 1</span><span>+0 s</span></li><li><span>attempt 2</span><span>+1 s</span></li><li><span>attempt 3</span><span>+3 s</span></li><li><span>attempt 4</span><span>+7 s</span></li><li><span>attempt 5</span><span>+15 s</span></li><!-- plan-list:end --></ol>
+        <p class="plan-summary" id="plan-summary" role="status" aria-live="polite"><!-- plan-summary:start -->If every attempt throws, attempt 5 starts <strong>15 s</strong> after the first, and the job is marked <span class="state s-failed">failed</span> when it throws. Add your handler’s own run time to each attempt.<!-- plan-summary:end --></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="limits" id="production" aria-labelledby="limits-title">
+    <div class="wrap">
+      <h2 id="limits-title">Before you depend on it</h2>
+      <p class="section-lede">What a team running Drumbeat behind real traffic needs to plan around.</p>
+      <div class="limit-grid">
+        <div class="limit">
+          <h3>Make handlers safe to run twice</h3>
+          <p>A retry calls the same handler with the same job ID and data. If attempt 1 sent the email and then timed out, attempt 2 sends it again unless you check. Pass the job ID to your mail or payment provider as the idempotency key.</p>
+        </div>
+        <div class="limit">
+          <h3>The memory store lives inside your process</h3>
+          <p>It is for local runs and tests. When the process exits, every job in it is gone, including ones waiting to retry, so don’t put production traffic on it.</p>
+        </div>
+        <div class="limit">
+          <h3>Give every job a last attempt</h3>
+          <p>A job that retries forever hides the fault. A failed job with its final error is something you can alert on and replay. Size the ceiling with the retry planner above.</p>
+        </div>
+        <div class="limit">
+          <h3>Send state changes where your team already looks</h3>
+          <p>Every transition is an event carrying the job ID, name, state, attempt and error, so you can count failures per job name or follow one job across attempts in the logs you already have.</p>
+<pre tabindex="0" role="region" aria-label="Example: forwarding job events to a logger"><code>queue.on('job:state', (e) =&gt; logger.info({
+  job: e.id, name: e.name, state: e.state,
+  attempt: e.attempt, err: e.error?.message,
+}));</code></pre>
+          <p class="code-tag">Illustrative API</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing" aria-labelledby="closing-title">
+    <div class="wrap">
+      <div>
+        <h2 id="closing-title">Read how a job moves, then install it.</h2>
+        <p>The docs walk through the same lifecycle: the five states, retry policy, the events you can forward and the memory store you can run today.</p>
+      </div>
+      <div class="closing-actions">
+        <a class="button" href="docs.html">Read the docs</a>
+        <div class="install">
+          <code id="install-closing"><span class="prompt" aria-hidden="true">$</span>npm install drumbeat</code>
+          <button class="ghost" type="button" data-copy="install-closing" data-status="status-closing">Copy</button>
+        </div>
+        <p class="copy-status" id="status-closing" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Drumbeat · open-source background jobs for Node.js</p>
+    <ul>
+      <li><a href="docs.html">Docs</a></li>
+      <li><a href="#example">Local example</a></li>
+      <li><a href="#states">Job states</a></li>
+      <li><a href="#retries">Retry planner</a></li>
+    </ul>
+  </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

@@ -35,13 +35,14 @@ Browser suite: 85 tests, green locally on repeated runs and in CI.
 | `f1d0a13` | IBM Plex served as IBM's unmodified files (Reserved Font Name); React licence notices shipped and linked; Jakub Krehel's and Meng To's skills credited and folded into four checks. |
 | `c79ad9a` | First with/without eval (queue brief, `evals/runs/2026-10-19-queue`). Fixes: `browser.mjs` dependency lookup and system-Chrome fallback; checker and renderer report `unavailable` instead of crashing; `verify-record` checks PNG width, accepts `unverified`, requires five numeric scores; honest completion contract. |
 | (this block) | 111 more verified candidates (248 total; 205 from YC, a16z and Pear); 211 homepages measured; `summarize_measurements.py` generates the summary and the recipes' observed lines, and validation fails on drift. |
+| `b94f92d` and after | Blind A/B evals (`evals/run.md`): round 1, skill preferred 2 of 3 (182/180); rules fixed; round 2, 4 of 4 including a holdout brief (254/235). Checker runs all 64 checks on pages opened from disk. |
 
 Browser suite: 98 tests. Unit tests: 14. The gallery passes all 64 automatic checks; the demos keep five documented warnings.
 
 ## Next
 
 1. Tag `v0.3.0` from the GitHub UI (this sandbox cannot push tags or create releases).
-2. Re-run the queue brief where a browser can launch, then the gift and renewal briefs, with and without the skill, and add rows to `evals/run.md`.
+2. Run more holdout briefs (new products, both ways, blind) to grow the eight pairs; re-test the two post-round-2 fixes.
 3. Audit more of the 211 measured candidates by hand, prioritising canvas-first and editorial-platform, which have one and two records.
 4. Structural wireframe thumbnails from each record's page sequence; prerendered routes for crawlers.
 

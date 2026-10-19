@@ -1,0 +1,59 @@
+{
+ "A": {
+  "scores": {
+   "clarity": 8,
+   "fit": 7,
+   "distinctiveness": 5,
+   "proof": 7,
+   "craft": 7,
+   "mobile": 7,
+   "honesty": 7,
+   "interaction": 9
+  },
+  "evidence": {
+   "clarity": "First screen has the eyebrow 'For adults coming back to the piano', the headline 'Play it through once. Practise the bars that need it.' and a plain subhead about the phone on the music stand, so a stranger gets it in 5 seconds.",
+   "fit": "The tone is warm ('A practice partner, not an examiner') and the demo needs no upload, but the try-it example sits below the fold at every width, and the panel opens with '13 of 16 bars came out steady', which reads like a mark out of 16.",
+   "distinctiveness": "The structure is stock SaaS: eyebrow, tilted phone mockup, three icon steps, dark green feature band, FAQ accordion, CTA card. Only the bar-grid demo feels made for this product.",
+   "proof": "The 'Try it' card plays a synthesized flawed take with a progress bar and moving bar highlight, then reveals bars 3/7/15 marked 'slower' with a cause ('A small stop... just before the F#'). That is a real before-and-after, but it sits about 700px down and the hero shows only a static illustration.",
+   "craft": "The spacing and green/amber palette are clean and consistent, but the bold default-looking serif headings and the evenly weighted sections make it competent rather than refined. The bar thumbnails are tiny piano-roll dashes that need a caption to read.",
+   "mobile": "No overflow at 390 and the CTAs go full width, but the phone mockup pushes the demo to roughly y=1150 on a 5,783px page. The 4-column bar grid becomes small thumbnails, and on a phone the detail panel stacks well below the grid.",
+   "honesty": "The illustration, demo and FAQ are labelled as fixed and pre-written, but the waitlist form takes an email, then shows 'Thanks!... your email hasn't been saved' only after submit. The FAQ tells teachers to pick 'I teach piano', an option that doesn't exist (the label is 'a piano teacher').",
+   "interaction": "Everything works: play/stop with progress, 'Skip to the practice map', every bar clickable with its own note, passage list, 'Hear bars 3-4 from the take' toggles to Stop, and tempo chips (76\u219288\u219296\u2192104) select with visual state. No console errors."
+  },
+  "problems": [
+   "The waitlist is a dead end. It collects an email, says 'Thanks!', then admits nothing was saved. The visitor's intent is lost, and the no-backend disclosure should come before they type, not after.",
+   "It looks like a generic SaaS template (phone mockup hero, 3 icon steps, dark band, FAQ, CTA card). The one distinctive asset, the playable demo, is below the fold, and the hero spends its best space on a static illustration.",
+   "Copy contradicts itself. 'No marks, no grades' sits beside a headline stat of '13 of 16 bars came out steady', and the FAQ tells teachers to choose 'I teach piano' when the form says 'a piano teacher'."
+  ]
+ },
+ "B": {
+  "scores": {
+   "clarity": 8,
+   "fit": 8,
+   "distinctiveness": 8,
+   "proof": 8,
+   "craft": 8,
+   "mobile": 7,
+   "honesty": 8,
+   "interaction": 7
+  },
+  "evidence": {
+   "clarity": "The headline 'Practise the bars that need it, at a speed that feels easy' plus 'Halfstep is for adults coming back to the piano...' and an annotated score on the first screen make the product obvious. The audience is stated only in body copy, not as a label.",
+   "fit": "The demo is in the first screen and needs no upload ('Plays in your browser. Nothing is uploaded.'). The tone is consistently gentle ('There's no test to pass', 'Steady. Leave it be.'), and the hero says 'The beta isn't open yet' before you click.",
+   "distinctiveness": "A staff of the Minuet with hand-drawn pencil circles and tempo marks, an 'One evening, one passage' tempo staircase timed 19:40-19:58, and 'A teacher's pencil, not an examiner's red pen' all feel specific to this product and audience.",
+   "proof": "On the first screen, the annotated staff shows what the output looks like and selecting any circle or bar changes the advice and tempo ladder. But you cannot hear the flawed sample take itself, only the target passage at the practice tempo, so cause and effect is asserted rather than heard.",
+   "craft": "The Lora/Inter pairing, strong hierarchy and generous measure look considered at 1440. Weaknesses: the circles are drawn in the same rust-red the copy disowns ('not an examiner's red pen'), the staff has no clef or stems, and the timeline/teacher sections leave large empty white bands.",
+   "mobile": "At 390 the staff reflows cleanly to four bars per row with circles intact and the timeline restacks as a list. But tapping a circle updates a panel below the staff, so the new advice and the Hear button land off-screen. The teacher radio label 'I teach adults who are' looks truncated.",
+   "honesty": "A red 'Illustrative sample, not a real recording or analysis' label sits on the demo, 'Illustrative evening; the times are an example' on the timeline and 'Illustrative, written for this page' on the note card. The CTA explains 'Opens your email app... This page doesn't send or store anything', but the address is the placeholder beta@halfstep.example.",
+   "interaction": "Circles, bars and tempo rungs all respond (Bar 2 says 'Steady... leave it be', 14-15 rebuilds rungs 60/74/88/104), and Hear toggles to Stop with a status line. There is no playhead or highlight during playback, no way to hear the original take, and the mailto CTA is the whole conversion path."
+  },
+  "problems": [
+   "The teacher option reads 'I teach adults who are' at every width. It looks like a broken string on the very form that has to settle the client's undecided audience question.",
+   "The waitlist is a mailto to a placeholder .example address. It bounces as shipped, fails for anyone without a configured mail client, and gives the client no list to count.",
+   "The demo shows the prescription but never lets you hear the 'before' take, there is no visual feedback while audio plays, and the rust-red circles look like the very examiner's red pen the page says it isn't."
+  ]
+ },
+ "preference": "B",
+ "confidence": "medium",
+ "reason": "B puts a distinctive, honestly labelled, product-specific demo on the first screen and discloses the no-backend waitlist before the click, while A wraps a stronger playable demo in a generic SaaS template and a waitlist form that tells you after submitting that nothing was saved. A's interaction is richer, but B is closer to what the client asked for, and its worst flaws (a truncated radio label, a placeholder mailto) are cheaper to fix than A's template-like structure."
+}

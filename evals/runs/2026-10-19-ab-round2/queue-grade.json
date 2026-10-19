@@ -1,0 +1,59 @@
+{
+ "A": {
+  "scores": {
+   "clarity": 8,
+   "fit": 8,
+   "distinctiveness": 8,
+   "proof": 8,
+   "craft": 7,
+   "mobile": 7,
+   "honesty": 8,
+   "interaction": 9
+  },
+  "evidence": {
+   "clarity": "Eyebrow 'open-source job queue for Node.js' plus the headline 'Follow every job from enqueue to its last retry' says what it is at once, but the first screen never says who it is for.",
+   "fit": "The hero trace covers queued > active > retrying > completed/failed, there is a no-Redis memory-store script with expected output, a retry planner, and a real docs.html. But the code is labelled 'Illustrative API: confirm names in the docs', so the 'works locally' promise is not actually shown to work.",
+   "distinctiveness": "The job_8f3c2a snapshot panel ('The job as it was at +5.003 s'), the Gantt-style attempt bars with dotted backoff, and the retry planner are built for this product, not a template.",
+   "proof": "Above the fold, picking 'Fails every time' produces a 7-event trace ending in failed at +18.003 s, with a per-event job record (attempt, next run, last error). The product's behaviour is shown, not described.",
+   "craft": "Clean grid and good mono/sans pairing, but the DejaVu Condensed Bold headlines feel heavy and dated. The timeline labels collide ('1 s backoff' overlaps the playhead line, '#3 x' sits on the backoff dots), and the planner leaves a large empty panel when attempts=1.",
+   "mobile": "At 390px the Menu toggle, stacked scenario buttons and stacked snapshot all work. The '1 s backoff' label runs past the right edge of the trace card, and the page is long (8300px).",
+   "honesty": "Says 'Simulated in your browser - illustrative timings', 'Expected output - timings illustrative' and 'no jitter', makes no throughput claims, and every CTA lands on a real anchor or docs.html. The repeated 'illustrative API' hedge is honest but makes the maintainer's own code look unverified.",
+   "interaction": "All 3 scenarios, every event row (updates the snapshot), the 3 planner selects (recomputes the schedule and the 'marked failed at +Xs' text) and every Copy button work with no console errors. Each control teaches retry timing."
+  },
+  "problems": [
+   "'Illustrative API: confirm names in the docs' on the code, and 'check names against the package's README' in the docs: the client's own site admits it doesn't know its API, which kills credibility with experienced engineers and undercuts 'one safe example that works'.",
+   "Headline typeface (DejaVu Sans Condensed Bold) reads as a system-font fallback next to Inter body text. Hierarchy is loud rather than refined, and the timeline labels collide at both desktop and 390px.",
+   "Never commits to or addresses the solo-vs-platform audience question beyond one 'Before you depend on it' section. The page is long and repeats the lifecycle three times (trace, states table, planner) without a clear 'who should start where'."
+  ]
+ },
+ "B": {
+  "scores": {
+   "clarity": 9,
+   "fit": 7,
+   "distinctiveness": 7,
+   "proof": 7,
+   "craft": 8,
+   "mobile": 8,
+   "honesty": 7,
+   "interaction": 8
+  },
+  "evidence": {
+   "clarity": "'Know where every background job is.' plus a subhead naming all five states, the install pill, and 'runs in memory. No server, account or API key' all fit on one first screen at 1440, 768 and 390.",
+   "fit": "Covers states via the diagram stepper through retry to failed, a 3-step local example (mkdir/npm init, retry-demo.mjs, run, then 'change calls < 3 to calls < 5' to see failed), an explicit 'No throughput numbers on this page' note, and an audience split ('Adding jobs to your app' vs 'Running queues for other teams'). But every 'Read the docs' link points to docs/, which returns ERR_FILE_NOT_FOUND.",
+   "distinctiveness": "The state-machine diagram with live-highlighted edges is specific to the product, but the warm off-white + orange mono eyebrow + Inter + rounded cards look is the stock 2025 dev-tool landing template.",
+   "proof": "The hero is a static 'Illustrative record' table. The real demonstration is lower down: the stepper shows attempt 3 of 3, 'Error: ETIMEDOUT', 'never (terminal)' on failure, and the code blocks have expected output.",
+   "craft": "Tight Inter display type, consistent eyebrows and cards, a polished simulator panel. There is a dead ~250px band under the hero at 1440, and the events log box is mostly empty space early in the stepper.",
+   "mobile": "At 390px the hero fits on one screen, the diagram is redrawn compactly without edge labels, and the code blocks scroll inside their boxes with no page overflow. Losing the edge labels ('claimed', 'none left') removes the teaching on mobile.",
+   "honesty": "Labels 'Illustrative record' and 'Runs in this page only', and has an explicit no-benchmarks paragraph. But the primary CTA, repeated four times ('Read the docs', nav Docs, 'Read the docs ->', footer), leads to a nonexistent page.",
+   "interaction": "The stepper works through all paths (claim > throw > wait 200ms > claim > throw > wait 400ms > claim > throw > failed; Reset; 'Enqueue a new job'), highlights diagram nodes and edges, and Copy works on every block. It is click-only, though: you can't pick a scenario or change the policy."
+  },
+  "problems": [
+   "The main conversion path is broken: every 'Read the docs' and 'Docs' link goes to docs/, which doesn't exist (ERR_FILE_NOT_FOUND). The client's stated goal is 'read the docs'.",
+   "The hero visual is a static illustrative table. The only real demo needs about 8 manual clicks of one-option buttons to reach 'failed', and the retry policy is fixed (3 attempts, 200ms), so a reader can't explore 'how long until it fails'.",
+   "Visual identity is generic (beige, orange mono eyebrows, Inter, rounded cards) and could be any 2025 OSS landing page. The diagram is the only element that belongs to Drumbeat."
+  ]
+ },
+ "preference": "A",
+ "confidence": "medium",
+ "reason": "A shows retry and failure working above the fold (scenario-driven trace, per-event job snapshot, configurable retry planner), and every primary action lands somewhere real, including an actual docs page. B is more polished and handles the audience question better, but its primary CTA is a dead link and its hero proof is static, so it fails the client's main 'read the docs' goal while A's flaws (the 'illustrative API' hedge, heavy headline type) are fixable copy and style issues."
+}

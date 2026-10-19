@@ -1,6 +1,6 @@
 # Startup Landing Lab
 
-**Great design skills already exist. This one takes the best rules from six of them, adds dated research on real startup sites, and turns it into 100 checks built for one job: startup landing pages.**
+**Great design skills already exist. This one takes the best rules from eight of them, adds dated research on real startup sites, and turns it into 100 checks built for one job: startup landing pages.**
 
 AI-built landing pages keep coming out the same: centred headline, framed screenshot, three adjective cards, a gradient blob. Good general design skills help, but none of them is about the specific decisions a startup homepage has to make. This skill takes the rules that hold up from the skills listed below, specialises them for landing pages, and grounds them in pages from YC, a16z speedrun and Pear companies that were opened, measured and dated.
 
@@ -94,7 +94,18 @@ The gallery uses original abstract composition studies and links to source websi
 
 ## Does the skill work?
 
-Partly, and the repo says so. Three raw product briefs in [`evals/`](evals/run.md) were given to isolated agents with only the skill folder. Each picked an archetype and compared hero variants; none finished the render, post-build gate and revision steps (2/7, 2/7, 1/7 assertions). That early stop is the main thing v0.3 fixes. Runs inside Claude Code, Codex and Cursor are still to be added; the protocol to add one is in the same file.
+Tested blind. Fresh agents built the same product brief twice, once with the skill and once without, and a separate grader saw only "page A" and "page B", operated both at desktop and phone width, and scored eight criteria.
+
+| Round | Briefs | Skill page preferred | Total score (with / without) |
+| --- | --- | --- | --- |
+| 1 (v0.3.0) | 3 | 2 of 3 | 182 / 180 |
+| 2 (after fixing what lost round 1) | 3 + 1 new holdout brief | 4 of 4 | 254 / 235 |
+
+The gains are in distinctiveness (+9 across four briefs), fit to the brief, product proof and honesty (+4 each). The skill's pages were slightly less clear at first glance (−2) and their interactions slightly weaker (−2). Round 1's loss, a developer-tool page with no install command, is kept in the record along with the rule change that caused it.
+
+![The holdout brief: a piano-practice app, built without and with the skill](evals/runs/2026-10-19-ab-round2/practice-compare.jpg)
+
+Limits: eight pairs are not a benchmark, builders and graders were AI agents from the same model family, every verdict was medium confidence, and three of round 2's four briefs were the ones the fixes were made against. The pages, grades and A/B keys are all in [`evals/`](evals/run.md), so you can judge them yourself.
 
 ## Run and validate
 
