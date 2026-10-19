@@ -1,6 +1,6 @@
 # Dated reference casebook
 
-Generated from research/sites.json. Inspection date: 2026-10-18. These are desktop observations, not current universal claims. Mobile, tablet, exact typefaces and reduced-motion behavior were not verified. Entries marked partial-desktop are selected-region field notes, not complete deep audits.
+Generated from research/sites.json. Each entry carries its inspection date in the canonical record. These are desktop observations, not current universal claims. Mobile, tablet, exact typefaces and reduced-motion behavior were not verified. Entries marked partial-desktop are selected-region field notes, not complete deep audits.
 
 ## PostHog · expressive-world
 
@@ -16,15 +16,15 @@ Avoid/limit: Desktop chrome competes for attention; nested scrolling needs separ
 
 ## Resend · typographic-technical
 
-https://resend.com · partial-desktop
+https://resend.com · desktop-audit
 
-Editorial type and generous silence make developer infrastructure feel carefully authored.
+Editorial type and generous silence open a long, increasingly concrete product tour for developer email infrastructure.
 
-Observed: Left-aligned, two-line serif headline on black. Two actions sit below a short explanation; the right side remains largely open. Clicked the Python tab. Both language and nested example tabs reported selected Python, and the rendered snippet changed to Python. No email was sent.
+Observed: At 1363 × 936, a left-aligned two-line serif headline moves from bright white to gray on black; Get started and Documentation sit beneath the brief explanation. A faint light ray gives the largely open right side a focal point. A slim navigation bar stays at the top while scrolling. Clicked Python in the integration code chooser. The main language and nested example tabs both selected Python, and the visible snippet changed to Python. The dashboard tabs and testimonial carousel were seen in the full-page capture but were not operated. No email was sent.
 
 Transfer: Make technical adoption concrete with a short, relevant integration example. A quiet hero can precede dense functional explanation. Use typographic contrast to create identity without obscuring product meaning.
 
-Avoid/limit: Some body text appears subdued against black. Hero visual was sparse in this browser; no conclusion about missing assets.
+Avoid/limit: Some body text appears subdued against black. The long sequence and dense product windows demand careful small-screen pacing. A full-page capture does not establish the behavior of unclicked tabs or carousels.
 
 ## Onlook · canvas-first
 
