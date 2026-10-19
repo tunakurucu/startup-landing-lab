@@ -20,7 +20,7 @@
 | Desktop nav height (px) | 52 | 62 | **72** | 86 | 132 |
 
 - A `prefers-reduced-motion` rule was found on 82 of 103 pages (15 had none; 6 could not be inspected because their CSS is cross-origin).
-- 51 heroes sit on a dark ground, 52 on a light one.
+- 43 heroes sit on a dark ground and 60 on a light one (median luminance of the first-screen capture; an earlier single-point sample misread light pages with dark product mocks, and was corrected).
 - 62 headers are sticky or fixed.
 - 82 pages had animations running at load; 49 contain a `<video>`, 36 a `<canvas>`.
 - One page scrolled sideways at 390 px.

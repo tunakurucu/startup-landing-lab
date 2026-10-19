@@ -80,8 +80,10 @@ function collect() {
     hero_height_px: heroBottom, section_count: sections.length, page_height_px: document.documentElement.scrollHeight,
     horizontal_overflow: document.documentElement.scrollWidth > innerWidth + 1, reduced_motion_rule: reduced,
     has_video: !!document.querySelector('video'), has_canvas: !!document.querySelector('canvas'),
-    // Background behind the hero: walk up from the element at the centre of the first screen to the first opaque background.
-    dark_background: (() => { let el = document.elementFromPoint(innerWidth / 2, innerHeight / 2); while (el) { const m = cs(el).backgroundColor.match(/[\d.]+/g)?.map(Number); if (m && (m.length < 4 || m[3] > 0.5)) return (m[0] * 299 + m[1] * 587 + m[2] * 114) / 1000 < 90; el = el.parentElement; } return false; })()
+    // Hero ground: median luminance of the opaque background behind a 5×4 grid of points in the first screen.
+    // (A single centre point mislabels light pages whose centre is a dark product mock.)
+    dark_background: (() => { const ground = (x, y) => { let el = document.elementFromPoint(x, y); while (el) { const m = cs(el).backgroundColor.match(/[\d.]+/g)?.map(Number); if (m && (m.length < 4 || m[3] > 0.5)) return (m[0] * 299 + m[1] * 587 + m[2] * 114) / 1000; el = el.parentElement; } return 255; };
+      const l = []; for (let i = 1; i <= 5; i++) for (let k = 1; k <= 4; k++) l.push(ground(innerWidth * i / 6, innerHeight * k / 5)); l.sort((a, b) => a - b); return l[Math.floor(l.length / 2)] < 90; })()
   };
 }
 
