@@ -4,7 +4,7 @@ Generated from `assets/checks.json`. **64 auto** checks are decided by `scripts/
 
 **block** = fix before calling the page done, or end with DONE_WITH_CONCERNS. **warn** = fix, or record the product reason it stays.
 
-Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry Tan); **EK** Emil Kowalski's skills; **VWG** Vercel Web Interface Guidelines; **MP** Matt Pocock's skills; **AFD** Anthropic frontend-design; **ASC** Anthropic skill-creator; **SLL** Startup Landing Lab research. Every rule is written in this project's own words; see `docs/attribution.md` in the repository for links and licences.
+Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry Tan); **EK** Emil Kowalski's skills; **VWG** Vercel Web Interface Guidelines; **MP** Matt Pocock's skills; **AFD** Anthropic frontend-design; **ASC** Anthropic skill-creator; **JK** Jakub Krehel's interface skills; **MT** Meng To's design skills; **SLL** Startup Landing Lab research. Every rule is written in this project's own words; see `docs/attribution.md` in the repository for links and licences.
 
 ## Product and story
 
@@ -17,7 +17,7 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | PS-05 | Every section tells the visitor something the sections above did not; repeated claims are cut. | record | warn | SLL GST |
 | PS-06 | There is one primary action, worded the same wherever it appears. | auto | warn | GST |
 | PS-07 | Questions to the user carried a recommended default; unanswered ones were assumed and logged. | record | warn | MP |
-| PS-08 | Two structurally different hero variants were compared and scored before any code. | record | block | SLL GST AFD |
+| PS-08 | Two hero variants that differ on one named axis (structure, density, emphasis, type or voice) were compared and scored before any code. | record | block | SLL GST AFD JK |
 | PS-09 | Two references serve different jobs, one counterexample is named, and what is not borrowed is stated. | record | block | SLL |
 | PS-10 | The page starts from one archetype recipe and records where it departs from it. | record | warn | SLL |
 
@@ -27,7 +27,7 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | --- | --- | --- | --- | --- |
 | HR-01 | The headline and primary action are visible without scrolling at 1440×900 and 390×844. | auto | block | GST |
 | HR-02 | A centred headline above a framed screenshot is used only with a product reason in the record. | shot | block | SLL AFD |
-| HR-03 | The headline has no single-word last line at any of the three widths. | shot | warn | IMP VWG |
+| HR-03 | The headline has no single-word last line at any of the three widths. | shot | warn | IMP VWG JK |
 | HR-04 | A headline above about 6.5rem is the signature of the page and keeps each line to three words or fewer. | auto | warn | IMP SLL |
 | HR-05 | The primary action names what the visitor will do, not "Get started" or "Learn more" alone. | auto | warn | IMP GST VWG |
 | HR-06 | The hero is sized with svh/dvh or content, not a fixed 100vh that clips under mobile browser bars. | code | warn | EK |
@@ -42,12 +42,12 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | TY-03 | The h1 and the first h2 are each at least 1.25× the body size. | auto | block | IMP GST |
 | TY-04 | At least two font weights carry the hierarchy. | auto | block | IMP |
 | TY-05 | Headline letter-spacing is no tighter than −0.04em. | auto | block | IMP |
-| TY-06 | Text above 14px is not tracked wider than 0.12em. | auto | warn | IMP |
+| TY-06 | Text above 14px is not tracked wider than 0.12em, and no paragraph is set in all caps. | auto | warn | IMP |
 | TY-07 | Body text is at least 16px on phones. | auto | warn | GST IMP |
 | TY-08 | No readable text below 11px. | auto | block | IMP GST |
 | TY-09 | Body paragraphs stay under about 80 characters per line. | auto | warn | IMP AFD |
 | TY-10 | Body line-height is at least 1.35. | auto | warn | IMP |
-| TY-11 | No paragraph is set in all caps. | auto | warn | IMP |
+| TY-11 | Weights under 400 appear only at 28px and up; smaller text is 400 or heavier. | auto | warn | JK |
 | TY-12 | A display face that is everywhere (Inter, Space Grotesk, Fraunces, Roboto, Poppins, Montserrat) has a stated reason. | auto | warn | IMP GST |
 | TY-13 | Each face has a role (display, text, data); a family is not added just to have two. | record | warn | AFD SLL |
 
@@ -62,7 +62,7 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | LY-05 | Sections do not all share one padding; spacing changes where the reading task changes. | auto | warn | IMP SLL |
 | LY-06 | No boxed card sits inside another boxed card. | auto | warn | IMP |
 | LY-07 | Density changes down the page on purpose: open, dense, quiet, active, short. | shot | warn | SLL |
-| LY-08 | In-page anchor targets are not hidden under a sticky header. | auto | warn | VWG |
+| LY-08 | In-page anchor targets are not hidden under a sticky header. | auto | warn | VWG JK |
 | LY-09 | A footer exists and holds real destinations. | auto | warn | SLL |
 | LY-10 | At 768px nothing is a cramped leftover of the desktop grid. | shot | warn | SLL GST |
 
@@ -92,7 +92,7 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | TT-08 | No grid, dot or stripe background used as filler. | auto | warn | IMP |
 | TT-09 | Replacing the logo would not turn this into another company's page. | record | block | SLL |
 | TT-10 | The signature idea still works if the palette changes. | record | warn | SLL |
-| TT-11 | No referenced site's recognisable treatment (mascot, lighting, layout) is reproduced. | record | block | SLL |
+| TT-11 | Compared with each reference on copy, names, numbers, imagery, layout and motion, no distinctive element or combination is reproduced. | record | block | SLL MT |
 
 ## Motion
 
@@ -162,6 +162,6 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | ID | Check | Verify | Severity | Credit |
 | --- | --- | --- | --- | --- |
 | PR-01 | Every screenshot listed as evidence was opened, is not blank and is the width it claims. | record | block | IMP |
-| PR-02 | One structural revision was made after rendering, with before and after evidence. | record | block | SLL GST |
-| PR-03 | The hero scores were redone after the revision, with what still keeps it from a 10. | record | warn | GST |
+| PR-02 | One structural revision was made after rendering, with before and after evidence and the hero rescored. | record | block | SLL GST |
+| PR-03 | Every decorative element left on the page has a named job; ones without a job were removed and are listed. | record | warn | MT |
 | PR-04 | verify-record.mjs exits 0 and the final reply ends with the record's status line. | record | block | GST IMP ASC |

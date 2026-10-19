@@ -106,6 +106,7 @@ try {
       h1Tracking: h1 ? Math.round(trackingEm(h1) * 1000) / 1000 : 0,
       wideTracked: T.filter(el => px(el) > 14 && trackingEm(el) > 0.12).slice(0, 4).map(el => ownText(el).slice(0, 30)),
       bodyPx: px(p0), tiny: T.filter(el => px(el) < 11 && !el.closest('[aria-hidden=true]')).slice(0, 6).map(el => `${ownText(el).slice(0, 24)} (${px(el).toFixed(1)}px)`),
+      thinSmall: T.filter(el => px(el) < 28 && Number(cs(el).fontWeight) < 400).slice(0, 4).map(el => `${ownText(el).slice(0, 30)} (${px(el)}px/${cs(el).fontWeight})`),
       allCaps: P.filter(p => cs(p).textTransform === 'uppercase' || (p.textContent === p.textContent.toUpperCase() && /[A-Z]{4}/.test(p.textContent))).length,
       leading: P.filter(p => { const lh = cs(p).lineHeight; return (lh === 'normal' ? 1.2 : parseFloat(lh) / px(p)) < 1.35; }).slice(0, 3).map(p => p.textContent.trim().slice(0, 30)),
       hiddenShare: T.length ? hidden.length / T.length : 0, hiddenSample: hidden.slice(0, 3).map(el => ownText(el).slice(0, 30)),
@@ -135,11 +136,11 @@ try {
   check('TY-03', r.ratioH1 >= 1.25 && (r.ratioH2 === null || r.ratioH2 >= 1.25), {h1_to_body: +r.ratioH1.toFixed(2), h2_to_body: r.ratioH2 && +r.ratioH2.toFixed(2)});
   check('TY-04', r.weights.length >= 2, r.weights);
   check('TY-05', r.h1Tracking >= -0.0405, `${r.h1Tracking}em`);
-  check('TY-06', r.wideTracked.length === 0, r.wideTracked);
+  check('TY-06', r.wideTracked.length === 0 && r.allCaps === 0, {wideTracked: r.wideTracked, allCapsParagraphs: r.allCaps});
   check('TY-07', r.bodyPx >= 16, `${r.bodyPx}px`);
   check('TY-08', r.tiny.length === 0, r.tiny);
   check('TY-10', r.leading.length === 0, r.leading);
-  check('TY-11', r.allCaps === 0, r.allCaps);
+  check('TY-11', r.thinSmall.length === 0, r.thinSmall);
   check('LY-01', !r.overflow);
   check('LY-03', r.clipped.length === 0, r.clipped);
   check('LY-04', r.nearEdge.length === 0, r.nearEdge);

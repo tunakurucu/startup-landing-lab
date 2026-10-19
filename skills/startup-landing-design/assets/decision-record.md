@@ -32,6 +32,8 @@ Copy this file next to the page as `DESIGN-RECORD.md` and replace every prompt w
 - Primary interaction and motion purpose:
 
 ## Two hero variants before code
+- Axis the variants differ on (structure, density, emphasis, type or voice):
+
 | Variant | Structure and artifact | Visitor doubt answered | Score 0–10 and what a 10 needs |
 | --- | --- | --- | --- |
 | A | | | |
@@ -73,7 +75,7 @@ The other 64 checks run automatically in `check-page.mjs`. Answer each of these 
 | PS-04 | Each of the visitor's first three doubts is answered by a specific artifact on the page. | | |
 | PS-05 | Every section tells the visitor something the sections above did not; repeated claims are cut. | | |
 | PS-07 | Questions to the user carried a recommended default; unanswered ones were assumed and logged. | | |
-| PS-08 | Two structurally different hero variants were compared and scored before any code. | | |
+| PS-08 | Two hero variants that differ on one named axis (structure, density, emphasis, type or voice) were compared and scored before any code. | | |
 | PS-09 | Two references serve different jobs, one counterexample is named, and what is not borrowed is stated. | | |
 | PS-10 | The page starts from one archetype recipe and records where it departs from it. | | |
 | HR-02 | A centred headline above a framed screenshot is used only with a product reason in the record. | | |
@@ -87,7 +89,7 @@ The other 64 checks run automatically in `check-page.mjs`. Answer each of these 
 | TT-04 | Section numbers appear only on content that is a real sequence. | | |
 | TT-09 | Replacing the logo would not turn this into another company's page. | | |
 | TT-10 | The signature idea still works if the palette changes. | | |
-| TT-11 | No referenced site's recognisable treatment (mascot, lighting, layout) is reproduced. | | |
+| TT-11 | Compared with each reference on copy, names, numbers, imagery, layout and motion, no distinctive element or combination is reproduced. | | |
 | MO-07 | Hover-only effects sit behind (hover:hover) and (pointer:fine). | | |
 | MO-08 | Staggers stay between 30 and 80ms and never block input. | | |
 | MO-09 | Every animation has a written contract: trigger, purpose, fallback, duration, easing. | | |
@@ -100,8 +102,8 @@ The other 64 checks run automatically in `check-page.mjs`. Answer each of these 
 | HP-03 | Illustrative interfaces say so on the page. | | |
 | HP-04 | The primary action leads somewhere real or produces a visible local result. | | |
 | PR-01 | Every screenshot listed as evidence was opened, is not blank and is the width it claims. | | |
-| PR-02 | One structural revision was made after rendering, with before and after evidence. | | |
-| PR-03 | The hero scores were redone after the revision, with what still keeps it from a 10. | | |
+| PR-02 | One structural revision was made after rendering, with before and after evidence and the hero rescored. | | |
+| PR-03 | Every decorative element left on the page has a named job; ones without a job were removed and are listed. | | |
 | PR-04 | verify-record.mjs exits 0 and the final reply ends with the record's status line. | | |
 <!-- checklist:end -->
 
@@ -116,6 +118,7 @@ The other 64 checks run automatically in `check-page.mjs`. Answer each of these 
 - Before:
 - After:
 - Score after the change and what still keeps it from a 10:
+- Removal pass (each decorative element → its job, or "removed"):
 
 ## Remaining weaknesses
 - What a buyer still cannot judge:

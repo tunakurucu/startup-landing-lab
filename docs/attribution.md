@@ -2,9 +2,11 @@
 
 Original repository code, authored research analysis, skill instructions, CSS composition studies, fictional branding and demo copy are MIT licensed. Company names and website URLs identify research subjects. Their trademarks and website materials remain their owners' property. This independent project is not affiliated with or endorsed by Y Combinator or any featured company.
 
-No third-party screenshots, logos, proprietary website source, custom font files or illustrations are redistributed. The diagrams and abstract composition studies are original. Screenshots under docs/screenshots show this project's own implemented pages.
+No third-party screenshots, logos, proprietary website source or illustrations are redistributed. The diagrams and abstract composition studies are original. Screenshots under docs/screenshots show this project's own implemented pages.
 
-Runtime dependencies: React and React DOM (MIT). Build/test dependencies include Vite (MIT), TypeScript (Apache-2.0), ESLint (MIT), typescript-eslint (MIT), Playwright (Apache-2.0), axe-core (MPL-2.0), jsonschema (MIT) and skills-ref (Apache-2.0). The lockfile records transitive versions; installed packages retain their licenses. Tooling is not required to use the instruction skill.
+Fonts in `gallery/public/fonts/` are SIL Open Font License 1.1, each with its licence text beside it. IBM Plex Sans and IBM Plex Mono are IBM's unmodified WOFF2 files, because the licence reserves the name "Plex" for unmodified versions. Inter, Bricolage Grotesque, Instrument Serif and Schibsted Grotesk are subset from google/fonts and stay under the OFL; they have no Reserved Font Name. Provenance per file: `gallery/public/fonts/README.md`.
+
+Runtime dependencies: React, React DOM and scheduler (MIT), bundled into the published gallery; their licence notices ship at `gallery/public/third-party-notices.txt` and are linked from the site footer. Build/test dependencies include Vite (MIT), TypeScript (Apache-2.0), ESLint (MIT), typescript-eslint (MIT), Playwright (Apache-2.0), axe-core (MPL-2.0), jsonschema (MIT) and skills-ref (Apache-2.0). The lockfile records transitive versions; installed packages retain their licenses. Tooling is not required to use the instruction skill.
 
 References to Impeccable, better-web-ui, Anthropic skills and Vercel agent skills are comparisons with source links. Their instructions and code are not copied or bundled.
 
@@ -22,6 +24,8 @@ Only mechanics and review patterns informed original instructions; no source pro
 | [Matt Pocock skills](https://github.com/mattpocock/skills) | MIT | Bounded, consequence-based questions instead of open-ended interviewing |
 | [Anthropic skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator) | Apache-2.0 in that skill's LICENSE.txt | Raw briefs, assertions and repeatable evaluation records |
 | [yray/skills](https://github.com/yray/skills) | MIT | Whole-page inspection and explicit hero variants with a separate type pass |
+| [Jakub Krehel skills](https://github.com/jakubkrehel/skills) | MIT | Type floors (weight under 18px, unitless line-height, text-wrap, tabular figures), space-before-lines grouping, scroll padding under sticky headers, variants that differ on one axis |
+| [Meng To skills](https://github.com/MengTo/skills) | MIT | Removal test for decorative elements; originality audit by category (copy, names, numbers, imagery, structure, motion) where missing evidence is never a pass |
 
 ## v0.3 cross-check
 
@@ -29,4 +33,4 @@ The v0.3 skill was compared rule by rule with the repositories above (cloned 202
 
 ## The 100 checks
 
-`skills/startup-landing-design/assets/checks.json` (generated from `scripts/checks_source.py`) lists each check with a `credit` field naming where the idea appears: IMP Impeccable (Apache-2.0), GST gstack (MIT), EK Emil Kowalski's skills (MIT), VWG Vercel Web Interface Guidelines (MIT), MP Matt Pocock's skills (MIT), AFD Anthropic frontend-design and ASC Anthropic skill-creator (Apache-2.0), SLL this project's own research. A credit records inspiration; the wording, thresholds and code are this project's. Thresholds that differ from a source (for example a 1.25× hierarchy ratio) are this project's choices.
+`skills/startup-landing-design/assets/checks.json` (generated from `scripts/checks_source.py`) lists each check with a `credit` field naming where the idea appears: IMP Impeccable (Apache-2.0), GST gstack (MIT), EK Emil Kowalski's skills (MIT), VWG Vercel Web Interface Guidelines (MIT), MP Matt Pocock's skills (MIT), AFD Anthropic frontend-design and ASC Anthropic skill-creator (Apache-2.0), JK Jakub Krehel's skills (MIT), MT Meng To's skills (MIT), SLL this project's own research. A credit records inspiration; the wording, thresholds and code are this project's. Thresholds that differ from a source (for example a 1.25× hierarchy ratio) are this project's choices.

@@ -66,13 +66,14 @@
  },
  {
   "id": "PS-08",
-  "check": "Two structurally different hero variants were compared and scored before any code.",
+  "check": "Two hero variants that differ on one named axis (structure, density, emphasis, type or voice) were compared and scored before any code.",
   "verify": "record",
   "severity": "block",
   "credit": [
    "SLL",
    "GST",
-   "AFD"
+   "AFD",
+   "JK"
   ]
  },
  {
@@ -119,7 +120,8 @@
   "severity": "warn",
   "credit": [
    "IMP",
-   "VWG"
+   "VWG",
+   "JK"
   ]
  },
  {
@@ -212,7 +214,7 @@
  },
  {
   "id": "TY-06",
-  "check": "Text above 14px is not tracked wider than 0.12em.",
+  "check": "Text above 14px is not tracked wider than 0.12em, and no paragraph is set in all caps.",
   "verify": "auto",
   "severity": "warn",
   "credit": [
@@ -260,11 +262,11 @@
  },
  {
   "id": "TY-11",
-  "check": "No paragraph is set in all caps.",
+  "check": "Weights under 400 appear only at 28px and up; smaller text is 400 or heavier.",
   "verify": "auto",
   "severity": "warn",
   "credit": [
-   "IMP"
+   "JK"
   ]
  },
  {
@@ -358,7 +360,8 @@
   "verify": "auto",
   "severity": "warn",
   "credit": [
-   "VWG"
+   "VWG",
+   "JK"
   ]
  },
  {
@@ -545,11 +548,12 @@
  },
  {
   "id": "TT-11",
-  "check": "No referenced site's recognisable treatment (mascot, lighting, layout) is reproduced.",
+  "check": "Compared with each reference on copy, names, numbers, imagery, layout and motion, no distinctive element or combination is reproduced.",
   "verify": "record",
   "severity": "block",
   "credit": [
-   "SLL"
+   "SLL",
+   "MT"
   ]
  },
  {
@@ -916,7 +920,7 @@
  },
  {
   "id": "PR-02",
-  "check": "One structural revision was made after rendering, with before and after evidence.",
+  "check": "One structural revision was made after rendering, with before and after evidence and the hero rescored.",
   "verify": "record",
   "severity": "block",
   "credit": [
@@ -926,11 +930,11 @@
  },
  {
   "id": "PR-03",
-  "check": "The hero scores were redone after the revision, with what still keeps it from a 10.",
+  "check": "Every decorative element left on the page has a named job; ones without a job were removed and are listed.",
   "verify": "record",
   "severity": "warn",
   "credit": [
-   "GST"
+   "MT"
   ]
  },
  {

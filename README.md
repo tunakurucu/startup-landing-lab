@@ -20,6 +20,8 @@ Every rule here is rewritten in this project's own words and credited to where t
 | [Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines) / [agent-skills](https://github.com/vercel-labs/agent-skills) | Vercel | MIT | Engineering hygiene: focus, labels, zoom, `transition: all`, image sizing, lazy loading, font loading, theme-color |
 | [Matt Pocock's skills](https://github.com/mattpocock/skills) (grilling, handoff) | Matt Pocock | MIT | Ask few questions, each with a recommended default, and keep going when nobody answers |
 | [Anthropic skills](https://github.com/anthropics/skills) (frontend-design, skill-creator) | Anthropic | Apache-2.0 | The list of current generated-design defaults; evals run with and without the skill |
+| [Jakub Krehel's skills](https://github.com/jakubkrehel/skills) (better-typography, better-layout, variant) | Jakub Krehel | MIT | Type floors (no light weights at small sizes, unitless line-height, `text-wrap`, tabular figures), grouping by space, hero variants that differ on one named axis |
+| [Meng To's skills](https://github.com/MengTo/skills) (no-ai-design-slop, audit-reference-originality) | Meng To | MIT | The removal pass (every decorative element names its job or goes) and a category-by-category originality check against references |
 
 What this project adds: a dated casebook of real startup homepages with measured type, layout and motion; seven archetype recipes; a decision record that maps each visitor doubt to a product artifact; two hero variants scored before any code; and a script that refuses to call the page done until all 100 checks are answered.
 
