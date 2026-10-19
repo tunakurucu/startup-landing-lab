@@ -113,6 +113,34 @@
           "string",
           "null"
         ]
+      },
+      "program": {
+        "enum": [
+          "yc",
+          "a16z-speedrun",
+          "pear"
+        ],
+        "description": "Which accelerator or fund page verified this company. yc_status stays the YC-specific field."
+      },
+      "round": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Non-YC cohort or round as stated on the verifying page, e.g. 'a16z speedrun SR006' or 'Seed 2026'."
+      },
+      "one_line": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "selection_signal": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "URL of third-party design praise, if any. A selection lead, not evidence."
       }
     },
     "allOf": [
