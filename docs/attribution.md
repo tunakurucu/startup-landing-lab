@@ -26,3 +26,7 @@ Only mechanics and review patterns informed original instructions; no source pro
 ## v0.3 cross-check
 
 The v0.3 skill was compared rule by rule with the repositories above (cloned 2026-10-19, read as data, no code run). Ideas adapted, all rewritten in our own words: a closed status line and a script that decides "done" (gstack; Impeccable's phase gates); recommended defaults on every interview question (Matt Pocock's grilling skill); checks for hidden-after-load text, flat hierarchy, display tracking, focus visibility, zoom, `transition: all` and tap targets (Impeccable's detector, Vercel's web-interface-guidelines, gstack's design-review); motion mechanics such as stagger limits, no `scale(0)`, hover gating and `svh` (Emil Kowalski's skills); with-and-without-skill baselines and transcript reading in evals (Anthropic's skill-creator). No rule names, lists or prose from those projects are copied into this repository.
+
+## The 100 checks
+
+`skills/startup-landing-design/assets/checks.json` (generated from `scripts/checks_source.py`) lists each check with a `credit` field naming where the idea appears: IMP Impeccable (Apache-2.0), GST gstack (MIT), EK Emil Kowalski's skills (MIT), VWG Vercel Web Interface Guidelines (MIT), MP Matt Pocock's skills (MIT), AFD Anthropic frontend-design and ASC Anthropic skill-creator (Apache-2.0), SLL this project's own research. A credit records inspiration; the wording, thresholds and code are this project's. Thresholds that differ from a source (for example a 1.25× hierarchy ratio) are this project's choices.

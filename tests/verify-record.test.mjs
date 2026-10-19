@@ -20,7 +20,8 @@ function filled(dir, {status = 'DONE', checkerFailures = []} = {}) {
   t = t.replace(/\| \| \| \|/g, '| none found | — | — |');
   t = t.replace(/\| (1440|768|390)×(\d+) \| \| \|/g, '| $1×$2 | shot-$1.png | hero and footer |');
   t = t.replace('- JSON: decided', '- JSON: check.json').replace('- Before: decided', '- Before: before.png').replace('- After: decided', '- After: after.png');
-  t = t.replace(/<!--[\s\S]*?-->/, status);
+  t = t.replace(/^\| ([A-Z]{2}-\d{2}) \| ([^|]+) \| \| \|$/gm, '| $1 | $2 | pass | seen in shot-1440.png |');
+  t = t.replace(/<!-- Exactly[\s\S]*?-->/, status);
   writeFileSync(join(dir, 'DESIGN-RECORD.md'), t);
 }
 
@@ -53,4 +54,23 @@ test('DONE_WITH_CONCERNS is accepted when the checker has failures', () => {
   const dir = mkdtempSync(join(tmpdir(), 'rec-'));
   filled(dir, {status: 'DONE_WITH_CONCERNS: touch targets on mobile nav', checkerFailures: ['touch_targets']});
   assert.equal(run(dir).status, 0);
+});
+
+test('an unanswered checklist item blocks completion', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'rec-'));
+  filled(dir);
+  const p = join(dir, 'DESIGN-RECORD.md');
+  writeFileSync(p, readFileSync(p, 'utf8').replace(/^\| PS-01 \| ([^|]+) \| pass \| [^|]+ \|$/m, '| PS-01 | $1 | | |'));
+  const r = run(dir);
+  assert.equal(r.status, 1);
+  assert.match(r.stdout, /Checklist: 1 of 36/);
+});
+test('a failed block-severity checklist item rules out DONE', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'rec-'));
+  filled(dir);
+  const p = join(dir, 'DESIGN-RECORD.md');
+  writeFileSync(p, readFileSync(p, 'utf8').replace(/^\| PS-03 \| ([^|]+) \| pass \|/m, '| PS-03 | $1 | fail |'));
+  const r = run(dir);
+  assert.equal(r.status, 1);
+  assert.match(r.stdout, /PS-03/);
 });

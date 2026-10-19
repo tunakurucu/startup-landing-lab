@@ -1,29 +1,46 @@
 # Startup Landing Lab
 
-**A design skill for startup pages with a point of view.**
+**Great design skills already exist. This one takes the best rules from six of them, adds dated research on real startup sites, and turns it into 100 checks built for one job: startup landing pages.**
 
-I kept seeing startup pages that could have belonged to any company. I built this field guide to study the decisions behind memorable ones, then test those ideas on three very different products.
+AI-built landing pages keep coming out the same: centred headline, framed screenshot, three adjective cards, a gradient blob. Good general design skills help, but none of them is about the specific decisions a startup homepage has to make. This skill takes the rules that hold up from the skills listed below, specialises them for landing pages, and grounds them in pages from YC, a16z speedrun and Pear companies that were opened, measured and dated.
 
-[Explore the live field guide](https://tunakurucu.github.io/startup-landing-lab/) · [Install the skill](docs/installation.md) · [Read the research](research/README.md)
+[Explore the live field guide](https://tunakurucu.github.io/startup-landing-lab/) · [Install the skill](docs/installation.md) · [The 100 checks](skills/startup-landing-design/references/checklist.md) · [Read the research](research/README.md)
 
 ![The Startup Landing Lab field guide](docs/screenshots/home-1440.png)
 
-## Why another design skill?
+## Built on
 
-Because “make it distinctive” is not a method. This skill connects a visitor's doubts to a reference decision, an original product artifact and a rendered quality check. It includes dated observations and the limits of that evidence.
+Every rule here is rewritten in this project's own words and credited to where the idea appears. No text, rule names or code are copied; the licences and exactly what was taken are in [attribution](docs/attribution.md). None of these authors endorses this project.
 
-It is an instruction skill, not a trained model. It does not copy startup pages or claim there is one YC visual style. It complements broader design and engineering skills.
+| Skill | Author | Licence | What it contributed |
+| --- | --- | --- | --- |
+| [Impeccable](https://github.com/pbakaus/impeccable) | Paul Bakaus | Apache-2.0 | The idea of a deterministic anti-pattern detector: hidden-after-load text, flat hierarchy, tracking and headline limits, gradient text, glows, side stripes, overused faces, screenshot validity |
+| [gstack](https://github.com/garrytan/gstack) (design-review, plan-design-review) | Garry Tan | MIT | Score the plan before building, first-impression test, 44px targets, AI-slop tells, a closed DONE / DONE_WITH_CONCERNS / BLOCKED status |
+| [Emil Kowalski's skills](https://github.com/emilkowalski/skills) | Emil Kowalski | MIT | Motion mechanics: easing, stagger limits, no `scale(0)`, hover gating, `svh`, worst-case stress at 320px |
+| [Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines) / [agent-skills](https://github.com/vercel-labs/agent-skills) | Vercel | MIT | Engineering hygiene: focus, labels, zoom, `transition: all`, image sizing, lazy loading, font loading, theme-color |
+| [Matt Pocock's skills](https://github.com/mattpocock/skills) (grilling, handoff) | Matt Pocock | MIT | Ask few questions, each with a recommended default, and keep going when nobody answers |
+| [Anthropic skills](https://github.com/anthropics/skills) (frontend-design, skill-creator) | Anthropic | Apache-2.0 | The list of current generated-design defaults; evals run with and without the skill |
 
-## Works with your existing design tools
+What this project adds: a dated casebook of real startup homepages with measured type, layout and motion; seven archetype recipes; a decision record that maps each visitor doubt to a product artifact; two hero variants scored before any code; and a script that refuses to call the page done until all 100 checks are answered.
 
-Startup Landing Lab comes first: product interpretation → dated references → archetype → `DESIGN-RECORD.md` → numeric recipe and pre-build gate. Keep your usual frontend or design skill for execution polish. The tools below are optional; the standalone Markdown skill and its local checks work without installing any of them.
+## The 100 checks
 
-| Optional companion | Job after our decision record |
-| --- | --- |
-| [frontend-design](https://github.com/anthropics/skills) / [Impeccable](https://github.com/pbakaus/impeccable) | Aesthetic execution; Impeccable's installed detector can add rule-ID findings |
-| [web-design-guidelines](https://github.com/vercel-labs/agent-skills) | Engineering and accessibility review |
-| [agent-browser](https://github.com/vercel-labs/agent-browser) or local Playwright | Render and inspect the page at three widths |
-| [Emil Kowalski's skills](https://github.com/emilkowalski/skills) | Motion review and stress thinking |
+| Group | Checks | Examples |
+| --- | --- | --- |
+| Product and story | 10 | A stranger can say what it does in five seconds; each visitor doubt has an artifact |
+| Hero | 7 | Headline and action above the fold at 1440 and 390; no "Get started" alone |
+| Type | 13 | Hierarchy ratio, tracking floor, 11px minimum, measure, overused faces |
+| Layout and rhythm | 10 | No overflow at 390 or 320, no clipped text, no nested cards, spacing that changes |
+| Colour and surface | 7 | WCAG AA contrast, no gradient text or glows, no default cream-and-serif |
+| Template tells | 11 | No adjective card rows, icon tiles, kicker labels everywhere, buzzwords, filler grids |
+| Motion | 10 | Reduced motion hides nothing, no layout animation, written contracts |
+| Mobile and touch | 8 | 44px targets, zoom never disabled, working menu, 200% zoom |
+| Accessibility and interaction | 12 | Names, alt, focus visible, labels, no script errors, real links |
+| Performance and assets | 4 | Sized and lazy images, font-display, page weight |
+| Honesty and proof | 4 | No unsupplied logos, testimonials or unsourced numbers |
+| Process | 4 | Screenshots opened, one structural revision, `verify-record` passes |
+
+64 are checked automatically by [`check-page.mjs`](skills/startup-landing-design/scripts/check-page.mjs). The other 36 need eyes, so the agent answers them in its decision record, and [`verify-record.mjs`](skills/startup-landing-design/scripts/verify-record.mjs) will not let it finish while any are open. This site runs the same 64 checks on every page in CI.
 
 ## Install
 
@@ -55,13 +72,13 @@ The workflow: understand the product → select reference principles → compare
 | [Sidequest](https://tunakurucu.github.io/startup-landing-lab/#/demo/sidequest) | Playful creative ritual | Bricolage Grotesque, Instrument Serif italic | Deal an original three-part brief; keep it as a text file |
 | [Fieldwork](https://tunakurucu.github.io/startup-landing-lab/#/demo/ledger) | Editorial operations | Instrument Serif, IBM Plex Sans | Compare structured and informal handoffs; export the working brief |
 
-All three pass the skill's own gate (`check-page.mjs`, 7/7 on every route), use self-hosted open-licence type, and carry motion written as contracts — trigger, purpose, fallback, duration — that reduced-motion removes without hiding anything. Fictional brands, original code and copy, no fabricated customers, figures or testimonials. [Design decisions, motion contracts and an honest diversity review](docs/demo-decisions.md).
+All three pass the skill's 64 automatic checks with no block failures (five warnings are kept on purpose, each with its reason), use self-hosted open-licence type, and carry motion written as contracts — trigger, purpose, fallback, duration — that reduced-motion removes without hiding anything. Fictional brands, original code and copy, no fabricated customers, figures or testimonials. [Design decisions, motion contracts and an honest diversity review](docs/demo-decisions.md).
 
 ![Relayline at desktop width: the trace explorer is the hero](docs/screenshots/demo-relayline-1440.png)
 
 ## Research you can inspect
 
-43 candidates. 38 official YC verifications. Twenty audit records: sixteen desktop inspections and four partial desktop field notes. Seven new 2025 YC batch companies were chosen using [documented design mentions](research/2025-praised-selection.md) and inspected live; the previous five cover [2026 YC companies in San Francisco](research/2026-yc-audit-queue.md). Seven design families. Five Bay Area comparison candidates have unverified YC status, not proven non-membership. Earlier [comparison source recon](research/source-recon-2026-10-19.md) remains outside the audited set.
+137 candidates, 94 of them from 2026 cohorts (YC W26, X26 and S26; a16z speedrun SR006; Pear), each verified on the official page. Twenty audit records so far: sixteen desktop inspections and four partial desktop field notes. Seven new 2025 YC batch companies were chosen using [documented design mentions](research/2025-praised-selection.md) and inspected live; the previous five cover [2026 YC companies in San Francisco](research/2026-yc-audit-queue.md). Seven design families. Five Bay Area comparison candidates have unverified YC status, not proven non-membership. Earlier [comparison source recon](research/source-recon-2026-10-19.md) remains outside the audited set.
 
 Reference-site mobile, tablet and reduced-motion behavior remain unverified. This is a focused first edition, not exhaustive research or a ranking. [Method, evidence and limitations](research/README.md).
 
@@ -91,7 +108,7 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-85 browser checks cover every route at 1440/768/390 with axe, the skill's own gate on home and all demos, each motion contract with and without reduced motion, 320 px stress, filters, navigation, demo controls and downloads. See [the evaluation](docs/evaluation.md) for what actually ran and what did not. [Architecture](docs/architecture.md) explains the single-source data flow and hash routing for Pages.
+The browser suite covers every route at 1440/768/390 with axe, the skill's 64 automatic checks on eight routes, each motion contract with and without reduced motion, 320 px stress, filters, navigation, demo controls and downloads. See [the evaluation](docs/evaluation.md) for what actually ran and what did not. [Architecture](docs/architecture.md) explains the single-source data flow and hash routing for Pages.
 
 ## Help improve it
 

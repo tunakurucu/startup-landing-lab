@@ -16,7 +16,7 @@ if (!existsSync(recordPath)) { console.log(`FAIL\n- ${recordPath} does not exist
 const text = readFileSync(recordPath, 'utf8');
 
 const REQUIRED = ['Product interpretation', 'Interview log', 'References', 'Hypothesis', 'Two hero variants before code',
-  'Gate before implementation', 'Render evidence', 'Checker result', 'Gate after render', 'Structural revision', 'Remaining weaknesses', 'Status'];
+  'Gate before implementation', 'Render evidence', 'Checker result', 'Checklist', 'Gate after render', 'Structural revision', 'Remaining weaknesses', 'Status'];
 const sections = {};
 let current = null;
 for (const line of text.split('\n')) {
@@ -53,6 +53,18 @@ for (const row of sections['Render evidence'] || []) {
   if (!/\.png$/i.test(shot)) problems.push(`Render evidence for ${cells[0]} is not a .png path or "unavailable: <error>"`);
   else if (!fileOk(shot, 8000)) problems.push(`screenshot ${shot} is missing or under 8 KB (probably blank)`);
 }
+// Checklist: every check that is not automatic needs a verdict and evidence.
+const CATALOG = JSON.parse(readFileSync(new URL('../assets/checks.json', import.meta.url), 'utf8'));
+const manual = CATALOG.filter(c => c.verify !== 'auto');
+const answers = {};
+for (const row of sections['Checklist'] || []) {
+  const cells = row.split('|').slice(1, -1).map(c => c.trim());
+  if (/^[A-Z]{2}-\d{2}$/.test(cells[0] || '')) answers[cells[0]] = {verdict: (cells[2] || '').toLowerCase(), evidence: cells[3] || ''};
+}
+const unanswered = manual.filter(c => !answers[c.id] || !/^(pass|fail|n\/a)$/.test(answers[c.id].verdict) || !answers[c.id].evidence);
+if (unanswered.length) problems.push(`Checklist: ${unanswered.length} of ${manual.length} checks lack a pass/fail/n/a verdict with evidence (${unanswered.slice(0, 6).map(c => c.id).join(', ')}${unanswered.length > 6 ? ', …' : ''})`);
+const blockFails = manual.filter(c => c.severity === 'block' && answers[c.id]?.verdict === 'fail').map(c => c.id);
+
 // Checker result: path to the saved check-page.mjs JSON, or unavailable.
 const checker = value('Checker result', 'JSON');
 let checkerClean = false;
@@ -60,7 +72,7 @@ if (!checker) problems.push('Checker result needs "- JSON: <path to saved check-
 else if (!/^unavailable:/i.test(checker)) {
   const f = resolve(dir, checker.replace(/`/g, ''));
   if (!existsSync(f)) problems.push(`checker JSON ${checker} does not exist`);
-  else { try { const j = JSON.parse(readFileSync(f, 'utf8')); checkerClean = Array.isArray(j.failures) && j.failures.length === 0; } catch { problems.push(`checker JSON ${checker} is not valid JSON`); } }
+  else { try { const j = JSON.parse(readFileSync(f, 'utf8')); checkerClean = Array.isArray(j.failures) && j.failures.length === 0 && !(j.not_run || []).length; } catch { problems.push(`checker JSON ${checker} is not valid JSON`); } }
 }
 // Structural revision: before and after evidence must exist (screenshots, or source excerpts when rendering failed).
 for (const key of ['Before', 'After']) {
@@ -73,7 +85,8 @@ const statusLine = (sections['Status'] || []).map(l => l.trim()).find(l => l);
 const status = statusLine?.match(/^(DONE_WITH_CONCERNS|DONE|BLOCKED)\b/)?.[1];
 if (!status) problems.push('Status must start with DONE, DONE_WITH_CONCERNS or BLOCKED');
 if (status === 'DONE' && renderUnavailable) problems.push('Status is DONE but rendering was unavailable: use DONE_WITH_CONCERNS');
-if (status === 'DONE' && !checkerClean) problems.push('Status is DONE but the checker JSON is missing or has failures: fix them or use DONE_WITH_CONCERNS');
+if (status === 'DONE' && !checkerClean) problems.push('Status is DONE but the checker JSON is missing, has block failures, or has checks that did not run: fix them or use DONE_WITH_CONCERNS');
+if (status === 'DONE' && blockFails.length) problems.push(`Status is DONE but block-severity checklist items failed (${blockFails.join(', ')}): fix them or use DONE_WITH_CONCERNS`);
 if (status === 'BLOCKED' && !/["`].+["`]/.test(statusLine)) problems.push('BLOCKED must quote the exact error that blocked you');
 
 if (problems.length) { console.log('FAIL\n' + problems.map(p => '- ' + p).join('\n')); process.exit(1); }

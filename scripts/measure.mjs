@@ -48,7 +48,7 @@ function collect() {
   const display = firstScreen.sort((a, b) => parseFloat(cs(b).fontSize) - parseFloat(cs(a).fontSize))[0] || h1;
   const paras = [...document.querySelectorAll('main p, body p')].filter(p => visible(p) && p.textContent.trim().length > 80);
   const bodyP = paras[0] || document.body;
-  const measure = p => { const s = cs(p); const chW = parseFloat(s.fontSize) * 0.5; return Math.round(p.getBoundingClientRect().width / chW); };
+  const measure = p => { const lh = parseFloat(cs(p).lineHeight) || parseFloat(cs(p).fontSize) * 1.4; const lines = Math.round(p.getBoundingClientRect().height / lh); return lines >= 2 ? Math.round(p.textContent.trim().length / lines) : null; };
   const header = document.querySelector('header') || document.querySelector('nav');
   const famCount = {};
   for (const el of document.querySelectorAll('body *')) {

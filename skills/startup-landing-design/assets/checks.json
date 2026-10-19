@@ -1,0 +1,947 @@
+[
+ {
+  "id": "PS-01",
+  "check": "The first screen says who it is for, what changes for them and how, in plain words.",
+  "verify": "shot",
+  "severity": "block",
+  "credit": [
+   "SLL",
+   "GST"
+  ]
+ },
+ {
+  "id": "PS-02",
+  "check": "A stranger can say what the product does after five seconds on the first screen.",
+  "verify": "shot",
+  "severity": "block",
+  "credit": [
+   "GST"
+  ]
+ },
+ {
+  "id": "PS-03",
+  "check": "The hero artifact is the product or its real output, not decoration.",
+  "verify": "shot",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "PS-04",
+  "check": "Each of the visitor's first three doubts is answered by a specific artifact on the page.",
+  "verify": "record",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "PS-05",
+  "check": "Every section tells the visitor something the sections above did not; repeated claims are cut.",
+  "verify": "record",
+  "severity": "warn",
+  "credit": [
+   "SLL",
+   "GST"
+  ]
+ },
+ {
+  "id": "PS-06",
+  "check": "There is one primary action, worded the same wherever it appears.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "GST"
+  ]
+ },
+ {
+  "id": "PS-07",
+  "check": "Questions to the user carried a recommended default; unanswered ones were assumed and logged.",
+  "verify": "record",
+  "severity": "warn",
+  "credit": [
+   "MP"
+  ]
+ },
+ {
+  "id": "PS-08",
+  "check": "Two structurally different hero variants were compared and scored before any code.",
+  "verify": "record",
+  "severity": "block",
+  "credit": [
+   "SLL",
+   "GST",
+   "AFD"
+  ]
+ },
+ {
+  "id": "PS-09",
+  "check": "Two references serve different jobs, one counterexample is named, and what is not borrowed is stated.",
+  "verify": "record",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "PS-10",
+  "check": "The page starts from one archetype recipe and records where it departs from it.",
+  "verify": "record",
+  "severity": "warn",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "HR-01",
+  "check": "The headline and primary action are visible without scrolling at 1440×900 and 390×844.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "GST"
+  ]
+ },
+ {
+  "id": "HR-02",
+  "check": "A centred headline above a framed screenshot is used only with a product reason in the record.",
+  "verify": "shot",
+  "severity": "block",
+  "credit": [
+   "SLL",
+   "AFD"
+  ]
+ },
+ {
+  "id": "HR-03",
+  "check": "The headline has no single-word last line at any of the three widths.",
+  "verify": "shot",
+  "severity": "warn",
+  "credit": [
+   "IMP",
+   "VWG"
+  ]
+ },
+ {
+  "id": "HR-04",
+  "check": "A headline above about 6.5rem is the signature of the page and keeps each line to three words or fewer.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP",
+   "SLL"
+  ]
+ },
+ {
+  "id": "HR-05",
+  "check": "The primary action names what the visitor will do, not \"Get started\" or \"Learn more\" alone.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP",
+   "GST",
+   "VWG"
+  ]
+ },
+ {
+  "id": "HR-06",
+  "check": "The hero is sized with svh/dvh or content, not a fixed 100vh that clips under mobile browser bars.",
+  "verify": "code",
+  "severity": "warn",
+  "credit": [
+   "EK"
+  ]
+ },
+ {
+  "id": "HR-07",
+  "check": "Nothing in the hero waits for an animation before it can be read.",
+  "verify": "shot",
+  "severity": "block",
+  "credit": [
+   "SLL",
+   "IMP"
+  ]
+ },
+ {
+  "id": "TY-01",
+  "check": "Exactly one h1.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "GST",
+   "VWG"
+  ]
+ },
+ {
+  "id": "TY-02",
+  "check": "Heading levels never skip (no h1 → h3).",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "IMP",
+   "VWG"
+  ]
+ },
+ {
+  "id": "TY-03",
+  "check": "The h1 and the first h2 are each at least 1.25× the body size.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "IMP",
+   "GST"
+  ]
+ },
+ {
+  "id": "TY-04",
+  "check": "At least two font weights carry the hierarchy.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "TY-05",
+  "check": "Headline letter-spacing is no tighter than −0.04em.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "TY-06",
+  "check": "Text above 14px is not tracked wider than 0.12em.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "TY-07",
+  "check": "Body text is at least 16px on phones.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "GST",
+   "IMP"
+  ]
+ },
+ {
+  "id": "TY-08",
+  "check": "No readable text below 11px.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "IMP",
+   "GST"
+  ]
+ },
+ {
+  "id": "TY-09",
+  "check": "Body paragraphs stay under about 80 characters per line.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP",
+   "AFD"
+  ]
+ },
+ {
+  "id": "TY-10",
+  "check": "Body line-height is at least 1.35.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "TY-11",
+  "check": "No paragraph is set in all caps.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "TY-12",
+  "check": "A display face that is everywhere (Inter, Space Grotesk, Fraunces, Roboto, Poppins, Montserrat) has a stated reason.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP",
+   "GST"
+  ]
+ },
+ {
+  "id": "TY-13",
+  "check": "Each face has a role (display, text, data); a family is not added just to have two.",
+  "verify": "record",
+  "severity": "warn",
+  "credit": [
+   "AFD",
+   "SLL"
+  ]
+ },
+ {
+  "id": "LY-01",
+  "check": "No horizontal scroll at 390px.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "GST",
+   "VWG"
+  ]
+ },
+ {
+  "id": "LY-02",
+  "check": "No horizontal scroll at 320px.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "EK"
+  ]
+ },
+ {
+  "id": "LY-03",
+  "check": "No text is cut off by its container.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "LY-04",
+  "check": "Body text keeps at least 12px from the screen edge on phones.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "LY-05",
+  "check": "Sections do not all share one padding; spacing changes where the reading task changes.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP",
+   "SLL"
+  ]
+ },
+ {
+  "id": "LY-06",
+  "check": "No boxed card sits inside another boxed card.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "LY-07",
+  "check": "Density changes down the page on purpose: open, dense, quiet, active, short.",
+  "verify": "shot",
+  "severity": "warn",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "LY-08",
+  "check": "In-page anchor targets are not hidden under a sticky header.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "LY-09",
+  "check": "A footer exists and holds real destinations.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "LY-10",
+  "check": "At 768px nothing is a cramped leftover of the desktop grid.",
+  "verify": "shot",
+  "severity": "warn",
+  "credit": [
+   "SLL",
+   "GST"
+  ]
+ },
+ {
+  "id": "CO-01",
+  "check": "Text meets WCAG AA contrast (4.5:1, or 3:1 for large text).",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "IMP",
+   "VWG",
+   "GST"
+  ]
+ },
+ {
+  "id": "CO-02",
+  "check": "No gradient-filled text.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP",
+   "AFD"
+  ]
+ },
+ {
+  "id": "CO-03",
+  "check": "No coloured glow or halo used as decoration.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "CO-04",
+  "check": "Depth does not come from a hairline border plus a wide soft shadow on every surface.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "CO-05",
+  "check": "The ground colour is chosen from where the product is used; cream with a serif display needs a reason.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP",
+   "AFD"
+  ]
+ },
+ {
+  "id": "CO-06",
+  "check": "Accent colour marks state or action and is not sprinkled for decoration.",
+  "verify": "shot",
+  "severity": "warn",
+  "credit": [
+   "GST"
+  ]
+ },
+ {
+  "id": "CO-07",
+  "check": "The theme-color meta matches the page background.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "TT-01",
+  "check": "No row of three equal cards with short adjective headings standing in for a product explanation.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "GST",
+   "AFD",
+   "SLL"
+  ]
+ },
+ {
+  "id": "TT-02",
+  "check": "No icon tile stacked above every card heading.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "TT-03",
+  "check": "No small tracked-caps label above nearly every section heading.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP",
+   "AFD"
+  ]
+ },
+ {
+  "id": "TT-04",
+  "check": "Section numbers appear only on content that is a real sequence.",
+  "verify": "shot",
+  "severity": "warn",
+  "credit": [
+   "IMP",
+   "AFD"
+  ]
+ },
+ {
+  "id": "TT-05",
+  "check": "No thick coloured stripe down one side of cards or callouts.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP",
+   "GST"
+  ]
+ },
+ {
+  "id": "TT-06",
+  "check": "No pulsing dot, blinking cursor or marquee on content that is not live.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "TT-07",
+  "check": "No stock marketing verbs (seamless, supercharge, unleash, revolutionize, cutting-edge, next-gen).",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP",
+   "GST"
+  ]
+ },
+ {
+  "id": "TT-08",
+  "check": "No grid, dot or stripe background used as filler.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "TT-09",
+  "check": "Replacing the logo would not turn this into another company's page.",
+  "verify": "record",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "TT-10",
+  "check": "The signature idea still works if the palette changes.",
+  "verify": "record",
+  "severity": "warn",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "TT-11",
+  "check": "No referenced site's recognisable treatment (mascot, lighting, layout) is reproduced.",
+  "verify": "record",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "MO-01",
+  "check": "With reduced motion, nothing moves and nothing is hidden.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "VWG",
+   "EK",
+   "SLL"
+  ]
+ },
+ {
+  "id": "MO-02",
+  "check": "After loading and one scroll, no text is still invisible.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "MO-03",
+  "check": "No transition: all.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "VWG",
+   "EK"
+  ]
+ },
+ {
+  "id": "MO-04",
+  "check": "Only transform, translate, scale, rotate and opacity animate; never layout properties.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "VWG",
+   "IMP"
+  ]
+ },
+ {
+  "id": "MO-05",
+  "check": "Nothing large loops forever without a way to pause it.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "MO-06",
+  "check": "Overshoot or bounce easing appears only in playful archetypes; entrances never start from scale(0) or ease in.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "IMP",
+   "EK"
+  ]
+ },
+ {
+  "id": "MO-07",
+  "check": "Hover-only effects sit behind (hover:hover) and (pointer:fine).",
+  "verify": "code",
+  "severity": "warn",
+  "credit": [
+   "EK"
+  ]
+ },
+ {
+  "id": "MO-08",
+  "check": "Staggers stay between 30 and 80ms and never block input.",
+  "verify": "code",
+  "severity": "warn",
+  "credit": [
+   "EK"
+  ]
+ },
+ {
+  "id": "MO-09",
+  "check": "Every animation has a written contract: trigger, purpose, fallback, duration, easing.",
+  "verify": "record",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "MO-10",
+  "check": "Text that must be read moves into place rather than fading in.",
+  "verify": "code",
+  "severity": "warn",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "MB-01",
+  "check": "The viewport meta never disables zoom.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "VWG",
+   "EK"
+  ]
+ },
+ {
+  "id": "MB-02",
+  "check": "Header, nav and boxed buttons are at least 44px tall.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "GST"
+  ]
+ },
+ {
+  "id": "MB-03",
+  "check": "Every other control is at least 24px tall.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "GST",
+   "VWG"
+  ]
+ },
+ {
+  "id": "MB-04",
+  "check": "Inputs use at least 16px text, so phones do not zoom on focus.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "EK",
+   "VWG"
+  ]
+ },
+ {
+  "id": "MB-05",
+  "check": "If the nav collapses on phones, a working menu control replaces it.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "GST"
+  ]
+ },
+ {
+  "id": "MB-06",
+  "check": "Dense artifacts are recomposed for phones, not shrunk.",
+  "verify": "shot",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "MB-07",
+  "check": "Fixed or full-bleed elements respect safe-area insets.",
+  "verify": "code",
+  "severity": "warn",
+  "credit": [
+   "VWG",
+   "EK"
+  ]
+ },
+ {
+  "id": "MB-08",
+  "check": "At 200% zoom (720px at 2×) the page still has no horizontal scroll.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "AX-01",
+  "check": "Every link and button has an accessible name.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "AX-02",
+  "check": "Every image has alt text, empty only when decorative.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "AX-03",
+  "check": "Decorative SVGs are hidden from assistive tech; meaningful ones are labelled.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "AX-04",
+  "check": "Every focusable control looks different when focused from the keyboard.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "AX-05",
+  "check": "Nothing is clickable without being a link or button.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "AX-06",
+  "check": "Every form control has a label.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "AX-07",
+  "check": "The page has a main landmark.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "AX-08",
+  "check": "The html element declares a language.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "AX-09",
+  "check": "No script errors or console errors while loading.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "IMP",
+   "GST"
+  ]
+ },
+ {
+  "id": "AX-10",
+  "check": "Links point somewhere real: no empty href, \"#\" or missing anchor or file.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "AX-11",
+  "check": "No broken images.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "AX-12",
+  "check": "Results of local actions are announced (aria-live or role=status).",
+  "verify": "code",
+  "severity": "warn",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "PF-01",
+  "check": "Images declare width and height, or an aspect-ratio.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "PF-02",
+  "check": "Images below the first screen load lazily.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "PF-03",
+  "check": "Web fonts use font-display: swap (or optional).",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "VWG"
+  ]
+ },
+ {
+  "id": "PF-04",
+  "check": "The first load transfers under about 2.5 MB.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "HP-01",
+  "check": "No customer logos or testimonials that were not supplied and verified.",
+  "verify": "record",
+  "severity": "block",
+  "credit": [
+   "SLL",
+   "GST"
+  ]
+ },
+ {
+  "id": "HP-02",
+  "check": "Every number has a source or is labelled illustrative.",
+  "verify": "record",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "HP-03",
+  "check": "Illustrative interfaces say so on the page.",
+  "verify": "shot",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "HP-04",
+  "check": "The primary action leads somewhere real or produces a visible local result.",
+  "verify": "record",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "PR-01",
+  "check": "Every screenshot listed as evidence was opened, is not blank and is the width it claims.",
+  "verify": "record",
+  "severity": "block",
+  "credit": [
+   "IMP"
+  ]
+ },
+ {
+  "id": "PR-02",
+  "check": "One structural revision was made after rendering, with before and after evidence.",
+  "verify": "record",
+  "severity": "block",
+  "credit": [
+   "SLL",
+   "GST"
+  ]
+ },
+ {
+  "id": "PR-03",
+  "check": "The hero scores were redone after the revision, with what still keeps it from a 10.",
+  "verify": "record",
+  "severity": "warn",
+  "credit": [
+   "GST"
+  ]
+ },
+ {
+  "id": "PR-04",
+  "check": "verify-record.mjs exits 0 and the final reply ends with the record's status line.",
+  "verify": "record",
+  "severity": "block",
+  "credit": [
+   "GST",
+   "IMP",
+   "ASC"
+  ]
+ }
+]

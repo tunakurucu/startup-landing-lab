@@ -1,6 +1,6 @@
 ---
 name: startup-landing-design
-description: Design, build and verify a distinctive startup landing page from dated startup evidence, a product-specific decision record, archetype recipes, a default-layout gate run before and after building, and rendered checks. Use for a new startup homepage, a landing-page redesign, or a request to avoid generic AI website patterns. Preserves existing brand and framework constraints.
+description: Design, build and verify a distinctive startup landing page from dated startup evidence, a product-specific decision record, archetype recipes and 100 checks (64 automatic, 36 judged from screenshots, code or the record) run before and after building. Use for a new startup homepage, a landing-page redesign, or a request to avoid generic AI website patterns. Preserves existing brand and framework constraints.
 license: MIT
 metadata:
   version: "0.3"
@@ -10,7 +10,7 @@ metadata:
 
 Build a working page and a filled `DESIGN-RECORD.md` beside it. Copy [the decision record](assets/decision-record.md) there first and fill it as you go. References are dated evidence for decisions, not layouts to reproduce.
 
-**Done means `node scripts/verify-record.mjs <page-dir>` exits 0.** It fails on any empty field, missing screenshot, missing checker output or missing before/after evidence. Never tell the user the page is finished before it passes. Spend at most a third of your effort on steps 1–3; most of the value is in building, rendering and revising.
+**Done means `node scripts/verify-record.mjs <page-dir>` exits 0.** It fails on any empty field, missing screenshot, missing checker output, missing before/after evidence or any of the [100 checks](references/checklist.md) left unanswered. Never tell the user the page is finished before it passes. Spend at most a third of your effort on steps 1–3; most of the value is in building, rendering and revising.
 
 ## 1. Interpret the product
 
@@ -40,7 +40,7 @@ This is one continuous sequence. Do not stop partway, and do not skip a step bec
 
 1. **Render.** Run `scripts/render.sh <url-or-file> <page-dir>/shots`. It uses agent-browser if present, otherwise Playwright. If neither exists, install Playwright in a scratch folder outside the project (`npm i playwright && npx playwright install chromium`). If rendering still fails, write `unavailable: "<exact error>"` in Render evidence and continue.
 2. **Look.** Open every PNG. Confirm it is not blank and shows the hero at its width; recapture if not. Write what you checked in each.
-3. **Check.** Run `node scripts/check-page.mjs <url-or-html> > <page-dir>/check.json`. Fix every failure, rerun, and record what you fixed and which warnings you keep. Read [visual QA](references/visual-qa.md). If `npx --no-install impeccable detect <dir> --json` works, exit 2 means findings to record by rule ID and exit 1 means "not run". Record optional tools that need the network as "not run: offline" when offline.
+3. **Check.** Run `node scripts/check-page.mjs <url-or-html> > <page-dir>/check.json`: 64 automatic checks. Fix every block failure, rerun, and record what you fixed and the product reason for each warning you keep. Then answer the other 36 in the record's Checklist from the screenshots, code and record. Read [visual QA](references/visual-qa.md). If `npx --no-install impeccable detect <dir> --json` works, exit 2 means findings to record by rule ID and exit 1 means "not run". Record optional tools that need the network as "not run: offline" when offline.
 4. **Gate again.** Run the [detector](references/default-detector.md) on the screenshots (or on the source if rendering failed) and fill in Gate after render.
 5. **Revise once, structurally.** Name the weakest explanation or most template-like decision, change structure (section order, hero composition, artifact, density), not just styling, then rerender and record before/after paths and the new score.
 6. **Verify.** Run `node scripts/verify-record.mjs <page-dir>` and fix whatever it reports. End your reply with the status line from the record: `DONE`, `DONE_WITH_CONCERNS: <what is unverified>` or `BLOCKED: "<quoted error>"`.

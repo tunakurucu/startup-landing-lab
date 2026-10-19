@@ -36,12 +36,17 @@ Implemented artifact: two workflow examples, structured/informal comparison and 
 
 ## Gate warnings we kept, and why
 
-The v0.3 detector warns on three choices these demos make. Each stays, with the reason the gate asks for:
+The skill's checker runs 64 automatic checks on every page in CI. The gallery passes all of them. The demos keep five warnings, each with the product reason the checklist asks for; `tests/browser/skill-gate.spec.ts` fails if any other warning appears.
 
-- **Relayline uses Inter as its display face.** The identity is meant to come from the trace and the monospace identifiers, so the display face is deliberately neutral. A more characterful grotesque would compete with the instrument.
-- **Fieldwork pairs a cream ground with a serif display.** The product's artifact is a written brief; the page reads like the document it sells. The serif does the editorial work and the ground is the paper it sits on.
-- **Sidequest uses a cream ground.** The cards are paper and the ritual is offline making; the ground is the table they are dealt on. The display face is a grotesque, not a serif, and the ground changes colour with each brief.
-- **All three use small tracked labels above sections.** Relayline's and Fieldwork's number real sequences; Sidequest's are tone, and are the weakest case of the three.
+| Demo | Check | Why it stays |
+| --- | --- | --- |
+| Relayline | TY-12 common display face (Inter) | Identity comes from the trace and the monospace identifiers; the display face is deliberately neutral so it does not compete with the instrument. |
+| Sidequest | TT-03 tracked-caps label above every section | The labels set the tone of a small ritual. This is the weakest of the five reasons; the first one to remove. |
+| Sidequest | MO-06 overshoot easing | A playful archetype, and the bounce only plays after an explicit "Another little idea". |
+| Fieldwork | CO-05 cream ground with a serif display | The product's artifact is a written brief; the page reads like the document it sells. |
+| Fieldwork | TT-03 tracked-caps label above every section | The labels number real chapters (I, II, III) of one argument. |
+
+Fixed rather than kept, when the v0.3 checker first ran: 8–10px labels raised to 11px on every page, 19px nav buttons raised to 44px, headline tracking loosened to −0.04em, the gallery's display face changed from Inter to Schibsted Grotesk, paragraph measure capped, a thick side stripe on the evidence note replaced, a heading-level skip on the demos page, theme-color following each page, and a 13px select raised to 16px.
 
 ## Motion contracts
 
