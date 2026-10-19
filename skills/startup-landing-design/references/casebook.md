@@ -98,3 +98,63 @@ Transfer: Structure a broad platform by customer decisions. Use a large visual f
 
 Avoid/limit: This mature platform’s breadth is inappropriate for a narrow early-stage product. Homepage claims were observed, not independently verified.
 
+## LightSprint · workflow-theater
+
+https://lightsprint.ai/ · desktop-audit
+
+A collaborative agent workflow staged as an orange-and-charcoal product scene, from request to review.
+
+Observed: Centered two-line sans heading and paired Book demo / Start for free actions sit above a broad orange, charcoal and gray textured field. A sample task composer and task boards animate over that field. A narrow announcement strip and sticky dark navigation frame the opening. Clicked Automated QA and testing in the five-step sequence. Its selected indicator moved and the adjacent scene changed to a QA panel listing a merge conflict, potential security issues and design-guideline warning. No task was submitted. The scene also advanced as the page scrolled.
+
+Transfer: Stage a complex process as a sequence of decisions and visible artifacts. Reuse a coherent product world across hero, walkthrough and proof. Distinguish illustrative task states from a live execution claim.
+
+Avoid/limit: Long scroll-linked scenes can obscure content when a capture does not trigger reveal states. Decorative task chrome and dense low-contrast labels need separate small-screen and accessibility review.
+
+## Palette · expressive-world
+
+https://palettelabs.com/ · desktop-audit
+
+A changing media stage leads into a long, modular explanation of generation, editing and model choice.
+
+Observed: White navigation surrounds a nearly full-viewport dark media canvas. Large white sans type overlays glossy abstract footage near the lower left; purple Book a call and outlined Explore actions sit on the lower right. The short verb in the headline changes with the selected clip. Selected the Ink bloom hero clip. The selected checkbox moved from Oil sheen to Ink bloom, the abstract footage changed from an oil surface to purple-blue ink and the headline changed from educates to sells. The action remained on the homepage; no generation was submitted.
+
+Transfer: Let changing examples demonstrate the range of output without changing the core promise. Use alternating visual and text chapters to pace a broad creative tool. Offer a concrete API example after visual storytelling for technical buyers.
+
+Avoid/limit: A rich media-first pitch loses explanatory evidence when clips fail; some text is placed over moving imagery. The long capability inventory can dilute the primary job for a narrow product.
+
+## Sherpa · workflow-theater
+
+https://www.withsherpa.ai/ · desktop-audit
+
+A calm website-management story makes agent work inspectable through sample requests, approvals and ownership.
+
+Observed: Centered black sans statement, short ownership-focused explanation and orange Get started action sit on a warm ivory ground. Below, a large browser-like paper sheet has a peelable orange corner; the alternative reveals an agent basecamp illustration. Clicked the hero peel control: its accessible description changed to Return to the website preview and the illustration showed an orange agent basecamp. Selected Ship three new pricing plans in the request tabs: selected state and sample preview changed. No approval button or real customer site was operated.
+
+Transfer: Make a service promise tangible with a believable reviewable artifact. Separate illustrative examples from verified customer outcomes. Answer switching and ownership objections within the main narrative.
+
+Avoid/limit: The interface mockups resemble live integrations; captions must keep sample data unmistakable. Numerous examples add length before a buyer can judge actual implementation.
+
+## Nori · immersive-editorial
+
+https://www.norirobotics.com/ · desktop-audit
+
+A robot-scale hero leads from a physical product image to task examples, hardware specifications and a direct order action.
+
+Observed: The robot fills most of a sage-green opening field. Cream badges mark fall 2026 shipping and YC backing; chunky dark NORI A3 lettering and a $1,688 claim anchor the left. Contact and Order remain in a small top bar. Selected Fetching from the fridge in the everyday-task tabs. The selected tab changed from Helping in the kitchen and the task media container changed its description; the visible media was black in that browser state, so the specific action in the clip was not verified. No order or contact form was submitted.
+
+Transfer: Let the physical artifact dominate the first impression, then provide task and specification evidence. Keep price and fulfillment timing beside the purchase action. Treat a product demo as evidence only when its media actually plays.
+
+Avoid/limit: A cinematic page depends heavily on media playback; failed clips weaken proof of capability. Claimed task performance, shipping and specifications are company statements, not independent tests.
+
+## Cyclon · functional-entrance
+
+https://cyclon.ai/ · desktop-audit
+
+A short waitlist page uses a single phone image and three plain-language capabilities to introduce a new device.
+
+Observed: Centered, bold two-line statement on white with brief explanatory copy, an email waitlist form and YC backing directly beneath. A tall front-view phone image extends below the fold; navigation is only the logo and About us. Opened About us from the header; navigation reached /about and displayed founders and background. The waitlist form was visible but no email was entered or submitted. No product demonstration was available on the homepage.
+
+Transfer: Use a single clear action when the product is still collecting interest. Give a new hardware concept a recognizable physical anchor. Keep early claims proportionate to what a page can show.
+
+Avoid/limit: The page leaves product reality, availability and proof largely unanswered. A phone render and capability statements are not evidence of a functioning device.
+
