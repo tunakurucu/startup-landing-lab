@@ -10,6 +10,7 @@ for(const size of [{width:1440,height:900},{width:768,height:1024},{width:390,he
   for(const route of routes){test(`${route} renders without overflow and has accessible structure`,async({page})=>{
    const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('#'+route);await expect(page.locator('h1')).toHaveCount(1);
    await expect(page.locator('footer')).toBeVisible();
+   await page.evaluate(()=>document.fonts.ready); // measure after the self-hosted faces have swapped in
    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBeTruthy();
    expect(errors).toEqual([]);
    const a11y=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();

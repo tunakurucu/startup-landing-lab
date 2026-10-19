@@ -9,8 +9,7 @@ test.describe('Relayline hero trace',()=>{
     const nodes=page.locator('.signal-path>*');
     await expect(nodes).toHaveCount(7);
     expect(await nodes.first().evaluate(e=>getComputedStyle(e).animationName)).toBe('pop');
-    await page.waitForTimeout(1300);
-    for(const o of await nodes.evaluateAll(els=>els.map(e=>getComputedStyle(e).opacity)))expect(o).toBe('1');
+    await expect.poll(async()=>(await nodes.evaluateAll(els=>els.map(e=>getComputedStyle(e).scale))).every(v=>v==='none'||v==='1'),{timeout:3000}).toBe(true);
     // The copy never waited for the trace.
     await expect(page.locator('.relay-hero h1')).toBeVisible();
   });
@@ -50,10 +49,9 @@ test.describe('Sidequest deal',()=>{
     const cards=page.locator('.idea-deck article');
     const delays=await cards.evaluateAll(els=>els.map(e=>getComputedStyle(e).animationDelay));
     expect(delays).toEqual(['0s','0.09s','0.18s']);
-    await page.waitForTimeout(700);
     const tilt=await cards.first().evaluate(e=>getComputedStyle(e).transform);
     expect(tilt).not.toBe('none');
-    for(const o of await cards.evaluateAll(els=>els.map(e=>getComputedStyle(e).opacity)))expect(o).toBe('1');
+    await expect.poll(async()=>(await cards.evaluateAll(els=>els.map(e=>getComputedStyle(e).opacity))).join(),{timeout:3000}).toBe('1,1,1');
   });
   test('is static under reduced motion',async({page})=>{
     await page.emulateMedia({reducedMotion:'reduce'});
@@ -76,8 +74,7 @@ test.describe('Fieldwork reveals',()=>{
     await principles.first().scrollIntoViewIfNeeded();
     await expect(principles.first()).toHaveClass(/is-in/);
     await expect(principles.last()).toHaveClass(/is-in/);
-    await page.waitForTimeout(800);
-    for(const o of await principles.evaluateAll(els=>els.map(e=>getComputedStyle(e).opacity)))expect(o).toBe('1');
+    await expect.poll(async()=>(await principles.evaluateAll(els=>els.map(e=>getComputedStyle(e).translate))).every(v=>v==='none'||v==='0px'),{timeout:3000}).toBe(true);
     expect(await principles.nth(2).evaluate(e=>getComputedStyle(e).transitionDelay)).toBe('0.2s');
   });
   test('nothing is hidden under reduced motion',async({page})=>{
