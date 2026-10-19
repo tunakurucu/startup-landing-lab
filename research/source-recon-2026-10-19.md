@@ -1,6 +1,6 @@
 # San Francisco reference recon · 2026-10-19
 
-**Scope update:** This comparison recon predates the decision to restrict further new research to 2026 YC companies. The active [2026 YC queue](2026-yc-audit-queue.md) supersedes these four as future audit targets.
+**Scope update:** This comparison recon predates the decision to restrict further new research to 2026 YC companies. The [2026 YC selection](2026-yc-audit-queue.md) superseded these four; five selected companies now have rendered audits.
 
 These four candidates extend the research queue. I read their public first-party homepage content and existing company evidence, but the rendered browser timed out while opening new sites. This is **source recon, not a visual or interaction audit**. No record has been added to `sites.json`, and all four remain unassessed in the gallery. Headings and ordering below reflect the accessible page text; repeated or conditional components may appear in a different visual order.
 
