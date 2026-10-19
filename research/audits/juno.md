@@ -8,7 +8,7 @@ A warm portrait photograph in an inset hero card, then photo-led step cards with
 
 ## Company evidence
 
-YC: verified-yc; batch: X26.
+YC: verified-yc; batch: P26.
 
 - desktop: 1440 × 900: rendered and measured from batch captures; live visit returned HTTP 502, no control operated
 - tablet: not inspected

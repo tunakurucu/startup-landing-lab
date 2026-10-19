@@ -118,6 +118,7 @@
         "enum": [
           "yc",
           "a16z-speedrun",
+          "a16z",
           "pear"
         ],
         "description": "Which accelerator or fund page verified this company. yc_status stays the YC-specific field."

@@ -8,7 +8,7 @@ A warm, photographic hero with a large light serif headline sells the guest's fe
 
 ## Company evidence
 
-YC: verified-yc; batch: X26.
+YC: verified-yc; batch: P26.
 
 - desktop: 1440 × 900: rendered, scrolled, one control operated
 - tablet: not inspected

@@ -8,7 +8,7 @@ An architectural-sketch hero hands off to feature cards that act out each step o
 
 ## Company evidence
 
-YC: verified-yc; batch: X26.
+YC: verified-yc; batch: P26.
 
 - desktop: 1440 × 900: rendered, scrolled, one control operated
 - tablet: not inspected

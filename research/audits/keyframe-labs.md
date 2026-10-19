@@ -8,7 +8,7 @@ A condensed-serif headline set against a framed live avatar preview, inside a ha
 
 ## Company evidence
 
-YC: verified-yc; batch: X26.
+YC: verified-yc; batch: P26.
 
 - desktop: 1440 × 900: rendered, scrolled, one control operated
 - tablet: not inspected

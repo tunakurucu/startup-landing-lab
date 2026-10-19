@@ -8,7 +8,7 @@ A scripted live phone call with timer, waveform and captions sits directly under
 
 ## Company evidence
 
-YC: verified-yc; batch: X26.
+YC: verified-yc; batch: P26.
 
 - desktop: 1440 × 900: rendered, scrolled, one control operated
 - tablet: not inspected

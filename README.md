@@ -80,7 +80,7 @@ All three pass the skill's 64 automatic checks with no block failures (five warn
 
 ## Research you can inspect
 
-137 candidates, 94 of them from 2026 cohorts (YC W26, X26 and S26; a16z speedrun SR006; Pear), each verified on the program's own page. 52 audit records: 32 from October 19 rendered at desktop and phone width, operated, tested with reduced motion and measured; 20 earlier desktop inspections. 103 homepages carry computed-style measurements, and the recipes quote them. One finding to start with: 11 of the 32 audited sites kept visible motion running when the visitor asked for reduced motion. [Findings, method and limits](research/README.md) · [Measurements](research/measurements.md).
+248 candidate websites, 205 of them from YC (W26, P26, S26), a16z and Pear, each verified on the program's own page. 52 audit records: 32 from October 19 rendered at desktop and phone width, operated, tested with reduced motion and measured; 20 earlier desktop inspections. 211 homepages carry computed-style measurements, and the recipes quote them. One finding to start with: 11 of the 32 audited sites kept visible motion running when the visitor asked for reduced motion. [Findings, method and limits](research/README.md) · [Measurements](research/measurements.md).
 
 Tablet layouts and real-device behaviour remain unverified. This is a dated sample, not a ranking or a census. [Method, evidence and limitations](research/README.md).
 

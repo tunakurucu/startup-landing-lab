@@ -8,7 +8,7 @@ The whole homepage is staged as a macOS desktop: a menu-bar nav, scattered .mov 
 
 ## Company evidence
 
-YC: verified-yc; batch: X26.
+YC: verified-yc; batch: P26.
 
 - desktop: 1440 × 900: rendered, scrolled, one control operated
 - tablet: not inspected
