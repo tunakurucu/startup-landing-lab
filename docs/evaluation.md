@@ -1,6 +1,6 @@
 # Evaluation
 
-Evidence date: 2026-10-18. This is a qualitative engineering/design assessment, not a calibrated benchmark or a conversion study.
+Original build evaluation: 2026-10-18. Research extension: 2026-10-19. This is a qualitative engineering/design assessment, not a calibrated benchmark or a conversion study.
 
 ## What actually ran
 
@@ -9,8 +9,8 @@ Evidence date: 2026-10-18. This is a qualitative engineering/design assessment, 
 - JSON Schema, duplicate identity, catalog/audit join and internal Markdown file-link checks: passed.
 - TypeScript production build and ESLint: passed.
 - Three data integrity tests: passed.
-- 31 Playwright tests against the production build under `/startup-landing-lab/`: passed. Includes eight routes at 1440×900, 768×1024 and 390×844, reference filter combinations/reset/empty state, mobile menu and detail navigation, demo state changes and three downloads, reduced motion, and anchor inventory.
-- axe WCAG 2 A/AA and 2.1 AA checks on the 24 route/viewport initial-state combinations: zero reported violations. This does not prove full accessibility or replace assistive-technology testing.
+- 46 Playwright tests against the production build under `/startup-landing-lab/`: passed after the research extension. Includes 13 routes at 1440×900, 768×1024 and 390×844, reference filter combinations/reset/empty state, mobile menu and detail navigation, demo state changes and three downloads, reduced motion, and anchor inventory.
+- axe WCAG 2 A/AA and 2.1 AA checks on the 39 route/viewport initial-state combinations: zero reported violations. This does not prove full accessibility or replace assistive-technology testing.
 - Actual full-page desktop and mobile screenshots of the gallery and three demos were inspected. No horizontal document overflow or clipped headings was found at the tested sizes.
 
 The first preview-server attempt failed because this environment could not enumerate network interfaces with a wildcard host. Binding the production preview to 127.0.0.1 resolved it; subsequent browser runs passed. The first browser download mirror failed; Playwright's standard fallback mirror installed Chromium successfully.
@@ -47,7 +47,7 @@ The gallery uses original abstract studies rather than third-party screenshots. 
 
 ## Limits
 
-Research is smaller than the initial 12–15 deep-audit aspiration: eight records, four full-page desktop inspections and four partial desktop records. Reference-site mobile, tablet, reduced-motion and comprehensive accessibility behavior were not tested. Five Bay Area comparisons have no verified YC status; this does not establish non-YC membership. Only two comparisons are audited. Four more candidates have source-only recon and are not counted as audits. These limits are visible in the gallery and dataset.
+The research now contains 13 records: nine full-page desktop inspections and four partial desktop records. Five new full-page records are 2026 YC companies. Reference-site mobile, tablet, reduced-motion and comprehensive accessibility behavior were not tested; this does not equal 13 cross-device deep audits. Five Bay Area comparisons have no verified YC status; this does not establish non-YC membership. Only two comparisons are audited. Four older comparison candidates have source-only recon and are not counted as audits. These limits are visible in the gallery and dataset.
 
 No complete screen-reader test, cross-browser matrix, production service behavior, conversion study or external-client automatic activation test was performed. The demos are local simulations, not production startup services.
 
