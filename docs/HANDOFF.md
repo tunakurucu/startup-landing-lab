@@ -1,4 +1,4 @@
-# Maintainer handoff · v0.2.0
+# Maintainer handoff · v0.3 in progress
 
 Public repo: `tunakurucu/startup-landing-lab`. Live gallery: https://tunakurucu.github.io/startup-landing-lab/. Both GitHub Actions workflows (Validate, Publish gallery) must be green on every push to `main`.
 
@@ -23,13 +23,24 @@ Public repo: `tunakurucu/startup-landing-lab`. Live gallery: https://tunakurucu.
 
 Browser suite: 85 tests, green locally on repeated runs and in CI.
 
-## v0.3 plan
+## v0.3 (on main, not yet tagged)
 
-1. **Fix the early stop.** All three eval agents stopped before render, post-gate and revision. Make those steps produce required files and make "done" conditional on them; re-run the three briefs.
-2. **Cross-check against reference skills** (Impeccable, Emil Kowalski's skills, Vercel web-design-guidelines, gstack design-review, Matt Pocock's grill-me, Anthropic skill-creator) and fold missing checkable rules into the detector and recipes.
-3. **Research expansion:** 2026 YC / a16z / Pear candidates with source links, ~30 deep audits with measured numbers (`scripts/measure.mjs`, `measurements` schema object), so recipe values can move from *recommended* to *observed*. Needs a browser with open web access.
-4. Structural wireframe thumbnails from each record's page sequence; prerendered routes for crawlers and link previews.
-5. Client rows in `evals/run.md`: the same briefs in Claude Code, Codex and Cursor, with and without the skill.
+| Commit | What it added |
+| --- | --- |
+| `9de02d8` | Cross-check against Impeccable, gstack, Emil Kowalski, Vercel, Matt Pocock and Anthropic skills. `verify-record.mjs` decides "done"; step 6 is one continuous render → check → revise → verify sequence with a closed status line. |
+| `48b6ca6` | The 100 checks (`scripts/checks_source.py` → `assets/checks.json`, `references/checklist.md`, the decision-record table): 64 automatic in `check-page.mjs`, 36 answered in the record and enforced by `verify-record`. Gallery and demos fixed where the checks found problems; README leads with "Built on" credits. |
+| `f8e7077` | 94 verified 2026 candidates (YC W26/X26/S26, a16z speedrun SR006, Pear). |
+| `0b6c0d6`, `634dc40` | `measure.mjs` and `research/measurements.jsonl` for 103 homepages; percentiles in `research/measurements.md`; recipes quote observed values. Dark/light classification corrected from screenshots. |
+| `314ea41`, `0892685`, `62b4722` | 32 desktop+phone audits merged (52 total) with measurements; findings in `research/README.md`; casebook split by family; per-family observed medians in recipes; gallery shows a16z/Pear evidence and measurement tables. |
+
+Browser suite: 98 tests. Unit tests: 10. The gallery passes all 64 automatic checks; the demos keep five documented warnings.
+
+## Next
+
+1. Tag `v0.3.0` from the GitHub UI (this sandbox cannot push tags or create releases).
+2. Re-run the three eval briefs with v0.3 in a fresh agent, with and without the skill, and fill `evals/run.md`. The v0.2 runs stopped before rendering; v0.3's `verify-record` exists to stop that.
+3. Audit the remaining 56 measured 2026 candidates, prioritising canvas-first and editorial-platform, which have one and two records.
+4. Structural wireframe thumbnails from each record's page sequence; prerendered routes for crawlers.
 
 ## How to continue
 
@@ -39,6 +50,10 @@ npm ci && python3 -m pip install -r requirements.txt
 npm run build && npm run lint && npm test && npm run validate
 agentskills validate skills/startup-landing-design
 npx playwright install chromium && npm run test:browser
+
+# regenerate derived files after editing research/sites.json or scripts/checks_source.py
+python3 scripts/generate.py && python3 scripts/checks_source.py
+# measure homepages (numbers only): node scripts/measure.mjs list.json out.jsonl [--shots dir]
 ```
 
 Rules that have held since v0.1: never push a red `main`; one commit per block; no fabricated observations, scores or client runs; no third-party assets or screenshots; recipe numbers stay labelled *recommended* until a measurement pass makes them *observed*.
