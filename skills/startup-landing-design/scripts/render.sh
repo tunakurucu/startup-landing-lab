@@ -10,6 +10,7 @@ if command -v agent-browser >/dev/null 2>&1; then
   for size in "1440 900" "768 1024" "390 844"; do
     read -r width height <<< "$size"
     agent-browser set viewport "$width" "$height"
+    # agent-browser scroll accepts a pixel count (vercel-labs/agent-browser#501).
     # Scroll to activate in-view scenes, then return to the top before the full-page capture.
     for _ in 1 2 3; do agent-browser scroll down "$height"; done
     agent-browser scroll up 99999

@@ -1,5 +1,18 @@
 # Evaluation
 
+## v0.2 gate baseline (2026-10-19)
+
+Production build served with `vite preview`; `check-page.mjs` used its 390px viewport. These are the **before** results, prior to the font work:
+
+| Route | one_h1 | type_system | reduced_motion_rule | no_overflow_390 | named_controls | valid_links | heading_order |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Home | PASS | **FAIL** | PASS | PASS | PASS | PASS | PASS |
+| Relayline | PASS | **FAIL** | PASS | PASS | PASS | PASS | PASS |
+| Sidequest | PASS | **FAIL** | PASS | PASS | PASS | PASS | PASS |
+| Fieldwork (`#/demo/ledger`) | PASS | **FAIL** | PASS | PASS | PASS | PASS | PASS |
+
+The CSS only declares Arial, Georgia and Courier New. The gate test is marked `fixme` until the self-hosted font block; it must be enabled with that block.
+
 Original build evaluation: 2026-10-18. Research extension: 2026-10-19. This is a qualitative engineering/design assessment, not a calibrated benchmark or a conversion study.
 
 ## What actually ran

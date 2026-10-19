@@ -10,7 +10,7 @@ The clone at `/workspace/scratch/02805d2c1737/v02` was fetched/reset to the publ
 
 - [x] Session 3 P0: skill v0.2 published at `6aa337ccab8d19fd613c67abe5bcf61064f9903c`.
 - [x] Session 4 recovery: publish this handoff as the first commit.
-- [ ] Block 1: exercise the gate on the demos, repair SPA wait/render script, improve recipes.
+- [x] Block 1: gate baseline captured (all four routes fail only type_system), SPA wait repaired, agent-browser pixel scroll syntax verified, recipe rows specified, regression tests added as fixme until font block.
 - [ ] Block 2: publish and grade three isolated evals.
 - [ ] Block 3: fonts, motion, distinct demo structure, screenshots.
 - [ ] Block 4: numeric research, conditional on remaining time.
@@ -21,6 +21,8 @@ The clone at `/workspace/scratch/02805d2c1737/v02` was fetched/reset to the publ
 P1 has three raw briefs, `evals/assertions.json` and `evals/run.md`. Three isolated Work agents were started with only the standalone skill and a raw brief. Their outputs belong outside the repo under `/workspace/scratch/02805d2c1737/eval-{queue,gift,renewal}/`. **Their runs have not yet been graded or reported as passing.** Update the table only after checking outputs, checker JSON and screenshots. Do not claim Claude Code, Cursor or standalone Codex CLI execution.
 
 The P1 files exist in a local draft commit `a2f9d8f` only. This handoff is published separately before those files. P2 (fonts, motion, skeleton revision and screenshot refresh), P3 (numeric research measurements) and release have not started. No v0.2 release tag exists.
+
+Block 1 is ready for publication after the full test gate. Its browser regression cases are intentionally marked `fixme` for the recorded `type_system` failure; unmark them in block 3. Agent-browser's documented `scroll down [px]` uses window scrolling (vercel-labs/agent-browser issue 501); our `scroll up 99999` returns to the top of normal documents.
 
 ## Next actions
 

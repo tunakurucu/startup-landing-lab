@@ -9,7 +9,10 @@ const failures=[];
 const findings={target:url,checks:[],failures};
 try {
   const page=await browser.newPage({viewport:{width:390,height:844}});
-  await page.goto(url,{waitUntil:'domcontentloaded'});
+  await page.goto(url,{waitUntil:'networkidle',timeout:15000});
+  await page.locator('h1').first().waitFor({state:'attached',timeout:5000}).catch(()=>{
+    throw new Error('Timed out waiting for h1 after networkidle; the route did not render.');
+  });
   const result=await page.evaluate(()=>{
     const all=[...document.querySelectorAll('*')];
     const headings=[...document.querySelectorAll('h1,h2,h3,h4,h5,h6')];
