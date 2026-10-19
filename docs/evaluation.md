@@ -47,7 +47,7 @@ The gallery uses original abstract studies rather than third-party screenshots. 
 
 ## Limits
 
-Research is smaller than the initial 12–15 deep-audit aspiration: eight records, three full-page desktop inspections and five partial desktop records. Reference-site mobile, tablet, reduced-motion and comprehensive accessibility behavior were not tested. Five Bay Area comparisons have no verified YC status; this does not establish non-YC membership. Only two comparisons are audited. These limits are visible in the gallery and dataset.
+Research is smaller than the initial 12–15 deep-audit aspiration: eight records, four full-page desktop inspections and four partial desktop records. Reference-site mobile, tablet, reduced-motion and comprehensive accessibility behavior were not tested. Five Bay Area comparisons have no verified YC status; this does not establish non-YC membership. Only two comparisons are audited. Four more candidates have source-only recon and are not counted as audits. These limits are visible in the gallery and dataset.
 
 No complete screen-reader test, cross-browser matrix, production service behavior, conversion study or external-client automatic activation test was performed. The demos are local simulations, not production startup services.
 
