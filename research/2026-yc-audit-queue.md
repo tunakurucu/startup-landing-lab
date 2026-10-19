@@ -1,15 +1,15 @@
-# 2026 YC audit queue
+# 2026 YC selection and audit completion
 
-Updated 2026-10-19. New research is restricted to companies in a **2026 Y Combinator batch**. Prefer San Francisco companies with different product categories and substantial public landing pages. A company's YC listing establishes batch, website and location; it does not establish the quality of its design. These are **candidates, not completed visual audits**.
+Updated 2026-10-19. New research is restricted to companies in a **2026 Y Combinator batch**. These five San Francisco companies were selected for different product categories and inspected at a 1363 × 936 desktop viewport. Their YC listings establish batch, website and location; they do not establish the quality of each design. Each now has a dated [canonical audit](sites.json) and generated readable audit. Mobile, tablet and reduced motion remain unverified.
 
-| Priority | Company | YC batch | Category and reason to inspect | Official evidence | Website |
+| Priority | Company | YC batch | Category and reason to inspect | Official evidence | Audit |
 | --- | --- | --- | --- | --- | --- |
-| 1 | LightSprint | Spring 2026 (P26) | Collaborative product development; test whether a complex agent workflow becomes understandable in a product tour. Already in the canonical candidate list. | [YC listing](https://www.ycombinator.com/companies/lightsprint) | [lightsprint.ai](https://lightsprint.ai/) |
-| 2 | Palette | Summer 2026 (S26) | Creative media platform; inspect how generated output and editing control are demonstrated. | [YC listing](https://www.ycombinator.com/companies/palette-2) | [palettelabs.com](https://palettelabs.com/) |
-| 3 | Sherpa | Spring 2026 (P26) | Website optimization; inspect how it presents experiments and proof without treating its own conversion claims as independent evidence. | [YC listing](https://www.ycombinator.com/companies/sherpa) | [withsherpa.ai](https://www.withsherpa.ai/) |
-| 4 | Nori | Summer 2026 (S26) | Consumer robotics; inspect the balance of hardware demonstration, concrete specifications, trust and purchase action. | [YC listing](https://www.ycombinator.com/companies/noril1) | [norirobotics.com](http://norirobotics.com/) |
-| 5 | Cyclon | Fall 2026 (F26) | AI-native phone; inspect how a sparse product page handles a novel physical product and availability. | [YC listing](https://www.ycombinator.com/companies/cyclon) | [cyclon.ai](https://cyclon.ai/) |
+| 1 | LightSprint | Spring 2026 (P26) | Collaborative product development; a staged agent workflow. | [YC listing](https://www.ycombinator.com/companies/lightsprint) | [Read audit](audits/lightsprint.md) |
+| 2 | Palette | Summer 2026 (S26) | Creative media platform; changing output and editing chapters. | [YC listing](https://www.ycombinator.com/companies/palette-2) | [Read audit](audits/palette.md) |
+| 3 | Sherpa | Spring 2026 (P26) | Website management; illustrative experiments and review controls. | [YC listing](https://www.ycombinator.com/companies/sherpa) | [Read audit](audits/sherpa.md) |
+| 4 | Nori | Summer 2026 (S26) | Consumer robotics; hardware scene, tasks and specifications. | [YC listing](https://www.ycombinator.com/companies/noril1) | [Read audit](audits/nori.md) |
+| 5 | Cyclon | Fall 2026 (F26) | AI-native phone; sparse waitlist page. | [YC listing](https://www.ycombinator.com/companies/cyclon) | [Read audit](audits/cyclon.md) |
 
-All five YC listings identify **San Francisco** and **founded in 2026**. Inspect the rendered desktop page from top to footer, operate a meaningful control, record exact viewport/date and limitations, and check mobile and reduced motion separately where possible. Promote a candidate to `sites.json` only when rendered evidence supports the audit. If a site has little content or a browser state fails, keep a partial record with an explicit limitation or move to another verified 2026 YC candidate. Do not use earlier-stage, non-YC or unverified-YC companies for the next new audits.
+All five YC listings identify **San Francisco** and **founded in 2026**. The rendered desktop pages were scanned from top to footer; a meaningful page control or navigation was operated on each. Cyclon had no product demonstration to test, and no waitlist submission was made. Some Palette and Nori media did not play in this browser. Each record states those limits; the audits do not imply working product capabilities, validated customer outcomes or complete accessibility.
 
 The [earlier source recon](source-recon-2026-10-19.md) documents four comparison sites selected before this scope change. It is retained for provenance, not the current audit queue.
