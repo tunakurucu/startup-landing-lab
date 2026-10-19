@@ -12,7 +12,7 @@ YC: verified-yc; batch: P25.
 
 - desktop: 1363 × 936: rendered hero, section scan and selected interaction
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Selected a hero carousel indicator and observed its selected slide change; autom
 ### Accessibility
 
 Hero slider indicators appeared as named checkboxes in the browser accessibility output. Automatic rotation, keyboard operation of the slider, video controls and reduced motion were not tested.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 48 | 42 |
+| Headline weight | 700 | 700 |
+| Headline tracking em | -0.02 | -0.02 |
+| Body px | 19 | 19 |
+| Characters per line | 49 | 37 |
+| Sections | 8 | 8 |
+| Reduced-motion rule | unverified | unverified |
 
 ## Interpretation
 

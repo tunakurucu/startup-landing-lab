@@ -6,6 +6,8 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 
 **Observed** across 103 measured startup homepages (2026-10-19): desktop h1 median 64px (middle half 55–77px, 90th percentile 95px), weight 500, tracking −0.025em; h1 about 3.8× the body size; body 17px at about 62 characters per line; phone h1 about 0.58× desktop (median 37px); two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.
 
+**Observed in this family** (9 audited sites, measured 2026-10-19: Arbital, Cactus, HeyClicky, Imperfect, Palette, Pingo, Prized, Sparkles, Voltair): desktop h1 median 77.4px at weight 500 and -0.02em; body 17px at about 51 characters per line; 7 sections; phone h1 42px; 3 of 9 on a dark ground.
+
 | Decision | Recipe |
 | --- | --- |
 | Fit | Broad suite or playful consumer system. Wrong for regulated decision under time pressure; wrong for single-purpose API. |

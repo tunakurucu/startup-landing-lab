@@ -61,3 +61,6 @@
 .measure-table thead th{font:.75rem var(--font-mono);text-transform:uppercase}
 .measure-table tbody th{color:#4c5242}
 .measure-table td{font-variant-numeric:tabular-nums}
+/* Long company names (e.g. "Applied Electrodynamics") must wrap inside narrow grid rows. */
+.row-description,.reference-row>*{min-width:0}
+.row-description h2,.detail-hero h1{overflow-wrap:anywhere;hyphens:auto}

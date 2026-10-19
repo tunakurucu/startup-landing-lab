@@ -12,7 +12,7 @@ YC: verified-yc; batch: S22.
 
 - desktop: 1363 × 936: rendered inspection
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Clicked Scrape. The action destination changed to a scrape-mode playground URL a
 ### Accessibility
 
 Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 60 | 44 |
+| Headline weight | 500 | 500 |
+| Headline tracking em | -0.005 | -0.005 |
+| Body px | 13 | 13 |
+| Characters per line | 69 | 42 |
+| Sections | 18 | 12 |
+| Reduced-motion rule | observed | observed |
 
 ## Interpretation
 

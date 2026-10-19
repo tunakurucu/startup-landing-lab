@@ -12,7 +12,7 @@ YC: verified-yc; batch: S25.
 
 - desktop: 1363 × 936: rendered hero, section scan and selected interaction
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Clicked the All systems normal control. Its accessible state expanded and reveal
 ### Accessibility
 
 The status disclosure reported collapsed/expanded states. Keyboard focus, automatic text-change announcements and reduced-motion treatment were not tested.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 24 | 24 |
+| Headline weight | 400 | 400 |
+| Headline tracking em | -0.015 | -0.015 |
+| Body px | 15 | 15 |
+| Characters per line | 53 | 46 |
+| Sections | 1 | 1 |
+| Reduced-motion rule | observed | observed |
 
 ## Interpretation
 

@@ -12,7 +12,7 @@ YC: not-verified; batch: not verified.
 
 - desktop: 1363 × 936: rendered inspection
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Opened Product menu and observed grouped workflow destinations. Escape returned 
 ### Accessibility
 
 Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 64 | 38 |
+| Headline weight | 510 | 510 |
+| Headline tracking em | -0.022 | -0.022 |
+| Body px | 14 | 14 |
+| Characters per line | 77 | 39 |
+| Sections | 6 | 4 |
+| Reduced-motion rule | observed | observed |
 
 ## Interpretation
 

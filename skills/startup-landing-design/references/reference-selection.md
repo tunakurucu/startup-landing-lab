@@ -12,6 +12,6 @@ Use a three-row decision record:
 
 Examples: transfer Resend's integration-before-feature-depth principle without its serif-on-black treatment. Transfer PostHog's navigable mental model without desktop icons or hedgehogs. Transfer Mercury's connection between ambition and product without its landscape, bank claims or signup form.
 
-Avoid selection by fame, funding or a badge. YC membership verifies cohort metadata, not design quality. The casebook has desktop evidence only, dated 2026-10-18. Mobile and motion gaps are not permission to improvise factual descriptions.
+Avoid selection by fame, funding or a badge. YC membership verifies cohort metadata, not design quality. The casebook holds 52 dated records: 32 from October 19, 2026 were rendered at desktop and phone width, operated and measured; 20 older ones are desktop observations. Where a record says something was not verified, do not fill the gap with a guess.
 
 When the full repository is available, inspect research/sites.json and the audit file. The installed skill is self-contained through casebook.md; it does not require the gallery or network.

@@ -12,7 +12,7 @@ YC: verified-yc; batch: F26.
 
 - desktop: 1363 × 936: rendered hero, full-page scan, selected sections and interaction
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Opened About us from the header; navigation reached /about and displayed founder
 ### Accessibility
 
 The waitlist input has an accessible Email address label, and there is a Skip to content link. Submission behavior, error messaging, keyboard traversal and screen-reader behavior were not tested.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 89.3 | 44 |
+| Headline weight | 600 | 600 |
+| Headline tracking em | -0.045 | -0.045 |
+| Body px | 21 | 18 |
+| Characters per line | 52 | 39 |
+| Sections | 1 | 1 |
+| Reduced-motion rule | observed | observed |
 
 ## Interpretation
 

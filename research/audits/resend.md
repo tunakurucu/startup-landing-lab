@@ -12,7 +12,7 @@ YC: verified-yc; batch: W23.
 
 - desktop: 1363 × 936: rendered inspection
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Clicked Python in the integration code chooser. The main language and nested exa
 ### Accessibility
 
 Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 96 | 64 |
+| Headline weight | 400 | 400 |
+| Headline tracking em | -0.01 | -0.01 |
+| Body px | 18 | 16 |
+| Characters per line | 53 | 43 |
+| Sections | 11 | 11 |
+| Reduced-motion rule | observed | observed |
 
 ## Interpretation
 

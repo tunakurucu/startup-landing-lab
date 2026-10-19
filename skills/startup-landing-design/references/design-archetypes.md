@@ -1,6 +1,6 @@
 # Design archetypes
 
-These are decision families, not mutually exclusive templates. Twenty dated desktop observations inform this casebook, including seven 2025 YC batch sites selected from documented design mentions and five 2026 YC sites. Some families have only one observed exemplar; treat them as hypotheses to test on the brief.
+These are decision families, not mutually exclusive templates. 52 dated records inform these families: 32 sites from 2026 YC, a16z speedrun and Pear cohorts audited at desktop and phone width on October 19, 2026, and 20 earlier desktop records. Workflow theater (14), immersive editorial (11), expressive world (10), typographic technical (7) and functional entrance (7) are well sampled; editorial platform (2) and canvas first (1) are still hypotheses to test on the brief.
 
 | Family / reference | Fit and personality | Composition and narrative | Interaction and mobile risk |
 | --- | --- | --- | --- |

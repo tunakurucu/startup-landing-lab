@@ -12,7 +12,7 @@ YC: verified-yc; batch: S25.
 
 - desktop: 1363 × 936: rendered hero, section scan and selected interaction
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Clicked Next languages in the horizontal chooser, then expanded the first FAQ. T
 ### Accessibility
 
 The language controls have descriptive button names and FAQ uses expandable buttons. App-store exits, keyboard order and any animation announcement were not tested.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 46 | 24 |
+| Headline weight | 400 | 400 |
+| Headline tracking em | -0.025 | -0.025 |
+| Body px | 16 | 16 |
+| Characters per line | 40 | 38 |
+| Sections | 8 | 7 |
+| Reduced-motion rule | observed | observed |
 
 ## Interpretation
 

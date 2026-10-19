@@ -18,7 +18,7 @@ Inspect existing code, brand and content. Write the promise as **who / what chan
 
 ## 2. Select reference jobs
 
-Read [reference selection](references/reference-selection.md), [archetypes](references/design-archetypes.md) and the relevant [casebook](references/casebook.md) entries. Record two references serving different jobs and one counterexample, each with the dated observed decision, its limit, the transferable principle and the treatment you will not borrow. Unaudited sites are leads, not evidence.
+Read [reference selection](references/reference-selection.md), [archetypes](references/design-archetypes.md) then the [casebook index](references/casebook.md) and only the casebook file for the family you are considering. Record two references serving different jobs and one counterexample, each with the dated observed decision, its limit, the transferable principle and the treatment you will not borrow. Unaudited sites are leads, not evidence.
 
 ## 3. Choose before coding
 

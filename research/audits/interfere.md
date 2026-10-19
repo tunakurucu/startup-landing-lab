@@ -12,7 +12,7 @@ YC: verified-yc; batch: S25.
 
 - desktop: 1363 × 936: rendered hero, section scan and selected interaction
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Opened the Product menu. It expanded into four audience-specific destinations fo
 ### Accessibility
 
 Skip-to-content and expanded menu state were visible in accessibility output. The illustrative issue UI and its controls were not tested for keyboard functionality or screen-reader behavior.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 56 | 36 |
+| Headline weight | 500 | 500 |
+| Headline tracking em | -0.01 | -0.01 |
+| Body px | 13 | 13 |
+| Characters per line | 60 | 60 |
+| Sections | 8 | 9 |
+| Reduced-motion rule | observed | observed |
 
 ## Interpretation
 

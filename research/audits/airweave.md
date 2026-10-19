@@ -12,7 +12,7 @@ YC: verified-yc; batch: P25.
 
 - desktop: 1363 × 936: rendered hero, section scan and selected interaction
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Clicked cURL in the hero example. The selected language changed from Python and 
 ### Accessibility
 
 The code language chooser was clickable in the rendered page; its labels were visible but not surfaced as named tabs in the accessibility tree. Keyboard, contrast and screen-reader behavior remain untested.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 80 | 41 |
+| Headline weight | 400 | 400 |
+| Headline tracking em | -0.03 | -0.03 |
+| Body px | 18.1 | 14.4 |
+| Characters per line | 79 | 43 |
+| Sections | 10 | 10 |
+| Reduced-motion rule | not_observed | not_observed |
 
 ## Interpretation
 

@@ -78,9 +78,9 @@ All three pass the skill's 64 automatic checks with no block failures (five warn
 
 ## Research you can inspect
 
-137 candidates, 94 of them from 2026 cohorts (YC W26, X26 and S26; a16z speedrun SR006; Pear), each verified on the official page. Twenty audit records so far: sixteen desktop inspections and four partial desktop field notes. Seven new 2025 YC batch companies were chosen using [documented design mentions](research/2025-praised-selection.md) and inspected live; the previous five cover [2026 YC companies in San Francisco](research/2026-yc-audit-queue.md). Seven design families. Five Bay Area comparison candidates have unverified YC status, not proven non-membership. Earlier [comparison source recon](research/source-recon-2026-10-19.md) remains outside the audited set.
+137 candidates, 94 of them from 2026 cohorts (YC W26, X26 and S26; a16z speedrun SR006; Pear), each verified on the program's own page. 52 audit records: 32 from October 19 rendered at desktop and phone width, operated, tested with reduced motion and measured; 20 earlier desktop inspections. 103 homepages carry computed-style measurements, and the recipes quote them. One finding to start with: 11 of the 32 audited sites kept visible motion running when the visitor asked for reduced motion. [Findings, method and limits](research/README.md) · [Measurements](research/measurements.md).
 
-Reference-site mobile, tablet and reduced-motion behavior remain unverified. This is a focused first edition, not exhaustive research or a ranking. [Method, evidence and limitations](research/README.md).
+Tablet layouts and real-device behaviour remain unverified. This is a dated sample, not a ranking or a census. [Method, evidence and limitations](research/README.md).
 
 The gallery uses original abstract composition studies and links to source websites. It does not redistribute third-party screenshots or assets.
 

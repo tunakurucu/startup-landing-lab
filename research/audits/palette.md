@@ -12,7 +12,7 @@ YC: verified-yc; batch: S26.
 
 - desktop: 1363 × 936: rendered hero, full-page scan, selected sections and interaction
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Selected the Ink bloom hero clip. The selected checkbox moved from Oil sheen to 
 ### Accessibility
 
 The hero choices, model rows, character samples and API examples expose named controls in the accessibility tree. Some media controls were present with playback failures; no comprehensive accessible-media or keyboard test was done.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 100.8 | 48 |
+| Headline weight | 600 | 600 |
+| Headline tracking em | -0.06 | -0.06 |
+| Body px | 18 | 16 |
+| Characters per line | 75 | 39 |
+| Sections | 10 | 9 |
+| Reduced-motion rule | observed | observed |
 
 ## Interpretation
 

@@ -12,7 +12,7 @@ YC: verified-yc; batch: P26.
 
 - desktop: 1363 × 936: rendered hero, full-page scan, selected sections and interaction
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Clicked Automated QA and testing in the five-step sequence. Its selected indicat
 ### Accessibility
 
 The sequence exposes named buttons and the FAQ exposes expandable buttons in the accessibility tree. No keyboard, screen-reader or motion-preference test was performed.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 48 | 32 |
+| Headline weight | 400 | 400 |
+| Headline tracking em | -0.025 | -0.037 |
+| Body px | 15 | 14 |
+| Characters per line | 57 | 50 |
+| Sections | 8 | 8 |
+| Reduced-motion rule | observed | observed |
 
 ## Interpretation
 

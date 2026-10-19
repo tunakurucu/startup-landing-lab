@@ -12,7 +12,7 @@ YC: verified-yc; batch: S26.
 
 - desktop: 1363 × 936: rendered hero, full-page scan, selected sections and interaction
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Selected Fetching from the fridge in the everyday-task tabs. The selected tab ch
 ### Accessibility
 
 The everyday tasks use named tabs; the primary order is a link. Several media regions reported Unable to play media in accessibility output. Video captions, keyboard access and reduced-motion treatment were not tested.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 102.4 | 46.4 |
+| Headline weight | 400 | 400 |
+| Headline tracking em | -0.025 | -0.025 |
+| Body px | 16 | 16 |
+| Characters per line | None | None |
+| Sections | 7 | 8 |
+| Reduced-motion rule | observed | observed |
 
 ## Interpretation
 

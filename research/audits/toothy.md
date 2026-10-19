@@ -12,7 +12,7 @@ YC: verified-yc; batch: W25.
 
 - desktop: 1363 × 936: rendered hero, section scan and selected interaction
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Clicked Billing in the hero, replacing the verification timeline with billing ta
 ### Accessibility
 
 Pricing uses named tabs with selected states and FAQ uses disclosure buttons. The top hero mode buttons have names; keyboard, screen-reader and contrast review remain untested.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 60 | 36 |
+| Headline weight | 700 | 700 |
+| Headline tracking em | 0 | 0 |
+| Body px | 20 | 18 |
+| Characters per line | 56 | 38 |
+| Sections | 6 | 6 |
+| Reduced-motion rule | observed | observed |
 
 ## Interpretation
 

@@ -12,7 +12,7 @@ YC: not-verified; batch: not verified.
 
 - desktop: 1363 × 936: rendered inspection
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Opened Products. A large multicolumn menu exposed banking, cards, payments and i
 ### Accessibility
 
 Semantic structure inspected through browser accessibility output. No contrast, keyboard, screen-reader or reduced-motion audit was completed.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 49.3 | 28 |
+| Headline weight | 480 | 480 |
+| Headline tracking em | 0 | 0 |
+| Body px | 12 | 10 |
+| Characters per line | 65 | 65 |
+| Sections | 13 | 13 |
+| Reduced-motion rule | observed | observed |
 
 ## Interpretation
 

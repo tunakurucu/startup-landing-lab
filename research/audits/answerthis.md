@@ -12,7 +12,7 @@ YC: verified-yc; batch: F25.
 
 - desktop: 1363 × 936: rendered hero, section scan and selected interaction
 - tablet: not inspected
-- mobile: not inspected
+- mobile: 390 × 844: computed styles measured 2026-10-19; not visually inspected
 
 ## Observations
 
@@ -39,6 +39,18 @@ Opened the Features navigation menu. It revealed descriptive links to Writer, Li
 ### Accessibility
 
 The page exposed headings and links, but the menu trigger appeared as a generic container in the accessibility tree. This is an observed semantic concern, not a completed keyboard or screen-reader audit.
+
+## Measured
+
+| Measure | 1440 px | 390 px |
+| --- | --- | --- |
+| Headline px | 64 | 32 |
+| Headline weight | 500 | 500 |
+| Headline tracking em | -0.05 | -0.05 |
+| Body px | 18 | 14 |
+| Characters per line | 88 | 49 |
+| Sections | 0 | 0 |
+| Reduced-motion rule | not_observed | not_observed |
 
 ## Interpretation
 
