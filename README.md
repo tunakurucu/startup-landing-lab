@@ -46,7 +46,13 @@ What this project adds: a dated casebook of real startup homepages with measured
 
 ## Install
 
-Copy the skill into your target project. You do not need to install the gallery.
+```bash
+npx skills add tunakurucu/startup-landing-lab
+```
+
+That installs the skill for the agent you pick. To render and check pages, the skill's scripts need Playwright: `npm i --prefix /tmp/sld-deps playwright @axe-core/playwright && npx --prefix /tmp/sld-deps playwright install chromium`, then run them with `SLD_DEPS=/tmp/sld-deps`.
+
+Or copy the folder by hand. You do not need the gallery.
 
 ```bash
 git clone https://github.com/tunakurucu/startup-landing-lab.git
@@ -60,7 +66,7 @@ Codex and Cursor document `.agents/skills/`. Claude Code uses `.claude/skills/`.
 
 > Use startup-landing-design to build a landing page for my developer API. Choose an appropriate visual direction, make the product understandable through an original local demo, then inspect and refine the mobile layout.
 
-The workflow: understand the product → select reference principles → compare two hero structures and pass a pre-build gate → build from the archetype's recipe → render at three widths and run the checker → critique → make one structural revision. The agent leaves a filled `DESIGN-RECORD.md` beside the page.
+The workflow: understand the product → select reference principles → compare two hero structures and pass a pre-build gate → build from the archetype's recipe → render at three widths and run the checker → critique → make at least one structural revision → verify the record. The agent leaves a filled `DESIGN-RECORD.md` beside the page.
 
 [Read the skill](skills/startup-landing-design/SKILL.md) or try [consumer and B2B prompts](docs/installation.md).
 
