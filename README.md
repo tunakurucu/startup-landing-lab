@@ -46,7 +46,7 @@ All three are fictional brands with original code and copy. There are no fabrica
 
 ## Research you can inspect
 
-36 candidates. 31 official YC verifications. Thirteen audit records: nine full-page desktop inspections and four partial desktop records. Five of the full-page records cover [2026 YC companies in San Francisco](research/2026-yc-audit-queue.md). Seven design families. Five Bay Area comparison candidates have unverified YC status, not proven non-membership. Earlier [comparison source recon](research/source-recon-2026-10-19.md) remains outside the audited set.
+43 candidates. 38 official YC verifications. Twenty audit records: sixteen desktop inspections and four partial desktop field notes. Seven new 2025 YC batch companies were chosen using [documented design mentions](research/2025-praised-selection.md) and inspected live; the previous five cover [2026 YC companies in San Francisco](research/2026-yc-audit-queue.md). Seven design families. Five Bay Area comparison candidates have unverified YC status, not proven non-membership. Earlier [comparison source recon](research/source-recon-2026-10-19.md) remains outside the audited set.
 
 Reference-site mobile, tablet and reduced-motion behavior remain unverified. This is a focused first edition, not exhaustive research or a ranking. [Method, evidence and limitations](research/README.md).
 
@@ -72,7 +72,7 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-31 browser checks cover desktop/tablet/mobile routes, axe checks, filters, navigation, demo controls, downloads and reduced motion. See [the evaluation](docs/evaluation.md) for what actually ran and what did not. [Architecture](docs/architecture.md) explains the single-source data flow and hash routing for Pages.
+67 browser checks cover desktop/tablet/mobile routes, axe checks, filters, navigation, demo controls, downloads and reduced motion. See [the evaluation](docs/evaluation.md) for what actually ran and what did not. [Architecture](docs/architecture.md) explains the single-source data flow and hash routing for Pages.
 
 ## Help improve it
 
