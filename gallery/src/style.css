@@ -55,3 +55,9 @@
 #main-content :is(h1,h2,h3),.wordmark,.footer-brand,.poster-type,.demo-preview>strong:not(i){font-family:var(--font-lab)}
 #main-content p{max-width:62ch}
 .fieldwork select{font-size:16px}
+.measure-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.measure-table caption{text-align:left;font:.75rem var(--font-mono);color:#5f6452;padding-bottom:12px}
+.measure-table th,.measure-table td{text-align:left;padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);font-weight:400}
+.measure-table thead th{font:.75rem var(--font-mono);text-transform:uppercase}
+.measure-table tbody th{color:#4c5242}
+.measure-table td{font-variant-numeric:tabular-nums}

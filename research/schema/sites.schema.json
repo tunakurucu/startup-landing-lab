@@ -79,6 +79,7 @@
       },
       "coverage": {
         "enum": [
+          "desktop-mobile-audit",
           "desktop-audit",
           "partial-desktop"
         ]
@@ -139,6 +140,10 @@
             "minLength": 1
           },
           "accessibility": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mobile": {
             "type": "string",
             "minLength": 1
           }
@@ -470,6 +475,25 @@
             }
           }
         }
+      },
+      "program": {
+        "enum": [
+          "yc",
+          "a16z-speedrun",
+          "pear"
+        ]
+      },
+      "round": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "archetype_note": {
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "allOf": [
