@@ -46,7 +46,7 @@ All three are fictional brands with original code and copy. There are no fabrica
 
 ## Research you can inspect
 
-32 candidates. 27 official YC verifications. Eight audit records: four full-page desktop inspections and four partial desktop records. Seven design families. Five Bay Area comparison candidates have unverified YC status, not proven non-membership. Four additional San Francisco candidates have [source recon](research/source-recon-2026-10-19.md) awaiting rendered inspection.
+36 candidates. 31 official YC verifications. Thirteen audit records: nine full-page desktop inspections and four partial desktop records. Five of the full-page records cover [2026 YC companies in San Francisco](research/2026-yc-audit-queue.md). Seven design families. Five Bay Area comparison candidates have unverified YC status, not proven non-membership. Earlier [comparison source recon](research/source-recon-2026-10-19.md) remains outside the audited set.
 
 Reference-site mobile, tablet and reduced-motion behavior remain unverified. This is a focused first edition, not exhaustive research or a ranking. [Method, evidence and limitations](research/README.md).
 
