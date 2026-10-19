@@ -27,6 +27,8 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 | Object entrance | Scene entrance → guide attention to object → static poster → 280–380ms opacity ease-out. |
 | Task selection | User selects task → image/caption changes together → immediate caption → 180–250ms opacity ease-out. |
 
+In these contracts, opacity applies to a container, highlight or decorative layer. Text the visitor must read swaps in immediately or moves into place; it never fades in.
+
 | Font role | SIL OFL candidates (choose deliberately) |
 | --- | --- |
 | Display | Newsreader / Instrument Serif / Gloock |

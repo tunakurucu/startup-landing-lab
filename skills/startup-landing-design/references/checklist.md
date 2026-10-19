@@ -164,4 +164,4 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | PR-01 | Every screenshot listed as evidence was opened, is not blank and is the width it claims. | record | block | IMP |
 | PR-02 | One structural revision was made after rendering, with before and after evidence and the hero rescored. | record | block | SLL GST |
 | PR-03 | Every decorative element left on the page has a named job; ones without a job were removed and are listed. | record | warn | MT |
-| PR-04 | verify-record.mjs exits 0 and the final reply ends with the record's status line. | record | block | GST IMP ASC |
+| PR-04 | The status line is DONE only if nothing above is unverified or unavailable; otherwise it names what is. | record | block | GST IMP ASC |

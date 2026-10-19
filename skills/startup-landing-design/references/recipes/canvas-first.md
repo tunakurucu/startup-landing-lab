@@ -25,6 +25,8 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 | Tool focus | Tool selection → affordance and state update → selected outline → 150–220ms opacity ease-out. |
 | Canvas revision | Artifact edit → visible output changes → immediate final state → 180–260ms transform/opacity ease-out. |
 
+In these contracts, opacity applies to a container, highlight or decorative layer. Text the visitor must read swaps in immediately or moves into place; it never fades in.
+
 | Font role | SIL OFL candidates (choose deliberately) |
 | --- | --- |
 | Display | Bricolage Grotesque / Schibsted Grotesk / Familjen Grotesk |

@@ -1,0 +1,19 @@
+success: exit 0
+{"id":"job-001","state":"queued","attempt":0}
+{"id":"job-001","state":"running","attempt":1}
+{"id":"job-001","state":"completed","attempt":1}
+
+retry: exit 0
+{"id":"job-001","state":"queued","attempt":0}
+{"id":"job-001","state":"running","attempt":1}
+{"id":"job-001","state":"retrying","attempt":1}
+{"id":"job-001","state":"running","attempt":2}
+{"id":"job-001","state":"completed","attempt":2}
+
+failure: exit 0
+{"id":"job-001","state":"queued","attempt":0}
+{"id":"job-001","state":"running","attempt":1}
+{"id":"job-001","state":"retrying","attempt":1}
+{"id":"job-001","state":"running","attempt":2}
+{"id":"job-001","state":"failed","attempt":2}
+PASS: three local scenarios, stable job ID, correct terminal states.

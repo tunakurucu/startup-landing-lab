@@ -939,7 +939,7 @@
  },
  {
   "id": "PR-04",
-  "check": "verify-record.mjs exits 0 and the final reply ends with the record's status line.",
+  "check": "The status line is DONE only if nothing above is unverified or unavailable; otherwise it names what is.",
   "verify": "record",
   "severity": "block",
   "credit": [

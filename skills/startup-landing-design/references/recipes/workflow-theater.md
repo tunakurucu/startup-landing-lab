@@ -27,6 +27,8 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 | State inspection | Step selection → current artifact and explanation update → immediate selected text → 160–220ms opacity ease-out. |
 | Timeline connector | Timeline progress → connector draws only when state advances → static numbered sequence → 260–380ms transform/opacity ease-out. |
 
+In these contracts, opacity applies to a container, highlight or decorative layer. Text the visitor must read swaps in immediately or moves into place; it never fades in.
+
 | Font role | SIL OFL candidates (choose deliberately) |
 | --- | --- |
 | Display | Schibsted Grotesk / IBM Plex Sans / Hanken Grotesk |

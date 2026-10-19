@@ -25,6 +25,8 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 | Path selection | Path choice → relevant workflow appears → direct link list → 150–220ms opacity ease-out. |
 | Chapter marker | Section transition → reveal a chapter marker, not essential text → all visible → 250–330ms opacity/translate ease-out. |
 
+In these contracts, opacity applies to a container, highlight or decorative layer. Text the visitor must read swaps in immediately or moves into place; it never fades in.
+
 | Font role | SIL OFL candidates (choose deliberately) |
 | --- | --- |
 | Display | Newsreader / Instrument Serif / Source Serif 4 |

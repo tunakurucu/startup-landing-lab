@@ -1,10 +1,12 @@
 // Run the automatic checks from assets/checks.json (64 of the skill's 100) against a rendered page.
 // Usage: node scripts/check-page.mjs <url-or-html-file>
 // Prints JSON: every check with id, severity, pass and detail, plus failures (block), warnings (warn) and not_run.
-// Exits 1 when any block-severity check fails. Needs Playwright with Chromium; @axe-core/playwright is optional
+// Exits 1 when any block-severity check fails, and 3 when no browser could run: it then still prints JSON with
+// "status": "unavailable" and the exact error, so a missing browser is never mistaken for a clean page.
+// Needs Playwright with Chromium (see browser.mjs for where it looks); @axe-core/playwright is optional
 // and powers the contrast check (CO-01), which is reported as not_run without it.
 // The other 36 checks need eyes: they are answered in DESIGN-RECORD.md and enforced by verify-record.mjs.
-import {chromium} from 'playwright';
+import {launch, load, Unavailable} from './browser.mjs';
 import {resolve} from 'node:path';
 import {existsSync, readFileSync} from 'node:fs';
 import {pathToFileURL, fileURLToPath} from 'node:url';
@@ -13,7 +15,7 @@ const input = process.argv[2];
 if (!input) { console.error('usage: check-page.mjs <url-or-html>'); process.exit(2); }
 const url = /^https?:\/\//.test(input) ? input : pathToFileURL(resolve(input)).href;
 const CATALOG = Object.fromEntries(JSON.parse(readFileSync(new URL('../assets/checks.json', import.meta.url), 'utf8')).map(c => [c.id, c]));
-const out = {target: url, checked_on: new Date().toISOString().slice(0, 10), checks: [], failures: [], warnings: [], not_run: []};
+const out = {status: 'ran', target: url, checked_on: new Date().toISOString().slice(0, 10), checks: [], failures: [], warnings: [], not_run: []};
 const done = new Set();
 function check(id, pass, detail = null) {
   const c = CATALOG[id]; if (!c || c.verify !== 'auto') throw new Error(`unknown auto check ${id}`);
@@ -22,7 +24,13 @@ function check(id, pass, detail = null) {
 }
 function notRun(id, why) { done.add(id); out.checks.push({id, check: CATALOG[id].check, severity: CATALOG[id].severity, pass: null, detail: `not_run: ${why}`}); out.not_run.push(id); }
 
-const browser = await chromium.launch();
+let browser;
+try { browser = await launch(); } catch (e) {
+  const autos = Object.values(CATALOG).filter(c => c.verify === 'auto').map(c => c.id);
+  console.log(JSON.stringify({...out, status: 'unavailable', error: String(e.message || e).split('\n')[0], not_run: autos,
+    summary: `browser unavailable: none of the ${autos.length} automatic checks ran`}, null, 2));
+  process.exit(e instanceof Unavailable ? 3 : 1);
+}
 async function open(viewport, options = {}) {
   const ctx = await browser.newContext({viewport, ...options});
   const page = await ctx.newPage();
@@ -185,7 +193,8 @@ try {
   check('AX-04', noFocus.length === 0, noFocus.slice(0, 8));
 
   // Contrast via axe (CO-01)
-  let Axe = null; try { Axe = (await import('@axe-core/playwright')).default; } catch {}
+  const axeMod = await load('@axe-core/playwright', {optional: true});
+  const Axe = axeMod ? (axeMod.AxeBuilder || axeMod.default?.AxeBuilder || axeMod.default?.default || axeMod.default) : null;
   if (Axe) { const res = await new Axe({page}).withRules(['color-contrast']).analyze(); check('CO-01', res.violations.length === 0, res.violations.flatMap(v => v.nodes.map(n => n.target.join(' '))).slice(0, 8)); }
   else notRun('CO-01', 'install @axe-core/playwright to measure contrast');
   await ctx.close();

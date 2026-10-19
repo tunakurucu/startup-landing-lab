@@ -1,6 +1,6 @@
 # DESIGN-RECORD
 
-Copy this file next to the page as `DESIGN-RECORD.md` and replace every prompt with a decision. Write `unknown` rather than leaving a field empty, and never present an assumption as observed evidence. `node scripts/verify-record.mjs <page-dir>` decides whether the task is finished: it fails on any empty field, empty table cell or unfinished marker.
+Copy this file next to the page as `DESIGN-RECORD.md` and replace every prompt with a decision. Keep answers to a line or two and link logs instead of pasting them. Write `unknown` rather than leaving a field empty, and never present an assumption as observed evidence. `node scripts/verify-record.mjs <page-dir>` checks the record: it fails on a `- Label:` line with nothing after it, an empty cell in the decision tables, an unanswered checklist row, an unfinished marker, a missing or wrong-width screenshot, or a status line the evidence does not support. Exit 0 means the record is complete and honest; only `OK DONE` means the page was also rendered and checked.
 
 ## Product interpretation
 - Audience, category, business model, brand constraints:
@@ -34,10 +34,12 @@ Copy this file next to the page as `DESIGN-RECORD.md` and replace every prompt w
 ## Two hero variants before code
 - Axis the variants differ on (structure, density, emphasis, type or voice):
 
-| Variant | Structure and artifact | Visitor doubt answered | Score 0–10 and what a 10 needs |
-| --- | --- | --- | --- |
-| A | | | |
-| B | | | |
+| Variant | Structure and artifact | Visitor doubt answered | Fit | Identity | Originality | Composition | Proof | What a 10 needs |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| A | | | | | | | | |
+| B | | | | | | | | |
+
+Score each dimension 0–10.
 
 - Chosen variant and why:
 
@@ -55,7 +57,7 @@ If nothing matched, write one row: `none found | — | —`.
 | 768×1024 | | |
 | 390×844 | | |
 
-Each screenshot cell is a relative `.png` path, or `unavailable: "<exact error>"`. Open every PNG before listing it.
+Each screenshot cell is a relative `.png` path, or `unavailable: "<decisive error line>"` with the full log linked in the next cell. Open every PNG before listing it.
 
 ## Checker result
 - JSON:
@@ -64,10 +66,10 @@ Each screenshot cell is a relative `.png` path, or `unavailable: "<exact error>"
 - Optional tools (Impeccable detect, web-design-guidelines): result, or "not run: <reason>":
 
 ## Checklist
-The other 64 checks run automatically in `check-page.mjs`. Answer each of these from the screenshots, the code or this record. A `fail` on a block-severity item rules out DONE. See `references/checklist.md` for severity and credit.
+The other 64 checks run automatically in `check-page.mjs`. Answer each of these from the screenshots, the code or this record: `pass`, `fail`, `n/a`, or `unverified` when the evidence could not be produced (for example, no render). A block-severity `fail` or any `unverified` rules out DONE. See `references/checklist.md` for severity and credit.
 
 <!-- checklist:start -->
-| ID | Check | Verdict (pass / fail / n/a) | Evidence |
+| ID | Check | Verdict (pass / fail / n/a / unverified) | Evidence |
 | --- | --- | --- | --- |
 | PS-01 | The first screen says who it is for, what changes for them and how, in plain words. | | |
 | PS-02 | A stranger can say what the product does after five seconds on the first screen. | | |
@@ -104,10 +106,12 @@ The other 64 checks run automatically in `check-page.mjs`. Answer each of these 
 | PR-01 | Every screenshot listed as evidence was opened, is not blank and is the width it claims. | | |
 | PR-02 | One structural revision was made after rendering, with before and after evidence and the hero rescored. | | |
 | PR-03 | Every decorative element left on the page has a named job; ones without a job were removed and are listed. | | |
-| PR-04 | verify-record.mjs exits 0 and the final reply ends with the record's status line. | | |
+| PR-04 | The status line is DONE only if nothing above is unverified or unavailable; otherwise it names what is. | | |
 <!-- checklist:end -->
 
 ## Gate after render
+Run on the screenshots. If rendering failed, run it on the source and start the first row with `source only`.
+
 | Detector signature | Block or warn | Fix, or the reason it stays |
 | --- | --- | --- |
 | | | |

@@ -10,7 +10,7 @@ metadata:
 
 Build a working page and a filled `DESIGN-RECORD.md` beside it. Copy [the decision record](assets/decision-record.md) there first and fill it as you go. References are dated evidence for decisions, not layouts to reproduce.
 
-**Done means `node scripts/verify-record.mjs <page-dir>` exits 0.** It fails on any empty field, missing screenshot, missing checker output, missing before/after evidence or any of the [100 checks](references/checklist.md) left unanswered. Never tell the user the page is finished before it passes. Spend at most a third of your effort on steps 1–3; most of the value is in building, rendering and revising.
+**Finish with `node scripts/verify-record.mjs <page-dir>` exiting 0.** It fails on empty fields, empty decision-table cells, wrong-width or blank screenshots, missing checker output, missing before/after evidence, any of the [100 checks](references/checklist.md) left unanswered, or a status the evidence does not support. Exit 0 means the record is complete and honest. Only `OK DONE` means the page was also rendered and checked; if rendering or the checker could not run, the honest result is `DONE_WITH_CONCERNS` naming what is unverified, and you say so to the user. Keep steps 1–3 to the files named below and the record's first six sections; most of the value is in building, rendering and revising.
 
 ## 1. Interpret the product
 
@@ -18,7 +18,7 @@ Inspect existing code, brand and content. Write the promise as **who / what chan
 
 ## 2. Select reference jobs
 
-Read [reference selection](references/reference-selection.md), [archetypes](references/design-archetypes.md) then the [casebook index](references/casebook.md) and only the casebook file for the family you are considering. Record two references serving different jobs and one counterexample, each with the dated observed decision, its limit, the transferable principle and the treatment you will not borrow. Unaudited sites are leads, not evidence.
+Read [reference selection](references/reference-selection.md), [archetypes](references/design-archetypes.md) then the [casebook index](references/casebook.md) and only the casebook file for the family you are considering. Record two references serving different jobs and one counterexample, each with the dated observed decision, its limit, the transferable principle and the treatment you will not borrow. Unaudited sites are leads, not evidence. If the casebook changes your choice of family, read that family's file too.
 
 ## 3. Choose before coding
 
@@ -28,7 +28,7 @@ Read [composition and type](references/composition-and-type.md) and [the detecto
 
 Pick the closest family and start from its **recommended** numbers, then adjust to the product: [typographic technical](references/recipes/typographic-technical.md) · [expressive world](references/recipes/expressive-world.md) · [canvas first](references/recipes/canvas-first.md) · [functional entrance](references/recipes/functional-entrance.md) · [workflow theater](references/recipes/workflow-theater.md) · [immersive editorial](references/recipes/immersive-editorial.md) · [editorial platform](references/recipes/editorial-platform.md).
 
-Read [implementation workflow](references/implementation-workflow.md) and [product storytelling](references/product-storytelling.md). Define type, spacing, width, surface and action tokens. Keep the existing stack. Build real product evidence, working navigation, a meaningful conversion action and an honest footer. Illustrative interfaces say so and do something locally. No backend to fake a product.
+Read [implementation workflow](references/implementation-workflow.md) and [product storytelling](references/product-storytelling.md). Define type, spacing, width, surface and action tokens. Keep the existing stack. Build real product evidence, working navigation, a meaningful conversion action and an honest footer. Illustrative interfaces say so and do something locally. If the brief gives no real API or package, show the product's behaviour as a labelled local model rather than inventing integration code. Do not build a backend to imitate a product that does not exist; a backend the real product needs is fine.
 
 ## 5. Contract motion and mobile
 
@@ -38,9 +38,9 @@ Read [motion and responsive](references/motion-and-responsive.md). For each anim
 
 This is one continuous sequence. Do not stop partway, and do not skip a step because an earlier one could not run.
 
-1. **Render.** Run `scripts/render.sh <url-or-file> <page-dir>/shots`. It uses agent-browser if present, otherwise Playwright. If neither exists, install Playwright in a scratch folder outside the project (`npm i playwright && npx playwright install chromium`). If rendering still fails, write `unavailable: "<exact error>"` in Render evidence and continue.
+1. **Render.** Run `scripts/render.sh <url-or-file> <page-dir>/shots`; it writes `<width>-top.png` and `<width>.png` at 1440, 768 and 390. If Playwright is missing, install it outside the project: `npm i --prefix /tmp/sld-deps playwright @axe-core/playwright && npx --prefix /tmp/sld-deps playwright install chromium`, then run the scripts with `SLD_DEPS=/tmp/sld-deps`. If the browser download fails, set `CHROME_PATH` to any installed Chrome or Chromium. If rendering still fails (exit 3), write `unavailable: "<decisive error line>"` in Render evidence, link the log, and continue.
 2. **Look.** Open every PNG. Confirm it is not blank and shows the hero at its width; recapture if not. Write what you checked in each.
-3. **Check.** Run `node scripts/check-page.mjs <url-or-html> > <page-dir>/check.json`: 64 automatic checks. Fix every block failure, rerun, and record what you fixed and the product reason for each warning you keep. Then answer the other 36 in the record's Checklist from the screenshots, code and record. Read [visual QA](references/visual-qa.md). If `npx --no-install impeccable detect <dir> --json` works, exit 2 means findings to record by rule ID and exit 1 means "not run". Record optional tools that need the network as "not run: offline" when offline.
-4. **Gate again.** Run the [detector](references/default-detector.md) on the screenshots (or on the source if rendering failed) and fill in Gate after render.
-5. **Revise once, structurally.** Name the weakest explanation or most template-like decision, change structure (section order, hero composition, artifact, density), not just styling, then rerender and record before/after paths and the new score.
-6. **Verify.** Run `node scripts/verify-record.mjs <page-dir>` and fix whatever it reports. End your reply with the status line from the record: `DONE`, `DONE_WITH_CONCERNS: <what is unverified>` or `BLOCKED: "<quoted error>"`.
+3. **Check.** Run `node scripts/check-page.mjs <url-or-html> > <page-dir>/check.json`: 64 automatic checks. Exit 3 means no browser ran and the JSON says `"status": "unavailable"`; that is a gap, never a pass. Fix every block failure, rerun, and record what you fixed and the product reason for each warning you keep. Then answer the other 36 in the record's Checklist from the screenshots, code and record; use `unverified` where the evidence could not be produced. Read [visual QA](references/visual-qa.md), including its removal and originality passes. Optional: if `npx --no-install impeccable --version` succeeds, run `npx --no-install impeccable detect <dir> --json` (exit 2 means findings to record by rule ID). Record any optional tool you could not run as `not run: <exact error>`.
+4. **Gate again.** Run the [detector](references/default-detector.md) on the screenshots and fill in Gate after render. If rendering failed, run it on the source and mark the gate `source only`.
+5. **Revise structurally, at least once.** Name the weakest explanation or most template-like decision, change structure (section order, hero composition, artifact, density), not just styling, then rerender and record before/after paths and the new scores. One revision is the minimum, not the bar: if the weakest point is still weak, revise again.
+6. **Verify.** Run `node scripts/verify-record.mjs <page-dir>` and fix whatever it reports. End your reply with the status line from the record: `DONE`, `DONE_WITH_CONCERNS: <what is unverified>` or `BLOCKED: "<quoted error>"`. Never call the page finished or verified when the status is not `DONE`.

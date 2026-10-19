@@ -1,0 +1,3 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm error npx canceled due to missing packages and no YES option: ["impeccable@4.7.0"]
+npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-19T18_14_04_857Z-debug-0.log

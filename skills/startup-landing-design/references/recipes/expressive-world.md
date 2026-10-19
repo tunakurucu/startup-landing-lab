@@ -27,6 +27,8 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 | Zone selection | User chooses zone → content/context changes → static selected panel → 180–240ms opacity ease-out. |
 | Deck shuffle | User creates or shuffles → new artifact appears → immediate replacement → 220–320ms transform/opacity spring-like CSS easing. |
 
+In these contracts, opacity applies to a container, highlight or decorative layer. Text the visitor must read swaps in immediately or moves into place; it never fades in.
+
 | Font role | SIL OFL candidates (choose deliberately) |
 | --- | --- |
 | Display | Bricolage Grotesque / Syne / Unbounded |

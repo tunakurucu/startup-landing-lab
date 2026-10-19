@@ -1,0 +1,4 @@
+success: queued → running → completed
+recover: queued → running → retrying → running → completed
+fail: queued → running → retrying → running → failed
+PASS: terminal states and invalid scenario

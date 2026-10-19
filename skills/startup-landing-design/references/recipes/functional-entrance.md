@@ -27,6 +27,8 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 | Mode switch | Mode change → output changes → immediate swap → 150–200ms opacity ease-out. |
 | Example result | Submit local example → result/status appears → text result without animation → 200–280ms opacity ease-out. |
 
+In these contracts, opacity applies to a container, highlight or decorative layer. Text the visitor must read swaps in immediately or moves into place; it never fades in.
+
 | Font role | SIL OFL candidates (choose deliberately) |
 | --- | --- |
 | Display | IBM Plex Sans / Schibsted Grotesk / Hanken Grotesk |

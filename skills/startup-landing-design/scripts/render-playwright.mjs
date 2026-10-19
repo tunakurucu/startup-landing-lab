@@ -1,7 +1,8 @@
 // Render a page at 1440x900, 768x1024 and 390x844. For each width it saves <width>-top.png (the first screen,
 // for legibility) and <width>.png (full page, for pacing). Waits for fonts and lets motion settle first, so the
 // screenshots show the finished state. Usage: node render-playwright.mjs <url> <out-dir>
-import {chromium} from 'playwright';
+// Exits 3 with the exact error when no browser can run (see browser.mjs), 1 when a capture looks blank.
+import {launch} from './browser.mjs';
 import {mkdir} from 'node:fs/promises';
 import {statSync} from 'node:fs';
 import {resolve} from 'node:path';
@@ -9,7 +10,8 @@ import {resolve} from 'node:path';
 const [url, out] = process.argv.slice(2);
 if (!url || !out) { console.error('usage: render-playwright.mjs <url> <out-dir>'); process.exit(2); }
 await mkdir(out, {recursive: true});
-const browser = await chromium.launch();
+let browser;
+try { browser = await launch(); } catch (e) { console.error(`unavailable: "${String(e.message || e).split('\n')[0]}"`); process.exit(3); }
 let tiny = 0;
 try {
   for (const [width, height] of [[1440, 900], [768, 1024], [390, 844]]) {
