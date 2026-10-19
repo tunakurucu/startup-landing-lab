@@ -34,6 +34,15 @@ Hypothesis: an editorial working brief makes ownership more credible than abstra
 
 Implemented artifact: two workflow examples, structured/informal comparison and a downloadable brief. People are sample characters. The illustrative quote is labelled, not presented as customer proof. Mobile turns the horizontal handoff into a vertical reading sequence.
 
+## Gate warnings we kept, and why
+
+The v0.3 detector warns on three choices these demos make. Each stays, with the reason the gate asks for:
+
+- **Relayline uses Inter as its display face.** The identity is meant to come from the trace and the monospace identifiers, so the display face is deliberately neutral. A more characterful grotesque would compete with the instrument.
+- **Fieldwork pairs a cream ground with a serif display.** The product's artifact is a written brief; the page reads like the document it sells. The serif does the editorial work and the ground is the paper it sits on.
+- **Sidequest uses a cream ground.** The cards are paper and the ritual is offline making; the ground is the table they are dealt on. The display face is a grotesque, not a serif, and the ground changes colour with each brief.
+- **All three use small tracked labels above sections.** Relayline's and Fieldwork's number real sequences; Sidequest's are tone, and are the weakest case of the three.
+
 ## Motion contracts
 
 Every animation in the three demos is listed here in the form the skill asks for. Only the individual `translate` / `scale` properties animate, so base transforms (card tilts, the character's rotation) are untouched. Opacity animates in one place, the user-triggered card deal: a first version also faded text in, and axe correctly flagged the reduced contrast mid-animation, so text now moves without fading. Under `prefers-reduced-motion: reduce` the stylesheet removes every animation and transition and the scroll reveals are never applied; every state and all content stay visible. Essential copy never waits for motion. `tests/browser/motion.spec.ts` checks each contract with motion allowed and with it reduced.
@@ -43,7 +52,7 @@ Every animation in the three demos is listed here in the form the skill asks for
 | Relayline | Page load, and again when the scenario changes | Attempt-path nodes scale in one after another, so the event's history reads as a sequence before the copy explains it | Complete path visible at first paint | 7 × 250 ms, 150 ms stagger, 1.15 s total, ease-out |
 | Relayline | Choose a scenario or step | Inspector content rises in to mark that the detail changed | Immediate replacement | 200 ms ease-out; row colour 150 ms |
 | Sidequest | Page load, once | Sticker and paper character pop in; nonessential scene, orients the eye | Visible at first paint | 400 ms, spring-like `cubic-bezier(.22,1.35,.36,1)`, 100 / 200 ms delay |
-| Sidequest | "Another little idea" | Three cards deal in with a stagger; the heading's word and the field colour follow, as a response to an explicit choice. The deal never runs on first paint: an earlier version did, and axe intermittently caught card text mid-fade | Final cards and colour immediately | 360 ms deal, 90 ms stagger, same spring curve; field 350 ms ease |
+| Sidequest | "Another little idea" | Three cards deal in with a stagger; the heading's word and the field colour follow, as a response to an explicit choice. The deal never runs on first paint: an earlier version did, and axe intermittently caught card text mid-fade | Final cards and colour immediately | 360 ms deal, 70 ms stagger, same spring curve; field 350 ms ease |
 | Fieldwork | Scroll into view | Process strip columns then arrows, chapter numeral, field note and the three principles slide up into place in reading order; nothing fades, so text keeps full contrast throughout | Nothing moves without JavaScript or under reduced motion | 450 ms `cubic-bezier(.2,.7,.2,1)` translate, 100–400 ms delays |
 | Fieldwork | Change workflow or toggle structure | The brief rises in to signal a new document | Immediate replacement | 220 ms ease-out |
 

@@ -2,13 +2,15 @@
 
 All numbers are **recommended**, not measured from the references. Desktop observations are dated in the evidence row. Tune after rendering the actual brief. Font candidates have SIL OFL distributions; verify the exact font files and license before self-hosting.
 
+Floors shared with the [default gate](../default-detector.md): display tracking no tighter than −0.04em; an H1 above about 6.5rem only when it is the page's signature and each line holds three words or fewer; Inter, Space Grotesk and Fraunces are so common as display faces that choosing one needs a stated product reason (Inter remains a sound body fallback).
+
 | Decision | Recipe |
 | --- | --- |
 | Fit | Multi-step operational decision with visible artifacts. Wrong for simple consumer purchase; wrong for one-screen lead capture. |
 | Hero A | An incident workspace shows owner, current state and next action beside the promise. |
 | Hero B | The state timeline fills the hero, with a compact explanation attached to each transition. |
 | Type | Display sans frames decisions; plain body handles nuance; mono names states and IDs. |
-| Scale **recommended** | H1 `clamp(3.4rem, 6vw, 6.8rem)` / 0.94–1.08 line-height; body 17–19px / 1.5; measure 54–70ch; tracking -0.05em to -0.015em; display 500–800, body 400–500. |
+| Scale **recommended** | H1 `clamp(3.4rem, 6vw, 6.5rem)` / 0.94–1.08 line-height; body 17–19px / 1.5; measure 54–70ch; tracking -0.04em to -0.015em; display 500–800, body 400–500. |
 | Layout **recommended** | Max width 1320px; narrow explanation / wide recurring workspace; alternate overview and close-up. Desktop section padding 88–144px, mobile 52–80px. Density: open → dense → quiet → active → short. |
 | Color/material | Product state carries color; restrained field, fine rules, high-contrast status accent. |
 | Product artifact | One fictional work item moves through selectable states; owner and next action update with the state. |
@@ -23,8 +25,8 @@ All numbers are **recommended**, not measured from the references. Desktop obser
 
 | Font role | SIL OFL candidates (choose deliberately) |
 | --- | --- |
-| Display | Inter / Space Grotesk / IBM Plex Sans |
-| Body | Inter / Source Sans 3 / IBM Plex Sans |
+| Display | Schibsted Grotesk / IBM Plex Sans / Hanken Grotesk |
+| Body | Source Sans 3 / IBM Plex Sans / Inter |
 | Mono | IBM Plex Mono / JetBrains Mono / Source Code Pro |
 
 Use only the roles the product actually needs. A distinct type system may use two families and multiple weights; do not download fonts to satisfy a count.

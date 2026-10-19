@@ -1,19 +1,25 @@
 {
-  "version": 1,
-  "briefs": ["queue", "gift", "renewal"],
+  "version": 2,
+  "briefs": [
+    "queue",
+    "gift",
+    "renewal"
+  ],
   "per_run": [
-    "DESIGN-RECORD.md exists beside the page and fills product, interview, references, hypothesis, two variants, both gate passes, render evidence, critique and limits",
-    "one named archetype and two different hero variants are compared before implementation",
+    "verify-record.mjs exits 0 on the output folder (record complete, screenshots real, checker JSON present, before/after evidence present)",
+    "one named archetype and two different hero variants are compared and scored before implementation",
     "pre-implementation gate is recorded with block findings resolved or justified",
     "post-render gate is recorded with accepted/rejected findings",
     "check-page.mjs JSON reports no failures",
-    "three full-page screenshots exist at 1440, 768 and 390 pixels",
-    "one structural rather than cosmetic revision is recorded and retested"
+    "screenshots exist at 1440, 768 and 390 pixels and are not blank",
+    "one structural rather than cosmetic revision is recorded with before and after evidence",
+    "the agent's final reply ends with DONE, DONE_WITH_CONCERNS or BLOCKED, matching the record"
   ],
   "across_runs": [
     "the named archetype differs across all three briefs",
     "all three conversion actions have honest destinations or local results",
     "no fabricated customers, metrics or endorsements"
   ],
-  "scoring": "Record each assertion as pass, fail, or unverified with a path or command output. Unverified is not a pass."
+  "scoring": "Record each assertion as pass, fail, or unverified with a path or command output. Unverified is not a pass. Keep the agent transcript; read it to see where it stopped.",
+  "baseline": "Run each brief a second time with no skill installed, same model and prompt, and score the same per-run assertions that apply (page renders, checker failures, screenshot of the hero). Compare product fit and how different the three pages look."
 }

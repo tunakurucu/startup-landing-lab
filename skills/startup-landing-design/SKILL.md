@@ -1,51 +1,46 @@
 ---
 name: startup-landing-design
-description: Design and implement distinctive startup landing pages using dated startup evidence, a product-specific decision record, archetype recipes, pre-build default-layout detection, functional product artifacts, and rendered QA. Use for new startup homepages, landing-page redesigns, or requests to escape generic AI website patterns. Preserve existing brand and framework constraints.
+description: Design, build and verify a distinctive startup landing page from dated startup evidence, a product-specific decision record, archetype recipes, a default-layout gate run before and after building, and rendered checks. Use for a new startup homepage, a landing-page redesign, or a request to avoid generic AI website patterns. Preserves existing brand and framework constraints.
 license: MIT
 metadata:
-  version: "0.2"
+  version: "0.3"
 ---
 
 # Startup landing design
 
-Build a working page and save a filled `DESIGN-RECORD.md` beside it. Copy [the decision record](assets/decision-record.md) first. The skill is self-contained; optional review tools are never prerequisites. References are dated evidence for decisions, not layouts to reproduce.
+Build a working page and a filled `DESIGN-RECORD.md` beside it. Copy [the decision record](assets/decision-record.md) there first and fill it as you go. References are dated evidence for decisions, not layouts to reproduce.
+
+**Done means `node scripts/verify-record.mjs <page-dir>` exits 0.** It fails on any empty field, missing screenshot, missing checker output or missing before/after evidence. Never tell the user the page is finished before it passes. Spend at most a third of your effort on steps 1–3; most of the value is in building, rendering and revising.
 
 ## 1. Interpret the product
 
-Inspect existing code, brand and content. Write the promise as **who / what changes / how**; name the conversion action and first three visitor doubts. Assign a real artifact to each doubt. Interview only when the answer would change the archetype, conversion action or artifact. Ask at most five questions, in one pass when possible; otherwise make explicit assumptions in the record. Never invent social proof.
+Inspect existing code, brand and content. Write the promise as **who / what changes / how**; name the conversion action and the first three visitor doubts, and give each doubt a real artifact that answers it. Ask questions only when the answer would change the archetype, the conversion action or the artifact: at most five, in one message, each with your recommended default. If nobody answers, or you are running unattended, proceed on the defaults and log them. Never invent social proof, metrics or customers.
 
 ## 2. Select reference jobs
 
-Read [reference selection](references/reference-selection.md), [archetypes](references/design-archetypes.md) and relevant entries in the [casebook](references/casebook.md). Record two references serving different jobs and one counterexample, with the dated observed decision, inspection limit, transferable principle and treatment not borrowed. Unaudited candidates are leads, not evidence. If browsing is unavailable, mark present appearance unverified.
+Read [reference selection](references/reference-selection.md), [archetypes](references/design-archetypes.md) and the relevant [casebook](references/casebook.md) entries. Record two references serving different jobs and one counterexample, each with the dated observed decision, its limit, the transferable principle and the treatment you will not borrow. Unaudited sites are leads, not evidence.
 
 ## 3. Choose before coding
 
-Read [composition/type](references/composition-and-type.md) and [the detector](references/default-detector.md). Write a hypothesis for type, composition, grid, material, motif, artifact, sections, interaction and motion. Draw two genuinely different hero structures and compare how each answers a visitor doubt. Score fit, identity, originality, composition and product proof from 0–10 with a sentence of evidence for each; revise the weak choice before code.
+Read [composition and type](references/composition-and-type.md) and [the detector](references/default-detector.md). Write the hypothesis: type roles and faces, composition, grid, ground and material, motif, artifact, sections, interaction, motion. Sketch two genuinely different hero structures; score each 0–10 for product fit, identity, originality, composition and product proof, and say what a 10 would need. Run the detector on the written plan and resolve every block before writing code. A centred hero or a serif display is allowed when the record gives a product reason.
 
-Run the detector against the written hypothesis and log every block/warn finding in the decision record. Resolve each block before implementation; a justified centered hero is allowed. Record the selected variant and why it beat the other.
+## 4. Build from one recipe
 
-## 4. Use one recipe, then adapt it
+Pick the closest family and start from its **recommended** numbers, then adjust to the product: [typographic technical](references/recipes/typographic-technical.md) · [expressive world](references/recipes/expressive-world.md) · [canvas first](references/recipes/canvas-first.md) · [functional entrance](references/recipes/functional-entrance.md) · [workflow theater](references/recipes/workflow-theater.md) · [immersive editorial](references/recipes/immersive-editorial.md) · [editorial platform](references/recipes/editorial-platform.md).
 
-Choose the closest decision family, read its **recommended**, not observed, numbers, and adjust them for the actual product:
-
-- [Typographic technical](references/recipes/typographic-technical.md)
-- [Expressive world](references/recipes/expressive-world.md)
-- [Canvas first](references/recipes/canvas-first.md)
-- [Functional entrance](references/recipes/functional-entrance.md)
-- [Workflow theater](references/recipes/workflow-theater.md)
-- [Immersive editorial](references/recipes/immersive-editorial.md)
-- [Editorial platform](references/recipes/editorial-platform.md)
-
-Read [implementation workflow](references/implementation-workflow.md) and [product storytelling](references/product-storytelling.md). Define coherent type/spacing/width/surface/action tokens. Preserve the existing stack. Build original functional product evidence, real navigation, a meaningful conversion action and an honest footer. Illustrative interfaces must say so and do something locally. Do not add a backend to fake a product.
+Read [implementation workflow](references/implementation-workflow.md) and [product storytelling](references/product-storytelling.md). Define type, spacing, width, surface and action tokens. Keep the existing stack. Build real product evidence, working navigation, a meaningful conversion action and an honest footer. Illustrative interfaces say so and do something locally. No backend to fake a product.
 
 ## 5. Contract motion and mobile
 
-Read [motion/responsive](references/motion-and-responsive.md). For every animation record trigger, state change, purpose, static fallback, duration and easing. Essential copy is visible before scripts. Respect keyboard and reduced motion. Recompose dense artifacts on mobile; don't scale down desktop chrome.
+Read [motion and responsive](references/motion-and-responsive.md). For each animation record trigger, state change, purpose, static fallback, duration and easing. Copy is visible before any script runs. Reduced motion removes movement and hides nothing. Recompose dense artifacts for phones instead of shrinking them.
 
-## 6. Render, gate and revise
+## 6. Render, check, revise, verify
 
-Run `scripts/render.sh <url-or-file> <out-dir>` for full-page 1440×900, 768×1024 and 390×844 evidence. It detects agent-browser, otherwise uses an existing local Playwright CLI, otherwise exits with “rendering unavailable”; mark visual QA not run. Run `node scripts/check-page.mjs <url-or-html>` when Playwright is already in the project. It emits JSON and exits nonzero on one-H1, type, reduced-motion, overflow, names, links or heading-order failures. Do not install dependencies just to silence an unavailable check.
+This is one continuous sequence. Do not stop partway, and do not skip a step because an earlier one could not run.
 
-Read [visual QA](references/visual-qa.md) and [anti-patterns](references/anti-patterns.md). Click every primary control; check focus, contrast, empty states, 320px and 200% zoom. Run the [detector](references/default-detector.md) again on the rendered page. If `npx --no-install impeccable --version` works, run `npx --no-install impeccable detect <files-or-dir> --json`; record accepted/rejected findings by rule ID. If `web-design-guidelines` is installed in the agent environment, run its engineering review. These tools add checks but cannot replace the record or screenshot critique.
-
-Identify the weakest explanation and most template-like decision. Make and rerender one **structural** revision, then record what changed and what remains weak. If rendering or a client capability is unavailable, state that limitation; a successful build is not visual verification.
+1. **Render.** Run `scripts/render.sh <url-or-file> <page-dir>/shots`. It uses agent-browser if present, otherwise Playwright. If neither exists, install Playwright in a scratch folder outside the project (`npm i playwright && npx playwright install chromium`). If rendering still fails, write `unavailable: "<exact error>"` in Render evidence and continue.
+2. **Look.** Open every PNG. Confirm it is not blank and shows the hero at its width; recapture if not. Write what you checked in each.
+3. **Check.** Run `node scripts/check-page.mjs <url-or-html> > <page-dir>/check.json`. Fix every failure, rerun, and record what you fixed and which warnings you keep. Read [visual QA](references/visual-qa.md). If `npx --no-install impeccable detect <dir> --json` works, exit 2 means findings to record by rule ID and exit 1 means "not run". Record optional tools that need the network as "not run: offline" when offline.
+4. **Gate again.** Run the [detector](references/default-detector.md) on the screenshots (or on the source if rendering failed) and fill in Gate after render.
+5. **Revise once, structurally.** Name the weakest explanation or most template-like decision, change structure (section order, hero composition, artifact, density), not just styling, then rerender and record before/after paths and the new score.
+6. **Verify.** Run `node scripts/verify-record.mjs <page-dir>` and fix whatever it reports. End your reply with the status line from the record: `DONE`, `DONE_WITH_CONCERNS: <what is unverified>` or `BLOCKED: "<quoted error>"`.

@@ -49,7 +49,7 @@ test.describe('Sidequest deal',()=>{
     await page.getByRole('button',{name:'Another little idea'}).click();
     const cards=page.locator('.idea-deck article');
     const delays=await cards.evaluateAll(els=>els.map(e=>getComputedStyle(e).animationDelay));
-    expect(delays).toEqual(['0s','0.09s','0.18s']);
+    expect(delays).toEqual(['0s','0.07s','0.14s']);
     const tilt=await cards.first().evaluate(e=>getComputedStyle(e).transform);
     expect(tilt).not.toBe('none');
     await expect.poll(async()=>(await cards.evaluateAll(els=>els.map(e=>getComputedStyle(e).opacity))).join(),{timeout:3000}).toBe('1,1,1');

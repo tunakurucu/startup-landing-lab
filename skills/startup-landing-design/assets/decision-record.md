@@ -1,9 +1,9 @@
 # DESIGN-RECORD
 
-Save a filled copy next to the page as `DESIGN-RECORD.md`. Replace every prompt below with a decision or an explicit `unknown`; never present an assumption as observed evidence.
+Copy this file next to the page as `DESIGN-RECORD.md` and replace every prompt with a decision. Write `unknown` rather than leaving a field empty, and never present an assumption as observed evidence. `node scripts/verify-record.mjs <page-dir>` decides whether the task is finished: it fails on any empty field, empty table cell or unfinished marker.
 
 ## Product interpretation
-- Audience, category, business model, existing brand constraints:
+- Audience, category, business model, brand constraints:
 - Promise (who / what changes / how):
 - Conversion action and destination:
 - Visitor doubt 1 → artifact:
@@ -11,9 +11,9 @@ Save a filled copy next to the page as `DESIGN-RECORD.md`. Replace every prompt 
 - Visitor doubt 3 → artifact:
 
 ## Interview log
-- Questions asked (at most five; only archetype, action or artifact-changing):
-- Answers:
-- Consequential assumptions and how they affect the page:
+- Questions asked, each with the recommended default you offered:
+- Answers, or "no answer; proceeded on defaults":
+- Assumptions that change the page:
 
 ## References
 | Job | Reference, dated observed decision and limit | Transferable principle | Treatment not borrowed |
@@ -23,46 +23,59 @@ Save a filled copy next to the page as `DESIGN-RECORD.md`. Replace every prompt 
 | Counterexample | | | |
 
 ## Hypothesis
-- Chosen archetype and why:
-- Type personality and roles:
+- Archetype and why:
+- Type roles, faces and why they fit this product:
 - Composition and grid:
-- Color, material and motif:
-- Signature artifact and local behavior:
+- Ground, colour and material, and why this ground:
+- Signature artifact and its local behaviour:
 - Section sequence, with one section deliberately omitted:
 - Primary interaction and motion purpose:
 
 ## Two hero variants before code
-| Variant | Structure and artifact | Visitor doubt answered | Cost/risk |
+| Variant | Structure and artifact | Visitor doubt answered | Score 0–10 and what a 10 needs |
 | --- | --- | --- | --- |
 | A | | | |
 | B | | | |
 
-Choice and why:
+- Chosen variant and why:
 
 ## Gate before implementation
-| Finding from default-detector.md | Block/warn | Revision or product justification |
+| Detector signature | Block or warn | Revision, or the product reason it stays |
 | --- | --- | --- |
 | | | |
 
+If nothing matched, write one row: `none found | — | —`.
+
 ## Render evidence
-| Viewport | Screenshot path | What was checked |
+| Viewport | Screenshot | What you checked in it |
 | --- | --- | --- |
 | 1440×900 | | |
 | 768×1024 | | |
 | 390×844 | | |
 
-Record unavailable rendering explicitly. Include `check-page.mjs` JSON and optional Impeccable rule IDs and web-design-guidelines findings. An unavailable tool is not a pass.
+Each screenshot cell is a relative `.png` path, or `unavailable: "<exact error>"`. Open every PNG before listing it.
+
+## Checker result
+- JSON:
+- Failures fixed:
+- Warnings kept and why:
+- Optional tools (Impeccable detect, web-design-guidelines): result, or "not run: <reason>":
 
 ## Gate after render
-| Finding from default-detector.md | Block/warn | Fix or reason retained |
+| Detector signature | Block or warn | Fix, or the reason it stays |
 | --- | --- | --- |
 | | | |
 
-## Critique and revision
-- Weakest explanation or most template-like choice:
-- One structural revision actually made:
-- Re-render/test evidence:
+## Structural revision
+- Weakest explanation or most template-like decision:
+- Change made (structure, not styling):
+- Before:
+- After:
+- Score after the change and what still keeps it from a 10:
 
 ## Remaining weaknesses
 - What a buyer still cannot judge:
-- Unverified interaction, accessibility, performance or responsive behavior:
+- What was not verified:
+
+## Status
+<!-- Exactly one line: DONE, DONE_WITH_CONCERNS: <what is unverified>, or BLOCKED: "<quoted error>" -->
