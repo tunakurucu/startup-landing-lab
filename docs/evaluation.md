@@ -32,7 +32,7 @@ The first preview-server attempt failed because this environment could not enume
 
 A separate agent received only the standalone skill directory and a raw brief for a fictional developer API, Relayline. It was asked to produce a light landing page with a local trace explorer. It generated a design record and a self-contained HTML page, including reference selection, art direction, scenario logic and an implementation. Its reported static/logic checks covered scenario behavior, attempt selection, IDs, fragment targets, single H1 and absence of external assets.
 
-That agent could not launch Chromium at the time, so its generated page was not visually verified by that agent. Its output was not silently treated as a validated production page or copied into the three demos. The main demo was authored separately. This is an actual isolated skill exercise in the available Work agent environment, not a run in Claude Code, Cursor or a standalone Codex CLI. No with/without controlled comparison was performed.
+That agent could not launch Chromium at the time, so its generated page was not visually verified by that agent. Its output was not silently treated as a validated production page or copied into the three demos. The main demo was authored separately. This is an isolated skill exercise in a sandboxed agent environment, not a run inside any of the supported clients (Claude Code, Cursor, Codex). No with/without controlled comparison was performed.
 
 ## Three structured brief evaluations
 

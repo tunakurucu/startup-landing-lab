@@ -1,35 +1,35 @@
-# Startup Landing Lab v0.2 handoff · 2026-10-19
+# Maintainer handoff · v0.2 in progress
+
+Public repo: `tunakurucu/startup-landing-lab`. Live gallery: https://tunakurucu.github.io/startup-landing-lab/. Both GitHub Actions workflows (Validate, Publish gallery) must be green on every push to `main`.
 
 ## Published state
 
-Public repo: `tunakurucu/startup-landing-lab`. P0 was published to `main` as `6aa337ccab8d19fd613c67abe5bcf61064f9903c` (same tree as local checkpoint `ad4048d`). It adds seven recommended-value recipes, a 14-signature pre/post default detector, the decision record, render/check scripts, v0.2 skill procedure, motion contract and optional companion positioning. `agentskills validate` passed. `npm run build`, `npm run lint`, `npm test`, `npm run validate` and 67 Playwright checks passed before publication. The render and checker scripts were exercised against a local HTML fixture at 1440/768/390.
+| Commit | What it added |
+| --- | --- |
+| `8a8e03d` | v0.1: 43 candidates, 20 desktop audits, 7 archetypes, skill v0.1, three demos, gallery, Pages. |
+| `6aa337c` | Skill v0.2: seven archetype recipes (recommended numbers), 14-signature default-layout gate, decision-record template, `render.sh` / `check-page.mjs` scripts, companion-tool positioning. |
+| `af3992e` | Gate wired into CI (`tests/browser/skill-gate.spec.ts`, fixme until fonts land); `check-page.mjs` waits for the SPA route; recipes de-templated. Gate baseline recorded in `docs/evaluation.md`: all four routes fail only `type_system`. |
+| `2caa98d` | `evals/`: three raw briefs, `assertions.json`, `run.md` with honest first-run results (2/7, 2/7, 1/7). |
 
-The clone at `/workspace/scratch/02805d2c1737/v02` was fetched/reset to the published P0 commit while preserving generated screenshots. Direct `git push` failed because HTTPS credentials are unavailable in the shell; publish future tested commits via the connected GitHub Git data API (create blobs/tree/commit/update_ref with an expected head). Do not force push. The old `startup-landing-lab` checkout is dirty and diverged; work in the clean `v02` clone or reclone from GitHub.
+## v0.2 remaining work
 
-## Session 3–4 progress
+- [ ] Fonts: self-host OFL `.woff2` + `OFL.txt` under `gallery/public/fonts/`; remove Arial/Georgia/Courier stacks; all routes pass `type_system`; enable the gate tests.
+- [ ] Motion: contracted interactions on all three demos (transform/opacity only, reduced-motion keeps state); contracts recorded in `docs/demo-decisions.md`.
+- [ ] Structure: change the section grammar of one demo; update the diversity table so it is true of architecture, not only mood.
+- [ ] Stress: 320 px, 200 % zoom, longest headline, empty widget states.
+- [ ] Screenshots: 12 total (home, references, skill, three demos × 1440 and 390). The 60-file set is retired.
+- [ ] Release: README counts and evals table, repo topics, `v0.2.0` tag, this file updated.
 
-- [x] Session 3 P0: skill v0.2 published at `6aa337ccab8d19fd613c67abe5bcf61064f9903c`.
-- [x] Session 4 recovery: publish this handoff as the first commit.
-- [x] Block 1: gate baseline captured (all four routes fail only type_system), SPA wait repaired, agent-browser pixel scroll syntax verified, recipe rows specified, regression tests added as fixme until font block.
-- [x] Block 2: three isolated first runs graded honestly; none achieved a full pass (queue 2/7, gift 2/7, renewal 1/7).
-- [ ] Block 3: fonts, motion, distinct demo structure, screenshots.
-- [ ] Block 4: numeric research, conditional on remaining time.
-- [ ] Block 5: release README, topics, tag, final handoff.
+Deferred to v0.3: numeric research measurements (`scripts/measure.mjs`, `measurements` schema object); structural wireframe thumbnails; prerendered routes for crawlers; re-running the three evals after the gate and font fixes.
 
-## Current checkpoint
+## How to continue
 
-P1 has three raw briefs, `evals/assertions.json` and `evals/run.md`. Three isolated Work agents were started with only the standalone skill and a raw brief. Their outputs belong outside the repo under `/workspace/scratch/02805d2c1737/eval-{queue,gift,renewal}/`. **Their runs have not yet been graded or reported as passing.** Update the table only after checking outputs, checker JSON and screenshots. Do not claim Claude Code, Cursor or standalone Codex CLI execution.
+```bash
+git clone https://github.com/tunakurucu/startup-landing-lab && cd startup-landing-lab
+npm ci && python3 -m pip install -r requirements.txt
+npm run build && npm run lint && npm test && npm run validate
+agentskills validate skills/startup-landing-design
+npx playwright install chromium && npm run test:browser
+```
 
-The P1 files exist in a local draft commit `a2f9d8f` only. This handoff is published separately before those files. P2 (fonts, motion, skeleton revision and screenshot refresh), P3 (numeric research measurements) and release have not started. No v0.2 release tag exists.
-
-Block 1 is ready for publication after the full test gate. Its browser regression cases are intentionally marked `fixme` for the recorded `type_system` failure; unmark them in block 3. Agent-browser's documented `scroll down [px]` uses window scrolling (vercel-labs/agent-browser issue 501); our `scroll up 99999` returns to the top of normal documents.
-
-Block 1 was published as `af3992e682acca557ebbb7e9646e1867282cb91e`. Its GitHub API tree accidentally reset the executable mode on `render.sh` to 100644; restore 100755 in the next publication. Block 2 eval artifacts are being published; their incomplete first-run results are in `evals/run.md`. Repeating the runs after the skill's gate and font fixes is a next-session task.
-
-## Next actions
-
-1. Collect the three isolated run outputs; grade every assertion as pass/fail/unverified with paths. Repair the skill if a real failure warrants it, then update `evals/run.md`.
-2. P2: source verified OFL font files/licenses, implement motion contracts and a real section-grammar change; test 320px/200% zoom, regenerate screenshots, run all checks.
-3. P3 measurement pass, then P4 structural thumbnails/crawlability/README/topics/tag. Never label recommended recipe numbers as observed until measured.
-
-Continue from `/workspace/scratch/02805d2c1737/v02`: `git fetch origin main`; `git reset --mixed origin/main` (preserves draft evals); `npm ci`; `npm run build && npm run lint && npm test && npm run test:browser`. Publish each block through GitHub Git Data API as one tree and one commit based on the latest `main` with `expected_sha`. Confirm the branch head after each update. The CLI may be in `/root/.local/bin/agentskills`. Verify final Actions Validate and Publish gallery against the exact new head. User's acceptance check for a no-JS fetch remains outstanding.
+Rules that have held since v0.1: never push a red `main`; one commit per block; no fabricated observations, scores or client runs; no third-party assets or screenshots; recipe numbers stay labelled *recommended* until a measurement pass makes them *observed*.
