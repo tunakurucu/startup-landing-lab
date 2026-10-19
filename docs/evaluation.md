@@ -54,13 +54,13 @@ That agent could not launch Chromium at the time, so its generated page was not 
 | Product fit | Reliability is explained through a persistent event trace | Three constraints lower the cost of starting | Owner, decision and next step match the buyer's question |
 | Identity | Deliberate light technical instrument | Strong playful type, paper deck and original character | Calm serif-led editorial brief |
 | Originality | Original event model and layout; common technical patterns remain | Original prompt content and composition; familiar card metaphor | Original workflow comparison; editorial conventions are familiar |
-| Composition | Split hero; dense inspection follows open rationale | Oversized wordplay; color and cards change reading rhythm | Asymmetric opening; chapters and annotations structure the story |
+| Composition | Instrument hero: the working trace is the first thing on the page; rationale follows | Oversized wordplay; color and cards change reading rhythm | Asymmetric opening; chapters and annotations structure the story |
 | Typography | Clear sans/mono roles; small labels need zoom review | Heavy sans and italic serif; narrow wraps are intentionally expressive | Serif display and plain body; conservative and readable |
 | Storytelling | Shows transient and auth failure decisions | The interaction performs the promise | Structured/informal comparison makes the improvement inspectable |
 | Functionality | Scenarios, step inspection and JSON download tested | Dealing and text export tested | Workflow selection, comparison and text export tested |
-| Responsive quality | Revised hero trace becomes vertical on mobile | Deck stacks; hero decoration simplifies | Process strip becomes vertical; annotations reflow |
+| Responsive quality | Statement, controls and instrument stack; attempt path shrinks, step list is the sequence; checked at 320 px | Deck stacks; hero decoration simplifies; checked at 320 px | Process strip becomes vertical; annotations reflow; checked at 320 px |
 | Accessibility | Native radio/buttons and live detail state; axe clear in tested initial states | Native controls and live brief; axe clear in tested initial states | Labelled select/checkbox, semantic brief; axe clear in tested initial states |
-| Motion | User-controlled state and optional smooth navigation | Color transition after dealing, removed for reduced motion | State replacement and optional smooth navigation |
+| Motion | Trace sequence on load and scenario change; inspector rise; contracts in demo-decisions.md | Spring-curve deal, pop-in scene, field crossfade | Scroll reveals in reading order; brief rise |
 | Diversity | Cool technical sequence | Warm expressive ritual | Muted editorial accountability |
 
 The manual brief assessments applied the skill's product interpretation, reference-selection, hypothesis, page architecture, implementation and QA steps. They are not three independent client-installation tests. See [demo decisions](demo-decisions.md) for concrete rationales and counterexamples.

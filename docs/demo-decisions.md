@@ -10,7 +10,9 @@ Reference jobs: Resend informs concrete integration proof; Firecrawl informs a u
 
 Hypothesis: a light technical instrument with a persistent event identity will make reliability inspectable. Sans-serif display, monospace identifiers, blue-gray surfaces, square outlines and a sequential trace establish the system. Narrative: promise → continuity principles → stateful example → honest scope.
 
-Implemented artifact: two scenario modes and four selectable steps per mode. Details distinguish transient failure from authentication failure. Download exports illustrative JSON. No remote webhook is sent. The mobile hero replaces the desktop signal diagram with a readable vertical sequence after visual critique.
+Implemented artifact: the hero *is* the instrument. The statement, scenario choice and download sit on the left; the live delivery record with its attempt path, selectable steps and inspector sits on the right. There is no separate "try it" section lower down. Two scenario modes, four steps each; selecting a pressed step again clears the inspector to an explicit empty state. Details distinguish transient failure from authentication failure. Download exports illustrative JSON. No remote webhook is sent.
+
+Structural revision (v0.2): the first version opened on a static delivery-record card and placed the working explorer two sections below, which is the same hero → explanation → widget → closing grammar the other two demos used. The recipe for this family names "offset statement + working trace instrument" as its first hero structure, so the explorer moved into the hero and the separate section was removed. The page now has three sections instead of four, and the first interaction is available without scrolling. On phones the attempt path stays horizontal at a smaller size and the step list directly below it is the readable sequence.
 
 ## Sidequest: consumer creativity
 
@@ -38,7 +40,7 @@ Every animation in the three demos is listed here in the form the skill asks for
 
 | Demo | Trigger | State change and purpose | Static fallback | Duration / easing |
 | --- | --- | --- | --- | --- |
-| Relayline | Page load, once | Hero trace nodes scale in received → failed → retried → delivered, so the event's history reads as a sequence before the copy explains it | Complete trace visible at first paint | 7 × 250 ms, 150 ms stagger, 1.15 s total, ease-out |
+| Relayline | Page load, and again when the scenario changes | Attempt-path nodes scale in one after another, so the event's history reads as a sequence before the copy explains it | Complete path visible at first paint | 7 × 250 ms, 150 ms stagger, 1.15 s total, ease-out |
 | Relayline | Choose a scenario or step | Inspector content rises in to mark that the detail changed | Immediate replacement | 200 ms ease-out; row colour 150 ms |
 | Sidequest | Page load, once | Sticker and paper character pop in; nonessential scene, orients the eye | Visible at first paint | 400 ms, spring-like `cubic-bezier(.22,1.35,.36,1)`, 100 / 200 ms delay |
 | Sidequest | "Another little idea" | Three cards deal in with a stagger; the heading's word and the field colour follow, as a response to an explicit choice | Final cards and colour immediately | 360 ms deal, 90 ms stagger, same spring curve; field 350 ms ease |
@@ -51,11 +53,12 @@ Not animated, deliberately: headlines, body copy, navigation, the gallery's own 
 
 | Dimension | Relayline | Sidequest | Fieldwork |
 | --- | --- | --- | --- |
-| Hero | Split statement and instrument | Oversized stacked wordplay and character | Editorial statement, offset explanation and process strip |
-| Type | Sans display / mono technical labels | Heavy sans / expressive italic serif | Serif display / small sans / chapter numbers |
-| Sections | Technical rationale and trace | Permission, card deck and color field | Chapters, annotations and working brief |
+| Section grammar | Instrument hero (statement + live console) → continuity rationale → design decision. 3 sections. | Invitation → rules → deck and colour field → outro. 4 sections. | Statement + process strip → chapter I problem with field note → chapter II sample brief → chapter III principles → close. 5 sections. |
+| Hero | Statement beside a working instrument with its controls | Oversized stacked wordplay, sticker and character | Editorial statement, offset explanation and process strip |
+| Type | Inter 600 display, Inter body, IBM Plex Mono identifiers | Bricolage Grotesque 800 display, Instrument Serif italic, Inter body | Instrument Serif display, IBM Plex Sans body, Plex Mono labels |
 | Color | Cool light blue / navy | Cream / pink / lime / changing accent | Cream / olive / muted green |
-| Product visual | Event sequence and selected state | Three-part creative prompt | Annotated owner/action record |
-| Interaction | Scenario and step inspection | Deal and keep | Compare workflow and structure |
+| Product visual | Attempt path, step list and inspector | Three-part creative prompt on paper cards | Annotated owner/action record |
+| Interaction | Scenario, step inspection, deselect to empty state | Deal and keep | Compare workflow and structure |
+| Motion | Trace sequence on load and scenario change; inspector rise | Spring-curve deal, pop-in scene, field crossfade | Scroll reveals in reading order; brief rise |
 
-Each pair differs across at least five dimensions. Shared navigation and accessibility conventions do not imply a shared page template.
+Where they still agree: all three keep a top-left wordmark, a right-aligned nav with one filled action, an eyebrow label above each section and a three-column row somewhere on the page. Sidequest and Fieldwork still share the hero → explanation → widget shape; Relayline no longer does. That is an honest description of the current diversity, not a claim that the three share nothing.

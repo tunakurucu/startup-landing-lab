@@ -21,12 +21,25 @@ test.describe('Relayline hero trace',()=>{
     expect(await node.evaluate(e=>getComputedStyle(e).animationName)).toBe('none');
     expect(await node.evaluate(e=>getComputedStyle(e).opacity)).toBe('1');
   });
-  test('inspector re-animates when a step is chosen',async({page})=>{
+  test('inspector re-animates when a step is chosen, and empties when it is chosen again',async({page})=>{
     await page.goto('#/demo/relayline');
-    await page.getByRole('button',{name:/Retry accepted/}).click();
+    const retry=page.getByRole('button',{name:/Retry accepted/});
+    await retry.click();
     const inspector=page.locator('.trace-inspector');
     await expect(inspector).toContainText('Retry accepted');
     expect(await inspector.evaluate(e=>getComputedStyle(e).animationName)).toBe('rise');
+    await retry.click();
+    await expect(inspector).toContainText('Pick a step.');
+    await expect(retry).toHaveAttribute('aria-pressed','false');
+  });
+  test('the trace path replays when the scenario changes',async({page})=>{
+    await page.goto('#/demo/relayline');
+    await page.waitForTimeout(1300);
+    await page.getByLabel('Invalid signature').check();
+    const nodes=page.locator('.signal-path>*');
+    await expect(nodes).toHaveCount(7);
+    await expect(page.locator('.signal-small')).toHaveText('RECEIVED → REJECTED → PAUSED → REVIEW');
+    expect(await nodes.last().evaluate(e=>getComputedStyle(e).animationName)).toBe('pop');
   });
 });
 
