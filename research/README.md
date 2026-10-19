@@ -1,6 +1,6 @@
 # Research method and evidence
 
-This first edition contains **32 candidates, 27 verified YC company records and eight written audit records**. Three audits include full-page desktop inspection; five are partial desktop field notes. No audit has complete desktop/tablet/mobile and reduced-motion coverage. Do not describe this as 12–15 completed deep audits.
+This edition contains **32 candidates, 27 verified YC company records and eight written audit records**. Four audits include full-page desktop inspection; four are partial desktop field notes. No audit has complete desktop/tablet/mobile and reduced-motion coverage. Do not describe this as 12–15 completed deep audits. Four more San Francisco candidates have [source recon](source-recon-2026-10-19.md), not rendered audits.
 
 Five candidates are Bay Area comparisons outside the verified-YC set. Their geography evidence is recorded individually. Their YC status is **not verified**, which does not establish non-membership. Two of these comparisons have audit records. The gallery exposes this distinction rather than calling unknown status “non-YC.”
 
@@ -20,7 +20,7 @@ Official public YC company pages supplied verified company identity, batch, webs
 
 Candidates cover technical tools, analytics, consumer marketplaces, hardware, operations, fintech and healthcare. Recent verified examples include HumanLayer F24, Onlook W25, Diode S24 and LightSprint P26. Their inclusion is not a statement about investment quality. Companies may have outgrown startup status; public and acquired companies remain labelled by official metadata where available.
 
-Rendered browser inspection on October 18, 2026 used a 1363 × 936 desktop viewport. We inspected headings and page sequence, hero composition, selected lower sections, and specific interaction states. Firecrawl, Raycast and Stripe received full-page composition captures. Other records retain partial coverage. These captures were temporary research evidence and are not redistributed.
+Rendered browser inspection on October 18, 2026 used a 1363 × 936 desktop viewport. We inspected headings and page sequence, hero composition, selected lower sections, and specific interaction states. Firecrawl, Raycast, Stripe and Resend received full-page composition captures. Other records retain partial coverage. These captures were temporary research evidence and are not redistributed. On October 19, first-party source pages were read for Figma, Cursor, Notion and Webflow. New rendered browser calls timed out, so their source recon remains outside the audit data and gallery.
 
 ## Evidence policy
 
