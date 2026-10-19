@@ -45,6 +45,7 @@ test.describe('Relayline hero trace',()=>{
 test.describe('Sidequest deal',()=>{
   test('cards deal with a stagger and keep their tilt',async({page})=>{
     await page.goto('#/demo/sidequest');
+    expect(await page.locator('.idea-deck article').first().evaluate(e=>getComputedStyle(e).animationName)).toBe('none'); // no fade on first paint
     await page.getByRole('button',{name:'Another little idea'}).click();
     const cards=page.locator('.idea-deck article');
     const delays=await cards.evaluateAll(els=>els.map(e=>getComputedStyle(e).animationDelay));
