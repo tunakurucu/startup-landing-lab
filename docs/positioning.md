@@ -15,4 +15,17 @@ It does not train a model, promise conversion gains, or define a single YC aesth
 
 These projects already address originality, product context and verification. We do not claim they lack those capabilities. Our differentiation is the evidence-labelled collection, its decision taxonomy, and three inspectable original demonstrations. The collection is small and predominantly desktop/technical; it must earn broader claims through more research and independent evaluation.
 
+## Composition with other skills
+
+Use this skill **before** a visual generator: interpret the product, choose dated references, write `DESIGN-RECORD.md`, compare two hero structures, and pass a concrete recipe to implementation. It supplies decision evidence and a local gate, while companions improve execution and engineering. None is a hard dependency.
+
+| Companion | Complementary role |
+| --- | --- |
+| [Anthropic frontend-design](https://github.com/anthropics/skills) / [Impeccable](https://github.com/pbakaus/impeccable) | Aesthetic execution and, if locally installed, deterministic design checks |
+| [Vercel web-design-guidelines](https://github.com/vercel-labs/agent-skills) | Web UI engineering review |
+| [agent-browser](https://github.com/vercel-labs/agent-browser) / Playwright | Rendered evidence and viewport checks |
+| [Emil Kowalski's skills](https://github.com/emilkowalski/skills) | Motion and breakage review |
+
+[brand-landingpage](https://github.com/wshobson/agents) provides an interview-to-brand-to-page path; [yc-startup-websites-rules](https://github.com/LevwTech/yc-startup-websites-rules) is a concise messaging/rules collection. The local casebook and gated decision record are this project's distinct layer. These are scope comparisons, not claims about the quality of their output.
+
 Original instructions and code were authored for this repository. No competitor skill text or proprietary website code was copied. better-web-ui uses its own license; none of its material is redistributed here.

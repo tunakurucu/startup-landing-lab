@@ -14,6 +14,17 @@ Because “make it distinctive” is not a method. This skill connects a visitor
 
 It is an instruction skill, not a trained model. It does not copy startup pages or claim there is one YC visual style. It complements broader design and engineering skills.
 
+## Works with your existing design tools
+
+Startup Landing Lab comes first: product interpretation → dated references → archetype → `DESIGN-RECORD.md` → numeric recipe and pre-build gate. Keep your usual frontend or design skill for execution polish. The tools below are optional; the standalone Markdown skill and its local checks work without installing any of them.
+
+| Optional companion | Job after our decision record |
+| --- | --- |
+| [frontend-design](https://github.com/anthropics/skills) / [Impeccable](https://github.com/pbakaus/impeccable) | Aesthetic execution; Impeccable's installed detector can add rule-ID findings |
+| [web-design-guidelines](https://github.com/vercel-labs/agent-skills) | Engineering and accessibility review |
+| [agent-browser](https://github.com/vercel-labs/agent-browser) or local Playwright | Render and inspect the page at three widths |
+| [Emil Kowalski's skills](https://github.com/emilkowalski/skills) | Motion review and stress thinking |
+
 ## Install
 
 Copy the skill into your target project. You do not need to install the gallery.

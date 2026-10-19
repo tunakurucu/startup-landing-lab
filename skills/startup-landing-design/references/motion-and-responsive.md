@@ -1,17 +1,15 @@
-# Motion and responsive design
+# Motion and responsive behavior
 
-Write a behavior contract before animating:
+These timings are **recommended defaults**, not measurements of referenced sites. Animate state and orientation, never the availability of essential copy. Prefer transform and opacity; avoid layout-changing width/height animation. A spring-like curve can suit a playful brand but should not make a technical or sober tool feel bouncy.
 
-| Trigger | State change | Purpose | Static alternative |
+| Trigger | State change and purpose | Static alternative | Recommended duration/easing |
 | --- | --- | --- | --- |
-| Choose a scenario | Trace and explanation update | Compare outcomes | Same final trace without tween |
-| Advance a workflow | Current step changes | Explain order | Numbered list |
-| Submit local input | Result/status appears | Confirm action | Immediate text update |
+| Press a scenario tab | Replace trace and explanation to compare outcomes | Immediate selected state and content | 150–220ms opacity ease-out |
+| Advance a workflow | Current step and connector update to explain order | Numbered list and selected step | 180–280ms transform/opacity ease-out |
+| Submit safe local input | Result/status appears to confirm action | Immediate text update | 150–250ms opacity ease-out |
+| First appearance of nonessential scene | Guide attention to the artifact once | Fully visible scene at first paint | 250–400ms opacity/translate ease-out |
+| Playful user deal | Cards arrive as a response to an explicit choice | Final cards and live status immediately | 220–360ms stagger, restrained spring-like cubic-bezier |
 
-Do not infer animation libraries, durations or easing from reference screenshots. Casebook interactions are limited to those explicitly marked observed. Use CSS transitions for small state changes; add dependencies only for a behavior CSS/native controls cannot support well.
+Micro-interactions usually belong at 150–250ms; entrances 250–400ms. Avoid continuous decoration and auto-advancing essential content. If a carousel is unavoidable, provide pause and preserve focus. Do not animate text a visitor must read first. Under `prefers-reduced-motion: reduce`, remove translation, parallax and smooth scrolling while keeping every state change and all content visible.
 
-Prefer user-triggered motion. Avoid auto-advancing essential content. If a carousel advances automatically, provide pause and retain focus. Respect prefers-reduced-motion: reduce; remove parallax, animated scrolling and continuous decoration. Preserve state changes and all content.
-
-At approximately 390px: convert wide spatial artifacts into readable vertical sequences, retain important labels, and avoid tiny nested desktop chrome. Keep hit areas near 44px where practical. Keep short tables scrollable in a labelled region if reflow would destroy comparison. Never hide product meaning merely to eliminate overflow.
-
-At tablet widths: test the awkward middle. Do not let a three-column desktop grid survive with unreadably narrow columns. Check sticky navigation against wrapping and text zoom. Reserve media dimensions and avoid relying on late fonts for stable wrapping.
+At 390px, replace wide artifacts with readable vertical steps and retain important labels. Check 320px and 200% zoom as stress cases; fixed 100vh heroes can clip mobile browser chrome. Keep controls near 44px where practical, use safe-area padding where controls reach screen edges, and reserve media dimensions. At 768px, test the awkward middle rather than retaining a cramped three-column desktop grid. A short table may scroll in a labelled region; the page itself should not overflow.

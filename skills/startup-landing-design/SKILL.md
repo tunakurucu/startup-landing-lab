@@ -1,48 +1,51 @@
 ---
 name: startup-landing-design
-description: Design and implement distinctive startup landing pages using an evidence-labelled reference casebook, product-specific art direction, functional product demonstrations, and rendered QA. Use for a new startup homepage, a landing-page redesign, or a request to avoid generic AI website patterns. Preserve existing brand and framework constraints.
+description: Design and implement distinctive startup landing pages using dated startup evidence, a product-specific decision record, archetype recipes, pre-build default-layout detection, functional product artifacts, and rendered QA. Use for new startup homepages, landing-page redesigns, or requests to escape generic AI website patterns. Preserve existing brand and framework constraints.
+license: MIT
+metadata:
+  version: "0.2"
 ---
 
 # Startup landing design
 
-Produce a working page and a small decision record. Use references as evidence for decisions, never as layouts to reproduce. This is a research-backed instruction skill, not a trained model.
+Build a working page and save a filled `DESIGN-RECORD.md` beside it. Copy [the decision record](assets/decision-record.md) first. The skill is self-contained; optional review tools are never prerequisites. References are dated evidence for decisions, not layouts to reproduce.
 
-## 1. Establish the evaluation task
+## 1. Interpret the product
 
-Inspect the existing code, content and brand constraints. Identify audience, category, business model, buying risk, conversion action and what visitors need to understand before acting. State consequential assumptions briefly; ask only for missing facts that change the product or action. Do not invent social proof.
+Inspect existing code, brand and content. Write the promise as **who / what changes / how**; name the conversion action and first three visitor doubts. Assign a real artifact to each doubt. Interview only when the answer would change the archetype, conversion action or artifact. Ask at most five questions, in one pass when possible; otherwise make explicit assumptions in the record. Never invent social proof.
 
-Write a one-sentence promise containing **who, what changes, and how**. List the first three visitor doubts. Assign each doubt a concrete artifact that could answer it: code input/output, workflow trace, editable example, real policy, or sourced case study. Do not start with a component checklist.
+## 2. Select reference jobs
 
-## 2. Select references by explanatory job
+Read [reference selection](references/reference-selection.md), [archetypes](references/design-archetypes.md) and relevant entries in the [casebook](references/casebook.md). Record two references serving different jobs and one counterexample, with the dated observed decision, inspection limit, transferable principle and treatment not borrowed. Unaudited candidates are leads, not evidence. If browsing is unavailable, mark present appearance unverified.
 
-Read [reference selection](references/reference-selection.md), [archetypes](references/design-archetypes.md) and the relevant entries in the [casebook](references/casebook.md). Choose two useful references with different jobs and one counterexample. For each, record:
+## 3. Choose before coding
 
-- The observed decision, its inspection limit, and the principle to transfer.
-- Why it helps this product's audience.
-- The branded treatment and assumptions that must not be borrowed.
+Read [composition/type](references/composition-and-type.md) and [the detector](references/default-detector.md). Write a hypothesis for type, composition, grid, material, motif, artifact, sections, interaction and motion. Draw two genuinely different hero structures and compare how each answers a visitor doubt. Score fit, identity, originality, composition and product proof from 0–10 with a sentence of evidence for each; revise the weak choice before code.
 
-Treat unaudited candidates as research leads, not design evidence. If browsing is unavailable, use the dated casebook and disclose that current appearance is unverified. Never infer motion from a screenshot.
+Run the detector against the written hypothesis and log every block/warn finding in the decision record. Resolve each block before implementation; a justified centered hero is allowed. Record the selected variant and why it beat the other.
 
-## 3. Commit to an art-direction hypothesis
+## 4. Use one recipe, then adapt it
 
-Read [composition and typography](references/composition-and-type.md). Write a compact hypothesis covering type personality, composition, grid, color/material, visual motif, product artifact, section sequence, primary interaction and motion purpose. Tie each decision to the visitor's evaluation task.
+Choose the closest decision family, read its **recommended**, not observed, numbers, and adjust them for the actual product:
 
-Choose a signature idea that would survive a palette change. Compare two possible hero structures, then implement the better fit. Ask: if the brand name disappeared, would this still read as this product? If the only differences are colors, gradients and corner radii, revise the composition or explanatory artifact.
+- [Typographic technical](references/recipes/typographic-technical.md)
+- [Expressive world](references/recipes/expressive-world.md)
+- [Canvas first](references/recipes/canvas-first.md)
+- [Functional entrance](references/recipes/functional-entrance.md)
+- [Workflow theater](references/recipes/workflow-theater.md)
+- [Immersive editorial](references/recipes/immersive-editorial.md)
+- [Editorial platform](references/recipes/editorial-platform.md)
 
-## 4. Build the narrative and functional artifact
+Read [implementation workflow](references/implementation-workflow.md) and [product storytelling](references/product-storytelling.md). Define coherent type/spacing/width/surface/action tokens. Preserve the existing stack. Build original functional product evidence, real navigation, a meaningful conversion action and an honest footer. Illustrative interfaces must say so and do something locally. Do not add a backend to fake a product.
 
-Read [implementation workflow](references/implementation-workflow.md) and [product storytelling](references/product-storytelling.md). Define tokens for type, spacing, width, surface, border, action and state. Preserve the project's stack. Avoid a mandatory universal section order.
+## 5. Contract motion and mobile
 
-Implement the hero, at least three meaningful supporting sections when appropriate, working navigation, primary action and footer. Prefer native HTML controls. An illustrative demo must say it is illustrative and have meaningful local behavior. Do not render fake tabs, search, playback, pricing calculators or signup success. Do not add a backend merely to make a fictional brand look real.
+Read [motion/responsive](references/motion-and-responsive.md). For every animation record trigger, state change, purpose, static fallback, duration and easing. Essential copy is visible before scripts. Respect keyboard and reduced motion. Recompose dense artifacts on mobile; don't scale down desktop chrome.
 
-## 5. Add purposeful motion and responsive behavior
+## 6. Render, gate and revise
 
-Read [motion and responsive design](references/motion-and-responsive.md). Name the trigger, state change, user purpose and static fallback for each animation. Keep essential copy visible before scripts or animations complete. Support reduced motion and keyboard use. Replace dense product diagrams with legible mobile narratives instead of shrinking them until unreadable.
+Run `scripts/render.sh <url-or-file> <out-dir>` for full-page 1440×900, 768×1024 and 390×844 evidence. It detects agent-browser, otherwise uses an existing local Playwright CLI, otherwise exits with “rendering unavailable”; mark visual QA not run. Run `node scripts/check-page.mjs <url-or-html>` when Playwright is already in the project. It emits JSON and exits nonzero on one-H1, type, reduced-motion, overflow, names, links or heading-order failures. Do not install dependencies just to silence an unavailable check.
 
-## 6. Critique, revise and verify
+Read [visual QA](references/visual-qa.md) and [anti-patterns](references/anti-patterns.md). Click every primary control; check focus, contrast, empty states, 320px and 200% zoom. Run the [detector](references/default-detector.md) again on the rendered page. If `npx --no-install impeccable --version` works, run `npx --no-install impeccable detect <files-or-dir> --json`; record accepted/rejected findings by rule ID. If `web-design-guidelines` is installed in the agent environment, run its engineering review. These tools add checks but cannot replace the record or screenshot critique.
 
-Read [visual QA](references/visual-qa.md) and [anti-patterns](references/anti-patterns.md). Render desktop, tablet and mobile. Click all primary controls. Check focus, overflow, heading order, contrast and reduced motion. Inspect actual screenshots; compilation alone is insufficient.
-
-Perform one substantive critique and revision. Change a weak hierarchy, interaction, narrative gap or mobile layout, not merely a shadow. Record the original issue, actual change, and verification result. If rendering is unavailable, state that the visual result is unverified.
-
-Deliver the implementation, design rationale, tested behavior and remaining limitations. For multiple demos, compare hero, type, sections, color, product presentation and interaction; revise pairs that share the same underlying template.
+Identify the weakest explanation and most template-like decision. Make and rerender one **structural** revision, then record what changed and what remains weak. If rendering or a client capability is unavailable, state that limitation; a successful build is not visual verification.
