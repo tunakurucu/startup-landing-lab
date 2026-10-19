@@ -601,5 +601,341 @@
       "https://cyclon.ai/",
       "https://www.ycombinator.com/companies/cyclon"
     ]
+  },
+  {
+    "id": "airweave",
+    "name": "Airweave",
+    "url": "https://airweave.ai/",
+    "category": "Infrastructure",
+    "archetype": "typographic-technical",
+    "yc_status": "verified-yc",
+    "batch": "P25",
+    "verification_url": "https://www.ycombinator.com/companies/airweave",
+    "geography_evidence": "https://www.ycombinator.com/companies/airweave",
+    "inspected_on": "2026-10-19",
+    "coverage": "desktop-audit",
+    "viewports": {
+      "desktop": "1363 × 936: rendered hero, section scan and selected interaction",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "A dark developer page moves from a restrained promise into an editable-feeling API example and a three-step retrieval model.",
+    "observations": {
+      "hero": "A centered Build smarter agents statement, YC badge and two actions sit on a dark blue-to-warm gradient. A wide code panel takes over the lower half of the first screen, with Python selected beside cURL and Node.",
+      "typography": "Large plain sans-serif headline, small tracked uppercase navigation and monospaced code. Exact font families unverified.",
+      "visual_system": "Nearly black surface, muted blue and warm gradient light, hairline code frames and small orange selected-state accents. The technical artifact carries more visual weight than decorative imagery.",
+      "page_sequence": "Hero/API example → customer strip and infrastructure rationale → three-step How Airweave Works → feature illustrations → four pricing tiers → blog/academy → FAQ → footer. Selected middle regions were scrolled separately because scroll reveal lowered text visibility in an intermediate viewport.",
+      "interaction": "Clicked cURL in the hero example. The selected language changed from Python and the visible snippet changed to cURL requests. No API request, account signup or pricing purchase was made.",
+      "accessibility": "The code language chooser was clickable in the rendered page; its labels were visible but not surfaced as named tabs in the accessibility tree. Keyboard, contrast and screen-reader behavior remain untested."
+    },
+    "interpretation": {
+      "principles": [
+        "Let a representative integration example answer the first technical adoption question.",
+        "Use one small system diagram to explain where infrastructure sits.",
+        "Keep the free-start and assisted-demo paths distinct."
+      ],
+      "fit": "Useful for a developer tool whose installation and place in a stack are central buyer questions.",
+      "risks": "The quiet supporting copy appeared faint in an early render and needs contrast review. The roundup praised a previous snapshot; its judgment is not automatically transferable to the current site."
+    },
+    "limitations": [
+      "One cloud Chromium session at a 1363 × 936 desktop viewport on 2026-10-19; the homepage can change.",
+      "Tablet, mobile, keyboard-only, screen-reader, color contrast and reduced-motion behavior were not tested.",
+      "Exact font names, animation timing, implementation libraries and conversion effects were not established.",
+      "A third-party design mention is a selection lead, not an independent conversion or product-quality endorsement.",
+      "The external roundup praised Airweave’s clean dark visuals; the current page was inspected independently."
+    ],
+    "sources": [
+      "https://airweave.ai/",
+      "https://www.ycombinator.com/companies/airweave",
+      "https://www.linkedin.com/posts/rishabhsamb_i-found-my-favorite-landing-pages-from-recent-activity-7378140765811568640-oUaI"
+    ]
+  },
+  {
+    "id": "normal",
+    "name": "Normal",
+    "url": "https://normal.ai/",
+    "category": "Hardware",
+    "archetype": "typographic-technical",
+    "yc_status": "verified-yc",
+    "batch": "S25",
+    "verification_url": "https://www.ycombinator.com/companies/normal",
+    "geography_evidence": "https://www.ycombinator.com/companies/normal",
+    "inspected_on": "2026-10-19",
+    "coverage": "desktop-audit",
+    "viewports": {
+      "desktop": "1363 × 936: rendered hero, section scan and selected interaction",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "A spare research-lab page uses a moving single-sentence subject and faint construction lines instead of a long sales funnel.",
+    "observations": {
+      "hero": "Small N mark and three links sit above a two-column introduction: an applied research lab for hardware design on the left, and a changing list of what it helps build on the right. A huge outline wordmark and very fine drafting guides occupy the empty center.",
+      "typography": "Compact sans-serif body and headings with technical micro-labels in the footer. The headline is deliberately modest in scale; exact families unverified.",
+      "visual_system": "White field, pale gray construction grid and one small orange pointer. The negative space and diagram-like lines do most of the work.",
+      "page_sequence": "This is a short, nearly one-screen composition: navigation → research proposition and cycling example industry → hiring invitation and expandable status/email control at the bottom. Research and leaderboard are separate routes, not homepage chapters.",
+      "interaction": "Clicked the All systems normal control. Its accessible state expanded and revealed a copyable founders@normal.ai address. The rotating industry word changed between observed frames; its interval was not measured.",
+      "accessibility": "The status disclosure reported collapsed/expanded states. Keyboard focus, automatic text-change announcements and reduced-motion treatment were not tested."
+    },
+    "interpretation": {
+      "principles": [
+        "Use extreme brevity when the intended next action is a conversation or hiring inquiry.",
+        "Make a few changing words do the job of a broad industry list.",
+        "Let a quiet visual system support a technical research identity."
+      ],
+      "fit": "Useful for a research-led organization with a narrow public ask and enough credibility elsewhere to sustain sparse copy.",
+      "risks": "This page provides almost no method, product proof or direct buyer path on the homepage. The roundup called an older Normal Factory site blocky; the current redirect to normal.ai is a different, much quieter design."
+    },
+    "limitations": [
+      "One cloud Chromium session at a 1363 × 936 desktop viewport on 2026-10-19; the homepage can change.",
+      "Tablet, mobile, keyboard-only, screen-reader, color contrast and reduced-motion behavior were not tested.",
+      "Exact font names, animation timing, implementation libraries and conversion effects were not established.",
+      "A third-party design mention is a selection lead, not an independent conversion or product-quality endorsement.",
+      "The external roundup described Normal Factory’s older blocky aesthetic; normalfactory.com now redirects to this different site."
+    ],
+    "sources": [
+      "https://normal.ai/",
+      "https://www.ycombinator.com/companies/normal",
+      "https://www.linkedin.com/posts/rishabhsamb_i-found-my-favorite-landing-pages-from-recent-activity-7378140765811568640-oUaI"
+    ]
+  },
+  {
+    "id": "answerthis",
+    "name": "AnswerThis",
+    "url": "https://answerthis.io/",
+    "category": "Research",
+    "archetype": "editorial-platform",
+    "yc_status": "verified-yc",
+    "batch": "F25",
+    "verification_url": "https://www.ycombinator.com/companies/answerthis",
+    "geography_evidence": "https://www.ycombinator.com/companies/answerthis",
+    "inspected_on": "2026-10-19",
+    "coverage": "desktop-audit",
+    "viewports": {
+      "desktop": "1363 × 936: rendered hero, section scan and selected interaction",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "A long research-workflow page builds a case from citation anxiety to a five-stage product tour and institutional reassurance.",
+    "observations": {
+      "hero": "Centered navy two-line Scientific AI headline on white, a YC badge, berry-colored Start For Free action, user avatars and a wide video panel. The video showed a buffering state in the inspected opening.",
+      "typography": "Large neutral sans-serif display and smaller gray body, with berry section labels and numbered feature stages. Exact families unverified.",
+      "visual_system": "White page, muted navy/berry accents, occasional photography and dense diagrams of papers, citations and workflow. The page alternates centered claims with split visual explanations.",
+      "page_sequence": "Hero/video → logo row and numerical proof claims → research pain points → verification benefit trio → five product stages → enterprise and source verification → privacy/integrations → testimonials → FAQ → final signup/footer.",
+      "interaction": "Opened the Features navigation menu. It revealed descriptive links to Writer, Library, Search Results, Literature Review and other capabilities. The video was buffering at the first capture; no research query or account creation was attempted.",
+      "accessibility": "The page exposed headings and links, but the menu trigger appeared as a generic container in the accessibility tree. This is an observed semantic concern, not a completed keyboard or screen-reader audit."
+    },
+    "interpretation": {
+      "principles": [
+        "Sequence a complex platform around the researcher’s actual workflow.",
+        "Make citation and verification doubts explicit early.",
+        "Keep institutional security and collaboration information available after the individual workflow story."
+      ],
+      "fit": "Useful for a multi-step research product with separate individual and institutional evaluators.",
+      "risks": "Dense claims and a long page can outrun first-screen clarity. Company-reported paper counts, researcher counts and compliance language were observed, not independently verified. The roundup praised the 2025 page, which may differ from today’s design."
+    },
+    "limitations": [
+      "One cloud Chromium session at a 1363 × 936 desktop viewport on 2026-10-19; the homepage can change.",
+      "Tablet, mobile, keyboard-only, screen-reader, color contrast and reduced-motion behavior were not tested.",
+      "Exact font names, animation timing, implementation libraries and conversion effects were not established.",
+      "A third-party design mention is a selection lead, not an independent conversion or product-quality endorsement.",
+      "The roundup called the then-current AnswerThis its favorite F25 landing page; today’s rendering is assessed separately."
+    ],
+    "sources": [
+      "https://answerthis.io/",
+      "https://www.ycombinator.com/companies/answerthis",
+      "https://www.linkedin.com/posts/rishabhsamb_i-found-my-favorite-landing-pages-from-recent-activity-7378140765811568640-oUaI"
+    ]
+  },
+  {
+    "id": "pingo",
+    "name": "Pingo",
+    "url": "https://pingo.ai/",
+    "category": "Education",
+    "archetype": "expressive-world",
+    "yc_status": "verified-yc",
+    "batch": "S25",
+    "verification_url": "https://www.ycombinator.com/companies/pingo",
+    "geography_evidence": "https://www.ycombinator.com/companies/pingo",
+    "inspected_on": "2026-10-19",
+    "coverage": "desktop-audit",
+    "viewports": {
+      "desktop": "1363 × 936: rendered hero, section scan and selected interaction",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "A conversation-first learning story turns a broad language promise into specific short exchanges and a direct app-download action.",
+    "observations": {
+      "hero": "An airy white hero centers Finally. Someone to speak with., a brief learning promise and two store buttons. A small colored mark and blue Get the app action frame the top navigation.",
+      "typography": "Bold rounded sans-serif display with short, conversational body copy. The simple type leaves the sample dialogue as the detailed proof; exact families unverified.",
+      "visual_system": "White space with restrained blue and a multicolor logo. Language links, six conversation cards and user-review cards supply color and rhythm rather than a large generic feature grid.",
+      "page_sequence": "Hero/store actions → horizontal language chooser → three-minute onboarding steps → six example conversations across languages and situations → learner reviews → FAQ → repeated download action and language footer.",
+      "interaction": "Clicked Next languages in the horizontal chooser, then expanded the first FAQ. The FAQ disclosed an explanation and reported expanded state; the chooser was operated but the amount of horizontal displacement was not measured.",
+      "accessibility": "The language controls have descriptive button names and FAQ uses expandable buttons. App-store exits, keyboard order and any animation announcement were not tested."
+    },
+    "interpretation": {
+      "principles": [
+        "Show a few realistic exchange fragments to demonstrate an abstract conversational promise.",
+        "Keep the immediate action aligned with a mobile app.",
+        "Answer beginner, advanced and voice-data questions near the final download prompt."
+      ],
+      "fit": "Useful for consumer software where use feels easier to understand through an example than through a feature list.",
+      "risks": "Conversation snippets are curated examples, not a live product test. The roundup praised the older colorful page; the current site is notably more restrained. User counts and ratings are company-presented claims."
+    },
+    "limitations": [
+      "One cloud Chromium session at a 1363 × 936 desktop viewport on 2026-10-19; the homepage can change.",
+      "Tablet, mobile, keyboard-only, screen-reader, color contrast and reduced-motion behavior were not tested.",
+      "Exact font names, animation timing, implementation libraries and conversion effects were not established.",
+      "A third-party design mention is a selection lead, not an independent conversion or product-quality endorsement.",
+      "The roundup praised colorful visuals and a clear CTA; the current page retains the direct CTA but is visually quieter."
+    ],
+    "sources": [
+      "https://pingo.ai/",
+      "https://www.ycombinator.com/companies/pingo",
+      "https://www.linkedin.com/posts/rishabhsamb_i-found-my-favorite-landing-pages-from-recent-activity-7378140765811568640-oUaI"
+    ]
+  },
+  {
+    "id": "cactus",
+    "name": "Cactus",
+    "url": "https://www.oncactus.com/",
+    "category": "Home services",
+    "archetype": "expressive-world",
+    "yc_status": "verified-yc",
+    "batch": "P25",
+    "verification_url": "https://www.ycombinator.com/companies/oncactus",
+    "geography_evidence": "https://www.ycombinator.com/companies/oncactus",
+    "inspected_on": "2026-10-19",
+    "coverage": "desktop-audit",
+    "viewports": {
+      "desktop": "1363 × 936: rendered hero, section scan and selected interaction",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "A trade-specific revenue story mixes job-site footage, a cactus character and a loss calculator around a demo call.",
+    "observations": {
+      "hero": "A white translucent left panel promises an AI revenue engine built for trades over a rotating job-site video backdrop. The narrow webinar strip and top-bar demo action remain visible.",
+      "typography": "Large plain sans-serif claims, uppercase labels and a few heavier emphasized words. The practical home-service wording matters more than type novelty; exact family unverified.",
+      "visual_system": "Dark evergreen text, orange linework, real trade footage and a hand-drawn cactus figure. Customer logos and team photo make the page feel located in its specific market.",
+      "page_sequence": "Video hero and customer logos → team/news → three revenue leaks and an audit form → sample call with cactus character → inbound/outbound workflow → revenue-impact sliders → customer quotes → final demo/phone choice and footer.",
+      "interaction": "Selected a hero carousel indicator and observed its selected slide change; automatic rotation also advanced the slide during inspection. No call, form submission or calculator assumption validation was made.",
+      "accessibility": "Hero slider indicators appeared as named checkboxes in the browser accessibility output. Automatic rotation, keyboard operation of the slider, video controls and reduced motion were not tested."
+    },
+    "interpretation": {
+      "principles": [
+        "Use imagery and language from the buyer’s actual work environment.",
+        "Turn a broad automation promise into missed-call, follow-up and CRM work.",
+        "Show calculator assumptions beside any output and avoid presenting estimates as measured outcomes."
+      ],
+      "fit": "Useful for a vertical service with an explicit revenue-loss diagnosis and a human-assisted sale.",
+      "risks": "The calculator output and several ROI statistics are company-provided claims; they were not validated. Automatic video and carousel motion can distract and needs separate accessibility review. The older praise was for a prior page snapshot."
+    },
+    "limitations": [
+      "One cloud Chromium session at a 1363 × 936 desktop viewport on 2026-10-19; the homepage can change.",
+      "Tablet, mobile, keyboard-only, screen-reader, color contrast and reduced-motion behavior were not tested.",
+      "Exact font names, animation timing, implementation libraries and conversion effects were not established.",
+      "A third-party design mention is a selection lead, not an independent conversion or product-quality endorsement.",
+      "The roundup praised its cactus theme. The currently rendered page still uses the character, but its hero has shifted toward job-site footage."
+    ],
+    "sources": [
+      "https://www.oncactus.com/",
+      "https://www.ycombinator.com/companies/oncactus",
+      "https://www.linkedin.com/posts/rishabhsamb_i-found-my-favorite-landing-pages-from-recent-activity-7378140765811568640-oUaI"
+    ]
+  },
+  {
+    "id": "interfere",
+    "name": "Interfere",
+    "url": "https://interfere.com/",
+    "category": "Developer tools",
+    "archetype": "workflow-theater",
+    "yc_status": "verified-yc",
+    "batch": "S25",
+    "verification_url": "https://www.ycombinator.com/companies/interfere",
+    "geography_evidence": "https://www.ycombinator.com/companies/interfere",
+    "inspected_on": "2026-10-19",
+    "coverage": "desktop-audit",
+    "viewports": {
+      "desktop": "1363 × 936: rendered hero, section scan and selected interaction",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "A large incident workspace makes the progression from an unseen bug to a source-linked fix visible beneath a spare hero.",
+    "observations": {
+      "hero": "White, left-anchored Ship software that never breaks statement faces a compact right-side explanation and two actions. A broad incident interface with inbox, timeline and code finding follows immediately; a soft pink-blue halo sits behind it.",
+      "typography": "Large black sans-serif hero, compact UI labels and a short serif customer quote later. Exact families unverified.",
+      "visual_system": "White/near-white fields, thin borders, restrained pastel blur and realistic application panels. The recurring broken-password incident provides cohesion across sections.",
+      "page_sequence": "Hero and issue workspace → trust logos → detect/understand/fix incident explanation → customer quote → deeper feature trio → security/compliance → changelog → closing action and extensive footer.",
+      "interaction": "Opened the Product menu. It expanded into four audience-specific destinations for engineers, designers, product managers and support. The incident workspace was inspected as a visual product example, not operated as a live application.",
+      "accessibility": "Skip-to-content and expanded menu state were visible in accessibility output. The illustrative issue UI and its controls were not tested for keyboard functionality or screen-reader behavior."
+    },
+    "interpretation": {
+      "principles": [
+        "Use one coherent incident example from detection through resolution.",
+        "Make the product interface carry proof before a generic feature list.",
+        "Offer role-specific entry points without splitting the central story."
+      ],
+      "fit": "Useful for operational software where a buyer needs to see the information available at each handoff.",
+      "risks": "The absolute claim never breaks exceeds what a homepage can establish. DesignMunk is a curated design feature, not evidence of product performance or conversion."
+    },
+    "limitations": [
+      "One cloud Chromium session at a 1363 × 936 desktop viewport on 2026-10-19; the homepage can change.",
+      "Tablet, mobile, keyboard-only, screen-reader, color contrast and reduced-motion behavior were not tested.",
+      "Exact font names, animation timing, implementation libraries and conversion effects were not established.",
+      "A third-party design mention is a selection lead, not an independent conversion or product-quality endorsement.",
+      "DesignMunk featured and described the current Interfere homepage; the page was then inspected live."
+    ],
+    "sources": [
+      "https://interfere.com/",
+      "https://www.ycombinator.com/companies/interfere",
+      "https://designmunk.com/interfere/"
+    ]
+  },
+  {
+    "id": "toothy",
+    "name": "Toothy AI",
+    "url": "https://toothy.ai/",
+    "category": "Healthcare",
+    "archetype": "workflow-theater",
+    "yc_status": "verified-yc",
+    "batch": "W25",
+    "verification_url": "https://www.ycombinator.com/companies/toothy-ai",
+    "geography_evidence": "https://www.ycombinator.com/companies/toothy-ai",
+    "inspected_on": "2026-10-19",
+    "coverage": "desktop-audit",
+    "viewports": {
+      "desktop": "1363 × 936: rendered hero, section scan and selected interaction",
+      "tablet": "not inspected",
+      "mobile": "not inspected"
+    },
+    "summary": "A dental revenue page pairs a plain financial promise with two changeable insurance-work examples and careful pricing caveats.",
+    "observations": {
+      "hero": "Left-aligned Stop letting insurance slow your revenue statement, three checkmarked benefits and demo/learn actions face a verification or billing process panel on the right.",
+      "typography": "Large bold sans-serif display, calm gray supporting copy and restrained uppercase section labels. Exact families unverified.",
+      "visual_system": "White page with purple brand accents, faint warm/cool glows, sparse rounded UI panels and small data-state chips. The workflow diagram is more specific than stock medical imagery.",
+      "page_sequence": "Hero and two workflow views → verification/billing/dashboard services → outcomes and reported practice results → PHI/security reassurance → two-mode pricing and scope caveats → FAQ → final demo/footer.",
+      "interaction": "Clicked Billing in the hero, replacing the verification timeline with billing tasks and collection/aging tiles. Clicked Billing & Collections in pricing; the selected tab and tier descriptions changed. No clinic details or demo request were submitted.",
+      "accessibility": "Pricing uses named tabs with selected states and FAQ uses disclosure buttons. The top hero mode buttons have names; keyboard, screen-reader and contrast review remain untested."
+    },
+    "interpretation": {
+      "principles": [
+        "Show a concrete before-to-after work trace for a complex service.",
+        "Keep plan scope and pricing variability next to the buying action.",
+        "Place privacy and human handoff information within the buyer journey."
+      ],
+      "fit": "Useful for a healthcare operations buyer who needs workflow visibility, process accountability and a sales conversation.",
+      "risks": "The page reports time saved and collection ratios without independent verification here. Awesomic’s case study is the design vendor’s promotional account of an earlier redesign; the current site was reviewed separately."
+    },
+    "limitations": [
+      "One cloud Chromium session at a 1363 × 936 desktop viewport on 2026-10-19; the homepage can change.",
+      "Tablet, mobile, keyboard-only, screen-reader, color contrast and reduced-motion behavior were not tested.",
+      "Exact font names, animation timing, implementation libraries and conversion effects were not established.",
+      "A third-party design mention is a selection lead, not an independent conversion or product-quality endorsement.",
+      "Awesomic documented a Toothy redesign; this is vendor-authored evidence of design attention, not an independent compliment."
+    ],
+    "sources": [
+      "https://toothy.ai/",
+      "https://www.ycombinator.com/companies/toothy-ai",
+      "https://www.awesomic.com/case-study/toothy-redesign"
+    ]
   }
 ]
