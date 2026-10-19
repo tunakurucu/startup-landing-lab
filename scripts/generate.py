@@ -12,7 +12,7 @@ for s in sites:
  text+='\n\n## Limitations\n\n'+'\n'.join('- '+x for x in s['limitations'])
  text+='\n\n## Sources\n\n'+'\n'.join('- '+x for x in dict.fromkeys(s['sources']))+'\n'
  (ROOT/f"research/audits/{s['id']}.md").write_text(text)
-case='# Dated reference casebook\n\nGenerated from research/sites.json. Inspection date: 2026-10-18. These are desktop observations, not current universal claims. Mobile, tablet, exact typefaces and reduced-motion behavior were not verified. Entries marked partial-desktop are selected-region field notes, not complete deep audits.\n\n'
+case='# Dated reference casebook\n\nGenerated from research/sites.json. Each entry carries its inspection date in the canonical record. These are desktop observations, not current universal claims. Mobile, tablet, exact typefaces and reduced-motion behavior were not verified. Entries marked partial-desktop are selected-region field notes, not complete deep audits.\n\n'
 for s in sites:
  case+=f"## {s['name']} · {s['archetype']}\n\n{s['url']} · {s['coverage']}\n\n{s['summary']}\n\nObserved: {s['observations']['hero']} {s['observations']['interaction']}\n\nTransfer: {' '.join(s['interpretation']['principles'])}\n\nAvoid/limit: {s['interpretation']['risks']}\n\n"
 skill=ROOT/'skills/startup-landing-design'
