@@ -1,6 +1,6 @@
 # Design archetypes
 
-These are decision families, not mutually exclusive templates. Eight desktop observations informed this first edition. Some families have only one observed exemplar; treat them as hypotheses to test on the brief.
+These are decision families, not mutually exclusive templates. Thirteen desktop observations inform this casebook, including five 2026 YC sites. Some families have only one observed exemplar; treat them as hypotheses to test on the brief.
 
 | Family / reference | Fit and personality | Composition and narrative | Interaction and mobile risk |
 | --- | --- | --- | --- |
