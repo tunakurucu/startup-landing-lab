@@ -1,0 +1,80 @@
+{
+ "meta": {
+  "seed": 505061020,
+  "k": 1,
+  "retest": 0,
+  "python": "3.13.16",
+  "briefs": [
+   "driftcheck",
+   "executor",
+   "kiln",
+   "liftplan"
+  ]
+ },
+ "builds": {
+  "kiln/without-r1": {
+   "workdir": "W001",
+   "brief": "kiln",
+   "arm": "without",
+   "brief_file": "briefs/kiln/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "executor/with-r1": {
+   "workdir": "W002",
+   "brief": "executor",
+   "arm": "with",
+   "brief_file": "briefs/executor/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "liftplan/with-r1": {
+   "workdir": "W003",
+   "brief": "liftplan",
+   "arm": "with",
+   "brief_file": "briefs/liftplan/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "driftcheck/without-r1": {
+   "workdir": "W004",
+   "brief": "driftcheck",
+   "arm": "without",
+   "brief_file": "briefs/driftcheck/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "liftplan/without-r1": {
+   "workdir": "W005",
+   "brief": "liftplan",
+   "arm": "without",
+   "brief_file": "briefs/liftplan/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "kiln/with-r1": {
+   "workdir": "W006",
+   "brief": "kiln",
+   "arm": "with",
+   "brief_file": "briefs/kiln/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "executor/without-r1": {
+   "workdir": "W007",
+   "brief": "executor",
+   "arm": "without",
+   "brief_file": "briefs/executor/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "driftcheck/with-r1": {
+   "workdir": "W008",
+   "brief": "driftcheck",
+   "arm": "with",
+   "brief_file": "briefs/driftcheck/with.md",
+   "fixture": null,
+   "skill_installed": true
+  }
+ }
+}

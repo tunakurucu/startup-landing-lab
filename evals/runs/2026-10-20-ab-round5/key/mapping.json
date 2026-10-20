@@ -1,0 +1,48 @@
+{
+ "meta": {
+  "seed": 505061020,
+  "k": 1,
+  "retest": 0,
+  "python": "3.13.16",
+  "briefs": [
+   "driftcheck",
+   "executor",
+   "kiln",
+   "liftplan"
+  ]
+ },
+ "packets": [
+  {
+   "kind": "primary",
+   "brief": "kiln",
+   "pair": "kiln-r1",
+   "A": "kiln/without-r1",
+   "B": "kiln/with-r1",
+   "packet": "P001"
+  },
+  {
+   "kind": "primary",
+   "brief": "liftplan",
+   "pair": "liftplan-r1",
+   "A": "liftplan/without-r1",
+   "B": "liftplan/with-r1",
+   "packet": "P002"
+  },
+  {
+   "kind": "primary",
+   "brief": "driftcheck",
+   "pair": "driftcheck-r1",
+   "A": "driftcheck/with-r1",
+   "B": "driftcheck/without-r1",
+   "packet": "P003"
+  },
+  {
+   "kind": "primary",
+   "brief": "executor",
+   "pair": "executor-r1",
+   "A": "executor/with-r1",
+   "B": "executor/without-r1",
+   "packet": "P004"
+  }
+ ]
+}

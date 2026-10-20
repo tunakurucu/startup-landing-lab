@@ -1,0 +1,62 @@
+[
+ {
+  "packet": "P001",
+  "brief": "kiln",
+  "persona": "designer"
+ },
+ {
+  "packet": "P004",
+  "brief": "executor",
+  "persona": "buyer"
+ },
+ {
+  "packet": "P004",
+  "brief": "executor",
+  "persona": "engineer"
+ },
+ {
+  "packet": "P001",
+  "brief": "kiln",
+  "persona": "buyer"
+ },
+ {
+  "packet": "P002",
+  "brief": "liftplan",
+  "persona": "engineer"
+ },
+ {
+  "packet": "P001",
+  "brief": "kiln",
+  "persona": "engineer"
+ },
+ {
+  "packet": "P003",
+  "brief": "driftcheck",
+  "persona": "designer"
+ },
+ {
+  "packet": "P002",
+  "brief": "liftplan",
+  "persona": "designer"
+ },
+ {
+  "packet": "P003",
+  "brief": "driftcheck",
+  "persona": "engineer"
+ },
+ {
+  "packet": "P003",
+  "brief": "driftcheck",
+  "persona": "buyer"
+ },
+ {
+  "packet": "P004",
+  "brief": "executor",
+  "persona": "designer"
+ },
+ {
+  "packet": "P002",
+  "brief": "liftplan",
+  "persona": "buyer"
+ }
+]
