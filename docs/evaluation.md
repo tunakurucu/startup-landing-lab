@@ -60,7 +60,7 @@ That agent could not launch Chromium at the time, so its generated page was not 
 | Functionality | Scenarios, step inspection and JSON download tested | Dealing and text export tested | Workflow selection, comparison and text export tested |
 | Responsive quality | Statement, controls and instrument stack; attempt path shrinks, step list is the sequence; checked at 320 px | Deck stacks; hero decoration simplifies; checked at 320 px | Process strip becomes vertical; annotations reflow; checked at 320 px |
 | Accessibility | Native radio/buttons and live detail state; axe clear in tested initial states | Native controls and live brief; axe clear in tested initial states | Labelled select/checkbox, semantic brief; axe clear in tested initial states |
-| Motion | Trace sequence on load and scenario change; inspector rise; contracts in demo-decisions.md | Spring-curve deal, pop-in scene, field crossfade | Scroll reveals in reading order; brief rise |
+| Motion | Trace sequence on load and scenario change; inspector rise; scroll-linked continuity stage; contracts in demo-decisions.md | Spring-curve deal, pop-in scene, field crossfade | One reveal on the handoff arrows; brief rise |
 | Diversity | Cool technical sequence | Warm expressive ritual | Muted editorial accountability |
 
 The manual brief assessments applied the skill's product interpretation, reference-selection, hypothesis, page architecture, implementation and QA steps. They are not three independent client-installation tests. See [demo decisions](demo-decisions.md) for concrete rationales and counterexamples.
