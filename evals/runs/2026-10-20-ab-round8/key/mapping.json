@@ -1,0 +1,56 @@
+{
+ "meta": {
+  "seed": 808082020,
+  "k": 1,
+  "retest": 1,
+  "python": "3.13.16",
+  "briefs": [
+   "contractcheck",
+   "staplepress",
+   "swaptide",
+   "tallyhall"
+  ]
+ },
+ "packets": [
+  {
+   "kind": "primary",
+   "brief": "staplepress",
+   "pair": "staplepress-r1",
+   "A": "staplepress/with-r1",
+   "B": "staplepress/without-r1",
+   "packet": "P001"
+  },
+  {
+   "kind": "primary",
+   "brief": "swaptide",
+   "pair": "swaptide-r1",
+   "A": "swaptide/with-r1",
+   "B": "swaptide/without-r1",
+   "packet": "P002"
+  },
+  {
+   "kind": "primary",
+   "brief": "contractcheck",
+   "pair": "contractcheck-r1",
+   "A": "contractcheck/without-r1",
+   "B": "contractcheck/with-r1",
+   "packet": "P003"
+  },
+  {
+   "kind": "primary",
+   "brief": "tallyhall",
+   "pair": "tallyhall-r1",
+   "A": "tallyhall/without-r1",
+   "B": "tallyhall/with-r1",
+   "packet": "P004"
+  },
+  {
+   "kind": "retest",
+   "brief": "swaptide",
+   "pair": "swaptide-r1",
+   "A": "swaptide/without-r1",
+   "B": "swaptide/with-r1",
+   "packet": "P005"
+  }
+ ]
+}

@@ -1,0 +1,77 @@
+[
+ {
+  "packet": "P001",
+  "brief": "staplepress",
+  "persona": "buyer"
+ },
+ {
+  "packet": "P002",
+  "brief": "swaptide",
+  "persona": "buyer"
+ },
+ {
+  "packet": "P005",
+  "brief": "swaptide",
+  "persona": "engineer"
+ },
+ {
+  "packet": "P005",
+  "brief": "swaptide",
+  "persona": "designer"
+ },
+ {
+  "packet": "P004",
+  "brief": "tallyhall",
+  "persona": "engineer"
+ },
+ {
+  "packet": "P002",
+  "brief": "swaptide",
+  "persona": "designer"
+ },
+ {
+  "packet": "P003",
+  "brief": "contractcheck",
+  "persona": "designer"
+ },
+ {
+  "packet": "P004",
+  "brief": "tallyhall",
+  "persona": "designer"
+ },
+ {
+  "packet": "P005",
+  "brief": "swaptide",
+  "persona": "buyer"
+ },
+ {
+  "packet": "P001",
+  "brief": "staplepress",
+  "persona": "engineer"
+ },
+ {
+  "packet": "P004",
+  "brief": "tallyhall",
+  "persona": "buyer"
+ },
+ {
+  "packet": "P003",
+  "brief": "contractcheck",
+  "persona": "buyer"
+ },
+ {
+  "packet": "P003",
+  "brief": "contractcheck",
+  "persona": "engineer"
+ },
+ {
+  "packet": "P001",
+  "brief": "staplepress",
+  "persona": "designer"
+ },
+ {
+  "packet": "P002",
+  "brief": "swaptide",
+  "persona": "engineer"
+ }
+]
