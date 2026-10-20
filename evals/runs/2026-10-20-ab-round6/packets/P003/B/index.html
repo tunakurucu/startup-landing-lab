@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Periodic KYC review software for credit unions · Refresh</title>
+<meta name="description" content="Refresh helps credit unions run periodic KYC reviews: it lists which members are due, gathers what is already on file, asks members only for what is missing, and keeps a trail an examiner can follow. Your compliance officer makes every risk decision.">
+<meta name="theme-color" content="#f3f4f1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Refresh · KYC reviews your examiner can follow">
+<meta property="og:description" content="Periodic KYC review software for credit unions. It asks members only for what is missing and keeps a trail an examiner can follow.">
+<meta property="og:image" content="og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Refresh · KYC reviews your examiner can follow">
+<meta name="twitter:description" content="Periodic KYC review software for credit unions. It asks members only for what is missing and keeps a trail an examiner can follow.">
+<meta name="twitter:image" content="og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+@font-face{font-family:"Refresh Serif";src:url(fonts/lora-var.woff) format("woff");font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Refresh Serif";src:url(fonts/lora-italic-var.woff) format("woff");font-weight:400 700;font-style:italic;font-display:swap}
+@font-face{font-family:"Refresh Sans";src:url(fonts/inter-400.woff) format("woff");font-weight:400;font-display:swap}
+@font-face{font-family:"Refresh Sans";src:url(fonts/inter-600.woff) format("woff");font-weight:600;font-display:swap}
+@font-face{font-family:"Ledger Mono";src:url(fonts/ledger-mono-400.woff) format("woff");font-weight:400;font-display:swap}
+@font-face{font-family:"Ledger Mono";src:url(fonts/ledger-mono-700.woff) format("woff");font-weight:700;font-display:swap}
+
+:root{
+  --ground:#f3f4f1; --paper:#ffffff; --ink:#17201d; --muted:#4a5550; --rule:#c6ccc7; --rule-soft:#dfe3df;
+  --manila:#e7d5a2; --manila-edge:#c9b06a; --manila-shade:#dcc584;
+  --action:#1d3a94; --action-hover:#142a6e; --on-action:#ffffff;
+  --ok:#1f6436; --ok-bg:#e5f1e8; --miss:#9e2f19; --miss-bg:#f8e6e1; --ask:#7a4f00; --ask-bg:#f7edd6; --wait:#56605b; --wait-bg:#eceeeb;
+  --sheet-hl:#fff1a6; --sticky:#f4e07a;
+  --serif:"Refresh Serif",Georgia,serif; --sans:"Refresh Sans",Arial,sans-serif; --mono:"Ledger Mono","Courier New",monospace;
+  --s-2xs:4px; --s-xs:8px; --s-s:12px; --s-m:20px; --s-l:32px; --s-xl:56px; --s-2xl:clamp(56px,3rem + 4vw,120px);
+  --gutter:clamp(16px,4vw,40px); --max:1240px;
+  --radius:6px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul{margin:0}
+ol,ul{padding:0;list-style:none}
+img,svg,video,canvas{display:block;max-width:100%}
+input,button,textarea,select{font:inherit;color:inherit}
+:where(p,li,dd,td,output,[role=status]){overflow-wrap:break-word;min-width:0}
+html{scroll-padding-top:84px;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:1.0625rem;line-height:1.55;text-rendering:optimizeLegibility}
+@media (min-width:960px){body{font-size:1.125rem}}
+a{color:var(--action);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--action-hover)}
+:focus-visible{outline:3px solid var(--action);outline-offset:2px;box-shadow:0 0 0 6px #fff}
+.skip{position:absolute;left:12px;top:-60px;padding:12px 16px;background:var(--ink);color:var(--paper);z-index:100;text-decoration:none}
+.skip:focus{top:12px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.mono{font-family:var(--mono)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.tab-num{font-variant-numeric:tabular-nums}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:var(--radius);background:var(--action);color:var(--on-action);font-weight:600;text-decoration:none;font-size:1rem;line-height:1.2;border:2px solid var(--action);transition:background-color .15s ease-out,transform .15s ease-out}
+.btn:hover{background:var(--action-hover);border-color:var(--action-hover);color:var(--on-action)}
+.btn:active{transform:scale(.97)}
+.btn-small{min-height:44px;padding:0 14px;font-size:.9375rem}
+
+/* header */
+.site-head{position:sticky;top:0;z-index:20;background:var(--ground);border-bottom:1px solid var(--rule-soft)}
+.head-row{display:flex;align-items:center;gap:var(--s-m);min-height:68px}
+.brand{display:inline-flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-family:var(--serif);font-weight:600;font-size:1.375rem;min-height:44px}
+.brand svg{width:30px;height:24px}
+.head-cta{margin-left:auto}
+.menu-btn{min-height:44px;min-width:64px;padding:0 12px;border:1px solid var(--ink);border-radius:var(--radius);background:transparent;font-weight:600;font-size:.9375rem;cursor:pointer}
+#site-menu ul{display:flex;gap:4px}
+#site-menu a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;color:var(--ink);text-decoration:none;font-size:.9375rem}
+#site-menu a:hover{text-decoration:underline}
+#site-menu .menu-cta{display:none}
+@media (max-width:879px){
+  .js #site-menu{position:absolute;left:0;right:0;top:100%;background:var(--paper);border-bottom:1px solid var(--rule);padding:var(--s-s) var(--gutter) var(--s-m)}
+  .js #site-menu[hidden]{display:none}
+  .js #site-menu ul{flex-direction:column;gap:0}
+  .js #site-menu a{min-height:48px;font-size:1.0625rem;width:100%;border-bottom:1px solid var(--rule-soft)}
+  .js #site-menu .menu-cta{display:block;margin-top:var(--s-s)}
+  .js #site-menu .menu-cta a{border:0;color:var(--on-action);justify-content:center}
+  html:not(.js) .head-row{flex-wrap:wrap}
+  html:not(.js) #site-menu ul{flex-wrap:wrap}
+  html:not(.js) .menu-btn{display:none}
+}
+@media (min-width:880px){
+  .menu-btn{display:none}
+  #site-menu{margin-left:auto}
+  .head-cta{margin-left:0}
+}
+@media (max-width:379px){.brand span{display:none}}
+
+/* hero */
+.hero{padding:clamp(20px,1rem + 2vw,48px) 0 0}
+.hero-top{display:grid;gap:var(--s-s) var(--s-xl);align-items:end}
+@media (min-width:960px){.hero-top{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.125rem,1.55rem + 2.75vw,4.25rem);line-height:1.04;letter-spacing:-0.012em;text-wrap:balance;overflow-wrap:break-word;max-width:13ch}
+.lede{max-width:34rem}
+.lede p{font-size:1.0625rem;line-height:1.5}
+@media (min-width:960px){.lede p{font-size:1.1875rem}}
+.lede strong{font-weight:600}
+.act{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-s) var(--s-m);margin-top:var(--s-m)}
+.act-note{font-size:.9375rem;line-height:1.4;color:var(--muted);max-width:22rem}
+.act-note b{color:var(--ink);font-weight:600}
+
+/* signature artifact: the member file */
+.file{margin-top:clamp(20px,1rem + 1.5vw,40px);position:relative}
+.file-label{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;font-size:.875rem;color:var(--muted);margin-bottom:var(--s-xs)}
+.file-label strong{color:var(--ink);font-weight:600}
+.tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;position:relative;z-index:2}
+@media (min-width:760px){.tabs{display:flex;gap:6px;padding-left:18px}}
+.tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;min-height:52px;min-width:44px;padding:6px 4px;border:1px solid var(--manila-edge);border-bottom:0;border-radius:8px 8px 0 0;background:var(--manila-shade);color:var(--ink);cursor:pointer;font-size:.875rem;line-height:1.15;font-weight:600;transition:background-color .15s ease-out}
+.tab .n{font-family:var(--mono);font-weight:400;font-size:.75rem;color:#4b3f1c}
+@media (min-width:760px){.tab{flex-direction:row;gap:8px;padding:8px 18px;min-width:120px;font-size:.9375rem}.tab .n{font-size:.8125rem}}
+.tab[aria-pressed="true"]{background:var(--manila);position:relative}
+.tab[aria-pressed="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:4px;background:var(--manila)}
+.tab[aria-pressed="true"] .t{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+@media (hover:hover) and (pointer:fine){.tab:not([aria-pressed="true"]):hover{background:#e2cd92}}
+.folder{background:var(--manila);border:1px solid var(--manila-edge);border-radius:0 0 10px 10px;padding:10px;display:grid;gap:10px}
+@media (min-width:760px){.folder{border-radius:0 10px 10px 10px;padding:14px}}
+@media (min-width:1000px){.folder{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start}.pane-then{order:-1}}
+.sheet{background:var(--paper);border:1px solid var(--manila-edge);border-radius:4px;padding:var(--s-s) 14px}
+@media (min-width:760px){.sheet{padding:18px 20px}}
+.pane-head{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.pane-name{font-size:.8125rem;font-weight:600;letter-spacing:.02em;color:var(--muted)}
+.member{font-family:var(--mono);font-size:.875rem}
+.tally{color:var(--ink);background:var(--sheet-hl);padding:1px 6px;border-radius:3px;letter-spacing:0}
+.member b{font-weight:700}
+.says{font-size:.9375rem;line-height:1.45;margin:10px 0 6px;min-height:2.9em}
+.items{border-top:1px solid var(--rule-soft)}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:7px 0;border-bottom:1px solid var(--rule-soft);position:relative}
+.item-name{font-size:.9375rem;font-weight:600;line-height:1.3}
+.item-detail{grid-column:1 / -1;font-family:var(--mono);font-size:.8125rem;line-height:1.35;color:var(--muted)}
+@media (min-width:1000px){.item{grid-template-columns:11.5rem minmax(0,1fr) auto}.item-detail{grid-column:auto;order:0}.chip{order:1}}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:.8125rem;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap;align-self:start}
+.chip::before{font-family:var(--mono);font-weight:700}
+.chip.ok{color:var(--ok);background:var(--ok-bg)} .chip.ok::before{content:"\2713"}
+.chip.miss{color:var(--miss);background:var(--miss-bg)} .chip.miss::before{content:"\00D7"}
+.chip.ask{color:var(--ask);background:var(--ask-bg)} .chip.ask::before{content:"\2192"}
+.chip.wait{color:var(--wait);background:var(--wait-bg)} .chip.wait::before{content:"\2022"}
+.item.changed::after{content:"";position:absolute;inset:0 -6px;background:var(--sheet-hl);opacity:0;z-index:-1;border-radius:3px}
+.items{position:relative;z-index:0}
+.decision{margin-top:10px;padding:8px 10px;border:1px dashed var(--rule);border-radius:4px;font-size:.9375rem;line-height:1.4}
+.decision.done{border:1px solid var(--ink);background:#f7f8f6}
+.decision .who{font-family:var(--mono);font-size:.8125rem;color:var(--muted);display:block;margin-top:2px}
+.latest{margin-top:10px;font-family:var(--mono);font-size:.8125rem;line-height:1.4;color:var(--muted);display:flex;flex-wrap:wrap;gap:2px 12px;justify-content:space-between}
+.latest a{font-family:var(--sans);font-size:.875rem;font-weight:600;min-height:44px;display:inline-flex;align-items:center}
+.latest{align-items:center}
+/* the spreadsheet (before) */
+.pane-then{background:#fbfbf9}
+.grid{width:100%;border-collapse:collapse;font-size:.8125rem;margin-top:10px;table-layout:fixed}
+.grid th,.grid td{border:1px solid #c9cdca;padding:4px 6px;text-align:left;vertical-align:top;line-height:1.3}
+.grid thead th{background:#eceeec;font-weight:400;color:var(--muted);text-align:center;font-size:.75rem}
+.grid th.rn{background:#eceeec;font-weight:400;color:var(--muted);text-align:center;font-size:.75rem}
+.grid td.note{font-family:var(--mono)}
+.grid td.nowrap{white-space:nowrap}
+.grid col.c-due{width:6.4rem}
+.grid tr.hl td{background:var(--sheet-hl)}
+.grid .cap td{background:#fff;color:var(--muted);font-size:.75rem}
+.then-cap{font-size:.9375rem;line-height:1.45;margin-top:10px}
+.then-file{font-family:var(--mono);font-size:.8125rem;color:var(--muted)}
+.then-art{margin-top:12px}
+@media (max-width:999px){.then-art{display:none}}
+@media (max-width:759px){
+  .grid thead{display:none}
+  .pane-then .pane-head{padding-bottom:4px}
+  .then-cap{font-size:.875rem;margin-top:6px}
+  .drawing svg{max-width:230px}
+  .close{margin-top:40px}
+  .drawing.binder{display:none}
+  .sec{padding-top:36px}
+  .schedule{padding:14px 16px}
+  .trail li{padding:9px 0}
+  .says{min-height:0}
+  .legend{gap:4px 12px}
+  .trail .src{display:none}
+  footer .foot{gap:var(--s-s)}
+  footer{padding-top:var(--s-m)}
+  .workpaper{padding:14px}
+  .trail .what{font-size:.875rem}
+  .note-card{padding:14px 16px}
+  footer{padding-bottom:var(--s-l)}
+  .close{padding:var(--s-l) 0}
+}
+
+.pane-trail{display:none}
+@media (min-width:1000px){
+  .folder{grid-template-areas:"then now" "trail now";grid-template-rows:auto 1fr}
+  .pane-now{grid-area:now}.pane-then{grid-area:then}.pane-trail{grid-area:trail;display:block;align-self:stretch}
+}
+.mini-trail{margin-top:8px}
+.mini-trail li{display:flex;gap:10px;align-items:center;padding:5px 0;font-size:.875rem;line-height:1.3;border-bottom:1px solid var(--rule-soft)}
+.mini-trail li:last-child{border-bottom:0}
+.mini-trail b{font-family:var(--mono);font-weight:400;color:var(--muted);margin-right:6px;font-size:.8125rem}
+.mini-trail .tk{width:1.4rem;height:1.4rem;font-size:.75rem}
+.mini-trail li.later{opacity:.35}
+.mini-trail li.later .tk{border-style:dashed}
+
+/* sections */
+.sec{padding:var(--s-2xl) 0 0}
+.q{font-family:var(--serif);font-style:italic;font-size:1.0625rem;color:var(--muted);margin-bottom:var(--s-xs)}
+.q b{font-style:normal;font-weight:600;font-family:var(--sans);font-size:.9375rem;color:var(--ink)}
+h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.75rem,1.35rem + 1.6vw,2.75rem);line-height:1.12;letter-spacing:-0.005em;text-wrap:balance;max-width:24ch}
+.body{max-width:38rem;margin-top:var(--s-m)}
+.body p+p{margin-top:var(--s-s)}
+.split{display:grid;gap:var(--s-l);margin-top:var(--s-m)}
+.split .body{margin-top:0}
+@media (min-width:960px){.split{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start}}
+.cap-label{font-size:.875rem;color:var(--muted);margin-bottom:var(--s-xs)}
+.cap-label strong{color:var(--ink);font-weight:600}
+
+/* due list */
+.schedule{background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius);padding:var(--s-m)}
+.schedule h3{font-size:1rem;font-weight:600}
+.schedule dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.schedule dl div{border-top:1px solid var(--rule);padding-top:6px}
+.schedule dt{font-weight:600}
+.schedule dd{font-family:var(--mono);font-size:.9375rem}
+.schedule p{font-size:.9375rem;color:var(--muted);margin-top:12px;line-height:1.45}
+.ledger{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--rule);font-size:.9375rem}
+.ledger th,.ledger td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+.ledger thead th{font-size:.8125rem;font-weight:600;color:var(--muted);border-bottom:1px solid var(--rule);background:#f8f9f7}
+.ledger td.m{font-family:var(--mono);font-size:.875rem;white-space:nowrap}
+.ledger tr.mark td{background:#fbf6e4}
+@media (max-width:719px){
+  .ledger thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .ledger,.ledger tbody,.ledger tr,.ledger td{display:block;width:100%}
+  .ledger tr{padding:10px 12px;border-bottom:1px solid var(--rule)}
+  .ledger td{border:0;padding:2px 0;display:grid;grid-template-columns:7.5rem minmax(0,1fr);gap:8px}
+  .ledger td::before{content:attr(data-label);font-family:var(--sans);font-size:.8125rem;color:var(--muted);font-weight:600}
+  .ledger td.m{white-space:normal}
+  .ledger tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:10px 12px}
+  .ledger td{display:block;padding:0}
+  .ledger td::before{content:none}
+  .ledger td:nth-child(1){font-weight:600}
+  .ledger td:nth-child(2){text-align:right;color:var(--muted)}
+  .ledger td:nth-child(3){grid-row:2;grid-column:2;text-align:right;color:var(--muted)}
+  .ledger td:nth-child(3)::before{content:"last ";font-family:var(--sans);font-size:.8125rem}
+  .ledger td:nth-child(4){grid-row:2;grid-column:1}
+  .ledger td:nth-child(4)::before{content:"due ";font-family:var(--sans);font-size:.8125rem;color:var(--muted)}
+  .ledger td:nth-child(5){grid-column:1 / -1}
+}
+
+/* request */
+.pair{display:grid;gap:var(--s-l);margin-top:var(--s-l)}
+@media (min-width:860px){.pair{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}}
+.drawing figcaption{font-size:.9375rem;color:var(--muted);margin-top:var(--s-xs);max-width:30rem}
+.drawing svg{width:100%;height:auto;max-width:460px}
+.note-card{background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius);padding:var(--s-m) var(--s-m) var(--s-m);max-width:30rem}
+.note-card .from{font-weight:600;font-size:.9375rem;padding-bottom:8px;border-bottom:1px solid var(--rule-soft)}
+.note-card p{margin-top:12px;font-size:1rem;line-height:1.5}
+.note-card ol{list-style:decimal;padding-left:1.4rem;margin-top:8px}
+.note-card ol li{margin-top:6px;font-size:1rem;line-height:1.45}
+.note-card .sent{font-family:var(--mono);font-size:.8125rem;color:var(--muted);margin-top:14px}
+
+/* duties */
+.duties{width:100%;border-collapse:collapse;margin-top:var(--s-l);background:var(--paper);border:1px solid var(--rule)}
+.duties th,.duties td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule-soft);font-size:.9375rem;line-height:1.45}
+.duties thead th{font-size:.8125rem;color:var(--muted);font-weight:600;background:#f8f9f7;border-bottom:1px solid var(--rule)}
+.duties tbody th{font-weight:600;width:34%}
+.duties td.no{color:var(--miss);font-weight:600}
+.duties tr.key th,.duties tr.key td{background:#f7f8f6;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+@media (max-width:719px){
+  .duties thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .duties,.duties tbody,.duties tr,.duties th,.duties td{display:block;width:100%}
+  .duties tr{padding:10px 12px;border-bottom:1px solid var(--rule)}
+  .duties tbody th{width:100%;padding:0 0 4px;border:0}
+  .duties td{border:0;padding:0;display:inline;line-height:1.4}
+  .duties td+td::before{content:" · " attr(data-label) ": "}
+  .duties tr{padding:8px 12px}
+  .duties td::before{content:attr(data-label) ": ";font-size:.875rem;color:var(--muted);font-weight:600}
+  .duties tr.key th,.duties tr.key td{border:0}
+  .duties tr.key{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);background:#f7f8f6}
+  .duties tr.key th,.duties tr.key td{background:transparent}
+}
+
+/* trail */
+.workpaper{background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius);padding:var(--s-m)}
+.wp-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.wp-head h3{font-family:var(--mono);font-size:.9375rem;font-weight:700}
+.wp-head p{font-size:.875rem;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.8125rem;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--rule-soft)}
+.tk{display:inline-flex;align-items:center;justify-content:center;width:1.6rem;height:1.6rem;border:1.5px solid var(--ink);border-radius:50%;font-family:var(--mono);font-weight:700;font-size:.8125rem;color:var(--ink);flex:none}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend .tk{width:1.4rem;height:1.4rem;font-size:.75rem}
+.trail li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;padding:12px 0;border-bottom:1px solid var(--rule-soft)}
+.trail li:last-child{border-bottom:0}
+.trail .when{font-family:var(--mono);font-size:.8125rem;color:var(--muted)}
+.trail .what{font-size:.9375rem;line-height:1.45;margin-top:2px}
+.trail .src{font-family:var(--mono);font-size:.8125rem;color:var(--muted);margin-top:2px}
+
+/* close */
+.close{margin-top:var(--s-2xl);padding:var(--s-xl) 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.close .act{margin-top:var(--s-l)}
+footer{padding:var(--s-l) 0 var(--s-xl);font-size:.9375rem;color:var(--muted)}
+.foot{display:flex;flex-wrap:wrap;gap:var(--s-m) var(--s-xl);justify-content:space-between}
+footer ul{display:flex;flex-wrap:wrap;gap:4px 18px}
+footer a{color:var(--ink);display:inline-flex;align-items:center;min-height:32px}
+
+/* motion */
+@media (prefers-reduced-motion:no-preference){
+  .item.changed::after{animation:flash .9s cubic-bezier(.2,.7,.2,1)}
+  .swap{animation:swapin .2s cubic-bezier(.2,.7,.2,1)}
+}
+@media (prefers-reduced-motion:reduce){
+  .item.changed::after{animation:flashfade .2s ease-out reverse}
+  .btn:active{transform:none}
+}
+@keyframes flash{0%{opacity:.95}100%{opacity:0}}
+@keyframes flashfade{0%{opacity:0}100%{opacity:.6}}
+@keyframes swapin{0%{opacity:.6}100%{opacity:1}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap head-row">
+    <a class="brand" href="#main" aria-label="Refresh, back to top">
+      <svg viewBox="0 0 30 24" aria-hidden="true"><path d="M1.5 6.5h9l2-3h8v3h8v15h-27z" fill="#e7d5a2" stroke="#17201d" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 14.5l3.5 3.5 8-8" fill="none" stroke="#17201d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Refresh</span>
+    </a>
+    <nav id="site-menu" aria-label="Main">
+      <ul>
+        <li><a href="#due">Who is due</a></li>
+        <li><a href="#request">Member request</a></li>
+        <li><a href="#decide">Who decides</a></li>
+        <li><a href="#trail">Exam trail</a></li>
+        <li class="menu-cta"><a class="btn" href="https://refresh.example/demo">Book a demo</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-small head-cta" href="https://refresh.example/demo">Book a demo</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="hero-top">
+        <h1 id="h1">KYC reviews your examiner can follow</h1>
+        <div class="lede">
+          <p><strong>Refresh is periodic KYC review software for credit unions.</strong> It lists which members are due, gathers what's already on file, and asks each member only for what's missing.</p>
+          <div class="act">
+            <a class="btn" href="https://refresh.example/demo">Book a demo</a>
+            <p class="act-note"><b>Your compliance officer makes every risk decision.</b> Refresh is in pilot at two credit unions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="file" data-signature id="file" role="region" aria-labelledby="file-title">
+        <p class="file-label" id="file-title"><strong>Sample review</strong><span>Fictional member. Pick a step.</span></p>
+        <div class="tabs" role="group" aria-label="Review steps">
+          <button class="tab" type="button" data-step="1" aria-pressed="false"><span class="n">1</span><span class="t">Due</span></button>
+          <button class="tab" type="button" data-step="2" aria-pressed="false"><span class="n">2</span><span class="t">On file</span></button>
+          <button class="tab" type="button" data-step="3" aria-pressed="false"><span class="n">3</span><span class="t">Ask</span></button>
+          <button class="tab" type="button" data-step="4" aria-pressed="false"><span class="n">4</span><span class="t">Reply</span></button>
+          <button class="tab" type="button" data-step="5" aria-pressed="true"><span class="n">5</span><span class="t">Decide</span></button>
+        </div>
+        <div class="folder">
+          <div class="sheet pane-now">
+            <div class="pane-head">
+              <p class="pane-name">In Refresh · <span class="tally" id="tally">file complete, officer decided</span></p>
+              <p class="member"><b>J. Alvarez</b> · #40118 · Moderate · due 2026-10-14</p>
+            </div>
+            <p class="says" id="says" role="status" aria-live="polite">The file is complete. M. Chen, the BSA officer, keeps the tier at Moderate and writes down why. Refresh doesn't make this call.</p>
+            <ul class="items" id="items">
+              <li class="item"><span class="item-name">Name and address</span><span class="chip ok">On file</span><span class="item-detail">member record, updated 2026-02-11</span></li>
+              <li class="item"><span class="item-name">Phone and email</span><span class="chip ok">On file</span><span class="item-detail">member record, updated 2025-06-30</span></li>
+              <li class="item"><span class="item-name">Government ID</span><span class="chip ok">Received</span><span class="item-detail">received 2026-10-06 · checked by A. Ruiz 2026-10-07</span></li>
+              <li class="item"><span class="item-name">Occupation and employer</span><span class="chip ok">Received</span><span class="item-detail">received 2026-10-06</span></li>
+              <li class="item"><span class="item-name">Expected account activity</span><span class="chip ok">On file</span><span class="item-detail">from the 2024-10-14 review</span></li>
+            </ul>
+            <p class="decision done" id="decision">Officer decision: risk tier kept at Moderate. “New employer; account activity matches what's on file.” Next review 2028-10-08.<span class="who">M. Chen, BSA officer · 2026-10-08 14:30</span></p>
+            <p class="latest"><span id="latest">Trail: 6 entries</span><a href="#trail">Read the full trail</a></p>
+          </div>
+          <div class="sheet pane-then">
+            <div class="pane-head">
+              <p class="pane-name">The same step today</p>
+              <p class="then-file">Reviews_2026.xlsx</p>
+            </div>
+            <table class="grid" aria-label="Spreadsheet row for the same member"><colgroup><col style="width:2.4rem"><col><col class="c-due"><col></colgroup>
+              <thead><tr><th class="rn" scope="col"><span class="sr">Row</span></th><th scope="col">A · Member</th><th scope="col">B · Next due</th><th scope="col">C · Notes</th></tr></thead>
+              <tbody><tr id="then-row"><th class="rn" scope="row">212</th><td>40118 Alvarez</td><td class="tab-num nowrap">10/14/2026</td><td class="note" id="then-note">OK per MC, see email</td></tr></tbody>
+            </table>
+            <p class="then-cap" id="then-cap">The decision sits in an email or a cell comment. Before the exam, someone rebuilds the story from inboxes.</p>
+          </div>
+          <div class="sheet pane-trail" aria-hidden="true">
+            <div class="pane-head"><p class="pane-name">Trail so far, in Refresh</p><p class="then-file" id="trail-count">6 entries</p></div>
+            <ol class="mini-trail" id="mini-trail">
+              <li><span class="tk">D</span><span><b>10-01 08:00</b> Added to due list</span></li>
+              <li><span class="tk">F</span><span><b>10-01 08:02</b> File checked: 3 current, 2 missing</span></li>
+              <li><span class="tk">S</span><span><b>10-02 09:15</b> Request sent: ID, employer</span></li>
+              <li><span class="tk">R</span><span><b>10-06 18:40</b> Member sent ID, employer</span></li>
+              <li><span class="tk">F</span><span><b>10-07 10:05</b> A. Ruiz checked ID</span></li>
+              <li><span class="tk">O</span><span><b>10-08 14:30</b> M. Chen kept tier Moderate</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="due" aria-labelledby="due-h">
+    <div class="wrap">
+      <p class="q"><b>Examiner:</b> “How do you decide who is due?”</p>
+      <h2 id="due-h">Due dates come from your review schedule, member by member</h2>
+      <div class="split">
+        <div>
+          <div class="body">
+            <p>Your compliance officer sets how often each risk tier is reviewed. Refresh keeps every member's last review date and builds the list of who is due.</p>
+            <p>Member-service staff work that list each day: who needs a request, who replied, which files are ready for the officer.</p>
+          </div>
+          <div class="schedule" style="margin-top:var(--s-m)">
+            <h3>Review schedule in this sample</h3>
+            <dl>
+              <div><dt>High</dt><dd>12 months</dd></div>
+              <div><dt>Moderate</dt><dd>24 months</dd></div>
+              <div><dt>Low</dt><dd>36 months</dd></div>
+            </dl>
+            <p>Example values. Yours are set by your compliance officer, not by Refresh.</p>
+          </div>
+        </div>
+        <div>
+          <p class="cap-label"><strong>Sample October list, as of 2026-10-09.</strong> Fictional members.</p>
+          <table class="ledger">
+            <thead><tr><th scope="col">Member</th><th scope="col">Tier</th><th scope="col">Last review</th><th scope="col">Due</th><th scope="col">Where it stands</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Member">P. Nguyen #22907</td><td data-label="Tier">High</td><td class="m" data-label="Last review">2025-10-03</td><td class="m" data-label="Due">2026-10-03</td><td data-label="Where it stands">Waiting on member, asked 2026-10-02</td></tr>
+              <tr class="mark"><td data-label="Member">J. Alvarez #40118</td><td data-label="Tier">Moderate</td><td class="m" data-label="Last review">2024-10-14</td><td class="m" data-label="Due">2026-10-14</td><td data-label="Where it stands">Decided by officer 2026-10-08</td></tr>
+              <tr><td data-label="Member">R. Okafor #51344</td><td data-label="Tier">Low</td><td class="m" data-label="Last review">2023-10-20</td><td class="m" data-label="Due">2026-10-20</td><td data-label="Where it stands">Nothing missing, ready for officer</td></tr>
+              <tr><td data-label="Member">T. Brandt #18260</td><td data-label="Tier">Moderate</td><td class="m" data-label="Last review">2024-10-27</td><td class="m" data-label="Due">2026-10-27</td><td data-label="Where it stands">1 item to ask for</td></tr>
+              <tr><td data-label="Member">L. Haddad #63071</td><td data-label="Tier">High</td><td class="m" data-label="Last review">2025-10-30</td><td class="m" data-label="Due">2026-10-30</td><td data-label="Where it stands">Waiting on member, asked 2026-10-09</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="request" aria-labelledby="req-h">
+    <div class="wrap">
+      <p class="q"><b>Examiner:</b> “What did you ask the member for?”</p>
+      <h2 id="req-h">Members get one short request, for the missing items only</h2>
+      <div class="body"><p>Refresh has already checked what's current, so the request names only what's missing. The date it went out goes on the trail.</p></div>
+      <div class="pair">
+        <figure class="drawing">
+          <svg viewBox="0 0 460 260" role="img" aria-label="Drawing: a mailed envelope, a full multi-page update form and a sticky note reading LM x2, left message twice.">
+            <g fill="none" stroke="#17201d" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+              <rect x="150" y="22" width="150" height="196" fill="#fff" transform="rotate(5 225 120)"/>
+              <rect x="140" y="28" width="150" height="196" fill="#fff" transform="rotate(-2 215 126)"/>
+              <rect x="128" y="34" width="150" height="196" fill="#fff"/>
+              <path d="M146 66h96M146 76h70"/>
+              <g stroke="#4a5550">
+                <rect x="146" y="88" width="8" height="8"/><path d="M162 92h96"/>
+                <rect x="146" y="106" width="8" height="8"/><path d="M162 110h80"/>
+                <rect x="146" y="124" width="8" height="8"/><path d="M162 128h100"/>
+                <rect x="146" y="142" width="8" height="8"/><path d="M162 146h70"/>
+                <rect x="146" y="160" width="8" height="8"/><path d="M162 164h92"/>
+                <rect x="146" y="178" width="8" height="8"/><path d="M162 182h60"/>
+                <path d="M146 204h50M230 204h30"/>
+              </g>
+              <text x="146" y="54" font-family="Ledger Mono, monospace" font-size="17" font-weight="700" fill="#17201d" stroke="none">UPDATE FORM</text>
+              <rect x="18" y="120" width="170" height="108" fill="#e7d5a2"/>
+              <path d="M18 120l85 58 85-58"/>
+              <path d="M18 228l64-50M188 228l-64-50"/>
+              <rect x="36" y="200" width="40" height="12" fill="#fff"/>
+              <g transform="rotate(7 365 90)">
+                <rect x="318" y="44" width="96" height="92" fill="#f4e07a"/>
+                <text x="334" y="84" font-family="Ledger Mono, monospace" font-size="20" font-weight="700" fill="#17201d" stroke="none">LM x2</text>
+                <path d="M334 104h56M334 116h40" stroke="#6b5a1a"/>
+              </g>
+              <path d="M330 168c18 12 40 14 58 4" stroke="#4a5550"/>
+              <path d="M382 166l8 6-9 4" stroke="#4a5550"/>
+            </g>
+          </svg>
+          <figcaption>Today: the full update form goes out by mail, then staff chase it by phone.</figcaption>
+        </figure>
+        <div>
+          <p class="cap-label"><strong>Sample request</strong> for the fictional member in the review above.</p>
+          <div class="note-card">
+            <p class="from">Riverbend Credit Union (fictional)</p>
+            <p>Hi J., it's time to update your member record. We only need two things:</p>
+            <ol>
+              <li>A photo of a current government-issued ID. The one we have expired on 2026-08-31.</li>
+              <li>Your current employer.</li>
+            </ol>
+            <p>Everything else on file is up to date.</p>
+            <p class="sent">Sent 2026-10-02 09:15 · 2 items · logged on the trail</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="decide" aria-labelledby="dec-h">
+    <div class="wrap">
+      <p class="q"><b>Examiner:</b> “Who decided this risk rating?”</p>
+      <h2 id="dec-h">Your officer makes the risk call. Refresh writes it down.</h2>
+      <div class="body"><p>Refresh gathers, asks and keeps the record. It never rates a member: a complete file waits for your officer, and the decision goes on the trail with a name, a time and a reason.</p></div>
+      <table class="duties">
+        <thead><tr><th scope="col">Task</th><th scope="col">Refresh</th><th scope="col">Your people</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Set how often each risk tier is reviewed</th><td class="no" data-label="Refresh">No</td><td data-label="Your people">Compliance officer</td></tr>
+          <tr><th scope="row">Keep review dates and list who is due</th><td data-label="Refresh">Yes</td><td data-label="Your people">Staff work the list</td></tr>
+          <tr><th scope="row">Gather what's already on file</th><td data-label="Refresh">Yes</td><td data-label="Your people">Staff check anything unclear</td></tr>
+          <tr><th scope="row">Ask the member for what's missing</th><td data-label="Refresh">Yes, missing items only</td><td data-label="Your people">Staff check what comes back</td></tr>
+          <tr class="key"><th scope="row">Decide the member's risk rating</th><td class="no" data-label="Refresh">No</td><td data-label="Your people">Compliance officer, with a written reason</td></tr>
+          <tr><th scope="row">Record who did what, when, and from which source</th><td data-label="Refresh">Yes, every step</td><td data-label="Your people">Officer reviews the trail</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec" id="trail" aria-labelledby="trail-h">
+    <div class="wrap">
+      <p class="q"><b>Examiner:</b> “Show me what happened, in order.”</p>
+      <h2 id="trail-h">Hand the examiner the trail, not a rebuilt spreadsheet</h2>
+      <div class="split">
+        <div>
+          <div class="body"><p>Every review leaves the same record, in the order it happened: why the member was due, what was on file and where it came from, what was asked and when, what came back, and who decided.</p></div>
+          <figure class="drawing binder" style="margin-top:var(--s-l)">
+            <svg viewBox="0 0 460 230" role="img" aria-label="Drawing: an exam-prep binder stuffed with printouts and sticky flags, beside a stack of member folders.">
+              <g fill="none" stroke="#17201d" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+                <rect x="30" y="40" width="190" height="170" rx="6" fill="#fff"/>
+                <rect x="30" y="40" width="34" height="170" rx="6" fill="#e7d5a2"/>
+                <circle cx="47" cy="80" r="5"/><circle cx="47" cy="125" r="5"/><circle cx="47" cy="170" r="5"/>
+                <path d="M76 66h120M76 80h96M76 94h110M76 120h120M76 134h80M76 160h104M76 174h90" stroke="#4a5550"/>
+                <rect x="216" y="56" width="26" height="14" fill="#f4e07a"/>
+                <rect x="216" y="92" width="26" height="14" fill="#f4e07a"/>
+                <rect x="216" y="138" width="26" height="14" fill="#f4e07a"/>
+                <rect x="216" y="172" width="26" height="14" fill="#f4e07a"/>
+                <text x="76" y="202" font-family="Ledger Mono, monospace" font-size="17" font-weight="700" fill="#17201d" stroke="none">EXAM PREP</text>
+                <path d="M270 210h170v-26H270z" fill="#e7d5a2"/>
+                <path d="M276 184h164v-26H276z" fill="#dcc584"/>
+                <path d="M266 158h170v-26H266z" fill="#e7d5a2"/>
+                <path d="M274 132h166v-26H274z" fill="#dcc584"/>
+                <path d="M270 106h168V80H270z" fill="#e7d5a2"/>
+                <path d="M290 80v-8h40v8" fill="#e7d5a2"/>
+                <rect x="300" y="88" width="50" height="10" fill="#fff"/>
+                <rect x="300" y="140" width="50" height="10" fill="#fff"/>
+                <rect x="306" y="192" width="50" height="10" fill="#fff"/>
+              </g>
+            </svg>
+            <figcaption>Today: the week before an exam, the story is rebuilt from paper files, inboxes and cell notes.</figcaption>
+          </figure>
+        </div>
+        <div>
+          <p class="cap-label"><strong>Sample trail</strong> for the fictional member in the review above.</p>
+          <div class="workpaper">
+            <div class="wp-head"><h3>Review trail · #40118 J. Alvarez</h3><p>6 entries · 2026-10-01 to 2026-10-08</p></div>
+            <p class="legend"><span><span class="tk" aria-hidden="true">D</span>due rule</span><span><span class="tk" aria-hidden="true">F</span>checked against file</span><span><span class="tk" aria-hidden="true">S</span>sent to member</span><span><span class="tk" aria-hidden="true">R</span>received</span><span><span class="tk" aria-hidden="true">O</span>officer decision</span></p>
+            <ol class="trail">
+              <li><span class="tk" aria-label="Due rule">D</span><div><p class="when">2026-10-01 08:00 · Refresh</p><p class="what">Added to the October due list: last review 2024-10-14, tier Moderate, 24-month schedule.</p></div></li>
+              <li><span class="tk" aria-label="Checked against file">F</span><div><p class="when">2026-10-01 08:02 · Refresh</p><p class="what">File checked. Missing: government ID (expired 2026-08-31), employer (blank).</p><p class="src">On file: name and address, phone and email (member record); expected activity (2024-10-14 review).</p></div></li>
+              <li><span class="tk" aria-label="Sent to member">S</span><div><p class="when">2026-10-02 09:15 · Refresh</p><p class="what">Request sent to member for 2 items: government ID, employer.</p></div></li>
+              <li><span class="tk" aria-label="Received">R</span><div><p class="when">2026-10-06 18:40 · Member</p><p class="what">Received from member: ID photo and current employer.</p></div></li>
+              <li><span class="tk" aria-label="Checked against file">F</span><div><p class="when">2026-10-07 10:05 · A. Ruiz, member services</p><p class="what">ID checked against the name and date of birth on the member record.</p></div></li>
+              <li><span class="tk" aria-label="Officer decision">O</span><div><p class="when">2026-10-08 14:30 · M. Chen, BSA officer</p><p class="what">Risk tier kept at Moderate. Reason: “New employer; account activity matches what's on file.” Next review 2028-10-08.</p></div></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="close-h">
+    <div class="close">
+      <h2 id="close-h">Bring your examiner's questions to a demo</h2>
+      <div class="body"><p>Two credit unions are piloting Refresh now. We can't name them and have no measured results yet, so this page shows a sample review instead of numbers.</p></div>
+      <div class="act">
+        <a class="btn" href="https://refresh.example/demo">Book a demo</a>
+        <p class="act-note">Opens the demo booking page at refresh.example.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <p><strong style="color:var(--ink)">Refresh</strong> · periodic KYC review software for credit unions.</p>
+    <ul aria-label="Footer">
+      <li><a href="#due">Who is due</a></li>
+      <li><a href="#request">Member request</a></li>
+      <li><a href="#decide">Who decides</a></li>
+      <li><a href="#trail">Exam trail</a></li>
+      <li><a href="https://refresh.example/demo">Book a demo</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Menu
+  var b = document.querySelector('.menu-btn'), m = document.getElementById('site-menu');
+  var mq = window.matchMedia('(max-width: 879px)');
+  function set(open){ b.setAttribute('aria-expanded', String(open)); m.hidden = mq.matches ? !open : false; }
+  set(false);
+  mq.addEventListener('change', function(){ set(false); });
+  b.addEventListener('click', function(){ set(b.getAttribute('aria-expanded') !== 'true'); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && b.getAttribute('aria-expanded') === 'true'){ set(false); b.focus(); } });
+  document.addEventListener('click', function(e){ if (mq.matches && !m.contains(e.target) && e.target !== b) set(false); });
+  m.addEventListener('focusout', function(e){ if (mq.matches && !m.contains(e.relatedTarget) && e.relatedTarget !== b) set(false); });
+  m.addEventListener('click', function(e){ if (mq.matches && e.target.closest('a')) set(false); });
+
+  // Sample review: one fictional member, five steps.
+  var ITEMS = ['Name and address','Phone and email','Government ID','Occupation and employer','Expected account activity'];
+  var W = ['wait','Not checked'];
+  var OK1 = ['ok','On file','member record, updated 2026-02-11'], OK2 = ['ok','On file','member record, updated 2025-06-30'], OK5 = ['ok','On file','from the 2024-10-14 review'];
+  var STEPS = {
+    1:{ says:'Refresh adds J. Alvarez to the October due list: last reviewed 2024-10-14, Moderate tier, reviewed every 24 months under your schedule.',
+        items:[W.concat('waiting for the file check'),W.concat('waiting for the file check'),W.concat('waiting for the file check'),W.concat('waiting for the file check'),W.concat('waiting for the file check')],
+        decision:null, count:1, tally:'5 items not checked yet', trail:'Trail: 1 entry',
+        note:'', hl:true, cap:'Someone filters the sheet by next-due date and trusts that the column is current.' },
+    2:{ says:'Refresh checks what is already on file before anyone contacts the member. Three items are current; two are missing.',
+        items:[OK1,OK2,['miss','Missing','ID on file expired 2026-08-31'],['miss','Missing','employer field is blank'],OK5],
+        decision:null, count:2, tally:'3 on file, 2 missing', trail:'Trail: 2 entries',
+        note:'pull file', hl:false, cap:'Staff pull the paper file and compare it with the member screen by eye.' },
+    3:{ says:'Refresh sends the member one request for the two missing items. Nothing else is asked.',
+        items:[OK1,OK2,['ask','Asked','asked 2026-10-02'],['ask','Asked','asked 2026-10-02'],OK5],
+        decision:null, count:3, tally:'2 items asked for', trail:'Trail: 3 entries',
+        note:'full form mailed 10/2', hl:false, cap:'The full update form goes out by mail and asks for everything again.' },
+    4:{ says:'The member sends both items. A. Ruiz in member services checks the ID against the member record.',
+        items:[OK1,OK2,['ok','Received','received 2026-10-06 · checked by A. Ruiz 2026-10-07'],['ok','Received','received 2026-10-06'],OK5],
+        decision:null, count:5, tally:'2 items received', trail:'Trail: 5 entries',
+        note:'called, left msg x2', hl:false, cap:'Follow-up is phone calls, kept as notes in a cell.' },
+    5:{ says:'The file is complete. M. Chen, the BSA officer, keeps the tier at Moderate and writes down why. Refresh doesn’t make this call.',
+        items:[OK1,OK2,['ok','Received','received 2026-10-06 · checked by A. Ruiz 2026-10-07'],['ok','Received','received 2026-10-06'],OK5],
+        decision:true, count:6, tally:'file complete, officer decided', trail:'Trail: 6 entries',
+        note:'OK per MC, see email', hl:false, cap:'The decision sits in an email or a cell comment. Before the exam, someone rebuilds the story from inboxes.' }
+  };
+  var DECISION_DONE = 'Officer decision: risk tier kept at Moderate. “New employer; account activity matches what’s on file.” Next review 2028-10-08.<span class="who">M. Chen, BSA officer · 2026-10-08 14:30</span>';
+  var DECISION_WAIT = 'Officer decision: waiting for a complete file. Refresh does not set the tier.<span class="who">Assigned to M. Chen, BSA officer</span>';
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var says = document.getElementById('says'), list = document.getElementById('items'), dec = document.getElementById('decision');
+  var tally = document.getElementById('tally'), mini = document.getElementById('mini-trail'), trailCount = document.getElementById('trail-count');
+  var latest = document.getElementById('latest'), note = document.getElementById('then-note'), row = document.getElementById('then-row'), cap = document.getElementById('then-cap');
+  var current = 5;
+
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function render(step, animate){
+    var s = STEPS[step], prev = STEPS[current];
+    tabs.forEach(function(t){ t.setAttribute('aria-pressed', String(Number(t.dataset.step) === step)); });
+    says.textContent = s.says;
+    list.innerHTML = s.items.map(function(it, i){
+      var changed = animate && prev && (prev.items[i][1] !== it[1] || prev.items[i][2] !== it[2]);
+      return '<li class="item' + (changed ? ' changed' : '') + '"><span class="item-name">' + esc(ITEMS[i]) + '</span><span class="chip ' + it[0] + '">' + esc(it[1]) + '</span><span class="item-detail">' + esc(it[2]) + '</span></li>';
+    }).join('');
+    dec.className = 'decision' + (s.decision ? ' done' : '');
+    dec.innerHTML = s.decision ? DECISION_DONE : DECISION_WAIT;
+    tally.textContent = s.tally;
+    if (animate){ tally.classList.remove('swap'); void tally.offsetWidth; tally.classList.add('swap'); }
+    latest.textContent = s.trail;
+    var n = s.count; Array.prototype.forEach.call(mini.children, function(li, i){ li.classList.toggle('later', i >= n); });
+    trailCount.textContent = n + (n === 1 ? ' entry' : ' entries');
+    note.textContent = s.note;
+    row.className = s.hl ? 'hl' : '';
+    cap.textContent = s.cap;
+    if (animate){ [dec, note.parentNode, cap].forEach(function(el){ el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); }); }
+    current = step;
+  }
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){ var n = Number(t.dataset.step); if (n !== current) render(n, true); });
+  });
+})();
+</script>
+</body>
+</html>

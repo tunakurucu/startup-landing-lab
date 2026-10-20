@@ -1,0 +1,80 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round6/packets/P003/B/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "KYC reviews your examiner can follow",
+    "left": 16,
+    "right": 295,
+    "top": 91,
+    "bottom": 197,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 5391
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "KYC reviews your examiner can follow",
+    "left": 16,
+    "right": 307,
+    "top": 93,
+    "bottom": 204,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 5399,
+   "axe": []
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "KYC reviews your examiner can follow",
+    "left": 31,
+    "right": 407,
+    "top": 100,
+    "bottom": 244,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 5650
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "KYC reviews your examiner can follow",
+    "left": 140,
+    "right": 668,
+    "top": 114,
+    "bottom": 315,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 5967,
+   "axe": []
+  }
+ }
+}
