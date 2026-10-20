@@ -1,0 +1,4 @@
+texgyreheroscn-bold.woff, texgyreheros-regular.woff, texgyreheros-bold.woff:
+  TeX Gyre Heros by GUST e-foundry, GUST Font License (embedding permitted). Subset to Latin.
+dejavusansmono.woff:
+  DejaVu Sans Mono, Bitstream Vera / DejaVu licence (embedding permitted). Subset to Latin.

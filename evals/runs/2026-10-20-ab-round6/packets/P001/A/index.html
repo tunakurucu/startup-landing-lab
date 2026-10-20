@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample map for lab −80 °C freezers · Rackwise</title>
+<meta name="description" content="Rackwise is a sample map for lab −80 °C freezers: every rack, box and tube position, with who put each tube there and when. In early access.">
+<meta name="theme-color" content="#E4EBED">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rackwise: know the box before you open the freezer">
+<meta property="og:description" content="A sample map for lab −80 °C freezers: every rack, box and tube position, with who put each tube there and when.">
+<meta property="og:image" content="og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rackwise: know the box before you open the freezer">
+<meta name="twitter:description" content="A sample map for lab −80 °C freezers: every rack, box and tube position, with who put each tube there and when.">
+<meta name="twitter:image" content="og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Rackwise, back to top">
+      <svg viewBox="0 0 26 26" aria-hidden="true" focusable="false"><rect x="1" y="1" width="24" height="24" rx="3" fill="#F7F9F9" stroke="#14232B" stroke-width="2"/><g fill="#4A5A62"><circle cx="7" cy="7" r="2.6"/><circle cx="13" cy="7" r="2.6"/><circle cx="19" cy="7" r="2.6"/><circle cx="7" cy="13" r="2.6"/><circle cx="7" cy="19" r="2.6"/><circle cx="13" cy="19" r="2.6"/></g><circle cx="13" cy="13" r="2.6" fill="#fff" stroke="#B7C4C9"/><circle cx="19" cy="19" r="2.6" fill="#fff" stroke="#B7C4C9"/><circle cx="19" cy="13" r="3.3" fill="#C2410C" stroke="#14232B" stroke-width="1.2"/></svg>
+      <span>Rackwise</span>
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Main">
+      <ul class="nav-links">
+        <li><a href="#find">Find a tube</a></li>
+        <li><a href="#record">Who moved what</a></li>
+        <li><a href="#managers">For lab managers</a></li>
+        <li><a href="#questions">Questions</a></li>
+      </ul>
+      <a class="btn btn-primary" href="https://rackwise.example/early-access">Request early access</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap hero-head">
+      <div class="hero-copy">
+        <h1 id="hero-title">Know the box before you open the freezer</h1>
+        <p class="lede">Rackwise is a sample map for lab −80 °C freezers: every rack, box and tube position, with who put each tube there and when.</p>
+      </div>
+      <div class="hero-act">
+        <a class="btn btn-primary" href="https://rackwise.example/early-access">Request early access</a>
+        <p class="beside"><b>In early access:</b> four labs are testing Rackwise now.</p>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="finder" id="find" data-signature role="region" aria-label="Find a tube in a sample lab">
+        <div class="finder-top">
+          <div><p class="finder-title">Find a tube</p><p class="sample-tag">Sample lab written for this page. Runs in your browser; nothing is sent.</p></div>
+          <button type="button" class="reset" id="reset">Reset sample</button>
+        </div>
+        <div class="finder-body">
+          <div class="finder-path">
+            <ol class="path" aria-label="Where the tube is, in the order you reach it">
+              <li><span class="k">Freezer</span><span class="v" data-path="freezer">B</span></li>
+              <li><span class="k">Shelf</span><span class="v" data-path="shelf">3</span></li>
+              <li><span class="k">Rack</span><span class="v" data-path="rack">2</span></li>
+              <li><span class="k">Box</span><span class="v" data-path="box">14</span></li>
+              <li><span class="k">Spot</span><span class="v" data-path="pos">D7</span></li>
+            </ol>
+            <p class="path-note">Read it before the door opens: freezer, shelf, rack, box, spot, in the order your hand reaches them.</p>
+            <div class="verdict" id="verdict" role="status" aria-live="polite"><div class="v-head"><p class="v-name echo">HEK293 p12, vial 1</p><p class="v-meta">Put here by <span class="who">Priya N.</span> · <span class="num">Wed 14 Oct 2026, 16:05</span></p></div><div class="v-more"><p>2 tubes match “<span class="echo">HEK293 p12</span>”:</p><button type="button" class="v-btn" aria-pressed="true" data-go="0" disabled="">HEK293 p12, vial 1 · box 14, D7</button><button type="button" class="v-btn" aria-pressed="false" data-go="1">HEK293 p12, vial 2 · box 14, D8</button></div></div>
+
+          </div>
+          <div class="finder-controls">
+            <form id="find-form" role="search" action="#find">
+              <label for="q">Sample name</label>
+              <div class="q-row">
+                <input id="q" name="q" type="search" maxlength="40" autocomplete="off" spellcheck="false" value="HEK293 p12">
+                <button type="submit" class="btn btn-ink">Find</button>
+              </div>
+            </form>
+            <div class="chips" role="group" aria-label="Samples to try">
+              <span class="chips-label">Or tap one:</span>
+              <button type="button" class="chip" data-q="HEK293 p12" aria-pressed="true">HEK293 p12</button>
+              <button type="button" class="chip" data-q="Liver RNA, mouse 4" aria-pressed="false">Liver RNA, mouse 4</button>
+              <button type="button" class="chip" data-q="Anti-GFP aliquot 3" aria-pressed="false">Anti-GFP aliquot 3</button>
+              <button type="button" class="chip" data-q="DH5α competent cells" aria-pressed="false">DH5α competent cells</button>
+            </div>
+          </div>
+          <div class="finder-result">
+
+            <div class="views">
+              <figure class="view view-freezer">
+                <div data-render="freezer"><svg viewBox="0 0 230 252" aria-hidden="true" focusable="false"><rect class="dw-body" x="42" y="12" width="176" height="228" rx="4"></rect><path class="dw-body" d="M42 14 L10 26 L10 230 L42 238 Z"></path><path class="dw-thin" d="M18 60 L18 110"></path><rect class="dw-frost" x="52" y="24" width="144" height="208"></rect><rect class="dw-line" x="52" y="24" width="144" height="208"></rect><path class="dw-thin" d="M52 67 H196"></path><rect class="dw-slot" x="57" y="30" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="91" y="30" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="125" y="30" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="159" y="30" width="30" height="34" rx="1"></rect><path class="dw-thin" d="M52 107.5 H196"></path><rect class="dw-slot" x="57" y="70.5" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="91" y="70.5" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="125" y="70.5" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="159" y="70.5" width="30" height="34" rx="1"></rect><rect class="dw-shelfband" x="53" y="108" width="142" height="40"></rect><path class="dw-thin" d="M52 148 H196"></path><rect class="dw-slot" x="57" y="111" width="30" height="34" rx="1"></rect><rect class="dw-hit" x="91" y="111" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="125" y="111" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="159" y="111" width="30" height="34" rx="1"></rect><path class="dw-thin" d="M52 188.5 H196"></path><rect class="dw-slot" x="57" y="151.5" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="91" y="151.5" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="125" y="151.5" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="159" y="151.5" width="30" height="34" rx="1"></rect><path class="dw-thin" d="M52 229 H196"></path><rect class="dw-slot" x="57" y="192" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="91" y="192" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="125" y="192" width="30" height="34" rx="1"></rect><rect class="dw-slot" x="159" y="192" width="30" height="34" rx="1"></rect><rect class="dw-line" x="58" y="240" width="14" height="8"></rect><rect class="dw-line" x="188" y="240" width="14" height="8"></rect></svg></div>
+                <figcaption data-cap="freezer">Freezer B, door open: <b>shelf 3</b> from the top, <b>rack 2</b> from the left</figcaption>
+              </figure>
+              <figure class="view view-rack">
+                <div data-render="rack"><div class="rackd" aria-hidden="true"><span class="rk-top"></span><div class="rk-body"><div class="drw empty"></div><div class="drw empty"></div><div class="drw hit">14</div><div class="drw">15</div><div class="drw empty"></div></div></div></div>
+                <figcaption data-cap="rack">Rack 2: <b>box 14</b> in drawer 3 from the top</figcaption>
+              </figure>
+              <figure class="view view-box">
+                <div class="box" data-render="box" role="img" aria-label="Box 14 seen from above, D7 marked"><i></i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i class="on">7</i><i>8</i><i>9</i><i>A</i><span></span><span></span><span class="t"></span><span></span><span class="t"></span><span class="t"></span><span></span><span class="t"></span><span></span><i>B</i><span></span><span class="t"></span><span class="t"></span><span></span><span></span><span></span><span></span><span></span><span></span><i>C</i><span class="t"></span><span></span><span></span><span></span><span class="t"></span><span class="t"></span><span class="t"></span><span></span><span class="t"></span><i class="on">D</i><span class="t"></span><span class="t"></span><span></span><span class="t"></span><span></span><span></span><span class="hit"></span><span class="t"></span><span></span><i>E</i><span class="t"></span><span></span><span></span><span></span><span></span><span class="t"></span><span></span><span></span><span></span><i>F</i><span></span><span class="t"></span><span></span><span></span><span class="t"></span><span></span><span></span><span></span><span></span><i>G</i><span></span><span></span><span class="t"></span><span></span><span></span><span class="t"></span><span></span><span class="t"></span><span class="t"></span><i>H</i><span></span><span class="t"></span><span></span><span></span><span></span><span></span><span></span><span class="t"></span><span class="t"></span><i>I</i><span class="t"></span><span class="t"></span><span class="t"></span><span class="t"></span><span class="t"></span><span class="t"></span><span class="t"></span><span></span><span></span></div>
+                <figcaption data-cap="box">Box 14 from above: <b>row D, column 7</b></figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="record" aria-labelledby="record-title">
+    <div class="wrap">
+      <h2 id="record-title">Every move is written down by whoever made it</h2>
+      <p class="sec-lede">Tubes go in, tubes come out, boxes change racks. Each time, the person at the freezer records the move in Rackwise, so the map changes when the freezer does, not when someone gets round to the spreadsheet.</p>
+      <div class="record-grid">
+        <figure class="before">
+          <svg viewBox="0 0 480 250" role="img" aria-label="Drawing of box 14's lid: the marker label has faded under frost and only part of it can be read">
+            <rect x="20" y="20" width="440" height="210" rx="10" fill="#fff" stroke="#14232B" stroke-width="1.5"/>
+            <rect x="40" y="40" width="400" height="170" rx="4" fill="#E4EBED" stroke="#4A5A62" stroke-width="1"/>
+            <g font-family="Heros, Helvetica, Arial, sans-serif" font-weight="700" fill="#14232B">
+              <text x="62" y="98" font-size="40" transform="rotate(-3 62 98)" opacity=".75">PN · HEK p9–11</text>
+              <text x="70" y="150" font-size="34" transform="rotate(-2 70 150)" opacity=".4">BOX 14 · R4</text>
+              <text x="372" y="200" font-size="22" transform="rotate(-4 372 200)" opacity=".25">2/26</text>
+            </g>
+            <g fill="#F7F9F9" opacity=".92">
+              <path d="M180 60 q30 -14 70 -2 q40 10 50 34 q-30 20 -70 12 q-44 -6 -50 -44z"/>
+              <path d="M60 128 q20 -10 46 0 q16 14 6 30 q-26 10 -46 0 q-14 -14 -6 -30z"/>
+              <path d="M250 136 q40 -12 80 4 q20 18 -4 30 q-40 10 -66 -4 q-22 -12 -10 -30z"/>
+              <path d="M360 52 q30 -6 52 8 q8 20 -16 26 q-30 2 -40 -14z"/>
+            </g>
+          </svg>
+          <div class="sheet-wrap" role="region" aria-label="Spreadsheet row for box 14" tabindex="0"><table class="sheet">
+            <caption>Shared spreadsheet, the row for box 14, last edited in March (sample)</caption>
+            <thead><tr><th scope="col">Box</th><th scope="col">Freezer</th><th scope="col">Shelf</th><th scope="col">Rack</th><th scope="col">Contents</th></tr></thead>
+            <tbody><tr><td>14</td><td>B</td><td>3</td><td class="stale">4</td><td class="stale">HEK293 p9–p11</td></tr></tbody>
+          </table></div>
+          <figcaption><b>Before Rackwise:</b> the lid is marker under frost, and the spreadsheet still says rack 4 and p9–p11. The box moved to rack 2 on Fri 9 Oct, p9 came out on Mon 12 Oct and p12 went in on Wed 14 Oct.</figcaption>
+        </figure>
+
+        <div class="log">
+          <div class="log-head">
+            <h3>Box 14’s record</h3>
+            <span class="addr">Freezer B · shelf 3 · rack 2 · drawer 3</span>
+            <span class="tag" style="width:100%">Sample entries, latest first. A tube you put away above shows up here.</span>
+          </div>
+          <ol data-render="log"><li><span class="when num">Wed 14 Oct 2026, 16:05</span><span class="who">Priya N.</span><span class="what echo">Put in HEK293 p12, vial 2</span><span class="pos">D8</span></li><li><span class="when num">Wed 14 Oct 2026, 16:05</span><span class="who">Priya N.</span><span class="what echo">Put in HEK293 p12, vial 1</span><span class="pos">D7</span></li><li><span class="when num">Mon 12 Oct 2026, 09:40</span><span class="who">Tom R.</span><span class="what echo">Took out HEK293 p9</span><span class="pos">C2, now empty</span></li><li><span class="when num">Fri 9 Oct 2026, 14:12</span><span class="who">Ana M.</span><span class="what echo">Moved box 14 from rack 4 to rack 2</span><span class="pos">shelf 3</span></li><li><span class="when num">Thu 8 Oct 2026, 11:30</span><span class="who">Priya N.</span><span class="what echo">Put in HEK293 p11, vial 1</span><span class="pos">C9</span></li></ol>
+          <p class="log-foot" data-render="logfoot">Older lines: 31 tubes put in between Wed 5 Aug 2026 and Tue 6 Oct 2026. Box 14 holds 34 tubes today.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="managers" aria-labelledby="managers-title">
+    <div class="wrap">
+      <h2 id="managers-title">Lab managers see every box in every freezer, and whose tubes are in it</h2>
+      <p class="sec-lede">When a project wraps up or someone leaves the lab, you can find everything they put in without opening a door.</p>
+      <div class="fleet">
+        <div class="fleet-top">
+          <span class="tag">The same sample lab as above. Pick a person.</span>
+          <div class="people" role="group" aria-label="Show boxes holding tubes put in by">
+            <button type="button" class="chip person" data-person="" aria-pressed="true">Everyone</button>
+            <button type="button" class="chip person" data-person="Priya N." aria-pressed="false">Priya N.</button>
+            <button type="button" class="chip person" data-person="Tom R." aria-pressed="false">Tom R.</button>
+            <button type="button" class="chip person" data-person="Ana M." aria-pressed="false">Ana M.</button>
+            <button type="button" class="chip person" data-person="Sam K." aria-pressed="false">Sam K.</button>
+          </div>
+        </div>
+        <p class="fleet-verdict" role="status" aria-live="polite" data-render="fleetverdict"><b>4 people</b> have put <b class="num">461 tubes</b> into 12 boxes across 2 freezers. Pick a person to mark the boxes holding their tubes.</p>
+        <div class="freezers" data-render="fleet"><div class="fz"><h3>Freezer A</h3><div class="fz-grid" role="img" aria-label="Freezer A: 5 shelves by 4 racks"><i class="sh"></i><i class="sh">1</i><i class="sh">2</i><i class="sh">3</i><i class="sh">4</i><i class="sh">1</i><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b class="bx">3</b><b></b><b></b><b></b></span><i class="sh">2</i><span class="rk"><b class="bx">22</b><b class="bx">23</b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><i class="sh">3</i><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b class="bx">5</b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><i class="sh">4</i><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b class="bx">31</b><b class="bx">32</b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><i class="sh">5</i><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span></div></div><div class="fz"><h3>Freezer B</h3><div class="fz-grid" role="img" aria-label="Freezer B: 5 shelves by 4 racks"><i class="sh"></i><i class="sh">1</i><i class="sh">2</i><i class="sh">3</i><i class="sh">4</i><i class="sh">1</i><span class="rk"><b></b><b></b><b class="bx">7</b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><i class="sh">2</i><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b class="bx">41</b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><i class="sh">3</i><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b class="bx">14</b><b class="bx">15</b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b class="bx">18</b><b></b><b></b><b></b><b></b></span><i class="sh">4</i><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><i class="sh">5</i><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b></b><b></b><b></b><b></b></span><span class="rk"><b></b><b class="bx">40</b><b></b><b></b><b></b></span></div></div></div>
+        <p class="fz-key">Rows are shelves, top to bottom. Columns are racks, left to right. Each rack shows its five drawers and the box in each. Addresses read freezer · shelf · rack.</p>
+        <p class="not-temp"><b>What the map is not:</b> Rackwise shows where samples are and who moved them. It does not measure freezer temperature or raise temperature alarms, so keep the monitoring you use now.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="questions" aria-labelledby="questions-title">
+    <div class="wrap">
+      <h2 id="questions-title">What labs ask before requesting access</h2>
+      <div class="qa">
+        <details>
+          <summary>Is anyone using Rackwise yet?</summary>
+          <p>Four labs are testing it now. They are not named on this page, and there are no results from them to report yet.</p>
+        </details>
+        <details>
+          <summary>Does it watch freezer temperature?</summary>
+          <p>No. Rackwise keeps track of where samples are and who put them there. Temperature monitoring and alarms stay with whatever you use now.</p>
+        </details>
+        <details>
+          <summary>Who uses it, and where?</summary>
+          <p>Researchers and technicians use it at the freezer, often with gloves on: look the tube up, open the door once, record what went in or came out. Lab managers, who buy it, use the whole map.</p>
+        </details>
+        <details>
+          <summary>What happens when I request early access?</summary>
+          <p>The button opens the early-access request page at rackwise.example. Ask there about setup, how many freezers you can map, and cost.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" aria-labelledby="final-title">
+    <div class="wrap final-inner">
+      <div>
+        <h2 id="final-title">Open the freezer once, and reach for the right box</h2>
+        <p class="sec-lede">Rackwise is in early access, with four labs testing it now.</p>
+      </div>
+      <div class="hero-act">
+        <a class="btn btn-primary" href="https://rackwise.example/early-access">Request early access</a>
+        <p class="beside">Opens the request page at rackwise.example.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#top" aria-label="Rackwise, back to top"><svg viewBox="0 0 26 26" aria-hidden="true" focusable="false"><rect x="1" y="1" width="24" height="24" rx="3" fill="#F7F9F9" stroke="#14232B" stroke-width="2"/><g fill="#4A5A62"><circle cx="7" cy="7" r="2.6"/><circle cx="13" cy="7" r="2.6"/><circle cx="19" cy="7" r="2.6"/><circle cx="7" cy="13" r="2.6"/><circle cx="7" cy="19" r="2.6"/><circle cx="13" cy="19" r="2.6"/></g><circle cx="13" cy="13" r="2.6" fill="#fff" stroke="#B7C4C9"/><circle cx="19" cy="19" r="2.6" fill="#fff" stroke="#B7C4C9"/><circle cx="19" cy="13" r="3.3" fill="#C2410C" stroke="#14232B" stroke-width="1.2"/></svg><span>Rackwise</span></a>
+      <p>A sample map for lab −80 °C freezers, in early access. The lab, people and tubes on this page are a sample written for illustration.</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="https://rackwise.example/early-access">Request early access</a></li>
+        <li><a href="#find">Find a tube</a></li>
+        <li><a href="#record">Who moved what</a></li>
+        <li><a href="#managers">For lab managers</a></li>
+        <li><a href="#questions">Questions</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
