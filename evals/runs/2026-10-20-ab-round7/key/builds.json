@@ -1,0 +1,52 @@
+{
+ "meta": {
+  "seed": 707072020,
+  "k": 1,
+  "retest": 0,
+  "briefs": [
+   "flagsweep",
+   "kycrefresh",
+   "rackwise",
+   "tidewise"
+  ],
+  "design": "rebuild of round 6 skill pages with v0.8; each is paired with the same round 6 no-skill page (built once, not rebuilt)"
+ },
+ "builds": {
+  "rackwise/with-r1": {
+   "workdir": "W001",
+   "brief": "rackwise",
+   "arm": "with",
+   "brief_file": "../2026-10-20-ab-round6/briefs/rackwise/with.md",
+   "fixture": null,
+   "skill_installed": true,
+   "model": "claude-opus-5-5"
+  },
+  "tidewise/with-r1": {
+   "workdir": "W002",
+   "brief": "tidewise",
+   "arm": "with",
+   "brief_file": "../2026-10-20-ab-round6/briefs/tidewise/with.md",
+   "fixture": null,
+   "skill_installed": true,
+   "model": "claude-opus-5-5"
+  },
+  "kycrefresh/with-r1": {
+   "workdir": "W003",
+   "brief": "kycrefresh",
+   "arm": "with",
+   "brief_file": "../2026-10-20-ab-round6/briefs/kycrefresh/with.md",
+   "fixture": null,
+   "skill_installed": true,
+   "model": "claude-opus-5-5"
+  },
+  "flagsweep/with-r1": {
+   "workdir": "W004",
+   "brief": "flagsweep",
+   "arm": "with",
+   "brief_file": "../2026-10-20-ab-round6/briefs/flagsweep/with.md",
+   "fixture": null,
+   "skill_installed": true,
+   "model": "claude-opus-5-5"
+  }
+ }
+}

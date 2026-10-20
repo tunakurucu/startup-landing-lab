@@ -1,0 +1,5 @@
+01fb7fa0921f4e0d86bb2bd9f7814c0a6204fcfb1266b231f29c50d845d583a7  evals/round6/grading.md
+2e3909a69fe6b93e290ed783def568ba12fb0ee423363ad34fa2453b98631213  evals/round6/briefs/flagsweep.md
+78db3a2b3b5f8e5ad1a7b982b69e04a5e78153de2266f964022077e15a60f95b  evals/round6/briefs/kycrefresh.md
+9ff95a98f051f77a3b9782b083681ef8d843a35f9b3b75b7ad76521e01a51cae  evals/round6/briefs/rackwise.md
+7257e70db9857c9f43fb7c4988ec4458d6e907da85cf9f60110d3f545ee28733  evals/round6/briefs/tidewise.md

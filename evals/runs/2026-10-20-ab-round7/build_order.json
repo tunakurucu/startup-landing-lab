@@ -1,0 +1,18 @@
+[
+ {
+  "workdir": "W001",
+  "run": "rackwise/with-r1"
+ },
+ {
+  "workdir": "W002",
+  "run": "tidewise/with-r1"
+ },
+ {
+  "workdir": "W003",
+  "run": "kycrefresh/with-r1"
+ },
+ {
+  "workdir": "W004",
+  "run": "flagsweep/with-r1"
+ }
+]
