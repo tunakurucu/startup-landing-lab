@@ -1,0 +1,61 @@
+{
+  "packet": "P016",
+  "persona": "buyer",
+  "A": {
+    "scores": {"clarity": 8, "fit": 6, "distinctiveness": 6, "proof": 6, "craft": 7, "mobile": 7, "honesty": 6, "interaction": 4, "copy": 8, "first_screen": 7},
+    "evidence": {
+      "clarity": "1440 and 390: h1 'The batch record builds itself.' plus subhead 'a brew-day log for small craft breweries. Readings go in on the tablet by the kettle... By the time the wort is in the fermenter, the batch record is written.' A stranger can repeat what it does and for whom; CTA 'Request early access' has an object.",
+      "fit": "Builds inside the Next app with the existing Button and tokens, excise handled ('What Grainline is not: excise software'), no customers/no time-saved claims. Both readers get a column ('On the floor' / 'In the office'). But the brief says there is nowhere to send requests yet, and every CTA is a mailto to hello@grainline.example, an address the brief never supplied. The head brewer with wet hands never sees the entry screen; 'Targets you can hit with a thumb' is only asserted in text.",
+      "distinctiveness": "The hero artifact (Batch 0412 West Coast Pale: timestamped readings on the left, 'Batch record, built by Grainline' summary on the right) is product-specific. The rest is a plain stack: two text columns, a callout, an early-access text block. With the artifact removed it reads like a generic text page.",
+      "proof": "Artifact is in the first screen at 1440 (right column) and its numbers are internally consistent (18.6 hL at 1.049 pre-boil to 16.3 hL at 1.056; boil-off 2.3 hL = 12%; brew day 05:30-10:55 = 5 h 25 min). But it only animates in once on load and cannot be operated; it shows the owner's output, not the brewer's input on a tablet, so the brewer's main doubt (can I enter this with gloves on) is not shown.",
+      "craft": "Clean, consistent type and spacing at 1440, 768 and 390; no overflow (probe 0 px), smallest text 14px. At 1440 the hero leaves a large empty area under the CTA beside the tall record card; at 768 the record summary panel is blank until the animation reaches it (~1.7 s).",
+      "mobile": "390: h1, subhead and a full-width 48px 'Request early access' fit the first screen; the record card stacks below with the summary as a 2-column grid; no menu is needed (header CTA hidden below sm). Nothing overflows at 320. The artifact begins at the bottom of the first screen and its 'worked example' label is only reached after scrolling the whole card.",
+      "honesty": "Candid early-access copy ('There is no pricing yet and there are no brewery logos on this page, because there are no customers yet') and the mailto is disclosed before the click ('Opens your email app with a short note to fill in'). But the sample label is a figcaption under the card: at 390 the card header 'Batch 0412 West Coast Pale' shows with no 'example' label for ~800px. And the CTA sends to an invented address that will not reach anyone, while telling the visitor it is how to request access.",
+      "interaction": "No interactive controls at all (0 buttons in DOM). I clicked the hero, header and bottom 'Request early access' at 1440, 768 and 390: each fires the same mailto:hello@grainline.example with subject and a prefilled brewery/brew length/brews per week template. No console errors. Nothing to operate in the artifact.",
+      "copy": "Specific brewhouse language: 'a damp notebook on the floor, then again in a spreadsheet in the office', 'Mash temperature at 06:35 is logged at 06:35, not pieced back together at four o'clock', 'Where the previous batch of this recipe sat at pre-boil is one glance away, not a cupboard away'. Button says what happens. Short and consistent.",
+      "first_screen": "1440: specific promise, CTA with its result stated, and the worked batch record beside it. 390: promise and full-width CTA are in view but only the top of the record card peeks in, with no example label in view. The CTA's destination is an invented inbox."
+    },
+    "problems": [
+      "Every primary action is a mailto to hello@grainline.example, an address the brief did not supply, while the brief says there is nowhere to send requests yet; a brewer who acts gets an email that goes nowhere.",
+      "The artifact is a static, animate-once record; the head brewer on a phone never sees the tablet entry screen, so the wet-hands/gloves doubt is answered only by an assertion.",
+      "'A worked example' label sits under the card, out of view at 390 while the batch data is on screen."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "All three 'Request early access' buttons (header at >=640px, hero, early-access section) and the footer link go to mailto:hello@grainline.example. The brief supplies no email address and states 'there's nowhere to send requests yet'; the address is invented by the page (defined in src/lib/earlyAccess.ts).",
+        "steps": "Serve packets/P016/A/site on 127.0.0.1:8161, open at 1440x900, inspect or click the hero 'Request early access' button: href is mailto:hello@grainline.example?subject=Early%20access%20to%20Grainline&body=... Compare with brief.md, which supplies no address."
+      }
+    ]
+  },
+  "B": {
+    "scores": {"clarity": 9, "fit": 7, "distinctiveness": 8, "proof": 9, "craft": 8, "mobile": 8, "honesty": 5, "interaction": 8, "copy": 8, "first_screen": 8},
+    "evidence": {
+      "clarity": "1440, 768, 390: h1 'The brew sheet that fills itself in as you brew.' plus 'Grainline is a brew-day log for small craft breweries. Tap each reading on the brewhouse tablet as you take it, and the batch record builds itself by knockout.' What, who and next step are all in the first lines; nav names the two halves ('Sample brew day', 'The record').",
+      "fit": "Each audience gets a real path: the brewer gets a tablet pad with 56px number keys in the hero; the owner gets 'The batch record is finished at knockout and opens on the owner's laptop' with the full sheet, and a flagged-reading section. Excise is excluded twice ('It does not file excise returns'; 'Not for... anyone who needs excise reporting'), no customer names or time numbers, built in the Next app with Button (two inverse variants added) and tokens. Marked down because the conversion form, given no backend, promises 'You hear back by email' and then sends nothing.",
+      "distinctiveness": "Structure comes from the product: dark tablet keypad beside a paper record that fills as you log, a table drawn as the brew sheet it replaces ('Signed off: not yet'), and a single flagged pre-boil gravity row with the brewer's note. Recognisable without the logo.",
+      "proof": "1440: operable pad in the first screen. I typed 1.060 for Pre-boil gravity (target 1.046-1.050) and pressed Log reading: the step row turned to a flag '1.060 SG . 08:45 . flagged', the record on the left added the row, status read '0.010 over target, flagged on the record.' 'Use the sample reading' through to step 8 gave 'Batch 231 record complete' and '8 of 8 readings . 1 flagged . complete'. Sample numbers consistent (12.4 hL at 1.044 to 10.2 hL at 1.054), labelled 'Sample batch. Runs in your browser; nothing is saved.' in the pad header.",
+      "craft": "Deliberate type roles (display/h2/lead tokens), mono for readings, consistent spacing; no overflow at 390/320. Minor: 12px mono labels ('Sample batch...', record header count) are small; the 1440 first screen is dense with the record card cut at the fold.",
+      "mobile": "390: h1, subhead, full-width 48px CTA in the first screen, pad starts just below with its sample label. The keypad opens inline under the selected step, not in a side column; keys 56px, step rows ~60px, 'Menu' 44px. Menu opened, listed 3 anchors plus CTA, and closed itself after I tapped 'The record'. After tapping Log reading the flagged row updated right above the keypad, though the text status line was ~400px below the tap. Long page (5481px) with a second full record list.",
+      "honesty": "Sample data is labelled where it appears at every width. But the form says, before submit, 'No card, no sales call. You hear back by email.' and the hero says 'Email and brewery name.'; only after I filled in head@harbourbrew.co.uk / Harbour Brewing and submitted did it say 'Nothing was sent. Early-access requests are not open yet, and nothing you typed has left this page.' Disclosure after the click, contradicting the pre-click line.",
+      "interaction": "All controls work at 1440/768/390 with no console errors: number keys, delete, 6-char cap (typing nine 9s gives 999999), empty 'Log reading' gives 'Enter a reading before logging it.', 'Change this reading' reopens a logged step, 'Start the sample over' resets to 'Sample reset to 08:40, with three readings logged.' Hero CTA scrolls to #early-access with the email field in view; empty submit gets native 'Please fill out this field.'; filled submit keeps the values and shows the not-sent message.",
+      "copy": "Customer-world nouns: 'knockout', 'Short sparge. Topped up 0.4 hL from the HLT.', 'An off reading gets flagged, not blocked.', 'written wet at the kettle, typed up dry in the evening and read a week late'. Good fit / Not for / What you get / Cost list is plain. One contradiction: 'You hear back by email' vs 'Nothing was sent'.",
+      "first_screen": "1440: promise, CTA and a live, labelled tablet pad plus the record it feeds all in one viewport. 390: promise and CTA in view with the pad header and sample label entering the bottom. The CTA label promises a request it cannot make yet."
+    },
+    "problems": [
+      "The early-access form promises 'You hear back by email' before submit and then reports 'Nothing was sent'; every lead is lost and the visitor learns it only after typing their details.",
+      "At 390 the demo's text feedback lands well below the tapped 'Log reading' button; only the step row shows the change near the tap.",
+      "Long, dense phone page: the record appears twice (live record under the pad, then the full sheet) before the owner section and the form."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "The primary action ends in a form whose submit does nothing (EARLY_ACCESS_ENDPOINT is empty, no request is made). Before the click the page says 'Email and brewery name. No card, no sales call.' (hero) and 'No card, no sales call. You hear back by email.' (form); the result, 'Nothing was sent. Early-access requests are not open yet', is shown only after submitting. The real result is not stated before the visitor commits, so the local-action exemption does not apply. Adjudicator to judge whether this meets 'does nothing'.",
+        "steps": "Serve packets/P016/B/site on 127.0.0.1:8162, open at 390x844, tap hero 'Request early access' (scrolls to #early-access), read the line under the submit button, fill Work email and Brewery, tap 'Request early access': no network request is made and the status reads 'Nothing was sent...'."
+      }
+    ]
+  },
+  "preference": "B",
+  "confidence": "medium",
+  "reason": "As the head brewer on a phone, B shows me the tablet screen with big keys and lets me log an off reading and see it flagged, and as the owner it shows the finished sheet with the note in the row; A only asserts the brewer side and shows a static record. Both mishandle the no-inbox constraint (A mails an invented address, B promises a reply and sends nothing), each fixable with one constant; if B's form problem were judged worse than A's invented address, or the brewer demo mattered less than A's tighter page, I would reconsider."
+}
