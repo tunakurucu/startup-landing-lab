@@ -1,0 +1,80 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round8/packets/P001/A/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "See your proof before we staple.",
+    "left": 18,
+    "right": 302,
+    "top": 80,
+    "bottom": 199,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3693
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "See your proof before we staple.",
+    "left": 20,
+    "right": 370,
+    "top": 80,
+    "bottom": 159,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3693,
+   "axe": []
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "See your proof before we staple.",
+    "left": 31,
+    "right": 737,
+    "top": 80,
+    "bottom": 175,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3720
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "See your proof before we staple.",
+    "left": 108,
+    "right": 558,
+    "top": 82,
+    "bottom": 191,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3779,
+   "axe": []
+  }
+ }
+}

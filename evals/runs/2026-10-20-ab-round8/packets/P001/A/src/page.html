@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Small-run zine printing, 25 to 500 copies, with a proof photo | Staplepress</title>
+<meta name="description" content="Staplepress prints zines and art books for independent artists, 25 to 500 copies. Upload a print-ready PDF; within two working days we post a photo of your proof, before anything is bound. From $2.10 a copy.">
+<meta name="theme-color" content="#c9cac6">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Staplepress: see your proof before we staple">
+<meta property="og:description" content="Zines and art books for independent artists, 25 to 500 copies. A photo of your proof within two working days, before anything is bound.">
+<meta property="og:url" content="https://staplepress.example/">
+<meta property="og:image" content="https://staplepress.example/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Staplepress: see your proof before we staple">
+<meta name="twitter:description" content="Zines and art books, 25 to 500 copies. A photo of your proof within two working days, before anything is bound.">
+<meta name="twitter:image" content="https://staplepress.example/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23c9cac6'/%3E%3Cpath d='M7 12V8h18v4' fill='none' stroke='%23161616' stroke-width='3.2'/%3E%3Cpath d='M4 19h24' stroke='%23b3121f' stroke-width='3'/%3E%3Cpath d='M7 24h18' stroke='%23161616' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --booth:#c9cac6; --booth-2:#bebfbb; --paper:#f7f6f1; --sheet:#fdfcf8;
+  --ink:#161616; --ink-2:#383836; --ink-3:#4a4a47;
+  --red:#b3121f; --red-dark:#8f0e18;
+  --rule:rgba(22,22,22,.3);
+  --serif:"Century Schoolbook","TeX Gyre Schola","C059","New Century Schoolbook",Georgia,serif;
+  --mono:"Courier New","TeX Gyre Cursor",Courier,monospace;
+  --t-body:1.0625rem; --t-lead:clamp(1.125rem,1.05rem + .35vw,1.3125rem);
+  --t-h1:clamp(2.375rem,1.6rem + 2.6vw,3.25rem);
+  --t-h2:clamp(1.75rem,1.35rem + 1.7vw,2.75rem);
+  --t-h3:1.3125rem; --t-small:.9375rem; --t-code:.8125rem;
+  --s-xs:8px; --s-s:12px; --s-m:24px; --s-l:48px;
+  --section:clamp(72px,3.5rem + 5vw,136px);
+  --gutter:clamp(16px,.5rem + 3vw,48px);
+  --max:1320px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul{margin:0}
+ol,ul{padding:0;list-style:none}
+img,svg,video,canvas{display:block;max-width:100%}
+input,button,textarea,select{font:inherit;color:inherit}
+:where(p,li,dd,td,output,[role=status]){overflow-wrap:break-word;min-width:0}
+.echo{overflow-wrap:anywhere}
+html{scroll-padding-top:8px;-webkit-text-size-adjust:100%}
+body{background:var(--booth);color:var(--ink);font-family:var(--serif);font-size:var(--t-body);line-height:1.55;font-variant-numeric:lining-nums}
+h1,h2,h3{font-weight:700;text-wrap:balance}
+h1{font-size:var(--t-h1);line-height:1.04;letter-spacing:-.012em}
+h2{font-size:var(--t-h2);line-height:1.12;letter-spacing:-.008em}
+h3{font-size:var(--t-h3);line-height:1.25}
+p{text-wrap:pretty}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.18em}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-60px;padding:12px 16px;background:var(--ink);color:var(--paper);z-index:100;text-decoration:none}
+.skip:focus{top:12px}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px var(--sheet)}
+.code{font-family:var(--mono);font-size:var(--t-code);letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 22px;border-radius:2px;font-weight:700;text-decoration:none;line-height:1.2;border:2px solid var(--ink);background:var(--sheet);color:var(--ink);cursor:pointer;transition:background-color .15s ease-out,transform .15s ease-out}
+.btn-primary{background:var(--red);border-color:var(--red);color:#fff;font-size:1.0625rem}
+.btn:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{background:#ecebe5}
+  .btn-primary:hover{background:var(--red-dark);border-color:var(--red-dark)}
+}
+
+/* Header */
+.site{max-width:var(--max);margin:0 auto;padding:10px var(--gutter);display:flex;align-items:center;gap:var(--s-m);min-height:68px;position:relative}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:1.3125rem;text-decoration:none;min-height:44px;letter-spacing:-.005em}
+.brand svg{width:30px;height:30px}
+.menu-btn{margin-left:auto;min-height:44px;min-width:44px;padding:8px 14px;border:2px solid var(--ink);background:transparent;border-radius:2px;font-weight:700;cursor:pointer}
+#site-menu{display:flex;align-items:center;gap:4px;margin-left:auto}
+#site-menu a:not(.btn){display:inline-flex;align-items:center;min-height:44px;padding:0 12px;text-decoration:none;font-size:1rem}
+#site-menu a:not(.btn):hover{text-decoration:underline}
+#site-menu .btn{margin-left:10px;min-height:44px;padding:10px 18px;font-size:1rem}
+@media (min-width:900px){ .menu-btn{display:none} }
+@media (max-width:899.98px){
+  .js #site-menu[hidden]{display:none}
+  .js #site-menu{position:absolute;top:100%;left:var(--gutter);right:var(--gutter);z-index:20;flex-direction:column;align-items:stretch;background:var(--sheet);border:2px solid var(--ink);padding:8px;gap:0;margin:0}
+  .js #site-menu .btn{margin:8px 0 0}
+  html:not(.js) .menu-btn{display:none}
+  html:not(.js) #site-menu{flex-wrap:wrap;margin-left:0}
+  html:not(.js) .site{flex-wrap:wrap}
+}
+
+/* Hero */
+.hero{max-width:var(--max);margin:0 auto;padding:clamp(12px,1vw,24px) var(--gutter) clamp(40px,4vw,56px);display:grid;gap:var(--s-m);grid-template-columns:minmax(0,1fr)}
+@media (min-width:1100px){
+  /* The proof spans both columns on a subgrid: the sheet owns the right column, its readout and controls sit under the copy. */
+  .hero{padding-bottom:32px;grid-template-columns:minmax(0,450px) minmax(0,1fr);column-gap:clamp(40px,4vw,56px);row-gap:36px;grid-template-rows:auto 1fr;align-items:start}
+  .hero-copy{grid-column:1;grid-row:1;position:relative;z-index:1}
+  .proof{grid-column:1 / 3;grid-row:1 / 3;display:grid;grid-template-columns:subgrid;grid-template-rows:subgrid;align-items:start}
+  .stage{grid-column:2;grid-row:1 / 3}
+  .panel{grid-column:1;grid-row:2;border-top:3px solid var(--ink);padding-top:14px}
+  .panel .readout{border-top:0;padding-top:0;margin-top:0}
+  .panel .controls{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 8px}
+  .panel .field{grid-column:1 / 3}
+  .panel .sheets{display:contents}
+  .panel .sheets .turn{grid-column:3;grid-row:1;align-self:end}
+  .panel .sheets button{font-size:.9375rem;padding:8px 6px}
+}
+.five{font-size:var(--t-lead);line-height:1.45;margin-top:var(--s-m);max-width:34em}
+.act{margin-top:28px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.beside{font-size:var(--t-small);line-height:1.45;color:var(--ink-2);max-width:31em}
+
+/* Ticket: what the starting price buys */
+.run-head{display:grid;gap:var(--s-m) var(--s-l);grid-template-columns:minmax(0,1fr);align-items:start}
+@media (min-width:960px){ .run-head{grid-template-columns:minmax(0,1fr) minmax(0,460px)} }
+.ticket{background:var(--sheet);border:1.5px solid var(--ink);padding:16px 18px 18px;max-width:520px}
+.ticket .code{display:flex;justify-content:space-between;gap:12px;border-bottom:1.5px solid var(--ink);padding-bottom:8px}
+.ticket h2{font-size:clamp(1.75rem,1.5rem + 1vw,2.25rem);margin-top:10px;line-height:1.1}
+.ticket h2 small{font-size:var(--t-body);font-weight:400;color:var(--ink-2);letter-spacing:0}
+.specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:12px;border-top:1px solid var(--rule)}
+.specs div{padding:8px 10px 8px 0;border-bottom:1px solid var(--rule)}
+.specs dt{font-size:.875rem;color:var(--ink-3)}
+.specs dd{font-weight:700;font-variant-numeric:tabular-nums}
+.ticket p{font-size:var(--t-small);margin-top:10px;color:var(--ink-2)}
+@media (max-width:420px){ .specs{grid-template-columns:repeat(2,minmax(0,1fr))} }
+
+/* The proof sheet (signature) */
+.proof{min-width:0}
+.proof-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;margin-bottom:10px}
+.proof-head strong{font-size:1.0625rem}
+.proof-head span{font-size:.9375rem;color:var(--ink-2)}
+.sheet-wrap{position:relative;background:var(--sheet);box-shadow:0 1px 2px rgba(60,60,52,.22),0 10px 28px rgba(60,60,52,.2)}
+.sheet-inner{position:relative;container-type:inline-size;transform-origin:50% 50%}
+.sheet{width:100%;height:auto}
+.pnum{position:absolute;top:52.5%;transform:translate(-50%,-50%);font-weight:700;font-size:13.2cqw;line-height:1;text-align:center;font-variant-numeric:lining-nums;color:var(--ink)}
+.pnum small{display:block;font-size:max(12px,4.2cqw);font-weight:400;color:var(--ink-2);margin-top:.15em}
+.pl{left:27.7%}.pr{left:72.3%}
+.sheet .paper{fill:var(--sheet)}
+.sheet .ln{fill:#6d6d69}
+.sheet .art{fill:#1f1f1d}
+.sheet .art-dark{fill:var(--sheet)}
+.sheet .art-sun{fill:var(--sheet)}
+.sheet .art-line{fill:none;stroke:var(--sheet);stroke-width:2px;vector-effect:non-scaling-stroke}
+.sheet .blank{fill:none;stroke:#8d8d88;stroke-width:1px;stroke-dasharray:4 4;vector-effect:non-scaling-stroke}
+.sheet .chip{fill:var(--sheet);stroke:var(--ink);stroke-width:1px;vector-effect:non-scaling-stroke}
+.sheet .num{font-family:var(--serif);font-weight:700;font-size:44px;fill:currentColor;color:var(--ink)}
+.sheet .blank-label{font-family:var(--serif);font-size:14px;fill:currentColor;color:var(--ink-2)}
+.sheet .mk{fill:none;stroke:var(--ink);stroke-width:1px;vector-effect:non-scaling-stroke}
+.sheet .dash{stroke-dasharray:3 2}
+.sheet .fold{fill:none;stroke:#b4b3ad;stroke-width:1px;stroke-dasharray:5 5;vector-effect:non-scaling-stroke}
+.sheet .mark-red{fill:none;stroke:var(--red);stroke-width:2.5px;vector-effect:non-scaling-stroke}
+.slug{font-family:var(--mono);font-size:.8125rem;font-weight:700;letter-spacing:.04em;margin-top:8px;color:var(--ink)}
+.readout{margin-top:10px;border-top:1.5px solid var(--ink);padding-top:10px;min-height:3.2em}
+#status{font-weight:700;font-size:1rem;line-height:1.4}
+#status.err{color:var(--red-dark)}
+#note{font-size:.9375rem;line-height:1.45;color:var(--ink-2);margin-top:4px}
+.controls{margin-top:14px;display:grid;gap:10px 16px;grid-template-columns:minmax(0,1fr)}
+.field{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.field label{font-weight:700;font-size:1rem}
+.stepper{display:flex;align-items:stretch}
+.stepper button,.sheets button{min-height:44px;min-width:48px;padding:8px 12px;border:2px solid var(--ink);background:var(--sheet);border-radius:2px;font-weight:700;cursor:pointer;line-height:1.1;transition:background-color .12s ease-out,transform .12s ease-out}
+.stepper input{width:4.25em;min-height:44px;border:2px solid var(--ink);border-left:0;border-right:0;border-radius:0;background:#fff;text-align:center;font-size:1.0625rem;font-weight:700;font-variant-numeric:tabular-nums;padding:0 4px}
+.stepper button:first-child{border-radius:2px 0 0 2px}
+.stepper button:last-child{border-radius:0 2px 2px 0}
+.sheets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.stepper button:active,.sheets button:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){ .stepper button:hover,.sheets button:hover{background:#e8e7e1} }
+.sheets .turn{background:var(--ink);color:var(--sheet)}
+@media (hover:hover) and (pointer:fine){ .sheets .turn:hover{background:#333} }
+@media (min-width:600px){
+  .sheets{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .sheets button{font-size:.9375rem;padding:8px 10px}
+}
+
+
+/* Bands */
+.band{padding:var(--section) 0}
+.paper{background:var(--paper)}
+#run{padding-top:48px}
+.booth{background:var(--booth)}
+.lede{font-size:var(--t-lead);max-width:36em;margin-top:var(--s-m);color:var(--ink-2)}
+
+/* Docket */
+.docket{margin-top:var(--s-l);border-top:3px solid var(--ink);counter-reset:none}
+.docket-head{display:none}
+.docket li{display:grid;grid-template-columns:2.25rem 4rem minmax(0,1fr);gap:4px 16px;padding:18px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.d-n{font-weight:700;font-size:1.5rem;font-variant-numeric:tabular-nums}
+.d-who{font-weight:700}
+.d-what{grid-column:1 / -1}
+.d-when{grid-column:1 / -1;font-family:var(--mono);font-weight:700;font-size:var(--t-code);letter-spacing:.04em;text-transform:uppercase}
+@media (min-width:760px){
+  .docket-head{display:grid;grid-template-columns:3rem 5rem minmax(0,1fr) 15rem;gap:16px;padding:10px 0;border-bottom:1.5px solid var(--ink)}
+  .docket li{grid-template-columns:3rem 5rem minmax(0,1fr) 15rem;padding:22px 0}
+  .d-what{grid-column:auto;max-width:38em}
+  .d-when{grid-column:auto}
+}
+
+/* Reading a proof */
+.split{display:grid;gap:var(--s-l);grid-template-columns:minmax(0,1fr);align-items:center}
+@media (min-width:960px){ .split{grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(48px,5vw,88px)} .split.rev > :first-child{order:2} }
+.drawing{background:var(--sheet);padding:clamp(14px,2vw,28px);box-shadow:0 1px 2px rgba(60,60,52,.22),0 10px 28px rgba(60,60,52,.2)}
+.drawing svg{width:100%;height:auto}
+.drawing figcaption{font-size:var(--t-small);color:var(--ink-2);margin-top:12px;border-top:1px solid var(--rule);padding-top:10px}
+.tech .l1{fill:none;stroke:var(--ink);stroke-width:2.4px;vector-effect:non-scaling-stroke}
+.tech .l2{fill:none;stroke:var(--ink);stroke-width:1.5px;vector-effect:non-scaling-stroke}
+.tech .l3{fill:none;stroke:var(--ink);stroke-width:1.1px;vector-effect:non-scaling-stroke}
+.tech .l4{fill:none;stroke:var(--ink-3);stroke-width:.9px;vector-effect:non-scaling-stroke}
+.tech .hid{stroke-dasharray:5 4}
+.tech .red{fill:none;stroke:var(--red);stroke-width:2.5px;vector-effect:non-scaling-stroke}
+.tech .lbl{font-family:var(--serif);font-size:15px;fill:currentColor;color:var(--ink)}
+.tech .lbl-b{font-family:var(--serif);font-size:15px;font-weight:700;fill:currentColor;color:var(--ink)}
+.tech .dot{fill:var(--ink)}
+.prose p + p{margin-top:16px}
+.prose p{max-width:34em}
+.prose h2 + p{margin-top:var(--s-m)}
+
+/* Galley: the usual terms, corrected */
+.galley{margin-top:var(--s-l);background:var(--sheet);border-top:3px solid var(--ink);padding:8px clamp(16px,3vw,40px) 24px;box-shadow:0 1px 2px rgba(60,60,52,.18)}
+.g-src{font-family:var(--mono);font-weight:700;font-size:var(--t-code);letter-spacing:.05em;text-transform:uppercase;margin-top:22px;color:var(--ink-2)}
+.g-line{display:grid;grid-template-columns:minmax(0,1fr);gap:4px 32px;padding:14px 0;border-bottom:1px solid var(--rule);font-size:clamp(1.125rem,1rem + .5vw,1.375rem);line-height:1.4}
+.g-line del{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2.5px;color:var(--ink)}
+.g-line ins{text-decoration:none;color:var(--red-dark);font-style:italic}
+.g-line ins::before{content:"‸ ";font-style:normal;font-weight:700;color:var(--red)}
+@media (min-width:800px){ .g-line{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:baseline} .g-line ins{padding-left:16px} }
+.galley-note{font-size:var(--t-small);color:var(--ink-2);margin-top:16px}
+
+/* Closing */
+.close{text-align:left}
+.close .act{margin-top:var(--s-m)}
+
+/* Footer */
+footer{background:var(--ink);color:var(--paper);padding:56px 0 40px}
+footer .wrap{display:grid;gap:24px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:1000px){ footer .wrap{grid-template-columns:minmax(0,1fr) auto;align-items:start} }
+footer .brand{color:var(--paper)}
+footer p{color:#d9d8d2;font-size:var(--t-small);max-width:34em}
+footer ul{display:flex;flex-wrap:wrap;gap:0 8px}
+footer ul a{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;color:var(--paper)}
+footer :focus-visible{outline-color:var(--paper);box-shadow:0 0 0 6px var(--ink)}
+.small-print{grid-column:1 / -1;border-top:1px solid #4a4a47;padding-top:16px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0s !important;animation-duration:0s !important}
+  .btn:active,.stepper button:active,.sheets button:active{transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <a class="brand" href="#top" aria-label="Staplepress, back to top">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 12V8h18v4" fill="none" stroke="#161616" stroke-width="3.2"/><path d="M4 19h24" stroke="#b3121f" stroke-width="3"/><path d="M7 24h18" stroke="#161616" stroke-width="2"/></svg>
+    Staplepress
+  </a>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  <nav id="site-menu" aria-label="Main">
+    <a href="#run">How a run goes</a>
+    <a href="#proof">Reading a proof</a>
+    <a href="#prices">Prices</a>
+    <a href="#press">The press</a>
+    <a class="btn btn-primary" href="https://staplepress.example/start">Upload your PDF</a>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+<section class="hero" id="top" aria-labelledby="h1">
+  <div class="hero-copy">
+    <h1 id="h1">See your proof before we staple.</h1>
+    <p class="five">Staplepress prints zines and art books for independent artists, 25 to 500 copies, from your print-ready PDF.</p>
+    <div class="act">
+      <a class="btn btn-primary" href="https://staplepress.example/start">Upload your PDF</a>
+      <p class="beside">Within two working days we post a photo of your proof, straight off the press, before anything is bound. Prices from $2.10 a copy.</p>
+    </div>
+  </div>
+
+  <figure class="proof" data-signature aria-labelledby="proof-title">
+    <div class="stage">
+      <div class="proof-head"><strong id="proof-title">A proof, flat off the press</strong><span>Sample sheet drawn for this page, not a customer’s work</span></div>
+      <div class="sheet-wrap" id="sheet-wrap"><!--SHEET--></div>
+      <p class="slug" id="slug" aria-hidden="true"><!--SLUG--></p>
+    </div>
+    <div class="panel">
+    <div class="readout">
+      <p id="status" role="status" aria-live="polite" class="echo"><!--STATUS--></p>
+      <p id="note"><!--NOTE--></p>
+    </div>
+    <form class="controls" id="controls" novalidate>
+      <div class="field">
+        <label for="pages">Pages in your zine</label>
+        <div class="stepper">
+          <button type="button" id="minus">−4<span class="vh"> pages</span></button>
+          <input id="pages" name="pages" type="text" inputmode="numeric" maxlength="3" value="24" autocomplete="off" spellcheck="false" aria-describedby="status">
+          <button type="button" id="plus">+4<span class="vh"> pages</span></button>
+        </div>
+      </div>
+      <div class="sheets">
+        <button type="button" id="prev">Previous sheet</button>
+        <button type="button" id="next">Next sheet</button>
+        <button type="button" id="turn" class="turn">Turn over</button>
+        <button type="button" id="reset">Reset sample</button>
+      </div>
+    </form>
+    </div>
+  </figure>
+
+</section>
+
+<section class="band paper" id="run" aria-labelledby="run-h">
+  <div class="wrap">
+    <div class="run-head">
+      <h2 id="run-h">From upload to a photo of your proof in two working days</h2>
+      <aside class="ticket" id="prices" aria-labelledby="ticket-h">
+        <p class="code"><span>Job ticket</span><span>Starting price</span></p>
+        <h2 id="ticket-h">$2.10 a copy <small>for this run</small></h2>
+        <dl class="specs">
+          <div><dt>Copies</dt><dd>50</dd></div>
+          <div><dt>Size</dt><dd>A5</dd></div>
+          <div><dt>Pages</dt><dd>24</dd></div>
+          <div><dt>Ink</dt><dd>Black</dd></div>
+          <div><dt>Paper</dt><dd>Uncoated</dd></div>
+          <div><dt>50 × $2.10</dt><dd>$105.00</dd></div>
+        </dl>
+        <p>Colour, other sizes and larger runs cost more.</p>
+  </aside>
+    </div>
+    <div class="docket">
+      <div class="docket-head code" aria-hidden="true"><span>Step</span><span>Who</span><span>What happens</span><span>When</span></div>
+      <ol>
+        <li><span class="d-n">1</span><span class="d-who">You</span><p class="d-what">Upload a print-ready PDF at <a href="https://staplepress.example/start">staplepress.example/start</a>.</p><span class="d-when">Day 0</span></li>
+        <li><span class="d-n">2</span><span class="d-who">We</span><p class="d-what">Print your proof on our press, photograph the sheet flat, and post the photo for you.</p><span class="d-when">Within two working days</span></li>
+        <li><span class="d-n">3</span><span class="d-who">You</span><p class="d-what">Look at every page on the photo, while nothing is folded or bound yet.</p><span class="d-when">Before binding</span></li>
+        <li><span class="d-n">4</span><span class="d-who">We</span><p class="d-what">Bind the run: anywhere from 25 to 500 copies.</p><span class="d-when">After you’ve seen the proof</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="band booth" id="proof" aria-labelledby="proof-h">
+  <div class="wrap split">
+    <figure class="drawing">
+      <svg class="tech" viewBox="0 0 400 270" role="img" aria-labelledby="cut-t">
+        <title id="cut-t">A 24-page stapled zine, open at the centre and seen from its top edge: six folded sheets nested inside each other, one staple through the fold. Sheet 1, the cover, carries pages 1, 2, 23 and 24; the innermost sheet carries pages 11 to 14.</title>
+        <!--CUTAWAY-->
+      </svg>
+      <figcaption>A 24-page zine, open at the centre and seen from the top edge: six sheets, four pages each, one staple through the fold.</figcaption>
+    </figure>
+    <div class="prose">
+      <h2 id="proof-h">On your proof, page 24 sits next to page 1</h2>
+      <p>The photo shows flat sheets the way the press prints them, not the way you’ll read them. A stapled zine is folded sheets nested inside each other, four pages to a sheet. So a 24-page zine is six sheets, and the outside of the first one carries pages 24 and 1.</p>
+      <p>To check a proof, add the two page numbers on any side of a sheet. They should make one more than your page count: 25, for 24 pages.</p>
+      <p>Page counts run in fours. If yours doesn’t, the sheet at the top of this page shows where blank pages would fall.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band paper" id="compare" aria-labelledby="compare-h">
+  <div class="wrap">
+    <h2 id="compare-h">A proof on runs of 25, not a 1,000-copy minimum</h2>
+    <p class="lede">Copy shops print small runs badly. Big online printers want 1,000 copies and never show a proof. Here are their usual terms, marked up the way we’d mark a proof.</p>
+    <div class="galley">
+      <p class="g-src">Big online printer</p>
+      <p class="g-line"><span>Smallest run: <del>1,000 copies</del></span> <ins>25 copies, up to 500</ins></p>
+      <p class="g-line"><span>Proof before binding: <del>never shown</del></span> <ins>a photo of your sheet, straight off the press, within two working days</ins></p>
+      <p class="g-src">Copy shop</p>
+      <p class="g-line"><span>Small runs: <del>printed badly</del></span> <ins>printed on our press, and you see the proof first</ins></p>
+    </div>
+    <p class="galley-note">Struck in red: what you get now. In the margin: what you get from us. The caret ‸ is the proofreader’s mark for “insert here”.</p>
+  </div>
+</section>
+
+<section class="band paper" id="press" aria-labelledby="press-h" style="padding-top:0">
+  <div class="wrap split rev">
+    <figure class="drawing">
+      <svg class="tech" viewBox="0 64 400 220" role="img" aria-labelledby="stap-t">
+        <title id="stap-t">Side view of a saddle stapler: an open zine rides the triangular saddle, cover on top, while the stapling head above drives a staple through the fold.</title>
+        <!--STAPLER-->
+      </svg>
+      <figcaption>Saddle stapling: the open zine rides the saddle, and the head drives staples through the fold.</figcaption>
+    </figure>
+    <div class="prose">
+      <h2 id="press-h">About 120 artists have printed with us since last year</h2>
+      <p>We print zines and art books for independent artists and small-press publishers. We run the press, photograph every proof, and bind a run only after you’ve seen it.</p>
+      <p>Their books are theirs. We don’t have permission to name them or show their work, so the sheet at the top of this page is our own sample.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band booth close" aria-labelledby="close-h">
+  <div class="wrap">
+    <h2 id="close-h">Upload the PDF; see your proof in two working days</h2>
+    <div class="act">
+      <a class="btn btn-primary" href="https://staplepress.example/start">Upload your PDF</a>
+      <p class="beside">Runs of 25 to 500 copies, from $2.10 a copy. No full-bleed covers yet.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#top" aria-label="Staplepress, back to top">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 12V8h18v4" fill="none" stroke="#f7f6f1" stroke-width="3.2"/><path d="M4 19h24" stroke="#e0505b" stroke-width="3"/><path d="M7 24h18" stroke="#f7f6f1" stroke-width="2"/></svg>
+        Staplepress
+      </a>
+      <p>Small-run printing for zines and art books, 25 to 500 copies, with a photo of your proof before anything is bound.</p>
+    </div>
+    <ul aria-label="Footer">
+      <li><a href="https://staplepress.example/start">Upload your PDF</a></li>
+      <li><a href="#run">How a run goes</a></li>
+      <li><a href="#proof">Reading a proof</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#press">The press</a></li>
+    </ul>
+    <p class="small-print">© 2026 Staplepress. Sheets and drawings on this page are our own samples.</p>
+  </div>
+</footer>
+
+<script>
+/*SHEETJS*/
+</script>
+<script>
+(function () {
+  'use strict';
+  // Menu
+  var b = document.querySelector('.menu-btn'), m = document.getElementById('site-menu');
+  var mq = window.matchMedia('(max-width: 899.98px)');
+  function setMenu(open) { b.setAttribute('aria-expanded', open ? 'true' : 'false'); m.hidden = mq.matches ? !open : false; }
+  setMenu(false);
+  mq.addEventListener ? mq.addEventListener('change', function () { setMenu(false); }) : mq.addListener(function () { setMenu(false); });
+  b.addEventListener('click', function () { setMenu(b.getAttribute('aria-expanded') !== 'true'); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && b.getAttribute('aria-expanded') === 'true') { setMenu(false); b.focus(); } });
+  document.addEventListener('click', function (e) { if (!m.contains(e.target) && e.target !== b && b.getAttribute('aria-expanded') === 'true') setMenu(false); });
+  m.addEventListener('focusout', function (e) { if (mq.matches && !m.contains(e.relatedTarget) && e.relatedTarget !== b) setMenu(false); });
+  m.addEventListener('click', function (e) { if (e.target.closest('a') && mq.matches) setMenu(false); });
+
+  // Proof sheet
+  var P = window.ProofSheet;
+  var wrap = document.getElementById('sheet-wrap'), slug = document.getElementById('slug');
+  var statusEl = document.getElementById('status'), noteEl = document.getElementById('note');
+  var input = document.getElementById('pages');
+  var state = P.make(24, 1, 'outside');
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function draw(msg) {
+    wrap.innerHTML = P.svg(state);
+    slug.textContent = P.slug(state);
+    if (msg) { statusEl.textContent = msg; statusEl.classList.add('err'); }
+    else { statusEl.textContent = P.status(state); statusEl.classList.remove('err'); }
+    noteEl.textContent = P.note(state);
+  }
+  function described() { return state.pages + ' pages' + (state.total !== state.pages ? ' (' + state.total + ' with blanks)' : ''); }
+  function setPages(n) { state = P.make(n, 1, 'outside'); input.value = String(n); draw(); }
+  function readInput() {
+    var r = P.parse(input.value);
+    if (!r.ok) { draw(r.msg.replace('{prev}', described())); return; }
+    setPages(r.pages);
+  }
+  var t;
+  input.addEventListener('input', function () { clearTimeout(t); t = setTimeout(readInput, 450); });
+  document.getElementById('controls').addEventListener('submit', function (e) { e.preventDefault(); clearTimeout(t); readInput(); });
+  input.addEventListener('blur', function () { if (input.value.trim() === '') { input.value = String(state.pages); } });
+
+  document.getElementById('plus').addEventListener('click', function () {
+    var next = Math.floor(state.pages / 4) * 4 + 4;
+    if (next > P.MAX) { draw('64 pages is the most this sketch draws: sixteen sheets.'); return; }
+    setPages(next);
+  });
+  document.getElementById('minus').addEventListener('click', function () {
+    var prev = Math.ceil(state.pages / 4) * 4 - 4;
+    if (prev < P.MIN) { draw('4 pages is the fewest this sketch draws: one sheet, folded once.'); return; }
+    setPages(prev);
+  });
+  function step(d) {
+    var S = state.total / 4;
+    state.sheet = ((state.sheet - 1 + d + S) % S) + 1;
+    state.side = 'outside';
+    draw();
+  }
+  document.getElementById('next').addEventListener('click', function () { step(1); });
+  document.getElementById('prev').addEventListener('click', function () { step(-1); });
+  document.getElementById('turn').addEventListener('click', function (e) {
+    var flip = function () { state.side = state.side === 'outside' ? 'inside' : 'outside'; draw(); };
+    var svg = wrap.querySelector('.sheet-inner');
+    // Pointer presses get a short turn; keyboard presses and reduced motion swap at once.
+    if (!e.detail || still.matches || !svg || !svg.animate) { flip(); return; }
+    svg.animate([{transform: 'scaleX(1)'}, {transform: 'scaleX(0.02)'}], {duration: 110, easing: 'cubic-bezier(.3,0,.8,.15)'}).finished.then(function () {
+      flip();
+      var s2 = wrap.querySelector('.sheet-inner');
+      s2.animate([{transform: 'scaleX(0.02)'}, {transform: 'scaleX(1)'}], {duration: 170, easing: 'cubic-bezier(.2,.7,.2,1)'});
+    });
+  });
+  document.getElementById('reset').addEventListener('click', function () { clearTimeout(t); setPages(24); });
+})();
+</script>
+</body>
+</html>

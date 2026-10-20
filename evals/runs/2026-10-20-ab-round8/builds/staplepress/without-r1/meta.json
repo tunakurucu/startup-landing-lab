@@ -1,0 +1,31 @@
+{
+  "run": "staplepress/without-r1",
+  "workdir": "W008",
+  "brief": "staplepress",
+  "arm": "without",
+  "model": "claude-opus-5-5",
+  "client_version": "2.1.304",
+  "start": "2026-10-20T21:30:02Z",
+  "end": "2026-10-20T21:38:49Z",
+  "wall_clock_s": 527,
+  "tokens": {
+    "input": 64,
+    "output": 1184,
+    "cache_read": 3165620,
+    "cache_create": 149204
+  },
+  "tool_calls": 18,
+  "cap_hit": false,
+  "skill_installed": false,
+  "skill_visible_to_agent": false,
+  "skill_md_read": false,
+  "skill_file_access_in_no_skill_arm": false,
+  "infrastructure_retry": null,
+  "start_note": "",
+  "transcript": "transcript.jsonl (tool calls, assistant text and truncated tool results; harness-injected context removed)",
+  "transcript_source": "a6af35b47a25facde.output",
+  "harness_skills_invoked": [
+    "frontend-design"
+  ],
+  "note": "Both arms ran in the same client with its built-in skills visible (for example frontend-design); the arms differ only in whether this skill was installed in the working folder."
+}
