@@ -1,0 +1,49 @@
+{
+  "packet": "P009",
+  "persona": "designer",
+  "A": {
+    "scores": {"clarity": 9, "fit": 9, "distinctiveness": 8, "proof": 9, "craft": 7, "mobile": 8, "honesty": 9, "interaction": 8, "copy": 9, "first_screen": 8},
+    "evidence": {
+      "clarity": "1440 first screen: H1 'Nothing from tonight's close gets lost by tomorrow's open.' plus lead 'Shiftnote is a shift logbook for restaurant managers. Write what ran out, who called in and what needs fixing on your phone at close...' and 'Start a free trial' with 'Opens the signup page at app.shiftnote.example. No sales call'. What, who and next step all stated; nothing later contradicts it.",
+      "fit": "All three readers get a real path: Step 1 composer (closer), Step 2 'Sam opened the note' view (opener), Step 3 'Week of 13 Oct' table (owner on a laptop, stacks on phone). Every main button goes to https://app.shiftnote.example/signup and says so. Old 'trusted by' strip and testimonials gone, logo.svg and both #3B3FD9/#FF7A59 kept, coral used with meaning (open item dot). Tone is kitchen-plain, not SaaS.",
+      "distinctiveness": "Hero artifact is a close note with mono timestamps, boxed '86'/'REPAIR'/'CASH' tags, dashed tear rule and coral 'Open' dots; steps are timestamped 'STEP 1 · 10:52 PM', 'STEP 2 · 9:38 AM'. It reads as a restaurant logbook, not a template. Structure otherwise familiar (split hero, alternating step rows, list + aside, CTA band), and the display serif falls back to a plain Times-like face in this renderer.",
+      "proof": "1440: the close note is operable in the first viewport; clicked 'Mark handled' on the Walk-in entry and it flipped to 'Handled · Sam, 1:18 pm' with an 'Undo' button; Undo restored 'Open · Sam, opening Wed'. Composer, opener view and owner week are all consistent with the same story (Walk-in 41°F, deposit bag, Dani/Marco) and each is captioned as sample.",
+      "craft": "Clear type scale (clamp h1 38-68px, 13px mono meta), rule-based grouping, no shadows, consistent spacing. Defects: typing an unbroken 300-char string into the composer and pressing Enter pushed the page 1775px (1440) / 2182px (390) wide because the list item does not wrap; handled time uses the live clock ('1:18 pm') which contradicts the 'read as Sam on Wednesday morning' frame; 768: note card sits at ~510px width leaving a dead right column under the hero; 390 week table reads 'Owner: Owner'.",
+      "mobile": "390: H1 at 3 lines, full-width 48px 'Start a free trial', destination note, then the close note starting at ~570px; Menu button (44px) opens a panel with How it works / What goes in it / Start a free trial, Escape closes it and label switches Menu/Close; week table recomposes into stacked cards. Chips and 'Mark handled'/'Add to tonight's note' buttons are 40px tall, under 44.",
+      "honesty": "Note caption 'Sample note... The restaurant and the people are made up; nothing you press here is saved or sent' sits right under the artifact; composer hint 'Sample only; nothing is sent'; 'Sample week' caption on the table; hero aside says no customer names or quotes exist yet. Every CTA states it opens app.shiftnote.example before the click.",
+      "interaction": "Operated at 1440/768/390: Mark handled/Undo work with in-place state; chip toggles set aria-pressed and the added entry carries the chosen tag ('REPAIR'); empty submit shows 'Write something first.'; Enter adds; realistic long text wraps (no overflow); focus outline 3px on every stop; no console errors. Weak spots: after adding, the input silently refills with a canned suggestion ('Dish machine is low on rinse aid...'), status messages are screen-reader only, and unbroken input overflows the page.",
+      "copy": "Customer-world nouns throughout: '86', 'before the first ticket', 'Deposit bag is in the safe, not dropped', 'the one toilet', 'What stays out: Schedules, the POS, inventory counts and payroll'. Buttons say what happens. Lead paragraph is long (one 45-word sentence) and the How heading is wordy ('One note, written once, read by three people who need different things from it').",
+      "first_screen": "1440x900: specific promise, CTA with destination note and the operable close note (three entries, two 'Mark handled' buttons) all in view. 390x844: promise, CTA and destination in view but only the note header and first 86 entry show at the bottom; the interactive part is below the fold."
+    },
+    "problems": [
+      "Composer entry list does not wrap unbroken text: a 300-char string with no spaces makes the page scroll sideways by ~1775-2182px at every width",
+      "Demo timestamps use the visitor's real clock ('Handled · Sam, 1:18 pm'), breaking the Wednesday-morning sample story; input auto-refills with a canned suggestion after each add",
+      "Display serif depends on Charter/Iowan being installed; in Chromium on Linux it falls back to a default-looking Times face, and touch targets in the artifact are 40px"
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {"clarity": 9, "fit": 7, "distinctiveness": 8, "proof": 7, "craft": 8, "mobile": 8, "honesty": 8, "interaction": 5, "copy": 9, "first_screen": 8},
+    "evidence": {
+      "clarity": "H1 'What close needs to tell open.' is shorthand restaurant people know; the lead 'Shiftnote is a shared logbook for restaurant managers. What ran out, who called in sick, what needs fixing — written at the end of one shift, read on a phone at the start of the next.' and 'Start a free trial / Takes you to app.shiftnote.example to sign up.' make what/who/next explicit at 1440 and 390.",
+      "fit": "Brand kept (logo.svg, indigo button, coral margin line and tags), fake logos/testimonials removed, all three CTAs go to the brief's signup URL and say so, phone-first manager framing is right. The owner gets one step card ('Sunday night — The owner reads the whole week') and no view of their own, so the second audience is closer to a token line.",
+      "distinctiveness": "Ruled-paper log with a coral margin rule, time stamps in the margin and serif entries, repeated in 'What goes in the log' with the same marks. It reads as the binder by the pass, and 'Why not the group chat?' is a product-born argument. Rest of the structure is stock: split hero, three-column steps, CTA colour band.",
+      "proof": "1440: 'Example handover — Tuesday close for Wednesday open, Written by Dani, 11:48 pm' sits beside the H1 with four entries whose times (8:15-11:45 pm) agree with the 11:48 pm step. It is specific and honest but static: nothing to press, no opener or owner view, no 'handled' state.",
+      "craft": "Ruled lines align with the serif text at 768 and 1440; tight indigo-on-pale-indigo palette, consistent spacing, axe clean. Minor: 1440 hero card trails ~6 empty ruled lines of dead area; entries fade in with staggered delays so the third/fourth entry is near-invisible for the first ~0.5s; 768 shows 'Read an example handover' link directly above the example it links to; header CTA 40px tall.",
+      "mobile": "390: header keeps logo + 'Start a free trial'; H1 2 lines, CTA, destination note, 'Read an example handover' link (scrolls to card, scrollY 551), example card from ~550px; steps recompose to a time-left column; no overflow at 320/390. Nav links are dropped on phone with no menu, so 'How it works'/'What goes in' are unreachable from the header.",
+      "honesty": "Card labelled 'Example handover' at its top in view at 390; destination stated under every button. Closing band leads with 'No logos to show you. No case studies yet.' — truthful but framed as a list of what the company lacks rather than handled quietly.",
+      "interaction": "Only controls are anchor links and three signup links; tabbed through at 390: skip link, logo, CTAs, example link all show a 3px outline, no errors. No artifact to operate, no state to reach; the product is shown, not tried.",
+      "copy": "Sharp and specific: '86'd the halibut', 'Table 14 wobbles — there's a wedge under it for now', 'The binder stays at the host stand, where the closer isn't and the owner never is', 'That's the whole product.' Consistent marks (Ran out / Called in / Needs fixing / Heads up). Owner copy is thin ('Nothing to chase down, nobody to call').",
+      "first_screen": "1440x900: promise, CTA with destination and the example log (two entries fully legible after the fade) in view. 390x844: promise, CTA, destination line and example link in view, with the card header and first 'Ran out' entry at the bottom edge; believable but nothing to try."
+    },
+    "problems": [
+      "The example is a static picture of a log: no way to feel writing, reading or marking an item, and no handled/open state that shows why it beats the group chat",
+      "Owner who pays gets one step card and no artifact of their own",
+      "Phone header drops the section nav with no menu, and the closing band leads with what the company lacks"
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "A",
+  "confidence": "medium",
+  "reason": "Both pages are honest, on-brand and written in the kitchen's own words, but A turns the logbook into something you can operate in the first screen (mark handled, add an entry) and gives the closer, opener and owner each their own view, while B's ruled-paper log is a handsome but static picture with the owner reduced to a line. B is the slightly tighter piece of visual craft; if A's overflow and live-clock bugs mattered more than the missing interaction and owner path, I would move toward B."
+}
