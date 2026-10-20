@@ -1,0 +1,49 @@
+{
+  "packet": "P001",
+  "persona": "designer",
+  "A": {
+    "scores": {"clarity": 9, "fit": 9, "distinctiveness": 8, "proof": 9, "craft": 7, "mobile": 8, "honesty": 9, "interaction": 9, "copy": 8, "first_screen": 9},
+    "evidence": {
+      "clarity": "1440 and 390: H1 'Know the box before you open the freezer' plus lede 'a sample map for lab −80 °C freezers: every rack, box and tube position, with who put each tube there and when' and an orange 'Request early access' say what, for whom and next step; nothing later contradicts it.",
+      "fit": "Researcher path is the hero finder (freezer/shelf/rack/box/spot read 'in the order your hand reaches them'); lab managers get their own operable section ('Pick a person' marks boxes across Freezer A and B); temperature is denied twice ('What the map is not' box and FAQ 'Does it watch freezer temperature? No.'); four labs stated as testing with 'no results ... to report yet'. Tone reads like someone who has stood at a freezer.",
+      "distinctiveness": "Three-view artifact (open freezer front, rack drawer stack, 9x9 box from above) with condensed Heros headings and a single rust accent on the hit position; frosted box-lid drawing next to a stale spreadsheet row; per-person fleet map. No icon-card row or logo strip. Overall structure (hero, sections, FAQ accordion, CTA band) is still conventional.",
+      "proof": "The finder sits in the first screen at 1440, 768 and 390 with a working result (B/3/2/14/D7). Chips, free-text search, a miss state and 'Put it away in box 14, A1' all update the path, three drawings, box 14's record ('You · just now, on this page') and the manager total (461 -> 462 tubes, 4 -> 5 people), so numbers stay internally consistent. Labelled 'Sample lab written for this page' at the top of the module.",
+      "craft": "Consistent type scale (condensed bold display, mono timestamps, tabular path strip) and clean 44px controls. Weaknesses: at 1440 the hero CTA floats alone in a right column with a large empty block above it beside the H1; the box grid is cut at the 900px fold; the hero module is dense, with small grey helper text (12px) carrying a lot of meaning; FAQ section has wide dead space on the right.",
+      "mobile": "390: recomposed, not shrunk: path strip and verdict move above the search field, so tapping 'DH5α competent cells' shows the result (verdict top at 63px) while the chips stay in view below; Menu opens a full-width panel, Escape closes it, tapping 'For lab managers' closes and scrolls. All measured targets ≥44px, no overflow at 390/320. The three drawings stack far down, the box grid only after the controls.",
+      "honesty": "'Sample lab written for this page. Runs in your browser; nothing is sent.' sits at the top of the artifact at every width; put-away result says 'Nothing is saved or sent'; log labelled 'Sample entries'; final CTA says 'Opens the request page at rackwise.example.'; footer repeats that people and tubes are a sample. No invented figures.",
+      "interaction": "Operated at 1440/768/390: 4 chips, typed search, empty submit ('Type a sample name first...'), 60-char input (capped at 40, no overflow), miss ('No tube called “zebrafish embryo”' with a put-away button), multi-match buttons, Reset sample, 5 person filters, FAQ details, mobile menu. All responded, no console errors. One oddity: 'Liver RNA, mouse 4' reports '4 tubes match' and lists mouse 14, 24 and 34.",
+      "copy": "Specific and from the bench: 'Read it before the door opens', 'the map changes when the freezer does, not when someone gets round to the spreadsheet', 'When a project wraps up or someone leaves the lab'. Microcopy is written (miss and empty states). Slightly long sentences in places; 'Addresses read freezer · shelf · rack' key is fussy.",
+      "first_screen": "1440: headline, lede, CTA, 'four labs are testing' and the live path strip B/3/2/14/D7 with the freezer drawing all in view, sample label visible. 390: headline, lede, CTA, sample label and the path strip with 'HEK293 p12, vial 1 · Put here by Priya N.' all within 844px."
+    },
+    "problems": [
+      "1440 hero composition: CTA and status line float in an otherwise empty right column, leaving dead space beside the headline, and the box grid is cut at the fold",
+      "Search match logic: 'Liver RNA, mouse 4' returns mouse 14/24/34 as matches, which a lab user would read as wrong",
+      "Dense hero module with a lot of meaning in 12–14px grey helper text; on the phone the freezer/rack/box drawings sit well below the controls"
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {"clarity": 9, "fit": 8, "distinctiveness": 8, "proof": 8, "craft": 7, "mobile": 6, "honesty": 7, "interaction": 7, "copy": 8, "first_screen": 7},
+    "evidence": {
+      "clarity": "1440: 'Find the box before you open the door.' with lede 'a live map of your lab’s −80 °C freezers. Every shelf, rack, box and tube position, with who put each sample there and when' and a yellow 'Request early access'. Clear what, who and next.",
+      "fit": "Both audiences get a column in 'Who it’s for'; researchers also get 'One trip to the freezer' with a gloved phone mock; temperature gets its own boxed section 'Rackwise doesn’t monitor freezer temperature'. Lab managers only get three bullets, no artifact of their own. Hero says 'Four labs are using Rackwise now' where the brief says testing (CTA section later says testing).",
+      "distinctiveness": "Coloured tube-cap 9x9 box grid, open-freezer schematic, a 'freezer inventory FINAL v3 (2).xlsx' spreadsheet with 'check w/ Sam' notes, a frost-faded lid label and a phone with glove-sized buttons. Yellow/navy palette and very large display H1 give a clear voice; numbered steps and two-column 'who it's for' are familiar patterns.",
+      "proof": "At 1440 the search module with a full result (2/3/C/4/D5, freezer and box drawings, provenance) is in the first screen and responds to chips and typing (also by person: 'Okafor', box: 'plasmids'). But the 'example data from a made-up lab' label sits at the bottom of the module, below the 900px fold at 1440 and at ~1850px on 390. History says 'Vial taken out by R. Silva' while the map still shows the tube at D5.",
+      "craft": "1440 hero is well composed (huge 4-line H1 against a framed artifact with offset shadow). Defects: on a miss ('zebrafish') the finder collapses to a short card leaving a large empty area beside the hero; axe reports 4 colour-contrast failures; SVG labels at 11px; at 768 the search field shows an empty placeholder while a HEK result is displayed beneath.",
+      "mobile": "390: stacks cleanly with no overflow, CTA 56px, glove buttons 64px. But the first screen shows only the search box, not a result; tapping a 'Try' chip puts the result top at 806px of an 844px viewport, so feedback lands off-screen; Try chips are 40px tall; header drops the CTA and there is no nav; the sample label is ~1850px down; the page becomes a long single column (6868px).",
+      "honesty": "Nothing invented and temperature is handled plainly, but the example label is late (bottom of the artifact, below the fold at both widths) and the hero wording 'Four labs are using Rackwise now' inflates the brief's 'testing'. CTA side copy 'We’ll get in touch when there’s room' sets expectations well.",
+      "interaction": "Operated at 1440/768/390: four chips, typed search, miss state ('No sample matches “zebrafish”' with suggestions), 200-char input (no overflow), clearing input (silently reverts to the HEK sample), three phone buttons ('Marked used up. D5 is now free.'). All work, no console errors. Thin spots: clearing the field gives no feedback, phone buttons' pressed state is ambiguous because 'Taken out' stays dark as the primary style, phone actions do not touch the search result.",
+      "copy": "Strong lines: 'nobody updated row 212', 'You find out it’s wrong with the door open', 'Record it with your gloves still on', 'Sized for a gloved finger. Try a button.' Plain and specific throughout; 'live map' and 'using' slightly overclaim relative to the brief.",
+      "first_screen": "1440: specific promise, CTA and an operable result with drawings in view (label below fold). 390: headline, lede, CTA and 'Four labs are using...' plus an empty search field; no location result or drawing in the first viewport, so nothing in view backs the promise on the phone."
+    },
+    "problems": [
+      "Phone: the artifact's result is below the first screen and chip taps land the result at the bottom edge of the viewport (top at 806/844px)",
+      "Example-data label placed at the bottom of the search module, below the fold at 1440 and 390; hero says 'using' rather than the brief's 'testing'",
+      "Lab managers get bullets only, no operable view of their own; miss state collapses the hero artifact and leaves dead space; 4 axe contrast failures"
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "A",
+  "confidence": "medium",
+  "reason": "A puts a labelled, operable artifact in the first screen at every width, recomposes it for the phone so feedback lands where you tapped, and gives the lab manager a working view of their own, with every state staying consistent across sections. B has the stronger 1440 hero composition and some of the best lines, but its phone layout pushes the result below the fold and its example label is late. A cleaner 1440 hero in A or a phone recomposition in B would narrow the gap."
+}
