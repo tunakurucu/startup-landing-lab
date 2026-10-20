@@ -8,10 +8,10 @@ Read the file for the family you chose; each entry has the observed decision, th
 
 | Family | Entries | Sites |
 | --- | --- | --- |
-| [canvas-first](casebook-canvas-first.md) | 6 | Excalidraw, tldraw, mmm.page, FLORA, Onlook, Endra |
-| [editorial-platform](casebook-editorial-platform.md) | 15 | Vercel, Harvey, Figma, ElevenLabs, Mintlify, Modal, Tailscale, Runway, Notion, Whimsical, Deel, Vanta, Webflow, Stripe, AnswerThis |
-| [expressive-world](casebook-expressive-world.md) | 16 | Railway, Browserbase, Phantom, Clay, PostHog, Palette, Pingo, Cactus, Arbital, HeyClicky, Imperfect, Sparkles, Voltair, Prized, Gutgutgoose, Doomersion |
-| [functional-entrance](casebook-functional-entrance.md) | 11 | Pitch, Retool, Firecrawl, Cyclon, 21st, Oasiz, CodeWisp, snag, Context.dev, InLoop Robotics, AquaShield |
-| [immersive-editorial](casebook-immersive-editorial.md) | 20 | Superhuman, Dia, Sierra, Krea, Daylight, Opal Electronics, Mercury, Nori, Atomarine, Juno, Applied Electrodynamics, Clair Health, Button Computer, Gravis Robotics, Elyra, General Legal, Known, Voxel Energy, Stilta, Origin |
-| [typographic-technical](casebook-typographic-technical.md) | 13 | Neon, Warp, Rive, Supabase, Resend, Airweave, Normal, Canary, Traverse, Keyframe Labs, Hedge, Sponge, InsForge (InstaCloud) |
-| [workflow-theater](casebook-workflow-theater.md) | 31 | Plain, Cursor, Clerk, Ramp, Attio, Granola, Cal.com, Framer, Paper, Linear, Raycast, LightSprint, Sherpa, Interfere, Toothy AI, AgentPhone, Drafted, Hotbox, Marble, screenpipe, Copperlane, End Close, Andera, CentralComs, Plena Health, Remix, Fixture, Anchr, Bloomy, Congruent, Kuli |
+| [canvas-first](casebook-canvas-first.md) | 7 | Excalidraw, tldraw, mmm.page, FLORA, Onlook, Endra, Reflection AI |
+| [editorial-platform](casebook-editorial-platform.md) | 19 | Vercel, Harvey, Figma, ElevenLabs, Mintlify, Modal, Tailscale, Runway, Notion, Whimsical, Deel, Vanta, Webflow, Stripe, AnswerThis, Mindy, Scarlet, Omnea, Listen Labs |
+| [expressive-world](casebook-expressive-world.md) | 19 | Railway, Browserbase, Phantom, Clay, PostHog, Palette, Pingo, Cactus, Arbital, HeyClicky, Imperfect, Sparkles, Voltair, Prized, Gutgutgoose, Doomersion, Idilio, Scope, Tutor Intelligence |
+| [functional-entrance](casebook-functional-entrance.md) | 14 | Pitch, Retool, Firecrawl, Cyclon, 21st, Oasiz, CodeWisp, snag, Context.dev, InLoop Robotics, AquaShield, Sway, Agency, Acely |
+| [immersive-editorial](casebook-immersive-editorial.md) | 23 | Superhuman, Dia, Sierra, Krea, Daylight, Opal Electronics, Mercury, Nori, Atomarine, Juno, Applied Electrodynamics, Clair Health, Button Computer, Gravis Robotics, Elyra, General Legal, Known, Voxel Energy, Stilta, Origin, Astro Mechanica, Casa, SketchPro.ai |
+| [typographic-technical](casebook-typographic-technical.md) | 14 | Neon, Warp, Rive, Supabase, Resend, Airweave, Normal, Canary, Traverse, Keyframe Labs, Hedge, Sponge, InsForge (InstaCloud), Pravah |
+| [workflow-theater](casebook-workflow-theater.md) | 34 | Plain, Cursor, Clerk, Ramp, Attio, Granola, Cal.com, Framer, Paper, Linear, Raycast, LightSprint, Sherpa, Interfere, Toothy AI, AgentPhone, Drafted, Hotbox, Marble, screenpipe, Copperlane, End Close, Andera, CentralComs, Plena Health, Remix, Fixture, Anchr, Bloomy, Congruent, Kuli, Squint, Moda, Socratix AI |

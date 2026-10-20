@@ -259,3 +259,75 @@ Transfer: Sequence a complex platform around the researcher’s actual workflow.
 Avoid/limit: Dense claims and a long page can outrun first-screen clarity. Company-reported paper counts, researcher counts and compliance language were observed, not independently verified. The roundup praised the 2025 page, which may differ from today’s design.
 
 Measured 2026-10-19: desktop h1 64px, weight 500, tracking -0.05em; body 18px; 0 sections; phone h1 32px.
+
+## Mindy · editorial-platform
+
+https://mindy.com · desktop-mobile-audit
+
+The homepage has been replaced by a single acquisition letter in a bordered card; the only action is an outbound press-release link.
+
+Observed: A white rounded logo tile sits centered at the top of a near-black page, followed by the centered heading "Mindy's Next Chapter" and a bordered, slightly lighter card holding a letter. The card (about 710 px wide at 1440) begins in the first screen and the letter runs below the fold. There is no navigation bar, no button and no image. No buttons, tabs, inputs or toggles exist on the page (control scan returned zero elements). The only operable element is the press-release text link; hovering it added an underline and nothing else changed. Nothing moved on load or scroll (0 running animations at both viewports). With reduced motion on, the page was identical; no prefers-reduced-motion rule was found in accessible stylesheets.
+
+Copy: H1: "Mindy's Next Chapter". There is no primary action button; the only labelled action is the text link "Mindy's Team Joins WorkWhile to Accelerate AI Adoption in Enterprise Workforce Management". The first screen offers no proof: no logos, numbers or demo, only the opening of the letter.
+
+Transfer: When the product is gone, replace the homepage with one honest letter rather than leaving a stale marketing site live. A single column of about 700 px with 1.7 line-height makes long-form text readable without any layout machinery. Keep the brand's existing palette (dark ground, one accent) so a transition notice still reads as the same company.
+
+Avoid/limit: Grey-on-black body text and a colour-only link are weak for readability; the page gives no route to the acquirer's product or a contact beyond an external press release, and nothing signals what visitors should do next.
+
+Measured 2026-10-20: desktop h1 48px, weight 600, tracking -0.02em; body 16px; 0 sections; phone h1 36px.
+
+On phones: Same single column: logo tile, 36 px heading, and the card shrinks to 348 px content width with the letter wrapping to roughly 41 characters per line, making the page 1808 px tall versus 1260 px on desktop. Nothing is hidden or recomposed; the footer stays at the bottom.
+
+## Scarlet · editorial-platform
+
+https://www.scarlet.cc/ · desktop-mobile-audit
+
+A clinical-footage video hero carrying one promise, then a long white page that stacks every trust device a regulator-adjacent buyer expects: logos, quotes, films, accreditations, FAQ.
+
+Observed: A white 68 px nav (logo, eight text links, outlined "Get in touch") sits above a full-width looping video of patients and clinicians using health apps; the frame changes between captures (phone glucose app, nurse with tablet, smartwatch). A single centred white line, "Certify your AI medical device without unnecessary delays", sits over the footage with no button beneath it. A cookie consent panel with Reject/Accept covers the bottom-right corner. Operated the first FAQ item "Which jurisdictions does Scarlet cover?": the question expanded to a list of seven jurisdictions and a CE-marking note, the plus icon became a cross, page height grew from 8505 to 8803 px, and nothing else changed. On load the hero video was playing; five other videos were present but paused. Measurement recorded one running animation on load and after scroll on desktop, none on mobile. With reduced motion on, the hero video still played on load and was paused after scrolling away; no prefers-reduced-motion rule was found in accessible stylesheets.
+
+Copy: H1: "Get your life-changing technology to the people who need it with the global AI certification body"; the hero overlay reads "Certify your AI medical device without unnecessary delays". Primary action: "Get in touch" (nav and below h1). The first screen offers footage only; logos and a founder quote arrive after the fold.
+
+Transfer: For a regulated-market buyer, sequence trust devices in rising formality: logos, then quotes, then film, then official accreditations. Keep the hero to one promise and move the long descriptive h1 to the first white band, where it can be read without competing with imagery. Use one small saturated button colour on an otherwise monochrome page so the single action is always findable. An FAQ accordion is a cheap way to answer jurisdiction and pricing questions without lengthening the page for everyone.
+
+Avoid/limit: Text over unscrimmed video and a persistent cookie panel hurt the first screen; six embedded videos add weight; the page relies on scrolling through many proof blocks before the first explanation of what the product actually does.
+
+Measured 2026-10-20: desktop h1 48px, weight 500, tracking -0.01em; body 16px; 2 sections; phone h1 32px.
+
+On phones: Nav collapses to logo plus hamburger; the hero keeps video with the line wrapping to three lines; the cookie panel covers the lower third of the first screen. Grids collapse: logos and regulator badges into two columns, the three story cards and six testimonials into one column. Blog entries and FAQ run full width; the footer stacks link columns above the wordmark. Page grows to 9296 px.
+
+## Omnea · editorial-platform
+
+https://omnea.co/ · desktop-mobile-audit
+
+A very long, light-ground enterprise page that stacks proof (logos, customer numbers, quotes, compliance badges) under one serif headline per section, with one scroll-pinned dark interlude.
+
+Observed: Centred stack on an off-white ground: a small avatar-plus-mono 'DISCOVER THE AOS' link, a two-line serif h1, one sentence of body copy and a single black 'Book a demo' button. Behind the text sits a circular field of fine dots drawn on a canvas, with small mono labels ('INTAKE AGENT', 'REVIEW AGENT', 'PROCUREMENT OFFICER') scattered around its edge. A 'TRUSTED BY INDUSTRY LEADERS' logo row (Spotify, Albertsons, Proofpoint, Adyen, DeepL, Adecco) sits at the fold. Operated: clicked the 'CONTEXT ENGINE' label in the dark pinned section; its description expanded beneath the label and one layer of the isometric stack turned pale green while the others stayed outline-only. On load the hero dot field redraws continuously (two screenshots 1.2s apart differed) and the logo row scrolls sideways. The dark section is pinned for roughly 900px of scroll and the nav switches to light-on-dark over it. With reducedMotion: 'reduce', zero CSS/WAAPI animations were running, but the canvas dot field and logo marquee still changed between frames.
+
+Copy: h1: "The Agentic Operating System for Procurement."; primary action: "Book a demo". First-screen proof is the customer logo row directly under the hero; the first numeric proof ('99% customer retention', '$5bn', '50%', '38%') arrives two screens later.
+
+Transfer: If you sell to enterprise, let the page be long and front-load named customers; one proof block with a photo, quote and three numbers does more than a feature grid. A single serif display face at light weight can carry a 16,000px page if every section repeats the same eyebrow-headline-body rhythm. Use a dark band sparingly as a chapter break for the 'how it works' part, and let the nav recolour over it instead of staying opaque. Pair a two-tone headline (black claim, grey consequence) with hairline cards to keep a dense page quiet.
+
+Avoid/limit: Length: the page is ~18 screens, and the pinned section plus a masonry wall of fifteen quotes push the final CTA very far down. Grey-on-off-white secondary text and tiny mono labels trade legibility for restraint. Canvas and marquee motion keeps running under reduced-motion, and the measurement record found no reduced-motion rule.
+
+Measured 2026-10-20: desktop h1 68px, weight 300, tracking -0.026em; body 18px; 0 sections; phone h1 44px.
+
+On phones: Everything stacks to one column: the four pillar cards, the PayPal proof block (photo above quote above three stats), security cards and stats. The agent arc shrinks to a compressed half-ring. The logo row becomes a narrow marquee showing two logos at a time. The testimonial carousel is cropped at the right edge, and the nav collapses to logo plus hamburger. Page height grows to 16,950px.
+
+## Listen Labs · editorial-platform
+
+https://listenlabs.ai · desktop-mobile-audit
+
+A two-colour editorial page (cream ground, one saturated blue) that runs an 88px headline over a strip of art-directed portraits, then a long numbered product walkthrough.
+
+Observed: Thin nav (logo, five menu items, a moon icon, Sign in, Demo) over a cream field. A small outlined pill ('Join us at an event'), a two-line blue headline spanning about three-quarters of the width, a two-line subhead, and an inline email field joined to a 'Book a demo' button. Below, a full-width row of five colour-graded portraits on green and blue backdrops; one carries a small 'Insight Quote' card. A cookie dialog covers the lower right. Operated the nav moon button ('Toggle dark mode'): body background switched from cream to the brand blue and headline/text from blue to cream; the portrait strip and layout were unchanged. On load the portrait strip filled in after the text (one capture showed it still empty) and the hero form re-laid itself out; the four videos stayed paused until played. With reducedMotion 'reduce', no visible element moved after load; the measurement record found no reduced-motion rule.
+
+Copy: h1: "Customer Understanding, Loud and Clear". Primary action: "Book a demo" next to a 'What's your work email?' field. The first screen offers no logos or numbers; its proof is the strip of interviewee portraits with a sample 'Insight Quote' card, and the logo/stat grid arrives one scroll down.
+
+Transfer: Commit to one brand colour and one neutral so that photography can carry the mood without competing palettes. Let a single oversized headline and a joined email-plus-button pair do the whole first-screen job, with proof one scroll below. Number the product walkthrough and pair each step with a real screenshot so a long page reads as a sequence rather than a feature list. Show the humans behind the service (team grid with prior employers) as a trust section for a services-heavy product.
+
+Avoid/limit: A very long page (12,500px desktop) with only one h1 and no h2 until far down; 12px measured body copy on desktop; 61 animations on load at 390 wide with no reduced-motion rule; a cookie dialog sits on the hero at both widths.
+
+Measured 2026-10-20: desktop h1 88px, weight 400, tracking -0.04em; body 12px; 1 sections; phone h1 88px.
+
+On phones: The h1 keeps its 88px measurement but the rendered hero shows the headline at a smaller visual size over two lines; the nav collapses to logo, a 'Book a Demo' button and a grid icon. The email field and button stay side by side in one full-width row; the portrait strip shows one portrait; the tile grid becomes two columns; each step's screenshot sits above its number and text; case-study cards show one at a time with the next peeking in; the use-case photos appear as a cropped two-image strip; footer columns go two-up.

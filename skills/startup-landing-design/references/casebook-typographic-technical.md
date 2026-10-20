@@ -209,3 +209,21 @@ Avoid/limit: Twelve equal-weight service cards and a 12-item nav dilute any sing
 Measured 2026-10-19: desktop h1 48px, weight 400, tracking 0em; body 16px; 8 sections; phone h1 32px.
 
 On phones: Nav collapses to logo, globe icon and hamburger. Headline wraps to three lines at 32px; the two CTAs stack to full width. The logo strip persists, overlapped by the fixed HUMAN/AGENT pill. The 'Ship Faster' diagram recomposes as a centre tile with icon tiles in left and right columns; the 12-card service grid becomes a single column list; testimonials and stat tiles stack one per row. Page height grows from 6358px to 11193px.
+
+## Pravah · typographic-technical
+
+https://www.pravah.com/ · desktop-mobile-audit
+
+A one-and-a-half-screen research-lab page: a canvas glyph of a transformer symbol, one 52px headline, four hairline-ruled use cases, an affiliations row, and nothing to click but 'Get in touch'.
+
+Observed: Warm off-white ground. A thin nav (wordmark 'Pravāh' left; 'Research', 'Team', 'Get in touch' right) above a 660 × 198px canvas drawing of an electrical transformer symbol (two overlapping circles between two bus lines), rendered either as hairline strokes or as rows of 0/1 digits depending on when it was captured. Below it, left-aligned in a ~660px column: a two-line h1 and a five-line paragraph. No button, image or logo row in the first screen; the first screen is otherwise empty space. Operated: clicked the footer 'Dark' button (aria-label 'Switch to dark'); the page inverted to a near-black ground, the label changed to 'Light', and the glyph re-rendered in light digits. On load the page was blank at t=0 and content had faded in by 1.5s (the CSS fades [data-in] blocks in); the canvas glyph was seen in two states (line drawing and binary digits) across captures. No CSS/WAAPI animations ran after load. With reducedMotion: 'reduce' nothing ran, two frames 2s apart were identical, and the CSS disables the fade-in under that query.
+
+Copy: h1: "Agents and machine learning for power systems."; the only primary action is the nav link "Get in touch", which is a mailto. First-screen proof: none; the affiliations row ('Built by engineers, scientists and researchers from' Stanford, MIT, Google, IIT, Chicago, Octopus Energy) sits at the bottom of the page, and research papers are one click away in a hidden view.
+
+Transfer: A deep-tech company can run a homepage as a single column of plain statements: one headline, four audience-labelled use cases, one affiliations line, and no buttons. Use a schematic of the domain (here a transformer symbol) as the only graphic so the glyph carries both brand and subject. Label each use case by who it is for before what it does; audience eyebrows let four buyers find their row in one scan. If proof is academic (papers, affiliations), put it on the page body rather than behind a nav view, so a first-time visitor sees it without clicking.
+
+Avoid/limit: The missing viewport meta means phones render a 980px desktop layout, undercutting an otherwise simple page. There is no call to action beyond an email link, no product evidence, and the strongest proof (papers, team, advisors) is hidden until the nav is used. The fade-in leaves the first second blank. Tiny eyebrow caps and grey descriptions are at the edge of legibility.
+
+Measured 2026-10-20: desktop h1 52px, weight 400, tracking -0.025em; body 16px; 1 sections; phone h1 30px.
+
+On phones: In the 390 capture (no device emulation) the column fills the width: glyph shrinks with its binary rows, h1 wraps to three lines at 30px, the four use cases stack with the same hairlines, and the affiliation marks reflow to two rows of three. Nav stays a single row with all three links. Page height 1,823px. Under true mobile emulation the page did not adapt (see accessibility).

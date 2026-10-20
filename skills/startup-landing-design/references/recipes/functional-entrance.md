@@ -6,7 +6,7 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 
 **Observed** across 328 measured startup homepages (2026-10-19): desktop h1 median 64px (middle half 54–76px, 90th percentile 96px), weight 500, tracking −0.025em; h1 about 3.7× the body size; body 17px at about 56 characters per line; phone h1 about 0.59× desktop (median 38px); two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.
 
-**Observed in this family** (11 audited sites, 2 of them reference tier, measured 2026-10-19/20: 21st, AquaShield, CodeWisp, Context.dev, Cyclon, Firecrawl, InLoop Robotics, Oasiz, Pitch, Retool, snag): desktop h1 median 72px at weight 600 and −0.035em; body 15.7px at about 52 characters per line; 7 sections; phone h1 42px; 5 of 11 on a dark ground.
+**Observed in this family** (14 audited sites, 2 of them reference tier, measured 2026-10-19/20: 21st, Acely, Agency, AquaShield, CodeWisp, Context.dev, Cyclon, Firecrawl, InLoop Robotics, Oasiz, Pitch, Retool, Sway, snag): desktop h1 median 64px at weight 600 and −0.022em; body 16.0px at about 54 characters per line; 7 sections; phone h1 40px; 6 of 14 on a dark ground.
 
 | Decision | Recipe |
 | --- | --- |

@@ -101,7 +101,7 @@ All three pass the skill's automatic checks with no block failures (a few warnin
 
 ## Research you can inspect
 
-679 candidate websites, 603 of them from YC (W25–F26), a16z speedrun (SR001–SR007), a16z, Pear, Sequoia Arc, Neo and EF, each verified on the program's own page, plus a reference tier of 42 product companies chosen for their design. 112 audit records: 92 rendered at desktop and phone width, operated, reloaded with reduced motion and measured (October 19–20, 2026); 20 earlier desktop inspections. 328 homepages carry computed-style measurements, and the recipes quote them. One finding to start with: 252 of the 328 measured homepages had animations running at load, and 60 had no reduced-motion rule at all. [Findings, method and limits](research/README.md) · [Measurements](research/measurements.md).
+679 candidate websites, 603 of them from YC (W25–F26), a16z speedrun (SR001–SR007), a16z, Pear, Sequoia Arc, Neo and EF, each verified on the program's own page, plus a reference tier of 42 product companies chosen for their design. 130 audit records: 110 rendered at desktop and phone width, operated, reloaded with reduced motion and measured (October 19–20, 2026); 20 earlier desktop inspections. 328 homepages carry computed-style measurements, and the recipes quote them. One finding to start with: 252 of the 328 measured homepages had animations running at load, and 60 had no reduced-motion rule at all. [Findings, method and limits](research/README.md) · [Measurements](research/measurements.md).
 
 Tablet layouts and real-device behaviour remain unverified. This is a dated sample, not a ranking or a census. [Method, evidence and limitations](research/README.md).
 

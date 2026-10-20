@@ -6,7 +6,7 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 
 **Observed** across 328 measured startup homepages (2026-10-19): desktop h1 median 64px (middle half 54–76px, 90th percentile 96px), weight 500, tracking −0.025em; h1 about 3.7× the body size; body 17px at about 56 characters per line; phone h1 about 0.59× desktop (median 38px); two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.
 
-**Observed in this family** (13 audited sites, 4 of them reference tier, measured 2026-10-19/20: Airweave, Canary, Hedge, InsForge (InstaCloud), Keyframe Labs, Neon, Normal, Resend, Rive, Sponge, Supabase, Traverse, Warp): desktop h1 median 54px at weight 400 and −0.015em; body 17.0px at about 64 characters per line; 8 sections; phone h1 32px; 6 of 13 on a dark ground.
+**Observed in this family** (14 audited sites, 4 of them reference tier, measured 2026-10-19/20: Airweave, Canary, Hedge, InsForge (InstaCloud), Keyframe Labs, Neon, Normal, Pravah, Resend, Rive, Sponge, Supabase, Traverse, Warp): desktop h1 median 52px at weight 400 and −0.02em; body 16.0px at about 64 characters per line; 7 sections; phone h1 32px; 6 of 14 on a dark ground.
 
 | Decision | Recipe |
 | --- | --- |

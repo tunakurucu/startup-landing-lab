@@ -327,3 +327,57 @@ Avoid/limit: The argument lives in scroll-pinned sequences that render as blank 
 Measured 2026-10-19: desktop h1 43.2px, weight 400, tracking -0.012em; body 10.2px; 10 sections; phone h1 24.8px.
 
 On phones: The nav becomes one frosted pill with the ring logo, two links and GET ACCESS. The typed question wraps to two lines at 24.8px. The platform embed recomposes vertically: hamburger toolbar, a small square slide viewport with 'Tap to interact', a 'Data & logs' disclosure and the tissue-composition list below. Advisors and investors become two columns. Each pinned step stacks the figure above its heading and paragraph with the counter and SKIP AHEAD beneath; 20-cluster grids become 3×4; the drug table becomes stacked rows. Page height 20477px versus 22751px.
+
+## Astro Mechanica · immersive-editorial
+
+https://www.astromecha.co · desktop-mobile-audit
+
+A full-bleed test-stand video with one line of copy, followed by a pinned scroll-reveal statement and a single product claim; news and a newsletter stand in for a CTA.
+
+Observed: The first screen is a looping video of a jet engine on a test stand with a glowing exhaust window, filling the viewport edge to edge. A small logo lockup sits top-left and four spaced-caps nav links (HOME underlined) top-right over the video. The only text is a two-line statement bottom-left, "We're building the next generation of flight." There is no button, no subhead and no proof element in the first screen. Operated the newsletter email input by typing "audit" without submitting: the field rendered the text in uppercase and nothing else on the page changed. On load two videos were already playing (hero and second band) and a third started when scrolled into view; the control scan found no tabs, toggles or carousels, only the email input and submit button. Running animations rose from 0 to 7 while the pinned text revealed, then back to 0. With reduced motion on, all three videos still played and the reveal still ran; no prefers-reduced-motion rule was found in accessible stylesheets.
+
+Copy: H1 (semantic): "The world’s first jet engine that’s engineered for efficiency across subsonic and supersonic speeds."; the hero display line reads "We're building the next generation of flight." There is no primary action in the first screen; the first labelled action on the page is the outline button "MORE NEWS" and the form button "SUBSCRIBE". First-screen proof is the test-stand footage itself; no logos or numbers.
+
+Transfer: When you have real hardware footage, let it be the entire first screen and keep copy to one sentence. Put the semantic h1 on the single concrete product claim, not on the mission slogan, so the page's strongest statement is also its most specific. Use one accent colour for every clickable element so sparse pages still signal where the actions are. A pinned word-by-word reveal buys attention for a mission sentence but should degrade to static text under reduced motion.
+
+Avoid/limit: Autoplaying video ignores reduced motion and raises page weight; the pinned reveal leaves a large empty band in non-scrolled renders and crawlers; there is no primary CTA, so the only conversions are a newsletter and news links.
+
+Measured 2026-10-20: desktop h1 42px, weight 300, tracking 0em; body 16px; 0 sections; phone h1 33.6px.
+
+On phones: The nav collapses to a logo and hamburger icon. The hero keeps the video with the statement near the bottom. The product section stacks: eyebrow, 33.6 px h1, then the engine render below. The three news cards stack vertically with the MORE NEWS button moved above them; the newsletter input and Subscribe button stack full width; footer link columns sit side by side and the wordmark shrinks to a single line. Page grows to 5766 px.
+
+## Casa · immersive-editorial
+
+https://getcasa.com · desktop-mobile-audit
+
+A black serif hero with one address prompt gives way to a long cream page that treats each membership benefit as its own illustrated chapter before naming the price.
+
+Observed: The first screen is black edge to edge: wordmark top-left, outlined "Benefits" and white "Get started" pills top-right, and a centred dark pill reading "AS FEATURED IN The New York Times" and "A letter from our CEO". The serif h1 and a four-line subline sit in the exact centre; near the bottom a rounded input-style bar reads "Find your home to get started" with a map thumbnail, above a line listing three served metros. A full-viewport autoplay video element exists but had not loaded in headless captures, so the ground appears solid black. Operated the "Appliances" tab in the home-inventory section: the active label moved from "3D Model" to "Appliances" (grey to dark, underline moved) and the caption changed to a sentence about makes, models, serial numbers and warranties; the URL did not change. On load 0 animations ran and the hero video stayed unloaded; while scrolling, 1–6 animations ran as sections entered view (measurement: 9 after scroll desktop, 3 mobile). A subscribe toast with an email field appeared lower right after load. Under reduced motion counts were 0 and the video stayed paused; no prefers-reduced-motion rule found.
+
+Copy: H1: "Home, taken care of." Primary action: "Get started" (nav) and the hero bar "Find your home to get started". First-screen proof is a press mention (The New York Times) and a CEO letter link; no numbers, logos beyond the one outlet, or demo.
+
+Transfer: Lead with a short serif promise on an empty ground and defer every feature to its own chapter below, so the hero reads as a brand rather than a feature list. Name the price late but plainly, in display type, after the benefits have each been shown. Let the first-screen input describe the first step in words ("Find your home") rather than presenting an empty form field. Use one press mention in the hero rather than a logo wall when you have a single strong outlet.
+
+Avoid/limit: A heavy 12 Mbps hero video that may not load leaves a flat black first screen; the page is very long (over 10,000 px) before price and FAQ; a newsletter toast competes with the hero on load; tab controls lack selected-state semantics.
+
+Measured 2026-10-20: desktop h1 68px, weight 400, tracking -0.02em; body 24px; 10 sections; phone h1 36px.
+
+On phones: Nav keeps the logo mark (wordmark dropped) with both pills. The hero stacks: press pill, 36 px serif h1, subline, and the address bar pinned near the bottom. All two-column benefit sections stack with imagery below text; the maintenance carousel becomes one card wide; the inventory tabs become a horizontally scrolling strip; the price benefit list becomes one column; FAQ and footer stack. Body drops to 18 px. Page height 10943 px.
+
+## SketchPro.ai · immersive-editorial
+
+https://sketchpro.ai/ · desktop-mobile-audit
+
+A full-bleed architectural video hero with a 96px light-weight four-word headline, followed by a quiet off-white page of demo videos, a stats band and one quote carousel.
+
+Observed: The whole first screen is a blue-grey photograph (the poster of a 1440px-wide autoplay video) of a curved glass facade shot from below. Centred white text: a one-line h1 'Design more. Document less.', a two-line subtitle, a white pill 'Request a demo' and an outlined pill 'See how it works →'. A row of white customer logos (RAMSA, SOM, Ware Malcomb, dar, FFKR, Devcon, Premier) scrolls along the bottom edge of the image. The nav is transparent over the image with a moon icon for dark mode. Operated: clicked the 'Next quote' arrow; the quote changed from a Dar engineer's airport-scale quote to a RAMSA associate's 'SketchPro isn't about replacing…', the attribution updated, and the active dot moved from first to second. On load two 'logo-scroll' CSS animations ran (the logo marquee); on scroll, the knowledge-base card's text typed itself out (character count rose from 332 to 424). The hero and demo videos were autoplay+muted but stayed at readyState 0 in this browser. With reducedMotion: 'reduce' the two logo-scroll animations still ran; the measurement record found a reduced-motion rule.
+
+Copy: h1: "Design more. Document less."; primary action: "Request a demo" (nav button reads "Request a Demo"). First-screen proof is the logo marquee of named architecture firms and the subtitle's claim 'The world's leading architecture and engineering firms trust SketchPro'; numeric proof ('15 mins', '20+ hrs', '50+') arrives three screens later.
+
+Transfer: A four-word, two-sentence headline at light weight over a single evocative image can replace a product shot in the first screen when the logos beneath it do the proving. Keep the body of the page colourless and let one photograph carry all the hue; black and white pills then read as the only interactive elements. Put a feature list in a name/description two-column table with hairlines instead of cards; it scans faster and scales to mobile without re-composition. Pair a stats band with the demo video it summarises so the number has a visible referent.
+
+Avoid/limit: Two large video panels failed to load here and rendered as blank white frames, leaving roughly 1,250px of empty space; the page depends on media that may not play. Light-weight white type over a photograph is contrast-fragile. The logo marquee ignores reduced motion. Quote-carousel dots are too small to tap on mobile. Proof is logo- and claim-based; no customer numbers appear until the stats band.
+
+Measured 2026-10-20: desktop h1 96px, weight 300, tracking -0.035em; body 20px; 7 sections; phone h1 40px.
+
+On phones: Hero stays full-bleed with the headline on two lines at 40px and both pills stacked full-width; the logo marquee shows two logos at a time. The positioning statement runs seven lines. Feature list keeps its two-column name/description rows at reduced width; stat band and security grid stack to one column; the knowledge-base card goes above the 'Firm standards' copy. Page height 7,615px versus 6,183px on desktop.

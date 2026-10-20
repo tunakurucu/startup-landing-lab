@@ -99,3 +99,21 @@ Avoid/limit: No hero CTA and no hero product shot; grey-on-black copy is hard to
 Measured 2026-10-19: desktop h1 72px, weight 400, tracking -0.02em; body 16px; 8 sections; phone h1 40px.
 
 On phones: Nav keeps the blue 'Book demo' pill beside a hamburger; the centred link pill disappears. The isometric stack shrinks to fit and the headline wraps to two lines at 40px, partly hidden by the cookie dialog. Discipline cards, feature cards and FAQ become one column; stats stack vertically over a dark photo. Page height grows from 7498 to 9141px.
+
+## Reflection AI · canvas-first
+
+https://reflection.ai · desktop-mobile-audit
+
+A warm-neutral research-lab page whose hero is a slowly drifting dot-matrix canvas with a light serif announcement headline centred inside it.
+
+Observed: A floating rounded nav bar (logo, five text items, an outlined 'Get in touch' pill with a dot) sits over an off-white field. The whole first screen is a canvas of olive-grey dots forming nested rings and arcs; centred in it are a three-line serif h1, a one-line sans subhead, and two pill buttons, dark 'Try it now' and outlined 'Learn more', each ending in a small dot. No image, product or logos appear in the first screen. Operated the 'Beam' nav item: a click only toggled a small dot before the label (aria-expanded stayed false); hovering set aria-expanded true and dropped a full-width panel with five links (Model card, API, Documentation hub, Weights, Learn more) and a 'Try Beam today' card. The hero dot canvas drifts continuously (about 46k pixels changed in 1.5s). With reducedMotion 'reduce' the canvas was static between captures but still re-drew when the pointer moved; the measurement record notes a reduced-motion rule.
+
+Copy: h1: "Introducing Beam: Reflection's 501B open-weight model". Primary action: "Try it now" with "Learn more" beside it. The first screen offers no proof beyond the parameter count in the headline; partner logos (AWS, NVIDIA, Modal, Nebius and others) appear several screens down.
+
+Transfer: Use a generative canvas as the hero's only image when the product is abstract, but keep text contrast independent of it. Lead the homepage with the current release as the headline so the page doubles as the announcement. Build the palette from one warm neutral, one dark and one bright accent, and let repeated motifs (dots, circles) do the branding. Put secondary actions (weights, API, docs) in the nav menu panel rather than crowding the hero.
+
+Avoid/limit: No product or proof in the first screen; menus require hover; the dot canvas keeps moving unless reduced motion is set; partner logos are muted to near-invisibility; the page's section labels ('Solutions' used for both a section and a card) repeat.
+
+Measured 2026-10-20: desktop h1 57px, weight 350, tracking -0.045em; body 16px; 6 sections; phone h1 36.5px.
+
+On phones: The floating nav keeps its rounded bar with logo and a dot-grid icon; the canvas persists behind a three-line 36.5px h1 and stacked full-width pill buttons. Solution cards stack one per row; 'Build with Beam' places the dotted figure above the text; partner logos drop to two columns; the stippled image becomes a tall card with the quote overlaid; conviction cards become icon-left rows; the olive panel keeps its three photo circles below the 'Join us' button; footer columns collapse into accordion rows ('Company' open, 'Connect with us' and 'Legal' closed).

@@ -497,3 +497,57 @@ Avoid/limit: Dozens of concurrent transitions and 26 video elements make the pag
 Measured 2026-10-19: desktop h1 68px, weight 700, tracking -0.035em; body 18px; 6 sections; phone h1 36px.
 
 On phones: Nav keeps the wordmark, a 'Book a Demo' pill and a hamburger; the FR toggle and Log in move out of view. The headline stacks to three centred lines with the rotating phrase on its own line; CTAs sit side by side. The logo marquee shows two logos at a time. The two-pane hero demo is not present in the 390 capture; the page goes from logos to 'How Kuli works', and each feature row stacks copy above a full-width product panel. Page height 10150px versus 7400px at 1440.
+
+## Squint · workflow-theater
+
+https://squint.ai · desktop-mobile-audit
+
+An enterprise industrial-AI page: a cobalt video band under a floating white nav, then a two-column h1 and a long sequence of use-case panels, tablet-in-the-field footage and stat tiles.
+
+Observed: A white rounded nav bar floats 16 px inside a full-width cobalt-blue video band (dim footage of a checklist and a worker in a hard hat), with a separate blue "Book a demo" pill to its right and a Fast Company "Most Innovative Companies 2026" badge bottom-right of the band. Below the band on white, the first screen ends with the h1 in a left column and a large grey subline in the right column; there is no button in the hero copy itself. Operated the "Solutions" nav item: hovering opened a full-width white mega-menu with a 3D garbage-truck render, four use-case cards and seven industry links; clicking changed nothing further and the URL stayed the same. On load the measurement recorded 138 running animations (143 on mobile), which the live visit attributed to the two logo marquees and the SVG node diagram (lines, circles, rects animating); the hero video was playing. With reduced motion on, running animations dropped to 4 and all seven videos were paused; a prefers-reduced-motion rule is present.
+
+Copy: H1: "Industrial AI that reduces downtime and improves quality." Primary action: "Book a demo" (nav and closing band); secondary "Login". First-screen proof is the Fast Company 2026 badge inside the video band; the customer logo marquee (BHE GT&S, Komatsu, Nailor, Konecranes, NextEra, Tenneco, AFL, Path Robotics, Fortera, PepsiCo and others) appears just below the fold.
+
+Transfer: Separate the brand band (video, badge) from the message (h1 on white) so the headline is never fighting footage for contrast. Put the outcome in the h1 and the mechanism in a large grey subline beside it, so a buyer reads the result first and the how second. Make the nav mega-menu carry the use-case and industry taxonomy so the homepage can stay a narrative rather than a catalogue. Anchor each proof tile to a named customer segment and a single figure, with one illustration, rather than a wall of quotes.
+
+Avoid/limit: Over a hundred continuously running animations and seven autoplay videos raise CPU and page weight; the logo marquee cannot be paused; the page runs past 10,000 px with many H1-level headings competing for hierarchy; the hero band spends the most valuable screen area on dim footage with no copy.
+
+Measured 2026-10-20: desktop h1 48px, weight 500, tracking -0.02em; body 48px; 12 sections; phone h1 26px.
+
+On phones: The nav becomes a blue bar with logo, "Book a demo" pill and a hamburger; the hero video shows a silhouetted worker with the badge bottom-left. H1 and subline stack in one column at 26 px. Logo marquee rows stay as two scrolling bands. All four-card grids become single-column stacks (use cases, photo steps, stat tiles) and the stat tiles keep their 3D renders; the footer link columns stack. Page height 11728 px.
+
+## Moda · workflow-theater
+
+https://moda.dev · desktop-mobile-audit
+
+A short white page whose hero is a clickable, HTML-built replica of the product dashboard, framed by blurred colour blocks instead of illustration.
+
+Observed: White ground, centred two-line h1 and a two-line grey subtitle, then a wide product dashboard (sidebar with Observe/Harness/Validate groups, three stat tiles, a 'Needs Attention' list, a line chart) that is cut off by the fold, with a 'Results' pass/fail card overlapping its lower right. Blurred rectangles in orange, yellow, blue and mint float in the margins on both sides. The nav has 'Book a demo' (outlined) and 'Sign in' (black) at right; no hero button below the subtitle. Operated: clicked the 'Problems' item in the hero dashboard's sidebar; the highlight moved from 'Home' to 'Problems' and nothing else in the panel changed, so the hero is live HTML with a selectable sidebar rather than an image. On load four CSS animations were running: a sideways logo marquee and three 'orbit' animations on the integration ring; the monitors mockup also exposes real selects, a number input and checkboxes. With reducedMotion: 'reduce' no animations were running and the scrolled screen was static, though two first-screen frames still differed.
+
+Copy: h1: "Your agents should never make the same mistake twice."; the first action is the nav's "Book a demo" (there is no button in the hero body), repeated under 'The loop' and in the closing section. The first-screen proof is the dashboard itself with plausible numbers (109K conversations, 14.8% signal rate, 94% pass); customer logos (Final Round AI, Kanu, Brief, Corelayer, Autumn, CodeWisp) sit just under the fold.
+
+Transfer: If the product is a dashboard, build the hero as working HTML and let it be clicked; a 32px headline is enough when the artefact underneath is the argument. Keep one accent colour for every interactive cue (nav dot, plus signs, primary button) and push the rest of the palette into soft gradients behind mockups. Alternate text-left/UI-right rows with one verb-led heading each ('Monitor', 'Find', 'Test') so a feature list reads as a loop. Put the FAQ on the homepage when the category is crowded; naming competitors in a question answers positioning cheaply.
+
+Avoid/limit: The dashboard dominates the first screen but its text is small on desktop and lost on mobile. The hero has no in-body call to action, and the two nav buttons disappear on mobile, so the only visible CTA at 390 is below the logo row. Decorative buttons and inputs in the mockups add keyboard noise. The blurred colour blocks are the only brand gesture and read as placeholders.
+
+Measured 2026-10-19: desktop h1 32px, weight 600, tracking -0.02em; body 20px; 6 sections; phone h1 26px.
+
+On phones: The h1 wraps to three lines at 26px; the dashboard shrinks to a 350px-wide image-like block with illegible text, and the floating colour blocks bunch below the logo row. Feature rows stack text-above-card; the bento becomes three stacked cards; the FAQ keeps its full-width rows. Nav collapses to logo plus hamburger with the two buttons hidden. Page height 5,516px versus 5,831px on desktop.
+
+## Socratix AI · workflow-theater
+
+https://getsocratix.ai/ · desktop-mobile-audit
+
+A blue-and-black enterprise page that stages the product as animated panels (agent run, before/after queue, signal map) revealed section by section on scroll.
+
+Observed: Black sticky nav with six links and a blue 'Request a demo' button, then a blue news bar ('NEWS … Money20/20 Money Awards 2026 finalist', 'Read the news →'). The white hero splits left/right: a mono-caps eyebrow 'BUILT FOR THE MAIN STREET', a three-line h1 with three phrases in blue, a grey subhead and a work-email field joined to a blue button; on the right a dark browser-chrome frame labelled 'app.getsocratix.ai' with a 'live' dot holding a demo video. A faint dot grid covers the ground; a cookie bar overlays the bottom. Operated the Benefits list item 'Improve customer experience': the highlight moved to it and the right panel swapped from 'BEFORE — MANUAL REVIEW / WITH SOCRATIX AGENTS' queues to a 'CUSTOMER UPDATES' feed ('Onboarding approved', 'Check deposit cleared', 'All clear'). On load ~50 CSS animations ran (named cta-shine-pass, ping, sigLine) and sections fade in on scroll, leaving full-page captures mostly blank. Under reducedMotion 'reduce' the shine pass stopped but ping and sigLine animations still ran (43 counted) while far fewer elements moved; the hero video stayed paused in headless.
+
+Copy: h1: "AI coworkers for fraud, financial crimes and compliance teams." Primary action: "Request a demo" (with a 'Work email' field). First-screen proof is the news bar award line and the 'live' app frame; the 'BUILT BY AI AND FRAUD EXPERTS FROM' logo grid starts at the bottom edge of the first screen.
+
+Transfer: Stage each capability as a small animated panel that changes when a sidebar item is chosen, so the page demonstrates rather than describes. Alternate light and dark bands with a shared dot-grid texture to keep a long enterprise page feeling like one surface. Lead with an award or news line in a bar above the hero when the company lacks customer logos it can show in the first screen. Colour only the keywords in headlines to point the eye without adding a second accent.
+
+Avoid/limit: Roughly 50 running animations on load at both widths, several surviving reduced motion; scroll-gated reveals leave the page blank in captures and for readers who jump; a persistent cookie bar; the hero's product frame depends on a video that may not play.
+
+Measured 2026-10-19: desktop h1 60.8px, weight 500, tracking -0.035em; body 17px; 3 sections; phone h1 38.4px.
+
+On phones: Nav collapses to logo plus hamburger; the news bar shortens its text. Hero stacks eyebrow, h1 (38px), subhead, email field, then the app frame. The founders' logo grid becomes two columns with ten visible marks (including 'Y Combinator', 'DoorDash', 'MIT', 'UCLA'); story cards become a horizontal swipe showing one card; later sections rendered blank in the full-page capture because their content reveals on scroll.

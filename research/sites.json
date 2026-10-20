@@ -12236,5 +12236,2030 @@
         "dark_background": true
       }
     }
+  },
+  {
+    "id": "mindy",
+    "name": "Mindy",
+    "url": "https://mindy.com",
+    "category": "Marketing",
+    "archetype": "editorial-platform",
+    "archetype_note": "Really a sunset/acquisition notice: one centered letter card, no product, no navigation, no call to action.",
+    "inspected_on": "2026-10-20",
+    "summary": "The homepage has been replaced by a single acquisition letter in a bordered card; the only action is an outbound press-release link.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "sequoia-arc",
+    "round": "Arc 2023",
+    "verification_url": "https://sequoiacap.com/companies/mindy",
+    "geography_evidence": null,
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "A white rounded logo tile sits centered at the top of a near-black page, followed by the centered heading \"Mindy's Next Chapter\" and a bordered, slightly lighter card holding a letter. The card (about 710 px wide at 1440) begins in the first screen and the letter runs below the fold. There is no navigation bar, no button and no image.",
+      "typography": "Single measured family Instrument Sans for everything. H1 measured 48 px, weight 600, line-height 1.1, tracking -0.02 em (36 px on mobile). Body 16 px at 1.7 line-height in mid-grey (rgb 161,161,170) on near-black; key phrases are bolded in white. The link is set in a muted violet without underline until hover.",
+      "visual_system": "Body background rgb(17,17,17) with a faint violet radial glow at the top centre; the letter sits in a card with a thin lighter border and rounded corners. Colour is limited to white text, grey body, one violet accent for the link and the small star in the logo. No imagery, no product screenshots, no motifs beyond the glow.",
+      "page_sequence": "Logo tile → h1 → letter card (origin story → acquisition announcement → gratitude → sign-off with press-release link) → one-line footer \"© 2026 Mindy. With gratitude.\"",
+      "interaction": "No buttons, tabs, inputs or toggles exist on the page (control scan returned zero elements). The only operable element is the press-release text link; hovering it added an underline and nothing else changed. Nothing moved on load or scroll (0 running animations at both viewports). With reduced motion on, the page was identical; no prefers-reduced-motion rule was found in accessible stylesheets.",
+      "accessibility": "Body copy is mid-grey on near-black, which looks low-contrast in the screenshot though it was not measured. The link relies on colour alone at rest (underline only on hover). No horizontal overflow at either width. Only one link and no form controls, so tap-target concerns are minimal.",
+      "mobile": "Same single column: logo tile, 36 px heading, and the card shrinks to 348 px content width with the letter wrapping to roughly 41 characters per line, making the page 1808 px tall versus 1260 px on desktop. Nothing is hidden or recomposed; the footer stays at the bottom.",
+      "copy": "H1: \"Mindy's Next Chapter\". There is no primary action button; the only labelled action is the text link \"Mindy's Team Joins WorkWhile to Accelerate AI Adoption in Enterprise Workforce Management\". The first screen offers no proof: no logos, numbers or demo, only the opening of the letter."
+    },
+    "interpretation": {
+      "principles": [
+        "When the product is gone, replace the homepage with one honest letter rather than leaving a stale marketing site live.",
+        "A single column of about 700 px with 1.7 line-height makes long-form text readable without any layout machinery.",
+        "Keep the brand's existing palette (dark ground, one accent) so a transition notice still reads as the same company."
+      ],
+      "fit": "Suits acquisition, sunset or wind-down notices and investor-facing updates; wrong for any company that still needs to convert visitors, since there is no navigation, product or call to action.",
+      "risks": "Grey-on-black body text and a colour-only link are weak for readability; the page gives no route to the acquirer's product or a contact beyond an external press release, and nothing signals what visitors should do next."
+    },
+    "limitations": [
+      "Contrast ratios were not measured, only judged visually.",
+      "No operable control other than a text link existed, so the control test was a hover rather than a click.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://mindy.com",
+      "https://sequoiacap.com/companies/mindy"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 48,
+        "h1_weight": 600,
+        "h1_tracking_em": -0.02,
+        "h1_line_height": 1.1,
+        "h1_family": "Instrument Sans",
+        "display_px": 48,
+        "body_px": 16,
+        "body_line_height": 1.7,
+        "body_measure_ch": null,
+        "families": [
+          "Instrument Sans"
+        ],
+        "content_width_px": 760,
+        "nav_height_px": null,
+        "sticky_nav": null,
+        "hero_height_px": 189,
+        "section_count": 0,
+        "page_height_px": 1260,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "unverified",
+        "animations_on_load": 0,
+        "animations_after_scroll": 0,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": true
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 36,
+        "h1_weight": 600,
+        "h1_tracking_em": -0.02,
+        "h1_line_height": 1.1,
+        "h1_family": "Instrument Sans",
+        "display_px": 36,
+        "body_px": 16,
+        "body_line_height": 1.7,
+        "body_measure_ch": 41,
+        "families": [
+          "Instrument Sans"
+        ],
+        "content_width_px": 348,
+        "nav_height_px": null,
+        "sticky_nav": null,
+        "hero_height_px": 160,
+        "section_count": 0,
+        "page_height_px": 1808,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "unverified",
+        "animations_on_load": 0,
+        "animations_after_scroll": 0,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": true
+      }
+    }
+  },
+  {
+    "id": "astro-mechanica",
+    "name": "Astro Mechanica",
+    "url": "https://www.astromecha.co",
+    "category": "Aerospace",
+    "archetype": "immersive-editorial",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A full-bleed test-stand video with one line of copy, followed by a pinned scroll-reveal statement and a single product claim; news and a newsletter stand in for a CTA.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "neo",
+    "round": "Neo portfolio (stage: Series A)",
+    "verification_url": "https://neo.com/startups?tab=Neo%20portfolio",
+    "geography_evidence": "https://neo.com/startups?tab=Neo%20portfolio",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "The first screen is a looping video of a jet engine on a test stand with a glowing exhaust window, filling the viewport edge to edge. A small logo lockup sits top-left and four spaced-caps nav links (HOME underlined) top-right over the video. The only text is a two-line statement bottom-left, \"We're building the next generation of flight.\" There is no button, no subhead and no proof element in the first screen.",
+      "typography": "One measured family, TWK lausanne, for everything. The hero statement is the measured display at 60 px; the semantic h1 is lower on the page, measured 42 px, weight 300, line-height 1.2, zero tracking (33.6 px on mobile). Body 16 px at 1.4. Eyebrow labels, nav and footer legal are small letter-spaced caps; the footer closes with the company name set as a very large wordmark across the full content width.",
+      "visual_system": "Black ground throughout; the hero and a later section use full-bleed video, and a pinned section shows faint concentric arc lines on near-black while a statement fills in word by word from grey to white. The product section pairs the h1 with a cut-away engine render on a dark grid. A single cyan accent is used for the eyebrow, the MORE NEWS outline button and the Subscribe button. News cards use dark photos with publication logos overlaid.",
+      "page_sequence": "Full-bleed hero video with statement → second full-bleed video band → pinned section where a one-sentence mission statement reveals word by word on scroll → product claim (eyebrow + h1 + engine cut-away render) → Recent News (three cards, MORE NEWS button) → newsletter form + link columns → giant wordmark and legal line.",
+      "interaction": "Operated the newsletter email input by typing \"audit\" without submitting: the field rendered the text in uppercase and nothing else on the page changed. On load two videos were already playing (hero and second band) and a third started when scrolled into view; the control scan found no tabs, toggles or carousels, only the email input and submit button. Running animations rose from 0 to 7 while the pinned text revealed, then back to 0. With reduced motion on, all three videos still played and the reveal still ran; no prefers-reduced-motion rule was found in accessible stylesheets.",
+      "accessibility": "White text sits directly over moving video without a scrim in the hero, and the nav links are small letter-spaced caps over the video. The reveal section renders unread words in dark grey on near-black, which looks very low contrast until scrolled. The email input uppercases typed text, which may hide case errors. No horizontal overflow at either width. The full-page capture shows a blank band where the pinned section is, so content there depends on scroll position.",
+      "mobile": "The nav collapses to a logo and hamburger icon. The hero keeps the video with the statement near the bottom. The product section stacks: eyebrow, 33.6 px h1, then the engine render below. The three news cards stack vertically with the MORE NEWS button moved above them; the newsletter input and Subscribe button stack full width; footer link columns sit side by side and the wordmark shrinks to a single line. Page grows to 5766 px.",
+      "copy": "H1 (semantic): \"The world’s first jet engine that’s engineered for efficiency across subsonic and supersonic speeds.\"; the hero display line reads \"We're building the next generation of flight.\" There is no primary action in the first screen; the first labelled action on the page is the outline button \"MORE NEWS\" and the form button \"SUBSCRIBE\". First-screen proof is the test-stand footage itself; no logos or numbers."
+    },
+    "interpretation": {
+      "principles": [
+        "When you have real hardware footage, let it be the entire first screen and keep copy to one sentence.",
+        "Put the semantic h1 on the single concrete product claim, not on the mission slogan, so the page's strongest statement is also its most specific.",
+        "Use one accent colour for every clickable element so sparse pages still signal where the actions are.",
+        "A pinned word-by-word reveal buys attention for a mission sentence but should degrade to static text under reduced motion."
+      ],
+      "fit": "Suits deep-tech and hardware companies whose audience is press, recruits and investors rather than self-serve buyers; wrong for a SaaS product that needs to explain features, show pricing or convert in the first screen.",
+      "risks": "Autoplaying video ignores reduced motion and raises page weight; the pinned reveal leaves a large empty band in non-scrolled renders and crawlers; there is no primary CTA, so the only conversions are a newsletter and news links."
+    },
+    "limitations": [
+      "Video playback under reduced motion was checked by media state, not by frame comparison.",
+      "The news cards' link targets and the MORE NEWS button were not followed.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://www.astromecha.co",
+      "https://neo.com/startups?tab=Neo%20portfolio"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 42,
+        "h1_weight": 300,
+        "h1_tracking_em": 0,
+        "h1_line_height": 1.2,
+        "h1_family": "TWK lausanne",
+        "display_px": 60,
+        "body_px": 16,
+        "body_line_height": 1.4,
+        "body_measure_ch": null,
+        "families": [
+          "TWK lausanne"
+        ],
+        "content_width_px": 1376,
+        "nav_height_px": 37,
+        "sticky_nav": false,
+        "hero_height_px": 5241,
+        "section_count": 0,
+        "page_height_px": 5241,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "unverified",
+        "animations_on_load": 0,
+        "animations_after_scroll": 0,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 33.6,
+        "h1_weight": 300,
+        "h1_tracking_em": 0,
+        "h1_line_height": 1.2,
+        "h1_family": "TWK lausanne",
+        "display_px": 32,
+        "body_px": 16,
+        "body_line_height": 1.4,
+        "body_measure_ch": null,
+        "families": [
+          "TWK lausanne"
+        ],
+        "content_width_px": 351,
+        "nav_height_px": 0,
+        "sticky_nav": true,
+        "hero_height_px": 5766,
+        "section_count": 0,
+        "page_height_px": 5766,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "unverified",
+        "animations_on_load": 0,
+        "animations_after_scroll": 0,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": true
+      }
+    }
+  },
+  {
+    "id": "scarlet",
+    "name": "Scarlet",
+    "url": "https://www.scarlet.cc/",
+    "category": "Healthcare",
+    "archetype": "editorial-platform",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A clinical-footage video hero carrying one promise, then a long white page that stacks every trust device a regulator-adjacent buyer expects: logos, quotes, films, accreditations, FAQ.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "ef",
+    "round": "EF portfolio (founded 2021)",
+    "verification_url": "https://www.joinef.com/portfolio/",
+    "geography_evidence": "https://www.joinef.com/portfolio/",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "A white 68 px nav (logo, eight text links, outlined \"Get in touch\") sits above a full-width looping video of patients and clinicians using health apps; the frame changes between captures (phone glucose app, nurse with tablet, smartwatch). A single centred white line, \"Certify your AI medical device without unnecessary delays\", sits over the footage with no button beneath it. A cookie consent panel with Reject/Accept covers the bottom-right corner.",
+      "typography": "Measured families Aeonik Pro Medium for headings, Aeonik Pro Regular for body, with Inter also loaded. The semantic h1 is below the video: 48 px, weight 500, line-height 1.1, tracking -0.01 em, dark grey on white (32 px on mobile). Body 16 px at 1.4; section eyebrows are small letter-spaced caps. The hero line over video is a lighter-weight white sans of similar size; the footer ends with a large wordmark in a purple-to-blue gradient.",
+      "visual_system": "White and pale grey alternating bands; the only strong colour is a small pink-red \"Get in touch\" button and red accents inside the device photography. Imagery is documentary: people holding devices, a clinician laughing, a customer-story film with a play button. Proof blocks are set as cards with thin borders: six customer logos, a 2×3 grid of testimonial cards, and a row of six regulator badges (EU flag, UK, US flag, MHRA, others).",
+      "page_sequence": "Nav → video hero with one line → h1 + \"Get in touch\" → customer logo row → single large pull-quote → \"Why Scarlet\" three photo cards with linked stories → \"Our customers\" film with play button → six testimonial cards → full-bleed photo band \"Transfer to Scarlet in 4 weeks\" with button → accreditation badges → news list (four posts) → FAQ accordion → dark CTA band \"Need to certify an AI medical device?\" → footer links and gradient wordmark.",
+      "interaction": "Operated the first FAQ item \"Which jurisdictions does Scarlet cover?\": the question expanded to a list of seven jurisdictions and a CE-marking note, the plus icon became a cross, page height grew from 8505 to 8803 px, and nothing else changed. On load the hero video was playing; five other videos were present but paused. Measurement recorded one running animation on load and after scroll on desktop, none on mobile. With reduced motion on, the hero video still played on load and was paused after scrolling away; no prefers-reduced-motion rule was found in accessible stylesheets.",
+      "accessibility": "White hero text sits over bright moving footage with no visible scrim, so legibility depends on the frame. The cookie panel stays fixed over content while scrolling and overlaps the FAQ on desktop. The nav bar stayed visible at the top when scrolled to the FAQ in the live visit. Accordion triggers were not exposed as buttons to the control scan. No horizontal overflow at either width.",
+      "mobile": "Nav collapses to logo plus hamburger; the hero keeps video with the line wrapping to three lines; the cookie panel covers the lower third of the first screen. Grids collapse: logos and regulator badges into two columns, the three story cards and six testimonials into one column. Blog entries and FAQ run full width; the footer stacks link columns above the wordmark. Page grows to 9296 px.",
+      "copy": "H1: \"Get your life-changing technology to the people who need it with the global AI certification body\"; the hero overlay reads \"Certify your AI medical device without unnecessary delays\". Primary action: \"Get in touch\" (nav and below h1). The first screen offers footage only; logos and a founder quote arrive after the fold."
+    },
+    "interpretation": {
+      "principles": [
+        "For a regulated-market buyer, sequence trust devices in rising formality: logos, then quotes, then film, then official accreditations.",
+        "Keep the hero to one promise and move the long descriptive h1 to the first white band, where it can be read without competing with imagery.",
+        "Use one small saturated button colour on an otherwise monochrome page so the single action is always findable.",
+        "An FAQ accordion is a cheap way to answer jurisdiction and pricing questions without lengthening the page for everyone."
+      ],
+      "fit": "Suits B2B services sold on credibility (compliance, certification, legal, clinical) with long consideration cycles; wrong for a self-serve product that needs a demo or sign-up in the first screen.",
+      "risks": "Text over unscrimmed video and a persistent cookie panel hurt the first screen; six embedded videos add weight; the page relies on scrolling through many proof blocks before the first explanation of what the product actually does."
+    },
+    "limitations": [
+      "Hero video legibility varies by frame; only a few frames were seen.",
+      "Testimonial, logo and accreditation claims were not verified beyond their presence on the page.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://www.scarlet.cc/",
+      "https://www.joinef.com/portfolio/"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 48,
+        "h1_weight": 500,
+        "h1_tracking_em": -0.01,
+        "h1_line_height": 1.1,
+        "h1_family": "Aeonik Pro Medium",
+        "display_px": 40,
+        "body_px": 16,
+        "body_line_height": 1.4,
+        "body_measure_ch": 31,
+        "families": [
+          "Aeonik Pro Regular",
+          "Aeonik Pro Medium",
+          "Inter"
+        ],
+        "content_width_px": 960,
+        "nav_height_px": 68,
+        "sticky_nav": false,
+        "hero_height_px": 8505,
+        "section_count": 2,
+        "page_height_px": 8505,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "not_observed",
+        "animations_on_load": 1,
+        "animations_after_scroll": 1,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": true
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 32,
+        "h1_weight": 500,
+        "h1_tracking_em": -0.01,
+        "h1_line_height": 1.1,
+        "h1_family": "Aeonik Pro Medium",
+        "display_px": 32,
+        "body_px": 16,
+        "body_line_height": 1.4,
+        "body_measure_ch": 31,
+        "families": [
+          "Aeonik Pro Regular",
+          "Aeonik Pro Medium",
+          "Inter"
+        ],
+        "content_width_px": 358,
+        "nav_height_px": 68,
+        "sticky_nav": false,
+        "hero_height_px": 9296,
+        "section_count": 2,
+        "page_height_px": 9296,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "not_observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 0,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "sway",
+    "name": "Sway",
+    "url": "https://sway.co",
+    "category": "Govtech",
+    "archetype": "functional-entrance",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "The hero is the product's first step: an address field inside a purple panel, with a live countdown and a four-step tracker underneath, before any explanation.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "neo",
+    "round": "Neo portfolio (stage: Pre-seed)",
+    "verification_url": "https://neo.com/startups?tab=Neo%20portfolio",
+    "geography_evidence": "https://neo.com/startups?tab=Neo%20portfolio",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "A white 69 px sticky nav (logo, three links, purple \"Log in\" pill) sits over a pale promo strip (\"Throw a ballot party. Get $500 from Sway.\" with floating badge illustrations and a \"See how it works\" button). Below it a rounded deep-purple panel holds a yellow countdown pill (\"15 days to Nov 3\"), the h1, a subline, a white address input with a \"Preview my ballot\" button, and a registration link; tilted ballot cards decorate both edges. A \"Your 4 steps\" tracker (Address, Ballot, Plan, Save) and the first row of group cards complete the first screen.",
+      "typography": "Measured families: Manrope for headings, Inter for body. H1 40 px, weight 600, line-height 1.2, tracking -0.012 em, white on purple (32 px, weight 500 on mobile). Body 16 px at 1.4 with about 43 characters per line. Section headings are mid-size and centred; small green eyebrow labels (\"Proven impact\", \"How it works\") sit above them. The ballot-card decorations use a slightly rotated, hand-placed look.",
+      "visual_system": "White ground with one saturated purple for the hero panel, buttons and links, plus yellow for the countdown pill and green for eyebrows and bar charts. Surfaces are rounded cards with thin grey borders. Imagery mixes photographic group cards (campaign-style photos and posters), halftone black-and-white illustrations (Capitol dome, scales of justice, raised fists with megaphones) and framed product screenshots of a map, office list, messaging form and leaderboard.",
+      "page_sequence": "Sticky nav → promo strip → purple hero with address input → 4-step tracker → \"Voting groups across the country\" carousel → \"Popular voting groups\" carousel → grey band \"Regular people drive political change\" with two buttons → \"Proven impact\" stat card (2.2× bar chart) → three-step how-it-works → \"Free. Private. Neutral.\" band → \"Everything you need to lead\" feature cards (map, offices, messaging, results, referrals) → app-store CTA over halftone crowd image → footer with link columns and Español link.",
+      "interaction": "Operated the right arrow on the \"Voting groups across the country\" carousel: the row advanced by four cards (first card became \"The Forward Party Voting Group\") and the previously disabled, 40 %-opacity left arrow became enabled. The arrows carry aria-labels. Nothing was seen visibly moving on load in screenshots; the measurement record counted 0 running animations on load and 18 after scroll on desktop, and the live visit sampled 56 on first load dropping to 0–4 while scrolling. With reduced motion on the same first-load count appeared and then 0 after scrolling; a prefers-reduced-motion rule is present.",
+      "accessibility": "Carousel cards carry 20 × 20 px share icon buttons, which are small targets. Card titles are white text over photographs with a dark gradient band. The countdown pill is live data and changed between captures (15 days, then 14 days). No horizontal overflow at either width. Nav links and buttons are text-labelled.",
+      "mobile": "Nav keeps logo, \"Explore\" and \"Log in\". The promo strip shrinks to text plus a circular arrow button. The hero panel stacks and the address input loses its text button in favour of an arrow icon. The four step tiles become square icon tiles in one row; the carousels become horizontally scrollable rows with no arrows (arrows are hidden below the small breakpoint). All later sections stack to one column with the halftone illustrations placed below their text; feature screenshots stack vertically. Page height 9008 px.",
+      "copy": "H1: \"Voting made easy\" with subline \"Make your plan and picks all in one spot.\" Primary action: \"Preview my ballot\" on the address field (secondary: \"Register or check your registration\", \"See how it works\", \"Log in\"). First-screen proof is live: a countdown to election day and a row of real voting groups with member and voter counts (for example \"65 recs · 68 voters\"); no logos."
+    },
+    "interpretation": {
+      "principles": [
+        "If the product starts with one input, make that input the hero and show the remaining steps as a tracker so the commitment looks small.",
+        "Use live data in the first screen (countdown, group counts) as proof that the product is in use, instead of static logos.",
+        "Reserve one saturated colour for the single most important panel and its buttons; keep every other section white or grey.",
+        "Hide carousel arrows on small screens and let the row scroll natively rather than shrinking the controls."
+      ],
+      "fit": "Suits consumer or civic products with a single clear first step tied to a deadline (voting, tax filing, enrolment, booking); wrong for products that need explanation or trust before any input is reasonable, such as high-ticket B2B or financial onboarding.",
+      "risks": "The page is dense: a promo strip, countdown, input, tracker and two carousels compete in the first 900 px, and tiny share icons and photo-overlaid titles reduce legibility. Date-bound copy ages daily and the group cards show partisan content that may alienate some visitors before they reach the \"Neutral\" claim."
+    },
+    "limitations": [
+      "The address input and \"Preview my ballot\" were not submitted, so the flow after the hero was not seen.",
+      "Running-animation counts differed between the measurement record and the live visit; no visible motion was identified in screenshots.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://sway.co",
+      "https://neo.com/startups?tab=Neo%20portfolio"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 40,
+        "h1_weight": 600,
+        "h1_tracking_em": -0.012,
+        "h1_line_height": 1.2,
+        "h1_family": "Manrope",
+        "display_px": 40,
+        "body_px": 16,
+        "body_line_height": 1.4,
+        "body_measure_ch": 43,
+        "families": [
+          "Inter",
+          "Manrope"
+        ],
+        "content_width_px": 1217,
+        "nav_height_px": 69,
+        "sticky_nav": true,
+        "hero_height_px": 6500,
+        "section_count": 11,
+        "page_height_px": 6500,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 18,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 32,
+        "h1_weight": 500,
+        "h1_tracking_em": -0.016,
+        "h1_line_height": 1.1,
+        "h1_family": "Manrope",
+        "display_px": 32,
+        "body_px": 16,
+        "body_line_height": 1.4,
+        "body_measure_ch": 29,
+        "families": [
+          "Inter",
+          "Manrope"
+        ],
+        "content_width_px": 255,
+        "nav_height_px": 69,
+        "sticky_nav": true,
+        "hero_height_px": 9008,
+        "section_count": 11,
+        "page_height_px": 9008,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 14,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": true
+      }
+    }
+  },
+  {
+    "id": "casa",
+    "name": "Casa",
+    "url": "https://getcasa.com",
+    "category": "Proptech",
+    "archetype": "immersive-editorial",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A black serif hero with one address prompt gives way to a long cream page that treats each membership benefit as its own illustrated chapter before naming the price.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "neo",
+    "round": "Neo portfolio (stage: Seed)",
+    "verification_url": "https://neo.com/startups?tab=Neo%20portfolio",
+    "geography_evidence": "https://neo.com/startups?tab=Neo%20portfolio",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "The first screen is black edge to edge: wordmark top-left, outlined \"Benefits\" and white \"Get started\" pills top-right, and a centred dark pill reading \"AS FEATURED IN The New York Times\" and \"A letter from our CEO\". The serif h1 and a four-line subline sit in the exact centre; near the bottom a rounded input-style bar reads \"Find your home to get started\" with a map thumbnail, above a line listing three served metros. A full-viewport autoplay video element exists but had not loaded in headless captures, so the ground appears solid black.",
+      "typography": "Measured display family casaLitteratur (a high-contrast serif) for the h1 at 68 px, weight 400, line-height 1.1, tracking -0.02 em (36 px on mobile); measured body family casaDiatype (a grotesque sans) at 24 px, line-height 1.3, about 32 characters per line (18 px on mobile). Section titles repeat the serif at a smaller size; eyebrows are tiny caps in coloured pills; the price line \"All for $199/month.\" is set in the serif at display size.",
+      "visual_system": "Black hero, then a white/cream ground with pale-green rounded cards for explanatory blocks. Imagery is warm interior photography (a kitchen with a handwritten-style overlay of chores, a living room), isometric 3D illustrations (a house on a green lawn, small objects like a bell, boxes, a plant), and stacked notification-style cards showing tasks. Colour appears only in small eyebrow pills (peach, green, yellow) and a yellow credit badge.",
+      "page_sequence": "Black hero → \"How Casa membership works\" three-column card → \"Your to-do list, done.\" → kitchen photo with chore-list overlay → Handyman (text, task cards, credit badge) → Concierge (chat card) → Autopilot → five-slide maintenance carousel → \"And for the everyday chores\" four cards → \"Enabled by a deep understanding of your home\" with isometric house and seven-tab inventory → \"All for $199/month\" with eight benefit rows → two trust cards → four-item FAQ → closing statement + newsletter → footer, \"With love, from San Francisco\".",
+      "interaction": "Operated the \"Appliances\" tab in the home-inventory section: the active label moved from \"3D Model\" to \"Appliances\" (grey to dark, underline moved) and the caption changed to a sentence about makes, models, serial numbers and warranties; the URL did not change. On load 0 animations ran and the hero video stayed unloaded; while scrolling, 1–6 animations ran as sections entered view (measurement: 9 after scroll desktop, 3 mobile). A subscribe toast with an email field appeared lower right after load. Under reduced motion counts were 0 and the video stayed paused; no prefers-reduced-motion rule found.",
+      "accessibility": "The inventory tabs are plain buttons without aria-selected; the carousel dots are 10 × 10 px targets with \"Go to slide\" labels. The chore-list text over the kitchen photograph is thin white on a mid-tone image. A newsletter toast overlays content on load and has a 32 px dismiss button. No horizontal overflow at either width. The full-page desktop capture was cut at 9000 px of a 10746 px page.",
+      "mobile": "Nav keeps the logo mark (wordmark dropped) with both pills. The hero stacks: press pill, 36 px serif h1, subline, and the address bar pinned near the bottom. All two-column benefit sections stack with imagery below text; the maintenance carousel becomes one card wide; the inventory tabs become a horizontally scrolling strip; the price benefit list becomes one column; FAQ and footer stack. Body drops to 18 px. Page height 10943 px.",
+      "copy": "H1: \"Home, taken care of.\" Primary action: \"Get started\" (nav) and the hero bar \"Find your home to get started\". First-screen proof is a press mention (The New York Times) and a CEO letter link; no numbers, logos beyond the one outlet, or demo."
+    },
+    "interpretation": {
+      "principles": [
+        "Lead with a short serif promise on an empty ground and defer every feature to its own chapter below, so the hero reads as a brand rather than a feature list.",
+        "Name the price late but plainly, in display type, after the benefits have each been shown.",
+        "Let the first-screen input describe the first step in words (\"Find your home\") rather than presenting an empty form field.",
+        "Use one press mention in the hero rather than a logo wall when you have a single strong outlet."
+      ],
+      "fit": "Suits premium consumer memberships and services where tone matters more than feature comparison (home, health, hospitality); wrong for utility software where buyers want screenshots and pricing in the first screen.",
+      "risks": "A heavy 12 Mbps hero video that may not load leaves a flat black first screen; the page is very long (over 10,000 px) before price and FAQ; a newsletter toast competes with the hero on load; tab controls lack selected-state semantics."
+    },
+    "limitations": [
+      "The hero video never loaded in headless Chromium, so its content and motion are unknown.",
+      "The desktop full-page screenshot was truncated at 9000 px; the lower sections were read from the live visit and the mobile capture.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://getcasa.com",
+      "https://neo.com/startups?tab=Neo%20portfolio"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 68,
+        "h1_weight": 400,
+        "h1_tracking_em": -0.02,
+        "h1_line_height": 1.1,
+        "h1_family": "casaLitteratur",
+        "display_px": 68,
+        "body_px": 24,
+        "body_line_height": 1.3,
+        "body_measure_ch": 32,
+        "families": [
+          "casaDiatype",
+          "casaLitteratur"
+        ],
+        "content_width_px": 1440,
+        "nav_height_px": 76,
+        "sticky_nav": true,
+        "hero_height_px": 10746,
+        "section_count": 10,
+        "page_height_px": 10746,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "not_observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 9,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": true
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 36,
+        "h1_weight": 400,
+        "h1_tracking_em": -0.02,
+        "h1_line_height": 1.2,
+        "h1_family": "casaLitteratur",
+        "display_px": 36,
+        "body_px": 18,
+        "body_line_height": 1.3,
+        "body_measure_ch": 32,
+        "families": [
+          "casaDiatype",
+          "casaLitteratur"
+        ],
+        "content_width_px": 325,
+        "nav_height_px": 64,
+        "sticky_nav": true,
+        "hero_height_px": 10943,
+        "section_count": 10,
+        "page_height_px": 10943,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "not_observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 3,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "squint",
+    "name": "Squint",
+    "url": "https://squint.ai",
+    "category": "Consumer",
+    "archetype": "workflow-theater",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "An enterprise industrial-AI page: a cobalt video band under a floating white nav, then a two-column h1 and a long sequence of use-case panels, tablet-in-the-field footage and stat tiles.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "sequoia-arc",
+    "round": "Arc 2023",
+    "verification_url": "https://sequoiacap.com/companies/squint",
+    "geography_evidence": null,
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "A white rounded nav bar floats 16 px inside a full-width cobalt-blue video band (dim footage of a checklist and a worker in a hard hat), with a separate blue \"Book a demo\" pill to its right and a Fast Company \"Most Innovative Companies 2026\" badge bottom-right of the band. Below the band on white, the first screen ends with the h1 in a left column and a large grey subline in the right column; there is no button in the hero copy itself.",
+      "typography": "Measured family Abccameraplain for the h1 and the subline, both 48 px, line-height 1.0, tracking -0.02 em, h1 weight 500 in near-black and the subline in mid-grey (26 px on mobile). Inter, Geist Mono and ui-monospace are also loaded; small monospace-style caps eyebrows (\"— OPERATIONAL KNOWLEDGE\") label each section. Section titles are mid-size sans; stat tiles show very large figures (10x, 17%, $5M, 19%).",
+      "visual_system": "Cobalt blue is the single brand colour: hero band, demo button, link accents, icon tints and the footer. Sections alternate white, pale-blue-grey cards and one black band (\"Purpose-built Industrial Agents\" with wireframe diagrams). Imagery is workers in blue overalls holding rugged tablets, device mock-ups with checklists, isometric 3D renders (bottles, a car, a wind turbine, a garbage truck in the menu) and a node diagram linking sources (video, manuals, audits) to a central logo. Two customer logo marquees scroll continuously.",
+      "page_sequence": "Floating nav + video band → h1 and subline → logo marquee → \"Your operational knowledge is everywhere\" node diagram → black \"Purpose-built Industrial Agents\" band → \"Transform every part of your operations\" four use-case cards → \"Turn frontline execution into competitive advantage\" four photo steps → \"Squint drives real impact\" four stat tiles → second logo marquee → \"Built for your team\" → \"Fast to deploy. Easy to integrate. Built to scale.\" → documentation-gap teaser → \"Ready to put Industrial AI to work?\" with Book a demo → blue footer with newsletter and link columns.",
+      "interaction": "Operated the \"Solutions\" nav item: hovering opened a full-width white mega-menu with a 3D garbage-truck render, four use-case cards and seven industry links; clicking changed nothing further and the URL stayed the same. On load the measurement recorded 138 running animations (143 on mobile), which the live visit attributed to the two logo marquees and the SVG node diagram (lines, circles, rects animating); the hero video was playing. With reduced motion on, running animations dropped to 4 and all seven videos were paused; a prefers-reduced-motion rule is present.",
+      "accessibility": "The logo marquee moves continuously and its images sit far off-canvas, so it cannot be paused by the user. The nav's expanding items are divs rather than buttons in the control scan. The subline is mid-grey at 48 px on white, acceptable at that size. The Fast Company badge is small grey text over dark video. No horizontal overflow at either width.",
+      "mobile": "The nav becomes a blue bar with logo, \"Book a demo\" pill and a hamburger; the hero video shows a silhouetted worker with the badge bottom-left. H1 and subline stack in one column at 26 px. Logo marquee rows stay as two scrolling bands. All four-card grids become single-column stacks (use cases, photo steps, stat tiles) and the stat tiles keep their 3D renders; the footer link columns stack. Page height 11728 px.",
+      "copy": "H1: \"Industrial AI that reduces downtime and improves quality.\" Primary action: \"Book a demo\" (nav and closing band); secondary \"Login\". First-screen proof is the Fast Company 2026 badge inside the video band; the customer logo marquee (BHE GT&S, Komatsu, Nailor, Konecranes, NextEra, Tenneco, AFL, Path Robotics, Fortera, PepsiCo and others) appears just below the fold."
+    },
+    "interpretation": {
+      "principles": [
+        "Separate the brand band (video, badge) from the message (h1 on white) so the headline is never fighting footage for contrast.",
+        "Put the outcome in the h1 and the mechanism in a large grey subline beside it, so a buyer reads the result first and the how second.",
+        "Make the nav mega-menu carry the use-case and industry taxonomy so the homepage can stay a narrative rather than a catalogue.",
+        "Anchor each proof tile to a named customer segment and a single figure, with one illustration, rather than a wall of quotes."
+      ],
+      "fit": "Suits enterprise B2B software sold through demos to operations and plant leadership; wrong for a self-serve or consumer product, and too heavy for a pre-traction startup without logos and stats to fill it.",
+      "risks": "Over a hundred continuously running animations and seven autoplay videos raise CPU and page weight; the logo marquee cannot be paused; the page runs past 10,000 px with many H1-level headings competing for hierarchy; the hero band spends the most valuable screen area on dim footage with no copy."
+    },
+    "limitations": [
+      "Animation attribution was by DOM target type, not by visual inspection of each element.",
+      "Customer logos, stats and the Fast Company badge were not verified beyond their presence on the page.",
+      "The desktop full-page screenshot was truncated at 9000 px; lower sections were read from the live page and the mobile capture.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://squint.ai",
+      "https://sequoiacap.com/companies/squint"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 48,
+        "h1_weight": 500,
+        "h1_tracking_em": -0.02,
+        "h1_line_height": 1,
+        "h1_family": "Abccameraplain",
+        "display_px": 48,
+        "body_px": 48,
+        "body_line_height": 1,
+        "body_measure_ch": 24,
+        "families": [
+          "Abccameraplain",
+          "Inter",
+          "Geist Mono",
+          "ui-monospace"
+        ],
+        "content_width_px": 1328,
+        "nav_height_px": 585,
+        "sticky_nav": false,
+        "hero_height_px": 843,
+        "section_count": 12,
+        "page_height_px": 10642,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 138,
+        "animations_after_scroll": 138,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": true
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 26,
+        "h1_weight": 500,
+        "h1_tracking_em": -0.02,
+        "h1_line_height": 1,
+        "h1_family": "Abccameraplain",
+        "display_px": 26,
+        "body_px": 26,
+        "body_line_height": 1,
+        "body_measure_ch": 24,
+        "families": [
+          "Abccameraplain",
+          "Inter",
+          "Geist Mono",
+          "ui-monospace"
+        ],
+        "content_width_px": 342,
+        "nav_height_px": 591,
+        "sticky_nav": false,
+        "hero_height_px": 867,
+        "section_count": 12,
+        "page_height_px": 11728,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 143,
+        "animations_after_scroll": 143,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "omnea",
+    "name": "Omnea",
+    "url": "https://omnea.co/",
+    "category": "Operations",
+    "archetype": "editorial-platform",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A very long, light-ground enterprise page that stacks proof (logos, customer numbers, quotes, compliance badges) under one serif headline per section, with one scroll-pinned dark interlude.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "ef",
+    "round": "EF portfolio (founded 2022)",
+    "verification_url": "https://www.joinef.com/portfolio/",
+    "geography_evidence": "https://www.joinef.com/portfolio/",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "Centred stack on an off-white ground: a small avatar-plus-mono 'DISCOVER THE AOS' link, a two-line serif h1, one sentence of body copy and a single black 'Book a demo' button. Behind the text sits a circular field of fine dots drawn on a canvas, with small mono labels ('INTAKE AGENT', 'REVIEW AGENT', 'PROCUREMENT OFFICER') scattered around its edge. A 'TRUSTED BY INDUSTRY LEADERS' logo row (Spotify, Albertsons, Proofpoint, Adyen, DeepL, Adecco) sits at the fold.",
+      "typography": "Display is a high-contrast serif, measured family 'Season Mix VF Variable Light': h1 68px, weight 300, line-height 1, tracking -0.026em (44px, line-height 1.1 on mobile). Body is measured 'Inter Variable' at 18px/1.4, measure ~55ch (16px/1.5 on mobile). Section eyebrows and hero labels use an all-caps monospace (measured 'Paper Mono Variable Regular' is in the family list). Many section headlines use a two-tone device: black first sentence, grey second sentence.",
+      "visual_system": "Warm off-white ground with thin 1px hairline card borders and very low-saturation surfaces; black is used only for buttons and two dark bands (the pinned 'Every agent's dream workplace' section and the footer). A small green dot precedes every eyebrow label. Imagery alternates between real photographs (PayPal card, customer portraits, a video still) and flat product-UI mockups on grey panels; the dark band uses an isometric line-drawn stack of layers. Dotted/particle textures recur as canvas backgrounds.",
+      "page_sequence": "Nav → canvas-particle hero → logo marquee → 'Platform' headline with arc of agent names → four pillar cards with link lists → '99% customer retention' proof block (photo, quote, three stats) → 'Why Omnea' two UI panels + three feature cards → testimonial carousel → three average-outcome stats → dark pinned layer explorer → dark 'Real humans' team-card cloud → customer story with video still → 'Enterprise ready' three security cards → trust badges → masonry wall of ~15 quotes → featured posts → newsletter form → dark CTA + footer.",
+      "interaction": "Operated: clicked the 'CONTEXT ENGINE' label in the dark pinned section; its description expanded beneath the label and one layer of the isometric stack turned pale green while the others stayed outline-only. On load the hero dot field redraws continuously (two screenshots 1.2s apart differed) and the logo row scrolls sideways. The dark section is pinned for roughly 900px of scroll and the nav switches to light-on-dark over it. With reducedMotion: 'reduce', zero CSS/WAAPI animations were running, but the canvas dot field and logo marquee still changed between frames.",
+      "accessibility": "Several headline second-sentences and stat captions are mid-grey on off-white (e.g. 'Built on trust. Measured on impact.'), and the pinned dark section's inactive labels are dark grey on near-black. Hero agent labels and eyebrows are very small mono caps. On mobile, product-pillar link rows measured 28px tall (51 links or buttons under 32px). No horizontal overflow at 390. The newsletter input has placeholder text only as its visible label.",
+      "mobile": "Everything stacks to one column: the four pillar cards, the PayPal proof block (photo above quote above three stats), security cards and stats. The agent arc shrinks to a compressed half-ring. The logo row becomes a narrow marquee showing two logos at a time. The testimonial carousel is cropped at the right edge, and the nav collapses to logo plus hamburger. Page height grows to 16,950px.",
+      "copy": "h1: \"The Agentic Operating System for Procurement.\"; primary action: \"Book a demo\". First-screen proof is the customer logo row directly under the hero; the first numeric proof ('99% customer retention', '$5bn', '50%', '38%') arrives two screens later."
+    },
+    "interpretation": {
+      "principles": [
+        "If you sell to enterprise, let the page be long and front-load named customers; one proof block with a photo, quote and three numbers does more than a feature grid.",
+        "A single serif display face at light weight can carry a 16,000px page if every section repeats the same eyebrow-headline-body rhythm.",
+        "Use a dark band sparingly as a chapter break for the 'how it works' part, and let the nav recolour over it instead of staying opaque.",
+        "Pair a two-tone headline (black claim, grey consequence) with hairline cards to keep a dense page quiet."
+      ],
+      "fit": "Suits enterprise SaaS with a real customer roster and a demo-led sales motion; wrong for a self-serve or developer product where the visitor needs to try something within the first screen.",
+      "risks": "Length: the page is ~18 screens, and the pinned section plus a masonry wall of fifteen quotes push the final CTA very far down. Grey-on-off-white secondary text and tiny mono labels trade legibility for restraint. Canvas and marquee motion keeps running under reduced-motion, and the measurement record found no reduced-motion rule."
+    },
+    "limitations": [
+      "Tablet widths not inspected; no interaction tested on the 390 viewport beyond rendering and measurement.",
+      "The headless full-page capture does not reproduce the pinned section as a user scrolls it; its behaviour was sampled at five scroll offsets only.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://omnea.co/",
+      "https://www.joinef.com/portfolio/"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 68,
+        "h1_weight": 300,
+        "h1_tracking_em": -0.026,
+        "h1_line_height": 1,
+        "h1_family": "Season Mix VF Variable Light",
+        "display_px": 68,
+        "body_px": 18,
+        "body_line_height": 1.4,
+        "body_measure_ch": 55,
+        "families": [
+          "Season Mix VF Variable Light",
+          "Inter Variable",
+          "Paper Mono Variable Regular",
+          "Suisse Intl Regular"
+        ],
+        "content_width_px": 1200,
+        "nav_height_px": null,
+        "sticky_nav": null,
+        "hero_height_px": 16579,
+        "section_count": 0,
+        "page_height_px": 16579,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "not_observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 0,
+        "has_video": false,
+        "has_canvas": true,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 44,
+        "h1_weight": 300,
+        "h1_tracking_em": -0.023,
+        "h1_line_height": 1.1,
+        "h1_family": "Season Mix VF Variable Light",
+        "display_px": 44,
+        "body_px": 16,
+        "body_line_height": 1.5,
+        "body_measure_ch": 36,
+        "families": [
+          "Inter Variable",
+          "Season Mix VF Variable Light",
+          "Paper Mono Variable Regular",
+          "Suisse Intl Regular"
+        ],
+        "content_width_px": 358,
+        "nav_height_px": null,
+        "sticky_nav": null,
+        "hero_height_px": 16950,
+        "section_count": 0,
+        "page_height_px": 16950,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "not_observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 0,
+        "has_video": false,
+        "has_canvas": true,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "moda",
+    "name": "Moda",
+    "url": "https://moda.dev",
+    "category": "Developer tools",
+    "archetype": "workflow-theater",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A short white page whose hero is a clickable, HTML-built replica of the product dashboard, framed by blurred colour blocks instead of illustration.",
+    "yc_status": "verified-yc",
+    "batch": "W26",
+    "program": "yc",
+    "verification_url": "https://www.ycombinator.com/companies/moda",
+    "geography_evidence": "https://www.ycombinator.com/companies/moda",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "White ground, centred two-line h1 and a two-line grey subtitle, then a wide product dashboard (sidebar with Observe/Harness/Validate groups, three stat tiles, a 'Needs Attention' list, a line chart) that is cut off by the fold, with a 'Results' pass/fail card overlapping its lower right. Blurred rectangles in orange, yellow, blue and mint float in the margins on both sides. The nav has 'Book a demo' (outlined) and 'Sign in' (black) at right; no hero button below the subtitle.",
+      "typography": "One sans family throughout, measured 'GT Standard L' with a mono companion 'gtStandardMono' for the prompt snippet. The h1 is small for a hero: 32px, weight 600, line-height 1.3, tracking -0.02em (26px, tracking 0 on mobile). Body measured 20px/1.4 at ~55ch (17px on mobile). Section headings ('Monitor every trace', 'Tailored to your workflow') are about the same size as the h1, so the hierarchy is flat and the dashboard carries the weight.",
+      "visual_system": "Pure white ground with hairline-bordered cards and light grey panels. Accent is a hot orange-red (nav dot, FAQ plus signs, 'Run comparison' button, 'High priority' labels) with yellow, sky-blue and mint used as soft radial gradients behind feature mockups. The repeated motif is the blurred colour block scattered around headlines, echoed on mobile. All imagery is rendered product UI; no photography, no illustration beyond integration logos on a thin orbit ring.",
+      "page_sequence": "Nav → h1 + interactive dashboard hero → 'For teams running agents in production' logo marquee → 'The loop' headline with 'Book a demo' → three alternating feature rows (Monitor every trace / Find the mistakes they keep repeating / Test every change before it ships), each text left and gradient-backed UI card right → 'Tailored to your workflow' bento: Custom signals, Monitors, Right where you work (orbiting integration icons) → FAQ accordion (seven questions) → closing headline + 'Book a demo' → footer.",
+      "interaction": "Operated: clicked the 'Problems' item in the hero dashboard's sidebar; the highlight moved from 'Home' to 'Problems' and nothing else in the panel changed, so the hero is live HTML with a selectable sidebar rather than an image. On load four CSS animations were running: a sideways logo marquee and three 'orbit' animations on the integration ring; the monitors mockup also exposes real selects, a number input and checkboxes. With reducedMotion: 'reduce' no animations were running and the scrolled screen was static, though two first-screen frames still differed.",
+      "accessibility": "The dashboard mockup's text is very small on desktop and unreadable on mobile (sidebar buttons measured 51 × 11px; 31 links or buttons under 32px at 390). Grey subtitle and feature body copy sit at mid-grey on white. The hero dashboard is a cluster of real buttons and inputs that are decorative, so they appear in the tab order without a page-level purpose. No horizontal overflow at either width.",
+      "mobile": "The h1 wraps to three lines at 26px; the dashboard shrinks to a 350px-wide image-like block with illegible text, and the floating colour blocks bunch below the logo row. Feature rows stack text-above-card; the bento becomes three stacked cards; the FAQ keeps its full-width rows. Nav collapses to logo plus hamburger with the two buttons hidden. Page height 5,516px versus 5,831px on desktop.",
+      "copy": "h1: \"Your agents should never make the same mistake twice.\"; the first action is the nav's \"Book a demo\" (there is no button in the hero body), repeated under 'The loop' and in the closing section. The first-screen proof is the dashboard itself with plausible numbers (109K conversations, 14.8% signal rate, 94% pass); customer logos (Final Round AI, Kanu, Brief, Corelayer, Autumn, CodeWisp) sit just under the fold."
+    },
+    "interpretation": {
+      "principles": [
+        "If the product is a dashboard, build the hero as working HTML and let it be clicked; a 32px headline is enough when the artefact underneath is the argument.",
+        "Keep one accent colour for every interactive cue (nav dot, plus signs, primary button) and push the rest of the palette into soft gradients behind mockups.",
+        "Alternate text-left/UI-right rows with one verb-led heading each ('Monitor', 'Find', 'Test') so a feature list reads as a loop.",
+        "Put the FAQ on the homepage when the category is crowded; naming competitors in a question answers positioning cheaply."
+      ],
+      "fit": "Suits developer and ops tools whose UI is dense and legible at a glance, especially pre-launch teams without customer photos; wrong for consumer or brand-led products and for any product whose UI is not yet presentable.",
+      "risks": "The dashboard dominates the first screen but its text is small on desktop and lost on mobile. The hero has no in-body call to action, and the two nav buttons disappear on mobile, so the only visible CTA at 390 is below the logo row. Decorative buttons and inputs in the mockups add keyboard noise. The blurred colour blocks are the only brand gesture and read as placeholders."
+    },
+    "limitations": [
+      "Which element changed between two first-screen frames under reduced motion was not isolated.",
+      "Tablet widths not inspected; no interaction tested at 390 beyond rendering and measurement.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://moda.dev",
+      "https://www.ycombinator.com/companies/moda"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-19",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 32,
+        "h1_weight": 600,
+        "h1_tracking_em": -0.02,
+        "h1_line_height": 1.3,
+        "h1_family": "GT Standard L",
+        "display_px": 32,
+        "body_px": 20,
+        "body_line_height": 1.4,
+        "body_measure_ch": 55,
+        "families": [
+          "GT Standard L",
+          "gtStandardMono"
+        ],
+        "content_width_px": 1440,
+        "nav_height_px": 99,
+        "sticky_nav": true,
+        "hero_height_px": 977,
+        "section_count": 6,
+        "page_height_px": 5831,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 5,
+        "animations_after_scroll": 6,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 26,
+        "h1_weight": 600,
+        "h1_tracking_em": 0,
+        "h1_line_height": 1.3,
+        "h1_family": "GT Standard L",
+        "display_px": 26,
+        "body_px": 17,
+        "body_line_height": 1.4,
+        "body_measure_ch": 41,
+        "families": [
+          "GT Standard L",
+          "gtStandardMono"
+        ],
+        "content_width_px": 350,
+        "nav_height_px": 44,
+        "sticky_nav": true,
+        "hero_height_px": 509,
+        "section_count": 5,
+        "page_height_px": 5516,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 5,
+        "animations_after_scroll": 6,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "idilio",
+    "name": "Idilio",
+    "url": "https://idilio.tv/en",
+    "category": "Media",
+    "archetype": "expressive-world",
+    "archetype_note": "Dark consumer app-store launch page: gradient headline, phone mockup, poster grid, numbered how-it-works, team, FAQ, contact form.",
+    "inspected_on": "2026-10-20",
+    "summary": "A black, app-store-style page that stacks every persuasion device (badge, stars, download counts, posters, five-step walkthrough, team bios, FAQ) and gates entry behind a QR download modal.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "a16z-speedrun",
+    "round": "a16z speedrun SR006",
+    "verification_url": "https://speedrun.a16z.com/companies/idilio",
+    "geography_evidence": "https://speedrun.a16z.com/companies/idilio",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "Black ground with a faint purple glow. Left column: a pill badge ('#1 Microdrama app in Latin America · 1.3M+ downloads'), a two-line h1 whose second line is a pink-orange-yellow-green gradient, a paragraph, a purple-ruled second paragraph repeating the pitch, a 4.8-star row, white App Store and Google Play buttons and a dim 'Be the first to know →' link. Right: a large phone frame holding an autoplay video (black here) with a mute icon. On load a 'Download our app' QR modal covers the page and a Spanish cookie bar sits along the bottom.",
+      "typography": "Everything renders in measured 'Arial' (a second family, 'Sofia Pro Zone', appears in the list and shows in the nav and logo). h1 72px, weight 700, line-height 1, tracking -0.025em (48px on mobile). Body 18px/1.6 at ~64ch, mostly light grey on black. Section eyebrows are small, letter-spaced caps in purple, teal, orange or green; step numbers are very large numerals coloured per step; team names are large and bold.",
+      "visual_system": "Near-black ground throughout with per-section coloured glows (purple, teal, green, orange). Accent purple for the primary button and pulse dot; a five-hue gradient recurs on display lines and the nav underline. Surfaces are charcoal cards with 1px white/10% borders and rounded corners. Imagery: four telenovela-style show posters, five phone screenshots of the app, three portrait photos. Icons sit in small tinted squares.",
+      "page_sequence": "Nav → hero with phone video → five-stat strip (1.3M+ downloads, 50+ countries, 3M+ monthly views, 29+ series, 400K+ followers) → 'What is a microdrama?' four cards → 'Latest releases' poster row + 'See all shows' → 'How it works' five numbered steps with alternating phone screenshots → 'Made in Latin America' gradient headline, three stats, awards card → 'Built different' six cards → 'We're not just a studio' tech list → creators banner + 'Submit Your Story' → team: three portrait bios → FAQ (six collapsibles) → 'Let's talk' name/email/message form → footer.",
+      "interaction": "Operated: after dismissing the download modal with 'Not now', clicked the first FAQ summary ('What are microdramas?'); the question turned purple, the plus icon became an ×, and a four-line answer expanded beneath. On load the only running animation was a 'pulse' on the badge's purple dot; the hero video element was autoplay+muted but never left readyState 0 in this browser. With reducedMotion: 'reduce' the pulse animation still ran and the video stayed paused. Header is sticky at 100px; the cookie bar is fixed at the bottom.",
+      "accessibility": "Secondary copy is grey (~40-60% white) on black, and the 'Be the first to know →' and 'Not now' links are set at 25-40% white. Nav language buttons measured 16 × 16px on desktop and 18 × 20px on mobile; footer social icons are 20px; 19 targets under 32px at 390. The download modal and cookie bar both overlay the first screen, and the modal's close is a 15px × glyph. No horizontal overflow. The h1 gradient line's green word ('With') sits low-contrast on black.",
+      "mobile": "The hero stacks: badge, three-line h1, paragraph, store buttons, then the phone frame (which is empty) below, pushing the first real content past 1,500px. The stat strip becomes a two-column grid with the fifth stat alone; format cards, how-it-works steps and team bios stack one column; posters become a 2 × 2 grid. The cookie bar covers about a fifth of the viewport and the QR modal still appears. Page height 18,486px.",
+      "copy": "h1: \"Latin Microdramas You'll Fall in Love With\"; primary actions are the store badges \"App Store\" / \"Google Play\" plus the nav's \"Be the first to know\". First-screen proof is numeric and ratings-based: the '#1 … 1.3M+ downloads' badge, '4.8 · 1.3M+ downloads on iOS and Android' with five stars, and 'Over 1 million people are already watching'."
+    },
+    "interpretation": {
+      "principles": [
+        "For a consumer app, put the store badges and a rating line in the first screen and repeat the download count in the badge, the stars and the body copy; redundancy is the point.",
+        "Show the product's actual content (posters, in-app screenshots) rather than abstractions; a numbered walkthrough with real screens explains a monetisation model without a diagram.",
+        "Pick one accent and one gradient and reuse them on every eyebrow, underline and display line so a long dark page stays one brand.",
+        "Do not stack a modal and a cookie bar on the first screen; one interrupt is already a cost."
+      ],
+      "fit": "Suits mobile-first consumer media and games with an existing audience and app-store presence; wrong for B2B, for anything without downloadable proof, and for a product whose first screen needs to be scannable without dismissing overlays.",
+      "risks": "Two overlays on load hide the hero. The page is 15 sections and ~13,500px, with investor, creator and viewer audiences all served on one homepage, so the hero copy repeats itself and the CTA shifts between 'download', 'be the first to know', 'submit your story' and 'let's talk'. Grey-on-black secondary text and tiny language/social controls hurt legibility and tap accuracy. The empty phone frame on mobile is a large blank gap if the video fails."
+    },
+    "limitations": [
+      "The hero video never loaded in headless Chromium (readyState 0), so the phone-frame content was not seen.",
+      "Tablet widths not inspected; no interaction tested at 390 beyond rendering and measurement.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://idilio.tv/en",
+      "https://speedrun.a16z.com/companies/idilio"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-19",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 72,
+        "h1_weight": 700,
+        "h1_tracking_em": -0.025,
+        "h1_line_height": 1,
+        "h1_family": "Arial",
+        "display_px": 72,
+        "body_px": 18,
+        "body_line_height": 1.6,
+        "body_measure_ch": 64,
+        "families": [
+          "Arial",
+          "Sofia Pro Zone"
+        ],
+        "content_width_px": 924,
+        "nav_height_px": 100,
+        "sticky_nav": true,
+        "hero_height_px": 900,
+        "section_count": 15,
+        "page_height_px": 13445,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "not_observed",
+        "animations_on_load": 1,
+        "animations_after_scroll": 1,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": true
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 48,
+        "h1_weight": 700,
+        "h1_tracking_em": -0.025,
+        "h1_line_height": 1,
+        "h1_family": "Arial",
+        "display_px": 48,
+        "body_px": 18,
+        "body_line_height": 1.6,
+        "body_measure_ch": 38,
+        "families": [
+          "Arial",
+          "Sofia Pro Zone"
+        ],
+        "content_width_px": 342,
+        "nav_height_px": 64,
+        "sticky_nav": true,
+        "hero_height_px": 1544,
+        "section_count": 15,
+        "page_height_px": 18486,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "not_observed",
+        "animations_on_load": 1,
+        "animations_after_scroll": 1,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": true
+      }
+    }
+  },
+  {
+    "id": "sketchpro-ai",
+    "name": "SketchPro.ai",
+    "url": "https://sketchpro.ai/",
+    "category": "Creative tools",
+    "archetype": "immersive-editorial",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A full-bleed architectural video hero with a 96px light-weight four-word headline, followed by a quiet off-white page of demo videos, a stats band and one quote carousel.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "neo",
+    "round": "Neo portfolio (stage: Seed)",
+    "verification_url": "https://neo.com/startups?tab=Neo%20portfolio",
+    "geography_evidence": "https://neo.com/startups?tab=Neo%20portfolio",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "The whole first screen is a blue-grey photograph (the poster of a 1440px-wide autoplay video) of a curved glass facade shot from below. Centred white text: a one-line h1 'Design more. Document less.', a two-line subtitle, a white pill 'Request a demo' and an outlined pill 'See how it works →'. A row of white customer logos (RAMSA, SOM, Ware Malcomb, dar, FFKR, Devcon, Premier) scrolls along the bottom edge of the image. The nav is transparent over the image with a moon icon for dark mode.",
+      "typography": "Single grotesque, measured family 'fkGrotesk' (Plus Jakarta Sans also listed). h1 96px, weight 300, line-height 1, tracking -0.035em; 40px on mobile at the same weight and tracking. Body 20px/1.4 at a narrow ~31ch measure (18px/1.6 on mobile). Section headlines are roughly half the h1 size at regular weight; eyebrows are small letter-spaced grey caps ('PLATFORM', 'FIRM STANDARDS', 'SECURITY'); ampersands in headings are set in a serif italic. Stats use large light numerals. The closing headline returns to near the hero's size and weight.",
+      "visual_system": "After the photographic hero, the ground is off-white/near-white with hairline rules dividing sections and a 1px-bordered stat band. There is no accent colour: buttons are black or white pills, links are grey, the only colour is the hero photograph and the logo's blue-green mark. Imagery is two large white-framed demo video panels (blank in headless) and a mock 'AI Knowledge Base' card with a text cursor. The page ships a dark-mode toggle.",
+      "page_sequence": "Transparent nav over video hero + logo marquee → two-tone positioning statement ('SketchPro is AI designed for architecture & engineering firms…') → large demo video panel with expand/mute controls → 'Platform' split: headline left, six-row feature list right (Automated dimensioning, Tagging, Views & sheets, Schedules, QA/QC checks, Firm standards) → second demo video panel → three-stat band (15 mins, 20+ hrs, 50+) → 'Firm standards' split with typing knowledge-base card and three benefit rows → quote carousel (4 quotes) → 'Security' four-point grid → closing headline + 'Request a demo' → one-line footer.",
+      "interaction": "Operated: clicked the 'Next quote' arrow; the quote changed from a Dar engineer's airport-scale quote to a RAMSA associate's 'SketchPro isn't about replacing…', the attribution updated, and the active dot moved from first to second. On load two 'logo-scroll' CSS animations ran (the logo marquee); on scroll, the knowledge-base card's text typed itself out (character count rose from 332 to 424). The hero and demo videos were autoplay+muted but stayed at readyState 0 in this browser. With reducedMotion: 'reduce' the two logo-scroll animations still ran; the measurement record found a reduced-motion rule.",
+      "accessibility": "White 300-weight text over a mid-tone photograph; subtitle contrast depends on the frame behind it. Mobile quote dots measured 6 × 6px (24 × 6px when active) and the mobile menu button is 24px; 10 targets under 32px at 390. Demo-video panels are large transparent 'Play demo video' buttons covering the whole frame with an unmute button inside. Feature-list descriptions are light grey on off-white. No horizontal overflow at either width.",
+      "mobile": "Hero stays full-bleed with the headline on two lines at 40px and both pills stacked full-width; the logo marquee shows two logos at a time. The positioning statement runs seven lines. Feature list keeps its two-column name/description rows at reduced width; stat band and security grid stack to one column; the knowledge-base card goes above the 'Firm standards' copy. Page height 7,615px versus 6,183px on desktop.",
+      "copy": "h1: \"Design more. Document less.\"; primary action: \"Request a demo\" (nav button reads \"Request a Demo\"). First-screen proof is the logo marquee of named architecture firms and the subtitle's claim 'The world's leading architecture and engineering firms trust SketchPro'; numeric proof ('15 mins', '20+ hrs', '50+') arrives three screens later."
+    },
+    "interpretation": {
+      "principles": [
+        "A four-word, two-sentence headline at light weight over a single evocative image can replace a product shot in the first screen when the logos beneath it do the proving.",
+        "Keep the body of the page colourless and let one photograph carry all the hue; black and white pills then read as the only interactive elements.",
+        "Put a feature list in a name/description two-column table with hairlines instead of cards; it scans faster and scales to mobile without re-composition.",
+        "Pair a stats band with the demo video it summarises so the number has a visible referent."
+      ],
+      "fit": "Suits tools sold to design, architecture or engineering professionals where the customer logos are recognisable and a cinematic image signals taste; wrong for products that need the UI visible in the first screen, or for teams without a loadable video, since the page's two largest panels are then empty.",
+      "risks": "Two large video panels failed to load here and rendered as blank white frames, leaving roughly 1,250px of empty space; the page depends on media that may not play. Light-weight white type over a photograph is contrast-fragile. The logo marquee ignores reduced motion. Quote-carousel dots are too small to tap on mobile. Proof is logo- and claim-based; no customer numbers appear until the stats band."
+    },
+    "limitations": [
+      "Hero and demo videos never loaded in headless Chromium (readyState 0), so their motion and content were not seen; the hero image described is the video poster frame.",
+      "Tablet widths not inspected; no interaction tested at 390 beyond rendering and measurement; dark-mode toggle not operated.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://sketchpro.ai/",
+      "https://neo.com/startups?tab=Neo%20portfolio"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 96,
+        "h1_weight": 300,
+        "h1_tracking_em": -0.035,
+        "h1_line_height": 1,
+        "h1_family": "fkGrotesk",
+        "display_px": 96,
+        "body_px": 20,
+        "body_line_height": 1.4,
+        "body_measure_ch": 31,
+        "families": [
+          "fkGrotesk",
+          "Plus Jakarta Sans"
+        ],
+        "content_width_px": 1184,
+        "nav_height_px": 64,
+        "sticky_nav": true,
+        "hero_height_px": 6183,
+        "section_count": 7,
+        "page_height_px": 6183,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 2,
+        "animations_after_scroll": 3,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 40,
+        "h1_weight": 300,
+        "h1_tracking_em": -0.035,
+        "h1_line_height": 1,
+        "h1_family": "fkGrotesk",
+        "display_px": 40,
+        "body_px": 18,
+        "body_line_height": 1.6,
+        "body_measure_ch": 31,
+        "families": [
+          "fkGrotesk",
+          "Plus Jakarta Sans"
+        ],
+        "content_width_px": 342,
+        "nav_height_px": 64,
+        "sticky_nav": true,
+        "hero_height_px": 7615,
+        "section_count": 7,
+        "page_height_px": 7615,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 2,
+        "animations_after_scroll": 3,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "agency",
+    "name": "Agency",
+    "url": "https://agency.inc",
+    "category": "Customer support",
+    "archetype": "functional-entrance",
+    "archetype_note": "Post-acquisition wind-down notice: one signed letter, no product content; not a marketing homepage in any of the seven families.",
+    "inspected_on": "2026-10-20",
+    "summary": "The homepage has been replaced by a four-paragraph wind-down letter under an acquisition banner; there is no headline, product, proof or call to action.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "sequoia-arc",
+    "round": "Arc 2024",
+    "verification_url": "https://sequoiacap.com/companies/agency",
+    "geography_evidence": null,
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "A 40px purple-to-black banner across the top reads 'Agency has been acquired by Klaviyo on August 5th, 2026. Read about it here.' Below it, on an off-white ground, sits the Agency wordmark with four text links (Security, Blog, Press, Privacy) and then a centred ~760px column of body text: four paragraphs explaining the acquisition and the August 31, 2026 wind-down, signed 'Elias, Luke & the Agency team'. A cookie-consent dialog covers the top of this column on load. There is no h1, no image and no button.",
+      "typography": "No h1 was measured. Display and body are the same measured family, 'ABC Normal', at 22px with line-height 1.6 and a ~73ch measure on desktop (18px/1.5, ~36ch on mobile). The letter is set in regular weight, dark grey on off-white, with one underlined inline link ('Agency is being acquired by Klaviyo'). The banner and nav links are small and semibold. Other listed families (Lato, Eina 01, helvetica) appear only in the cookie dialog and footer.",
+      "visual_system": "Off-white page ground, a near-black footer-less layout with a white footer band. The only colour is the banner's purple gradient and the teal 'Accept' button of the third-party cookie dialog. Footer shows AICPA SOC and ISO 27001 badges, a 'Subscribe to Our Newsletter' input with a black 'Submit' pill, and LinkedIn/X icons. No illustration, screenshot or photograph anywhere.",
+      "page_sequence": "Acquisition banner → nav (logo + four links) → wind-down letter (four paragraphs + signature) → footer: logo, compliance badges, 'Company' links (Security, Press), newsletter form, legal links and social icons. Page height 1,221px on desktop, 1,520px on mobile.",
+      "interaction": "Operated: clicked the cookie dialog's '×' ('Dismiss cookie banner'); the dialog disappeared and the full letter became readable, with no other change. Nothing animated on load (zero running animations) and nothing moved on scroll; the nav sits in a fixed-position wrapper but the page is only ~1.3 screens tall. With reducedMotion: 'reduce' nothing ran and two frames 1.5s apart were identical.",
+      "accessibility": "The page has no heading elements at all, so the letter is unstructured for screen readers. The cookie dialog's dismiss control measured 14 × 25px on mobile; footer legal links are 17-20px tall. On mobile the dialog covers most of the first screen and the nav collapses to a hamburger. Banner text is small white type on dark purple. No horizontal overflow at either width.",
+      "mobile": "Banner text truncates at the right edge ('…on August 5th,'). The letter becomes a single full-width column at 18px; the cookie dialog stacks its Accept/Decline buttons full-width and hides the first two paragraphs until dismissed. Footer stacks logo, Company links, badges, newsletter form and centred legal links.",
+      "copy": "There is no h1; the first line of content is the banner 'Agency has been acquired by Klaviyo on August 5th, 2026. Read about it here.' and the letter opens 'As announced on August 5, 2026, Agency is being acquired by Klaviyo…'. There is no primary action; the only interactive elements are the banner link to a TechCrunch article, the nav links and the footer newsletter 'Submit'. First-screen proof: none."
+    },
+    "interpretation": {
+      "principles": [
+        "When a company winds down, a short signed letter at reading size with one dated banner is a complete homepage; dropping the marketing shell avoids promising a product that will not exist.",
+        "Keep the compliance badges and the Security link in the footer through a shutdown; existing customers still need them while data is migrated.",
+        "A single-column, 22px, ~73ch letter is readable, but even one page of prose needs a heading element so assistive tech can find the start."
+      ],
+      "fit": "Suits a sunset or acquisition notice, a maintenance page or a one-announcement microsite; wrong as a reference for any live product homepage, since it demonstrates nothing about hero, proof or conversion design.",
+      "risks": "No heading structure, no primary action and a third-party cookie dialog that hides the message on first paint, especially on mobile. The banner truncates at 390px, cutting off the date. The newsletter form in the footer invites sign-ups for a company that is closing. For dataset purposes the page carries no transferable landing-page pattern beyond the wind-down letter itself."
+    },
+    "limitations": [
+      "The page is a post-acquisition notice, not the product homepage that existed before August 2026; the earlier design was not inspected.",
+      "No candidate location in the record, so no geography evidence.",
+      "Tablet widths not inspected; no interaction tested at 390 beyond rendering and measurement.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://agency.inc",
+      "https://sequoiacap.com/companies/agency"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": null,
+        "h1_weight": null,
+        "h1_tracking_em": null,
+        "h1_line_height": null,
+        "h1_family": null,
+        "display_px": 22,
+        "body_px": 22,
+        "body_line_height": 1.6,
+        "body_measure_ch": 73,
+        "families": [
+          "ABC Normal",
+          "Lato",
+          "Eina 01",
+          "helvetica"
+        ],
+        "content_width_px": null,
+        "nav_height_px": 53,
+        "sticky_nav": false,
+        "hero_height_px": null,
+        "section_count": 1,
+        "page_height_px": 1221,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "unverified",
+        "animations_on_load": 1,
+        "animations_after_scroll": 1,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": null,
+        "h1_weight": null,
+        "h1_tracking_em": null,
+        "h1_line_height": null,
+        "h1_family": null,
+        "display_px": 18,
+        "body_px": 18,
+        "body_line_height": 1.5,
+        "body_measure_ch": 36,
+        "families": [
+          "ABC Normal",
+          "Lato",
+          "Eina 01",
+          "helvetica"
+        ],
+        "content_width_px": null,
+        "nav_height_px": 0,
+        "sticky_nav": false,
+        "hero_height_px": null,
+        "section_count": 1,
+        "page_height_px": 1520,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "unverified",
+        "animations_on_load": 1,
+        "animations_after_scroll": 1,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "pravah",
+    "name": "Pravah",
+    "url": "https://www.pravah.com/",
+    "category": "Energy",
+    "archetype": "typographic-technical",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A one-and-a-half-screen research-lab page: a canvas glyph of a transformer symbol, one 52px headline, four hairline-ruled use cases, an affiliations row, and nothing to click but 'Get in touch'.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "pear",
+    "round": "Pear portfolio (listed stages: Pre-seed, Seed)",
+    "verification_url": "https://pear.vc/companies/",
+    "geography_evidence": null,
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "Warm off-white ground. A thin nav (wordmark 'Pravāh' left; 'Research', 'Team', 'Get in touch' right) above a 660 × 198px canvas drawing of an electrical transformer symbol (two overlapping circles between two bus lines), rendered either as hairline strokes or as rows of 0/1 digits depending on when it was captured. Below it, left-aligned in a ~660px column: a two-line h1 and a five-line paragraph. No button, image or logo row in the first screen; the first screen is otherwise empty space.",
+      "typography": "One family throughout, measured 'Switzer'. h1 52px, weight 400, line-height 1.1, tracking -0.025em (30px on mobile). Body 16px/1.5 at ~56ch (~40ch on mobile). Use-case blocks use tiny letter-spaced grey caps for the audience label, a slightly-larger-than-body regular title and smaller grey description text. The canvas glyph's digits are set in a tiny monospace. Footer links are small.",
+      "visual_system": "No colour: off-white ground (rgb 253,252,249), near-black text, mid-grey secondary text and 1px hairline rules; a 'Dark' footer toggle inverts to rgb(26,26,26) with light text. The only graphic is the canvas transformer glyph, which doubles as the brand motif. Affiliation marks (Stanford, MIT, Google, IIT, University of Chicago, Octopus Energy) are rendered in grey. Research and Team exist as hidden views swapped in by the nav rather than as sections below.",
+      "page_sequence": "Nav → canvas glyph → h1 + paragraph → four hairline-separated use cases, each with an audience eyebrow (Hyperscalers & Neoclouds / Data center developers / Chip companies / Power traders), a title and two lines → 'Built by engineers, scientists and researchers from' + six grey marks → footer (© Pravāh 2026 · Dark · Open roles). Research (six papers) and Team (four people, six advisors) are separate hidden views reached from the nav.",
+      "interaction": "Operated: clicked the footer 'Dark' button (aria-label 'Switch to dark'); the page inverted to a near-black ground, the label changed to 'Light', and the glyph re-rendered in light digits. On load the page was blank at t=0 and content had faded in by 1.5s (the CSS fades [data-in] blocks in); the canvas glyph was seen in two states (line drawing and binary digits) across captures. No CSS/WAAPI animations ran after load. With reducedMotion: 'reduce' nothing ran, two frames 2s apart were identical, and the CSS disables the fade-in under that query.",
+      "accessibility": "The markup has no viewport meta tag: with mobile device emulation the document laid out at 980px wide (scrollWidth 980 at a 390px viewport), so a real phone would see a zoomed-out desktop layout; the non-emulated 390 capture shows a clean single column. Use-case eyebrows are tiny and descriptions are mid-grey on off-white. Nav and footer links measured 20px tall. Headings are well structured (h1 then h2s). The glyph canvas is aria-hidden.",
+      "mobile": "In the 390 capture (no device emulation) the column fills the width: glyph shrinks with its binary rows, h1 wraps to three lines at 30px, the four use cases stack with the same hairlines, and the affiliation marks reflow to two rows of three. Nav stays a single row with all three links. Page height 1,823px. Under true mobile emulation the page did not adapt (see accessibility).",
+      "copy": "h1: \"Agents and machine learning for power systems.\"; the only primary action is the nav link \"Get in touch\", which is a mailto. First-screen proof: none; the affiliations row ('Built by engineers, scientists and researchers from' Stanford, MIT, Google, IIT, Chicago, Octopus Energy) sits at the bottom of the page, and research papers are one click away in a hidden view."
+    },
+    "interpretation": {
+      "principles": [
+        "A deep-tech company can run a homepage as a single column of plain statements: one headline, four audience-labelled use cases, one affiliations line, and no buttons.",
+        "Use a schematic of the domain (here a transformer symbol) as the only graphic so the glyph carries both brand and subject.",
+        "Label each use case by who it is for before what it does; audience eyebrows let four buyers find their row in one scan.",
+        "If proof is academic (papers, affiliations), put it on the page body rather than behind a nav view, so a first-time visitor sees it without clicking."
+      ],
+      "fit": "Suits research-led infrastructure or ML companies in a recruiting or partnership phase where credibility comes from people and papers; wrong for anything self-serve, for a product with a UI to show, or for a sales motion that needs a form rather than a mailto.",
+      "risks": "The missing viewport meta means phones render a 980px desktop layout, undercutting an otherwise simple page. There is no call to action beyond an email link, no product evidence, and the strongest proof (papers, team, advisors) is hidden until the nav is used. The fade-in leaves the first second blank. Tiny eyebrow caps and grey descriptions are at the edge of legibility."
+    },
+    "limitations": [
+      "The canvas glyph's transition between line drawing and binary digits was inferred from two captures in different states; its trigger was not observed.",
+      "No candidate location in the record, so no geography evidence.",
+      "Tablet widths not inspected; no interaction tested at 390 beyond rendering and measurement.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://www.pravah.com/",
+      "https://pear.vc/companies/"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 52,
+        "h1_weight": 400,
+        "h1_tracking_em": -0.025,
+        "h1_line_height": 1.1,
+        "h1_family": "Switzer",
+        "display_px": 52,
+        "body_px": 16,
+        "body_line_height": 1.5,
+        "body_measure_ch": 56,
+        "families": [
+          "Switzer"
+        ],
+        "content_width_px": 1424,
+        "nav_height_px": 72,
+        "sticky_nav": false,
+        "hero_height_px": 532,
+        "section_count": 1,
+        "page_height_px": 1734,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 4,
+        "animations_after_scroll": 4,
+        "has_video": false,
+        "has_canvas": true,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 30,
+        "h1_weight": 400,
+        "h1_tracking_em": -0.025,
+        "h1_line_height": 1.1,
+        "h1_family": "Switzer",
+        "display_px": 30,
+        "body_px": 16,
+        "body_line_height": 1.5,
+        "body_measure_ch": 40,
+        "families": [
+          "Switzer"
+        ],
+        "content_width_px": 326,
+        "nav_height_px": 72,
+        "sticky_nav": false,
+        "hero_height_px": 496,
+        "section_count": 1,
+        "page_height_px": 1823,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 4,
+        "animations_after_scroll": 4,
+        "has_video": false,
+        "has_canvas": true,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "acely",
+    "name": "Acely",
+    "url": "https://acely.com",
+    "category": "Education",
+    "archetype": "functional-entrance",
+    "archetype_note": "Consumer conversion page: lifestyle photo, proof ticker, pricing and FAQ in one scroll.",
+    "inspected_on": "2026-10-20",
+    "summary": "A navy consumer landing page that puts a student photo with a score overlay beside a serif promise and repeats one free-trial button through pricing and FAQ.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "pear",
+    "round": "Pear portfolio, Seed → Series A (year not shown)",
+    "verification_url": "https://pear.vc/companies/",
+    "geography_evidence": null,
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "A light-green promo bar and a white sticky nav sit above a full-width navy hero. Left column: three-line serif h1, a one-line sans subhead, a green pill button and a small 'No credit card required' note. Right column: a rounded photo of a student at a laptop with a large green '1480' overlaid and a caption about a 110-point gain. A cookie notice overlaps the bottom-right corner.",
+      "typography": "Measured h1 64px (40px mobile), weight 400, tracking -0.02em, line-height 1.1, family Lora (a serif). Body 18px/1.5 (16px mobile) in measured DM Sans; DM Mono appears in small uppercase labels ('STUDENTS AT TOP SCHOOLS LOVE ACELY', 'SAT 1410 → 1520', 'BEST VALUE'). Section headings reuse the serif at smaller sizes; feature titles use the bold sans.",
+      "visual_system": "Navy ground for hero and footer, warm off-white elsewhere; accents are a light green (promo bar, primary button, score chips), a blue (plan highlight, numbered steps) and a lavender panel. Surfaces are rounded cards with soft shadows; small pixel-dot textures decorate plan-card headers. Imagery: one lifestyle photo, product screenshots, four illustrated feature tiles, avatar chips, and a line-art character near the final call to action.",
+      "page_sequence": "Promo bar → nav → hero (serif h1 + photo) → university logo marquee → '20 minutes a day' three-step with product screenshot → blue score-change ticker (name, SAT/ACT before→after) → four feature tiles → three testimonial cards → 'Know what you need' checklist + question-card image → three pricing cards + button → FAQ accordion (15 items) → illustration + final CTA → dark footer.",
+      "interaction": "Operated the FAQ item 'What is Acely?': aria-expanded turned true, the chevron flipped and two paragraphs of answer text appeared inline; no URL change. On load the university logo row and the score ticker scroll sideways continuously (swiper slides moved ~70px in 1.5s). With reducedMotion 'reduce' no visible element moved at the logo row; the measurement record notes a reduced-motion rule is present.",
+      "accessibility": "A persistent cookie notice covers the bottom-right of the hero on desktop. Small mono labels (~12px) sit on green and blue chips. Pricing cards are whole-card buttons (each 324×400px) whose selected state is a checkbox icon. The score ticker has no visible pause control. No horizontal overflow measured at either width.",
+      "mobile": "Hero stacks: centred h1, subhead, button, then the photo below. Logo row and ticker keep scrolling horizontally; the three steps move above the screenshot; feature tiles become icon-left rows; testimonials and pricing cards become one-at-a-time swipeable carousels with arrow buttons and a progress bar; FAQ items stay full-width; footer columns stack to two per row.",
+      "copy": "h1: \"Your personal study trainer for the SAT & ACT.\" Primary action: \"Try for free\" (with a 'No credit card required' line beneath). First-screen proof is the photo overlay '1480 — Ava increased her SAT score by 110 points in 2 months'; university logos sit just below the fold."
+    },
+    "interpretation": {
+      "principles": [
+        "Put one concrete outcome number inside the hero image so the proof is read before the copy.",
+        "Pair a warm serif headline with a plain sans body to make a tutoring product feel personal rather than corporate.",
+        "Repeat the same low-friction action label at every section boundary instead of introducing new asks.",
+        "Turn social proof into a compact ticker of before→after results rather than long quotes."
+      ],
+      "fit": "Suits consumer subscriptions with a free trial and measurable outcomes (test prep, fitness, language apps); wrong for developer tools or infrastructure where a lifestyle photo and pricing-first flow would feel off-register.",
+      "risks": "Two auto-scrolling marquees and a cookie notice compete with the hero; three plan cards and 15 FAQ items make a long page (8,000+px) that leans on the reader scrolling; the serif at weight 400 reads light on navy at mobile size."
+    },
+    "limitations": [
+      "Could not verify animation timing or whether the ticker pauses on hover.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://acely.com",
+      "https://pear.vc/companies/"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-19",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 64,
+        "h1_weight": 400,
+        "h1_tracking_em": -0.02,
+        "h1_line_height": 1.1,
+        "h1_family": "Lora",
+        "display_px": 64,
+        "body_px": 18,
+        "body_line_height": 1.5,
+        "body_measure_ch": 95,
+        "families": [
+          "DM Sans",
+          "Lora",
+          "DM Mono"
+        ],
+        "content_width_px": 1200,
+        "nav_height_px": 78,
+        "sticky_nav": true,
+        "hero_height_px": 841,
+        "section_count": 8,
+        "page_height_px": 8035,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 11,
+        "animations_after_scroll": 2,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": true
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 40,
+        "h1_weight": 400,
+        "h1_tracking_em": -0.02,
+        "h1_line_height": 1.1,
+        "h1_family": "Lora",
+        "display_px": 40,
+        "body_px": 16,
+        "body_line_height": 1.5,
+        "body_measure_ch": 37,
+        "families": [
+          "DM Sans",
+          "Lora",
+          "DM Mono"
+        ],
+        "content_width_px": 342,
+        "nav_height_px": 64,
+        "sticky_nav": true,
+        "hero_height_px": 949,
+        "section_count": 8,
+        "page_height_px": 9315,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 2,
+        "animations_after_scroll": 2,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": true
+      }
+    }
+  },
+  {
+    "id": "listen-labs",
+    "name": "Listen Labs",
+    "url": "https://listenlabs.ai",
+    "category": "Marketing",
+    "archetype": "editorial-platform",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A two-colour editorial page (cream ground, one saturated blue) that runs an 88px headline over a strip of art-directed portraits, then a long numbered product walkthrough.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "sequoia-arc",
+    "round": "Arc 2023",
+    "verification_url": "https://sequoiacap.com/companies/listen-labs",
+    "geography_evidence": null,
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "Thin nav (logo, five menu items, a moon icon, Sign in, Demo) over a cream field. A small outlined pill ('Join us at an event'), a two-line blue headline spanning about three-quarters of the width, a two-line subhead, and an inline email field joined to a 'Book a demo' button. Below, a full-width row of five colour-graded portraits on green and blue backdrops; one carries a small 'Insight Quote' card. A cookie dialog covers the lower right.",
+      "typography": "Measured h1 88px at both widths, weight 400, tracking -0.04em, line-height 1, family Inter; the same family carries everything (single measured family). Desktop body measured 12px/1.3 (the small section labels and card captions); mobile body 16px/1.4. Section titles are regular-weight blue sans well below h1 size; step numbers ('01'–'05') are large blue numerals; small sentence-case labels ('Trusted Partners', 'How it Works') sit at both ends of hairline rules at section tops.",
+      "visual_system": "Two colours do almost all the work: a warm cream ground and one saturated blue for headline, text, numerals, rules and the footer block; a second cream-on-blue inversion is available via the moon toggle. Surfaces are flat; the logo wall is a beige tile grid mixing logos with big stats. Imagery is heavily art-directed: colour-graded studio portraits, retro office scenes, team photos run through a blue duotone, and light product screenshots of a chat-style study builder.",
+      "page_sequence": "Nav → h1 + email/demo field → portrait strip → 'Trusted Partners' logo/stat tile grid → 'How it Works' five numbered steps, each with a product screenshot → 'Case Studies' three video cards with stat and quote → 'Use cases' six-row list beside a photo → 'See Listen in action' video with 3x/120+/50m+ stats → 'Research Partners' team grid (duotone portraits with prior employers) → 'Book a Demo' form over an office photo → blue footer with seven link columns.",
+      "interaction": "Operated the nav moon button ('Toggle dark mode'): body background switched from cream to the brand blue and headline/text from blue to cream; the portrait strip and layout were unchanged. On load the portrait strip filled in after the text (one capture showed it still empty) and the hero form re-laid itself out; the four videos stayed paused until played. With reducedMotion 'reduce', no visible element moved after load; the measurement record found no reduced-motion rule.",
+      "accessibility": "Measured desktop body text is 12px (section labels, captions, form legal copy); the outlined 'Join us at an event' pill is similarly small. Cookie dialog overlaps the hero portraits on both widths. The moon toggle is a 16×16px icon whose aria-pressed stayed 'false' after the colours switched. Four videos sit behind 'Play video' buttons and stayed paused.",
+      "mobile": "The h1 keeps its 88px measurement but the rendered hero shows the headline at a smaller visual size over two lines; the nav collapses to logo, a 'Book a Demo' button and a grid icon. The email field and button stay side by side in one full-width row; the portrait strip shows one portrait; the tile grid becomes two columns; each step's screenshot sits above its number and text; case-study cards show one at a time with the next peeking in; the use-case photos appear as a cropped two-image strip; footer columns go two-up.",
+      "copy": "h1: \"Customer Understanding, Loud and Clear\". Primary action: \"Book a demo\" next to a 'What's your work email?' field. The first screen offers no logos or numbers; its proof is the strip of interviewee portraits with a sample 'Insight Quote' card, and the logo/stat grid arrives one scroll down."
+    },
+    "interpretation": {
+      "principles": [
+        "Commit to one brand colour and one neutral so that photography can carry the mood without competing palettes.",
+        "Let a single oversized headline and a joined email-plus-button pair do the whole first-screen job, with proof one scroll below.",
+        "Number the product walkthrough and pair each step with a real screenshot so a long page reads as a sequence rather than a feature list.",
+        "Show the humans behind the service (team grid with prior employers) as a trust section for a services-heavy product."
+      ],
+      "fit": "Suits research, agency-like or insight products sold to marketing and product teams where tone and taste matter; wrong for a developer tool or utility where a 12,500px page and portrait-led hero would delay the concrete demonstration.",
+      "risks": "A very long page (12,500px desktop) with only one h1 and no h2 until far down; 12px measured body copy on desktop; 61 animations on load at 390 wide with no reduced-motion rule; a cookie dialog sits on the hero at both widths."
+    },
+    "limitations": [
+      "The nav bar did not render in this session's headless captures (visible in the earlier screenshots), so the toggle was triggered programmatically.",
+      "The use-case list's active row changed between captures but neither click nor hover changed it; its driver was not identified.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://listenlabs.ai",
+      "https://sequoiacap.com/companies/listen-labs"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 88,
+        "h1_weight": 400,
+        "h1_tracking_em": -0.04,
+        "h1_line_height": 1,
+        "h1_family": "Inter",
+        "display_px": 88,
+        "body_px": 12,
+        "body_line_height": 1.3,
+        "body_measure_ch": 33,
+        "families": [
+          "Inter"
+        ],
+        "content_width_px": 1044,
+        "nav_height_px": 44,
+        "sticky_nav": false,
+        "hero_height_px": 12525,
+        "section_count": 1,
+        "page_height_px": 12525,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "not_observed",
+        "animations_on_load": 4,
+        "animations_after_scroll": 0,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 88,
+        "h1_weight": 400,
+        "h1_tracking_em": -0.04,
+        "h1_line_height": 1,
+        "h1_family": "Inter",
+        "display_px": 88,
+        "body_px": 16,
+        "body_line_height": 1.4,
+        "body_measure_ch": 46,
+        "families": [
+          "Inter"
+        ],
+        "content_width_px": 358,
+        "nav_height_px": null,
+        "sticky_nav": null,
+        "hero_height_px": 9803,
+        "section_count": 1,
+        "page_height_px": 9803,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "not_observed",
+        "animations_on_load": 61,
+        "animations_after_scroll": 0,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "scope",
+    "name": "Scope",
+    "url": "https://www.getscope.ai/",
+    "category": "Logistics",
+    "archetype": "expressive-world",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "An industrial-mood page that alternates near-black and cream bands, uses a grainy amber gradient as its only colour, and sets every label in mono caps.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "ef",
+    "round": "EF portfolio (founded 2024)",
+    "verification_url": "https://www.joinef.com/portfolio/",
+    "geography_evidence": "https://www.joinef.com/portfolio/",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "A cream nav (logo, a grey pill holding three mono-caps links, 'LOG IN' and a black 'BOOK A DEMO') sits over a full-bleed near-black hero. Centre-aligned: a two-line h1, a two-line subhead and one cream 'BOOK A DEMO' button. Diagonal grainy amber-to-yellow stripes rise from the lower-left and upper-right corners; there is no product image in the first screen.",
+      "typography": "Measured h1 68px (36px mobile), weight 400, tracking -0.02em, line-height 1, family Archivo (a grotesque sans). Body measured 20px/1.5 (16.8px mobile) in Manrope. Geist Mono carries nav links, buttons, eyebrow labels ('HOW IT'S DONE', 'JOIN US'), image captions, security card titles and footer links, all in caps. Three oversized slashed-zero numerals ('10X', '55%', '0') act as display elements mid-page.",
+      "visual_system": "Alternating bands: black hero, cream industries section, black workflow grid, cream/black split stat tiles, cream testimonials, black security block, amber-gradient closing CTA, black footer. Colour is restricted to the grainy amber gradient and a small orange square bullet; photographs are orange-duotoned industrial scenes. Motifs: faint grid lines behind product mocks, a thin line-drawn part outline, wireframe polygons, hairline-bordered cards.",
+      "page_sequence": "Nav → black hero (h1, subhead, button) → 'Trusted by 7 of the top 10' orange eyebrow + 'Accelerate report writing' + horizontal strip of five duotone industry photos → black 'HOW IT'S DONE' four-step grid with dark UI mocks → split tile: line-drawing with 'More field time…' beside stacked 10X / 55% / 0 → 'JOIN US' (black) and 'FOR BUSINESSES' (cream) panels with wireframe shapes → three testimonials → black 'Data security' four-card row + SOC/ISO/GDPR badges → amber 'See Scope run on your own reports' CTA → footer.",
+      "interaction": "Operated the horizontal industries strip by dragging it: it scrolled 800px, revealing 'Energy' and 'Infrastructure' after 'Chemical'; no arrows or dots are provided. Nothing continued moving after load (four animations counted then zero); the measurement record counted seven animations after scroll at 1440, which I did not see as sustained motion. With reducedMotion 'reduce' nothing moved; no reduced-motion rule was observed in the measurement record.",
+      "accessibility": "Mono caps labels and captions appear small by eye (not measured) on black and cream. The closing 'BOOK A DEMO' button is dark brown text on a dark translucent panel over the amber gradient, with low contrast at both widths. The industries strip has no visible affordance that it scrolls. All four 'BOOK A DEMO' buttons leave the site for the same external scheduling page.",
+      "mobile": "Hero keeps the centred stack; the nav shows logo, 'BOOK A DEMO' and a hamburger. The industries strip shows one photo at a time; the four workflow steps stack vertically with their mocks; the 10X/55%/0 tiles become full-width black bands; 'JOIN US' and 'FOR BUSINESSES' panels stack; testimonials stack; security cards stack in one column. Page height grows to 10,614px.",
+      "copy": "h1: \"Supercharge your inspection team\". Primary action: \"BOOK A DEMO\". The first screen offers no logos, numbers or demo; the subhead claims '10x faster inspections' and the first proof ('Trusted by 7 of the top 10 largest inspection providers') appears one scroll down."
+    },
+    "interpretation": {
+      "principles": [
+        "Build an industrial identity from one textured gradient and mono-caps labels instead of a multi-colour palette.",
+        "Alternate dark and light full-width bands so each section reads as a distinct room rather than a list.",
+        "Let three giant numerals carry the outcome claims, with the explanation in small type beside them.",
+        "Duotone all photography to one hue so stock imagery looks owned."
+      ],
+      "fit": "Suits field-operations, hardware-adjacent or heavy-industry software selling to buyers who book demos; wrong for self-serve products that need the product visible in the first screen or a sign-up path.",
+      "risks": "No product or proof in the first screen; an unlabelled horizontal scroller hides two of five industries; the closing CTA button has weak contrast; mono caps at small sizes reduce readability; section_count measured as 0, suggesting no semantic sectioning."
+    },
+    "limitations": [
+      "Could not verify what the seven post-scroll animations in the measurement record were.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://www.getscope.ai/",
+      "https://www.joinef.com/portfolio/"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 68,
+        "h1_weight": 400,
+        "h1_tracking_em": -0.02,
+        "h1_line_height": 1,
+        "h1_family": "Archivo",
+        "display_px": 68,
+        "body_px": 20,
+        "body_line_height": 1.5,
+        "body_measure_ch": 103,
+        "families": [
+          "Manrope",
+          "Geist Mono",
+          "Archivo"
+        ],
+        "content_width_px": 1120,
+        "nav_height_px": 64,
+        "sticky_nav": false,
+        "hero_height_px": 7086,
+        "section_count": 0,
+        "page_height_px": 7086,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "not_observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 7,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 36,
+        "h1_weight": 400,
+        "h1_tracking_em": -0.02,
+        "h1_line_height": 1,
+        "h1_family": "Archivo",
+        "display_px": 36,
+        "body_px": 16.8,
+        "body_line_height": 1.5,
+        "body_measure_ch": 34,
+        "families": [
+          "Manrope",
+          "Archivo",
+          "Geist Mono",
+          "Inter Tight"
+        ],
+        "content_width_px": 342,
+        "nav_height_px": 64,
+        "sticky_nav": false,
+        "hero_height_px": 10614,
+        "section_count": 0,
+        "page_height_px": 10614,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "not_observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 0,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": true
+      }
+    }
+  },
+  {
+    "id": "socratix-ai",
+    "name": "Socratix AI",
+    "url": "https://getsocratix.ai/",
+    "category": "Fintech",
+    "archetype": "workflow-theater",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A blue-and-black enterprise page that stages the product as animated panels (agent run, before/after queue, signal map) revealed section by section on scroll.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "pear",
+    "round": "Seed 2025",
+    "verification_url": "https://pear.vc/socratix-ai-seed-round/",
+    "geography_evidence": null,
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "Black sticky nav with six links and a blue 'Request a demo' button, then a blue news bar ('NEWS … Money20/20 Money Awards 2026 finalist', 'Read the news →'). The white hero splits left/right: a mono-caps eyebrow 'BUILT FOR THE MAIN STREET', a three-line h1 with three phrases in blue, a grey subhead and a work-email field joined to a blue button; on the right a dark browser-chrome frame labelled 'app.getsocratix.ai' with a 'live' dot holding a demo video. A faint dot grid covers the ground; a cookie bar overlays the bottom.",
+      "typography": "Measured h1 60.8px (38.4px mobile), weight 500, tracking -0.035em, line-height 1.1, family Geist; body 17px/1.7 (16px mobile) in the same family. Geist Mono carries all eyebrows, card tags ('CASE STUDY'), signal labels and link labels ('READ CASE STUDY →', 'VIEW TRUST CENTER →') in letter-spaced caps. Headline keywords are coloured blue; one h2 greys its first words ('Benefits that' grey, 'redefine your operations' black).",
+      "visual_system": "White and near-black bands alternate, both carrying a dot-grid texture; one saturated blue is the only accent apart from pale tinted card headers (peach, blue, pink, green) on the story cards. Surfaces are hairline-bordered cards and dark app frames; a hairline logo grid holds integration marks in grey. Motifs: a particle sphere with callout lines (signal map), a striped half-tone globe near the footer, a SOC 2 badge.",
+      "page_sequence": "Nav → news bar → hero (h1 + email field + app video frame) → 'BUILT BY AI AND FRAUD EXPERTS FROM' logo grid → 'Selected stories' four cards with stat headers → dark 'One command center' particle sphere with signal labels → 'Fewer losses. Cleaner exams.' three use-case panels → dark 'AI that understands' agent panel (GATHER/ASSESS/RECOMMEND/LEARN) → 'Benefits' tab list beside a before/after queue panel → integrations logo grid → dark SOC 2 + 'Ready to see what Socratix can do?' email field → footer.",
+      "interaction": "Operated the Benefits list item 'Improve customer experience': the highlight moved to it and the right panel swapped from 'BEFORE — MANUAL REVIEW / WITH SOCRATIX AGENTS' queues to a 'CUSTOMER UPDATES' feed ('Onboarding approved', 'Check deposit cleared', 'All clear'). On load ~50 CSS animations ran (named cta-shine-pass, ping, sigLine) and sections fade in on scroll, leaving full-page captures mostly blank. Under reducedMotion 'reduce' the shine pass stopped but ping and sigLine animations still ran (43 counted) while far fewer elements moved; the hero video stayed paused in headless.",
+      "accessibility": "Cookie bar persists across the whole page at both widths. Mono eyebrows and card tags are small letter-spaced caps (not measured). Benefits list items are clickable without tab roles or aria-selected. Large regions of the page are empty until scroll-triggered reveals fire. The hero video frame rendered black in this session. No horizontal overflow measured.",
+      "mobile": "Nav collapses to logo plus hamburger; the news bar shortens its text. Hero stacks eyebrow, h1 (38px), subhead, email field, then the app frame. The founders' logo grid becomes two columns with ten visible marks (including 'Y Combinator', 'DoorDash', 'MIT', 'UCLA'); story cards become a horizontal swipe showing one card; later sections rendered blank in the full-page capture because their content reveals on scroll.",
+      "copy": "h1: \"AI coworkers for fraud, financial crimes and compliance teams.\" Primary action: \"Request a demo\" (with a 'Work email' field). First-screen proof is the news bar award line and the 'live' app frame; the 'BUILT BY AI AND FRAUD EXPERTS FROM' logo grid starts at the bottom edge of the first screen."
+    },
+    "interpretation": {
+      "principles": [
+        "Stage each capability as a small animated panel that changes when a sidebar item is chosen, so the page demonstrates rather than describes.",
+        "Alternate light and dark bands with a shared dot-grid texture to keep a long enterprise page feeling like one surface.",
+        "Lead with an award or news line in a bar above the hero when the company lacks customer logos it can show in the first screen.",
+        "Colour only the keywords in headlines to point the eye without adding a second accent."
+      ],
+      "fit": "Suits enterprise workflow software sold by demo to risk, compliance or ops teams where a believable product scene matters more than a sign-up; wrong for a page that must be scannable in one pass or read well without JavaScript, since content appears only on scroll reveal.",
+      "risks": "Roughly 50 running animations on load at both widths, several surviving reduced motion; scroll-gated reveals leave the page blank in captures and for readers who jump; a persistent cookie bar; the hero's product frame depends on a video that may not play."
+    },
+    "limitations": [
+      "The hero demo video did not play in headless Chromium, so its content was not seen.",
+      "Mobile sections below the stories carousel were blank in the capture (scroll reveal) and were not re-rendered live at 390.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://getsocratix.ai/",
+      "https://pear.vc/socratix-ai-seed-round/"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-19",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 60.8,
+        "h1_weight": 500,
+        "h1_tracking_em": -0.035,
+        "h1_line_height": 1.1,
+        "h1_family": "Geist",
+        "display_px": 60.8,
+        "body_px": 17,
+        "body_line_height": 1.7,
+        "body_measure_ch": 66,
+        "families": [
+          "Geist",
+          "Geist Mono"
+        ],
+        "content_width_px": 1344,
+        "nav_height_px": 57,
+        "sticky_nav": true,
+        "hero_height_px": 6573,
+        "section_count": 3,
+        "page_height_px": 6573,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 49,
+        "animations_after_scroll": 54,
+        "has_video": true,
+        "has_canvas": true,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 38.4,
+        "h1_weight": 500,
+        "h1_tracking_em": -0.035,
+        "h1_line_height": 1.1,
+        "h1_family": "Geist",
+        "display_px": 38.4,
+        "body_px": 16,
+        "body_line_height": 1.7,
+        "body_measure_ch": 43,
+        "families": [
+          "Geist",
+          "Geist Mono"
+        ],
+        "content_width_px": 342,
+        "nav_height_px": 57,
+        "sticky_nav": true,
+        "hero_height_px": 8447,
+        "section_count": 4,
+        "page_height_px": 8447,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 49,
+        "animations_after_scroll": 57,
+        "has_video": true,
+        "has_canvas": true,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "tutor-intelligence",
+    "name": "Tutor Intelligence",
+    "url": "https://tutorintelligence.com/",
+    "category": "Robotics",
+    "archetype": "expressive-world",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A graph-paper hardware page that lets an oversized robot-head render break out of the hero under a light serif headline, with mono-caps navigation and one yellow accent.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "neo",
+    "round": "Neo portfolio (stage: Series A)",
+    "verification_url": "https://neo.com/startups?tab=Neo%20portfolio",
+    "geography_evidence": "https://neo.com/startups?tab=Neo%20portfolio",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "An amber announcement bar in mono caps, then a sticky nav (logo, '+ ROBOTS', '+ SOLUTIONS', 'PRICING', '+ COMPANY', 'CAREERS', 'GET IN TOUCH', 'SIGN IN', black 'SIGN UP'). The hero sits on a graph-paper grid: a centred two-line serif h1 in a pale panel, below it a large white robot sensor-head render on a column that extends past the fold. Bottom-left a grey panel holds the one-sentence description with '$14 an hour'; bottom-right a video thumbnail with play control, a yellow 'GET IN TOUCH' and a white 'DISCOVER OUR RESEARCH' button.",
+      "typography": "Measured h1 72px (32px mobile), weight 300, tracking -0.05em, line-height 1, family Sentient (a serif). Body 16px/1.4 (14px mobile) in Manrope. Roboto Mono carries the announcement bar, nav items, buttons and footer links in caps. Mid-page h2s reuse the serif in blue at roughly 36px in a left column; the 'Get in touch' form title is the same serif in black.",
+      "visual_system": "Light grey graph-paper grid behind the hero, plain white for the rest, with hairline blue rules separating the three solution rows. Accents: an amber bar, a yellow button and form panel (the panel repeats the grid motif in darker yellow), one green button for Sonny, and blue for the solutions text. Imagery is product-led: a CG render of the robot head, two photographs of robots in warehouses, a frosted-glass office photo. Nav items carry '+' prefixes that turn to '−' when open.",
+      "page_sequence": "Announcement bar → nav → hero (h1, robot render, blurb, video thumb, two buttons) → 'A robotics research and deployment company' photo + text + button → 'Meet Cassie' text + warehouse photo + yellow button → 'Meet Sonny' photo + text + green button → three blue-ruled rows: palletizing, fleet picking, usage-based pricing, each with a short paragraph and underlined links → yellow 'Get in touch' form (first name, last name, work email, mobile phone) → footer with mono link columns.",
+      "interaction": "Operated the '+ ROBOTS' nav button: a full-width white panel dropped over the hero with a photo of the Cassie robot, the links 'Cassie' and 'Sonny', and a small grid tile graphic; the '+' became '−' and the label turned blue. Nothing ran on load; sections fade in as they scroll into view (8 transitions and ~285 elements moved after a scroll). With reducedMotion 'reduce' all heading text was present on load and nothing moved after scrolling. The two videos stayed paused in headless.",
+      "accessibility": "Without reduced motion, the h1 and h2 elements still had empty text about four seconds after load (they were populated under 'reduce'), and lower sections stay blank until their reveal fires. Mono caps nav and footer links are small (not measured). The three nav menu buttons exposed no text name and no aria-expanded value after opening. Measured mobile body is 14px. The announcement bar plus nav takes 111px of sticky height on desktop.",
+      "mobile": "Announcement bar wraps to two lines; nav collapses to logo and hamburger. Hero stacks h1 (32px), the robot render cropped at the right edge, the blurb, the video thumbnail, then the yellow and white buttons full-width. Company, Cassie and Sonny sections become text-then-photo stacks; the blue-ruled rows stack heading over paragraph; the form sits in a full-width yellow panel; footer links become one long column.",
+      "copy": "h1: \"Intelligent robot workers for industry\". Primary action: \"GET IN TOUCH\" (yellow), with \"DISCOVER OUR RESEARCH\" beside it. First-screen proof is the video thumbnail of a robot palletizing and the price claim 'from $14 an hour'; no logos or counts appear."
+    },
+    "interpretation": {
+      "principles": [
+        "Let a single product render break the hero's frame so the hardware, not the copy, is the first thing read.",
+        "Use mono caps for all wayfinding and a serif only for statements, so hierarchy survives without colour.",
+        "State price in the first screen when the business model ('from $14 an hour') is itself the differentiator.",
+        "Keep one accent for action (yellow) and a second (blue) for reading, so buttons never compete with headings."
+      ],
+      "fit": "Suits hardware and robotics companies with a photogenic product and a sales-led motion; wrong for software without a physical object to render, or for any page that must be readable before scroll-reveal scripts run.",
+      "risks": "Scroll-gated reveals leave text absent for assistive tech and captures until motion fires; the hero spends its right column on a paused video thumbnail; mobile body at 14px and small mono caps reduce readability; the announcement bar plus sticky nav consume a large share of the mobile screen."
+    },
+    "limitations": [
+      "Videos did not play in headless Chromium, so the reel content was not seen.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://tutorintelligence.com/",
+      "https://neo.com/startups?tab=Neo%20portfolio"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 72,
+        "h1_weight": 300,
+        "h1_tracking_em": -0.05,
+        "h1_line_height": 1,
+        "h1_family": "Sentient",
+        "display_px": 72,
+        "body_px": 16,
+        "body_line_height": 1.4,
+        "body_measure_ch": 36,
+        "families": [
+          "Manrope",
+          "Sentient",
+          "Roboto Mono"
+        ],
+        "content_width_px": 1296,
+        "nav_height_px": 111,
+        "sticky_nav": true,
+        "hero_height_px": 955,
+        "section_count": 4,
+        "page_height_px": 5027,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 0,
+        "has_video": true,
+        "has_canvas": true,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 32,
+        "h1_weight": 300,
+        "h1_tracking_em": -0.05,
+        "h1_line_height": 1,
+        "h1_family": "Sentient",
+        "display_px": 32,
+        "body_px": 14,
+        "body_line_height": 1.4,
+        "body_measure_ch": 54,
+        "families": [
+          "Manrope",
+          "Sentient",
+          "Roboto Mono"
+        ],
+        "content_width_px": 350,
+        "nav_height_px": 61,
+        "sticky_nav": true,
+        "hero_height_px": 1050,
+        "section_count": 4,
+        "page_height_px": 6495,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 0,
+        "has_video": true,
+        "has_canvas": true,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "reflection-ai",
+    "name": "Reflection AI",
+    "url": "https://reflection.ai",
+    "category": "AI infrastructure",
+    "archetype": "canvas-first",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A warm-neutral research-lab page whose hero is a slowly drifting dot-matrix canvas with a light serif announcement headline centred inside it.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "sequoia-arc",
+    "round": "Arc 2024",
+    "verification_url": "https://sequoiacap.com/companies/reflection-ai",
+    "geography_evidence": null,
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "A floating rounded nav bar (logo, five text items, an outlined 'Get in touch' pill with a dot) sits over an off-white field. The whole first screen is a canvas of olive-grey dots forming nested rings and arcs; centred in it are a three-line serif h1, a one-line sans subhead, and two pill buttons, dark 'Try it now' and outlined 'Learn more', each ending in a small dot. No image, product or logos appear in the first screen.",
+      "typography": "Measured h1 57px (36.5px mobile), weight 350, tracking -0.045em, line-height 1.1, family 'NaN Serf B' (a serif with moderate contrast). Body 16px/1.5 at both widths in measured 'NaN Serf Sans'. Section h2s reuse the serif at roughly 40px; card titles are the serif at about 20px; small uppercase tags ('Solutions', 'Open intelligence') sit in beige chips. Buttons use the sans at about 14px.",
+      "visual_system": "Off-white ground with beige card surfaces and a dark olive used for primary buttons and one full-width panel; a chartreuse appears on icon chips and two buttons ('Our mission', 'Join us'). Dot-matrix motifs recur: the hero canvas, a second dotted-ring figure beside 'Build with Beam', a stippled green-and-white landscape image, and three circular photo crops in the olive panel. Corners are large radii throughout; a ○● logo mark is repeated as a divider.",
+      "page_sequence": "Nav → dot canvas hero (h1, subhead, two buttons) → dot figures descending to the ○● mark → 'We're making intelligence open' + 'Our mission' button → 'Solutions' four beige cards (Open-weight models, Open source software, Infrastructure, Solutions) → 'Build with Beam' text + 'Weights'/'API' buttons beside dotted figure → 'Our Partners' logo rows → stippled image with 'The most important technology…' overlay → 'Our convictions' three icon cards → olive 'Build the future of open intelligence' panel with 'Join us' → newsletter form + footer columns.",
+      "interaction": "Operated the 'Beam' nav item: a click only toggled a small dot before the label (aria-expanded stayed false); hovering set aria-expanded true and dropped a full-width panel with five links (Model card, API, Documentation hub, Weights, Learn more) and a 'Try Beam today' card. The hero dot canvas drifts continuously (about 46k pixels changed in 1.5s). With reducedMotion 'reduce' the canvas was static between captures but still re-drew when the pointer moved; the measurement record notes a reduced-motion rule.",
+      "accessibility": "Nav labels are small sans text and the mobile menu control is a small four-dot icon. Menu panels open on hover but a click does not open them. Dot canvas sits behind the headline with low contrast between dots and ground, so text remains readable. Partner logos are rendered in a muted olive at low contrast. Newsletter form in the footer; no cookie banner observed.",
+      "mobile": "The floating nav keeps its rounded bar with logo and a dot-grid icon; the canvas persists behind a three-line 36.5px h1 and stacked full-width pill buttons. Solution cards stack one per row; 'Build with Beam' places the dotted figure above the text; partner logos drop to two columns; the stippled image becomes a tall card with the quote overlaid; conviction cards become icon-left rows; the olive panel keeps its three photo circles below the 'Join us' button; footer columns collapse into accordion rows ('Company' open, 'Connect with us' and 'Legal' closed).",
+      "copy": "h1: \"Introducing Beam: Reflection's 501B open-weight model\". Primary action: \"Try it now\" with \"Learn more\" beside it. The first screen offers no proof beyond the parameter count in the headline; partner logos (AWS, NVIDIA, Modal, Nebius and others) appear several screens down."
+    },
+    "interpretation": {
+      "principles": [
+        "Use a generative canvas as the hero's only image when the product is abstract, but keep text contrast independent of it.",
+        "Lead the homepage with the current release as the headline so the page doubles as the announcement.",
+        "Build the palette from one warm neutral, one dark and one bright accent, and let repeated motifs (dots, circles) do the branding.",
+        "Put secondary actions (weights, API, docs) in the nav menu panel rather than crowding the hero."
+      ],
+      "fit": "Suits research labs, model providers and infrastructure companies whose audience already knows what the product is; wrong for a product that needs a screenshot or concrete outcome in the first screen, or for a hero that must be read fast on slow devices where canvas rendering lags.",
+      "risks": "No product or proof in the first screen; menus require hover; the dot canvas keeps moving unless reduced motion is set; partner logos are muted to near-invisibility; the page's section labels ('Solutions' used for both a section and a card) repeat."
+    },
+    "limitations": [
+      "The measurement record counts 4 animations on load that my getAnimations sampling did not capture; motion was confirmed only by pixel difference on the canvas.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://reflection.ai",
+      "https://sequoiacap.com/companies/reflection-ai"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 57,
+        "h1_weight": 350,
+        "h1_tracking_em": -0.045,
+        "h1_line_height": 1.1,
+        "h1_family": "NaN Serf B",
+        "display_px": 57,
+        "body_px": 16,
+        "body_line_height": 1.5,
+        "body_measure_ch": 45,
+        "families": [
+          "NaN Serf Sans",
+          "NaN Serf B"
+        ],
+        "content_width_px": 1425,
+        "nav_height_px": 74,
+        "sticky_nav": true,
+        "hero_height_px": 1486,
+        "section_count": 6,
+        "page_height_px": 7812,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 4,
+        "animations_after_scroll": 4,
+        "has_video": false,
+        "has_canvas": true,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 36.5,
+        "h1_weight": 350,
+        "h1_tracking_em": -0.045,
+        "h1_line_height": 1.1,
+        "h1_family": "NaN Serf B",
+        "display_px": 36.5,
+        "body_px": 16,
+        "body_line_height": 1.5,
+        "body_measure_ch": 34,
+        "families": [
+          "NaN Serf Sans",
+          "NaN Serf B"
+        ],
+        "content_width_px": 331,
+        "nav_height_px": 0,
+        "sticky_nav": true,
+        "hero_height_px": 1118,
+        "section_count": 6,
+        "page_height_px": 7849,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 4,
+        "animations_after_scroll": 4,
+        "has_video": false,
+        "has_canvas": true,
+        "dark_background": false
+      }
+    }
   }
 ]

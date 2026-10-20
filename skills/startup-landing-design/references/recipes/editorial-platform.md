@@ -6,7 +6,7 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 
 **Observed** across 328 measured startup homepages (2026-10-19): desktop h1 median 64px (middle half 54–76px, 90th percentile 96px), weight 500, tracking −0.025em; h1 about 3.7× the body size; body 17px at about 56 characters per line; phone h1 about 0.59× desktop (median 38px); two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.
 
-**Observed in this family** (14 audited sites, 13 of them reference tier, measured 2026-10-19/20: AnswerThis, Deel, ElevenLabs, Figma, Harvey, Mintlify, Modal, Notion, Runway, Tailscale, Vanta, Vercel, Webflow, Whimsical): desktop h1 median 60px at weight 400 and −0.012em; body 16.0px at about 49 characters per line; 5 sections; phone h1 38px; 2 of 14 on a dark ground.
+**Observed in this family** (18 audited sites, 13 of them reference tier, measured 2026-10-19/20: AnswerThis, Deel, ElevenLabs, Figma, Harvey, Listen Labs, Mindy, Mintlify, Modal, Notion, Omnea, Runway, Scarlet, Tailscale, Vanta, Vercel, Webflow, Whimsical): desktop h1 median 60px at weight 400 and −0.02em; body 16.0px at about 49 characters per line; 4 sections; phone h1 38px; 4 of 18 on a dark ground.
 
 | Decision | Recipe |
 | --- | --- |

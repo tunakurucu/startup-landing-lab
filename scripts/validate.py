@@ -31,6 +31,7 @@ def validate_summary():
  import subprocess
  if subprocess.run([sys.executable,str(ROOT/'scripts/summarize_measurements.py'),'--check']).returncode:raise ValueError('research/measurements.md is out of date: run python3 scripts/summarize_measurements.py')
  if subprocess.run([sys.executable,str(ROOT/'scripts/summarize_type.py'),'--check']).returncode:raise ValueError('references/type-observed.md is out of date: run python3 scripts/summarize_type.py')
+ if subprocess.run([sys.executable,str(ROOT/'scripts/summarize_motion.py'),'--check']).returncode:raise ValueError('references/motion-patterns.md is out of date: run python3 scripts/summarize_motion.py')
 if __name__=='__main__':
  try:validate_summary();print(f'PASS: {validate_data()} candidates; {validate_links()} internal file links; measurement summary current')
  except Exception as e:print(e,file=sys.stderr);sys.exit(1)

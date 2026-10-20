@@ -253,3 +253,57 @@ Avoid/limit: Desktop is served by the same five phone videos with no interaction
 Measured 2026-10-19: desktop h1 55.4px, weight 700, tracking -0.03em; body 25.8px; 9 sections; phone h1 32px.
 
 On phones: A different composition rather than a stacked desktop: a small mascot-plus-wordmark header, a cloud of eleven tilted pastel language pills, a white two-line headline, two full-width store buttons and a 'see how it works' chevron fill the first screen. Below, content becomes bento tiles: a yellow 'Learn from Subtitles' tile with a phone video, a cyan '11' tile beside a pink explore-phone tile, a green 'Language Learning Center' tile with two phones, then repeated store buttons and footer. Page height 2710px, measured section count 0.
+
+## Idilio · expressive-world
+
+https://idilio.tv/en · desktop-mobile-audit
+
+A black, app-store-style page that stacks every persuasion device (badge, stars, download counts, posters, five-step walkthrough, team bios, FAQ) and gates entry behind a QR download modal.
+
+Observed: Black ground with a faint purple glow. Left column: a pill badge ('#1 Microdrama app in Latin America · 1.3M+ downloads'), a two-line h1 whose second line is a pink-orange-yellow-green gradient, a paragraph, a purple-ruled second paragraph repeating the pitch, a 4.8-star row, white App Store and Google Play buttons and a dim 'Be the first to know →' link. Right: a large phone frame holding an autoplay video (black here) with a mute icon. On load a 'Download our app' QR modal covers the page and a Spanish cookie bar sits along the bottom. Operated: after dismissing the download modal with 'Not now', clicked the first FAQ summary ('What are microdramas?'); the question turned purple, the plus icon became an ×, and a four-line answer expanded beneath. On load the only running animation was a 'pulse' on the badge's purple dot; the hero video element was autoplay+muted but never left readyState 0 in this browser. With reducedMotion: 'reduce' the pulse animation still ran and the video stayed paused. Header is sticky at 100px; the cookie bar is fixed at the bottom.
+
+Copy: h1: "Latin Microdramas You'll Fall in Love With"; primary actions are the store badges "App Store" / "Google Play" plus the nav's "Be the first to know". First-screen proof is numeric and ratings-based: the '#1 … 1.3M+ downloads' badge, '4.8 · 1.3M+ downloads on iOS and Android' with five stars, and 'Over 1 million people are already watching'.
+
+Transfer: For a consumer app, put the store badges and a rating line in the first screen and repeat the download count in the badge, the stars and the body copy; redundancy is the point. Show the product's actual content (posters, in-app screenshots) rather than abstractions; a numbered walkthrough with real screens explains a monetisation model without a diagram. Pick one accent and one gradient and reuse them on every eyebrow, underline and display line so a long dark page stays one brand. Do not stack a modal and a cookie bar on the first screen; one interrupt is already a cost.
+
+Avoid/limit: Two overlays on load hide the hero. The page is 15 sections and ~13,500px, with investor, creator and viewer audiences all served on one homepage, so the hero copy repeats itself and the CTA shifts between 'download', 'be the first to know', 'submit your story' and 'let's talk'. Grey-on-black secondary text and tiny language/social controls hurt legibility and tap accuracy. The empty phone frame on mobile is a large blank gap if the video fails.
+
+Measured 2026-10-19: desktop h1 72px, weight 700, tracking -0.025em; body 18px; 15 sections; phone h1 48px.
+
+On phones: The hero stacks: badge, three-line h1, paragraph, store buttons, then the phone frame (which is empty) below, pushing the first real content past 1,500px. The stat strip becomes a two-column grid with the fifth stat alone; format cards, how-it-works steps and team bios stack one column; posters become a 2 × 2 grid. The cookie bar covers about a fifth of the viewport and the QR modal still appears. Page height 18,486px.
+
+## Scope · expressive-world
+
+https://www.getscope.ai/ · desktop-mobile-audit
+
+An industrial-mood page that alternates near-black and cream bands, uses a grainy amber gradient as its only colour, and sets every label in mono caps.
+
+Observed: A cream nav (logo, a grey pill holding three mono-caps links, 'LOG IN' and a black 'BOOK A DEMO') sits over a full-bleed near-black hero. Centre-aligned: a two-line h1, a two-line subhead and one cream 'BOOK A DEMO' button. Diagonal grainy amber-to-yellow stripes rise from the lower-left and upper-right corners; there is no product image in the first screen. Operated the horizontal industries strip by dragging it: it scrolled 800px, revealing 'Energy' and 'Infrastructure' after 'Chemical'; no arrows or dots are provided. Nothing continued moving after load (four animations counted then zero); the measurement record counted seven animations after scroll at 1440, which I did not see as sustained motion. With reducedMotion 'reduce' nothing moved; no reduced-motion rule was observed in the measurement record.
+
+Copy: h1: "Supercharge your inspection team". Primary action: "BOOK A DEMO". The first screen offers no logos, numbers or demo; the subhead claims '10x faster inspections' and the first proof ('Trusted by 7 of the top 10 largest inspection providers') appears one scroll down.
+
+Transfer: Build an industrial identity from one textured gradient and mono-caps labels instead of a multi-colour palette. Alternate dark and light full-width bands so each section reads as a distinct room rather than a list. Let three giant numerals carry the outcome claims, with the explanation in small type beside them. Duotone all photography to one hue so stock imagery looks owned.
+
+Avoid/limit: No product or proof in the first screen; an unlabelled horizontal scroller hides two of five industries; the closing CTA button has weak contrast; mono caps at small sizes reduce readability; section_count measured as 0, suggesting no semantic sectioning.
+
+Measured 2026-10-20: desktop h1 68px, weight 400, tracking -0.02em; body 20px; 0 sections; phone h1 36px.
+
+On phones: Hero keeps the centred stack; the nav shows logo, 'BOOK A DEMO' and a hamburger. The industries strip shows one photo at a time; the four workflow steps stack vertically with their mocks; the 10X/55%/0 tiles become full-width black bands; 'JOIN US' and 'FOR BUSINESSES' panels stack; testimonials stack; security cards stack in one column. Page height grows to 10,614px.
+
+## Tutor Intelligence · expressive-world
+
+https://tutorintelligence.com/ · desktop-mobile-audit
+
+A graph-paper hardware page that lets an oversized robot-head render break out of the hero under a light serif headline, with mono-caps navigation and one yellow accent.
+
+Observed: An amber announcement bar in mono caps, then a sticky nav (logo, '+ ROBOTS', '+ SOLUTIONS', 'PRICING', '+ COMPANY', 'CAREERS', 'GET IN TOUCH', 'SIGN IN', black 'SIGN UP'). The hero sits on a graph-paper grid: a centred two-line serif h1 in a pale panel, below it a large white robot sensor-head render on a column that extends past the fold. Bottom-left a grey panel holds the one-sentence description with '$14 an hour'; bottom-right a video thumbnail with play control, a yellow 'GET IN TOUCH' and a white 'DISCOVER OUR RESEARCH' button. Operated the '+ ROBOTS' nav button: a full-width white panel dropped over the hero with a photo of the Cassie robot, the links 'Cassie' and 'Sonny', and a small grid tile graphic; the '+' became '−' and the label turned blue. Nothing ran on load; sections fade in as they scroll into view (8 transitions and ~285 elements moved after a scroll). With reducedMotion 'reduce' all heading text was present on load and nothing moved after scrolling. The two videos stayed paused in headless.
+
+Copy: h1: "Intelligent robot workers for industry". Primary action: "GET IN TOUCH" (yellow), with "DISCOVER OUR RESEARCH" beside it. First-screen proof is the video thumbnail of a robot palletizing and the price claim 'from $14 an hour'; no logos or counts appear.
+
+Transfer: Let a single product render break the hero's frame so the hardware, not the copy, is the first thing read. Use mono caps for all wayfinding and a serif only for statements, so hierarchy survives without colour. State price in the first screen when the business model ('from $14 an hour') is itself the differentiator. Keep one accent for action (yellow) and a second (blue) for reading, so buttons never compete with headings.
+
+Avoid/limit: Scroll-gated reveals leave text absent for assistive tech and captures until motion fires; the hero spends its right column on a paused video thumbnail; mobile body at 14px and small mono caps reduce readability; the announcement bar plus sticky nav consume a large share of the mobile screen.
+
+Measured 2026-10-20: desktop h1 72px, weight 300, tracking -0.05em; body 16px; 4 sections; phone h1 32px.
+
+On phones: Announcement bar wraps to two lines; nav collapses to logo and hamburger. Hero stacks h1 (32px), the robot render cropped at the right edge, the blurb, the video thumbnail, then the yellow and white buttons full-width. Company, Cassie and Sonny sections become text-then-photo stacks; the blue-ruled rows stack heading over paragraph; the form sits in a full-width yellow panel; footer links become one long column.

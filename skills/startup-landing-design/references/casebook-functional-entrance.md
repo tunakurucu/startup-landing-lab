@@ -175,3 +175,57 @@ Avoid/limit: No real product screenshot, customer or number appears; the proof s
 Measured 2026-10-19: desktop h1 76px, weight 700, tracking -0.05em; body 15.7px; 3 sections; phone h1 42.1px.
 
 On phones: The nav keeps only the logo and wordmark; 'Get in touch' disappears. The hero recomposes centred: the building animation moves above the text, then the eyebrow (wrapping to two lines), a four-line 42px headline, subhead, the 'Book a demo' pill and backers. The proof band stacks its sentence over three logos. The two feature rows become single columns with the heading and paragraph above the animation. Page height 2890px versus 3167px on desktop.
+
+## Sway · functional-entrance
+
+https://sway.co · desktop-mobile-audit
+
+The hero is the product's first step: an address field inside a purple panel, with a live countdown and a four-step tracker underneath, before any explanation.
+
+Observed: A white 69 px sticky nav (logo, three links, purple "Log in" pill) sits over a pale promo strip ("Throw a ballot party. Get $500 from Sway." with floating badge illustrations and a "See how it works" button). Below it a rounded deep-purple panel holds a yellow countdown pill ("15 days to Nov 3"), the h1, a subline, a white address input with a "Preview my ballot" button, and a registration link; tilted ballot cards decorate both edges. A "Your 4 steps" tracker (Address, Ballot, Plan, Save) and the first row of group cards complete the first screen. Operated the right arrow on the "Voting groups across the country" carousel: the row advanced by four cards (first card became "The Forward Party Voting Group") and the previously disabled, 40 %-opacity left arrow became enabled. The arrows carry aria-labels. Nothing was seen visibly moving on load in screenshots; the measurement record counted 0 running animations on load and 18 after scroll on desktop, and the live visit sampled 56 on first load dropping to 0–4 while scrolling. With reduced motion on the same first-load count appeared and then 0 after scrolling; a prefers-reduced-motion rule is present.
+
+Copy: H1: "Voting made easy" with subline "Make your plan and picks all in one spot." Primary action: "Preview my ballot" on the address field (secondary: "Register or check your registration", "See how it works", "Log in"). First-screen proof is live: a countdown to election day and a row of real voting groups with member and voter counts (for example "65 recs · 68 voters"); no logos.
+
+Transfer: If the product starts with one input, make that input the hero and show the remaining steps as a tracker so the commitment looks small. Use live data in the first screen (countdown, group counts) as proof that the product is in use, instead of static logos. Reserve one saturated colour for the single most important panel and its buttons; keep every other section white or grey. Hide carousel arrows on small screens and let the row scroll natively rather than shrinking the controls.
+
+Avoid/limit: The page is dense: a promo strip, countdown, input, tracker and two carousels compete in the first 900 px, and tiny share icons and photo-overlaid titles reduce legibility. Date-bound copy ages daily and the group cards show partisan content that may alienate some visitors before they reach the "Neutral" claim.
+
+Measured 2026-10-20: desktop h1 40px, weight 600, tracking -0.012em; body 16px; 11 sections; phone h1 32px.
+
+On phones: Nav keeps logo, "Explore" and "Log in". The promo strip shrinks to text plus a circular arrow button. The hero panel stacks and the address input loses its text button in favour of an arrow icon. The four step tiles become square icon tiles in one row; the carousels become horizontally scrollable rows with no arrows (arrows are hidden below the small breakpoint). All later sections stack to one column with the halftone illustrations placed below their text; feature screenshots stack vertically. Page height 9008 px.
+
+## Agency · functional-entrance
+
+https://agency.inc · desktop-mobile-audit
+
+The homepage has been replaced by a four-paragraph wind-down letter under an acquisition banner; there is no headline, product, proof or call to action.
+
+Observed: A 40px purple-to-black banner across the top reads 'Agency has been acquired by Klaviyo on August 5th, 2026. Read about it here.' Below it, on an off-white ground, sits the Agency wordmark with four text links (Security, Blog, Press, Privacy) and then a centred ~760px column of body text: four paragraphs explaining the acquisition and the August 31, 2026 wind-down, signed 'Elias, Luke & the Agency team'. A cookie-consent dialog covers the top of this column on load. There is no h1, no image and no button. Operated: clicked the cookie dialog's '×' ('Dismiss cookie banner'); the dialog disappeared and the full letter became readable, with no other change. Nothing animated on load (zero running animations) and nothing moved on scroll; the nav sits in a fixed-position wrapper but the page is only ~1.3 screens tall. With reducedMotion: 'reduce' nothing ran and two frames 1.5s apart were identical.
+
+Copy: There is no h1; the first line of content is the banner 'Agency has been acquired by Klaviyo on August 5th, 2026. Read about it here.' and the letter opens 'As announced on August 5, 2026, Agency is being acquired by Klaviyo…'. There is no primary action; the only interactive elements are the banner link to a TechCrunch article, the nav links and the footer newsletter 'Submit'. First-screen proof: none.
+
+Transfer: When a company winds down, a short signed letter at reading size with one dated banner is a complete homepage; dropping the marketing shell avoids promising a product that will not exist. Keep the compliance badges and the Security link in the footer through a shutdown; existing customers still need them while data is migrated. A single-column, 22px, ~73ch letter is readable, but even one page of prose needs a heading element so assistive tech can find the start.
+
+Avoid/limit: No heading structure, no primary action and a third-party cookie dialog that hides the message on first paint, especially on mobile. The banner truncates at 390px, cutting off the date. The newsletter form in the footer invites sign-ups for a company that is closing. For dataset purposes the page carries no transferable landing-page pattern beyond the wind-down letter itself.
+
+Measured 2026-10-20: desktop h1 Nonepx, weight None, tracking Noneem; body 22px; 1 sections; phone h1 Nonepx.
+
+On phones: Banner text truncates at the right edge ('…on August 5th,'). The letter becomes a single full-width column at 18px; the cookie dialog stacks its Accept/Decline buttons full-width and hides the first two paragraphs until dismissed. Footer stacks logo, Company links, badges, newsletter form and centred legal links.
+
+## Acely · functional-entrance
+
+https://acely.com · desktop-mobile-audit
+
+A navy consumer landing page that puts a student photo with a score overlay beside a serif promise and repeats one free-trial button through pricing and FAQ.
+
+Observed: A light-green promo bar and a white sticky nav sit above a full-width navy hero. Left column: three-line serif h1, a one-line sans subhead, a green pill button and a small 'No credit card required' note. Right column: a rounded photo of a student at a laptop with a large green '1480' overlaid and a caption about a 110-point gain. A cookie notice overlaps the bottom-right corner. Operated the FAQ item 'What is Acely?': aria-expanded turned true, the chevron flipped and two paragraphs of answer text appeared inline; no URL change. On load the university logo row and the score ticker scroll sideways continuously (swiper slides moved ~70px in 1.5s). With reducedMotion 'reduce' no visible element moved at the logo row; the measurement record notes a reduced-motion rule is present.
+
+Copy: h1: "Your personal study trainer for the SAT & ACT." Primary action: "Try for free" (with a 'No credit card required' line beneath). First-screen proof is the photo overlay '1480 — Ava increased her SAT score by 110 points in 2 months'; university logos sit just below the fold.
+
+Transfer: Put one concrete outcome number inside the hero image so the proof is read before the copy. Pair a warm serif headline with a plain sans body to make a tutoring product feel personal rather than corporate. Repeat the same low-friction action label at every section boundary instead of introducing new asks. Turn social proof into a compact ticker of before→after results rather than long quotes.
+
+Avoid/limit: Two auto-scrolling marquees and a cookie notice compete with the hero; three plan cards and 15 FAQ items make a long page (8,000+px) that leans on the reader scrolling; the serif at weight 400 reads light on navy at mobile size.
+
+Measured 2026-10-19: desktop h1 64px, weight 400, tracking -0.02em; body 18px; 8 sections; phone h1 40px.
+
+On phones: Hero stacks: centred h1, subhead, button, then the photo below. Logo row and ticker keep scrolling horizontally; the three steps move above the screenshot; feature tiles become icon-left rows; testimonials and pricing cards become one-at-a-time swipeable carousels with arrow buttons and a progress bar; FAQ items stay full-width; footer columns stack to two per row.

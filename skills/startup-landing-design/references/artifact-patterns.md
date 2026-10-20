@@ -1,6 +1,6 @@
 # Hero artifacts observed
 
-First-screen artifacts from the first 94 records in `research/sites.json` (the 18 records added on October 20 are not yet classified here) (one browser, one date each), grouped by what the artifact is. Pair with [product storytelling](product-storytelling.md) and [motion and responsive](motion-and-responsive.md). Counts are records whose observations fit; "below" marks an artifact under the first screen. Across 8 records (Vercel, Modal, Supabase, Elyra, Sparkles, Runway, Traverse, Known) the first screen shows no product, and the record lists that as a risk.
+First-screen artifacts from the first 94 records in `research/sites.json` (the 36 records added on October 20 are not yet classified here) (one browser, one date each), grouped by what the artifact is. Pair with [product storytelling](product-storytelling.md) and [motion and responsive](motion-and-responsive.md). Counts are records whose observations fit; "below" marks an artifact under the first screen. Across 8 records (Vercel, Modal, Supabase, Elyra, Sparkles, Runway, Traverse, Known) the first screen shows no product, and the record lists that as a risk.
 
 ## 1. The real thing, operable (7 records)
 
