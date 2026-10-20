@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply bg-foam text-ink antialiased;
+    scroll-behavior: smooth;
+  }
+
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-wort;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  /* The hero batch record fills in once, line by line, on page load.
+     Each row sets its own animation-delay inline. */
+  .log-row {
+    animation: log-row-in 360ms ease-out both;
+  }
+
+  @keyframes log-row-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .log-row {
+      animation: none;
+    }
+  }
+}

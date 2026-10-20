@@ -1,0 +1,92 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P010/B/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Did anyone surprise you today?",
+    "left": 42,
+    "right": 278,
+    "top": 265,
+    "bottom": 333,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 2272
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Did anyone surprise you today?",
+    "left": 42,
+    "right": 348,
+    "top": 244,
+    "bottom": 312,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 2272,
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 4
+    }
+   ]
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Did anyone surprise you today?",
+    "left": 178,
+    "right": 590,
+    "top": 264,
+    "bottom": 304,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 2272
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Did anyone surprise you today?",
+    "left": 514,
+    "right": 926,
+    "top": 264,
+    "bottom": 304,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 2272,
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 4
+    }
+   ]
+  }
+ }
+}

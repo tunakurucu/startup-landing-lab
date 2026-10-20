@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casefold — alert reviews that hold up in an exam</title>
+<meta name="description" content="Casefold turns each monitoring alert at a community bank or credit union into one case file: the reviewer, the evidence checked, the decision and the reason.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#sample">Skip to the sample case</a>
+
+<header class="site-head">
+  <a class="wordmark" href="#top" aria-label="Casefold home">
+    <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 4.5A1.5 1.5 0 0 1 4.5 3H9l2 2.5h6.5A1.5 1.5 0 0 1 19 7v10.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 3 17.5z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 9.5h16" stroke="currentColor" stroke-width="1.6"/></svg>
+    Casefold
+  </a>
+  <nav class="site-nav" aria-label="Page sections">
+    <a href="#sample">Sample case</a>
+    <a href="#why">Why the examiner</a>
+    <a href="#board">For the board</a>
+    <a href="#not">What we don't claim</a>
+    <a class="nav-cta" href="#sandbox">Request a sandbox</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <p class="hero-who">For BSA officers at community banks and credit unions</p>
+  <h1>When the examiner asks why you closed an alert, the answer is already in the file.</h1>
+  <p class="hero-sub">Casefold turns each monitoring alert into one case file: who reviewed it, what they checked, what they decided, and the reason. One record, written as the work happens, that you can hand over as it is.</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#sandbox">Request a sandbox</a>
+    <a class="btn btn-quiet" href="#sample">Step through a sample case</a>
+  </div>
+</section>
+
+<section class="sample" id="sample" aria-labelledby="sample-title">
+  <div class="sample-head">
+    <h2 id="sample-title">A sample case file, one step at a time</h2>
+    <p>This is a made-up alert at a made-up bank. Step through it the way a reviewer would, then look at what the examiner sees at the end.</p>
+  </div>
+
+  <div class="casefile" data-step="1">
+    <div class="casefile-bar">
+      <span class="casefile-id">Case CF-2026-0142</span>
+      <span class="casefile-status" id="cf-status">Open</span>
+      <span class="casefile-count" id="cf-count" aria-live="polite">Step 1 of 5</span>
+    </div>
+
+    <div class="casefile-body">
+      <ol class="steps" id="steps" aria-label="Steps in this case">
+        <li><button type="button" class="step is-current" data-go="1" aria-current="step"><span class="step-n">1</span><span class="step-t">Alert arrives</span></button></li>
+        <li><button type="button" class="step" data-go="2"><span class="step-n">2</span><span class="step-t">Reviewer assigned</span></button></li>
+        <li><button type="button" class="step" data-go="3"><span class="step-n">3</span><span class="step-t">Evidence checked</span></button></li>
+        <li><button type="button" class="step" data-go="4"><span class="step-n">4</span><span class="step-t">Decision and reason</span></button></li>
+        <li><button type="button" class="step" data-go="5"><span class="step-n">5</span><span class="step-t">What the examiner sees</span></button></li>
+      </ol>
+
+      <div class="panel" id="panel" tabindex="0" aria-label="Case file contents">
+
+        <!-- Step 1 -->
+        <section class="block" data-block="1" aria-labelledby="b1">
+          <h3 id="b1" class="block-h">Alert</h3>
+          <dl class="facts">
+            <div><dt>Rule</dt><dd>Cash deposits above expected profile</dd></div>
+            <div><dt>Raised</dt><dd>Oct 6, 2026, 6:12 am, by transaction monitoring</dd></div>
+            <div><dt>Customer</dt><dd>Harbor Street Auto Repair LLC, business checking ending 4471</dd></div>
+            <div><dt>Trigger</dt><dd>$56,300 in cash deposits over 30 days. Profile expects $20,000 a month.</dd></div>
+            <div><dt>Priority</dt><dd>Medium. Due Nov 5, 2026 (30 days, per policy)</dd></div>
+          </dl>
+        </section>
+
+        <!-- Step 2 -->
+        <section class="block" data-block="2" aria-labelledby="b2" hidden>
+          <h3 id="b2" class="block-h">Reviewer</h3>
+          <dl class="facts">
+            <div><dt>Assigned to</dt><dd>Dana Whitfield, BSA Officer</dd></div>
+            <div><dt>How</dt><dd>Queue rule: business cash alerts go to the BSA Officer</dd></div>
+            <div><dt>When</dt><dd>Oct 6, 2026, 10:14 am</dd></div>
+            <div><dt>Second review</dt><dd>Marcus Oyelaran, Deputy BSA Officer. Required by policy before any alert is closed.</dd></div>
+          </dl>
+        </section>
+
+        <!-- Step 3 -->
+        <section class="block" data-block="3" aria-labelledby="b3" hidden>
+          <h3 id="b3" class="block-h">Evidence checked</h3>
+          <ul class="evidence">
+            <li>
+              <span class="ev-check" aria-hidden="true"></span>
+              <div>
+                <p class="ev-what">Customer profile</p>
+                <p class="ev-found">Expected cash activity of $20,000 a month, recorded at account opening in March 2023. Never updated.</p>
+                <p class="ev-meta">Dana Whitfield, Oct 7, 9:02 am</p>
+              </div>
+            </li>
+            <li>
+              <span class="ev-check" aria-hidden="true"></span>
+              <div>
+                <p class="ev-what">Twelve months of cash deposits</p>
+                <p class="ev-found">Averaged $19,400 a month through July. $41,800 in August, $52,100 in September, $56,300 in the trailing 30 days.</p>
+                <p class="ev-meta">Dana Whitfield, Oct 7, 9:30 am</p>
+              </div>
+            </li>
+            <li>
+              <span class="ev-check" aria-hidden="true"></span>
+              <div>
+                <p class="ev-what">Currency transaction reports</p>
+                <p class="ev-found">Three deposits over $10,000 in the period. A CTR was filed for each (Aug 14, Sep 3, Sep 22). No deposits between $9,000 and $9,999.</p>
+                <p class="ev-meta">Dana Whitfield, Oct 7, 9:48 am</p>
+              </div>
+            </li>
+            <li>
+              <span class="ev-check" aria-hidden="true"></span>
+              <div>
+                <p class="ev-what">Prior alerts and screening</p>
+                <p class="ev-found">No alerts on this customer in 36 months. Sanctions and adverse media screening run Oct 7, no matches.</p>
+                <p class="ev-meta">Dana Whitfield, Oct 7, 9:52 am</p>
+              </div>
+            </li>
+            <li>
+              <span class="ev-check" aria-hidden="true"></span>
+              <div>
+                <p class="ev-what">Branch contact</p>
+                <p class="ev-found">Main Street branch manager spoke with the owner on Oct 8. The business opened a second shop on Route 9 in August. Owner provided the lease and August and September sales summaries.</p>
+                <p class="ev-meta">Dana Whitfield, Oct 8, 2:20 pm. 3 attachments.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Step 4 -->
+        <section class="block" data-block="4" aria-labelledby="b4" hidden>
+          <h3 id="b4" class="block-h">Decision</h3>
+          <p class="decision">Close. No SAR filed.</p>
+          <p class="facts-label">Reason</p>
+          <p class="reason">The increase in cash is explained by a second location opened in August 2026. The owner provided a lease and sales records that match the deposit volume. Every deposit over $10,000 was reported on a CTR, and there is no pattern of deposits just under the threshold. The activity is consistent with a cash-intensive business operating two locations.</p>
+          <p class="facts-label">Follow-up</p>
+          <ul class="plain">
+            <li>Update expected cash activity to $55,000 a month, with the lease and sales summaries as the source.</li>
+            <li>Review this customer again on Jan 6, 2027.</li>
+          </ul>
+          <dl class="facts">
+            <div><dt>Decided by</dt><dd>Dana Whitfield, Oct 9, 2026, 9:40 am</dd></div>
+            <div><dt>Second review</dt><dd>Marcus Oyelaran agreed, Oct 9, 2026, 11:05 am</dd></div>
+          </dl>
+        </section>
+
+        <!-- Step 5 -->
+        <section class="block block-record" data-block="5" aria-labelledby="b5" hidden>
+          <h3 id="b5" class="block-h">The record</h3>
+          <p class="record-intro">Once closed, the case file is one document. Every entry carries a name and a time. Later changes are added to the history; nothing above is overwritten.</p>
+          <ol class="timeline">
+            <li><time>Oct 6, 6:12 am</time><span>Alert raised by transaction monitoring</span></li>
+            <li><time>Oct 6, 10:14 am</time><span>Assigned to Dana Whitfield</span></li>
+            <li><time>Oct 7, 9:02 am</time><span>Customer profile reviewed</span></li>
+            <li><time>Oct 7, 9:30 am</time><span>Twelve months of cash deposits reviewed</span></li>
+            <li><time>Oct 7, 9:48 am</time><span>CTR filings checked</span></li>
+            <li><time>Oct 7, 9:52 am</time><span>Prior alerts and screening checked</span></li>
+            <li><time>Oct 8, 2:20 pm</time><span>Branch contact recorded, 3 attachments added</span></li>
+            <li><time>Oct 9, 9:40 am</time><span>Decision entered: close, no SAR, with reason and follow-up</span></li>
+            <li><time>Oct 9, 11:05 am</time><span>Second review by Marcus Oyelaran, agreed</span></li>
+            <li><time>Oct 9, 11:05 am</time><span>Case closed</span></li>
+          </ol>
+          <p class="record-note">Export the file as a PDF, or give the examiner read-only access to the case for the review period.</p>
+        </section>
+
+      </div>
+    </div>
+
+    <div class="casefile-foot">
+      <p class="step-note" id="step-note"></p>
+      <div class="step-nav">
+        <button type="button" class="btn btn-quiet" id="prev">Back</button>
+        <button type="button" class="btn btn-primary" id="next">Next</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="why" id="why" aria-labelledby="why-title">
+  <h2 id="why-title">Why we lead with the examiner</h2>
+  <div class="why-cols">
+    <div>
+      <h3>The hard question is about closed alerts</h3>
+      <p>An alert that becomes a SAR has a narrative. An alert that was closed often has a spreadsheet row and a memory. Casefold asks for the reason at the moment of the decision, from the person who made it, and keeps it with the evidence.</p>
+    </div>
+    <div>
+      <h3>Evidence is recorded as it is checked</h3>
+      <p>Each check is its own entry: what was looked at, what was found, who looked and when. Attachments sit on the entry they support. Rebuilding a file from email and screenshots a year later is not something anyone should have to do.</p>
+    </div>
+    <div>
+      <h3>One record per alert</h3>
+      <p>The alert, the reviewer, the checks, the decision, the second review and the follow-up are a single case. Not a ticket here, a note there, and a PDF somewhere on a shared drive.</p>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how" aria-labelledby="how-title">
+  <h2 id="how-title">Where it sits</h2>
+  <div class="how-row">
+    <div class="how-box how-box-dim">
+      <p class="how-name">Your monitoring system</p>
+      <p>Raises alerts, as it does today.</p>
+    </div>
+    <div class="how-arrow" aria-hidden="true"></div>
+    <div class="how-box how-box-main">
+      <p class="how-name">Casefold</p>
+      <p>Opens a case for each alert. Assigns it, records the checks, captures the decision and reason, and closes the file.</p>
+    </div>
+    <div class="how-arrow" aria-hidden="true"></div>
+    <div class="how-box how-box-dim">
+      <p class="how-name">Your files</p>
+      <p>SAR filings, CTRs and customer records stay where they are. Casefold links to them.</p>
+    </div>
+  </div>
+  <p class="how-note">Casefold does not raise alerts, score risk or decide anything. The BSA officer decides. Casefold keeps the record.</p>
+</section>
+
+<section class="board" id="board" aria-labelledby="board-title">
+  <h2 id="board-title">For the CEO and the board</h2>
+  <p class="board-lede">Anything that touches compliance gets approved above the BSA officer. These are the questions we expect, answered plainly.</p>
+  <dl class="qa">
+    <div>
+      <dt>Does this replace our monitoring system or our policies?</dt>
+      <dd>No. Monitoring keeps raising alerts and your BSA policy keeps setting the rules. Casefold is the place the review of each alert is written down.</dd>
+    </div>
+    <div>
+      <dt>Who can change a case file after it is closed?</dt>
+      <dd>Anyone with permission can add to the history. No one can edit or delete what is already there. Each addition carries a name and a time.</dd>
+    </div>
+    <div>
+      <dt>Can we see what the examiner would see before we commit?</dt>
+      <dd>Yes. The sandbox is a working copy loaded with sample cases. Close a few alerts in it, then export the files and show them to whoever will be in the room during the exam.</dd>
+    </div>
+    <div>
+      <dt>What does it cost, and what is the contract?</dt>
+      <dd>We price per institution, not per user or per alert, so there is no reason to keep people out of the system. Ask for terms when you ask for the sandbox.</dd>
+    </div>
+  </dl>
+</section>
+
+<section class="not" id="not" aria-labelledby="not-title">
+  <h2 id="not-title">What Casefold does not claim</h2>
+  <ul class="not-list">
+    <li>
+      <p class="not-h">It does not make your bank compliant.</p>
+      <p>Your program, your policies and your reviewers' judgment do that. Casefold records the work so the judgment can be followed later.</p>
+    </li>
+    <li>
+      <p class="not-h">It is not approved or endorsed by any regulator.</p>
+      <p>No examiner, agency or auditor has reviewed or signed off on Casefold. If anyone tells you otherwise, they are not speaking for us.</p>
+    </li>
+    <li>
+      <p class="not-h">We do not have a SOC 2 report.</p>
+      <p>We are a small company and have not completed one. We will answer your security and vendor-management questions in writing before you decide anything.</p>
+    </li>
+  </ul>
+</section>
+
+<section class="sandbox" id="sandbox" aria-labelledby="sandbox-title">
+  <div class="sandbox-inner">
+    <h2 id="sandbox-title">Ask for a sandbox</h2>
+    <p>We set every sandbox up by hand, so it starts with an email. Tell us your institution and the kinds of alerts you review most. You will get a sandbox with sample cases that match, and a person to talk to.</p>
+    <a class="btn btn-primary btn-big" id="mail-btn" href="mailto:sandbox@casefold.example?subject=Sandbox%20request&body=Institution%3A%0AYour%20role%3A%0AAlert%20types%20we%20review%20most%3A%0A">Email sandbox@casefold.example</a>
+    <p class="sandbox-alt">If that button does not open your mail client, write to <span class="addr">sandbox@casefold.example</span> <button type="button" class="copy" id="copy-btn">Copy address</button><span class="copy-done" id="copy-done" role="status"></span></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-foot">
+  <p>Casefold. Case files for alert reviews at community banks and credit unions.</p>
+  <p>Names, institutions and figures in the sample case are invented.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

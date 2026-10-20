@@ -1,0 +1,31 @@
+{
+  "run": "envvars/without-r1",
+  "workdir": "W005",
+  "brief": "envvars",
+  "arm": "without",
+  "model": "claude-fable-5-1",
+  "client_version": "2.1.304",
+  "start": "2026-10-20T04:07:35Z",
+  "end": "2026-10-20T04:17:06Z",
+  "wall_clock_s": 571,
+  "tokens": {
+    "input": 130,
+    "output": 30916,
+    "cache_read": 6208665,
+    "cache_create": 122053
+  },
+  "tool_calls": 41,
+  "cap_hit": false,
+  "skill_installed": false,
+  "skill_visible_to_agent": false,
+  "skill_md_read": false,
+  "skill_file_access_in_no_skill_arm": false,
+  "infrastructure_retry": "isolation breach in run 1 (the agent read the skill); rebuilt once, see DEVIATIONS.md",
+  "start_note": null,
+  "transcript": "transcript.jsonl (tool calls, assistant text and truncated tool results; harness-injected context removed)",
+  "transcript_source": "a4be234c81d895a95.output",
+  "harness_skills_invoked": [
+    "frontend-design"
+  ],
+  "note": "Both arms ran in the same client with its built-in skills visible (for example frontend-design); the arms differ only in whether this skill was installed in the working folder."
+}

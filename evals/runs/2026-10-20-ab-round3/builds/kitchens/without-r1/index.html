@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ovenhour — licensed kitchens, rented by the hour</title>
+<meta name="description" content="Ovenhour lets licensed commercial kitchens rent their empty hours to small food makers who need a certified space. Kitchens list idle hours and house rules; makers book a shift and see exactly what equipment they get.">
+<style>
+  :root {
+    --tile: #edefea;
+    --tile-deep: #dfe3dc;
+    --line: #c7ccc4;
+    --steel: #5f676f;
+    --ink: #20262c;
+    --night: #1e2a3b;
+    --night-deep: #15202f;
+    --busy: #4b5666;
+    --amber: #e9a825;
+    --amber-deep: #8a5c05;
+    --amber-soft: #f6e1a8;
+    --paper: #f8f9f6;
+
+    --serif: Charter, "Bitstream Charter", "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
+    --sans: "Helvetica Neue", Inter, "Segoe UI", "TeX Gyre Heros", Arial, sans-serif;
+
+    --measure: 62ch;
+    --wrap: 1160px;
+    --gutter: clamp(16px, 4vw, 48px);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--tile);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 { font-weight: 400; margin: 0; line-height: 1.1; letter-spacing: -0.015em; }
+  h2 { font-size: clamp(1.75rem, 3.2vw, 2.5rem); max-width: 22ch; }
+  h3 { font-size: 1.125rem; }
+  p { margin: 0 0 1em; max-width: var(--measure); }
+  a { color: inherit; text-underline-offset: 0.15em; text-decoration-thickness: 1px; }
+  a:hover { color: var(--amber-deep); }
+  :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+  ul, ol { margin: 0; padding: 0; }
+
+  .wrap { width: min(var(--wrap), 100% - 2 * var(--gutter)); margin-inline: auto; }
+
+  /* ---------- Header ---------- */
+  .site-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 24px;
+    padding: 22px 0 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .wordmark {
+    font-family: var(--sans); font-weight: 600; font-size: 1.25rem; letter-spacing: -0.01em;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+  }
+  .wordmark .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--amber); box-shadow: inset 0 0 0 2px var(--night); }
+  .site-nav { display: flex; gap: 22px; font-family: var(--sans); font-size: 0.95rem; }
+  .site-nav a { text-decoration: none; color: var(--steel); }
+  .site-nav a:hover { color: var(--ink); }
+  @media (max-width: 560px) {
+    .site-head { flex-wrap: wrap; gap: 12px 24px; }
+    .site-nav { width: 100%; gap: 16px; flex-wrap: wrap; font-size: 0.9rem; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: clamp(40px, 7vw, 88px) 0 0; }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6.2vw, 5rem);
+    max-width: 15ch;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  .hero .lede { font-size: clamp(1.125rem, 1.6vw, 1.375rem); line-height: 1.45; margin: 26px 0 0; max-width: 46ch; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px 18px; margin-top: 30px; align-items: center; }
+
+  .btn {
+    font-family: var(--sans); font-size: 0.98rem; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 18px; border-radius: 4px; text-decoration: none;
+    border: 1px solid var(--night); color: var(--night); background: transparent;
+    cursor: pointer; line-height: 1.2;
+  }
+  .btn:hover { background: var(--paper); color: var(--night); }
+  .btn-solid { background: var(--night); color: var(--tile); }
+  .btn-solid:hover { background: var(--night-deep); color: var(--tile); }
+  .btn-amber { background: var(--amber); border-color: var(--amber); color: var(--night); }
+  .btn-amber:hover { background: #f0b53a; color: var(--night); }
+
+  /* ---------- Hour board ---------- */
+  .board-section { margin-top: clamp(40px, 6vw, 72px); }
+  .board-caption {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 32px;
+    font-family: var(--sans); font-size: 0.92rem; color: var(--steel); margin-bottom: 12px;
+  }
+  .board-caption p { margin: 0; max-width: none; }
+  .legend { display: flex; gap: 20px; list-style: none; }
+  .legend li { display: inline-flex; align-items: center; gap: 8px; }
+  .swatch { width: 22px; height: 11px; border-radius: 2px; }
+  .swatch.busy { background: var(--busy); background-image: repeating-linear-gradient(135deg, transparent 0 3px, rgba(255,255,255,.14) 3px 4px); }
+  .swatch.empty { background: var(--amber); }
+
+  .board {
+    background: var(--night);
+    color: #dde3ea;
+    border-radius: 6px;
+    padding: 22px clamp(14px, 2.5vw, 30px) 18px;
+    font-family: var(--sans);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(150px, 230px) 1fr minmax(96px, 130px);
+    gap: 0 18px;
+    align-items: center;
+    padding: 12px 0;
+  }
+  .row + .row { border-top: 1px solid rgba(255,255,255,.08); }
+  .row-name { font-size: 0.95rem; line-height: 1.3; }
+  .row-name small { display: block; color: #9aa5b3; font-size: 0.82rem; margin-top: 2px; }
+  .row-count { text-align: right; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+  .row-count b { font-weight: 600; color: var(--amber); font-size: 1.35rem; }
+  .row-count span { display: block; font-size: 0.78rem; color: #9aa5b3; }
+
+  .track {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    gap: 0;
+    height: 44px;
+    position: relative;
+    list-style: none;
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--night-deep);
+  }
+  .seg {
+    height: 100%;
+    display: flex; align-items: center;
+    padding: 0 10px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    min-width: 0;
+  }
+  .seg.busy {
+    background: var(--busy);
+    background-image: repeating-linear-gradient(135deg, transparent 0 5px, rgba(255,255,255,.12) 5px 6px);
+    color: #c9d1db;
+    box-shadow: inset 1px 0 0 var(--night);
+  }
+  .seg.empty {
+    background: var(--amber);
+    color: var(--night);
+    font-weight: 500;
+    box-shadow: inset 1px 0 0 var(--night);
+    transform-origin: left center;
+  }
+  .seg .lbl { overflow: hidden; text-overflow: ellipsis; }
+  .seg.narrow .lbl { display: none; }
+
+  .axis {
+    display: grid; grid-template-columns: minmax(150px, 230px) 1fr minmax(96px, 130px); gap: 0 18px;
+    margin-top: 8px;
+  }
+  .axis ol { grid-column: 2; display: grid; grid-template-columns: repeat(4, 1fr); list-style: none; font-size: 0.76rem; color: #9aa5b3; position: relative; }
+  .axis li { position: relative; padding-top: 6px; }
+  .axis li::before { content: ""; position: absolute; left: 0; top: -2px; height: 6px; width: 1px; background: #55606d; }
+  .axis li:last-child { position: absolute; right: 0; top: 0; text-align: right; }
+  .axis li:last-child::before { left: auto; right: 0; }
+
+  .board-foot { font-family: var(--sans); font-size: 0.9rem; color: var(--steel); margin: 14px 0 0; max-width: 72ch; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .board.animate .seg.empty { animation: light-up 520ms cubic-bezier(.2,.7,.2,1) both; }
+    .board.animate .seg.empty .lbl { animation: fade 300ms 420ms both; }
+    @keyframes light-up { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  }
+
+  @media (max-width: 760px) {
+    .row { grid-template-columns: 1fr auto; grid-template-areas: "name count" "track track"; gap: 8px 14px; }
+    .row-name { grid-area: name; }
+    .row-count { grid-area: count; }
+    .track { grid-area: track; height: 36px; }
+    .axis { grid-template-columns: 1fr; }
+    .axis ol { grid-column: 1; }
+    .seg { padding: 0 6px; font-size: 0.74rem; }
+  }
+
+  /* ---------- Sections ---------- */
+  .section { padding: clamp(56px, 8vw, 112px) 0 0; }
+  .section-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 24px 64px; align-items: start; margin-bottom: clamp(28px, 4vw, 48px); }
+  .section-head .intro { font-size: 1.125rem; }
+  .section-head .intro p:last-child { margin-bottom: 0; }
+  @media (max-width: 760px) { .section-head { grid-template-columns: 1fr; gap: 16px; } }
+
+  .notice {
+    font-family: var(--sans); font-size: 0.92rem;
+    display: inline-block;
+    border-left: 3px solid var(--amber); padding: 6px 12px; background: var(--paper);
+    max-width: none; margin: 0 0 20px;
+  }
+
+  /* ---------- Sample listing ---------- */
+  .listing-grid {
+    display: grid;
+    grid-template-columns: minmax(170px, 1fr) minmax(0, 2.6fr) minmax(170px, 1fr);
+    gap: 32px;
+    align-items: start;
+  }
+  .notes { font-family: var(--sans); font-size: 0.9rem; color: var(--steel); line-height: 1.45; position: sticky; top: 24px; }
+  .notes h3 { font-family: var(--sans); font-weight: 600; font-size: 0.9rem; color: var(--ink); margin-bottom: 14px; }
+  .notes ul { list-style: none; display: grid; gap: 14px; }
+  .notes li { padding-left: 14px; border-left: 2px solid var(--line); }
+  .notes-maker li { border-left-color: var(--amber); }
+
+  .listing {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-family: var(--sans);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .listing-head {
+    padding: 22px 26px 18px;
+    border-bottom: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; align-items: baseline;
+  }
+  .listing-head h3 { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.01em; }
+  .listing-head .sub { color: var(--steel); font-size: 0.95rem; margin: 4px 0 0; }
+  .price { text-align: right; font-size: 0.95rem; color: var(--steel); }
+  .price b { display: block; color: var(--ink); font-size: 1.2rem; font-weight: 600; }
+  .listing dl { margin: 0; padding: 8px 26px 10px; }
+  .listing .field { display: grid; grid-template-columns: 130px 1fr; gap: 20px; padding: 16px 0; }
+  .listing .field + .field { border-top: 1px solid var(--tile-deep); }
+  .listing dt { font-weight: 600; font-size: 0.95rem; padding-top: 1px; }
+  .listing dd { margin: 0; font-size: 0.97rem; line-height: 1.5; }
+  .listing dd ul { list-style: disc; padding-left: 1.1em; display: grid; gap: 4px; }
+  .listing dd ul.two { columns: 2; column-gap: 24px; display: block; }
+  .listing dd ul.two li { break-inside: avoid; margin-bottom: 4px; }
+  .listing dd .muted { color: var(--steel); }
+  .listing-foot { padding: 14px 26px 18px; border-top: 1px solid var(--line); font-size: 0.86rem; color: var(--steel); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 3px; background: var(--amber-soft); color: var(--amber-deep); font-weight: 600; font-size: 0.78rem; }
+
+  @media (max-width: 960px) {
+    .listing-grid { grid-template-columns: 1fr; gap: 24px; }
+    .notes { position: static; }
+    .notes ul { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .listing dd ul.two { columns: 1; }
+  }
+  @media (max-width: 560px) {
+    .listing-head, .listing dl, .listing-foot { padding-inline: 16px; }
+    .listing .field { grid-template-columns: 1fr; gap: 6px; }
+    .price { text-align: left; }
+  }
+
+  /* ---------- Shift clock ---------- */
+  .clock { border-top: 1px solid var(--ink); font-family: var(--sans); }
+  .clock-row {
+    display: grid; grid-template-columns: 150px 1fr 1fr; gap: 0 40px;
+    padding: 22px 0; border-bottom: 1px solid var(--line);
+  }
+  .clock-row.head { padding: 12px 0; font-weight: 600; font-size: 0.9rem; }
+  .clock-row.head .side-k { color: var(--steel); }
+  .clock-row.head .side-m { color: var(--amber-deep); }
+  .clock-time { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .clock-time small { display: block; font-weight: 400; color: var(--steel); font-size: 0.85rem; }
+  .clock-row p { margin: 0; font-family: var(--serif); font-size: 1.02rem; max-width: 38ch; }
+  @media (max-width: 760px) {
+    .clock-row { grid-template-columns: 1fr; gap: 10px; }
+    .clock-row.head { display: none; }
+    .clock-row .cell { padding-left: 12px; border-left: 2px solid var(--line); }
+    .clock-row .cell.m { border-left-color: var(--amber); }
+    .clock-row .cell::before { font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 2px; }
+    .clock-row .cell.k::before { content: "Kitchen"; color: var(--steel); }
+    .clock-row .cell.m::before { content: "Maker"; color: var(--amber-deep); }
+  }
+
+  /* ---------- County rules ---------- */
+  .county { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px 64px; }
+  .county .varies { font-family: var(--sans); list-style: none; border-top: 1px solid var(--ink); }
+  .county .varies li { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 0.97rem; max-width: 48ch; }
+  .county .varies-title { font-family: var(--sans); font-weight: 600; font-size: 0.95rem; margin-bottom: 10px; }
+  @media (max-width: 760px) { .county { grid-template-columns: 1fr; } }
+
+  /* ---------- Two sides ---------- */
+  .sides { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: stretch; }
+  .side { padding: clamp(24px, 3vw, 40px); border-radius: 6px; }
+  .side-makers { background: var(--night); color: #e6eaf0; }
+  .side-makers h2, .side-makers h3 { color: #fff; }
+  .side-makers p { color: #c9d1db; }
+  .side-kitchens { background: var(--paper); border: 1px solid var(--line); }
+  .side h2 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); margin-bottom: 14px; }
+  .side .why { font-family: var(--sans); font-size: 0.92rem; }
+  @media (max-width: 860px) { .sides { grid-template-columns: 1fr; } }
+
+  form { font-family: var(--sans); margin-top: 24px; }
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px; }
+  .fields .full { grid-column: 1 / -1; }
+  @media (max-width: 560px) { .fields { grid-template-columns: 1fr; } }
+  label.f { display: grid; gap: 6px; font-size: 0.9rem; font-weight: 500; }
+  label.f span small { font-weight: 400; color: #9aa5b3; }
+  input[type="text"], input[type="email"], textarea {
+    font: inherit; font-size: 1rem; color: var(--ink);
+    padding: 11px 12px; border-radius: 4px; border: 1px solid #8794a4; background: #f8f9f6; width: 100%;
+  }
+  input:focus-visible, textarea:focus-visible { outline: 3px solid var(--amber); outline-offset: 1px; border-color: var(--amber); }
+  textarea { min-height: 72px; resize: vertical; }
+  fieldset { border: 0; padding: 0; margin: 0; }
+  legend { font-size: 0.9rem; font-weight: 500; padding: 0; margin-bottom: 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .chip span {
+    display: inline-block; padding: 7px 12px; border-radius: 999px; border: 1px solid #8794a4; font-size: 0.9rem; cursor: pointer; color: #e6eaf0;
+  }
+  .chip input:checked + span { background: var(--amber); border-color: var(--amber); color: var(--night); font-weight: 500; }
+  .chip input:focus-visible + span { outline: 3px solid var(--amber); outline-offset: 2px; }
+  .form-actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 22px; }
+  .form-actions .fine { font-size: 0.85rem; color: #9aa5b3; margin: 0; }
+  .form-error { color: #ffd37a; font-size: 0.9rem; margin: 10px 0 0; display: none; }
+  .form-error.show { display: block; }
+
+  .confirm { display: none; margin-top: 24px; font-family: var(--sans); border-top: 1px solid rgba(255,255,255,.18); padding-top: 20px; }
+  .confirm.show { display: block; }
+  .confirm h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 8px; }
+  .confirm p { max-width: 48ch; }
+  .confirm a { color: var(--amber); }
+
+  .ready { font-family: var(--sans); list-style: none; display: grid; gap: 10px; margin: 20px 0 28px; font-size: 0.97rem; }
+  .ready li { display: grid; grid-template-columns: 18px 1fr; gap: 12px; align-items: baseline; }
+  .ready li::before { content: ""; width: 12px; height: 12px; border: 1.5px solid var(--steel); border-radius: 2px; transform: translateY(1px); }
+  .side-kitchens .url { font-family: var(--sans); font-size: 0.9rem; color: var(--steel); margin: 12px 0 0; }
+
+  /* ---------- Status ---------- */
+  .status { margin-top: clamp(56px, 8vw, 112px); border-top: 1px solid var(--ink); padding-top: 24px; font-family: var(--sans); }
+  .status-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 32px; }
+  .status-grid div { display: grid; gap: 4px; font-size: 0.95rem; }
+  .status-grid dt { color: var(--steel); font-size: 0.85rem; }
+  .status-grid dd { margin: 0; }
+  .status .as-of { font-size: 0.85rem; color: var(--steel); margin: 0 0 18px; }
+  @media (max-width: 760px) { .status-grid { grid-template-columns: 1fr 1fr; } }
+
+  /* ---------- Footer ---------- */
+  .site-foot { margin-top: 56px; padding: 26px 0 40px; border-top: 1px solid var(--line); font-family: var(--sans); font-size: 0.9rem; color: var(--steel); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; }
+  .site-foot ul { list-style: none; display: flex; gap: 20px; flex-wrap: wrap; }
+  .site-foot a { text-decoration: none; }
+  .site-foot a:hover { text-decoration: underline; }
+
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--amber); color: var(--night); padding: 8px 12px; font-family: var(--sans); border-radius: 4px; z-index: 10; }
+  .skip:focus { left: 8px; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="wrap site-head">
+  <a class="wordmark" href="#" aria-label="Ovenhour, home"><span class="dot" aria-hidden="true"></span>Ovenhour</a>
+  <nav class="site-nav" aria-label="Page">
+    <a href="#shift">The listing</a>
+    <a href="#county">County rules</a>
+    <a href="#makers">Makers</a>
+    <a href="#kitchens">Kitchens</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="wrap hero">
+    <h1>Every licensed kitchen has hours it sits empty.</h1>
+    <p class="lede">Ovenhour rents them out. A kitchen lists the hours it's closed, the equipment on offer and its house rules. A small food maker books a shift and cooks in a certified space, knowing exactly what they'll find when they walk in.</p>
+    <div class="hero-actions">
+      <a class="btn btn-amber" href="#makers">I make food and need a kitchen</a>
+      <a class="btn" href="https://ovenhour.example/kitchens">I run a kitchen with empty hours</a>
+    </div>
+  </section>
+
+  <section class="wrap board-section" aria-labelledby="board-title">
+    <div class="board-caption">
+      <p id="board-title">Where the empty hours usually are, over one day</p>
+      <ul class="legend" aria-label="Legend">
+        <li><span class="swatch busy" aria-hidden="true"></span>Kitchen's own work</li>
+        <li><span class="swatch empty" aria-hidden="true"></span>Empty, could be booked</li>
+      </ul>
+    </div>
+
+    <div class="board" id="board">
+      <div class="row">
+        <div class="row-name">A bakery<small>Starts at 3 am, done by 1 pm</small></div>
+        <ol class="track" aria-label="Bakery: busy 3 am to 1 pm, empty 1 pm to 3 am the next day">
+          <li class="seg empty" style="grid-column: 1 / 4" aria-label="Empty midnight to 3 am"><span class="lbl">12 – 3 am</span></li>
+          <li class="seg busy" style="grid-column: 4 / 14"><span class="lbl">Baking and front counter</span></li>
+          <li class="seg empty" style="grid-column: 14 / 25" aria-label="Empty 1 pm to midnight"><span class="lbl">Empty 1 pm – 3 am</span></li>
+        </ol>
+        <div class="row-count"><b>14</b><span>empty hours</span></div>
+      </div>
+
+      <div class="row">
+        <div class="row-name">A dinner-only restaurant<small>Prep from 2 pm, closes at 11</small></div>
+        <ol class="track" aria-label="Dinner restaurant: busy 2 pm to 11 pm, empty 11 pm to 2 pm the next day">
+          <li class="seg empty" style="grid-column: 1 / 15" aria-label="Empty midnight to 2 pm"><span class="lbl">Empty 11 pm – 2 pm</span></li>
+          <li class="seg busy" style="grid-column: 15 / 24"><span class="lbl">Prep and service</span></li>
+          <li class="seg empty narrow" style="grid-column: 24 / 25" aria-label="Empty 11 pm to midnight"><span class="lbl">11 pm</span></li>
+        </ol>
+        <div class="row-count"><b>15</b><span>empty hours</span></div>
+      </div>
+
+      <div class="row">
+        <div class="row-name">A caterer, weekday with no event<small>A short prep block, 9 to 2</small></div>
+        <ol class="track" aria-label="Caterer on a quiet weekday: busy 9 am to 2 pm, empty the other 19 hours">
+          <li class="seg empty" style="grid-column: 1 / 10" aria-label="Empty midnight to 9 am"><span class="lbl">12 – 9 am</span></li>
+          <li class="seg busy" style="grid-column: 10 / 15"><span class="lbl">Prep</span></li>
+          <li class="seg empty" style="grid-column: 15 / 25" aria-label="Empty 2 pm to midnight"><span class="lbl">Empty 2 pm – 9 am</span></li>
+        </ol>
+        <div class="row-count"><b>19</b><span>empty hours</span></div>
+      </div>
+
+      <div class="axis" aria-hidden="true">
+        <ol><li>12 am</li><li>6 am</li><li>12 pm</li><li>6 pm</li><li>12 am</li></ol>
+      </div>
+    </div>
+    <p class="board-foot">Typical patterns for three kinds of kitchen, not listings. Ovenhour has no kitchens listed yet; when it does, each one will show its own hours like this.</p>
+  </section>
+
+  <section class="wrap section" id="shift" aria-labelledby="shift-title">
+    <div class="section-head">
+      <h2 id="shift-title">One listing, written by the kitchen, read by the maker</h2>
+      <div class="intro">
+        <p>There aren't two products here. The kitchen fills in a page once; the maker reads the same page before booking. If something isn't on it, it isn't part of the shift. That one rule is what keeps both sides honest with each other.</p>
+      </div>
+    </div>
+
+    <p class="notice"><strong>Sample listing.</strong> There are no kitchens on Ovenhour yet. This is the shape a real one will take.</p>
+
+    <div class="listing-grid">
+      <aside class="notes notes-kitchen" aria-label="What the kitchen should know">
+        <h3>If you run the kitchen</h3>
+        <ul>
+          <li>List the hours you're closed, not the hours you'd like to be paid for. A maker will turn up at the start of them.</li>
+          <li>Listed equipment is everything a maker may touch. Leave off anything you don't want used.</li>
+          <li>House rules are enforced as written, so write them the way you'd say them to a new hire.</li>
+        </ul>
+      </aside>
+
+      <article class="listing" aria-labelledby="listing-title">
+        <div class="listing-head">
+          <div>
+            <h3 id="listing-title">Weeknight shift, 10 pm to 5 am</h3>
+            <p class="sub">Tuesdays and Thursdays. Up to two people.</p>
+          </div>
+          <div class="price"><b>$— per hour</b>set by the kitchen</div>
+        </div>
+        <dl>
+          <div class="field">
+            <dt>Hours</dt>
+            <dd>10:00 pm to 5:00 am. Clean-down finishes by 4:30 am. The morning crew arrives at 5:30 and the kitchen is theirs.</dd>
+          </div>
+          <div class="field">
+            <dt>Equipment you get</dt>
+            <dd>
+              <ul class="two">
+                <li>Six-burner range with oven</li>
+                <li>Double-stack convection oven</li>
+                <li>20-quart planetary mixer</li>
+                <li>One labelled walk-in shelf</li>
+                <li>Three-compartment sink</li>
+                <li>Hood with fire suppression</li>
+                <li>One 6-foot stainless prep table</li>
+                <li>Hand-wash sink, soap, paper</li>
+              </ul>
+            </dd>
+          </div>
+          <div class="field">
+            <dt>Not included</dt>
+            <dd>Deep fryer, dry storage, smallwares and sheet pans, the office. <span class="muted">Bring your own pans, knives and containers.</span></dd>
+          </div>
+          <div class="field">
+            <dt>House rules</dt>
+            <dd>
+              <ul>
+                <li>No tree nuts or peanuts anywhere in the building.</li>
+                <li>Everything that goes in the walk-in is labelled with your name and the date. Nothing stays past 5 am.</li>
+                <li>Trash goes to the rear dumpster, cardboard flattened.</li>
+                <li>Lock-up: hood off, gas valves closed, door code entered in the log.</li>
+              </ul>
+            </dd>
+          </div>
+          <div class="field">
+            <dt>Licensed as</dt>
+            <dd>Commercial food establishment. <span class="muted">License number and county are shown to a maker once a shift is booked.</span></dd>
+          </div>
+        </dl>
+        <div class="listing-foot">
+          <span><span class="tag">Sample</span>&nbsp; Not a real kitchen</span>
+          <span>What a maker needs to cook here depends on the county. <a href="#county">See county rules</a></span>
+        </div>
+      </article>
+
+      <aside class="notes notes-maker" aria-label="What the maker should know">
+        <h3>If you're the maker</h3>
+        <ul>
+          <li>Hours are exact. The shift ends when the listing says it does, clean-down included.</li>
+          <li>If a piece of equipment isn't listed, it isn't yours for the night.</li>
+          <li>Booking means agreeing to the house rules, so read them before you do.</li>
+          <li>The county decides what permits you need to cook here. Ovenhour doesn't.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="clock-title">
+    <div class="section-head">
+      <h2 id="clock-title">One shift, by the clock</h2>
+      <div class="intro">
+        <p>Both sides are watching the same hours. Here is who does what, from the moment a kitchen lists to the moment the morning crew walks in.</p>
+      </div>
+    </div>
+
+    <div class="clock">
+      <div class="clock-row head" aria-hidden="true">
+        <div></div><div class="side-k">The kitchen</div><div class="side-m">The maker</div>
+      </div>
+      <div class="clock-row">
+        <div class="clock-time">Before<small>Any time</small></div>
+        <div class="cell k"><p>Lists the hours it's closed, the equipment a maker may use, the house rules, and a price per hour.</p></div>
+        <div class="cell m"><p>Reads the listing and the county's requirements, and checks their own permits cover what they plan to make.</p></div>
+      </div>
+      <div class="clock-row">
+        <div class="clock-time">Booking<small>Days ahead</small></div>
+        <div class="cell k"><p>Sees who has booked, what they make, and which hours. Keeps a kitchen it's happy to hand over.</p></div>
+        <div class="cell m"><p>Books the shift and gets the practical details: entry, parking, where to put the car and the crates.</p></div>
+      </div>
+      <div class="clock-row">
+        <div class="clock-time">10:00 pm<small>Shift starts</small></div>
+        <div class="cell k"><p>Leaves the kitchen clean, the listed equipment working, and the walk-in shelf cleared.</p></div>
+        <div class="cell m"><p>Walks in to exactly what the listing promised, and gets to work. Listed equipment, listed hours.</p></div>
+      </div>
+      <div class="clock-row">
+        <div class="clock-time">5:00 am<small>Shift ends</small></div>
+        <div class="cell k"><p>Finds the kitchen as it was left. The clean-down list is the same list the maker was reading an hour ago.</p></div>
+        <div class="cell m"><p>Finishes clean-down by 4:30, logs out by 5, and leaves the morning crew nothing to notice.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="county" aria-labelledby="county-title">
+    <div class="section-head">
+      <h2 id="county-title">Where you cook sets the rules</h2>
+      <div class="intro">
+        <p>Food safety is regulated county by county. What a maker needs in order to cook in a shared commercial kitchen, and what they can sell afterwards, is decided by the local health department, and it changes across a county line.</p>
+      </div>
+    </div>
+    <div class="county">
+      <div>
+        <p>Ovenhour hasn't announced launch counties yet. When a county opens, its requirements for makers will be written out next to the kitchens listed there, before anyone can book. Until then we won't guess on your behalf, and neither should a listing.</p>
+        <p>The kitchen's license covers the building and the equipment. Whatever a county asks of the person cooking is the maker's to hold, and a kitchen can ask to see it.</p>
+      </div>
+      <div>
+        <p class="varies-title">Things that commonly differ from one county to the next</p>
+        <ul class="varies">
+          <li>Whether a cottage-food registration is enough, or a full commercial food permit is needed</li>
+          <li>Who on the shift needs a food-handler card or a certified food manager</li>
+          <li>How a maker's use of a shared kitchen is recorded with the health department</li>
+          <li>Labelling and allergen rules for what you sell</li>
+          <li>Where the finished food can be sold: markets, online, wholesale</li>
+          <li>Whether the kitchen or the maker carries which insurance</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-label="Get started">
+    <div class="sides">
+      <div class="side side-makers" id="makers">
+        <h2>Nothing to book yet. Tell us where you'd cook.</h2>
+        <p class="why">Makers are the side we hear from most, and there isn't a listing to show you. The counties we open first will be the ones with makers waiting in them. Leave your details and we'll email you when a kitchen within reach lists its hours.</p>
+
+        <form id="maker-form" novalidate>
+          <div class="fields">
+            <label class="f"><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
+            <label class="f"><span>City and county</span><input type="text" name="place" autocomplete="address-level2" placeholder="e.g. Durham, Durham County" required></label>
+            <label class="f full"><span>What you make <small>— a line is plenty</small></span><input type="text" name="makes" placeholder="e.g. tamales for a Saturday market"></label>
+            <fieldset class="full">
+              <legend>Hours you'd want</legend>
+              <div class="chips">
+                <label class="chip"><input type="checkbox" name="hours" value="early"><span>Early mornings</span></label>
+                <label class="chip"><input type="checkbox" name="hours" value="daytime"><span>Weekday daytime</span></label>
+                <label class="chip"><input type="checkbox" name="hours" value="nights"><span>Late nights</span></label>
+                <label class="chip"><input type="checkbox" name="hours" value="weekends"><span>Weekends</span></label>
+              </div>
+            </fieldset>
+          </div>
+          <p class="form-error" id="maker-error" role="alert"></p>
+          <div class="form-actions">
+            <button class="btn btn-amber" type="submit">Email me when a kitchen lists</button>
+            <p class="fine">One email when there's something near you. Nothing else.</p>
+          </div>
+        </form>
+
+        <div class="confirm" id="maker-confirm" tabindex="-1" aria-live="polite">
+          <h3>Noted.</h3>
+          <p id="confirm-text"></p>
+          <p>If that email doesn't go through on its own, send the same details to <a href="mailto:makers@ovenhour.example">makers@ovenhour.example</a>.</p>
+        </div>
+      </div>
+
+      <div class="side side-kitchens" id="kitchens">
+        <h2>Run a licensed kitchen with hours to spare?</h2>
+        <p class="why">Kitchens can sign up now. Listing takes one sitting if you have these to hand:</p>
+        <ul class="ready">
+          <li>Your food establishment license and the county it's issued in</li>
+          <li>The hours and days the kitchen is closed</li>
+          <li>The equipment a maker may use, and what's off limits</li>
+          <li>Your house rules, including clean-down and lock-up</li>
+          <li>The price per hour you'd want</li>
+        </ul>
+        <a class="btn btn-solid" href="https://ovenhour.example/kitchens">List your kitchen</a>
+        <p class="url">ovenhour.example/kitchens</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap status" aria-labelledby="status-title">
+    <h2 id="status-title" style="font-size:1.25rem; font-family: var(--sans); font-weight: 600; margin-bottom: 4px;">Where Ovenhour is today</h2>
+    <p class="as-of">Plainly, as of October 2026</p>
+    <dl class="status-grid">
+      <div><dt>Kitchens</dt><dd>Signing up</dd></div>
+      <div><dt>Listings</dt><dd>None yet</dd></div>
+      <div><dt>Launch counties</dt><dd>Not announced</dd></div>
+      <div><dt>Makers</dt><dd>Waiting list open</dd></div>
+    </dl>
+  </section>
+
+</main>
+
+<footer class="wrap site-foot">
+  <span>Ovenhour</span>
+  <ul>
+    <li><a href="https://ovenhour.example/kitchens">Kitchens</a></li>
+    <li><a href="#makers">Makers</a></li>
+    <li><a href="#county">County rules</a></li>
+    <li><a href="mailto:hello@ovenhour.example">hello@ovenhour.example</a></li>
+  </ul>
+</footer>
+
+<script>
+  (function () {
+    // Light the empty hours once, left to right, when the board first comes into view.
+    var board = document.getElementById('board');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (board && !reduce) {
+      var empties = board.querySelectorAll('.seg.empty');
+      empties.forEach(function (seg) {
+        var start = parseInt((seg.style.gridColumn || '1').split('/')[0], 10) || 1;
+        seg.style.animationDelay = (120 + start * 28) + 'ms';
+        var lbl = seg.querySelector('.lbl');
+        if (lbl) lbl.style.animationDelay = (420 + start * 28) + 'ms';
+      });
+      var fire = function () { board.classList.add('animate'); };
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          if (entries.some(function (e) { return e.isIntersecting; })) { fire(); io.disconnect(); }
+        }, { threshold: 0.25 });
+        io.observe(board);
+      } else { fire(); }
+    }
+
+    // Hide labels in segments too narrow to hold them.
+    function fitLabels() {
+      document.querySelectorAll('.seg').forEach(function (seg) {
+        var lbl = seg.querySelector('.lbl');
+        if (!lbl) return;
+        seg.classList.remove('narrow');
+        lbl.style.visibility = 'hidden';
+        var pad = parseFloat(getComputedStyle(seg).paddingLeft) * 2 + 4;
+        var fits = lbl.scrollWidth + pad <= seg.clientWidth;
+        lbl.style.visibility = '';
+        if (!fits) seg.classList.add('narrow');
+      });
+    }
+    fitLabels();
+    window.addEventListener('resize', fitLabels);
+
+    // Maker waiting list. Static site: validate, confirm, and open a prefilled email as the delivery path.
+    var form = document.getElementById('maker-form');
+    var err = document.getElementById('maker-error');
+    var confirmBox = document.getElementById('maker-confirm');
+    var confirmText = document.getElementById('confirm-text');
+    if (form) {
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var email = form.email.value.trim();
+        var place = form.place.value.trim();
+        var makes = form.makes.value.trim();
+        var hours = Array.prototype.map.call(form.querySelectorAll('input[name="hours"]:checked'), function (c) { return c.nextElementSibling.textContent; });
+
+        var problems = [];
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) problems.push('an email address we can reach');
+        if (!place) problems.push('the city and county you cook in');
+        if (problems.length) {
+          err.textContent = 'We need ' + problems.join(' and ') + '.';
+          err.classList.add('show');
+          (problems[0].indexOf('email') === 0 ? form.email : form.place).focus();
+          return;
+        }
+        err.classList.remove('show');
+
+        var body = 'Where I cook: ' + place + '\n' +
+                   'What I make: ' + (makes || '(not said)') + '\n' +
+                   'Hours I want: ' + (hours.length ? hours.join(', ') : '(any)') + '\n' +
+                   'Email me at: ' + email + '\n';
+        var href = 'mailto:makers@ovenhour.example?subject=' + encodeURIComponent('Maker waiting for a kitchen in ' + place) +
+                   '&body=' + encodeURIComponent(body);
+
+        confirmText.textContent = "We'll email " + email + ' when a kitchen lists hours near ' + place + '. Your note helps decide which counties open first.';
+        form.hidden = true;
+        confirmBox.classList.add('show');
+        confirmBox.focus();
+        try { window.location.href = href; } catch (e) { /* mailto handling is up to the browser */ }
+      });
+    }
+  })();
+</script>
+</body>
+</html>

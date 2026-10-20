@@ -1,0 +1,29 @@
+{
+  "run": "stitch/without-r1",
+  "workdir": "W009",
+  "brief": "stitch",
+  "arm": "without",
+  "model": "claude-fable-5-1",
+  "client_version": "2.1.304",
+  "start": "2026-10-20T04:04:19Z",
+  "end": "2026-10-20T04:17:24Z",
+  "wall_clock_s": 785,
+  "tokens": {
+    "input": 84,
+    "output": 54570,
+    "cache_read": 4517006,
+    "cache_create": 158399
+  },
+  "tool_calls": 25,
+  "cap_hit": false,
+  "skill_installed": false,
+  "skill_visible_to_agent": false,
+  "skill_md_read": false,
+  "skill_file_access_in_no_skill_arm": false,
+  "infrastructure_retry": null,
+  "start_note": null,
+  "transcript": "transcript.jsonl (tool calls, assistant text and truncated tool results; harness-injected context removed)",
+  "transcript_source": "aa7c1ecdb4e3e9055.output",
+  "harness_skills_invoked": [],
+  "note": "Both arms ran in the same client with its built-in skills visible (for example frontend-design); the arms differ only in whether this skill was installed in the working folder."
+}

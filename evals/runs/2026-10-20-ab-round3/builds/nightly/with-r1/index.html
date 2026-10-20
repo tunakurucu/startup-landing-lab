@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>An evening question app for iPhone — Lamplit</title>
+<meta name="description" content="Lamplit asks you one small question each evening and keeps your answer on your phone. Answer tonight's question here, see a sample week, and ask for a TestFlight invite.">
+<meta name="theme-color" content="#1b1720">
+<meta property="og:site_name" content="Lamplit">
+<meta property="og:title" content="One small question a night, kept on your phone">
+<meta property="og:description" content="Lamplit is an iPhone app that asks you one thing at the end of the day and stores your answer on your device. In TestFlight beta.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lamplit.app/">
+<meta property="og:image" content="https://lamplit.app/share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="One small question a night, kept on your phone">
+<meta name="twitter:description" content="Lamplit is an iPhone app that asks you one thing at the end of the day and stores your answer on your device. In TestFlight beta.">
+<meta name="twitter:image" content="https://lamplit.app/share.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{
+  --ground:#1b1720;
+  --surface:#262030;
+  --surface-2:#312a3c;
+  --line:#3d3548;
+  --ink:#f4eee6;
+  --ink-2:#cdc4b9;
+  --ink-3:#a79d93;
+  --lamp:#f2b84b;
+  --lamp-ink:#1b1720;
+  --lamp-soft:#6a4f1f;
+  --display:Charter,"Bitstream Charter","Iowan Old Style",Palatino,"Palatino Linotype","TeX Gyre Pagella",Georgia,serif;
+  --text:-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --s-1:.5rem; --s-2:.75rem; --s-3:1rem; --s-4:1.5rem; --s-5:2.25rem; --s-6:3.5rem; --s-7:5.5rem;
+  --gutter:clamp(1.25rem, .6rem + 2.6vw, 3rem);
+  --max:72rem;
+  --measure:36rem;
+  --ease-out:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html{background:var(--ground);color:var(--ink);font-family:var(--text);font-size:100%;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);line-height:1.55;font-size:1.0625rem;overflow-wrap:break-word}
+img,svg{display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:700;margin:0;text-wrap:balance;overflow-wrap:break-word}
+h1{font-size:clamp(2.5rem, 1.6rem + 3.2vw, 3.9rem);line-height:1.04;letter-spacing:-.01em}
+h2{font-size:clamp(1.75rem, 1.3rem + 1.5vw, 2.5rem);line-height:1.12;letter-spacing:-.005em}
+h3{font-size:1.25rem;line-height:1.25}
+p{margin:0;max-width:var(--measure);text-wrap:pretty}
+p+p{margin-top:var(--s-3)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9375rem;line-height:1.45}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+
+/* skip link */
+.skip{position:absolute;left:var(--gutter);top:.75rem;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;background:var(--lamp);color:var(--lamp-ink);padding:0;border-radius:.4rem;font-weight:600;z-index:10}
+.skip:focus{width:auto;height:auto;clip:auto;padding:.6rem .9rem}
+
+/* nav */
+.nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.25rem var(--s-3);min-height:4rem;padding-block:.25rem}
+.wordmark{font-family:var(--display);font-weight:700;font-size:1.375rem;text-decoration:none;display:inline-flex;align-items:center;min-height:2.75rem;letter-spacing:-.005em}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:.25rem}
+.nav li a{display:inline-flex;align-items:center;min-height:2.75rem;padding:0 .7rem;text-decoration:none;color:var(--ink-2);font-size:.9375rem;border-radius:.4rem}
+.nav li a:hover{color:var(--ink)}
+.nav li a.strong{color:var(--ink);border:1px solid var(--line)}
+
+/* hero */
+.hero{padding-block:var(--s-5) var(--s-6)}
+.hero .section-head{margin-bottom:var(--s-4)}
+.hero-grid{display:grid;gap:var(--s-5);align-items:start}
+.lede{margin-top:var(--s-4);font-size:1.125rem;line-height:1.5;max-width:34rem}
+.cta{margin-top:var(--s-5);display:flex;flex-direction:column;gap:var(--s-2);align-items:flex-start}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3.25rem;padding:.8rem 1.4rem;border-radius:.6rem;font-weight:600;font-size:1.0625rem;text-decoration:none;border:1px solid transparent;cursor:pointer;font-family:var(--text);line-height:1.2}
+.btn-primary{background:var(--lamp);color:var(--lamp-ink);border-color:var(--lamp)}
+.btn-primary:hover{background:#f7c466}
+.btn-secondary{background:transparent;color:var(--ink);border-color:var(--ink-3)}
+.btn-secondary:hover{border-color:var(--ink);background:var(--surface-2)}
+.beside{color:var(--ink-2);font-size:.9375rem;line-height:1.45;max-width:28rem}
+:is(a,button,textarea,input,summary):focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
+
+/* tonight card: the app's evening screen */
+.tonight{background:var(--surface);border-radius:1rem;padding:var(--s-4);display:grid;gap:var(--s-3);position:relative}
+.tonight-head{display:flex;align-items:center;justify-content:space-between;gap:var(--s-2);color:var(--ink-2);font-size:.9375rem}
+.tonight-head time{font-variant-numeric:tabular-nums}
+.question{font-family:var(--display);font-size:clamp(1.5rem, 1.25rem + 1vw, 1.9rem);line-height:1.25;font-weight:700;letter-spacing:-.005em;margin:0;max-width:none}
+.field{display:grid;gap:.4rem}
+.field label{font-size:.9375rem;color:var(--ink-2)}
+.field textarea{width:100%;font:inherit;font-size:1.0625rem;line-height:1.5;color:var(--ink);background:var(--ground);border:1px solid var(--line);border-radius:.6rem;padding:.75rem .85rem;resize:vertical;min-height:5.2rem}
+.field textarea::placeholder{color:var(--ink-3)}
+.tonight-actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-2) var(--s-3)}
+.count{font-size:.875rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.status{font-size:.9375rem;line-height:1.45;color:var(--ink-2);min-height:1.4em}
+.status strong{color:var(--ink)}
+.sample-note{font-size:.875rem;color:var(--ink-3);line-height:1.45;margin:0;max-width:none}
+
+/* lamp glyph: a small window that lights when the day has an answer */
+.lamp{width:1.5rem;height:1.5rem;flex:0 0 auto}
+.lamp .pane{fill:var(--surface-2);stroke:var(--ink-3);stroke-width:1.25;transition:fill 200ms var(--ease-out),stroke 200ms var(--ease-out)}
+.lamp .glow{fill:var(--lamp);opacity:0;transition:opacity 200ms var(--ease-out)}
+.lamp .bar{stroke:var(--ink-3);stroke-width:1.25;fill:none;transition:stroke 200ms var(--ease-out)}
+.lit .lamp .bar,.lamp.is-lit .bar{stroke:var(--ground)}
+.lit .lamp .pane,.lamp.is-lit .pane{fill:var(--lamp);stroke:var(--lamp)}
+.lit .lamp .glow,.lamp.is-lit .glow{opacity:.3}
+
+/* week */
+.week{padding-top:var(--s-6)}
+.section-head{display:grid;gap:var(--s-3);margin-bottom:var(--s-5)}
+.days{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+.day{display:grid;gap:.5rem;align-items:start;background:var(--surface);border-radius:.75rem;padding:var(--s-3) var(--s-4)}
+.day-head{display:flex;align-items:center;gap:.6rem}
+.day-head .day-when{flex:1 1 auto}
+.day-when{display:flex;align-items:baseline;gap:.4rem;font-size:.875rem;color:var(--ink-2);white-space:nowrap;max-width:none}
+.day-when b{color:var(--ink);font-weight:600}
+.day-q{font-size:.9375rem;color:var(--ink-3);margin-top:0;max-width:none}
+.day-a{font-family:var(--display);font-size:1.25rem;line-height:1.4;margin-top:.4rem;max-width:none;text-wrap:pretty}
+.day-a.empty{color:var(--ink-3);font-family:var(--text);font-size:1rem}
+.day-a.empty a{color:var(--ink-2)}
+.day.tonight-row{background:var(--surface-2);outline:1px solid var(--line)}
+.tag{display:inline-block;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);line-height:1.2}
+.tag.yours{color:var(--lamp)}
+.week-foot{margin-top:var(--s-4)}
+
+/* prose sections */
+.band{padding-block:var(--s-6)}
+.band+.band{border-top:1px solid var(--line)}
+.two{display:grid;gap:var(--s-4)}
+.qlist{list-style:none;margin:var(--s-4) 0 0;padding:0;display:grid;gap:.6rem;max-width:var(--measure)}
+.qlist li{font-family:var(--display);font-size:1.2rem;line-height:1.4;padding-left:1.1rem;text-indent:-1.1rem;color:var(--ink)}
+.qlist li::before{content:"·";color:var(--ink-3);margin-right:.55rem}
+.steps{margin:var(--s-4) 0 0;padding-left:1.25rem;max-width:var(--measure);display:grid;gap:.6rem;color:var(--ink-2)}
+.steps li::marker{color:var(--ink-2);font-weight:600}
+.steps strong{color:var(--ink);font-weight:600}
+.claim{font-family:var(--display);font-size:1.35rem;line-height:1.4;max-width:30rem}
+
+/* final action */
+.final{padding-block:var(--s-6) var(--s-7)}
+.final .cta{margin-top:var(--s-4)}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding-block:var(--s-5)}
+.foot{display:grid;gap:var(--s-4)}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.25rem 1.25rem}
+.foot a{color:var(--ink-2)}
+.foot a:hover{color:var(--ink)}
+.foot p{color:var(--ink-3);font-size:.9375rem}
+
+@media (min-width:48em){
+  .hero{padding-block:var(--s-6) var(--s-6)}
+  .tonight{padding:var(--s-5);max-width:34rem}
+  .days{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-6)}
+}
+@media (min-width:68em){
+  .hero-grid{grid-template-columns:minmax(0,1fr) 28rem;gap:4rem;align-items:center}
+  .tonight{max-width:none}
+  .days{grid-template-columns:repeat(7,minmax(0,1fr));gap:.6rem}
+  .day{padding:var(--s-3);min-height:12rem}
+  .day-head{flex-wrap:wrap;justify-content:space-between;margin-bottom:.25rem}
+  .day-head .day-when{order:3;flex-basis:100%;margin-top:.25rem}
+  .day-a{font-size:1.1rem}
+}
+@media (hover:hover) and (pointer:fine){
+  .btn{transition:background-color 150ms var(--ease-out),border-color 150ms var(--ease-out)}
+}
+@media (prefers-reduced-motion:reduce){
+  .lamp .pane,.lamp .glow,.btn{transition:none}
+}
+</style>
+</head>
+<body id="top">
+<a class="skip" href="#tonight">Skip to tonight's question</a>
+<header class="wrap">
+  <nav class="nav" aria-label="Site">
+    <a class="wordmark" href="#top">Lamplit</a>
+    <ul>
+      <li><a href="#week">Week</a></li>
+      <li><a href="#privacy">Privacy</a></li>
+      <li><a class="strong" href="#testflight">TestFlight</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero wrap" aria-labelledby="h1">
+    <div class="hero-grid">
+      <div>
+        <h1 id="h1">One small question a night, kept on your phone.</h1>
+        <p class="lede">Lamplit is an iPhone app that asks you one thing at the end of the day, like what you noticed on the way home, and stores your answer on your device. Try tonight's question here.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="mailto:invites@lamplit.app?subject=TestFlight%20invite%20for%20Lamplit&amp;body=Hi%20%E2%80%94%20I%27d%20like%20a%20TestFlight%20invite%20for%20Lamplit.">Request a TestFlight invite</a>
+          <p class="beside">Opens your mail app with a short note. Free during the beta, no card, no account.</p>
+        </div>
+      </div>
+
+      <form class="tonight" id="tonight" aria-labelledby="tonight-title" novalidate>
+        <div class="tonight-head">
+          <span id="tonight-title"><svg class="lamp" id="tonight-lamp" viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="display:inline-block;vertical-align:-6px;margin-right:.4rem"><circle class="glow" cx="12" cy="12" r="11"/><rect class="pane" x="4.5" y="4.5" width="15" height="15" rx="2"/><path class="bar" d="M12 4.5v15M4.5 12h15"/></svg>Tonight's question</span>
+          <time id="tonight-date" datetime="">Tonight</time>
+        </div>
+        <p class="question" id="question">What did you notice on the way home?</p>
+        <div class="field">
+          <label for="answer">Your answer, a line or two</label>
+          <textarea id="answer" name="answer" rows="2" maxlength="240" placeholder="Type it here…" autocomplete="off"></textarea>
+        </div>
+        <div class="tonight-actions">
+          <button class="btn btn-secondary" type="submit" id="keep">Keep tonight's answer</button>
+          <span class="count" id="count" aria-hidden="true">0 / 240</span>
+        </div>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+        <p class="sample-note">A working sample of the evening screen. Nothing you type leaves this page; it is gone when you close the tab.</p>
+      </form>
+    </div>
+    <div class="week" id="week" aria-labelledby="week-h">
+    <div class="section-head">
+      <h2 id="week-h">A week is seven short lines, not seven pages.</h2>
+      <p class="muted">A sample week, newest first. Tonight is yours once you keep it above; the six evenings before it were written for this page.</p>
+    </div>
+    <ol class="days" id="days">
+      <li class="day tonight-row" id="today-row"><div class="day-head"><svg class="lamp" id="today-lamp" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle class="glow" cx="12" cy="12" r="11"/><rect class="pane" x="4.5" y="4.5" width="15" height="15" rx="2"/><path class="bar" d="M12 4.5v15M4.5 12h15"/></svg><p class="day-when"><b data-day="0">Tue</b> <span data-date="0">20 Oct</span></p><span class="tag yours">Tonight</span></div><div><p class="day-q" id="today-q">What did you notice on the way home?</p><p class="day-a empty" id="today-a">Not answered yet. <a href="#answer">Write it above</a> and it appears here.</p></div></li>
+      <li class="day lit"><div class="day-head"><svg class="lamp" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle class="glow" cx="12" cy="12" r="11"/><rect class="pane" x="4.5" y="4.5" width="15" height="15" rx="2"/><path class="bar" d="M12 4.5v15M4.5 12h15"/></svg><p class="day-when"><b data-day="-1">Mon</b> <span data-date="-1">19 Oct</span></p><span class="tag">Sample</span></div><div><p class="day-q">What did you eat that was better than you expected?</p><p class="day-a">Leftover rice with an egg on top.</p></div></li>
+      <li class="day lit"><div class="day-head"><svg class="lamp" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle class="glow" cx="12" cy="12" r="11"/><rect class="pane" x="4.5" y="4.5" width="15" height="15" rx="2"/><path class="bar" d="M12 4.5v15M4.5 12h15"/></svg><p class="day-when"><b data-day="-2">Sun</b> <span data-date="-2">18 Oct</span></p><span class="tag">Sample</span></div><div><p class="day-q">What took longer than it should have?</p><p class="day-a">Finding the parking ticket. It was in the book I was reading.</p></div></li>
+      <li class="day"><div class="day-head"><svg class="lamp" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle class="glow" cx="12" cy="12" r="11"/><rect class="pane" x="4.5" y="4.5" width="15" height="15" rx="2"/><path class="bar" d="M12 4.5v15M4.5 12h15"/></svg><p class="day-when"><b data-day="-3">Sat</b> <span data-date="-3">17 Oct</span></p><span class="tag">Sample</span></div><div><p class="day-q">What made you laugh, even a little?</p><p class="day-a empty">Skipped. The question waits for the next evening.</p></div></li>
+      <li class="day lit"><div class="day-head"><svg class="lamp" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle class="glow" cx="12" cy="12" r="11"/><rect class="pane" x="4.5" y="4.5" width="15" height="15" rx="2"/><path class="bar" d="M12 4.5v15M4.5 12h15"/></svg><p class="day-when"><b data-day="-4">Fri</b> <span data-date="-4">16 Oct</span></p><span class="tag">Sample</span></div><div><p class="day-q">What is one thing you are glad is finished?</p><p class="day-a">The tax form. Sent at 4:52.</p></div></li>
+      <li class="day lit"><div class="day-head"><svg class="lamp" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle class="glow" cx="12" cy="12" r="11"/><rect class="pane" x="4.5" y="4.5" width="15" height="15" rx="2"/><path class="bar" d="M12 4.5v15M4.5 12h15"/></svg><p class="day-when"><b data-day="-5">Thu</b> <span data-date="-5">15 Oct</span></p><span class="tag">Sample</span></div><div><p class="day-q">What did you notice on the way home?</p><p class="day-a">The bakery on Elm Street has new blue awnings.</p></div></li>
+      <li class="day lit"><div class="day-head"><svg class="lamp" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle class="glow" cx="12" cy="12" r="11"/><rect class="pane" x="4.5" y="4.5" width="15" height="15" rx="2"/><path class="bar" d="M12 4.5v15M4.5 12h15"/></svg><p class="day-when"><b data-day="-6">Wed</b> <span data-date="-6">14 Oct</span></p><span class="tag">Sample</span></div><div><p class="day-q">Who did you talk to the longest today?</p><p class="day-a">Mum, forty minutes, mostly about the boiler.</p></div></li>
+    </ol>
+    <p class="week-foot muted small">The sample answers belong to no real person. Weekday names follow your device's clock.</p>
+    </div>
+  </section>
+
+
+  <section class="band wrap" id="privacy" aria-labelledby="p-h">
+    <div class="two">
+      <div>
+        <h2 id="p-h">Your answers are stored on your device.</h2>
+        <p class="muted" style="margin-top:1rem">That is the promise, and it is the only one we make about privacy right now. Our privacy design has not been audited by anyone outside the team, so we do not claim more than we can show you.</p>
+      </div>
+      <div>
+        <p class="claim">The sample on this page works the same way: it runs in your browser, and nothing you type is sent anywhere.</p>
+        <p class="muted small" style="margin-top:1rem">There is no sign-in on this page and no form that sends data. Reload it and your line is gone.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band wrap" id="questions" aria-labelledby="q-h">
+    <div class="two">
+      <div>
+        <h2 id="q-h">The questions are small on purpose.</h2>
+        <p class="muted" style="margin-top:1rem">Each one asks about something that happened today: what you ate, who you talked to, what you noticed. A line or two answers it, and a blank evening is allowed. Lamplit is not therapy and does not try to be. It is closer to a note you leave for yourself.</p>
+      </div>
+      <div>
+        <p class="small muted">Questions in the sample on this page. The app's own list is kept by the team and may differ.</p>
+        <ul class="qlist" id="qlist">
+          <li>What did you eat that was better than you expected?</li>
+          <li>Who did you talk to the longest today?</li>
+          <li>What did you notice on the way home?</li>
+          <li>What is one thing you are glad is finished?</li>
+          <li>Which sound do you remember from today?</li>
+          <li>What made you laugh, even a little?</li>
+          <li>What took longer than it should have?</li>
+          <li>What did you look at for too long today?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band wrap final" id="testflight" aria-labelledby="t-h">
+    <div class="two">
+      <div>
+        <h2 id="t-h">It is on TestFlight, not the App Store yet.</h2>
+        <p class="muted" style="margin-top:1rem">Lamplit is in beta through Apple's TestFlight. There is no App Store listing, so there are no ratings or reviews to show you; the question above is the proof we have. About 200 seats are open as of October 2026.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="mailto:invites@lamplit.app?subject=TestFlight%20invite%20for%20Lamplit&amp;body=Hi%20%E2%80%94%20I%27d%20like%20a%20TestFlight%20invite%20for%20Lamplit.">Request a TestFlight invite</a>
+          <p class="beside">Opens your mail app with a short note. Free during the beta, no card, no account.</p>
+        </div>
+      </div>
+      <div>
+        <h3>What happens after you ask</h3>
+        <ol class="steps">
+          <li><strong>Your mail app opens</strong> with a one-line request. Send it as it is, or add a word about why.</li>
+          <li><strong>We reply with a TestFlight link.</strong> Invites go out by hand, so it can take a few days.</li>
+          <li><strong>Install TestFlight, then Lamplit.</strong> TestFlight is Apple's free app for beta software. Lamplit needs an iPhone.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="foot">
+    <ul>
+      <li><a href="#tonight">Tonight's question</a></li>
+      <li><a href="#week">A sample week</a></li>
+      <li><a href="#privacy">Privacy</a></li>
+      <li><a href="#questions">The questions</a></li>
+      <li><a href="#testflight">TestFlight</a></li>
+      <li><a href="mailto:invites@lamplit.app">invites@lamplit.app</a></li>
+    </ul>
+    <p>Lamplit is an iPhone app in TestFlight beta. Answers are stored on your device. This page keeps nothing you type.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var bank = [
+    'What did you eat that was better than you expected?',
+    'Who did you talk to the longest today?',
+    'What did you notice on the way home?',
+    'What is one thing you are glad is finished?',
+    'Which sound do you remember from today?',
+    'What made you laugh, even a little?',
+    'What took longer than it should have?',
+    'What did you look at for too long today?'
+  ];
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 0);
+  var doy = Math.floor((now - start) / 86400000);
+  var q = bank[doy % bank.length];
+  var qEl = document.getElementById('question');
+  var todayQ = document.getElementById('today-q');
+  qEl.textContent = q; todayQ.textContent = q;
+
+  var dateEl = document.getElementById('tonight-date');
+  function fmt(d, opts) { try { return d.toLocaleDateString('en-GB', opts); } catch (e) { return ''; } }
+  var iso = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+  dateEl.setAttribute('datetime', iso);
+  dateEl.textContent = fmt(now, {weekday: 'short', day: 'numeric', month: 'short'}) || 'Tonight';
+
+  var dayEls = document.querySelectorAll('[data-day]');
+  for (var i = 0; i < dayEls.length; i++) {
+    var off = parseInt(dayEls[i].getAttribute('data-day'), 10);
+    var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + off);
+    dayEls[i].textContent = fmt(d, {weekday: 'short'}) || dayEls[i].textContent;
+  }
+  var dateEls = document.querySelectorAll('[data-date]');
+  for (var j = 0; j < dateEls.length; j++) {
+    var o = parseInt(dateEls[j].getAttribute('data-date'), 10);
+    var dd = new Date(now.getFullYear(), now.getMonth(), now.getDate() + o);
+    dateEls[j].textContent = fmt(dd, {day: 'numeric', month: 'short'}) || dateEls[j].textContent;
+  }
+
+  var form = document.getElementById('tonight');
+  var ta = document.getElementById('answer');
+  var keep = document.getElementById('keep');
+  var count = document.getElementById('count');
+  var status = document.getElementById('status');
+  var todayA = document.getElementById('today-a');
+  var todayRow = document.getElementById('today-row');
+  var tonightLamp = document.getElementById('tonight-lamp');
+  var kept = null;
+
+  ta.addEventListener('input', function () {
+    count.textContent = ta.value.length + ' / 240';
+    if (kept !== null && ta.value !== kept) { keep.textContent = 'Keep the new line'; }
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = ta.value.replace(/\s+/g, ' ').trim();
+    if (!v) {
+      status.innerHTML = 'Nothing to keep yet. A few words is enough, or <strong>skip tonight</strong> and the question waits.';
+      ta.focus();
+      return;
+    }
+    kept = ta.value;
+    todayA.textContent = v;
+    todayA.classList.remove('empty');
+    todayRow.classList.add('lit');
+    tonightLamp.classList.add('is-lit');
+    keep.textContent = 'Kept';
+    status.innerHTML = '<strong>Kept.</strong> Your line is in <a href="#today-row">the week below</a>, on this page only.';
+  });
+})();
+</script>
+</body>
+</html>

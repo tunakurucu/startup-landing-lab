@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>envcensus</title>
+<meta name="description" content="envcensus is a command-line tool that finds every environment variable a codebase reads and checks it against .env.example and CI. Runs locally, sends nothing anywhere, fails the build when something is missing.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23F2F5EE'/%3E%3Cpath d='M7 9h18M7 16h18M7 23h12' stroke='%231C2B25' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --paper: #F2F5EE;
+    --paper-deep: #E6ECE2;
+    --ink: #1C2B25;
+    --ink-soft: #566660;
+    --rule: #C3D1C5;
+    --rule-strong: #9FB3A4;
+    --stamp: #2A4D9B;
+    --stamp-wash: #E1E8F6;
+    --red: #B3362B;
+    --red-wash: #F5E3E0;
+    --amber: #8A6414;
+    --amber-wash: #F4ECD6;
+    --code-bg: #1C2B25;
+    --code-ink: #E9EFE6;
+    --code-dim: #93A69C;
+
+    --serif: Charter, "Bitstream Charter", "Iowan Old Style", "Source Serif Pro", Georgia, "Times New Roman", serif;
+    --mono: "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", "Courier New", monospace;
+
+    --measure: 62ch;
+    --gutter: clamp(16px, 5vw, 64px);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--stamp); }
+  :focus-visible { outline: 2px solid var(--stamp); outline-offset: 3px; border-radius: 2px; }
+
+  code, kbd, pre, .mono { font-family: var(--mono); }
+  p code, li code, dd code, td code, figcaption code, h2 code, h3 code {
+    font-size: 0.86em;
+    background: var(--paper-deep);
+    padding: 0.08em 0.35em;
+    border-radius: 3px;
+  }
+
+  h1, h2, h3 { font-weight: 400; line-height: 1.12; margin: 0; letter-spacing: -0.005em; }
+  h2 { font-size: clamp(28px, 3.6vw, 40px); max-width: 24ch; margin-bottom: 0.6em; }
+  h3 { font-size: 22px; margin-bottom: 0.35em; }
+  p { margin: 0 0 1em; max-width: var(--measure); }
+  ul, ol { max-width: var(--measure); padding-left: 1.2em; }
+  li { margin-bottom: 0.4em; }
+
+  .wrap { padding-left: var(--gutter); padding-right: var(--gutter); max-width: 1120px; margin: 0 auto; }
+
+  /* ---------- header ---------- */
+  .top {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 24px;
+    padding-top: 28px; padding-bottom: 28px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .brand { font-family: var(--mono); font-size: 17px; text-decoration: none; letter-spacing: 0.01em; }
+  .brand:hover { color: var(--ink); }
+  .top nav { display: flex; gap: 22px; flex-wrap: wrap; font-size: 16px; }
+  .top nav a { text-decoration: none; }
+  .top nav a:hover { text-decoration: underline; }
+
+  /* ---------- hero ---------- */
+  .hero { padding-top: clamp(48px, 8vw, 104px); padding-bottom: 24px; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 5vw, 80px); align-items: end; }
+  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; align-items: start; } }
+  .hero h1 {
+    font-size: clamp(34px, 5vw, 60px);
+    max-width: 24ch;
+    text-wrap: balance;
+  }
+  .hero .lede { font-size: clamp(18px, 1.5vw, 20px); margin: 0; max-width: 48ch; color: var(--ink); }
+
+  .cmd {
+    display: inline-flex; align-items: stretch; margin-top: 28px;
+    border: 1px solid var(--ink); border-radius: 4px; overflow: hidden;
+    background: var(--code-bg); color: var(--code-ink);
+    max-width: 100%;
+  }
+  .cmd code {
+    font-size: 19px; padding: 14px 20px; white-space: nowrap;
+  }
+  .cmd code .prompt { color: var(--code-dim); user-select: none; }
+  .cmd button {
+    font: inherit; font-family: var(--serif); font-size: 16px;
+    background: var(--paper); color: var(--ink); border: 0; border-left: 1px solid var(--ink);
+    padding: 0 18px; cursor: pointer;
+  }
+  .cmd button:hover { background: var(--paper-deep); }
+  .cmd button:focus-visible { outline-offset: -3px; }
+  .cmd-note { font-size: 16px; color: var(--ink-soft); margin-top: 12px; }
+
+  /* ---------- census ledger ---------- */
+  .ledger { padding-top: 56px; padding-bottom: 32px; }
+  .ledger figure { margin: 0; }
+  .ledger-head {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 14px; color: var(--ink-soft);
+    padding-bottom: 10px;
+  }
+  .ledger-head .path { color: var(--ink); }
+
+  table.census {
+    width: 100%; border-collapse: collapse;
+    font-family: var(--mono); font-size: 15px;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .census th {
+    text-align: left; font-weight: 400; color: var(--ink-soft);
+    padding: 10px 12px 10px 0; border-bottom: 1px solid var(--rule-strong);
+    white-space: nowrap;
+  }
+  .census td {
+    padding: 9px 12px 9px 0; border-bottom: 1px solid var(--rule);
+    vertical-align: baseline; white-space: nowrap;
+  }
+  .census tr:last-child td { border-bottom: 0; }
+  .census td:last-child, .census th:last-child { padding-right: 0; }
+  .census .var { color: var(--ink); }
+  .census .at { color: var(--ink-soft); }
+  .census .at em { font-style: normal; color: var(--ink); }
+  .census .none { color: var(--ink-soft); }
+
+  .yes, .no { display: inline-block; min-width: 2.6em; }
+  .yes { color: var(--stamp); }
+  .no { color: var(--red); }
+
+  .verdict { font-family: var(--mono); font-size: 14px; white-space: normal !important; line-height: 1.3; }
+  .verdict.ok { color: var(--ink-soft); }
+  .verdict.missing { color: var(--red); }
+  .verdict.unused { color: var(--amber); }
+
+  .census tfoot td {
+    border-top: 1px solid var(--rule-strong); border-bottom: 0;
+    padding-top: 12px; padding-bottom: 12px; white-space: normal;
+  }
+  .census tfoot .tally { display: flex; gap: 12px 20px; flex-wrap: wrap; }
+  .census tfoot .exit { color: var(--red); }
+
+  .ledger figcaption { font-size: 16px; color: var(--ink-soft); margin-top: 14px; max-width: var(--measure); }
+
+  /* page-load tally: rows appear one at a time, once */
+  .census tbody tr, .census tfoot tr { animation: tally 240ms ease-out both; animation-delay: calc(var(--i) * 70ms + 300ms); }
+  @keyframes tally { from { opacity: 0; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    .census tbody tr, .census tfoot tr { animation: none; }
+  }
+
+  @media (max-width: 880px) {
+    .census .col-at { display: none; }
+    .census { font-size: 13.5px; }
+    .yes, .no { min-width: 2.2em; }
+  }
+  @media (max-width: 480px) {
+    .census td, .census th { white-space: normal; padding-right: 8px; }
+    .census .var { white-space: nowrap; }
+    .yes, .no { min-width: 0; }
+    .census td.verdict, .census th:last-child { display: none; }
+    .census td.var[data-verdict]::after {
+      content: attr(data-verdict); display: block; white-space: normal;
+      font-size: 12.5px; line-height: 1.3; margin-top: 2px; color: var(--red);
+    }
+    .census td.var[data-kind="unused"]::after { color: var(--amber); }
+    .census .verdict { font-size: 12.5px; line-height: 1.3; }
+    .ledger-head { font-size: 13px; }
+  }
+
+  /* ---------- sections ---------- */
+  section.block { padding-top: clamp(56px, 8vw, 96px); padding-bottom: clamp(24px, 4vw, 48px); border-top: 1px solid var(--rule); }
+  .split { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+  @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+
+  /* checks */
+  .checks { list-style: none; padding: 0; margin: 0; max-width: none; display: grid; gap: 28px; }
+  .checks li { margin: 0; padding-top: 18px; border-top: 1px solid var(--rule); }
+  .checks .line { font-family: var(--mono); font-size: 15px; display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 10px; }
+  .checks p { margin-bottom: 0; }
+
+  /* code blocks */
+  pre {
+    margin: 0; background: var(--code-bg); color: var(--code-ink);
+    padding: 20px 22px; border-radius: 4px; overflow-x: auto;
+    font-size: 14px; line-height: 1.55; tab-size: 2;
+  }
+  pre.wrap-lines { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .help-pre { max-width: 76ch; }
+  pre .c { color: var(--code-dim); }
+  pre .k { color: #AFC6F5; }
+  pre .s { color: #D9E6C7; }
+  pre .r { color: #F0A49B; }
+  pre .y { color: #E5CF8A; }
+  .pre-label { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); margin: 0 0 8px; }
+  .stack { display: grid; gap: 28px; }
+  .split > *, .stack > * { min-width: 0; }
+
+  dl.exit { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; margin: 18px 0 0; max-width: var(--measure); font-size: 17px; }
+  dl.exit dt { font-family: var(--mono); font-size: 15px; padding-top: 2px; }
+  dl.exit dd { margin: 0; }
+
+  .aside { font-size: 17px; color: var(--ink-soft); }
+  .aside p { margin-bottom: 0.8em; }
+
+  /* status list */
+  .status { list-style: none; padding: 0; margin: 0; max-width: none; }
+  .status li { display: grid; grid-template-columns: 11rem 1fr; gap: 12px 24px; padding: 14px 0; border-top: 1px solid var(--rule); margin: 0; }
+  .status li:last-child { border-bottom: 1px solid var(--rule); }
+  .status .k { font-family: var(--mono); font-size: 15px; color: var(--ink-soft); padding-top: 3px; }
+  .status .v { max-width: 56ch; }
+  @media (max-width: 560px) { .status li { grid-template-columns: 1fr; gap: 4px; } }
+
+  footer { padding-top: 40px; padding-bottom: 56px; border-top: 1px solid var(--rule); margin-top: clamp(48px, 8vw, 96px); font-size: 16px; color: var(--ink-soft); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer a { color: var(--ink); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(8px);
+    background: var(--ink); color: var(--paper); font-size: 15px; padding: 8px 14px; border-radius: 4px;
+    opacity: 0; pointer-events: none; transition: opacity 160ms ease, transform 160ms ease;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="brand" href="#">envcensus</a>
+  <nav aria-label="Page">
+    <a href="#run">Run it</a>
+    <a href="#ci">CI</a>
+    <a href="#help">Help output</a>
+    <a href="https://www.npmjs.com/package/envcensus" rel="noopener">npm</a>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <h1>Every environment variable your code reads, checked against .env.example and CI.</h1>
+    <div>
+    <p class="lede">envcensus scans the repository in front of it, lists each variable with the line that reads it, and tells you which ones nobody set and which ones nothing reads anymore. It runs on your machine and sends nothing anywhere.</p>
+
+    <div class="cmd">
+      <code><span class="prompt">$ </span><span id="cmd-text">npx envcensus</span></code>
+      <button type="button" id="copy" aria-label="Copy the command npx envcensus">Copy</button>
+    </div>
+    <p class="cmd-note">Needs Node.js and npm. No account, no config file, no network.</p>
+    </div>
+  </section>
+
+  <section class="wrap ledger" aria-labelledby="ledger-title">
+    <figure>
+      <div class="ledger-head">
+        <span><span class="path">~/code/orders-api</span> $ envcensus</span>
+        <span id="ledger-title">scanned 212 files in 3 directories</span>
+      </div>
+      <table class="census">
+        <thead>
+          <tr>
+            <th scope="col">variable</th>
+            <th scope="col" class="col-at">read at</th>
+            <th scope="col">.env.example</th>
+            <th scope="col">ci.yml</th>
+            <th scope="col"><span class="sr">verdict</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="--i:0"><td class="var">NODE_ENV</td><td class="at col-at"><em>src/config.ts</em>:2</td><td><span class="yes">yes</span></td><td><span class="yes">yes</span></td><td class="verdict ok"></td></tr>
+          <tr style="--i:1"><td class="var">PORT</td><td class="at col-at"><em>src/server.ts</em>:30</td><td><span class="yes">yes</span></td><td><span class="yes">yes</span></td><td class="verdict ok"></td></tr>
+          <tr style="--i:2"><td class="var">DATABASE_URL</td><td class="at col-at"><em>src/db.ts</em>:12</td><td><span class="yes">yes</span></td><td><span class="yes">yes</span></td><td class="verdict ok"></td></tr>
+          <tr style="--i:3"><td class="var">REDIS_URL</td><td class="at col-at"><em>src/cache.ts</em>:8</td><td><span class="yes">yes</span></td><td><span class="yes">yes</span></td><td class="verdict ok"></td></tr>
+          <tr style="--i:4"><td class="var" data-kind="missing" data-verdict="missing from .env.example">SESSION_SECRET</td><td class="at col-at"><em>src/auth/session.ts</em>:5</td><td><span class="no">no</span></td><td><span class="yes">yes</span></td><td class="verdict missing">missing from .env.example</td></tr>
+          <tr style="--i:5"><td class="var" data-kind="missing" data-verdict="not set in ci.yml">STRIPE_SECRET_KEY</td><td class="at col-at"><em>src/billing/charge.ts</em>:21</td><td><span class="yes">yes</span></td><td><span class="no">no</span></td><td class="verdict missing">not set in ci.yml</td></tr>
+          <tr style="--i:6"><td class="var">LOG_LEVEL</td><td class="at col-at"><em>src/log.ts</em>:3</td><td><span class="yes">yes</span></td><td><span class="yes">yes</span></td><td class="verdict ok"></td></tr>
+          <tr style="--i:7"><td class="var">SENTRY_DSN</td><td class="at col-at"><em>src/monitor.ts</em>:9</td><td><span class="yes">yes</span></td><td><span class="yes">yes</span></td><td class="verdict ok"></td></tr>
+          <tr style="--i:8"><td class="var">SMTP_HOST</td><td class="at col-at"><em>src/mail.ts</em>:14</td><td><span class="yes">yes</span></td><td><span class="yes">yes</span></td><td class="verdict ok"></td></tr>
+          <tr style="--i:9"><td class="var" data-kind="missing" data-verdict="missing from both">SMTP_PASSWORD</td><td class="at col-at"><em>src/mail.ts</em>:16</td><td><span class="no">no</span></td><td><span class="no">no</span></td><td class="verdict missing">missing from both</td></tr>
+          <tr style="--i:10"><td class="var">FEATURE_NEW_CHECKOUT</td><td class="at col-at"><em>scripts/seed.js</em>:7</td><td><span class="yes">yes</span></td><td><span class="yes">yes</span></td><td class="verdict ok"></td></tr>
+          <tr style="--i:11"><td class="var" data-kind="unused" data-verdict="unused">LEGACY_CACHE_TTL</td><td class="at col-at none">not read anywhere</td><td><span class="yes">yes</span></td><td><span class="yes">yes</span></td><td class="verdict unused">unused</td></tr>
+        </tbody>
+        <tfoot>
+          <tr style="--i:12">
+            <td colspan="5">
+              <div class="tally">
+                <span>11 variables read</span>
+                <span class="no" style="min-width:0">3 missing</span>
+                <span style="color:var(--amber)">1 unused</span>
+                <span class="exit">exit 1</span>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <figcaption>A run against a small Node service. This table is the whole product: there is no app behind it, and no dashboard to log in to.</figcaption>
+    </figure>
+  </section>
+
+  <section class="wrap block" id="checks">
+    <div class="split">
+      <div>
+        <h2>Three ways an environment variable goes wrong</h2>
+        <p class="aside">Each one is a mismatch between two lists that nobody keeps in sync by hand: the variables your code reads, the ones <code>.env.example</code> promises, and the ones CI actually sets. envcensus builds all three and diffs them.</p>
+      </div>
+      <ul class="checks">
+        <li>
+          <div class="line"><span class="var">SESSION_SECRET</span><span class="verdict missing">missing from .env.example</span></div>
+          <p>Someone added a variable last sprint and set it in their own shell. The next person to clone the repo copies the example file, starts the app, and gets a stack trace instead of a login page.</p>
+        </li>
+        <li>
+          <div class="line"><span class="var">STRIPE_SECRET_KEY</span><span class="verdict missing">not set in ci.yml</span></div>
+          <p>Tests pass on a laptop and fail in the pipeline. Or they pass in the pipeline because the code falls back to a default, and the real failure waits for production.</p>
+        </li>
+        <li>
+          <div class="line"><span class="var">LEGACY_CACHE_TTL</span><span class="verdict unused">unused</span></div>
+          <p>The code that read it was deleted a year ago. The example file keeps growing, every new hire sets it anyway, and nobody is sure what is safe to remove.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap block" id="run">
+    <div class="split">
+      <div>
+        <h2>Run it on your own repo</h2>
+        <p class="aside">The best way to judge it is to point it at code you know. It takes one command and prints a table like the one above. Nothing is written to disk and nothing is uploaded.</p>
+        <p class="aside">npm is the only install channel for now. There is no Homebrew formula yet.</p>
+      </div>
+      <div class="stack">
+        <div>
+          <p class="pre-label">once, without installing</p>
+<pre><code><span class="c">$</span> cd your-repo
+<span class="c">$</span> npx envcensus</code></pre>
+        </div>
+        <div>
+          <p class="pre-label">or keep it around</p>
+<pre><code><span class="c">$</span> npm install -g envcensus
+<span class="c">$</span> envcensus <span class="c"># scans the current directory</span>
+<span class="c">$</span> envcensus services/api --example services/api/.env.sample</code></pre>
+        </div>
+        <div>
+          <p class="pre-label">what counts as a read</p>
+<pre><code><span class="k">process.env</span>.STRIPE_SECRET_KEY
+<span class="k">process.env</span>[<span class="s">"STRIPE_SECRET_KEY"</span>]
+<span class="k">const</span> { PORT, LOG_LEVEL } = <span class="k">process.env</span>
+<span class="k">os.environ</span>[<span class="s">"DATABASE_URL"</span>]   <span class="k">os.getenv</span>(<span class="s">"DATABASE_URL"</span>)
+<span class="k">os.Getenv</span>(<span class="s">"REDIS_URL"</span>)
+<span class="k">ENV</span>[<span class="s">"SESSION_SECRET"</span>]        <span class="k">ENV.fetch</span>(<span class="s">"SESSION_SECRET"</span>)
+<span class="k">$SMTP_HOST</span>   <span class="k">${SMTP_HOST}</span>   <span class="c"># in shell scripts and Dockerfiles</span></code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block" id="ci">
+    <div class="split">
+      <div>
+        <h2>Fail the build when something is missing</h2>
+        <p class="aside">If you own the pipeline rather than the application: it is one step, needs no token, and makes no outbound request. "Set in CI" means the variable appears in the workflow file's <code>env</code> block or <code>secrets</code> mapping, so the check reads only what is already in the repo.</p>
+        <p class="aside">Opt a variable out with <code>--allow-unused</code> if the example file is deliberately broader than the code, or <code>--ignore</code> for generated directories.</p>
+      </div>
+      <div class="stack">
+        <div>
+          <p class="pre-label">.github/workflows/ci.yml</p>
+<pre><code><span class="y">jobs</span>:
+  <span class="y">test</span>:
+    <span class="y">runs-on</span>: ubuntu-latest
+    <span class="y">env</span>:
+      <span class="y">DATABASE_URL</span>: ${{ secrets.DATABASE_URL }}
+      <span class="y">STRIPE_SECRET_KEY</span>: ${{ secrets.STRIPE_SECRET_KEY }}
+    <span class="y">steps</span>:
+      - <span class="y">uses</span>: actions/checkout@v4
+      - <span class="y">run</span>: npx envcensus --format github
+      - <span class="y">run</span>: npm test</code></pre>
+        </div>
+        <div>
+          <p class="pre-label">what the job sees when it fails</p>
+<pre class="wrap-lines"><code><span class="r">::error file=src/mail.ts,line=16::</span>SMTP_PASSWORD is read here but not in .env.example or ci.yml
+<span class="r">::error file=src/auth/session.ts,line=5::</span>SESSION_SECRET is read here but not in .env.example
+<span class="r">::warning file=.env.example,line=23::</span>LEGACY_CACHE_TTL is not read anywhere
+<span class="c">Process completed with exit code 1.</span></code></pre>
+        </div>
+        <div>
+          <h3>Exit codes</h3>
+          <dl class="exit">
+            <dt>0</dt><dd>every variable accounted for</dd>
+            <dt>1</dt><dd>at least one variable is missing, or unused without <code>--allow-unused</code></dd>
+            <dt>2</dt><dd>could not scan: bad path, unreadable file, or no example file found</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block" id="help">
+    <div class="split">
+      <div>
+        <h2>The help output is the documentation</h2>
+        <p class="aside">There is no docs site yet. This is what <code>envcensus --help</code> prints, reproduced here so you can read it before you install anything. If a flag is not listed below, it does not exist.</p>
+      </div>
+      <div class="help-pre">
+        <p class="pre-label">envcensus --help</p>
+<pre><code>envcensus [directory] [options]
+
+Find every environment variable the code in a directory reads
+and check it against .env.example and CI workflow files.
+Runs locally. Makes no network requests.
+
+Options
+  --example &lt;file&gt;      example file to check against
+                        (default: .env.example)
+  --ci &lt;glob&gt;           CI files to check, repeatable
+                        (default: .github/workflows/*.yml)
+  --ignore &lt;glob&gt;       paths to skip, repeatable
+                        (node_modules, .git, dist and build
+                        are always skipped)
+  --allow-unused        do not fail on example variables
+                        that nothing reads
+  --format &lt;kind&gt;       table, json or github
+                        (default: table)
+  --no-color            plain output
+  -h, --help            show this and exit
+  -v, --version         print the version and exit
+
+Exit codes
+  0  every variable is read, in the example file and set in CI
+  1  a variable is missing somewhere, or unused
+  2  the scan could not run
+
+Examples
+  envcensus
+  envcensus packages/api --example packages/api/.env.sample
+  envcensus --ci ".gitlab-ci.yml" --format json > census.json</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block" id="status">
+    <div class="split">
+      <div>
+        <h2>Where it stands</h2>
+        <p class="aside">The honest state of the project, so you can decide how much to lean on it.</p>
+      </div>
+      <ul class="status">
+        <li><span class="k">on npm</span><span class="v">Published and installable today as <code>envcensus</code>.</span></li>
+        <li><span class="k">source</span><span class="v">Private until 1.0. It opens when the output format and flags stop changing.</span></li>
+        <li><span class="k">homebrew</span><span class="v">No formula yet. npm is the only channel.</span></li>
+        <li><span class="k">speed</span><span class="v">No published numbers. It has not been benchmarked carefully and this page will not quote a figure it cannot back. Run it on your repo and time it.</span></li>
+        <li><span class="k">users</span><span class="v">None to name. If it finds something in your code, that is the testimonial.</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>envcensus. Published on <a href="https://www.npmjs.com/package/envcensus" rel="noopener">npm</a>. Source opens at 1.0.</span>
+  <span>Runs locally, sends nothing anywhere.</span>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('copy');
+    var text = document.getElementById('cmd-text').textContent;
+    var toast = document.getElementById('toast');
+    var timer;
+    function say(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(timer);
+      timer = setTimeout(function () { toast.classList.remove('show'); }, 1800);
+    }
+    function fallback() {
+      var range = document.createRange();
+      range.selectNodeContents(document.getElementById('cmd-text'));
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) {}
+      say(ok ? 'Copied npx envcensus' : 'Select the command and copy it');
+    }
+    btn.addEventListener('click', function () {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { say('Copied npx envcensus'); }, fallback);
+      } else {
+        fallback();
+      }
+    });
+  })();
+</script>
+</body>
+</html>

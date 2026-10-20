@@ -1,0 +1,31 @@
+{
+  "run": "agenda/without-r1",
+  "workdir": "W008",
+  "brief": "agenda",
+  "arm": "without",
+  "model": "claude-fable-5-1",
+  "client_version": "2.1.304",
+  "start": "2026-10-20T04:01:35Z",
+  "end": "2026-10-20T04:09:46Z",
+  "wall_clock_s": 491,
+  "tokens": {
+    "input": 92,
+    "output": 35118,
+    "cache_read": 4370953,
+    "cache_create": 119484
+  },
+  "tool_calls": 28,
+  "cap_hit": false,
+  "skill_installed": false,
+  "skill_visible_to_agent": false,
+  "skill_md_read": false,
+  "skill_file_access_in_no_skill_arm": false,
+  "infrastructure_retry": null,
+  "start_note": "2026-10-20T03:5?:??Z (marker deleted by builder; start recorded from launch log)",
+  "transcript": "transcript.jsonl (tool calls, assistant text and truncated tool results; harness-injected context removed)",
+  "transcript_source": "a50c92acb9227ee60.output",
+  "harness_skills_invoked": [
+    "frontend-design"
+  ],
+  "note": "Both arms ran in the same client with its built-in skills visible (for example frontend-design); the arms differ only in whether this skill was installed in the working folder."
+}

@@ -1,0 +1,31 @@
+{
+  "run": "kitchens/without-r1",
+  "workdir": "W001",
+  "brief": "kitchens",
+  "arm": "without",
+  "model": "claude-fable-5-1",
+  "client_version": "2.1.304",
+  "start": "2026-10-20T04:09:46Z",
+  "end": "2026-10-20T04:19:33Z",
+  "wall_clock_s": 587,
+  "tokens": {
+    "input": 120,
+    "output": 37002,
+    "cache_read": 6015644,
+    "cache_create": 123682
+  },
+  "tool_calls": 40,
+  "cap_hit": false,
+  "skill_installed": false,
+  "skill_visible_to_agent": false,
+  "skill_md_read": false,
+  "skill_file_access_in_no_skill_arm": false,
+  "infrastructure_retry": "isolation breach in run 1 (deps inside the repo exposed the skill path); rebuilt once, see DEVIATIONS.md",
+  "start_note": null,
+  "transcript": "transcript.jsonl (tool calls, assistant text and truncated tool results; harness-injected context removed)",
+  "transcript_source": "a144810bd7a41f061.output",
+  "harness_skills_invoked": [
+    "frontend-design"
+  ],
+  "note": "Both arms ran in the same client with its built-in skills visible (for example frontend-design); the arms differ only in whether this skill was installed in the working folder."
+}

@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lamplit</title>
+<meta name="description" content="Lamplit asks one small question each evening and keeps your answers on your phone. Answer tonight's question here and ask for a TestFlight invite.">
+<meta name="theme-color" content="#1b2140">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231b2140'/%3E%3Ccircle cx='16' cy='18' r='8' fill='%23f2c57c'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --night: #1b2140;
+    --night-deep: #141934;
+    --dusk: #2a3058;
+    --dusk-line: #3a4170;
+    --lamp: #f2c57c;
+    --lamp-hot: #ffe2a8;
+    --paper: #fbf3e3;
+    --paper-edge: #e9dcc2;
+    --ink: #2b2318;
+    --ink-soft: #6f6250;
+    --mist: #c9cce0;
+    --mist-dim: #8f94b4;
+    --focus: #ffd98a;
+
+    --serif: ui-serif, "New York", "Iowan Old Style", "Palatino", Georgia, "TeX Gyre Termes", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Inter, "Segoe UI", Roboto, sans-serif;
+
+    --col: 30rem;
+    --gutter: 1.25rem;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+  body {
+    margin: 0;
+    background: var(--night);
+    color: var(--mist);
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+  a { color: var(--lamp); text-underline-offset: 0.15em; }
+  a:focus-visible, button:focus-visible, textarea:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+  button { font: inherit; }
+
+  .col {
+    width: 100%;
+    max-width: var(--col);
+    margin: 0 auto;
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+
+  /* ---------- Top ---------- */
+  .top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-top: max(1.1rem, env(safe-area-inset-top));
+  }
+  .wordmark {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    color: var(--paper);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .top-note {
+    font-size: 0.875rem;
+    color: var(--mist-dim);
+  }
+  .top-note a { color: var(--mist); }
+
+  /* ---------- Lamp + lit question ---------- */
+  .lamp-stage {
+    position: relative;
+    padding-top: 0;
+    padding-bottom: 2.5rem;
+  }
+  .lamp {
+    display: block;
+    margin: 0 auto;
+    width: 112px;
+    height: 150px;
+    overflow: visible;
+  }
+  .glow {
+    --rim: 118px;
+    position: absolute;
+    left: 50%;
+    top: calc(var(--rim) - 360px);
+    width: min(100vw, 920px);
+    height: 720px;
+    transform: translateX(-50%);
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255, 226, 168, 0.55) 0%, rgba(242, 197, 124, 0.26) 34%, rgba(242, 197, 124, 0.0) 72%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 46%, #000 56%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 46%, #000 56%);
+    z-index: 0;
+  }
+  .card {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 14px;
+    padding: 1.35rem 1.35rem 1.25rem;
+    margin-top: -0.5rem;
+    box-shadow:
+      0 0 0 1px rgba(255, 226, 168, 0.35),
+      0 24px 60px -20px rgba(0, 0, 0, 0.6),
+      0 0 90px -4px rgba(242, 197, 124, 0.45);
+  }
+  .card-when {
+    margin: 0 0 0.6rem;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+  }
+  .question {
+    margin: 0 0 1.1rem;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.75rem;
+    line-height: 1.22;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .answer {
+    display: block;
+    width: 100%;
+    resize: none;
+    border: 0;
+    border-bottom: 1px solid var(--paper-edge);
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    line-height: 1.4;
+    padding: 0.35rem 0 0.6rem;
+    min-height: 3.4rem;
+    caret-color: #b07a1e;
+  }
+  .answer::placeholder { color: #a79781; opacity: 1; }
+  .answer:focus { outline: none; border-bottom-color: #b07a1e; }
+  .answer:focus-visible { outline: none; }
+  .card-row { margin-top: 1rem; }
+  .btn {
+    appearance: none;
+    border: 0;
+    border-radius: 999px;
+    width: 100%;
+    padding: 0.85rem 1.1rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn[disabled] { opacity: 0.45; cursor: default; }
+  .kept {
+    display: none;
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+  .kept button {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: #8a5a0e;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    cursor: pointer;
+    font-size: inherit;
+  }
+  .card.is-kept .answer { border-bottom-color: transparent; }
+  .card.is-kept .card-row { display: none; }
+  .card.is-kept .kept { display: block; margin-top: 0.6rem; }
+  .card-foot {
+    margin: 1rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Intro line ---------- */
+  .intro {
+    position: relative;
+    z-index: 1;
+    padding-top: 0.5rem;
+    padding-bottom: 2.25rem;
+  }
+  .intro p {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    line-height: 1.4;
+    color: var(--paper);
+    text-wrap: pretty;
+  }
+
+  /* ---------- Week ---------- */
+  .week {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 2.75rem;
+  }
+  .week h2, .how h2, .invite h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.45rem;
+    line-height: 1.25;
+    margin: 0 0 0.35rem;
+    color: var(--paper);
+  }
+  .week > .lede, .how > .lede, .invite > .lede {
+    margin: 0 0 1.25rem;
+    color: var(--mist-dim);
+    font-size: 0.95rem;
+  }
+  .days {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--dusk-line);
+  }
+  .day {
+    display: grid;
+    grid-template-columns: 3.2rem 1fr;
+    gap: 0.25rem 0.75rem;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid var(--dusk-line);
+  }
+  .day-name {
+    grid-row: 1 / span 2;
+    font-size: 0.875rem;
+    color: var(--mist-dim);
+    padding-top: 0.15rem;
+  }
+  .day-name b { display: block; font-weight: 600; color: var(--mist); font-size: 0.95rem; }
+  .day-q {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--mist-dim);
+  }
+  .day-a {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    line-height: 1.35;
+    color: var(--paper);
+  }
+  .day.tonight {
+    border-radius: 10px;
+    margin: 0.35rem -0.75rem 0;
+    padding: 0.95rem 0.75rem;
+    border-bottom-color: transparent;
+    background: var(--dusk);
+  }
+  .day.tonight .day-name b { color: var(--lamp); }
+  .day.tonight .day-a.empty { color: var(--mist-dim); font-style: italic; }
+  .day.tonight .day-a.empty a { color: var(--lamp); }
+  .day.tonight.lit {
+    animation: lit 1.4s ease-out;
+  }
+  @keyframes lit {
+    0%   { box-shadow: 0 0 0 0 rgba(242,197,124,0), inset 0 0 0 100px rgba(242,197,124,0.28); }
+    100% { box-shadow: 0 0 0 0 rgba(242,197,124,0), inset 0 0 0 100px rgba(242,197,124,0); }
+  }
+  .week-foot {
+    margin: 1rem 0 0;
+    font-size: 0.875rem;
+    color: var(--mist-dim);
+  }
+  .week-foot button {
+    background: none; border: 0; padding: 0;
+    color: var(--mist); text-decoration: underline; text-underline-offset: 0.15em;
+    cursor: pointer; font-size: inherit;
+  }
+
+  /* ---------- How ---------- */
+  .how { padding-bottom: 2.75rem; }
+  .how dl { margin: 0; }
+  .how dt {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--paper);
+    margin: 0;
+  }
+  .how dd {
+    margin: 0.2rem 0 1.1rem;
+    color: var(--mist);
+    font-size: 0.975rem;
+    max-width: 36ch;
+  }
+  .how dd:last-child { margin-bottom: 0; }
+
+  /* ---------- Invite ---------- */
+  .invite {
+    padding-bottom: 3rem;
+  }
+  .invite-box {
+    background: var(--dusk);
+    border: 1px solid var(--dusk-line);
+    border-radius: 14px;
+    padding: 1.25rem;
+  }
+  .invite-box p { margin: 0 0 0.9rem; color: var(--mist); font-size: 0.975rem; }
+  .invite-box p:last-child { margin-bottom: 0; }
+  .btn-lamp {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    border-radius: 999px;
+    padding: 0.95rem 1.25rem;
+    background: var(--lamp);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin: 0.25rem 0 0.9rem;
+  }
+  .btn-lamp:active { transform: translateY(1px); }
+  .fine { font-size: 0.875rem !important; color: var(--mist-dim) !important; }
+  .fine code {
+    font-family: inherit;
+    color: var(--mist);
+    user-select: all;
+    -webkit-user-select: all;
+  }
+  .fine button {
+    background: none; border: 0; padding: 0;
+    color: var(--mist); text-decoration: underline; text-underline-offset: 0.15em;
+    cursor: pointer; font-size: inherit;
+  }
+
+  /* ---------- Footer ---------- */
+  .foot {
+    padding-bottom: max(1.75rem, env(safe-area-inset-bottom));
+    font-size: 0.8125rem;
+    color: var(--mist-dim);
+    border-top: 1px solid var(--dusk-line);
+    padding-top: 1.1rem;
+  }
+  .foot p { margin: 0 0 0.3rem; }
+
+  /* ---------- Wider screens: keep the lamp column, let the night widen ---------- */
+  @media (min-width: 640px) {
+    :root { --col: 32rem; --gutter: 1.5rem; }
+    .question { font-size: 2.05rem; }
+    .card { padding: 1.6rem 1.6rem 1.4rem; }
+    .lamp { width: 124px; height: 166px; }
+    .glow { --rim: 128px; }
+    .day { grid-template-columns: 3.6rem 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .day.tonight.lit { animation: none; }
+    .btn:active, .btn-lamp:active { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="col top">
+  <a class="wordmark" href="#">Lamplit</a>
+  <span class="top-note"><a href="#invite">Testing on TestFlight</a></span>
+</header>
+
+<main>
+  <section class="col lamp-stage" aria-labelledby="tonight-heading">
+    <svg class="lamp" viewBox="0 0 112 150" aria-hidden="true" focusable="false">
+      <!-- cord -->
+      <line x1="56" y1="0" x2="56" y2="78" stroke="#8f94b4" stroke-width="1.5"/>
+      <!-- shade -->
+      <path d="M34 78 L78 78 L96 118 L16 118 Z" fill="#2a3058" stroke="#3a4170" stroke-width="1"/>
+      <path d="M18 118 L94 118 L92 121 L20 121 Z" fill="#f2c57c"/>
+      <!-- bulb -->
+      <ellipse cx="56" cy="121" rx="26" ry="4.5" fill="#ffe2a8"/>
+    </svg>
+    <div class="glow" aria-hidden="true"></div>
+
+    <div class="card" id="card">
+      <p class="card-when">Tonight's question. <span id="when-date"></span></p>
+      <h1 class="question" id="tonight-heading"></h1>
+      <label for="answer" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Your answer</label>
+      <textarea class="answer" id="answer" rows="2" maxlength="240" placeholder="A sentence is plenty." autocomplete="off" autocapitalize="sentences" spellcheck="true"></textarea>
+      <div class="card-row">
+        <button class="btn" id="keep" type="button" disabled>Keep tonight's answer</button>
+      </div>
+      <p class="kept" id="kept">Kept. It's in your week below. <button type="button" id="change">Change it</button></p>
+      <p class="card-foot">This page stores your answer in this browser only. Nothing is sent anywhere.</p>
+    </div>
+  </section>
+
+  <section class="col intro">
+    <p>Lamplit is an iPhone app that asks you one small question each evening, around the time you'd put a lamp on, and keeps your answers on your phone.</p>
+  </section>
+
+  <section class="col week" aria-labelledby="week-heading">
+    <h2 id="week-heading">A week of answers</h2>
+    <p class="lede">What a week looks like in the app. Six nights are made up. Tonight's is yours.</p>
+    <ol class="days" id="days"></ol>
+    <p class="week-foot" id="week-foot"></p>
+  </section>
+
+  <section class="col how" aria-labelledby="how-heading">
+    <h2 id="how-heading">How it works</h2>
+    <p class="lede">There isn't much to it, which is the idea.</p>
+    <dl>
+      <dt>One question, in the evening.</dt>
+      <dd>A notification arrives at a time you pick. The question is small and specific: who you talked to, what you ate, where you were at three.</dd>
+      <dt>A sentence is enough.</dt>
+      <dd>There's no word count and no streak to protect. If you skip a night, the next question still comes.</dd>
+      <dt>Answers stay on your phone.</dt>
+      <dd>Your answers are stored on your device. You can read back any week, and delete anything whenever you like.</dd>
+    </dl>
+  </section>
+
+  <section class="col invite" id="invite" aria-labelledby="invite-heading">
+    <h2 id="invite-heading">Try it before it's in the App Store</h2>
+    <p class="lede">Lamplit is in TestFlight. About 200 seats are open.</p>
+    <div class="invite-box">
+      <p>Send a short note and we'll reply with a TestFlight link. Invites go to the email address tied to your Apple ID, so use that one.</p>
+      <a class="btn-lamp" id="invite-link" href="#invite">Ask for a TestFlight invite</a>
+      <p class="fine">That opens your mail app with the note written for you. If it doesn't, email <code id="invite-email"></code> <button type="button" id="copy-email">(copy)</button> with the subject "TestFlight invite".</p>
+    </div>
+  </section>
+</main>
+
+<footer class="col foot">
+  <p>Lamplit asks one question a night. Answers are stored on your device.</p>
+  <p>Made for iPhone. 2026.</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var INVITE_EMAIL = 'invites@lamplit.app';
+
+  var questions = [
+    "What did you eat today that was better than you expected?",
+    "Who did you talk to the longest today?",
+    "What did you notice on the way somewhere today?",
+    "What's something you finished today, even a small thing?",
+    "What did you hear today that stuck with you?",
+    "Where were you at three in the afternoon?",
+    "What's one thing you'd happily do again tomorrow?",
+    "What did you look up today?",
+    "Which small thing took longer than it should have?",
+    "What made you laugh, even a little?",
+    "What's the last thing you bought?",
+    "Did anyone surprise you today?",
+    "What was the weather doing when you went outside?",
+    "What did you put off until tomorrow?"
+  ];
+
+  // Six made-up nights. Index refers to `questions`.
+  var samples = [
+    { q: 0, a: "Leftover rice with a fried egg on top. Had no right to be that good." },
+    { q: 1, a: "Priya, about her move. Forty minutes, mostly about boxes." },
+    { q: 2, a: "The bakery on 4th has a new sign. Same bread." },
+    { q: 3, a: "The tax form. Finally." },
+    { q: 4, a: "Someone on the bus: \"it's not a race, but I am winning.\"" },
+    { q: 5, a: "The park, on the grass, pretending to read." }
+  ];
+
+  var today = new Date();
+  var dayKey = today.getFullYear() + '-' + pad(today.getMonth() + 1) + '-' + pad(today.getDate());
+  var storageKey = 'lamplit.tonight';
+
+  // Tonight's question: pick from the ones the sample week doesn't use, by date.
+  var used = samples.map(function (s) { return s.q; });
+  var pool = [];
+  for (var i = 0; i < questions.length; i++) if (used.indexOf(i) === -1) pool.push(i);
+  var dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+  var tonightQ = questions[pool[dayOfYear % pool.length]];
+
+  var $ = function (id) { return document.getElementById(id); };
+  var card = $('card'), answer = $('answer'), keep = $('keep'), kept = $('kept'), change = $('change');
+  var daysEl = $('days'), weekFoot = $('week-foot');
+
+  $('tonight-heading').textContent = tonightQ;
+  $('when-date').textContent = today.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' }) + '.';
+
+  // ---- storage (browser only) ----
+  function load() {
+    try {
+      var raw = localStorage.getItem(storageKey);
+      if (!raw) return null;
+      var v = JSON.parse(raw);
+      if (v && v.date === dayKey && typeof v.answer === 'string' && v.answer.trim()) return v.answer;
+    } catch (e) {}
+    return null;
+  }
+  function save(text) {
+    try { localStorage.setItem(storageKey, JSON.stringify({ date: dayKey, question: tonightQ, answer: text })); } catch (e) {}
+  }
+  function clear() {
+    try { localStorage.removeItem(storageKey); } catch (e) {}
+  }
+
+  // ---- week ----
+  function renderWeek(tonightAnswer, animate) {
+    daysEl.innerHTML = '';
+    for (var offset = 6; offset >= 0; offset--) {
+      var d = new Date(today.getFullYear(), today.getMonth(), today.getDate() - offset);
+      var li = document.createElement('li');
+      li.className = 'day';
+      var name = document.createElement('span');
+      name.className = 'day-name';
+      var isTonight = offset === 0;
+      name.innerHTML = '<b>' + (isTonight ? 'Tonight' : d.toLocaleDateString(undefined, { weekday: 'short' })) + '</b>' +
+        d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      var q = document.createElement('p');
+      q.className = 'day-q';
+      var a = document.createElement('p');
+      a.className = 'day-a';
+      if (isTonight) {
+        li.className += ' tonight';
+        q.textContent = tonightQ;
+        if (tonightAnswer) {
+          a.textContent = tonightAnswer;
+          if (animate) li.className += ' lit';
+        } else {
+          a.className += ' empty';
+          a.innerHTML = 'Nothing yet. <a href="#answer">Answer tonight\'s question</a> and it shows up here.';
+        }
+      } else {
+        var s = samples[6 - offset];
+        q.textContent = questions[s.q];
+        a.textContent = s.a;
+      }
+      li.appendChild(name); li.appendChild(q); li.appendChild(a);
+      daysEl.appendChild(li);
+    }
+    weekFoot.innerHTML = tonightAnswer
+      ? 'Your answer is kept in this browser until you clear it. <button type="button" id="clear">Clear my answer</button>'
+      : 'In the app, every night fills in like this, on your phone.';
+    var clearBtn = $('clear');
+    if (clearBtn) clearBtn.addEventListener('click', function () {
+      clear();
+      answer.value = '';
+      card.classList.remove('is-kept');
+      keep.disabled = true;
+      renderWeek(null, false);
+      answer.focus();
+    });
+  }
+
+  // ---- card ----
+  function setKept(text) {
+    answer.value = text;
+    card.classList.add('is-kept');
+    autosize();
+  }
+  function autosize() {
+    answer.style.height = 'auto';
+    answer.style.height = answer.scrollHeight + 'px';
+  }
+  answer.addEventListener('input', function () {
+    keep.disabled = !answer.value.trim();
+    autosize();
+  });
+  keep.addEventListener('click', function () {
+    var text = answer.value.trim();
+    if (!text) return;
+    save(text);
+    setKept(text);
+    renderWeek(text, true);
+    var tonight = daysEl.querySelector('.tonight');
+    if (tonight) {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      tonight.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    }
+  });
+  change.addEventListener('click', function () {
+    card.classList.remove('is-kept');
+    keep.disabled = !answer.value.trim();
+    answer.focus();
+    answer.setSelectionRange(answer.value.length, answer.value.length);
+  });
+
+  // ---- invite ----
+  var subject = 'TestFlight invite';
+  var body = "Hi,\n\nI'd like a TestFlight seat for Lamplit.\n\nThe email on my Apple ID is: \n\nThanks.";
+  $('invite-link').href = 'mailto:' + INVITE_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  $('invite-email').textContent = INVITE_EMAIL;
+  $('copy-email').addEventListener('click', function () {
+    var btn = this;
+    function done() { btn.textContent = '(copied)'; setTimeout(function () { btn.textContent = '(copy)'; }, 1800); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(INVITE_EMAIL).then(done, function () { selectEmail(); });
+    } else { selectEmail(); }
+  });
+  function selectEmail() {
+    var range = document.createRange();
+    range.selectNodeContents($('invite-email'));
+    var sel = window.getSelection();
+    sel.removeAllRanges(); sel.addRange(range);
+  }
+
+  // ---- start ----
+  var existing = load();
+  if (existing) setKept(existing);
+  renderWeek(existing, false);
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+})();
+</script>
+</body>
+</html>
