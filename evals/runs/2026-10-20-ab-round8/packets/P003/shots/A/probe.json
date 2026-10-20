@@ -1,0 +1,80 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round8/packets/P003/A/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Catch the API change before a client team does.",
+    "left": 16,
+    "right": 304,
+    "top": 79,
+    "bottom": 179,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 11.88,
+   "text_elements_under_12px": 2,
+   "body_text_length": 4228
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Catch the API change before a client team does.",
+    "left": 16,
+    "right": 374,
+    "top": 79,
+    "bottom": 179,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 11.88,
+   "text_elements_under_12px": 2,
+   "body_text_length": 4228,
+   "axe": []
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Catch the API change before a client team does.",
+    "left": 24,
+    "right": 442,
+    "top": 121,
+    "bottom": 191,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 11.88,
+   "text_elements_under_12px": 2,
+   "body_text_length": 4249
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Catch the API change before a client team does.",
+    "left": 154,
+    "right": 606,
+    "top": 121,
+    "bottom": 289,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 11.88,
+   "text_elements_under_12px": 2,
+   "body_text_length": 4249,
+   "axe": []
+  }
+ }
+}
