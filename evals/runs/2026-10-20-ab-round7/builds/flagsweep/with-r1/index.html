@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find feature flags to delete, with the lines to change · Flagsweep</title>
+<meta name="description" content="Flagsweep scans your codebase for feature flags, checks each one against LaunchDarkly, Unleash or a config file, and lists the flags that have been fully on or off for weeks, with the files and lines to change. MIT licensed.">
+<meta name="theme-color" content="#f3f4f1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Flagsweep: delete these flags. Here are the lines.">
+<meta property="og:description" content="An open-source CLI that lists feature flags fully on or off for weeks, with the files and lines to change. pipx install flagsweep">
+<meta property="og:image" content="https://flagsweep.example/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Flagsweep: delete these flags. Here are the lines.">
+<meta name="twitter:description" content="An open-source CLI that lists feature flags fully on or off for weeks, with the files and lines to change.">
+<meta name="twitter:image" content="https://flagsweep.example/og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="#main" aria-label="Flagsweep, top of page">
+      <svg class="brand-mark" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true" focusable="false"><path d="M6 3v20" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M7 4h13l-3.6 4.5L20 13H7z" fill="currentColor"/><path class="brand-cut" d="M3 17.5h20" stroke-width="3" stroke-linecap="round"/></svg>
+      <span>flagsweep</span>
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Main">
+      <a href="#rule">How it decides</a>
+      <a href="#edit">What you change</a>
+      <a href="#install">Install</a>
+      <a href="https://flagsweep.example/docs">Docs</a>
+      <a href="https://github.com/flagsweep/flagsweep">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<section class="hero" aria-labelledby="h1">
+  <div class="hero-top">
+    <h1 id="h1">Delete these flags.<br> Here are the lines.</h1>
+    <p class="lede"><strong>Flagsweep is an open-source CLI for engineers.</strong> It checks each flag in your code against your flag service’s history and lists the ones fully on or off for weeks, with the lines to change.</p>
+    <div class="install hero-install" id="hero-install">
+      <code class="install-cmd" id="cmd-hero"><span aria-hidden="true" class="prompt">$</span>pipx install flagsweep</code>
+      <button class="btn" type="button" data-copy="pipx install flagsweep" data-select="cmd-hero" aria-describedby="copy-hero-status">Copy the install command</button>
+    </div>
+    <p class="beside hero-beside"><span id="copy-hero-status" role="status" class="copy-status"></span>Free and MIT licensed, with no paid plan. Works with LaunchDarkly, Unleash or a plain config file. <a href="https://flagsweep.example/docs" class="beside-docs">Read the docs</a></p>
+  </div>
+
+  <figure class="report" data-signature aria-labelledby="report-title">
+    <figcaption class="report-label" id="report-title"><span class="label-strong">Sample report</span> on a made-up TypeScript repo. Output format and option names are illustrative.</figcaption>
+    <div class="report-grid">
+      <div class="report-main">
+        <form class="cmd" id="cutoff-form" novalidate>
+          <span class="cmd-text"><span class="prompt" aria-hidden="true">$</span> flagsweep scan . --source launchdarkly --stale-after <span class="cmd-echo" id="cmd-echo">30d</span></span>
+          <span class="cut">
+            <label for="cutoff" class="cut-label">Stale after<span class="vh"> (days)</span></label>
+            <button type="button" class="cut-btn" id="cut-down" aria-label="Shorter cut-off">−</button>
+            <input id="cutoff" name="cutoff" type="text" inputmode="numeric" maxlength="4" value="30" autocomplete="off" spellcheck="false" aria-describedby="scan-note">
+                        <button type="button" class="cut-btn" id="cut-up" aria-label="Longer cut-off">+</button>
+            <button type="button" class="cut-reset" id="cut-reset">Reset</button>
+          </span>
+        </form>
+        <p class="scan-meta">9 flags found in 214 files · history from LaunchDarkly</p>
+        <output class="scan-status" id="scan-status" for="cutoff" role="status" aria-live="polite"><!--status:start-->Remove 4 flags: 10 lines in 8 files<!--status:end--></output>
+        <p class="scan-note echo" id="scan-note" role="alert" hidden></p>
+        <ol class="rows" id="rows" aria-label="Flags to remove"><!--rows:start--><li class="row"><div class="row-head"><span class="tag">REMOVE</span><span class="row-key">new-checkout-flow</span><span class="row-facts"><span class="row-state">ON · 100%</span><span class="row-sep" aria-hidden="true"> · </span><span class="row-age">unchanged 74 days</span></span><svg class="strip" width="168" height="28" viewBox="0 0 168 28" aria-hidden="true" focusable="false"><rect class="strip-bg" x="0" y="0" width="168" height="28"/><rect class="strip-still" x="57.0" y="0" width="111.0" height="28"/><path class="strip-area" d="M0.0 25.0 L18.0 25.0 L18.0 23.9 L28.5 23.9 L28.5 22.8 L39.0 22.8 L39.0 19.5 L48.0 19.5 L48.0 14.0 L57.0 14.0 L57.0 3.0 L168.0 3.0 L168 25 L0 25 Z"/><path class="strip-line" d="M0.0 25.0 L18.0 25.0 L18.0 23.9 L28.5 23.9 L28.5 22.8 L39.0 22.8 L39.0 19.5 L48.0 19.5 L48.0 14.0 L57.0 14.0 L57.0 3.0 L168.0 3.0"/><line class="strip-cut" x1="123.0" y1="0" x2="123.0" y2="28"/></svg></div><ul class="refs" aria-label="new-checkout-flow: 3 lines to change"><li class="ref"><span class="ref-gutter" aria-hidden="true">−</span><span class="ref-path">src/checkout/CartPage.tsx<span class="ref-line">:42</span></span><code class="ref-code">if (ldClient.variation('new-checkout-flow', user, false)) {</code></li><li class="ref"><span class="ref-gutter" aria-hidden="true">−</span><span class="ref-path">src/checkout/CartPage.tsx<span class="ref-line">:118</span></span><code class="ref-code">const payLabel = ldClient.variation('new-checkout-flow', user, false);</code></li><li class="ref"><span class="ref-gutter" aria-hidden="true">−</span><span class="ref-path">src/api/orders.ts<span class="ref-line">:31</span></span><code class="ref-code">if (await ld.variation('new-checkout-flow', ctx, false)) {</code></li></ul></li><li class="row"><div class="row-head"><span class="tag">REMOVE</span><span class="row-key">legacy-search-fallback</span><span class="row-facts"><span class="row-state">OFF · 0%</span><span class="row-sep" aria-hidden="true"> · </span><span class="row-age">unchanged 121 days</span></span><svg class="strip" width="168" height="28" viewBox="0 0 168 28" aria-hidden="true" focusable="false"><rect class="strip-bg" x="0" y="0" width="168" height="28"/><rect class="strip-still" x="0.0" y="0" width="168.0" height="28"/><path class="strip-area" d="M0.0 25.0 L168.0 25.0 L168 25 L0 25 Z"/><path class="strip-line" d="M0.0 25.0 L168.0 25.0"/><line class="strip-cut" x1="123.0" y1="0" x2="123.0" y2="28"/></svg></div><ul class="refs" aria-label="legacy-search-fallback: 4 lines to change"><li class="ref"><span class="ref-gutter" aria-hidden="true">−</span><span class="ref-path">src/search/SearchBox.tsx<span class="ref-line">:27</span></span><code class="ref-code">const old = ldClient.variation('legacy-search-fallback', user, false);</code></li><li class="ref"><span class="ref-gutter" aria-hidden="true">−</span><span class="ref-path">src/search/SearchBox.tsx<span class="ref-line">:64</span></span><code class="ref-code">{old &amp;&amp; &lt;LegacyResults query={query} /&gt;}</code></li><li class="ref"><span class="ref-gutter" aria-hidden="true">−</span><span class="ref-path">src/search/query.ts<span class="ref-line">:12</span></span><code class="ref-code">if (ld.variation('legacy-search-fallback', ctx, false)) {</code></li><li class="ref"><span class="ref-gutter" aria-hidden="true">−</span><span class="ref-path">src/server/routes/search.ts<span class="ref-line">:58</span></span><code class="ref-code">const old = await ld.variation('legacy-search-fallback', ctx, false);</code></li></ul></li><li class="row"><div class="row-head"><span class="tag">REMOVE</span><span class="row-key">dark-mode-beta</span><span class="row-facts"><span class="row-state">ON · 100%</span><span class="row-sep" aria-hidden="true"> · </span><span class="row-age">unchanged 41 days</span></span><svg class="strip" width="168" height="28" viewBox="0 0 168 28" aria-hidden="true" focusable="false"><rect class="strip-bg" x="0" y="0" width="168" height="28"/><rect class="strip-still" x="106.5" y="0" width="61.5" height="28"/><path class="strip-area" d="M0.0 25.0 L75.0 25.0 L75.0 22.8 L85.5 22.8 L85.5 14.0 L106.5 14.0 L106.5 3.0 L168.0 3.0 L168 25 L0 25 Z"/><path class="strip-line" d="M0.0 25.0 L75.0 25.0 L75.0 22.8 L85.5 22.8 L85.5 14.0 L106.5 14.0 L106.5 3.0 L168.0 3.0"/><line class="strip-cut" x1="123.0" y1="0" x2="123.0" y2="28"/></svg></div><ul class="refs" aria-label="dark-mode-beta: 2 lines to change"><li class="ref"><span class="ref-gutter" aria-hidden="true">−</span><span class="ref-path">src/theme/ThemeProvider.tsx<span class="ref-line">:19</span></span><code class="ref-code">const dark = ldClient.variation('dark-mode-beta', user, false);</code></li><li class="ref"><span class="ref-gutter" aria-hidden="true">−</span><span class="ref-path">src/settings/Appearance.tsx<span class="ref-line">:33</span></span><code class="ref-code">{ldClient.variation('dark-mode-beta', user, false) &amp;&amp; &lt;Toggle /&gt;}</code></li></ul></li><li class="row"><div class="row-head"><span class="tag">REMOVE</span><span class="row-key">holiday-banner-2025</span><span class="row-facts"><span class="row-state">OFF · 0%</span><span class="row-sep" aria-hidden="true"> · </span><span class="row-age">unchanged 290 days</span></span><svg class="strip" width="168" height="28" viewBox="0 0 168 28" aria-hidden="true" focusable="false"><rect class="strip-bg" x="0" y="0" width="168" height="28"/><rect class="strip-still" x="0.0" y="0" width="168.0" height="28"/><path class="strip-area" d="M0.0 25.0 L168.0 25.0 L168 25 L0 25 Z"/><path class="strip-line" d="M0.0 25.0 L168.0 25.0"/><line class="strip-cut" x1="123.0" y1="0" x2="123.0" y2="28"/></svg></div><ul class="refs" aria-label="holiday-banner-2025: 1 line to change"><li class="ref"><span class="ref-gutter" aria-hidden="true">−</span><span class="ref-path">src/layout/Header.tsx<span class="ref-line">:76</span></span><code class="ref-code">{ldClient.variation('holiday-banner-2025', user, false) &amp;&amp; &lt;Banner /&gt;}</code></li></ul></li><!--rows:end--></ol>
+      </div>
+      <aside class="report-side" aria-labelledby="skipped-title">
+        <p class="side-title" id="skipped-title">Not listed (<span id="skipped-count"><!--count:start-->5<!--count:end--></span>)</p>
+        <ul class="skipped" id="skipped"><!--skipped:start--><li><span class="skip-key">pricing-page-v2</span><span class="skip-why">fully on, but changed 19 days ago (under 30)</span></li><li><span class="skip-key">eu-checkout-copy</span><span class="skip-why">fully on, but changed 9 days ago (under 30)</span></li><li><span class="skip-key">recs-model-b</span><span class="skip-why">still rolling out at 50%</span></li><li><span class="skip-key">search-ranking-v3</span><span class="skip-why">still rolling out at 10%</span></li><li><span class="skip-key">free-shipping-banner</span><span class="skip-why">on for one segment only, not everyone</span></li><!--skipped:end--></ul>
+        <div class="legend" aria-hidden="true">
+          <p class="legend-row"><span class="sw sw-still"></span>unchanged span</p>
+          <p class="legend-row"><span class="sw sw-cut"></span>your cut-off</p>
+          <p class="legend-row legend-note">Strips show the last 16 weeks, 0–100% served.</p>
+        </div>
+      </aside>
+    </div>
+  </figure>
+</section>
+
+<section class="sec rule" id="rule" aria-labelledby="rule-h">
+  <div class="sec-in">
+    <h2 id="rule-h">Listed only when every user has seen the same value for weeks</h2>
+    <p class="sec-lede">Flagsweep reads when each flag last changed in LaunchDarkly, Unleash or your config file. A flag makes the list when it serves one value to everyone, on or off, and has stayed that way past your cut-off. Anything still moving stays off the list.</p>
+
+    <figure class="timeline">
+      <figcaption class="fig-label"><span class="label-strong">new-checkout-flow</span>, from the sample above: 16 weeks of history at a 30-day cut-off</figcaption>
+      <div class="timeline-plot">
+        <svg viewBox="0 0 720 200" preserveAspectRatio="none" aria-hidden="true" focusable="false" class="timeline-svg">
+          <rect x="245" y="0" width="475" height="200" class="tl-still"/>
+          <line x1="0" y1="20" x2="720" y2="20" class="tl-grid"/>
+          <line x1="0" y1="110" x2="720" y2="110" class="tl-grid"/>
+          <line x1="0" y1="200" x2="720" y2="200" class="tl-axis"/>
+          <path d="M0 200 H77 V191 H122 V182 H167 V155 H206 V110 H245 V20 H720" class="tl-line" vector-effect="non-scaling-stroke"/>
+          <line x1="527" y1="0" x2="527" y2="200" class="tl-cut" vector-effect="non-scaling-stroke"/>
+        </svg>
+        <span class="tl-tick tl-y100">100%</span>
+        <span class="tl-tick tl-y50">50%</span>
+        <span class="tl-tick tl-y0">0%</span>
+      </div>
+      <div class="timeline-axis" aria-hidden="true"><span>16 weeks ago</span><span>today</span></div>
+      <ol class="timeline-notes">
+        <li><span class="sw sw-line"></span><span><strong>Ramp.</strong> 5% to 100% over four weeks while the team watched it.</span></li>
+        <li><span class="sw sw-still"></span><span><strong>Unchanged for 74 days</strong> at 100%. Everyone gets the new checkout.</span></li>
+        <li><span class="sw sw-cut"></span><span><strong>Your cut-off, 30 days.</strong> The flat line started before it, so the flag is listed.</span></li>
+      </ol>
+    </figure>
+
+    <ul class="cases" aria-label="Flags from the sample that are not listed at 30 days">
+      <li class="case">
+        <span class="case-strip"><!--strip:recs-model-b--><svg class="strip" width="168" height="28" viewBox="0 0 168 28" aria-hidden="true" focusable="false"><rect class="strip-bg" x="0" y="0" width="168" height="28"/><rect class="strip-still" x="159.0" y="0" width="9.0" height="28"/><path class="strip-area" d="M0.0 25.0 L138.0 25.0 L138.0 22.8 L159.0 22.8 L159.0 14.0 L168.0 14.0 L168 25 L0 25 Z"/><path class="strip-line" d="M0.0 25.0 L138.0 25.0 L138.0 22.8 L159.0 22.8 L159.0 14.0 L168.0 14.0"/><line class="strip-cut" x1="123.0" y1="0" x2="123.0" y2="28"/></svg></span>
+        <p><code>recs-model-b</code> <span class="case-why">is at 50% and moved 6 days ago. It is still an experiment, so it is not listed.</span></p>
+      </li>
+      <li class="case">
+        <span class="case-strip"><!--strip:free-shipping-banner--><svg class="strip" width="168" height="28" viewBox="0 0 168 28" aria-hidden="true" focusable="false"><rect class="strip-bg" x="0" y="0" width="168" height="28"/><rect class="strip-still" x="100.5" y="0" width="67.5" height="28"/><path class="strip-area is-seg" d="M0.0 25.0 L100.5 25.0 L100.5 14.0 L168.0 14.0 L168 25 L0 25 Z"/><path class="strip-line" d="M0.0 25.0 L100.5 25.0 L100.5 14.0 L168.0 14.0"/><line class="strip-cut" x1="123.0" y1="0" x2="123.0" y2="28"/></svg></span>
+        <p><code>free-shipping-banner</code> <span class="case-why">is on for one segment only. Not everyone sees the same value, so it is not listed.</span></p>
+      </li>
+      <li class="case">
+        <span class="case-strip"><!--strip:pricing-page-v2--><svg class="strip" width="168" height="28" viewBox="0 0 168 28" aria-hidden="true" focusable="false"><rect class="strip-bg" x="0" y="0" width="168" height="28"/><rect class="strip-still" x="139.5" y="0" width="28.5" height="28"/><path class="strip-area" d="M0.0 25.0 L118.5 25.0 L118.5 22.8 L129.0 22.8 L129.0 14.0 L139.5 14.0 L139.5 3.0 L168.0 3.0 L168 25 L0 25 Z"/><path class="strip-line" d="M0.0 25.0 L118.5 25.0 L118.5 22.8 L129.0 22.8 L129.0 14.0 L139.5 14.0 L139.5 3.0 L168.0 3.0"/><line class="strip-cut" x1="123.0" y1="0" x2="123.0" y2="28"/></svg></span>
+        <p><code>pricing-page-v2</code> <span class="case-why">has been at 100% for 19 days. It joins the list once it passes your cut-off.</span></p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec edit" id="edit" aria-labelledby="edit-h">
+  <div class="sec-in edit-in">
+    <div class="edit-copy">
+      <h2 id="edit-h">Each line in the report is one check to take out of your code</h2>
+      <p>The report points at the line; you make the edit in a normal pull request. For a flag that is fully on, keep the code inside the check and delete the check. For a flag that is fully off, delete the check and the code it guards.</p>
+      <p>Then delete the flag in your flag service, so nothing reads it again.</p>
+    </div>
+    <figure class="diff" aria-labelledby="diff-cap">
+      <figcaption class="fig-label" id="diff-cap"><span class="label-strong">src/checkout/CartPage.tsx:42</span>, edited by hand for <code>new-checkout-flow</code> (fully on). Illustrative.</figcaption>
+      <div class="diff-body" role="region" aria-label="Example edit to CartPage.tsx" tabindex="0">
+<pre><code><span class="dl ctx"><span class="ln">41</span>  function Checkout({ cart, user }: Props) {</span>
+<span class="dl del"><span class="ln">42</span>−   if (ldClient.variation('new-checkout-flow', user, false)) {</span>
+<span class="dl del"><span class="ln">43</span>−     return &lt;NewCheckout cart={cart} /&gt;;</span>
+<span class="dl del"><span class="ln">44</span>−   }</span>
+<span class="dl del"><span class="ln">45</span>−   return &lt;LegacyCheckout cart={cart} /&gt;;</span>
+<span class="dl add"><span class="ln">42</span>+   return &lt;NewCheckout cart={cart} /&gt;;</span>
+<span class="dl ctx"><span class="ln">43</span>  }</span></code></pre>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="sec instead" id="instead" aria-labelledby="instead-h">
+  <div class="sec-in">
+    <h2 id="instead-h">Rerun the report any day instead of waiting for cleanup day</h2>
+    <p class="sec-lede">A flag spreadsheet is only as current as the last person who edited it, and cleanup day keeps moving. Flagsweep answers from your flag service’s history and your code as they are when you run it.</p>
+    <div class="ledger-wrap">
+    <table class="ledger">
+      <caption class="fig-label"><span class="label-strong">The same flags, two ways.</span> The sheet columns are an illustration of a flag spreadsheet; the report column is the sample report above, at 30 days.</caption>
+      <colgroup><col class="c-flag"><col class="c-sheet"><col class="c-sheet"><col class="c-report"></colgroup>
+      <thead>
+        <tr class="grp"><td></td><th scope="colgroup" colspan="2" class="g-sheet">flags-cleanup.xlsx</th><th scope="col" class="g-report">$ flagsweep scan .</th></tr>
+        <tr><th scope="col">Flag</th><th scope="col" class="s">Owner</th><th scope="col" class="s">Remove when?</th><th scope="col" class="r">Report says</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">new-checkout-flow</th><td class="s q" data-l="Owner">?</td><td class="s" data-l="Remove">after launch</td><td class="r" data-l="Report"><span class="tag">REMOVE</span> ON 100%, unchanged 74 days · 3 lines</td></tr>
+        <tr><th scope="row">legacy-search-fallback</th><td class="s q" data-l="Owner">?</td><td class="s" data-l="Remove">cleanup day</td><td class="r" data-l="Report"><span class="tag">REMOVE</span> OFF 0%, unchanged 121 days · 4 lines</td></tr>
+        <tr><th scope="row">dark-mode-beta</th><td class="s q" data-l="Owner">?</td><td class="s" data-l="Remove">ask design</td><td class="r" data-l="Report"><span class="tag">REMOVE</span> ON 100%, unchanged 41 days · 2 lines</td></tr>
+        <tr><th scope="row">holiday-banner-2025</th><td class="s q" data-l="Owner">?</td><td class="s" data-l="Remove">cleanup day</td><td class="r" data-l="Report"><span class="tag">REMOVE</span> OFF 0%, unchanged 290 days · 1 line</td></tr>
+        <tr><th scope="row">recs-model-b</th><td class="s q" data-l="Sheet">not in the sheet</td><td class="s" data-l="Remove"></td><td class="r keep" data-l="Report">not listed: still rolling out at 50%</td></tr>
+      </tbody>
+      <tfoot><tr><th scope="row">Total</th><td class="s" colspan="2" data-l="Sheet">4 rows, no owners, no dates</td><td class="r" data-l="Report"><strong>Remove 4 flags: 10 lines in 8 files</strong></td></tr></tfoot>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section class="sec install-sec" id="install" aria-labelledby="install-h">
+  <div class="sec-in">
+    <h2 id="install-h">Install with pipx, then point it at LaunchDarkly, Unleash or a config file</h2>
+    <div class="install-grid">
+      <div class="install-steps">
+        <div class="install install-big">
+          <code class="install-cmd" id="cmd-foot"><span aria-hidden="true" class="prompt">$</span>pipx install flagsweep</code>
+          <button class="btn" type="button" data-copy="pipx install flagsweep" data-select="cmd-foot" aria-describedby="copy-foot-status">Copy the install command</button>
+        </div>
+        <p class="beside"><span id="copy-foot-status" role="status" class="copy-status"></span>Free and MIT licensed, with no paid plan. The code is on <a href="https://github.com/flagsweep/flagsweep">GitHub</a>; there is no company behind it yet.</p>
+
+        <div class="sources">
+          <div class="tablist" role="tablist" aria-label="Flag source">
+            <button role="tab" type="button" id="tab-ld" aria-controls="panel-ld" aria-selected="true">LaunchDarkly</button>
+            <button role="tab" type="button" id="tab-un" aria-controls="panel-un" aria-selected="false">Unleash</button>
+            <button role="tab" type="button" id="tab-cf" aria-controls="panel-cf" aria-selected="false">Config file</button>
+          </div>
+          <p class="fig-label">Example. Command and option names are illustrative; the docs have the real ones.</p>
+          <div class="panel" role="tabpanel" id="panel-ld" aria-labelledby="tab-ld" tabindex="0">
+<pre class="term"><code><span class="prompt" aria-hidden="true">$ </span>flagsweep scan . --source launchdarkly
+<span class="c"># finds calls like</span>
+ldClient.variation('new-checkout-flow', user, false)</code></pre>
+          </div>
+          <div class="panel" role="tabpanel" id="panel-un" aria-labelledby="tab-un" tabindex="0">
+<pre class="term"><code><span class="prompt" aria-hidden="true">$ </span>flagsweep scan . --source unleash
+<span class="c"># finds calls like</span>
+unleash.isEnabled('new-checkout-flow')</code></pre>
+          </div>
+          <div class="panel" role="tabpanel" id="panel-cf" aria-labelledby="tab-cf" tabindex="0">
+<pre class="term"><code><span class="prompt" aria-hidden="true">$ </span>flagsweep scan . --source config/flags.yaml
+<span class="c"># reads flags defined like</span>
+new-checkout-flow: true</code></pre>
+          </div>
+        </div>
+      </div>
+      <div class="install-links">
+        <a class="link-big" href="https://flagsweep.example/docs"><span>Read the docs</span><span class="link-sub">flagsweep.example/docs</span></a>
+        <a class="link-big" href="https://github.com/flagsweep/flagsweep"><span>Read the code on GitHub</span><span class="link-sub">github.com/flagsweep/flagsweep</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <p class="foot-brand">flagsweep · open-source CLI · MIT licence</p>
+    <nav aria-label="Footer">
+      <a href="https://flagsweep.example/docs">Docs</a>
+      <a href="https://github.com/flagsweep/flagsweep">GitHub</a>
+      <a href="#install">Install</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round7/packets/P002/A/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Delete these flags. Here are the lines.",
+    "left": 16,
+    "right": 304,
+    "top": 75,
+    "bottom": 153,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 4655
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Delete these flags. Here are the lines.",
+    "left": 17,
+    "right": 373,
+    "top": 75,
+    "bottom": 155,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 4655,
+   "axe": [
+    {
+     "id": "scrollable-region-focusable",
+     "impact": "serious",
+     "nodes": 1
+    }
+   ]
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Delete these flags. Here are the lines.",
+    "left": 25,
+    "right": 743,
+    "top": 87,
+    "bottom": 195,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 5422
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Delete these flags. Here are the lines.",
+    "left": 134,
+    "right": 790,
+    "top": 104,
+    "bottom": 264,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 5422,
+   "axe": []
+  }
+ }
+}

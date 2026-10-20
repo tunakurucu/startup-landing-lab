@@ -1,0 +1,28 @@
+1440 default
+1440 minus-14 {"status":"Remove 5 flags: 12 lines in 10 files","note":"","val":"14","focus":"cut-down","sw":1440}
+1440 minus-1 {"status":"Remove 6 flags: 13 lines in 11 files","note":"","val":"1","focus":"cut-down","sw":1440}
+1440 minus-at-min {"status":"Remove 6 flags: 13 lines in 11 files","note":"1 day is the shortest cut-off.","val":"1","focus":"cut-down","sw":1440}
+1440 plus-60 {"status":"Remove 3 flags: 8 lines in 6 files","note":"","val":"60","focus":"cut-up","sw":1440}
+1440 empty-365 {"status":"No flags to remove at 365 days: nothing in this sample has been fully on or off that long.","note":"","val":"365","focus":"cutoff","sw":1440}
+1440 empty-input {"status":"No flags to remove at 365 days: nothing in this sample has been fully on or off that long.","note":"Type a number of days from 1 to 365. Still showing 365 days.","val":"365","focus":"cutoff","sw":1440}
+1440 out-of-range {"status":"No flags to remove at 365 days: nothing in this sample has been fully on or off that long.","note":"This sample holds a year of history, so the longest cut-off is 365 days. Showing 365.","val":"365","focus":"cutoff","sw":1440}
+1440 negative {"status":"Remove 6 flags: 13 lines in 11 files","note":"The shortest cut-off is 1 day. Showing 1.","val":"1","focus":"cutoff","sw":1440}
+1440 nonsense {"status":"Remove 6 flags: 13 lines in 11 files","note":"“abc” isn’t a whole number of days. Still showing 1 day.","val":"1","focus":"cutoff","sw":1440}
+1440 own-45 {"status":"Remove 3 flags: 8 lines in 6 files","note":"","val":"45","focus":"cutoff","sw":1440}
+1440 repeat-plus {"status":"No flags to remove at 365 days: nothing in this sample has been fully on or off that long.","note":"365 days is the longest cut-off in this sample.","val":"365","focus":"cut-up","sw":1440}
+1440 reset {"status":"Remove 4 flags: 10 lines in 8 files","note":"","val":"30","focus":"cut-reset","sw":1440}
+1440 keyboard {"status":"Remove 3 flags: 8 lines in 6 files","note":"","val":"60","focus":"cut-up","sw":1440}
+390 default
+390 minus-14 {"status":"Remove 5 flags: 12 lines in 10 files","note":"","val":"14","focus":"cut-down","sw":390}
+390 minus-1 {"status":"Remove 6 flags: 13 lines in 11 files","note":"","val":"1","focus":"cut-down","sw":390}
+390 minus-at-min {"status":"Remove 6 flags: 13 lines in 11 files","note":"1 day is the shortest cut-off.","val":"1","focus":"cut-down","sw":390}
+390 plus-60 {"status":"Remove 3 flags: 8 lines in 6 files","note":"","val":"60","focus":"cut-up","sw":390}
+390 empty-365 {"status":"No flags to remove at 365 days: nothing in this sample has been fully on or off that long.","note":"","val":"365","focus":"cutoff","sw":390}
+390 empty-input {"status":"No flags to remove at 365 days: nothing in this sample has been fully on or off that long.","note":"Type a number of days from 1 to 365. Still showing 365 days.","val":"365","focus":"cutoff","sw":390}
+390 out-of-range {"status":"No flags to remove at 365 days: nothing in this sample has been fully on or off that long.","note":"This sample holds a year of history, so the longest cut-off is 365 days. Showing 365.","val":"365","focus":"cutoff","sw":390}
+390 negative {"status":"Remove 6 flags: 13 lines in 11 files","note":"The shortest cut-off is 1 day. Showing 1.","val":"1","focus":"cutoff","sw":390}
+390 nonsense {"status":"Remove 6 flags: 13 lines in 11 files","note":"“abc” isn’t a whole number of days. Still showing 1 day.","val":"1","focus":"cutoff","sw":390}
+390 own-45 {"status":"Remove 3 flags: 8 lines in 6 files","note":"","val":"45","focus":"cutoff","sw":390}
+390 repeat-plus {"status":"No flags to remove at 365 days: nothing in this sample has been fully on or off that long.","note":"365 days is the longest cut-off in this sample.","val":"365","focus":"cut-up","sw":390}
+390 reset {"status":"Remove 4 flags: 10 lines in 8 files","note":"","val":"30","focus":"cut-reset","sw":390}
+390 keyboard {"status":"Remove 3 flags: 8 lines in 6 files","note":"","val":"60","focus":"cut-up","sw":390}

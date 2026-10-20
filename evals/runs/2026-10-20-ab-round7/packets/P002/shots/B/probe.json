@@ -1,0 +1,86 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round7/packets/P002/B/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 21,
+   "h1": {
+    "text": "Find the feature flags you should have deleted weeks ago.",
+    "left": 16,
+    "right": 341,
+    "top": 79,
+    "bottom": 229,
+    "within_viewport_x": false
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3645
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Find the feature flags you should have deleted weeks ago.",
+    "left": 16,
+    "right": 374,
+    "top": 79,
+    "bottom": 192,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3645,
+   "axe": [
+    {
+     "id": "scrollable-region-focusable",
+     "impact": "serious",
+     "nodes": 1
+    }
+   ]
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Find the feature flags you should have deleted weeks ago.",
+    "left": 16,
+    "right": 380,
+    "top": 79,
+    "bottom": 192,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3645
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Find the feature flags you should have deleted weeks ago.",
+    "left": 162,
+    "right": 728,
+    "top": 126,
+    "bottom": 301,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3640,
+   "axe": []
+  }
+ }
+}
