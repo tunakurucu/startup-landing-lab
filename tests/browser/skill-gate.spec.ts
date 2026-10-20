@@ -15,7 +15,7 @@ const KEPT:Record<string,string[]>={
   '/reference/resend':[...GALLERY,'CP-11'],
   '/demo/relayline':['TY-10','ST-06'],
   '/demo/sidequest':['TY-10','TT-03','MO-06'],
-  '/demo/ledger':['CO-03','TT-03'],
+  '/demo/ledger':[],
 };
 // PF-05 is a lab timing (median LCP of three throttled runs), so it is budgeted rather than matched exactly:
 // every page must meet the checker's own 2.5 s, except a record page, which paints its frame first and the
