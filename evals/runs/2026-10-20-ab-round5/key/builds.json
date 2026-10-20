@@ -13,12 +13,14 @@
  },
  "builds": {
   "kiln/without-r1": {
-   "workdir": "W001",
+   "workdir": "W011",
    "brief": "kiln",
    "arm": "without",
    "brief_file": "briefs/kiln/without.md",
    "fixture": null,
-   "skill_installed": false
+   "skill_installed": false,
+   "superseded_workdir": "W001",
+   "model": "claude-opus-5-5"
   },
   "executor/with-r1": {
    "workdir": "W002",
@@ -37,12 +39,14 @@
    "skill_installed": true
   },
   "driftcheck/without-r1": {
-   "workdir": "W004",
+   "workdir": "W012",
    "brief": "driftcheck",
    "arm": "without",
    "brief_file": "briefs/driftcheck/without.md",
    "fixture": null,
-   "skill_installed": false
+   "skill_installed": false,
+   "superseded_workdir": "W004",
+   "model": "claude-opus-5-5"
   },
   "liftplan/without-r1": {
    "workdir": "W005",
@@ -53,12 +57,14 @@
    "skill_installed": false
   },
   "kiln/with-r1": {
-   "workdir": "W006",
+   "workdir": "W009",
    "brief": "kiln",
    "arm": "with",
    "brief_file": "briefs/kiln/with.md",
    "fixture": null,
-   "skill_installed": true
+   "skill_installed": true,
+   "superseded_workdir": "W006",
+   "model": "claude-opus-5-5"
   },
   "executor/without-r1": {
    "workdir": "W007",
@@ -69,12 +75,14 @@
    "skill_installed": false
   },
   "driftcheck/with-r1": {
-   "workdir": "W008",
+   "workdir": "W010",
    "brief": "driftcheck",
    "arm": "with",
    "brief_file": "briefs/driftcheck/with.md",
    "fixture": null,
-   "skill_installed": true
+   "skill_installed": true,
+   "superseded_workdir": "W008",
+   "model": "claude-opus-5-5"
   }
  }
 }
