@@ -2,7 +2,7 @@
 
 A screenshot is evidence only after fonts have loaded and motion has settled; open each one and confirm it is not blank and is the width it claims. Inspect hero, one middle section and footer at desktop, tablet and mobile. Also inspect expanded menus, selected tabs, empty states and errors. A full-page image checks pacing; viewport images check legibility. Neither proves keyboard accessibility.
 
-Check document overflow, headline clipping, awkward orphan words, unreadable diagrams, missing media, sticky overlap and CTA contrast. Check logical H1/H2/H3 order, named controls, visible focus, keyboard activation, Escape behavior, label associations and reduced motion. Use axe or an equivalent tool when available; manually inspect concerns automation cannot settle.
+Check document overflow, headline clipping, awkward orphan words, unreadable diagrams, missing media, sticky overlap and contrast: a CTA label needs 4.5:1 against its fill (WCAG 1.4.3), input borders and selected-state markers 3:1 against their neighbours (WCAG 1.4.11), and text over an image or gradient is unverified until sampled at its worst point (CO-01). Check logical H1/H2/H3 order, named controls, visible focus, keyboard activation, Escape behaviour, label associations and reduced motion. Use axe or an equivalent tool when available; manually inspect concerns automation cannot settle.
 
 Click every primary action. A link label must match the destination. A local simulation must produce a meaningful result and explicitly describe what it does not execute. A form must validate and describe where submitted data goes. Do not add a form when a local example would meet the task.
 
@@ -10,10 +10,18 @@ Score product fit, identity, originality, composition and product proof 0–10 b
 
 Mandatory critique: identify the weakest explanatory section and the most template-like decision. Revise at least one structural issue and rerender the affected states. If a test cannot run, mark it not tested; never convert a successful build into a claim of visual or accessibility success.
 
+## Fix order
+
+When several things are wrong, fix them in this order: idea, hierarchy, composition, type, imagery, colour, detail, motion. A later fix cannot rescue an earlier failure; better motion will not save a muddled hierarchy. (Order adapted from Leonxlnx's taste-skill, MIT.)
+
 ## Removal pass
 
 Before the revision, list every decorative element still on the page: glows, gradients, textures, badges, eyebrows, icon tiles, borders, shadows, extra motion. For each, write the job it does (state, action, hierarchy, product meaning or brand character). Remove it in your head; if nothing is lost and the page reads more clearly, delete it. If something is lost, make the smallest fix within the existing system instead of adding a new effect. Record the list in the decision record. Judge the rendered page, not who or what made it.
 
 ## Originality pass
 
-Compare the page with each reference you recorded, category by category: copy, names and marks, numbers, imagery and assets, section order, distinctive layout devices and motion. Common grammar (a dark ground, large sans headlines, an ordinary footer) is not an overlap on its own; a combination of distinctive choices is. For any overlap, name the reference location, what matches and what differs, and change the page until the match is broken. Recolouring is not a fix. A reference you could not inspect is a gap to record, never a pass.
+Compare the page with each reference you recorded, category by category: copy, names and marks, numbers, imagery and assets, section order, distinctive layout devices and motion. Common grammar (a dark ground, large sans headlines, a conventional section order, an ordinary footer) is not an overlap on its own; a combination of distinctive choices is. For any overlap, name the reference location, what matches and what differs, and change the page until the match is broken. Recolouring is not a fix. A reference you could not inspect is a gap to record, never a pass.
+
+## House-style pass
+
+A page can also repeat this skill's own habits. Compare it with your previous builds from this skill: earlier pages in the same project, or the gallery demos if you have the source repository. List the choices that repeat across unrelated briefs, such as the same display face, ground, hero split, label style, artifact frame or motion. Break at least two of them on purpose and record which ones and why. If a stranger could tell the new page and the last one came from the same studio, revise. (Adapted from the auteur skill, MIT.)

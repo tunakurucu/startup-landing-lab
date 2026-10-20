@@ -1,5 +1,113 @@
 # Casebook: immersive-editorial
 
+## Superhuman · immersive-editorial
+
+https://superhuman.com · desktop-mobile-audit · **reference tier**
+
+A cinematic sky-and-portrait video carries the brand mood while floating product UI cards supply proof, then a sticky-tabbed suite walks through four products.
+
+Observed: Full-bleed video of a person in profile against a dusk sky. A centred white headline, a one-line subhead and a dark 'Get Superhuman' button with a purple arrow sit on the sky. Translucent product cards float over the video: a Go chat booking a meeting, a vertical app rail, an inbox list, a doc with an editing toolbar and a 'Tailor this language for executives' chip. A dark pill above the nav asks 'Looking for Superhuman Mail?'. The person differed between captures. Clicking 'Docs' in the suite tabs scrolled the Docs panel up under the sticky tab bar and shaded Docs; the shading also followed scroll position before the click. On load one video was playing and the measurement counted 10 running animations; floating cards and chips shifted while scrolling, and logo-grid cells changed between captures, sometimes blank. With reduced motion the hero video stayed paused on a still frame and one animation on an image in an asset grid kept running.
+
+Copy: H1: 'Superpowers, everywhere you work'. Subhead: 'Mail, Docs, and AI that works in every app and tab'. Primary button 'Get Superhuman'. The category is presented as a suite; each product gets a superlative headline ('The most productive email app ever made', 'Everyone's favorite AI writing partner') and four outcome bullets such as 'Save 4 hours every single week'. The audience is anyone working across apps; no role or company size is named.
+
+Transfer: Layer real product UI fragments over an emotional full-bleed scene so mood and proof are read in the same glance. For a multi-product suite, put a sticky tab bar over stacked chapters so it both navigates and shows where the reader is. Give every product chapter the same structure (headline, one sentence, learn-more link, four outcome bullets, screenshot) so several products read as one system.
+
+Avoid/limit: Headline contrast depends on the video frame, and the hero leans on video that some browsers and capture tools will not play. Two homepage variants were served on the same day, so first impressions differ by visitor. Four products and superlative claims compete for one button, and the outcome bullets have no supporting evidence on the page.
+
+Measured 2026-10-20: desktop h1 64px, weight 540, tracking 0em; body 18px; 4 sections; phone h1 32px.
+
+On phones: The text block stacks above the video; the h1 drops to 32px over two lines; floating UI cards are removed, leaving the portrait. Nav becomes wordmark plus a menu button that opens a full-screen list. The logo grid becomes 3×2. The suite loses its tab bar: products stack, each with its screenshot below the bullets, and 'Get the suite' moves under the heading. Page height grows from 6446px to 8505px.
+
+## Dia · immersive-editorial
+
+https://www.diabrowser.com · desktop-mobile-audit · **reference tier**
+
+An oversized serif wordmark on a yellow scene outranks a modest h1, then numbered steps show finished artifacts Dia produces, with the waitlist button always on screen.
+
+Observed: Saturated yellow, blurred foliage-like ground. A floating white pill nav (logo, What's New, Apps, Security) sits top centre over a one-line white serif h1. Below, an oversized white serif 'DIA' wordmark with swash terminals is half-hidden behind a cream macOS-style browser window showing a tab sidebar and an 'Ask anything…' field. A cream arc cuts across the bottom, holding a wide black 'Join the Waitlist' button and 'Available for macOS and Windows'. Clicking '02 Synthesis you'll actually use' scrolled the page so the 'Sarah's Week Recap' artifact sat beside the list, expanded 02's description with a left rule, and greyed 01 and 03; the active step also followed scroll position. After the hero, a sticky bottom arc with 'Join the Waitlist' and a top-right waitlist pill stayed on screen. The four video elements never loaded a source, and captures 2s apart at top and mid-page were identical; reduced motion looked the same, with all content visible.
+
+Copy: H1: 'More than a browser. A better workday.' There is no subhead; the only supporting line is 'Available for macOS and Windows'. Primary button 'Join the Waitlist'; with a phone user agent it read 'Send download link'. The page names the category as a browser and immediately reframes it as a workday outcome; section copy addresses people juggling work, freelance and personal contexts, and names 'Dia for Work' for teams.
+
+Transfer: Show what the product produces (a morning brief, a weekly recap, an answer) as finished artifacts rather than the interface mid-task. When the name is the asset, let the wordmark be the display type and keep the h1 to one supporting line. Keep a single conversion action persistent during long storytelling, and adapt its label to the visitor's device. On phones, recompose a scroll-linked side list into artifact-then-caption pairs instead of shrinking it.
+
+Avoid/limit: White text on yellow fails contrast, and the sticky bar permanently costs viewport height. The hero window is decorative (an empty 'Ask anything' field), so the first screen sells mood over capability. A waitlist-only action with no pricing leaves evaluators nothing to try immediately.
+
+Measured 2026-10-20: desktop h1 38.8px, weight 500, tracking -0.04em; body 14px; 4 sections; phone h1 28px.
+
+On phones: The pill nav becomes a full-width bar with the 'Dia' wordmark and a '+' button. The h1 wraps to two lines; the wordmark and window scale down, and the waitlist button moves below the yellow arc at full width. The numbered steps recompose into artifact-then-caption pairs with no side list; the bento becomes one column; privacy chips are cropped at both edges; the footer becomes two mono columns.
+
+## Sierra · immersive-editorial
+
+https://sierra.ai · desktop-mobile-audit · **reference tier**
+
+Full-bleed moving imagery of human moments carries a two-line outcome promise and an agent-conversation bubble, deferring product UI until after a 30-logo wall.
+
+Observed: A blue announcement bar ('Sierra Summit 2026 Recap…'), then a white nav with green logo, 'Sign in' and a green 'Learn more' pill. Below, full-bleed moving imagery of a sleeping baby on a parent's shoulder; the two-line white h1 and a white 'Learn more' pill sit at lower left, and a frosted chat bubble at right shows one line of an agent–customer exchange. In the measurement first-screen captures the h1 and bubble had not yet appeared. Opened the 'Product' nav menu: aria-expanded became true, the item gained a pale green pill, and a white panel appeared with Build / Orchestrate / Optimize / Scale columns (Ghostwriter, Agent Studio, Horizon, Context Engine, Explorer, Insights, Channels, Trust and reliability). Meanwhile the hero imagery changed scene (baby → man on a phone) and the bubble text changed. On load the bubble alternated agent and customer lines. With reduced motion the hero was static: three captures were identical.
+
+Copy: H1: 'Better outcomes. Built on Sierra.' No hero subhead. Every primary button reads 'Learn more' (nav, hero, closing CTA). The hero names neither category nor product; it emerges in card copy ('Build powerful AI agents quickly', 'The agent-building agent') and the Product menu ('The leading conversational AI platform for businesses'). The audience is enterprise brands ('Leading brands succeed with Sierra', 'the great companies of the world').
+
+Transfer: When the buyer's outcome is emotional, open on imagery of the end customer and overlay a short product exchange to tie the scene to the software. Place a large, quiet logo wall directly after the hero when trust, not comprehension, is the first hurdle. Tag each product chapter with a small named pill (Ghostwriter, Insights, Horizon) so a broad platform reads as distinct tools.
+
+Avoid/limit: The hero names neither product nor category and offers only 'Learn more', so meaning depends on the imagery and later sections; text-over-imagery contrast varies frame to frame; first-screen text arrived late in one capture; product UI does not appear until about 4,900px down.
+
+Measured 2026-10-20: desktop h1 65px, weight 400, tracking -0.02em; body 16px; 10 sections; phone h1 32px.
+
+On phones: H1 drops to 32px at left over a tighter crop of the imagery; no chat bubble was visible in the phone first screen. The logo wall becomes three columns in brand colours instead of grey. Feature cards stack and gain '+' expand buttons; testimonials stack; product cards become sideways rows with the next card peeking at the right edge. Footer columns stack to two.
+
+## Krea · immersive-editorial
+
+https://www.krea.ai · desktop-mobile-audit · **reference tier**
+
+A dark photographed desk scene frames the app UI under a superlative claim, then a long catalogue of models, features and full pricing follows.
+
+Observed: Dark full-bleed scene of a desk at night (a video element is present): a large monitor shows the Krea app ('Let's create something' prompt and thumbnails), with keyboard and mouse in warm light. Centred above it: a 'NEW · Try the new Seedance 2.5 model' pill, two-line h1, one-line subhead, a white 'Open Krea' pill and a translucent 'Krea Agent' pill that overlaps the top of the monitor. Nav: logo mark, ten links (Pricing with a '40% OFF' badge), 'Sign up for free' and 'Log in' pills. Clicked the right arrow of the model carousel below the hero: no visible change after 3 s and no horizontal scroll offset changed. The page scrolls inside a <main> element (document height equals the viewport), so scrolling worked via the wheel over content. The hero did not change over 1.5 s; a video element was present but not playing. Reduced motion: same static hero. Measurement: 10 animations on load and after scroll (12 at 390); rule 'observed'.
+
+Copy: H1: 'Krea.ai is the world's most powerful creative AI suite.' Subhead: generate, enhance and edit images, videos or 3D meshes for free with AI. Primary button 'Open Krea'; secondary 'Krea Agent'; nav 'Sign up for free'. The category is 'creative AI suite'; audience is named as 'creatives, enterprises, and everyday people' and 'pros and beginners alike', with the scale claim 'Trusted by over 30,000,000 users From 191 countries'.
+
+Transfer: Stage the real app UI inside a physical scene (a desk, a monitor) so a software tool reads as a place where work happens. When the product is self-serve with a free tier, put full pricing on the homepage rather than behind a link. Use a bento grid with oversized numerals to compress a broad capability list into scannable claims. Announce the newest model in a pill above the h1 so a fast-moving product shows freshness without rewriting the hero.
+
+Avoid/limit: The superlative h1 has no proof beside it, and the monitor in the hero scene is small and drops out entirely on mobile. The page is a long catalogue with repeated sign-up blocks. Inner-container scrolling defeats full-page capture; unlabeled carousel controls and the aria-label mismatch weaken accessibility.
+
+Measured 2026-10-20: desktop h1 60px, weight 400, tracking 0em; body 14px; 15 sections; phone h1 36px.
+
+On phones: The nav keeps logo, 'Sign up for free', 'Log in' and a menu icon. The hero photo is cropped to keyboard and chair, so the monitor with the app UI is not visible; the h1 wraps to three centred lines and the two CTAs stack as wide pills. The carousel shows one card with the next peeking. Bento tiles recompose into a two-column mosaic; pricing and enterprise plans stack; the prompt-box demo and Krea 3 carousel go full width.
+
+## Daylight · immersive-editorial
+
+https://daylightcomputer.com/ · desktop-mobile-audit · **reference tier**
+
+One device lying on grass carries the page: a pinned hero turns from day to amber night on scroll, and a 'de-invented' manifesto sells focus over specs.
+
+Observed: A rounded full-bleed card holds a photo-real overhead scene: a pale tablet showing a botanical engraving lies on grass among leaves. Top left: white serif h1 and a two-line subhead; bottom left: an amber-framed video thumbnail with a play triangle. Top right: a grey nav cluster (Home, Product, FAQ, orange ORDER NOW) with a 'Meet Daylight Kids' card and round 'Limited daylight KIDS bundle' badge; bottom right: a Newsletter card, 'IN STOCK · SHIPS IN 3-5 BUSINESS DAYS' and a wide orange ORDER NOW. Clicked the hero 'Play video' thumbnail: a dark full-card player with native controls and a close × replaced the hero; it stayed at 0:00 because the video did not load in this browser. On load the Kids card slid down from under the nav. Scrolling the pinned hero turned the scene to night with an amber device screen; manifesto words revealed progressively; a mid-page stretch moved panels sideways. Reduced motion: no running animations, manifesto text shown whole, window shadow absent; the Kids card still slid down.
+
+Copy: H1: 'The computer, de-invented'. Subhead: 'Meet DC-1. A new kind of computer, designed for deep focus and wellbeing.' Primary button 'ORDER NOW' (nav, hero, footer). The category is named by negation ('de-invented'; 'We refuse to accept a future where our devices are exhausting, addictive, and distracting') and by benefits (paper-like display, amber glow, no blue light). The audience is implied as people seeking focus and health; families are addressed through 'Daylight Kids'.
+
+Transfer: Let one physical object carry the hero and change its state on scroll (day to night, white to amber) so the product's signature mode is demonstrated rather than listed. When the product's value is what it leaves out, name the category by negating the incumbent ('de-invented', a 'we refuse' manifesto) before naming features. Repeat one purchase action in fixed positions (nav, hero, footer) so a long narrative page never strands a ready buyer. Tie each chapter's ground colour to the benefit it describes, such as sky blue for outdoor reading and amber then black for night use.
+
+Avoid/limit: 18,848px of pinned and sideways scroll, canvas scenes and word-by-word reveals make content depend on scroll position (the desktop full-page capture is blank below the hero). The first screen stacks four overlays (nav, Kids card, newsletter, order bar) around the product. Specs are deferred to other pages, and two h1s blur the outline.
+
+Measured 2026-10-20: desktop h1 60px, weight 300, tracking -0.07em; body 18px; 11 sections; phone h1 40px.
+
+On phones: The hero stays one full-height card (measured 844px versus 1,800px pinned on desktop): h1 breaks to two lines at 40px, nav collapses to ORDER NOW plus a menu icon, the video thumbnail shrinks to the bottom left and the Newsletter card overlaps it; the Kids card drops below the hero. Reading / Note-taking / Writing photos stack vertically, the app grid becomes a centred 3×3, and benefits become icon rows. Page height 19,840px.
+
+## Opal Electronics · immersive-editorial
+
+https://op.al/ · desktop-mobile-audit · **reference tier**
+
+The homepage is one dated letter set in a narrow column over an overhead photograph of the company's prototype table, with no menu, buttons or product listing.
+
+Observed: No conventional hero. The first screen is an overhead photograph of a concrete table crowded with cameras, circuit boards, chrome parts and coloured prototypes, with a narrow centred white text column on top: bold 'the table', the date 'June 1, 2026', then the opening paragraphs of a letter. Only a small two-line 'opal electronics' wordmark sits top left; there is no navigation menu and no button. The page has no tabs, buttons or toggles; the one operable surface is the dotted wordmark canvas, which sets a crosshair cursor. Brighter patches of dots drifted across the letters while idle; after sweeping the pointer across it, lit patches covered more of 'pal', but the idle drift prevents attributing that to the pointer. Nothing else moved on load or scroll apart from the grain overlay. With reduced motion the grain overlay's animation still ran (frame-to-frame pixel changes up to 10/255).
+
+Copy: No h1; title 'the table', dated 'June 1, 2026'. The letter opens 'In our office, there is a table.' and describes the company's webcams, its customer ('the golden decile: the ten percent of people who want something of extreme difference'), an investment announcement and three wishes. No primary button; the only links are the footer and the wordmark. The category is named in the text as 'top electronics for demanding customers'.
+
+Transfer: When there is little product to show yet, publish one dated letter as the homepage and let the voice and the taste of its imagery do the selling. Use a single photograph of real artefacts as the page ground so the body of work is visible without product cards. Drop navigation and calls to action entirely when the page's job is announcement and recall rather than conversion. Art-direct the mobile version separately, moving text blocks around objects instead of shrinking the desktop composition.
+
+Avoid/limit: No path to buy, sign up or learn product details; no h1, main landmark or named logo link; long white text over a busy photo strains legibility, worse at 390 where text overlaps objects; a dated letter goes stale; the grain overlay ignores reduced motion.
+
+Measured 2026-10-20: desktop h1 Nonepx, weight None, tracking Noneem; body 16px; 1 sections; phone h1 Nonepx.
+
+On phones: The photograph is recomposed, not just cropped: at 390 'the table' sits large on two lines beside a stack of cameras, and the letter breaks into blocks that alternate left and right around individual objects. The dotted-wordmark area rendered as black space in the 390 full-page capture, and footer links stack vertically. Page height 3,176px versus 3,656px on desktop.
+
 ## Mercury · immersive-editorial
 
 https://mercury.com/ · partial-desktop

@@ -1,5 +1,77 @@
 # Casebook: expressive-world
 
+## Railway · expressive-world
+
+https://railway.com · desktop-mobile-audit · **reference tier**
+
+An illustrated night-sky railway world—track rail, departure board, 'All Aboard'—wraps scripted product-canvas demos, so infrastructure reads as calm rather than technical.
+
+Observed: Under a dark nav, an inset rounded panel holds an illustrated night sky with stars and pink-lit clouds. Centered: serif h1, one-line subhead, a purple 'Deploy →' and a dark 'Agents' button. Beneath sits a large product window ('New Project' dialog, later a service canvas) with a stage bar—Deploy, Network, Scale, Monitor, Evolve—over painted mountains and a bullet train; a 6×2 logo grid closes the panel. Clicked 'Evolve' in the hero's stage bar: no visible change within 2 s (an earlier attempt timed out waiting for the bar to settle). The bar advanced on its own—'Network' and 'Scale' were highlighted at different times as the window switched scenes. Section canvases rebuilt with new project names; a pointer opened a dropdown in the dashboard mock; the stats heading read '0+' in a live frame ('220.4M+' in the measurement capture) and the split-flap board filled in from blank tiles. Reduced motion: sampled frames still.
+
+Copy: h1: 'Ship software peacefully'. Subhead: 'With the all-in-one intelligent cloud provider', with 'intelligent' underlined. Primary button 'Deploy →', secondary 'Agents'; the nav adds 'Book a demo'. The category is named as 'cloud provider'. Competitors are named through each chapter's 'Alternative to' logos and the footer's Compare column (Heroku, Render, Fly.io, Vercel). Proof uses counts ('220.4M+ deploys per month', 'Join 2M+ developers').
+
+Transfer: Build one metaphor into the structure—progress rail, departure board, boarding call—so brand elements also mark navigation and proof. Give every feature chapter the same frame (label, statement, live-looking demo, three features, 'alternative to' row) so a long page stays scannable. Name the incumbents you replace in line so evaluators can map the product to tools they already use. Animate product mocks to show state changes (build, alert, scale), but make each resting frame meaningful on its own.
+
+Avoid/limit: Illustration and staged demos load late: early frames show a flat panel, an empty dialog and placeholder nav. The mobile hero removes the product entirely, leaving only the slogan. Chapter demos move on their own, so a reader can miss the state being explained, and the stage bar looks interactive but did not respond.
+
+Measured 2026-10-20: desktop h1 54px, weight 500, tracking -0.036em; body 18px; 4 sections; phone h1 40px.
+
+On phones: Nav collapses to logo and a menu icon. The hero drops the product window: serif h1 (40px), subhead, two buttons, then a 2×3 logo grid inside the sky panel. Each chapter becomes a stacked card—label, serif head, a reduced canvas thumbnail, features listed vertically. Customer quotes stack; developer posts become a sideways card row; the stats board crops at both edges. Page grows to 13,351px (measured).
+
+## Browserbase · expressive-world
+
+https://www.browserbase.com · desktop-mobile-audit · **reference tier**
+
+Dithered pixel-art landscapes and orange highlight-block headings give an invisible browser-infrastructure API its own world, with an interactive ecosystem diagram explaining the product.
+
+Observed: A sticky white nav (orange 'B' logo, five links, 'Log in', 'Sign up', black 'Get a demo') sits above a framed hero panel: pale blue dotted ground with a dithered pixel-art mountain range in orange, yellow, green and black. The heading is centred in two orange highlight blocks with white text, followed by a two-line subhead and two pills, black 'Get API key' and pale 'Setup for agents' with a copy icon. The logo-row heading shows below the panel within the first screen. Operated: the 'Extract structured web data' tab on the ecosystem diagram. The highlighted arc moved round the ring, the centre title changed from 'Research at web scale', a different set of capability chips lit up, the right-hand output switched from browser windows ('Running 128 browsers…') to a code panel with a JSON skeleton, and the left source tiles changed. Two first-screen captures 1.5 s apart were identical. Counters showed placeholder zeros ('000,000') in captures. Reduced motion: no visible change; the measurement records a reduced-motion rule.
+
+Copy: Hero heading: 'Give your agents access to the whole web.' Subhead: 'Browserbase makes the web as reliable and programmable as APIs'. Primary button: 'Get API key' (secondary 'Setup for agents'; nav 'Get a demo'). The audience is builders of AI agents: headings address 'your agents' and claim 'Anything you can do in a browser, your agent can too.' Use-case cards end in monospaced 'GET STARTED ▶' links.
+
+Transfer: An infrastructure product with no interface to show can own a recognisable look by applying one illustration technique consistently across hero, diagrams and step cards. Make the architecture diagram switchable by job (research, extraction, form filling, testing) so each scenario lights up the capabilities and output it uses. Give the hero one action per audience: an API key for developers and a setup action aimed at agents. Monospaced micro-labels and highlight blocks can give a developer page texture without adding more imagery.
+
+Avoid/limit: With no h1 the main claim is weaker for assistive technology and search. The imagery is decorative and says little about how the API works until the diagram section. In automated captures counters showed zeros and media slots were blank, which reads as broken if animations or videos fail. White text on bright orange blocks is a contrast risk.
+
+Measured 2026-10-20: desktop h1 Nonepx, weight None, tracking Noneem; body 20px; 10 sections; phone h1 Nonepx.
+
+On phones: The hero heading shrinks to 21px highlight blocks; the pills stack vertically and the landscape compresses into a short strip. Logos become a two-column grid with play triangles. The API list, use-case cards and three steps stack single-column with tall blank media slots between them. The pixel computer moves under its text. The 'Don't use the web' mountain does not appear in the capture. The footer reflows to two link columns with the large 'B' at the bottom.
+
+## Phantom · expressive-world
+
+https://phantom.com/ · desktop-mobile-audit · **reference tier**
+
+A consumer-app page built from three chapters (trade, move money, stay secure), each a headline with the ghost mascot set inline and a one-sentence card carousel.
+
+Observed: A lavender page with a floating white nav pill (Features, Learn, Explore, Company, Developers, Support), a round search button and a lavender 'Download' pill. Below, a large rounded panel holds centred white text: eyebrow 'Where the world trades', a three-line h1 and a pale 'Download Phantom' pill with a phone icon. The panel is a video element that never loaded here and rendered flat grey. A cookie banner covers the lower right. Clicked 'Next slide' on the Trading carousel: the row shifted one card, so 'Buy and sell all types of crypto in an instant.' left the view and 'Go long, go short, go anywhere with Perps.' entered at the right. Scrolling changed the page ground colour per chapter. No CSS animations ran on load or scroll and every video stayed unloaded, so media motion was not seen. Reduced motion: no running animations and identical frames, the same as the default load here.
+
+Copy: H1: 'Your home for trading crypto, predictions, perps, and more'. Eyebrow 'Where the world trades'; no subhead paragraph. Primary button 'Download Phantom'. The category is named directly as trading crypto, predictions and perps; the audience is 'everyone'. Proof is one number: 'Trusted by a community of 20+ million users. It's more than a wallet.' Cards hold one sentence each, e.g. 'Self-custodial means you control your funds. We never have access.'
+
+Transfer: Set the mascot inside the headline as a glyph so brand character recurs in every chapter without separate illustration. Organise a broad app into three verb-led chapters (trade, move money, stay secure), each a headline plus a swipeable row of one-sentence cards. Change the page ground colour per chapter to mark topic shifts without dividers. Give trust a single plain number ('20+ million users') right before the final download call.
+
+Avoid/limit: Nearly every proof surface is video, so when media fails the hero becomes a grey block with low-contrast white text and the cards become empty colour slabs. Section h2s outsize the h1, flattening the outline. One-sentence cards trade depth for brevity, and fees and risk appear only in small italic legal text near the footer.
+
+Measured 2026-10-20: desktop h1 80px, weight 400, tracking -0.025em; body 20px; 6 sections; phone h1 29.3px.
+
+On phones: The nav reduces to the ghost logo, a 'Download' pill and a 47px round menu button. The hero keeps its rounded panel with the h1 on three lines at 29.3px. Each carousel shows one full-width card with the next one peeking at the right edge, arrows above the row. Footer link columns become a two-column grid. Page height 7,228px versus 8,075px on desktop.
+
+## Clay · expressive-world
+
+https://www.clay.com/ · desktop-mobile-audit · **reference tier**
+
+A handmade claymation toy world brands the page, and each product chapter gets its own colour, 3D object and named customer result, with use-case tabs swapping product mocks.
+
+Observed: The upper two-thirds is a full-bleed claymation-style scene of green hills, trees and toy machinery (funnel, magnifier, seesaw, coiled tube, block bar chart, mailbox) with coloured balls. A lower dark-green band holds a large white two-line h1 at left; at right a three-line subhead, a white 'Start free trial' button, a lime 'Get a demo' button and 'or install directly with' three AI-app icons. A floating white nav has ⌘K search, Log in, Get a demo and a black Start free trial. Clicked the 'Lead Scoring' tab: it turned purple and centred in the row, the subhead changed to 'Prioritize the highest-converting leads using real-time intent and engagement signals.', and the mock swapped from a demo-form table with an email preview on lime to a lead-scoring table, 'Lead Score Formula' panel and 'Sample Outputs' on purple. The customer grid drifted left on its own, and the prompt placeholder showed different text across captures. No CSS animations ran; the hero video did not load. With reduced motion the customer grid stayed still.
+
+Copy: H1: 'Build systems to grow revenue'. Subhead: 'Infrastructure to get any data, run agentic workflows, and launch GTM plays.' Primary button 'Start free trial'; secondary 'Get a demo'. The audience is named as 'GTM engineers' and the field as 'GTM engineering'. Each chapter carries one named customer result; the named customers differed between loads (e.g. Rippling, Mistral AI, Intercom). The closing CTA adds 'Start for free today. No credit card required.'
+
+Transfer: Give each product module its own colour, label pill and physical object, and reuse that colour in its heading, button and proof, so a long platform page reads as distinct chapters. Make the use-case selector a tab row that swaps both the one-line promise and the product mock, so each buyer sees their own workflow in one click. Attach one named customer and one number to every chapter instead of relying on a single logo wall. Carry one illustration language from hero to footer so the brand world doubles as an icon system for modules.
+
+Avoid/limit: The hero spends two-thirds of the first screen on illustration, so the h1 and buttons sit low and the cookie banner covers them. Ten thousand pixels of dense proof grids and chapters ask for a lot of scrolling; images widely lack alt attributes; proof rotating between loads makes the page's claims inconsistent from visit to visit.
+
+Measured 2026-10-20: desktop h1 88px, weight 575, tracking -0.04em; body 12px; 9 sections; phone h1 41.6px.
+
+On phones: The hero scene crops to a band behind the nav and the 41.6px two-line h1 overlaps its lower edge; subhead and the two buttons stack below. The nav reduces to logo, 'Get a demo' and a menu icon. The tab row scrolls sideways above the mock, and the prompt chips stack vertically. Each chapter becomes label, heading, copy, proof and buttons with its 3D image below. The footer becomes two columns over the ball-pit art. Page height 11,352px.
+
 ## PostHog · expressive-world
 
 https://www.posthog.com · partial-desktop

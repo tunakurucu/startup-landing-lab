@@ -72,19 +72,66 @@ observed = (f"**Observed** across {n} measured startup homepages (2026-10-19): d
             f"tracking {fmt(med(ROWS[2][1]), 3)}em; h1 about {fmt(med(ROWS[3][1]), 1)}× the body size; body {fmt(med(ROWS[4][1]), 0)}px at about "
             f"{fmt(med(ROWS[5][1]), 0)} characters per line; phone h1 about {fmt(med(ROWS[7][1]), 2)}× desktop (median {fmt(med(ROWS[6][1]), 0)}px); "
             f"two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.")
+# Per-family lines come from the audited records that carry measurements (cohort and reference tier together).
+sites = json.load((ROOT / 'research/sites.json').open())
+def fam_line(fam):
+    recs = [s for s in sites if s['archetype'] == fam and s.get('measurements', {}).get('desktop')]
+    if len(recs) < 3: return None
+    d = lambda s: s['measurements']['desktop']; mo = lambda s: s['measurements'].get('mobile') or {}
+    names = ', '.join(sorted(s['name'] for s in recs))
+    ref = sum(1 for s in recs if s.get('tier') == 'reference')
+    dark = sum(1 for s in recs if d(s).get('dark_background'))
+    return (f"**Observed in this family** ({len(recs)} audited sites, {ref} of them reference tier, measured 2026-10-19/20: {names}): "
+            f"desktop h1 median {fmt(med([d(s).get('h1_px') for s in recs]), 0)}px at weight {fmt(med([d(s).get('h1_weight') for s in recs]), 0)} and {fmt(med([d(s).get('h1_tracking_em') for s in recs]), 3)}em; "
+            f"body {fmt(med([d(s).get('body_px') for s in recs]), 1)}px at about {fmt(med([d(s).get('body_measure_ch') for s in recs]), 0)} characters per line; "
+            f"{fmt(med([d(s).get('section_count') for s in recs]), 0)} sections; phone h1 {fmt(med([mo(s).get('h1_px') for s in recs]), 0)}px; {dark} of {len(recs)} on a dark ground.")
 stale = []
 for recipe in sorted((ROOT / 'skills/startup-landing-design/references/recipes').glob('*.md')):
     lines_r = recipe.read_text().split('\n')
-    updated = [observed if l.startswith('**Observed** across') else l for l in lines_r]
+    fl = fam_line(recipe.stem)
+    updated = [observed if l.startswith('**Observed** across') else (fl if (fl and l.startswith('**Observed in this family**')) else l) for l in lines_r]
+    if fl and not any(l.startswith('**Observed in this family**') for l in lines_r):
+        i = next(k for k, l in enumerate(updated) if l.startswith('**Observed** across'))
+        updated[i:i+1] = [updated[i], '', fl]
     if updated != lines_r:
         stale.append(recipe.name)
         if '--check' not in sys.argv: recipe.write_text('\n'.join(updated))
+
+# Reference tier: measured separately, never mixed into the cohort percentiles.
+REF = ROOT / 'research/measurements-reference.jsonl'
+ref_block = ''
+if REF.exists():
+    rok = [r for r in (json.loads(l) for l in REF.open() if l.strip()) if not r['error'] and 'desktop' in r['viewports'] and 'mobile' in r['viewports']]
+    rrows = [
+        ('Desktop h1 size (px)', [D(r)['h1_px'] for r in rok], 0),
+        ('Desktop h1 weight', [D(r)['h1_weight'] for r in rok], 0),
+        ('Desktop h1 tracking (em)', [D(r)['h1_tracking_em'] for r in rok], 3),
+        ('Desktop body size (px)', [D(r)['body_px'] for r in rok], 1),
+        ('Body characters per line', [D(r)['body_measure_ch'] for r in rok], 0),
+        ('Phone h1 size (px)', [M(r)['h1_px'] for r in rok], 0),
+        ('Top-level sections', [D(r)['section_count'] for r in rok], 0),
+    ]
+    lines_r = [f'## Reference tier: {len(rok)} sites chosen for their design', '',
+               'Product companies chosen for the design of their sites (each audited record names its selection signal, or says it was a maintainer pick), measured the same way on 2026-10-20 and kept out of the table above.', '',
+               '| Measure | 25th | Median | 75th | Cohort median |', '| --- | --- | --- | --- | --- |']
+    for (label, vals, nd), (_, cvals, _) in zip(rrows, [r for r in ROWS if r[0] in [x[0] for x in rrows]]):
+        lines_r.append(f'| {label} | {fmt(pct(vals, 25), nd)} | **{fmt(pct(vals, 50), nd)}** | {fmt(pct(vals, 75), nd)} | {fmt(pct(cvals, 50), nd)} |')
+    rdark = sum(1 for r in rok if D(r)['dark_background'])
+    rrm = sum(1 for r in rok if D(r)['reduced_motion_rule'] == 'observed')
+    lines_r += ['', f'- {rdark} of {len(rok)} heroes sit on a dark ground; a `prefers-reduced-motion` rule was found on {rrm}.']
+    ref_block = '\n'.join(lines_r)
 
 doc = DOC.read_text()
 start, end = '<!-- summary:start -->', '<!-- summary:end -->'
 if start not in doc:
     raise SystemExit('measurements.md lacks summary markers')
 new = doc.split(start)[0] + start + '\n' + block + '\n' + end + doc.split(end)[1]
+rs_, re_ = '<!-- reference:start -->', '<!-- reference:end -->'
+if ref_block:
+    if rs_ in new:
+        new = new.split(rs_)[0] + rs_ + '\n' + ref_block + '\n' + re_ + new.split(re_)[1]
+    else:
+        new = new.replace(end, end + '\n\n' + rs_ + '\n' + ref_block + '\n' + re_, 1)
 if '--check' in sys.argv:
     sys.exit(0 if new == doc and not stale else 1)
 DOC.write_text(new)

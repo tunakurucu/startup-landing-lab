@@ -6,7 +6,7 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 
 **Observed** across 211 measured startup homepages (2026-10-19): desktop h1 median 64px (middle half 54–76px, 90th percentile 96px), weight 500, tracking −0.025em; h1 about 3.7× the body size; body 17px at about 58 characters per line; phone h1 about 0.57× desktop (median 38px); two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.
 
-**Observed in this family** (12 audited sites, measured 2026-10-19: AgentPhone, Andera, Copperlane, Drafted, End Close, Hotbox, Interfere, LightSprint, Linear, Marble, Toothy AI, screenpipe): desktop h1 median 60px at weight 550 and -0.022em; body 16px at about 68 characters per line; 8 sections; phone h1 36px; 3 of 12 on a dark ground.
+**Observed in this family** (21 audited sites, 9 of them reference tier, measured 2026-10-19/20: AgentPhone, Andera, Attio, Cal.com, Clerk, Copperlane, Cursor, Drafted, End Close, Framer, Granola, Hotbox, Interfere, LightSprint, Linear, Marble, Paper, Plain, Ramp, Toothy AI, screenpipe): desktop h1 median 60px at weight 500 and −0.02em; body 16.0px at about 58 characters per line; 8 sections; phone h1 36px; 4 of 21 on a dark ground.
 
 | Decision | Recipe |
 | --- | --- |
@@ -14,11 +14,11 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 | Hero A | An incident workspace shows owner, current state and next action beside the promise. |
 | Hero B | The state timeline fills the hero, with a compact explanation attached to each transition. |
 | Type | Display sans frames decisions; plain body handles nuance; mono names states and IDs. |
-| Scale **recommended** | H1 `clamp(3.4rem, 6vw, 6.5rem)` / 0.94–1.08 line-height; body 17–19px / 1.5; measure 54–70ch; tracking -0.04em to -0.015em; display 500–800, body 400–500. |
+| Scale **recommended** | H1 `clamp(2.25rem, 1.167rem + 4.81vw, 5.5rem)` (about 37px on a 390px phone, 88px at 1440) / 1.0–1.1 line-height; body 17–19px / 1.5; measure 55–75 rendered characters (about 45–60ch in most fonts); tracking −0.04em to 0, by face; display 500–800, body 400–500. |
 | Layout **recommended** | Max width 1320px; narrow explanation / wide recurring workspace; alternate overview and close-up. Desktop section padding 88–144px, mobile 52–80px. Density: open → dense → quiet → active → short. |
 | Color/material | Product state carries color; restrained field, fine rules, high-contrast status accent. |
 | Product artifact | One fictional work item moves through selectable states; owner and next action update with the state. |
-| Sections | Problem state → timeline → selected decision → evidence/limits → action. Delete first: a second generic feature-card row. |
+| Sections | Problem state → timeline → selected decision → real proof, only when it exists → evidence and limits → cost → final action with the primary label. Delete first: a second generic feature-card row. |
 | Mobile | current step and detail become a vertical sequence; no shrunken dashboard. |
 | Evidence | Linear's issue context, LightSprint's selected QA stage, Interfere's recurring incident, Toothy's billing tab (desktop 2026-10-18/19). All scale, grid, spacing, and timing values are recommendations. |
 

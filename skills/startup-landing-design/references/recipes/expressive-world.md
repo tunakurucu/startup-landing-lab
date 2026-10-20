@@ -6,7 +6,7 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 
 **Observed** across 211 measured startup homepages (2026-10-19): desktop h1 median 64px (middle half 54–76px, 90th percentile 96px), weight 500, tracking −0.025em; h1 about 3.7× the body size; body 17px at about 58 characters per line; phone h1 about 0.57× desktop (median 38px); two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.
 
-**Observed in this family** (9 audited sites, measured 2026-10-19: Arbital, Cactus, HeyClicky, Imperfect, Palette, Pingo, Prized, Sparkles, Voltair): desktop h1 median 77.4px at weight 500 and -0.02em; body 17px at about 51 characters per line; 7 sections; phone h1 42px; 3 of 9 on a dark ground.
+**Observed in this family** (13 audited sites, 4 of them reference tier, measured 2026-10-19/20: Arbital, Browserbase, Cactus, Clay, HeyClicky, Imperfect, Palette, Phantom, Pingo, Prized, Railway, Sparkles, Voltair): desktop h1 median 77px at weight 500 and −0.025em; body 18.0px at about 51 characters per line; 7 sections; phone h1 40px; 4 of 13 on a dark ground.
 
 | Decision | Recipe |
 | --- | --- |
@@ -14,11 +14,11 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 | Hero A | A labelled map offers three destinations; selecting one reveals a different task and its outcome. |
 | Hero B | A large, tangible object anchors the headline while a compact card deck lets visitors try one action. |
 | Type | Heavy sans gives the world its voice; restrained body sans keeps instructions readable. |
-| Scale **recommended** | H1 `clamp(4rem, 8vw, 6.5rem)` / 0.94–1.08 line-height; body 17–19px / 1.5; measure 55–68ch; tracking -0.04em to -0.015em; display 500–800, body 400–500. |
+| Scale **recommended** | H1 `clamp(2.625rem, 1.333rem + 5.74vw, 6.5rem)` (about 44px on a 390px phone, 104px at 1440) / 1.0–1.1 line-height; body 17–19px / 1.5; measure 55–75 rendered characters (about 45–60ch in most fonts); tracking −0.04em to 0, by face; display 500–800, body 400–500. |
 | Layout **recommended** | Max width 1260px; asymmetric object field with 3/9 or 4/8 copy/scene. Desktop section padding 88–144px, mobile 52–80px. Density: open → dense → quiet → active → short. |
 | Color/material | A vivid field, or a pale ground chosen from where the product is used. Cream with a serif display is a common generated default, so record the product reason if you land there. One controlled accent per state; paper edges and outlines before shadow. |
 | Product artifact | A local card deck changes prompt, action and result together; the character or world never substitutes for the product. |
-| Sections | Invitation → world map → selected local experience → practical detail → action. Delete first: a decorative feature carousel. |
+| Sections | Invitation → world map → selected local experience → real proof, only when it exists → practical detail, including what it costs → final action with the primary label. Delete first: a decorative feature carousel. |
 | Mobile | collapse world map to a labelled list; keep one active scene; no tiny desktop chrome. |
 | Evidence | PostHog's desktop-like shell and selected story tab changed; Pingo's conversation samples; Cactus's recurring character (desktop 2026-10-18/19). All scale, grid, spacing, and timing values are recommendations. |
 

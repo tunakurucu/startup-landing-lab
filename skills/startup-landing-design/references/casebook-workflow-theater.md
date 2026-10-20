@@ -1,5 +1,167 @@
 # Casebook: workflow-theater
 
+## Plain · workflow-theater
+
+https://www.plain.com · desktop-mobile-audit · **reference tier**
+
+A centred two-tone promise, then four feature chapters that each pair a wide product video with three close-up UI fragments, ending in a 29-minute onboarding ladder.
+
+Observed: Centred on white: a two-line h1 with the first line bright green and the second near-black, a two-line subhead, and two square-cornered mono buttons ('BOOK A DEMO' filled green, 'START A TRIAL' outlined). Below sits a wide pale-green panel framed by solid and dashed green curves that holds a product video, with a full-width logo strip across it at the fold. A dark green bar above the nav promotes Ari; a cookie prompt covered the lower right. No tabs, toggles, carousels or demo inputs were found in a scan of buttons, tabs and pointer-cursor elements. The header 'Product' dropdown, built as a link, did not open on hover or click, and the floating chat launcher sat under the cookie prompt. Product media are videos that did not play here. Captures 2s apart at top and mid-page were identical with and without reduced motion; the measurement counted 2 animations at 1440 and 50 on load, 143 after scroll at 390. At 390 the menu opened as a full-screen accordion.
+
+Copy: H1: 'Build support your own way'. Subhead: Plain is AI support infrastructure that lets B2B teams build anything, no-code or all-code. Primary button 'BOOK A DEMO'; secondary 'START A TRIAL', with 'START FOR FREE' in the closing CTA. The page names the category 'Support Infrastructure' and the audience 'B2B teams', frames the problem as 'Tools add distance.', and addresses comparison shoppers directly ('Here's why, and when, we win').
+
+Transfer: Under each wide product view, add three close-up fragments of real states (a routing rule, an agent reply, a created ticket) so every feature claim has something concrete to point at. Name the pain in a short visual phrase before introducing the new category. Turn onboarding claims into a time ladder (5, 15, 29 minutes) with specific tasks at each step. Reserve a mono uppercase voice for actions and labels so navigation cues never blend into prose.
+
+Avoid/limit: The brand green fails text contrast on the h1, buttons and links. Wide product proof depends on videos that this browser could not play, leaving the static fragments to carry the evidence alone. Four identical chapter templates flatten priority, and the page is very long on both widths.
+
+Measured 2026-10-20: desktop h1 80px, weight 400, tracking -0.02em; body 18px; 0 sections; phone h1 46px.
+
+On phones: The h1 stays centred at 46px; buttons stretch and stack; the announcement shortens to 'Your new autonomous support agent'. The hero panel shows product UI (a webhook ticket thread with an 'Ask a follow up' composer). The problem line's single Slack icon becomes a row of app icons with a 999+ badge; the dark section heading overlays a monitor photo; capability cards and chapters stack (pill → media → headline → text). Page height grows from 12,155px to 16,328px.
+
+## Cursor · workflow-theater
+
+https://cursor.com · desktop-mobile-audit · **reference tier**
+
+Small, quiet type defers to staged product windows—agent queue, CLI, Slack, phone—set on painted landscapes, so the product's working state carries the pitch.
+
+Observed: A thin nav, then a left-aligned two-line h1 and two pill buttons (dark download, light 'Request a demo →'); no subhead. Below, a full-width beige panel holds a 'Cursor Desktop' window mock—agent task sidebar ('In progress', 'Ready for review'), chat pane, browser or editor pane—overlapped by a 'Cursor CLI' window, set over a painted landscape. The demo fills the lower half of the first screen. Clicked the 'presence.ts' file tab in the first feature panel's editor mock: only a hover state appeared (a close ×); the panel stayed on feature-prd.md. Frame pairs 1–1.5 s apart at the top and eight scroll positions showed no visible change. Demo windows (Slack, CLI, phone repo list) were empty when scrolled into view live but filled in the measurement capture, and the hero showed a different task state in each capture. Reduced motion: sampled frames still.
+
+Copy: h1: 'Cursor is your coding agent for building ambitious software.' No hero subhead. The primary button is platform-specific: 'Download for Linux' in the measurement capture, 'Download for macOS' in the live visit, 'Get started →' at 390. The category is named directly ('coding agent'); audience is implied by 'teams that build world-class software' and the enterprise card's 'Trusted by over half of the Fortune 500'.
+
+Transfer: Let the product carry the hero: a modest headline and two buttons leave room for a large, realistic working-state window above the fold. Use one staging device—an app window over the same painted backdrop—in every feature section so varied demos read as one system. Split each section head into a dark claim and a grey elaboration to get headline and subhead in one typographic block. Match the primary download button to the visitor's platform so the first action needs no choice.
+
+Avoid/limit: A 26px h1 gives the category claim little weight, so the page leans on brand recognition. Demo windows are dense small-text UI, unreadable when cropped at 390, and their filled state depends on timing—early viewers can see empty windows. Grey secondary text on beige lowers contrast, and tabs that look clickable do nothing.
+
+Measured 2026-10-20: desktop h1 26px, weight 400, tracking -0.012em; body 17.3px; 8 sections; phone h1 24.4px.
+
+On phones: Nav reduces to logo, 'Sign in' and a menu icon; the two hero buttons become one 'Get started →'. The hero demo keeps desktop scale and is cropped by its frame's right edge. Logo tiles become 4×2; feature panels stack copy above demo; testimonials drop from six to three; frontier cards stack; changelog and blog rows become horizontal strips with the next card cut off at the edge; footer goes to two columns.
+
+## Clerk · workflow-theater
+
+https://clerk.com · desktop-mobile-audit · **reference tier**
+
+A tabbed showcase of Clerk's own drop-in components—sign-up form, sign-in card, profile panel—sits directly under a heavy h1, so the shipped UI is the pitch.
+
+Observed: A black announcement bar ('Clerk raises $50m Series C') sits above a floating rounded nav. Left: a heavy two-line h1 and one-line subhead. Right: a 'Build with agents' tab holding a copyable prompt. Below, a full-width panel with four product tabs (User Authentication, Multi-tenancy, Enterprise Authentication, Agent Authentication) shows a crisp 'Create your account' card between faded sign-in and profile cards, with sub-tabs underneath. No hero button; Sign in and Sign up sit in the nav. Clicked the 'Multi-tenancy' tab in the hero demo: it took a hover highlight but the panel stayed on User Authentication through ~2 s. The hero demo did not change across ~8 s at the top; the measurement capture shows a pointer graphic and a typed 'c' in its email field. Nav Sign in/Sign up appeared a few seconds after load. On scroll, a soft glow behind the billing mock shifted hue; with reduced motion that glow still shifted and nothing else was seen moving.
+
+Copy: h1: 'Everything you need for authentication'. Subhead: 'More than APIs. The complete user layer for modern apps.' There is no hero button; the first offered action is copying 'Add Clerk auth to my app: clerk.com/SKILL.md', then per-section links such as 'Explore user authentication ▸'. The category is named directly; the audience is developers building B2B SaaS, with pricing language in proof ('Free for your first 50,000 monthly retained users').
+
+Transfer: If the product is UI, show the real components in context before any feature list. Offer an agent-ready install prompt beside the headline when buyers increasingly start integrations through coding agents. Gather a broad feature set into one dark bento band with a single illustration style, so breadth reads as one system. Mark chapter changes on a long page with contrasting bands and a distinctive edge shape.
+
+Avoid/limit: No hero button: the strongest call is a copy-to-clipboard prompt plus nav links, which can stall non-developer evaluators. The hero demo depends on tab state and timing; when it does not respond, the first screen is a static form. Faded side cards and small grey text lower contrast.
+
+Measured 2026-10-20: desktop h1 56px, weight 700, tracking -0.035em; body 11px; 6 sections; phone h1 32px.
+
+On phones: The floating nav keeps logo, Sign in, Sign up and a menu icon. The hero stacks h1 → subhead → truncated agent prompt → tabs as a 2×2 grid → only the central 'Create your account' card, with sub-tabs cut off at the right. Logos become 2×2. The bento becomes one column; the billing mock shows one plan with the next peeking; framework and integration grids stack. Page grows from 7,187px to 13,378px (measured).
+
+## Ramp · workflow-theater
+
+https://ramp.com · desktop-mobile-audit · **reference tier**
+
+A value-equation headline with inline email capture sits beside a celebrity photo and a self-cycling product UI, backed by live 'agents at work' counters.
+
+Observed: A black announcement bar ('Ramp raises $1.85B…') tops a sticky nav with 'Sign in', lime 'See a demo' and black 'Get started'. Left: a small uppercase label with a changing percentage, the one-line h1, a grey subhead, and an email field joined to a lime 'Get started for free' button. Right: a cut-out photo of two men holding skateboards, handwritten name scribbles and a caption popup. Below, a wide panel shows animated product UI, and an 'Agents at work today' ticker runs along the bottom of the first screen. Operated: the close button on the hero caption popup; the popup disappeared, exposing a 'Forecast' screen and a 'Bills' phone panel. On load the UI panel cycled through screens (invoice matching went from 'MATCHING TO P.O.' to 'MATCHED'; reporting and forecast views appeared), and ticker and percentage values changed. Sections revealed late on scroll; reaching the footer opened a 'Stay up to date' newsletter modal. With reduced motion the first screen was static, but the product panel was still empty and the ticker absent about 4 s after load.
+
+Copy: H1: 'Time is money. Save both.' Subhead: 'Cards, expenses, bill payments, and banking* – in the blink of AI', listing the modules with a footnoted asterisk. Primary button: 'Get started for free' beside a work-email field (nav adds 'See a demo'). The category is 'One platform for all of finance'; the audience is 'finance teams' and '85,000 of the world's most ambitious companies'. The closing block repeats the h1 and form.
+
+Transfer: Compress the value proposition into a short equation-style headline, put the email field in the hero, and repeat the identical headline and form at the end. Let one panel cycle through real product screens so a multi-module product shows breadth without asking the visitor to click tabs. Label running counters ('agents at work today', share of payments processed) so an AI claim reads as concrete activity. If a pop-culture image is used for attention, keep its caption dismissible and out of the way of the product proof.
+
+Avoid/limit: The first screen stacks many elements (announcement, counter label, form, celebrity photo, caption, animated UI, ticker) that compete for attention. Under reduced motion the product panel was empty rather than showing a static frame. Long scroll-driven sections rendered blank in captures, and the end-of-page modal interrupts. 13px body text is small for a page about 14,500px long.
+
+Measured 2026-10-20: desktop h1 64px, weight 400, tracking 0em; body 13px; 10 sections; phone h1 40px.
+
+On phones: The announcement wraps to two lines and the nav becomes logo plus a 40×40 menu. The h1 breaks into two lines; email field and lime button stack full-width. The photo and popup move below the form, with the ticker over the bottom of the first screen, followed by a cropped product composite with a Ramp card. The logo grid becomes three columns; module cards stack; testimonials scroll sideways.
+
+## Attio · workflow-theater
+
+https://attio.com · desktop-mobile-audit · **reference tier**
+
+A centred one-line category claim over a live-typing CRM workspace, then a sticky five-step rail walks the revenue lifecycle through dense product panels.
+
+Observed: A black announcement bar and white nav sit above a centred stack: a pill link ('GTM lessons from Elena Verna and more'), a one-line h1, a two-line grey subhead, and an outlined 'Talk to sales' beside a dark 'Start for free'. Below, a macOS-style frame of the Attio workspace (Basepoint sidebar, Home, a prompt box) begins inside the first screen and continues past the fold. Clicked the 'Railway' tab in Customer stories: aria-pressed became true, the tab cell shaded, and the panel swapped from '83% faster lead triage' (Granola, billboard photo) to '100% adoption, no admin' (Railway, team photo). On load the hero workspace typed 'How do I win my deal with GreenLeaf' and then switched to a deal view and a companies table showing 'AI is thinking…'. On scroll the rail highlight moved down the five steps. With reduced motion set, the hero demo still advanced between captures.
+
+Copy: H1: 'Welcome to agentic revenue.' Subhead: Attio is the platform that builds pipeline, advances deals and grows accounts around the clock. Primary button 'Start for free' (secondary 'Talk to sales'). The category is named as CRM ('The only CRM with Universal Context™'; page title 'The CRM for agentic revenue'); the audience is sales and revenue teams ('Free your reps to sell', 'For the people who own the number').
+
+Transfer: Back the category claim in the first screen with a working-looking product session rather than an illustration. Walk a multi-stage workflow with a sticky step rail: one short claim per step, one dense, realistic product panel beside it. Use two-tone headlines (statement in full black, elaboration in grey) to carry a long proposition without a separate subhead.
+
+Avoid/limit: At about 17,600px and eight-plus chapters the story is long and the platform message repeats; grey heading clauses trade contrast for rhythm; the hero demo keeps running under reduced motion; on phones the rail's tables are cropped and hard to read.
+
+Measured 2026-10-20: desktop h1 64px, weight 600, tracking -0.02em; body 18px; 8 sections; phone h1 40px.
+
+On phones: H1 drops to 40px over two centred lines. The hero buttons become an email field, a full-width 'Send me a demo' button and a 'Talk to sales →' link. The workspace frame is cropped at the right edge. The sticky rail becomes a horizontally scrolling tab strip (Build pipeline, Convert leads, Run sales motion…) with product tables running off-screen. A 'Stay ahead of GTM' email block sits before the final CTA; the footer stacks to two columns. Measured sections: 9.
+
+## Granola · workflow-theater
+
+https://www.granola.ai · desktop-mobile-audit · **reference tier**
+
+A large serif promise beside a typing meeting-note mock, then one named note recurs before, during and after a meeting inside lime and charcoal brand bands.
+
+Observed: Left column: a 'New · Granola for Apple Watch' pill, a four-line serif h1, a two-line sans subhead, a dark olive 'Download for free ↓' pill and a platform line ('Available for macOS, Windows, iOS, Android'). Right: a 'Q3 GTM sync' note window with traffic-light dots over collage-style art panels, overlapped by a phone-shaped call window and a 'Transcribing' pill. Clicked 'After the meeting' in the stepper: the page scrolled about 1,770px to the 'Post-meeting admin, done' panel, the label turned dark with an underline, and the panel showed 'List actions', 'Write follow-up email' and 'Draft project plan'. On load the hero note typed text, showed an 'Enhancing notes' state, and the call tiles changed faces. With reduced motion set, the note still typed and showed 'Enhancing notes' between captures.
+
+Copy: H1: 'The AI notepad for back-to-back meetings'. Subhead: 'Notes, actions and memory. Without a meeting bot.' Primary button 'Download for free' (nav adds 'Talk to sales'). The category is in the h1 ('AI notepad'); the audience is people in stacked meetings ('For the doers', 'Helping busy people through busy days'), and the no-bot difference recurs ('Humans in the room, not bots').
+
+Transfer: Carry one named sample artifact (a specific meeting note) through every workflow stage so the visitor follows one story instead of a feature list. Put the main objection-killer in the subhead ('Without a meeting bot') and repeat it in the feature rows. Let one characterful display serif and one saturated accent hold the brand, and keep product UI in a plain sans so the two never compete.
+
+Avoid/limit: Much of the meaning sits in images and video; when they had not loaded, sections showed empty frames and an unlabelled nav button. The hero demo ignores reduced motion. The 86px serif h1 takes four lines and pushes the platform line toward the fold.
+
+Measured 2026-10-20: desktop h1 86.4px, weight 400, tracking -0.02em; body 16px; 11 sections; phone h1 48px.
+
+On phones: H1 drops to 48px, left-aligned over four lines; the full 'Download for free' button stays in the first screen and the note mock moves below it, with the art panels cropped to its edges. The nav collapses to a 'Download' pill and a menu icon. Feature rows and testimonials stack to one column; measured sections drop to 10 and page height to 12,192px.
+
+## Cal.com · workflow-theater
+
+https://cal.com · desktop-mobile-audit · **reference tier**
+
+Sign-up buttons share a framed hero card with a recreated booking page and calendar, so visitors see the surface their invitees will use before reading feature copy.
+
+Observed: A white rounded card on a light-grey ground holds two columns. Left: a release pill ('Cal.com launches v6.9.5'), a three-line h1, a grey subhead, a full-width dark 'Sign up with Google' button, a lighter 'Sign up with email' button and 'No credit card required'. Right: a recreated booking page (host avatar, meeting title, 15m/30m/45m/1h chips, video app, timezone) beside a May 2025 month grid cropped at the card edge, above Trustpilot, Product Hunt and G2 star rows. Customer logos sit below the card. Clicking the hero '1h' chip and a date changed nothing; the cursor stayed default, so the booker acted as a static picture. I operated the FAQ instead: clicking the second question opened its answer and closed the first. It responded only after a long settle in this proxied session. After scrolling, the nav moved into a rounded white bar with a hairline border. No running animations or pixel changes appeared on the first screen, with or without reduced motion.
+
+Copy: h1: 'The better way to schedule your meetings'. The subhead names three audiences: individuals, businesses taking calls, and developers building scheduling platforms. Primary button 'Sign up with Google'; the nav button is 'Get started'. The category is named plainly as a scheduling app or software ('Your all-purpose scheduling app'). Several section heads carry a dark-and-light button pair ('Get started' with 'Book a demo' or 'Explore apps'; 'Talk to sales' with 'Get started'). Testimonials and social posts compare it directly with Calendly.
+
+Transfer: Put the artifact your users' customers will see (here, a booking page) in the hero, so visitors judge the output instead of reading claims. Make one-click OAuth sign-up the primary hero action, and state the friction removed ('No credit card required') directly beneath it. Use one module shape (a white bordered card on a quiet ground) for every section, so a long page stays scannable. If a hero artifact looks interactive (chips, dates), make it respond locally or mark it as an illustration.
+
+Avoid/limit: The hero booker invites clicks it ignores. Light-weight grey body text falls below 4.5:1. Repeated CTA pairs and a long run of proof sections (carousel, wall of love, FAQ, repeated logos) make the page long, close to 12,000px at 390. Interactive elements are not exposed as buttons, which hurts keyboard and screen-reader use.
+
+Measured 2026-10-20: desktop h1 64px, weight 600, tracking 0em; body 16px; 1 sections; phone h1 40px.
+
+On phones: The hero card stacks: copy and both sign-up buttons first, then the booker and the month grid, which stays cropped at its right edge. Section heads move from centred to left-aligned. Step and feature cards go single-column, and the eight icon tiles become two columns. In the capture the logo strip showed only its caption. The nav keeps the wordmark, 'Sign in', 'Get started' and a menu icon. The page grows from 8,569px to 11,874px.
+
+## Framer · workflow-theater
+
+https://www.framer.com · desktop-mobile-audit · **reference tier**
+
+A 12-word category claim ("design agent") on black, then staged agent sessions and a platform bento argue the agent sits on a full site builder.
+
+Observed: Nav: logo, Platform/Solutions/Resources menus, Enterprise, Pricing; Log in and a white Sign up button on the right. The h1 sits left on two lines with "Get started for free" (white) and "Download app" (dark grey) beneath; a "New: Skills →" link aligns right on the same row. A full-width rounded tile below holds a video of a glowing blue prompt box ("New Chat", "Ask Framer…", model picker) with a 0:36 duration badge, filling the rest of the first screen. Tried the terminal tab "cursor" twice (second time after 7 s in view): "claude" stayed active and the session body stayed empty below its header. Clicking the hero tile only drew a white outline; the video stayed paused at frame 0. Hovering and clicking "Platform" opened no menu. The page never left readyState "interactive" and its mp4s never loaded. While scrolling, the nav and the agent chat panel stayed pinned. 16 running "ghostFlow" animations were reported in normal and reduced-motion loads; hero frames 1.5 s apart showed no pixel change in either.
+
+Copy: h1: "Framer is the design agent for every step from idea to launch". No subhead; the buttons follow directly. Primary "Get started for free", secondary "Download app". The h1 names the category ("design agent"), matching the document title "Framer: AI design agent". Section heads position against replacement and against vibe-coding ("not instead of you", "Not just vibes, a full platform"). Audience is professional teams ("teams shipping big sites"); the footer's Compare column names Webflow, Figma, Wix, Lovable, Claude Code and others.
+
+Transfer: When the product is entering a new category, put the category noun in the h1 and skip the subhead so the claim and the two actions read as one unit. Show an agent's work as a pinned session panel beside the outputs it produced, so stacked feature cards read as steps of one session. Follow AI claims with a dense bento of operational proof (performance numbers, uptime, localization, A/B results) to answer the 'is it a toy' objection. Replace a desktop-only interactive closer, such as a prompt box with starter chips, with a single button on phones rather than shrinking it.
+
+Avoid/limit: Almost all proof is media: in this headless session the hero video, showcase and story cards stayed unloaded and the controls did not respond, leaving large black voids in the desktop capture. Without a subhead, the first screen never says in words that the output is a website. The all-black ground, grey-on-black card copy and small phone tap targets trade legibility for atmosphere.
+
+Measured 2026-10-20: desktop h1 54px, weight 500, tracking -0.04em; body 18px; 7 sections; phone h1 36px.
+
+On phones: Desktop menus collapse to a hamburger. The h1 wraps to three lines; buttons stay side by side and "New: Skills" drops below them. The video tile shrinks to a 219px strip. Logos become one row cropped at both edges. Agent cards stack with no pinned chat panel or terminal; the fourth reads "Connect to any agent". Story cards sit in a row cropped at the right. The closing prompt box becomes a "Get started for free" button over a canvas UI image.
+
+## Paper · workflow-theater
+
+https://paper.design/ · desktop-mobile-audit · **reference tier**
+
+A scripted agent terminal builds one playlist page inside a realistic editor window, and the page itself is drawn as an artboard with rulers and paper grain.
+
+Observed: Left-aligned stack on a warm, grainy paper ground: a two-tone headline (dark 'design incredible', then a grey continuation), a one-sentence subhead, a black 'download Paper' button and a text link 'open Paper in the browser →'. From about y=430 a full-width editor window (pages panel, empty canvas, layout inspector) fills the rest of the screen, overlapped by a terminal pane running the prompt 'build my playlist screen with real data'. A tick-mark ruler and a folded-paper diagonal sit at the right edge. Clicked the 'Paper' app icon in the Desktop dock: the centre icon changed from a solid blue mark to a teal noise-filled version; the side icons cycled through other app icons before and after. On load the hero terminal typed its prompt and listed tool calls while the canvas stayed empty; later editor demos replayed typed prompts ('build my…', 'generate 6 mobi…') beside the playlist page. The nav stayed pinned. With reduced motion the hero loaded finished (full log, built page) and frames 1.5 s apart did not change.
+
+Copy: h1: 'design incredible', continued by 'the connected canvas for teams shipping with agents'. Subhead: Paper connects teams, agents, code and data on one design space built on web standards, 'so nothing gets lost in translation'. Primary button 'download Paper' (later buttons read 'download for Linux' in this browser); secondary 'open Paper in the browser →'. Category named as a 'connected canvas'; audience as teams working with agents and designers at named companies. Copy is mostly lower-case, nav and buttons included, with lines like 'good bye lorem ipsum'.
+
+Transfer: Script an agent session inside a realistic editor window and reuse the same finished artifact in every demo, so each feature reads as a step on one piece of work. Dress the page in the product's own medium (artboard handles, rulers, paper grain) so the brand and the tool share one visual language. When reduced motion is requested, load a scripted demo in its finished state rather than an empty canvas. Split the headline into a short dark claim and a lighter category line to get a memorable phrase and a clear category in one block.
+
+Avoid/limit: Light 360-weight type and the grey second headline line trade contrast for tone. The same editor-window demo appears four times, so the middle of the page repeats itself, and the feature cards between demos are text-only. The download button names the visitor's OS ('download for Linux'). In the phone capture several demo panels rendered empty, leaving large blank areas.
+
+Measured 2026-10-20: desktop h1 48px, weight 360, tracking -0.02em; body 18px; 10 sections; phone h1 40px.
+
+On phones: The header shows only the logo and a hamburger. The headline wraps to five lines (h1 40px), the subhead follows, and only 'download Paper' remains in the first screen. The editor window shows mainly its terminal pane. Feature card pairs stack. In the 390 full-page capture the demo windows under 'finally a continuous loop' and 'connected to real content' rendered as empty panels. The measurement counts 10 sections at 1440 and 4 at 390; page height 9,585px against 9,312px.
+
 ## Linear · workflow-theater
 
 https://linear.app/ · partial-desktop

@@ -1,5 +1,77 @@
 # Casebook: typographic-technical
 
+## Neon · typographic-technical
+
+https://neon.com · desktop-mobile-audit · **reference tier**
+
+Numbered, mono-labelled chapters of two-tone sentence headlines on black carry a backend-platform argument, switching to a mint ground with marker highlights for the architecture story.
+
+Observed: An announcement bar ('Neon now has realtime…') tops a black nav with Discord, a GitHub star count, Log in and Sign up. The upper two-thirds is a field of glowing vertical green, blue and white bar clusters. Lower left: a monospace line 'NEON IS PART OF THE DATABRICKS PLATFORM', a two-line h1 with a dotted underline under 'Lakebase', and white 'Get started' plus outline 'Read the docs' pills. A divider and a scrolling logo row close the screen. Clicked 'Save costs' in the autoscaling toggle: it took the pressed state and the chart changed from a split 'Without Neon' (red spike, 'Resource limit reached… Outage triggered') vs 'With Neon' ('Autoscaling active', '+4 vCPU') view to one chart with a '4 vCPU/16 GB RAM… Savings estimation 80%' callout. The logo row scrolled continuously; the chapter-02 agent panel shifted between frames; the hero bars held still across ~7 s. Reduced motion: the logo row stopped; sampled frames still.
+
+Copy: h1: 'The backend for apps and agents, built to scale on Lakebase Postgres.' No separate subhead; the Databricks line above the h1 supplies the reassurance. Primary button 'Get started', secondary 'Read the docs'; the close adds a copyable '$ npx neon init'. The audience is named as apps and agents, then segmented into startups, agent platforms and the Fortune 500 in chapter 03.
+
+Transfer: Number the chapters and label them in monospace so a long technical page reads as a sequence, not a feature dump. Write each section head as one sentence pair—bright claim, grey elaboration—so the point lands before any card. Use a two-state toggle on one chart to show both buyer motives (avoid outages, save costs) with the same data. Place the backing or ownership signal above the h1 when it answers the buyer's first risk question.
+
+Avoid/limit: Much of the page depends on late-loading media: captures show black voids, broken-image icons and blank card illustrations, which undercuts a reliability pitch. Grey text on black lowers contrast. The h1 packs two audiences and a product name into 13 words.
+
+Measured 2026-10-20: desktop h1 56px, weight 400, tracking -0.04em; body 18px; 7 sections; phone h1 32px.
+
+On phones: Announcement text truncates with an ellipsis; nav becomes logo plus menu. The hero bar field shrinks to a band above the h1; buttons stay side by side. Chapters keep the numeral above the two-tone sentence; the five product cards become a sideways strip with the next card peeking; the agent panel moves below the text and shows a prompt and 'Thinking…'. Pricing cards and stats stack; the closing panel puts the wireframe mountain above full-width buttons.
+
+## Warp · typographic-technical
+
+https://www.warp.dev · desktop-mobile-audit · **reference tier**
+
+An all-monospace page built like a technical paper: numbered figures, section tags, a live task grid in the hero and factory config shown as real files.
+
+Observed: Left-aligned on a pale lavender ground with a faint dot grid and vertical rules: two-line monospaced h1, one-line grey subhead, a dark 'REQUEST EARLY ACCESS' button and an outlined 'DOWNLOAD WARP TERMINAL' button. Below, a framed '[ fig. 1 — the factory ]' panel: an 8×28 grid of task squares in grey and electric blue, a queued/working/waiting/shipped legend and counters. Tiny vertical 'WARP · HOME · 2026' labels run on both edges; a speaker-icon button sits bottom-left. Clicked the 'AGENTS' tab: it turned electric blue, the description switched to agents and 'the Foreman', and the file tree opened agents/implementation/agent.md in the viewer instead of factory.yaml. On load, fig. 1 squares changed state between frames 1.5 s apart. After scrolling, the nav became a blue section index ([C] Configuration … [F] FAQ). Reduced motion: frames identical at top and at 35% depth. Measurement: 5 animations on load, 23 after scroll; rule 'observed'.
+
+Copy: H1: 'Open infrastructure for cloud software factories'. Subhead: build on Warp with factories as code, any model or harness, and evals, benchmarks and self-improvement built in. Primary button 'REQUEST EARLY ACCESS'; secondary 'DOWNLOAD WARP TERMINAL'; nav adds 'BOOK A DEMO' and 'GET STARTED'. The h1 coins the category ('cloud software factories'); audience is developers ('800k+ devs') and enterprise teams. FAQ items are lowercase terminal prompts ('> what is a cloud software factory?').
+
+Transfer: On a long technical page, number the figures and tag the sections so the page reads like a spec and can be navigated by section. Prove an 'as code' claim with a browsable file tree whose files change with each tab. Put one live-state figure in the hero (items moving through named states) to make an abstract system feel operational. Replace the global nav with a section index once the reader is inside a long page.
+
+Avoid/limit: Monospaced body text at 16px/1.7 with wide tracking is slow to read across long paragraphs, and many labels are pale. The hero figure is abstract squares, so it signals activity without showing what a task is. In the full-page measurement capture several sections below the case study rendered blank, so content depends on scroll-triggered rendering.
+
+Measured 2026-10-20: desktop h1 54px, weight 400, tracking -0.037em; body 16px; 10 sections; phone h1 32px.
+
+On phones: The nav keeps logo, yellow 'BOOK A DEMO' and a menu icon. The h1 wraps to three lines; buttons sit side by side with two-line labels. Fig. 1 recomposes into a denser grid with a wrapped legend. Configuration tabs become a vertical list above the description and viewer; quality-loop charts stack inside one figure; stories, layers and product cards stack. Page height grows from 9363 to 14029px.
+
+## Rive · typographic-technical
+
+https://rive.app · desktop-mobile-audit · **reference tier**
+
+An all-caps Orbitron headline and a CLI install panel with OS tabs lead the first screen, while a column of use-case video tiles scrolls beside them.
+
+Observed: Black ground, split layout in a 1000px column. Left: a column of bordered tiles labelled by use case (Product UI, Game UI, Mobile Apps, Film + TV, Websites, Games, Fantasy Interfaces) drifts upward. Right: a spaced 'RIVE' wordmark, a two-line uppercase h1 and a grey subhead. Below them, a dark panel holds 'RIVE CLI' (macOS/Linux and Windows tabs, a curl command, a copy button) and 'RIVE EDITOR' ('Sign up', 'Download desktop app'). A one-line trust claim closes the column. Operated the CLI tab: clicking 'Windows' replaced 'curl -fsSL …/install.sh | sh' with 'irm …/install.ps1 | iex' and moved the underline. The hero tile column moved upward between captures taken 3 s apart, although getAnimations() listed no animations. With reduced motion the column still moved about the same distance. During the scroll getAnimations() stayed empty and no video played. The measurement record found no reduced-motion rule.
+
+Copy: h1: 'The Interactive experience engine', rendered uppercase. Subhead: build interactive UI, motion and game experiences in the Editor, or have an agent generate them with the CLI; the output runs natively on mobile, desktop, web, consoles, TVs and vehicles. Primary actions are the copyable CLI command, 'Sign up' and 'Download desktop app'; the nav says 'Get started'. Audience: designers, animators and developers. Proof names Spotify Wrapped and Duolingo, and a paragraph compares Rive with After Effects, Figma, Lottie and CSS animations.
+
+Transfer: For a product developers install, put the exact install command in the hero, with an OS selector and a copy button, next to the GUI sign-up path. Let a moving column of real output tiles carry the use cases, so the headline can stay short. Keep a distinctive display face for the headline and section titles only, and set body text in a neutral sans. On phones, shrink the display size less than the body, or the headline stops reading as a headline.
+
+Avoid/limit: The hero depends on video. In this browser every tile and the Editor video stayed blank, leaving grey boxes and an empty half-section. The drifting tile column ignores reduced motion. The futuristic display face sets a gaming tone that may undersell product-UI use. The 21px mobile h1 and the three-line command weaken the first phone screen. The menu trigger cannot be reached by keyboard.
+
+Measured 2026-10-20: desktop h1 40px, weight 900, tracking 0.01em; body 16px; 0 sections; phone h1 21px.
+
+On phones: The tile column becomes a horizontal row of tiles across the top, above the wordmark and h1. The h1 drops to 21px. The CLI command wraps onto three lines, and 'Download desktop app' shortens to 'Downloads'. The runtimes icon grid moves below its copy. The logo wall reflows into four rows, testimonials go single-column, and the footer becomes two columns. The nav keeps the logo, a menu icon and 'Get started'.
+
+## Supabase · typographic-technical
+
+https://supabase.com · desktop-mobile-audit · **reference tier**
+
+Pairs a two-line outcome promise with a plain list of bundled services, then shows breadth through a seven-module bento and real dashboard and code views.
+
+Observed: Nav: logo, Product/Developers/Solutions menus, Pricing, Docs, Blog, a GitHub star count (111.7K), Sign in and a green "Start your project" button. Below it, an offset two-column block: the two-line h1 and two buttons on the left, a three-line subhead top-aligned on the right. From about y=450 the first row of a seven-card product bento (wide Postgres Database card with an elephant line drawing, Authentication, Edge Functions) fills the rest of the first screen. Operated the dashboard tab "SQL Editor": its pill took the dark outline, Table Editor's cleared (aria-selected moved), and the framed panel switched from a countries table grid to an SQL editor with a query, a results grid and an Assistant side panel. It took effect on a second load, after the panel had mounted. Frames 1.5–3 s apart on the hero and testimonial wall showed no pixel change. The nav stayed pinned while scrolling (measurement record lists sticky_nav false). Under reduced motion nothing moved either; only late images appeared.
+
+Copy: h1: "Build in a weekend" / "Scale to millions". Subhead lists the bundle: start with a Postgres database, add Authentication, Data APIs, Edge Functions, Realtime Data, Storage and Vector embeddings. Primary button "Start your project"; secondary "Request a demo". The page names its category by components, Postgres first, rather than a label; the document title reads "The Postgres Development Platform". Audience cues are developer-specific: framework code, starter templates, testimonials about solo founders and vibe coding, footer Solutions listing "AI Builders", "Vibe Coders" and "Enterprise".
+
+Transfer: Let the h1 carry the outcome and the subhead name the components buyers already search for, so the promise and the inventory arrive together. Split each section heading into a dark claim line and a grey qualifier line so the headings alone read as the page's argument. Place a tabbed real-UI view and a framework-switching code sample mid-page so evaluators see both the dashboard and the integration before templates and customer stories. On phones, drop decorative card art and keep each module's name and one-sentence claim.
+
+Avoid/limit: The first screen shows no product UI, only grey line drawings; the real dashboard sits about 1,700px down and its frame loaded late (blank until mounted). Every section uses the same white card and hairline treatment, so after the hero little signals which part matters most. The testimonial wall and the long footer add length without new product information.
+
+Measured 2026-10-20: desktop h1 46px, weight 500, tracking 0em; body 16px; 10 sections; phone h1 34px.
+
+On phones: Header collapses to logo plus hamburger; the GitHub count, Sign in and header button go. Hero stacks h1 (34px), subhead, then both buttons side by side. The bento becomes a single column of text-only cards: the line drawings, email grid and globe are dropped. Logos move to a 3-column grid; the dashboard demo keeps its tabs over a cropped frame; templates and story logo tiles stack full width; footer goes to two columns. Page grows from 7,691px to 9,820px; 10 sections at both widths.
+
 ## Resend · typographic-technical
 
 https://resend.com · desktop-audit

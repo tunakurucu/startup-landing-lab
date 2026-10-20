@@ -6,20 +6,20 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 
 **Observed** across 211 measured startup homepages (2026-10-19): desktop h1 median 64px (middle half 54–76px, 90th percentile 96px), weight 500, tracking −0.025em; h1 about 3.7× the body size; body 17px at about 58 characters per line; phone h1 about 0.57× desktop (median 38px); two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.
 
-**Observed in this family** (11 audited sites, measured 2026-10-19: Applied Electrodynamics, Atomarine, Button Computer, Clair Health, Elyra, General Legal, Gravis Robotics, Juno, Known, Mercury, Nori): desktop h1 median 72px at weight 500 and -0.003em; body 16px at about 60 characters per line; 8 sections; phone h1 36px; 9 of 11 on a dark ground.
+**Observed in this family** (17 audited sites, 6 of them reference tier, measured 2026-10-19/20: Applied Electrodynamics, Atomarine, Button Computer, Clair Health, Daylight, Dia, Elyra, General Legal, Gravis Robotics, Juno, Known, Krea, Mercury, Nori, Opal Electronics, Sierra, Superhuman): desktop h1 median 64px at weight 500 and −0.02em; body 16.0px at about 55 characters per line; 8 sections; phone h1 32px; 12 of 17 on a dark ground.
 
 | Decision | Recipe |
 | --- | --- |
 | Fit | Ambitious physical or emotional outcome with real imagery. Wrong for technical API that needs parameters first; wrong for weak or unavailable product imagery. |
-| Hero A | A product object fills the first scene; a short caption identifies what the visitor can inspect. |
+| Hero A | A product object leads the first scene; a short caption identifies what the visitor can inspect. |
 | Hero B | A close crop and offset statement lead to a selectable set of use cases with paired captions. |
 | Type | Expressive serif or restrained sans display; very readable sans body; mono only for captions if useful. |
-| Scale **recommended** | H1 `clamp(4rem, 7vw, 6.5rem)` / 0.94–1.08 line-height; body 17–19px / 1.5; measure 50–64ch; tracking -0.04em to -0.015em; display 500–800, body 400–500. |
-| Layout **recommended** | Max width 1440px; large scene plus asymmetrical text; proof and qualifications enter below. Desktop section padding 88–144px, mobile 52–80px. Density: open → dense → quiet → active → short. |
+| Scale **recommended** | H1 `clamp(2.5rem, 1.25rem + 5.56vw, 6.25rem)` (about 42px on a 390px phone, 100px at 1440) / 1.0–1.1 line-height; body 17–19px / 1.5; measure 55–75 rendered characters (about 45–60ch in most fonts); tracking −0.04em to 0, by face; display 500–800, body 400–500. |
+| Layout **recommended** | Max width 1440px; large scene plus asymmetrical text; proof and qualifications enter below. Required: the first scene never fills the viewport alone; the top of the next section, or a scene element cut by the fold, shows at the bottom edge at 1440×900 and 390×844 (HR-05), so the opening never reads as the whole page. Desktop section padding 88–144px, mobile 52–80px. Density: open → dense → quiet → active → short. |
 | Color/material | Editorial warm or cool field matched to product; image contrast scrim only when needed. |
 | Product artifact | An original or licensed scene must identify a product property through its caption; a descriptive still remains usable. |
-| Sections | World/ambition → concrete offering → object/task evidence → terms → action. Delete first: mood-only imagery with no product link. |
-| Mobile | crop for legibility, reposition action outside image, provide static poster and text alternative. |
+| Sections | World/ambition, with the next section visible below it → concrete offering → object/task evidence → real proof, only when it exists → terms and cost → final action with the primary label. Delete first: mood-only imagery with no product link. |
+| Mobile | crop for legibility, reposition action outside image, keep the next section peeking below the scene, provide static poster and text alternative. |
 | Evidence | Mercury's landscape/desk opening and Nori's product-scale robot hero; media limits recorded (desktop 2026-10-18/19). All scale, grid, spacing, and timing values are recommendations. |
 
 | Motion contract | Trigger → state/purpose → static fallback → **recommended** timing |

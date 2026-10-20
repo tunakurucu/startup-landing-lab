@@ -117,15 +117,15 @@ function CriteriaBoard({round}:{round:Round}){
   </figure>
 }
 
-export function Evals(){
+/** Everything below the evals page's heading. The heading itself renders from the main chunk (main.tsx) while the run files load. */
+export function EvalsBody(){
   const lost=pair(round1,'queue'),lostAfter=pair(round2,'queue');
   const honesty=critSum(round2,'honesty'),craft=critSum(round2,'craft');
   const margins=(r:Round)=>r.pairs.map(p=>p.withTotal-p.withoutTotal);
-  return <section className="section evals-page">
-    <p className="eyebrow">THE SKILL, TESTED / BLIND A/B / OCTOBER 19, 2026</p>
-    <h1>Does it work?<br/><i>Better, not yet proven.</i></h1>
-    <p className="page-intro">In blind side-by-side grading, the page built with the skill was preferred for {word(wins(round1))} of {word(round1.pairs.length)} briefs in round 1 and, after fixes, for {word(wins(round2))} of {word(round2.pairs.length)} in round 2, including a holdout brief neither side had seen. That is {word(pairCount)} graded pairs; builders and graders were AI agents from one model family, and every grader rated its confidence {list(confidences)}. Read it as an early signal, not a general performance claim.</p>
-    <a className="text-link" href={repo+'/blob/main/evals/run.md'}>Read the full run log ↗</a>
+  return <>
+    <p className="page-intro">In blind side-by-side grading, the page built with the skill was preferred for {word(wins(round1))} of {word(round1.pairs.length)} briefs in round 1 and, after fixes, for {word(wins(round2))} of {word(round2.pairs.length)} in round 2, including a holdout brief neither side had seen.</p>
+    <p className="page-intro intro-caveat">That is {word(pairCount)} graded pairs; builders and graders were AI agents from one model family, and every grader rated its confidence {list(confidences)}. Read it as an early signal, not a general performance claim.</p>
+    <a className="button outline" href={repo+'/blob/main/evals/run.md'}>Read the full run log <span>↗</span></a>
     <div className="detail-meta">{rounds.map(r=><span key={r.n}>ROUND {r.n} / {wins(r)} OF {r.pairs.length} PREFERRED</span>)}<span>{pairCount} BLIND PAIRS / {CRITERIA.length} CRITERIA</span><span>ONE MODEL FAMILY / {list(confidences).toUpperCase()} CONFIDENCE</span></div>
 
     <section className="detail-split">
@@ -206,5 +206,5 @@ export function Evals(){
         </ul>
       </div>
     </section>
-  </section>
+  </>
 }

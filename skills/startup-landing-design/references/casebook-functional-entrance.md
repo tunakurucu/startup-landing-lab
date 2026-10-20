@@ -1,5 +1,41 @@
 # Casebook: functional-entrance
 
+## Pitch · functional-entrance
+
+https://pitch.com · desktop-mobile-audit · **reference tier**
+
+A 180px headline over a purple scene of blurred slide templates, with an AI prompt box directly beneath it as the first action.
+
+Observed: A lavender announcement bar ('Pitch's MCP & API are here') sits over a saturated purple scene of blurred, scattered slide-template thumbnails. The h1 fills the centre in two huge white lines. Directly under it is a white prompt box pre-filled 'Generate a sales presentation for a digital marketplace' with '+', 'Prompts' and a pale 'Generate' button, then a two-line subhead. Nav: logo, five items, white 'Log in' pill and lime 'Sign up'; the desktop hero has no separate signup button. Operated: the 'Creative agencies' tab in Solutions. The underline moved from 'Software companies', the heading changed from 'Ramp your sales engine' to 'Win more pitches' with agency copy, and the image slot was blank about 2 s later. On scroll the h1 left the hero while the prompt box stayed, nav links faded leaving Log in/Sign up pinned, and the full nav returned over purple sections. Fast scrolling produced long blank viewports. With reduced motion a viewport about 3,600px down was still blank across two captures; the measurement found no reduced-motion rule.
+
+Copy: H1: 'Create slides that win.' Subhead: 'From prompt to presentation, 4M+ teams create and deliver winning slides together in Pitch.' The desktop hero's action is the prompt box's 'Generate'; the nav and mobile hero use 'Sign up' / 'Sign up for free' and 'Get a demo'. The page title and a section head call it a 'presentation workspace'; the audience is 'teams' and, in Solutions, software companies, creative agencies, leading brands and freelance designers.
+
+Transfer: If the product starts from a prompt, put the input directly under the headline so the first action is using the product rather than signing up. One oversized, tightly leaded headline can carry brand identity on its own if it stays at four or five words that still fit a phone screen. Introduce audience tabs after the general tour, once visitors know what the product does, so each segment sees tailored proof without a fork at the top.
+
+Avoid/limit: Scroll-gated reveals leave blank screens on fast scrolling and stayed blank under reduced motion, with no reduced-motion rule found. Light text on lavender loses contrast. Desktop leads with 'Generate' while mobile leads with signup buttons and an empty-looking prompt panel, so the first action differs by breakpoint. The page is long (about 14,350px at 1440).
+
+Measured 2026-10-20: desktop h1 180px, weight 700, tracking -0.04em; body 18px; 11 sections; phone h1 82px.
+
+On phones: The h1 drops to 82px and breaks into three centred lines. In the measurement capture the prompt box is an empty frosted panel, and two buttons, 'Sign up for free' and lime 'Get a demo', appear in the hero instead. The nav becomes logo plus a round menu button. Feature rows stack image over text; stats sit in two columns; testimonials and Solutions tabs run off the right edge as sideways rows; toolkit cards stack.
+
+## Retool · functional-entrance
+
+https://retool.com · desktop-mobile-audit · **reference tier**
+
+A prompt box, not a screenshot, is the hero's centrepiece: the page asks visitors to describe an app, then spends most of its length on governance and enterprise proof.
+
+Observed: A gradient announcement bar and a dark nav sit above a rounded blue-to-rust gradient panel, with tilted, dimmed dashboard screenshots behind the content. Centred in the panel: a light-weight h1, a 'NEW: Explore the new Retool app builder for free' pill, and a large cream prompt box (placeholder 'Write a prompt, use @ to include data', 'Starter prompts', submit arrow). Under the box are two dropdowns, 'Import code' and 'Build with AI agents', with tool logos, and a 'Watch the film' pill. 'Starter prompts' did not open after two clicks, so I operated 'Import code': it opened an 'Import external React apps' panel with React App, Lovable and Replit tabs and an explanatory accordion. The prompt box then held 'Build a customer support queue'; other captures show other example prompts. On load the placeholder changed brightness between captures, and getAnimations() listed a text shimmer and a border pulse. On scroll the left heads stay pinned as media cards pass. With reduced motion only the shimmer was still listed.
+
+Copy: h1: 'Secure your vibe-coded apps'. There is no subhead sentence; the 'NEW' pill line ('Explore the new Retool app builder for free') stands in for one. The announcement bar promotes 'A unified harness to run and govern AI agents'. Nav primary: 'Start for free'. Nav secondary: 'Contact sales' ('Book a demo' on one load). The audience is framed as enterprises ('Why enterprises choose Retool'). The page title says 'Build internal software better, with AI.'
+
+Transfer: When the product starts from a sentence, make the input itself the hero object, with secondary entrances (import, agent integrations) beside it. Name the visitor's current problem in the headline ('vibe-coded apps') and let the section order answer it with data-access, governance and security proof. Walk through several capabilities with a pinned heading column and scrolling media cards, rather than a new section for each. Repeat the hero input at the close, so the last screen offers an action rather than a summary.
+
+Avoid/limit: The hero prompt produces nothing until sign-up, so it promises an interaction and then defers it. The h1 is four words, there is no subhead, and a promo pill sits beside it; 'internal software' appears in the page title but not on the first screen. Captures show large dark gaps where content had not rendered. The transparent fixed nav collides with body text, and copy and nav labels varied between loads.
+
+Measured 2026-10-20: desktop h1 72px, weight 300, tracking -0.022em; body 16px; 7 sections; phone h1 40px.
+
+On phones: The hero keeps its order in a narrower rounded panel: a two-line 40px h1, the pill, a prompt box showing a typed example, and dropdowns shortened to 'Import' and 'Build'. A two-row logo grid follows (Amazon, Taco Bell, Conagra, EA, Lyft, Quest, Boeing, Adobe). The app gallery becomes a horizontal strip. The pinned split becomes stacked items, each with its media card above the copy. The nav shrinks to the wordmark, 'Contact sales' and a menu button.
+
 ## Firecrawl · functional-entrance
 
 https://www.firecrawl.dev · desktop-audit

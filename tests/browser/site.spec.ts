@@ -1,8 +1,9 @@
 import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import {mkdirSync,writeFileSync,readFileSync} from 'node:fs';
-const SITES=JSON.parse(readFileSync('research/sites.json','utf8')) as {yc_status:string;archetype:string}[];
-const N=SITES.length, YC=SITES.filter(s=>s.yc_status==='verified-yc').length, WT=SITES.filter(s=>s.archetype==='workflow-theater').length;
+const SITES=JSON.parse(readFileSync('research/sites.json','utf8')) as {yc_status:string;archetype:string;tier?:string}[];
+// The "Company evidence" filter puts each record in one class: reference-tier records are "Reference tier" even when they are also verified YC.
+const N=SITES.length, YC=SITES.filter(s=>s.yc_status==='verified-yc'&&s.tier!=='reference').length, WT=SITES.filter(s=>s.archetype==='workflow-theater').length;
 // Twelve committed screenshots: six routes at desktop and phone width. Every route is still tested at all three sizes.
 const SHOT_ROUTES=new Set(['/','/references','/skill','/demo/relayline','/demo/sidequest','/demo/ledger']);
 const routes=['/','/references','/skill','/demos','/evals','/reference/resend','/reference/lightsprint','/reference/palette','/reference/sherpa','/reference/nori','/reference/cyclon','/reference/airweave','/reference/normal','/reference/answerthis','/reference/pingo','/reference/cactus','/reference/interfere','/reference/toothy','/reference/canary','/reference/snag','/reference/elyra','/demo/relayline','/demo/sidequest','/demo/ledger'];

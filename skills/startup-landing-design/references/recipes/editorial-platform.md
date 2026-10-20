@@ -6,17 +6,19 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 
 **Observed** across 211 measured startup homepages (2026-10-19): desktop h1 median 64px (middle half 54–76px, 90th percentile 96px), weight 500, tracking −0.025em; h1 about 3.7× the body size; body 17px at about 58 characters per line; phone h1 about 0.57× desktop (median 38px); two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.
 
+**Observed in this family** (14 audited sites, 13 of them reference tier, measured 2026-10-19/20: AnswerThis, Deel, ElevenLabs, Figma, Harvey, Mintlify, Modal, Notion, Runway, Tailscale, Vanta, Vercel, Webflow, Whimsical): desktop h1 median 60px at weight 400 and −0.012em; body 16.0px at about 49 characters per line; 5 sections; phone h1 38px; 2 of 14 on a dark ground.
+
 | Decision | Recipe |
 | --- | --- |
 | Fit | Broad platform with distinct buyer decisions. Wrong for narrow one-feature startup; wrong for product with no evidence beyond a waitlist. |
 | Hero A | A typographic thesis sits beside an indexed buyer path; each path links to a distinct workflow. |
 | Hero B | Audience chapters begin above the fold; the selected chapter previews one real integration or process. |
 | Type | Serif display signals breadth; sans body supports scanning; mono only for references. |
-| Scale **recommended** | H1 `clamp(4rem, 7vw, 6.5rem)` / 0.94–1.08 line-height; body 17–19px / 1.5; measure 56–72ch; tracking -0.04em to -0.015em; display 500–800, body 400–500. |
+| Scale **recommended** | H1 `clamp(2.5rem, 1.25rem + 5.56vw, 6.25rem)` (about 42px on a 390px phone, 100px at 1440) / 1.0–1.1 line-height; body 17–19px / 1.5; measure 55–75 rendered characters (about 45–60ch in most fonts); tracking −0.04em to 0, by face; display 500–800, body 400–500. |
 | Layout **recommended** | Max width 1360px; asymmetric introduction; pathway grid changes width and density by topic. Desktop section padding 88–144px, mobile 52–80px. Density: open → dense → quiet → active → short. |
 | Color/material | Large calm fields and section-specific accent; use rules and typographic hierarchy before cards. |
 | Product artifact | A path chooser swaps a concrete workflow and preserves an ordinary link to the full explanation. |
-| Sections | Promise → buyer paths → selected path artifact → integration/trust → action. Delete first: a complete-product inventory before the buyer paths. |
+| Sections | Promise → real proof, only when it exists (recognizable, attributed customers) → buyer paths → selected path artifact → integration and trust detail → pricing or cost per path → final action with the primary label. Delete first: a complete-product inventory before the buyer paths. |
 | Mobile | path list becomes native disclosure or stacked links; selected artifact fills width. |
 | Evidence | Stripe's product menu grouped capabilities; AnswerThis's Features menu exposed research stages (desktop 2026-10-18/19). All scale, grid, spacing, and timing values are recommendations. |
 

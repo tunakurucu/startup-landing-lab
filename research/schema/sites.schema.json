@@ -146,6 +146,10 @@
           "mobile": {
             "type": "string",
             "minLength": 1
+          },
+          "copy": {
+            "type": "string",
+            "description": "The h1 (quoted if 15 words or fewer), the subhead gist, the primary button label and how the page names its category or audience."
           }
         }
       },
@@ -495,6 +499,12 @@
           "string",
           "null"
         ]
+      },
+      "tier": {
+        "enum": [
+          "reference"
+        ],
+        "description": "Reference tier: recognised for design quality, audited as a benchmark rather than as a cohort sample."
       }
     },
     "allOf": [

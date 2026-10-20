@@ -33,4 +33,19 @@ The v0.3 skill was compared rule by rule with the repositories above (cloned 202
 
 ## The 100 checks
 
-`skills/startup-landing-design/assets/checks.json` (generated from `scripts/checks_source.py`) lists each check with a `credit` field naming where the idea appears: IMP Impeccable (Apache-2.0), GST gstack (MIT), EK Emil Kowalski's skills (MIT), VWG Vercel Web Interface Guidelines (MIT), MP Matt Pocock's skills (MIT), AFD Anthropic frontend-design and ASC Anthropic skill-creator (Apache-2.0), JK Jakub Krehel's skills (MIT), MT Meng To's skills (MIT), SLL this project's own research. A credit records inspiration; the wording, thresholds and code are this project's. Thresholds that differ from a source (for example a 1.25× hierarchy ratio) are this project's choices.
+`skills/startup-landing-design/assets/checks.json` (generated from `scripts/checks_source.py`) lists each check with a `credit` field naming where the idea appears; the keys (skills, research groups, standards and authors) are defined at the top of `skills/startup-landing-design/references/checklist.md`. A credit records inspiration; the wording, thresholds and code are this project's. Thresholds that differ from a source (for example a 1.25× hierarchy ratio) are this project's choices.
+
+## v0.4 additions
+
+Ideas adapted in v0.4, all rewritten in our own words, with no prose, rule names or code copied. Licences were read from each repository's LICENSE file on 2026-10-19 or 2026-10-20.
+
+| Source | Licence | Adapted idea |
+| --- | --- | --- |
+| [Corey Haines, marketingskills](https://github.com/coreyhaines31/marketingskills) | MIT | Copy gate applied to every heading; structural tells of generated copy; title order for an unknown brand. The project credits Profound's skills-marketing-library for its tell list. |
+| [Leonxlnx, taste-skill](https://github.com/Leonxlnx/taste-skill) | MIT | Hero scores capped by measured failures (enforced by `verify-record.mjs`); fix order from idea to motion |
+| [agiwhitelist, auteur](https://github.com/agiwhitelist/auteur) | MIT | Name and avoid both the category default and the anti-default; house-style pass against earlier builds |
+| [ibelick, ui-skills](https://github.com/ibelick/ui-skills) | MIT | Metadata and share-card contract (PF-06, PF-07) |
+| [Wondel.ai, skills](https://github.com/wondelai/skills) | MIT | Positioning inputs before the promise, after April Dunford's method |
+
+Research sources (articles, studies, standards and talks) are cited where they are used: `references/copy-and-positioning.md`, `references/page-structure.md`, `references/audit-lens.md`, `references/frameworks.md`, `references/motion-and-responsive.md` and `references/composition-and-type.md`. Ideas are not copyrightable; we cite them so readers can check the evidence. Short quotations, where they appear, are attributed. The `credit` field on each of the 100 checks names where its idea appears; the keys are defined at the top of `references/checklist.md`.
+

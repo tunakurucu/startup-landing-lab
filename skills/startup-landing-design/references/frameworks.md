@@ -8,7 +8,7 @@ Load this when the page lives in an existing codebase or site builder. The desig
 - **First screen in the HTML.** The h1, promise, primary action and LCP element arrive in the server response, not from JavaScript. Script-managed content delays LCP; the LCP image must be in the HTML and never lazy-loaded [38]. Prove it: `curl -s <url> | grep -o '<h1[^>]*>[^<]*'` prints the headline.
 - **Self-host fonts** as WOFF2 with `font-display: swap` [39][40]. The checker reads `@font-face` rules, from disk if it has to; only a font stylesheet on another origin leaves PF-03 `not_run`.
 - **Reduced motion has two layers:** a `prefers-reduced-motion: reduce` rule [41] and the animation library's own setting. MO-01 tests both.
-- **Check the production build over HTTP, never the dev server.** Dev tooling and unbundled code (Next.js shows a dev indicator by default [9]) pollute AX-09, PF-04 and screenshots. Start it in the background, poll until `curl -sf <url>` succeeds, run the scripts, stop it. A page delivered from disk is checked from disk.
+- **Check the production build over HTTP, never the dev server.** Dev tooling and unbundled code (Next.js shows a dev indicator by default [9]) pollute AX-07, PF-04, PF-05 and screenshots. Start it in the background, poll until `curl -sf <url>` succeeds, run the scripts, stop it. A page delivered from disk is checked from disk.
 
 | Stack | Build and serve, then check `http://localhost:<port>/` |
 |---|---|
@@ -72,7 +72,7 @@ Restyle through its semantic token pairs (`--background`, `--primary`, `--muted`
 
 - **Problem:** the template's `index.html` holds an empty `<div id="root">` [31], so headline and LCP appear only after the bundle runs, hurting LCP [38] and previews from bots that read only HTML [3].
 - **Fix:** prerender. React Router framework mode with `prerender` and `ssr: false` emits HTML for listed paths and a SPA fallback for the rest [32]; plain SPA mode prerenders only the root route [33]. Without a framework, see Vite's prerendering notes [30].
-- **Routing:** history routing needs the host to send unknown URLs to `index.html` [33]; prerendered paths are real files. `HashRouter` keeps the route in the hash, which the server never sees [34], and competes with in-page `#section` anchors (AX-10, LY-08). Prefer history routing plus prerendering; use hash routing only on a host without rewrites and a page without anchor links.
+- **Routing:** history routing needs the host to send unknown URLs to `index.html` [33]; prerendered paths are real files. `HashRouter` keeps the route in the hash, which the server never sees [34], and competes with in-page `#section` anchors (AX-08, LY-06). Prefer history routing plus prerendering; use hash routing only on a host without rewrites and a page without anchor links.
 - **Fonts:** Fontsource variable packages (`@fontsource-variable/<family>`), imported once; `swap` by default [35][36].
 - **Traps:** the template's system-ui stack, purple accent and "Vite + React + TS" title [31].
 

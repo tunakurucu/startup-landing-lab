@@ -23,7 +23,20 @@ Public repo: `tunakurucu/startup-landing-lab`. Live gallery: https://tunakurucu.
 
 Browser suite: 85 tests, green locally on repeated runs and in CI.
 
-## v0.3 (on main, not yet tagged)
+## v0.4 (on main after 2026-10-20)
+
+| What | Where |
+| --- | --- |
+| Three modes: Build, Revise (with `compare-checks.mjs`) and Audit (`assets/audit-report.md`, `references/audit-lens.md`) | `SKILL.md` |
+| The 100 checks revised: 68 automatic. New groups for copy and positioning (CP) and structure and conversion (ST); Core Web Vitals, focus contrast, WCAG text spacing, share-card metadata, false urgency; corrected reduced-motion, target-size and line-length rules | `scripts/checks_source.py`, `scripts/check-page.mjs`, `references/checklist.md` |
+| New references: copy and positioning, page structure (evidence-graded), audit lens (YC, operators, psychology), framework adapters, observed type | `references/` |
+| Reference tier: 42 sites chosen for their design, audited at desktop and phone, measured separately (`research/measurements-reference.jsonl`), listed first in each casebook family | `research/sites.json` (`tier: reference`) |
+| Five more skills credited (marketingskills, taste-skill, auteur, ui-skills, wondelai) and the research sources behind the copy, structure and audit rules | `README.md`, `docs/attribution.md` |
+| Round-3 eval kit: 12 new briefs, a redesign fixture, a Next.js fixture, three grader personas, pre-registered sign test | `evals/round3/` |
+
+Regenerate after editing data: `python3 scripts/generate.py && python3 scripts/checks_source.py && python3 scripts/summarize_measurements.py && python3 scripts/summarize_type.py`.
+
+## v0.3 (tagged v0.3.0)
 
 | Commit | What it added |
 | --- | --- |
@@ -58,7 +71,7 @@ npx playwright install chromium && npm run test:browser
 # regenerate derived files after editing research/sites.json or scripts/checks_source.py
 python3 scripts/generate.py && python3 scripts/checks_source.py
 # measure homepages (numbers only): node scripts/measure.mjs list.json out.jsonl [--shots dir]
-# after appending to research/measurements.jsonl: python3 scripts/summarize_measurements.py
+# after appending to research/measurements.jsonl: python3 scripts/summarize_measurements.py && python3 scripts/summarize_type.py
 ```
 
 Rules that have held since v0.1: never push a red `main`; one commit per block; no fabricated observations, scores or client runs; no third-party assets or screenshots; recipe numbers stay labelled *recommended* until a measurement pass makes them *observed*.

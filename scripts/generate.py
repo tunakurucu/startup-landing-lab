@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sites=json.loads((ROOT/'research/sites.json').read_text())
 for s in sites:
- text=f"# {s['name']}\n\nInspected: {s['inspected_on']} · {s['coverage']} · {s['archetype']}\n\n{s['url']}\n\n{s['summary']}\n\n## Company evidence\n\nYC: {s['yc_status']}; batch: {s['batch'] or 'not verified'}.\n\n"
+ text=f"# {s['name']}\n\nInspected: {s['inspected_on']} · {s['coverage']} · {s['archetype']}\n\n{s['url']}\n\n{s['summary']}\n\n## Company evidence\n\nYC: {s['yc_status']}; batch: {s['batch'] or 'not verified'}."+(" Reference tier: recognised for design quality and audited as a benchmark, not as part of the cohort sample." if s.get('tier')=='reference' else '')+"\n\n"
  text+='\n'.join(f'- {k}: {v}' for k,v in s['viewports'].items())+'\n\n## Observations\n\n'
  text+='\n\n'.join(f"### {k.replace('_',' ').title()}\n\n{v}" for k,v in s['observations'].items())
  m=s.get('measurements')
@@ -18,9 +18,9 @@ for s in sites:
  text+='\n\n## Limitations\n\n'+'\n'.join('- '+x for x in s['limitations'])
  text+='\n\n## Sources\n\n'+'\n'.join('- '+x for x in dict.fromkeys(s['sources']))+'\n'
  (ROOT/f"research/audits/{s['id']}.md").write_text(text)
-case='# Dated reference casebook\n\nGenerated from research/sites.json. Each entry carries its inspection date. Records marked desktop-mobile-audit (October 19, 2026) were rendered at 1440 and 390 px, scrolled, had one control operated and a reduced-motion load, and carry computed-style measurements; older records are desktop observations, and partial-desktop entries are selected-region notes. Exact typefaces, timings and libraries are not claimed. These describe what the pages did on that date, not what converts.\n\n'
-for s in sites:
- case+=f"## {s['name']} · {s['archetype']}\n\n{s['url']} · {s['coverage']}\n\n{s['summary']}\n\nObserved: {s['observations']['hero']} {s['observations']['interaction']}\n\nTransfer: {' '.join(s['interpretation']['principles'])}\n\nAvoid/limit: {s['interpretation']['risks']}\n\n"
+case='# Dated reference casebook\n\nGenerated from research/sites.json. Each entry carries its inspection date. Records marked desktop-mobile-audit (October 19, 2026) were rendered at 1440 and 390 px, scrolled, had one control operated and a reduced-motion load, and carry computed-style measurements; older records are desktop observations, and partial-desktop entries are selected-region notes. Exact typefaces, timings and libraries are not claimed. These describe what the pages did on that date, not what converts.\n\nEntries marked **reference tier** come from companies recognised for the design of their sites (October 20, 2026 audits); they are listed first in each family. The other entries are a sample of 2026 YC, a16z and Pear companies and earlier field notes, which show what typical startups ship.\n\n'
+for s in sorted(sites, key=lambda s: s.get('tier')!='reference'):
+ case+=f"## {s['name']} · {s['archetype']}\n\n{s['url']} · {s['coverage']}"+(' · **reference tier**' if s.get('tier')=='reference' else '')+f"\n\n{s['summary']}\n\nObserved: {s['observations']['hero']} {s['observations']['interaction']}\n\n"+(f"Copy: {s['observations']['copy']}\n\n" if s['observations'].get('copy') else '')+f"Transfer: {' '.join(s['interpretation']['principles'])}\n\nAvoid/limit: {s['interpretation']['risks']}\n\n"
  m=s.get('measurements')
  if m:
   d=m['desktop']; mo=m.get('mobile') or {}

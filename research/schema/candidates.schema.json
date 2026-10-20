@@ -142,6 +142,12 @@
           "null"
         ],
         "description": "URL of third-party design praise, if any. A selection lead, not evidence."
+      },
+      "tier": {
+        "enum": [
+          "reference"
+        ],
+        "description": "Reference tier: recognised for design quality, audited as a benchmark rather than as a cohort sample."
       }
     },
     "allOf": [

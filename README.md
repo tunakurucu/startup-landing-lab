@@ -1,6 +1,6 @@
 # Startup Landing Lab
 
-**Great design skills already exist. This one takes the best rules from eight of them, adds dated research on real startup sites, and turns it into 100 checks built for one job: startup landing pages.**
+**Great design skills already exist. This one takes the best rules from thirteen of them, adds what YC partners, operators and web research say a startup homepage must do, grounds it in dated measurements of real startup sites, and turns it into 100 checks built for one job: startup landing pages. It can build a page, change one part of it, or audit the one you already have.**
 
 AI-built landing pages keep coming out the same: centred headline, framed screenshot, three adjective cards, a gradient blob. Good general design skills help, but none of them is about the specific decisions a startup homepage has to make. This skill takes the rules that hold up from the skills listed below, specialises them for landing pages, and grounds them in pages from YC, a16z speedrun and Pear companies that were opened, measured and dated.
 
@@ -22,6 +22,13 @@ Every rule here is rewritten in this project's own words and credited to where t
 | [Anthropic skills](https://github.com/anthropics/skills) (frontend-design, skill-creator) | Anthropic | Apache-2.0 | The list of current generated-design defaults; evals run with and without the skill |
 | [Jakub Krehel's skills](https://github.com/jakubkrehel/skills) (better-typography, better-layout, variant) | Jakub Krehel | MIT | Type floors (no light weights at small sizes, unitless line-height, `text-wrap`, tabular figures), grouping by space, hero variants that differ on one named axis |
 | [Meng To's skills](https://github.com/MengTo/skills) (no-ai-design-slop, audit-reference-originality) | Meng To | MIT | The removal pass (every decorative element names its job or goes) and a category-by-category originality check against references |
+| [marketingskills](https://github.com/coreyhaines31/marketingskills) (copywriting, product-marketing) | Corey Haines | MIT | A line-by-line copy gate, structural tells of generated copy, and a title that leads with category for an unknown brand |
+| [taste-skill](https://github.com/Leonxlnx/taste-skill) (critique) | Leonxlnx | MIT | Scores capped by measured failures, and a fixed order for fixes |
+| [auteur](https://github.com/agiwhitelist/auteur) | agiwhitelist | MIT | Name the category default and the obvious anti-default and avoid both; compare against your own past builds |
+| [ui-skills](https://github.com/ibelick/ui-skills) (fixing-metadata) | Julien Thibeaut | MIT | The share-card and metadata contract |
+| [wondelai skills](https://github.com/wondelai/skills) (obviously-awesome) | Wondel.ai | MIT | Positioning inputs before the promise, after April Dunford |
+
+Beyond skills, the copy, structure and audit rules draw on Paul Graham and Y Combinator's partners, April Dunford, Julian Shapiro, Harry Dry, Copyhackers, Jason Cohen, Patrick McKenzie, Peep Laja, Nielsen Norman Group, WCAG 2.2, web.dev and peer-reviewed research on first impressions and credibility. Each reference file lists its sources.
 
 What this project adds: a dated casebook of real startup homepages with measured type, layout and motion; seven archetype recipes; a decision record that maps each visitor doubt to a product artifact; two hero variants scored before any code; and a script that refuses to call the page done until all 100 checks are answered.
 
@@ -29,20 +36,28 @@ What this project adds: a dated casebook of real startup homepages with measured
 
 | Group | Checks | Examples |
 | --- | --- | --- |
-| Product and story | 10 | A stranger can say what it does in five seconds; each visitor doubt has an artifact |
-| Hero | 7 | Headline and action above the fold at 1440 and 390; no "Get started" alone |
-| Type | 13 | Hierarchy ratio, tracking floor, 11px minimum, measure, overused faces |
-| Layout and rhythm | 10 | No overflow at 390 or 320, no clipped text, no nested cards, spacing that changes |
-| Colour and surface | 7 | WCAG AA contrast, no gradient text or glows, no default cream-and-serif |
-| Template tells | 11 | No adjective card rows, icon tiles, kicker labels everywhere, buzzwords, filler grids |
-| Motion | 10 | Reduced motion hides nothing, no layout animation, written contracts |
-| Mobile and touch | 8 | 44px targets, zoom never disabled, working menu, 200% zoom |
-| Accessibility and interaction | 12 | Names, alt, focus visible, labels, no script errors, real links |
-| Performance and assets | 4 | Sized and lazy images, font-display, page weight |
-| Honesty and proof | 4 | No unsupplied logos, testimonials or unsourced numbers |
+| Product and story | 9 | A stranger can say what it does in five seconds; each visitor doubt has an artifact |
+| Copy and positioning | 11 | Headline beats the visitor's current alternative; no generic marketing phrases; a line that answers the biggest reason not to click |
+| Hero | 6 | Headline and action above the fold at 1440 and 390; the button names its outcome; no false floor |
+| Structure and conversion | 6 | Cost is findable; no covering pop-ups; short forms; install command and docs for developer tools |
+| Type | 10 | Hierarchy ratio, tracking floor, 11px minimum, measure, overused faces |
+| Layout | 7 | No overflow at 390 or 320, no clipped text, no nested cards, nothing hidden under a sticky header |
+| Colour | 4 | WCAG AA contrast, no gradient text or glows, a ground chosen for the product |
+| Template tells | 6 | No adjective card rows or icon tiles; the logo-swap test; nothing copied from references |
+| Motion | 8 | Reduced motion removes movement and hides nothing; nothing moves by itself without a pause |
+| Mobile and input | 6 | 44px primary targets, WCAG 2.5.8 target size, zoom never disabled, a working menu |
+| Accessibility | 11 | Names, alt, a focus ring with real contrast, labels, no script errors, text spacing survives |
+| Performance and metadata | 7 | Hero never lazy-loaded, layout shift, lab LCP, title, description and share card |
+| Honesty and proof | 5 | No unsupplied logos or testimonials, no unsourced numbers, no fake urgency |
 | Process | 4 | Screenshots opened, one structural revision, `verify-record` passes |
 
-64 are checked automatically by [`check-page.mjs`](skills/startup-landing-design/scripts/check-page.mjs). The other 36 need eyes, so the agent answers them in its decision record, and [`verify-record.mjs`](skills/startup-landing-design/scripts/verify-record.mjs) will not let it finish while any are open. This site runs the same 64 checks on every page in CI.
+68 are checked automatically by [`check-page.mjs`](skills/startup-landing-design/scripts/check-page.mjs). The other 32 need eyes, so the agent answers them in its decision record, and [`verify-record.mjs`](skills/startup-landing-design/scripts/verify-record.mjs) will not let it finish while any are open. This site runs the same automatic checks on every page in CI.
+
+## Audit your own homepage
+
+Point an agent with the skill at your site and ask for an audit. It reads your repo and docs first, renders the page at three widths, runs the automatic checks, and answers the [audit lens](skills/startup-landing-design/references/audit-lens.md): the questions YC partners, operators and web research say a startup homepage has to answer. You get `AUDIT.md`: findings ordered by harm, each phrased as "if you change X, visitors can Y, because Z", the three changes that matter most, and what to keep. It changes nothing on your site.
+
+> Use startup-landing-design to audit our homepage at https://example.com. We are pre-launch and selling to small finance teams.
 
 ## Install
 
@@ -80,7 +95,7 @@ The workflow: understand the product → select reference principles → compare
 | [Sidequest](https://tunakurucu.github.io/startup-landing-lab/#/demo/sidequest) | Playful creative ritual | Bricolage Grotesque, Instrument Serif italic | Deal an original three-part brief; keep it as a text file |
 | [Fieldwork](https://tunakurucu.github.io/startup-landing-lab/#/demo/ledger) | Editorial operations | Instrument Serif, IBM Plex Sans | Compare structured and informal handoffs; export the working brief |
 
-All three pass the skill's 64 automatic checks with no block failures (five warnings are kept on purpose, each with its reason), use self-hosted open-licence type, and carry motion written as contracts — trigger, purpose, fallback, duration — that reduced-motion removes without hiding anything. Fictional brands, original code and copy, no fabricated customers, figures or testimonials. [Design decisions, motion contracts and an honest diversity review](docs/demo-decisions.md).
+All three pass the skill's automatic checks with no block failures (a few warnings are kept on purpose, each with its reason), use self-hosted open-licence type, and carry motion written as contracts — trigger, purpose, fallback, duration — that reduced-motion removes without hiding anything. Fictional brands, original code and copy, no fabricated customers, figures or testimonials. [Design decisions, motion contracts and an honest diversity review](docs/demo-decisions.md).
 
 ![Relayline at desktop width: the trace explorer is the hero](docs/screenshots/demo-relayline-1440.png)
 
@@ -127,7 +142,7 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-The browser suite covers every route at 1440/768/390 with axe, the skill's 64 automatic checks on eight routes, each motion contract with and without reduced motion, 320 px stress, filters, navigation, demo controls and downloads. See [the evaluation](docs/evaluation.md) for what actually ran and what did not. [Architecture](docs/architecture.md) explains the single-source data flow and hash routing for Pages.
+The browser suite covers every route at 1440/768/390 with axe, the skill's 68 automatic checks on nine routes, each motion contract with and without reduced motion, 320 px stress, filters, navigation, demo controls and downloads. See [the evaluation](docs/evaluation.md) for what actually ran and what did not. [Architecture](docs/architecture.md) explains the single-source data flow and hash routing for Pages.
 
 ## Help improve it
 

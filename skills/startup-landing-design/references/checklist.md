@@ -1,37 +1,62 @@
 # The 100 checks
 
-Generated from `assets/checks.json`. **64 auto** checks are decided by `scripts/check-page.mjs`; **12 screenshot**, **6 code** and **18 record** checks are answered in the `## Checklist` section of `DESIGN-RECORD.md`, one line each: `ID | pass, fail or n/a | evidence`. `scripts/verify-record.mjs` refuses to finish while any of them is unanswered.
+Generated from `assets/checks.json`. **68 auto** checks are decided by `scripts/check-page.mjs`; **14 screenshot**, **3 code** and **15 record** checks are answered in the `## Checklist` section of `DESIGN-RECORD.md`, one line each: `ID | pass, fail or n/a | evidence`. `scripts/verify-record.mjs` refuses to finish while any of them is unanswered.
 
 **block** = fix before calling the page done, or end with DONE_WITH_CONCERNS. **warn** = fix, or record the product reason it stays.
 
-Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry Tan); **EK** Emil Kowalski's skills; **VWG** Vercel Web Interface Guidelines; **MP** Matt Pocock's skills; **AFD** Anthropic frontend-design; **ASC** Anthropic skill-creator; **JK** Jakub Krehel's interface skills; **MT** Meng To's design skills; **SLL** Startup Landing Lab research. Every rule is written in this project's own words; see `docs/attribution.md` in the repository for links and licences.
+Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry Tan); **EK** Emil Kowalski's skills; **VWG** Vercel Web Interface Guidelines; **MP** Matt Pocock's skills; **AFD** Anthropic frontend-design; **ASC** Anthropic skill-creator; **JK** Jakub Krehel's interface skills; **MT** Meng To's design skills; **SLL** Startup Landing Lab research; **NNG** Nielsen Norman Group research (nngroup.com); **WCAG** W3C Web Content Accessibility Guidelines 2.2; **WEB** web.dev (Core Web Vitals, LCP, fonts); **APL** Apple Human Interface Guidelines; **JS** Julian Shapiro, growth handbook (julian.com); **HD** Harry Dry, Marketing Examples; **AD** April Dunford, positioning; **CH** Copyhackers / Joanna Wiebe; **PG** Paul Graham essays; **YC** Y Combinator advice; **37S** 37signals; **SWC** Stanford Web Credibility Research; **UB** Unbounce conversion benchmark report (2024); **WPAI** Wikipedia, "Signs of AI writing"; **CHN** Corey Haines, marketingskills (MIT); **AUT** auteur skill (MIT); **UI** ibelick ui-skills, fixing-metadata (MIT); **EM** Evil Martians, study of 100 developer-tool landing pages; **CXL** CXL Institute social-proof research; **SO** Stack Overflow Developer Survey 2025; **HS** HockeyStack B2B SaaS benchmark; **HUB** HubSpot landing-page form research; **BAY** Baymard Institute; **GOOG** Google Search guidance on intrusive interstitials; **FTC** US Federal Trade Commission rule on fake reviews and testimonials (2024); **MATH** Mathur et al. 2019, dark patterns at scale. Every rule is written in this project's own words; see `docs/attribution.md` in the repository for links and licences.
 
 ## Product and story
 
 | ID | Check | Verify | Severity | Credit |
 | --- | --- | --- | --- | --- |
-| PS-01 | The first screen says who it is for, what changes for them and how, in plain words. | shot | block | SLL GST |
-| PS-02 | A stranger can say what the product does after five seconds on the first screen. | shot | block | GST |
-| PS-03 | The hero artifact is the product or its real output, not decoration. | shot | block | SLL |
+| PS-01 | The first screen says who it is for, what changes for them and how, in plain words. | shot | block | SLL GST NNG |
+| PS-02 | A stranger can say what the product does after five seconds on the first screen. | shot | block | GST NNG |
+| PS-03 | The hero artifact is the product or its real output, not decoration. | shot | block | SLL NNG |
 | PS-04 | Each of the visitor's first three doubts is answered by a specific artifact on the page. | record | block | SLL |
-| PS-05 | Every section tells the visitor something the sections above did not; repeated claims are cut. | record | warn | SLL GST |
-| PS-06 | There is one primary action, worded the same wherever it appears. | auto | warn | GST |
+| PS-05 | Every section tells the visitor something the sections above did not; repeated claims are cut. | shot | warn | SLL GST |
+| PS-06 | There is one primary action, worded the same wherever it appears. | auto | warn | GST NNG |
 | PS-07 | Questions to the user carried a recommended default; unanswered ones were assumed and logged. | record | warn | MP |
-| PS-08 | Two hero variants that differ on one named axis (structure, density, emphasis, type or voice) were compared and scored before any code. | record | block | SLL GST AFD JK |
-| PS-09 | Two references serve different jobs, one counterexample is named, and what is not borrowed is stated. | record | block | SLL |
-| PS-10 | The page starts from one archetype recipe and records where it departs from it. | record | warn | SLL |
+| PS-08 | Two hero variants that differ on one named axis (structure, density, emphasis, type or voice) were scored before code, and neither is the category's obvious default or the obvious "anti-default". | record | block | SLL GST AFD JK AUT |
+| PS-09 | Two references serve different jobs, one counterexample is named, what is not borrowed is stated, and departures from the chosen recipe are recorded. | record | block | SLL |
+
+## Copy and positioning
+
+| ID | Check | Verify | Severity | Credit |
+| --- | --- | --- | --- | --- |
+| CP-01 | The h1 has 3–12 words and says more than the product or company name. | auto | warn | JS HD NNG |
+| CP-02 | A subhead of one or two sentences, at most 40 words, follows the h1 and is visible without scrolling. | auto | warn | JS CH |
+| CP-03 | The first screen says what kind of thing the product is: a plain category noun or an "X for Y" frame. | shot | warn | AD PG YC |
+| CP-04 | The record names the visitor's current alternative (including doing nothing), the one advantage only this product has, the category frame, and who it is for and not for; the headline would be false or odd on the alternative's page. | record | block | AD HD CHN |
+| CP-05 | Every headline and section heading passes two of three tests: a reader can picture it, it could be proven false, it would not fit a named competitor's page unchanged. | record | warn | CHN |
+| CP-06 | The record lists at least three phrases in the target users' own words with their source, or says none exist yet; the hero uses or adapts one. | record | warn | CH HD |
+| CP-07 | The first screen contains none of the generic marketing phrases on the list (for example seamless, supercharge, unlock, unleash, streamline, effortless, all-in-one, next-gen, cutting-edge, revolutionize, "AI-powered", "not just X, it's Y", "say goodbye to"). | auto | warn | HD IMP GST WPAI |
+| CP-08 | No superlative (best, #1, leading, fastest, world's first, unmatched) appears unless its block also holds a source link or citation. | auto | warn | HD NNG SWC |
+| CP-09 | One line next to the primary action answers the biggest reason not to click: cost, card, time, setup or data. | shot | warn | HD CH JS 37S |
+| CP-10 | Section headings carry the argument on their own: reading only the headings explains the product. | shot | warn | NNG |
+| CP-11 | Body copy scores Flesch–Kincaid grade 9 or below, or the record gives the audience reason. | auto | warn | UB NNG |
 
 ## Hero
 
 | ID | Check | Verify | Severity | Credit |
 | --- | --- | --- | --- | --- |
-| HR-01 | The headline and primary action are visible without scrolling at 1440×900 and 390×844. | auto | block | GST |
-| HR-02 | A centred headline above a framed screenshot is used only with a product reason in the record. | shot | block | SLL AFD |
+| HR-01 | The headline and primary action are visible without scrolling at 1440×900 and 390×844. | auto | block | GST VWG NNG |
+| HR-02 | The primary action's label starts with a verb and names the outcome in 2–5 words; "Get started", "Learn more", "Start now" or "Try it now" alone fail. "Book a demo" and "Join the waitlist" pass. | auto | warn | IMP GST VWG NNG |
 | HR-03 | The headline has no single-word last line at any of the three widths. | shot | warn | IMP VWG JK |
 | HR-04 | A headline above about 6.5rem is the signature of the page and keeps each line to three words or fewer. | auto | warn | IMP SLL |
-| HR-05 | The primary action names what the visitor will do, not "Get started" or "Learn more" alone. | auto | warn | IMP GST VWG |
-| HR-06 | The hero is sized with svh/dvh or content, not a fixed 100vh that clips under mobile browser bars. | code | warn | EK |
-| HR-07 | Nothing in the hero waits for an animation before it can be read. | shot | block | SLL IMP |
+| HR-05 | The first screen is not a false floor: at 1440×900 and 390×844 some content below the hero, or a hero element cut by the fold, shows in the bottom 15% of the viewport. | auto | warn | NNG |
+| HR-06 | The hero is sized with svh/dvh or by its content, not a fixed 100vh that clips under mobile browser bars. | code | warn | EK |
+
+## Structure and conversion
+
+| ID | Check | Verify | Severity | Credit |
+| --- | --- | --- | --- | --- |
+| ST-01 | Cost is easy to find: a header or footer link to pricing or plans, or visible prices; otherwise the record says how cost is disclosed and why. | auto | warn | NNG SO HS |
+| ST-02 | Within 5 seconds at 390×844, no dialog or fixed overlay covers more than 30% of the viewport, except a legally required consent prompt named in the record. | auto | warn | GOOG NNG |
+| ST-03 | Clickable things look clickable: the primary action has a fill or a border with at least 3:1 contrast against its surroundings, and links inside paragraphs are underlined or differ from body text by at least 3:1. | auto | warn | NNG WCAG |
+| ST-04 | Real proof, when supplied, appears within the first two screenfuls or beside the claim it supports, and every quote carries name, role and company. | record | warn | EM CXL NNG |
+| ST-05 | The conversion form shows at most three fields before submit, no textarea and at most one select. | auto | warn | HUB BAY NNG |
+| ST-06 | For developer products, the first two screenfuls show an install command or code sample, and the header links to docs or a quickstart; other products are n/a. | auto | warn | SO EM |
 
 ## Type
 
@@ -40,43 +65,34 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | TY-01 | Exactly one h1. | auto | block | GST VWG |
 | TY-02 | Heading levels never skip (no h1 → h3). | auto | block | IMP VWG |
 | TY-03 | The h1 and the first h2 are each at least 1.25× the body size. | auto | block | IMP GST |
-| TY-04 | At least two font weights carry the hierarchy. | auto | block | IMP |
-| TY-05 | Headline letter-spacing is no tighter than −0.04em. | auto | block | IMP |
-| TY-06 | Text above 14px is not tracked wider than 0.12em, and no paragraph is set in all caps. | auto | warn | IMP |
-| TY-07 | Body text is at least 16px on phones. | auto | warn | GST IMP |
-| TY-08 | No readable text below 11px. | auto | block | IMP GST |
-| TY-09 | Body paragraphs stay under about 80 characters per line. | auto | warn | IMP AFD |
-| TY-10 | Body line-height is at least 1.35. | auto | warn | IMP |
-| TY-11 | Weights under 400 appear only at 28px and up; smaller text is 400 or heavier. | auto | warn | JK |
-| TY-12 | A display face that is everywhere (Inter, Space Grotesk, Fraunces, Roboto, Poppins, Montserrat) has a stated reason. | auto | warn | IMP GST |
-| TY-13 | Each face has a role (display, text, data); a family is not added just to have two. | record | warn | AFD SLL |
+| TY-04 | Headline letter-spacing is no tighter than −0.04em. | auto | block | IMP |
+| TY-05 | Body text is at least 16px on phones. | auto | warn | GST IMP |
+| TY-06 | No readable text below 11px. | auto | block | IMP GST |
+| TY-07 | Body paragraphs stay under about 80 rendered characters per line. | auto | warn | IMP AFD WCAG |
+| TY-08 | Body line-height is at least 1.35. | auto | warn | IMP |
+| TY-09 | Weights under 400 appear only at 28px and up; smaller text is 400 or heavier. | auto | warn | JK |
+| TY-10 | A display face that is everywhere (Inter, Space Grotesk, Fraunces, Roboto, Poppins, Montserrat) has a stated reason, and every face has a role (display, text, data). | auto | warn | IMP GST AFD |
 
-## Layout and rhythm
+## Layout
 
 | ID | Check | Verify | Severity | Credit |
 | --- | --- | --- | --- | --- |
 | LY-01 | No horizontal scroll at 390px. | auto | block | GST VWG |
-| LY-02 | No horizontal scroll at 320px. | auto | block | EK |
+| LY-02 | No horizontal scroll at 320px. | auto | block | EK WCAG |
 | LY-03 | No text is cut off by its container. | auto | block | IMP |
 | LY-04 | Body text keeps at least 12px from the screen edge on phones. | auto | block | IMP |
-| LY-05 | Sections do not all share one padding; spacing changes where the reading task changes. | auto | warn | IMP SLL |
-| LY-06 | No boxed card sits inside another boxed card. | auto | warn | IMP |
-| LY-07 | Density changes down the page on purpose: open, dense, quiet, active, short. | shot | warn | SLL |
-| LY-08 | In-page anchor targets are not hidden under a sticky header. | auto | warn | VWG JK |
-| LY-09 | A footer exists and holds real destinations. | auto | warn | SLL |
-| LY-10 | At 768px nothing is a cramped leftover of the desktop grid. | shot | warn | SLL GST |
+| LY-05 | No boxed card sits inside another boxed card. | auto | warn | IMP |
+| LY-06 | In-page anchor targets and focused controls are not hidden under a sticky header. | auto | warn | VWG JK WCAG |
+| LY-07 | A footer exists and holds real destinations. | auto | warn | SLL |
 
-## Colour and surface
+## Colour
 
 | ID | Check | Verify | Severity | Credit |
 | --- | --- | --- | --- | --- |
-| CO-01 | Text meets WCAG AA contrast (4.5:1, or 3:1 for large text). | auto | block | IMP VWG GST |
-| CO-02 | No gradient-filled text. | auto | warn | IMP AFD |
-| CO-03 | No coloured glow or halo used as decoration. | auto | warn | IMP |
-| CO-04 | Depth does not come from a hairline border plus a wide soft shadow on every surface. | auto | warn | IMP |
-| CO-05 | The ground colour is chosen from where the product is used; cream with a serif display needs a reason. | auto | warn | IMP AFD |
-| CO-06 | Accent colour marks state or action and is not sprinkled for decoration. | shot | warn | GST |
-| CO-07 | The theme-color meta matches the page background. | auto | warn | VWG |
+| CO-01 | Text meets WCAG AA contrast (4.5:1, or 3:1 for 24px+ or 18.66px+ bold); text over images or gradients is sampled at its worst point. | auto | block | IMP VWG GST WCAG |
+| CO-02 | No gradient-filled text and no coloured glow used as decoration. | auto | warn | IMP AFD |
+| CO-03 | The ground colour is chosen from where the product is used; cream with a serif display needs a reason. | auto | warn | IMP AFD |
+| CO-04 | Accent colour marks state or action and is not sprinkled for decoration. | shot | warn | GST |
 
 ## Template tells
 
@@ -85,83 +101,77 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | TT-01 | No row of three equal cards with short adjective headings standing in for a product explanation. | auto | warn | GST AFD SLL |
 | TT-02 | No icon tile stacked above every card heading. | auto | warn | IMP |
 | TT-03 | No small tracked-caps label above nearly every section heading. | auto | warn | IMP AFD |
-| TT-04 | Section numbers appear only on content that is a real sequence. | shot | warn | IMP AFD |
-| TT-05 | No thick coloured stripe down one side of cards or callouts. | auto | warn | IMP GST |
-| TT-06 | No pulsing dot, blinking cursor or marquee on content that is not live. | auto | warn | IMP |
-| TT-07 | No stock marketing verbs (seamless, supercharge, unleash, revolutionize, cutting-edge, next-gen). | auto | warn | IMP GST |
-| TT-08 | No grid, dot or stripe background used as filler. | auto | warn | IMP |
-| TT-09 | Replacing the logo would not turn this into another company's page. | record | block | SLL |
-| TT-10 | The signature idea still works if the palette changes. | record | warn | SLL |
-| TT-11 | Compared with each reference on copy, names, numbers, imagery, layout and motion, no distinctive element or combination is reproduced. | record | block | SLL MT |
+| TT-04 | No thick coloured side stripe on cards and no grid, dot or stripe background used as filler. | auto | warn | IMP GST |
+| TT-05 | Replacing the logo would not turn this into another company's page. | record | block | SLL |
+| TT-06 | Compared with each reference on copy, names, numbers, imagery, layout and motion, no distinctive element or combination is reproduced. | record | block | SLL MT |
 
 ## Motion
 
 | ID | Check | Verify | Severity | Credit |
 | --- | --- | --- | --- | --- |
-| MO-01 | With reduced motion, nothing moves and nothing is hidden. | auto | block | VWG EK SLL |
+| MO-01 | With reduced motion, nothing translates, scales or zooms and nothing is hidden; short fades are allowed. | auto | block | VWG EK SLL WCAG APL |
 | MO-02 | After loading and one scroll, no text is still invisible. | auto | block | IMP |
 | MO-03 | No transition: all. | auto | block | VWG EK |
 | MO-04 | Only transform, translate, scale, rotate and opacity animate; never layout properties. | auto | warn | VWG IMP |
-| MO-05 | Nothing large loops forever without a way to pause it. | auto | warn | VWG |
-| MO-06 | Overshoot or bounce easing appears only in playful archetypes; entrances never start from scale(0) or ease in. | auto | warn | IMP EK |
-| MO-07 | Hover-only effects sit behind (hover:hover) and (pointer:fine). | code | warn | EK |
-| MO-08 | Staggers stay between 30 and 80ms and never block input. | code | warn | EK |
-| MO-09 | Every animation has a written contract: trigger, purpose, fallback, duration, easing. | record | block | SLL |
-| MO-10 | Text that must be read moves into place rather than fading in. | code | warn | SLL |
+| MO-05 | Nothing that moves or changes by itself runs longer than 5 seconds without a visible pause control, and the h1 and primary action never change by themselves. | auto | block | WCAG NNG BAY |
+| MO-06 | Overshoot or bounce easing appears only in playful archetypes; entrances never start from scale(0) or ease-in. | auto | warn | IMP EK |
+| MO-07 | Hover-only effects sit behind (hover:hover) and (pointer:fine), and staggers stay between 30 and 80ms without blocking input. | code | warn | EK |
+| MO-08 | Every animation has a written contract: trigger, purpose, fallback, duration, easing. | record | block | SLL |
 
-## Mobile and touch
+## Mobile and input
 
 | ID | Check | Verify | Severity | Credit |
 | --- | --- | --- | --- | --- |
 | MB-01 | The viewport meta never disables zoom. | auto | block | VWG EK |
-| MB-02 | Header, nav and boxed buttons are at least 44px tall. | auto | block | GST |
-| MB-03 | Every other control is at least 24px tall. | auto | block | GST VWG |
+| MB-02 | On phones, the primary action and navigation controls are at least 44×44px. | auto | warn | GST APL |
+| MB-03 | Every other control is at least 24×24px or has enough space around it (WCAG 2.5.8); links inside sentences are exempt. | auto | block | WCAG VWG |
 | MB-04 | Inputs use at least 16px text, so phones do not zoom on focus. | auto | warn | EK VWG |
 | MB-05 | If the nav collapses on phones, a working menu control replaces it. | auto | block | GST |
 | MB-06 | Dense artifacts are recomposed for phones, not shrunk or removed. | shot | block | SLL |
-| MB-07 | Fixed or full-bleed elements respect safe-area insets. | code | warn | VWG EK |
-| MB-08 | At 200% zoom (720px at 2×) the page still has no horizontal scroll. | auto | warn | VWG |
 
-## Accessibility and interaction
+## Accessibility and robustness
 
 | ID | Check | Verify | Severity | Credit |
 | --- | --- | --- | --- | --- |
 | AX-01 | Every link and button has an accessible name. | auto | block | VWG |
 | AX-02 | Every image has alt text, empty only when decorative. | auto | block | VWG |
-| AX-03 | Decorative SVGs are hidden from assistive tech; meaningful ones are labelled. | auto | warn | VWG |
-| AX-04 | Every focusable control looks different when focused from the keyboard. | auto | block | VWG |
-| AX-05 | Nothing is clickable without being a link or button. | auto | block | VWG |
-| AX-06 | Every form control has a label. | auto | block | VWG |
-| AX-07 | The page has a main landmark. | auto | warn | VWG |
-| AX-08 | The html element declares a language. | auto | block | VWG |
-| AX-09 | No script errors or console errors while loading. | auto | block | IMP GST |
-| AX-10 | Links point somewhere real: no empty href, "#" or missing anchor or file. | auto | block | SLL |
-| AX-11 | No broken images. | auto | block | IMP |
-| AX-12 | Results of local actions are announced (aria-live or role=status). | code | warn | VWG |
+| AX-03 | Every focusable control shows a focus indicator from the keyboard: an outline at least 2px with at least 3:1 contrast against adjacent colours. | auto | block | VWG WCAG |
+| AX-04 | Nothing is clickable without being a link or button. | auto | block | VWG |
+| AX-05 | Every form control has a label. | auto | block | VWG |
+| AX-06 | The html element declares a language and the page has a main landmark. | auto | block | VWG |
+| AX-07 | No script errors or console errors while loading. | auto | block | IMP GST |
+| AX-08 | Links point somewhere real: no empty href, "#" or missing anchor or file. | auto | block | SLL |
+| AX-09 | No broken images. | auto | block | IMP |
+| AX-10 | Results of local actions are announced (aria-live or role=status). | code | warn | VWG |
+| AX-11 | With WCAG 1.4.12 text spacing applied (line-height 1.5, paragraph spacing 2em, letter-spacing 0.12em, word-spacing 0.16em), no text is clipped or overlaps. | auto | block | WCAG |
 
-## Performance and assets
+## Performance and metadata
 
 | ID | Check | Verify | Severity | Credit |
 | --- | --- | --- | --- | --- |
-| PF-01 | Images declare width and height, or an aspect-ratio. | auto | warn | VWG |
-| PF-02 | Images below the first screen load lazily. | auto | warn | VWG |
-| PF-03 | Web fonts use font-display: swap (or optional). | auto | warn | VWG |
-| PF-04 | The first load transfers under about 2.5 MB. | auto | warn | SLL |
+| PF-01 | Images declare width and height or an aspect-ratio, and images below the first screen load lazily. | auto | warn | VWG |
+| PF-02 | The largest element in the first screen (LCP) is not lazy-loaded or injected after load, and an LCP image has fetchpriority="high" or a preload. | auto | block | WEB |
+| PF-03 | Web fonts use font-display swap or optional. | auto | warn | VWG WEB |
+| PF-04 | Layout shift (CLS) through load, one scroll and one interaction stays at or under 0.1. | auto | warn | WEB |
+| PF-05 | On a throttled mobile profile, lab LCP is at or under 2.5 seconds (a lab estimate, not field data). | auto | warn | WEB |
+| PF-06 | The page has a title and a meta description; for an unknown brand the title leads with the category or audience. | auto | warn | CHN UI |
+| PF-07 | Sharing works: og:title, og:description, an absolute og:image, twitter:card, a favicon and an apple-touch-icon are present, and theme-color matches the page background. | auto | warn | UI CHN VWG |
 
 ## Honesty and proof
 
 | ID | Check | Verify | Severity | Credit |
 | --- | --- | --- | --- | --- |
-| HP-01 | No customer logos or testimonials that were not supplied and verified. | record | block | SLL GST |
-| HP-02 | Every number has a source or is labelled illustrative. | record | block | SLL |
+| HP-01 | No customer logos or testimonials that were not supplied and verified. | shot | block | SLL GST FTC |
+| HP-02 | Every number has a source or is labelled illustrative. | shot | block | SLL |
 | HP-03 | Illustrative interfaces and code are labelled right beside them, not in a separate disclaimer section. | shot | block | SLL |
-| HP-04 | Every action reaches what its label promises (install, docs, a real page or a visible local result). | record | block | SLL |
+| HP-04 | Every action reaches what its label promises (install, docs, a real page or a visible local result). | shot | block | SLL |
+| HP-05 | No false urgency or scarcity: no countdown timer, "only N left" or "spots filling fast" unless it is true and sourced. | auto | warn | FTC MATH |
 
 ## Process
 
 | ID | Check | Verify | Severity | Credit |
 | --- | --- | --- | --- | --- |
-| PR-01 | Every screenshot listed was opened, is not blank and is the width it claims, and the signature artifact was captured in each of its states. | record | block | IMP |
+| PR-01 | Every screenshot listed was opened, is not blank and is the width it claims, the 768 layout was looked at, and the signature artifact was captured in each of its states. | record | block | IMP |
 | PR-02 | One structural revision was made after rendering, with before and after evidence and the hero rescored. | record | block | SLL GST |
 | PR-03 | Every decorative element left on the page has a named job; ones without a job were removed and are listed. | record | warn | MT |
 | PR-04 | The status line is DONE only if nothing above is unverified or unavailable; otherwise it names what is. | record | block | GST IMP ASC |
