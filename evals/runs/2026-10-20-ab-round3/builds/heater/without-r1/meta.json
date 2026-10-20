@@ -1,0 +1,31 @@
+{
+  "run": "heater/without-r1",
+  "workdir": "W022",
+  "brief": "heater",
+  "arm": "without",
+  "model": "claude-fable-5-1",
+  "client_version": "2.1.304",
+  "start": "2026-10-20T05:25:40Z",
+  "end": "2026-10-20T05:37:59Z",
+  "wall_clock_s": 739,
+  "tokens": {
+    "input": 104,
+    "output": 48868,
+    "cache_read": 5471116,
+    "cache_create": 145292
+  },
+  "tool_calls": 34,
+  "cap_hit": false,
+  "skill_installed": false,
+  "skill_visible_to_agent": false,
+  "skill_md_read": false,
+  "skill_file_access_in_no_skill_arm": false,
+  "infrastructure_retry": null,
+  "start_note": null,
+  "transcript": "transcript.jsonl (tool calls, assistant text and truncated tool results; harness-injected context removed)",
+  "transcript_source": "a0c23e859f6e92401.output",
+  "harness_skills_invoked": [
+    "frontend-design"
+  ],
+  "note": "Both arms ran in the same client with its built-in skills visible (for example frontend-design); the arms differ only in whether this skill was installed in the working folder."
+}

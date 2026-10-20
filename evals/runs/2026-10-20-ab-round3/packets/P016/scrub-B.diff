@@ -1,0 +1,1 @@
+README.md: - `design/DESIGN-RECORD.md` is the landing-page decision record, with screenshots in `design/shots/` and the automatic check output in `design/check.json`.

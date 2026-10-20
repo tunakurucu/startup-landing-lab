@@ -1,0 +1,338 @@
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/app/globals.css /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/A/src/app/globals.css
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/app/globals.css	2026-10-20 02:28:53.816527486 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/A/src/app/globals.css	2026-10-20 03:42:34.954751462 +0000
+@@ -5,9 +5,41 @@
+ @layer base {
+   html {
+     @apply bg-foam text-ink antialiased;
++    scroll-behavior: smooth;
+   }
+ 
+   :focus-visible {
+     @apply outline outline-2 outline-offset-2 outline-wort;
+   }
++
++  @media (prefers-reduced-motion: reduce) {
++    html {
++      scroll-behavior: auto;
++    }
++  }
++}
++
++@layer components {
++  /* The hero batch record fills in once, line by line, on page load.
++     Each row sets its own animation-delay inline. */
++  .log-row {
++    animation: log-row-in 360ms ease-out both;
++  }
++
++  @keyframes log-row-in {
++    from {
++      opacity: 0;
++      transform: translateY(4px);
++    }
++    to {
++      opacity: 1;
++      transform: none;
++    }
++  }
++
++  @media (prefers-reduced-motion: reduce) {
++    .log-row {
++      animation: none;
++    }
++  }
+ }
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/app/layout.tsx /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/A/src/app/layout.tsx
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/app/layout.tsx	2026-10-20 02:28:53.816650811 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/A/src/app/layout.tsx	2026-10-20 03:43:28.970750227 +0000
+@@ -2,8 +2,9 @@
+ import "./globals.css";
+ 
+ export const metadata: Metadata = {
+-  title: "Grainline",
+-  description: "Grainline is a brew-day log for small craft breweries.",
++  title: "Grainline: the brew-day log that builds the batch record",
++  description:
++    "Grainline is a brew-day log for small craft breweries. Readings go in on the brewhouse tablet and the batch record builds itself. Request early access.",
+   icons: { icon: "/grainline-mark.svg" },
+ };
+ 
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/app/page.tsx /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/A/src/app/page.tsx
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/app/page.tsx	2026-10-20 02:28:53.816650811 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/A/src/app/page.tsx	2026-10-20 03:43:26.206016237 +0000
+@@ -1,15 +1,146 @@
++import { BatchRecord } from "@/components/BatchRecord";
+ import { Button } from "@/components/Button";
++import { EARLY_ACCESS_EMAIL, EARLY_ACCESS_MAILTO } from "@/lib/earlyAccess";
++
++const container = "mx-auto w-full max-w-6xl px-4 sm:px-6";
+ 
+-// Placeholder until the real homepage is built.
+ export default function Home() {
+   return (
+-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col items-start justify-center gap-6 px-6">
+-      <p className="font-mono text-sm text-steel">grainline.example</p>
+-      <h1 className="text-4xl font-semibold tracking-tight">Grainline</h1>
+-      <p className="text-lg text-steel">Homepage coming soon.</p>
+-      <Button href="#" variant="primary">
+-        Request early access
+-      </Button>
+-    </main>
++    <>
++      <header className={`${container} flex items-center justify-between py-5`}>
++        <a href="/" className="flex items-center gap-2.5 rounded-btn">
++          <img src="/grainline-mark.svg" alt="" width={28} height={28} className="h-7 w-7" />
++          <span className="text-lg font-semibold tracking-tight">Grainline</span>
++        </a>
++        <Button href={EARLY_ACCESS_MAILTO} variant="secondary" className="hidden sm:inline-flex">
++          Request early access
++        </Button>
++      </header>
++
++      <main>
++        {/* Hero */}
++        <section className={`${container} pb-16 pt-8 sm:pt-14 lg:pb-24 lg:pt-20`}>
++          <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
++            <div className="lg:col-span-5 lg:pt-4">
++              <h1 className="max-w-[12ch] text-[2.6rem] font-semibold leading-[1.02] tracking-tight sm:text-6xl">
++                The batch record builds itself.
++              </h1>
++              <p className="mt-6 max-w-prose text-lg leading-relaxed text-ink/80 sm:text-xl">
++                Grainline is a brew-day log for small craft breweries. Readings go in on the tablet by the kettle, as
++                you take them. By the time the wort is in the fermenter, the batch record is written.
++              </p>
++              <div className="mt-8">
++                <Button href={EARLY_ACCESS_MAILTO} size="lg" className="w-full sm:w-auto">
++                  Request early access
++                </Button>
++                <p className="mt-3 text-sm text-steel">
++                  Opens your email app with a short note to fill in. No account, no card.
++                </p>
++              </div>
++            </div>
++            <div className="lg:col-span-7">
++              <BatchRecord />
++            </div>
++          </div>
++        </section>
++
++        {/* Two readers */}
++        <section className="border-t border-ink/10 bg-white/50">
++          <div className={`${container} py-16 sm:py-24`}>
++            <div className="max-w-2xl">
++              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">One record, two readers.</h2>
++              <p className="mt-4 text-lg leading-relaxed text-ink/80">
++                Today a brew day gets written down twice: in a damp notebook on the floor, then again in a spreadsheet in
++                the office. Grainline keeps one record, made where the readings happen and read wherever they are
++                needed.
++              </p>
++            </div>
++
++            <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-12">
++              <div className="border-t-2 border-ink pt-6">
++                <h3 className="text-xl font-semibold">On the floor</h3>
++                <ul className="mt-5 space-y-5 text-base leading-relaxed text-ink/80 sm:text-lg">
++                  <li>
++                    <strong className="font-semibold text-ink">Targets you can hit with a thumb.</strong> One reading per
++                    screen, big numbers, nothing that needs a dry fingertip or a stylus.
++                  </li>
++                  <li>
++                    <strong className="font-semibold text-ink">Stamped when you take it.</strong> Mash temperature at 06:35
++                    is logged at 06:35, not pieced back together at four o&rsquo;clock.
++                  </li>
++                  <li>
++                    <strong className="font-semibold text-ink">Last time&rsquo;s numbers beside this time&rsquo;s.</strong>{" "}
++                    Where the previous batch of this recipe sat at pre-boil is one glance away, not a cupboard away.
++                  </li>
++                </ul>
++              </div>
++              <div className="border-t-2 border-ink pt-6">
++                <h3 className="text-xl font-semibold">In the office</h3>
++                <ul className="mt-5 space-y-5 text-base leading-relaxed text-ink/80 sm:text-lg">
++                  <li>
++                    <strong className="font-semibold text-ink">Every batch in the same shape.</strong> Gravities, volumes,
++                    temperatures and times laid out the same way for batch 12 and batch 412.
++                  </li>
++                  <li>
++                    <strong className="font-semibold text-ink">What the brewhouse actually did.</strong> Efficiency,
++                    boil-off and volume into the fermenter come from the readings, not from the recipe sheet.
++                  </li>
++                  <li>
++                    <strong className="font-semibold text-ink">Written whether or not anyone wrote it up.</strong> The
++                    record exists the moment the readings do, so nothing is waiting on a quiet afternoon.
++                  </li>
++                </ul>
++              </div>
++            </div>
++
++            <div className="mt-12 max-w-2xl border-l-4 border-hop pl-5 text-base leading-relaxed text-ink/80 sm:text-lg">
++              <p>
++                <strong className="font-semibold text-ink">What Grainline is not: excise software.</strong> It records
++                the brew day. Duty returns, and the paperwork around them, stay with whatever you use for them today.
++              </p>
++            </div>
++          </div>
++        </section>
++
++        {/* Early access */}
++        <section id="early-access" className="border-t border-ink/10">
++          <div className={`${container} py-16 sm:py-24`}>
++            <div className="max-w-2xl">
++              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Early access</h2>
++              <p className="mt-4 text-lg leading-relaxed text-ink/80">
++                We are putting Grainline on the brewhouse tablets of a handful of small breweries and brewing alongside
++                them. You get the log from your next brew day. We get told, plainly, what is wrong with it.
++              </p>
++              <p className="mt-4 text-lg leading-relaxed text-ink/80">
++                There is no pricing yet and there are no brewery logos on this page, because there are no customers
++                yet. That is what early access means.
++              </p>
++              <div className="mt-8">
++                <Button href={EARLY_ACCESS_MAILTO} size="lg" className="w-full sm:w-auto">
++                  Request early access
++                </Button>
++                <p className="mt-3 text-sm text-steel">
++                  Opens an email to {EARLY_ACCESS_EMAIL} with the questions we will ask: brewery, brew length, brews per
++                  week, who to talk to.
++                </p>
++              </div>
++            </div>
++          </div>
++        </section>
++      </main>
++
++      <footer className="border-t border-ink/10">
++        <div className={`${container} flex flex-col gap-4 py-8 text-sm text-steel sm:flex-row sm:items-center sm:justify-between`}>
++          <div className="flex items-center gap-2.5">
++            <img src="/grainline-mark.svg" alt="" width={20} height={20} className="h-5 w-5" />
++            <span className="font-semibold text-ink">Grainline</span>
++            <span>A brew-day log for small craft breweries.</span>
++          </div>
++          <a href={`mailto:${EARLY_ACCESS_EMAIL}`} className="rounded-btn underline-offset-4 hover:underline">
++            {EARLY_ACCESS_EMAIL}
++          </a>
++        </div>
++      </footer>
++    </>
+   );
+ }
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/BatchRecord.tsx /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/A/src/components/BatchRecord.tsx
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/BatchRecord.tsx	1970-01-01 00:00:00.000000000 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/A/src/components/BatchRecord.tsx	2026-10-20 03:45:14.974747802 +0000
+@@ -0,0 +1,88 @@
++// The hero visual: a brew day being logged on the brewhouse tablet, and the
++// batch record Grainline builds from those readings. Numbers are a worked
++// example, not a customer's batch.
++
++type Reading = {
++  time: string;
++  label: string;
++  value: string;
++};
++
++// One reading per entry, the way it goes in on the tablet.
++const readings: Reading[] = [
++  { time: "05:30", label: "Grist weighed", value: "400 kg" },
++  { time: "05:42", label: "Strike water", value: "19.0 hL" },
++  { time: "05:44", label: "Strike temp", value: "75.5 °C" },
++  { time: "06:05", label: "Mash in", value: "66.5 °C" },
++  { time: "06:35", label: "Mash temp", value: "66.2 °C" },
++  { time: "07:25", label: "First runnings", value: "1.078" },
++  { time: "08:35", label: "Pre-boil gravity", value: "1.049" },
++  { time: "08:36", label: "Pre-boil volume", value: "18.6 hL" },
++  { time: "09:40", label: "Hops, 60 min", value: "1.6 kg" },
++  { time: "10:40", label: "Knockout gravity", value: "1.056" },
++  { time: "10:42", label: "Into FV3", value: "16.3 hL" },
++  { time: "10:55", label: "Yeast pitched", value: "20.0 °C" },
++];
++
++const record = [
++  { label: "Original gravity", value: "1.056" },
++  { label: "Into fermenter", value: "16.3 hL" },
++  { label: "Brewhouse efficiency", value: "74 %" },
++  { label: "Boil-off", value: "2.3 hL, 12 %" },
++  { label: "Mash temperature", value: "66.4 °C avg" },
++  { label: "Brew day", value: "5 h 25 min" },
++];
++
++export function BatchRecord() {
++  return (
++    <figure className="w-full">
++      <div className="overflow-hidden rounded-2xl bg-ink text-foam shadow-[0_24px_60px_-24px_rgba(31,26,20,0.55)] ring-1 ring-ink/80">
++        {/* Batch header */}
++        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-foam/15 px-5 py-4 sm:px-6">
++          <div className="flex items-baseline gap-3">
++            <span className="font-mono text-sm text-barley">Batch 0412</span>
++            <span className="text-base font-semibold">West Coast Pale</span>
++          </div>
++          <span className="text-sm text-foam/70">16 hL, Tue 14 Oct</span>
++        </div>
++
++        <div className="grid md:grid-cols-[1fr_auto]">
++          {/* Readings as they went in */}
++          <div className="px-5 py-4 sm:px-6">
++            <p className="mb-3 text-sm text-foam/70">Readings as they went in</p>
++            <ol className="divide-y divide-foam/10">
++              {readings.map((r, i) => (
++                <li
++                  key={r.time}
++                  className="log-row grid grid-cols-[3rem_1fr_auto] items-baseline gap-3 py-2 text-[15px] leading-snug sm:text-base"
++                  style={{ animationDelay: `${150 + i * 110}ms` }}
++                >
++                  <span className="font-mono text-foam/60 tabular-nums">{r.time}</span>
++                  <span className="min-w-0">{r.label}</span>
++                  <span className="whitespace-nowrap font-mono tabular-nums text-barley">{r.value}</span>
++                </li>
++              ))}
++            </ol>
++          </div>
++
++          {/* What Grainline built from them */}
++          <div
++            className="log-row border-t border-foam/15 bg-foam/[0.06] px-5 py-4 sm:px-6 md:w-64 md:border-l md:border-t-0"
++            style={{ animationDelay: `${150 + readings.length * 110 + 200}ms` }}
++          >
++            <p className="mb-3 text-sm text-foam/70">Batch record, built by Grainline</p>
++            <dl className="grid grid-cols-2 gap-x-6 gap-y-3 md:grid-cols-1">
++              {record.map((row) => (
++                <div key={row.label}>
++                  <dt className="text-sm text-foam/70">{row.label}</dt>
++                  <dd className="font-mono text-lg tabular-nums text-barley">{row.value}</dd>
++                </div>
++              ))}
++            </dl>
++          </div>
++        </div>
++      </div>
++      <figcaption className="mt-3 text-sm text-steel">A worked example, not a customer&rsquo;s batch.</figcaption>
++    </figure>
++  );
++}
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/lib/earlyAccess.ts /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/A/src/lib/earlyAccess.ts
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/lib/earlyAccess.ts	1970-01-01 00:00:00.000000000 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/A/src/lib/earlyAccess.ts	2026-10-20 03:42:05.558752134 +0000
+@@ -0,0 +1,23 @@
++// Early access requests go by email until there is somewhere to send them.
++// Swap this for a form action when a backend exists; every call to action
++// on the site reads from here.
++
++export const EARLY_ACCESS_EMAIL = "hello@grainline.example";
++
++const subject = "Early access to Grainline";
++
++const body = [
++  "Hi Grainline,",
++  "",
++  "We'd like early access.",
++  "",
++  "Brewery:",
++  "Brew length (hL or bbl):",
++  "Brews per week:",
++  "Who should we contact:",
++  "",
++].join("\n");
++
++export const EARLY_ACCESS_MAILTO = `mailto:${EARLY_ACCESS_EMAIL}?subject=${encodeURIComponent(
++  subject,
++)}&body=${encodeURIComponent(body)}`;

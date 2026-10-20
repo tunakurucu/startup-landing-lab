@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plain-language council agendas and neighbourhood alerts · Commonread</title>
+<meta name="description" content="Commonread turns each city council agenda into short plain-language summaries. A model drafts, a volunteer checks, every summary links to the original item, and you get an email when your neighbourhood comes up.">
+<meta property="og:site_name" content="Commonread">
+<meta property="og:title" content="Know what the council will decide on your street, before they vote">
+<meta property="og:description" content="Plain-language summaries of the city council agenda, checked by volunteers and linked to the original item. Free email alerts for one neighbourhood.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://commonread.example/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f3f2ee">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{
+  --ground:#f3f2ee;
+  --paper:#ffffff;
+  --ink:#17191c;
+  --ink-2:#4b5058;
+  --rule:#d8d5cd;
+  --rule-strong:#b9b5aa;
+  --mark:#ffe45c;
+  --mark-soft:#fff6bf;
+  --action:#17191c;
+  --action-ink:#ffffff;
+  --sans:"TeX Gyre Heros","Helvetica Neue",Helvetica,Arial,"Liberation Sans",sans-serif;
+  --serif:"TeX Gyre Termes","Times New Roman",Times,"Liberation Serif",serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --s1:0.5rem; --s2:1rem; --s3:1.5rem; --s4:2.5rem; --s5:4rem; --s6:5.5rem;
+  --gutter:clamp(1rem, 4vw, 2.5rem);
+  --max:1180px;
+  --text:1.0625rem;
+  --lh:1.55;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:100%;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;font-size:var(--text);line-height:var(--lh);background:var(--ground)}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.15em}
+a:hover{text-decoration-thickness:2px}
+h1,h2,h3{margin:0;line-height:1.15;font-weight:700;overflow-wrap:break-word}
+h1{font-size:clamp(2.25rem, 1.6rem + 1.8vw, 3.125rem);line-height:1.06;letter-spacing:-0.015em;text-wrap:balance}
+h2{font-size:clamp(1.6rem, 1.2rem + 1.3vw, 2.35rem);letter-spacing:-0.01em;text-wrap:balance;max-width:30ch}
+h3{font-size:1.125rem}
+p{margin:0}
+p+p{margin-top:var(--s2)}
+ul,ol{margin:0;padding:0}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+.muted{color:var(--ink-2)}
+.mono{font-family:var(--mono);font-size:.875rem;letter-spacing:.01em}
+.serif{font-family:var(--serif)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* header */
+.top{border-bottom:1px solid var(--rule);background:var(--ground)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);min-height:4rem;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:.75rem;text-decoration:none;padding:.5rem 0}
+.brand strong{font-size:1.25rem;letter-spacing:-0.01em}
+.brand span{font-size:.9375rem;color:var(--ink-2)}
+.top nav ul{display:flex;gap:var(--s3);list-style:none}
+.top nav a{text-decoration:none;padding:.75rem 0;display:inline-block}
+.top nav a:hover{text-decoration:underline}
+.menu-btn{display:none;background:none;border:1px solid var(--rule-strong);padding:.6rem .9rem;border-radius:2px;min-height:44px;min-width:44px;cursor:pointer}
+
+/* hero */
+.hero{padding-block:var(--s4) var(--s5)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s5);align-items:start}
+.hero-copy .sub{font-size:1.1875rem;margin-top:var(--s3);max-width:34em}
+.hero-copy .sub strong{font-weight:700}
+
+/* form */
+.signup{margin-top:var(--s4);display:grid;gap:var(--s2);max-width:30rem}
+.field{display:grid;gap:.35rem}
+.field span{font-weight:700;font-size:.9375rem}
+.field select,.field input{width:100%;padding:.75rem .85rem;border:1px solid var(--rule-strong);border-radius:2px;background:var(--paper);font-size:1rem;min-height:48px}
+.field select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%2317191c' stroke-width='2'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.5rem}
+.btn{display:inline-block;justify-self:start;background:var(--action);color:var(--action-ink);border:1px solid var(--action);padding:.9rem 1.25rem;border-radius:2px;font-weight:700;cursor:pointer;text-decoration:none;min-height:48px;text-align:center}
+@media (hover:hover) and (pointer:fine){.btn:hover{background:#000}}
+.beside{font-size:1rem;color:var(--ink-2)}
+.beside b{color:var(--ink);font-weight:700}
+.status{font-size:1rem;border:1px solid var(--rule-strong);background:var(--paper);padding:.85rem 1rem;border-radius:2px}
+.status:empty{display:none}
+.status.err{border-color:#9b1c1c}
+
+/* digest artifact */
+.digest{background:var(--paper);border:1px solid var(--rule-strong);box-shadow:0 1px 0 var(--rule)}
+.digest-head{padding:var(--s2) var(--s3);border-bottom:1px solid var(--rule)}
+.digest-head .row{display:flex;justify-content:space-between;gap:var(--s2);flex-wrap:wrap;align-items:baseline}
+.digest-title{font-size:1.125rem;font-weight:700;line-height:1.3}
+.digest-note{color:var(--ink-2);font-size:.9375rem;margin-top:.25rem}
+.digest-status{margin-top:var(--s2);font-size:1rem;padding:.6rem .85rem;background:var(--ground);border-radius:2px}
+.items{list-style:none}
+.item{display:grid;grid-template-columns:4rem minmax(0,1fr);gap:var(--s2);padding:var(--s3);border-top:1px solid var(--rule)}
+.item:first-child{border-top:0}
+.item .num{font-family:var(--mono);font-size:.9375rem;padding-top:.2rem}
+.item .official{font-family:var(--serif);font-size:1.0625rem;line-height:1.4;color:var(--ink-2)}
+.item .official b{color:var(--ink);font-weight:700}
+.item .plain{margin-top:.6rem}
+.item .plain .hl{background:transparent;color:inherit;padding:0 .1em;margin:0 -.1em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.item.match .plain .hl{background:var(--mark)}
+.item .meta{display:flex;flex-wrap:wrap;gap:.4rem .9rem;margin-top:.75rem;font-size:.9375rem;color:var(--ink-2);align-items:center}
+.item .meta a{color:var(--ink)}
+.tags{display:flex;flex-wrap:wrap;gap:.35rem;list-style:none}
+.tags li{font-family:var(--mono);font-size:.8125rem;border:1px solid var(--rule-strong);padding:.1rem .45rem;border-radius:2px;letter-spacing:.01em}
+.alert-chip{display:none;font-family:var(--mono);font-size:.8125rem;font-weight:700;background:var(--mark);padding:.15rem .5rem;border-radius:2px;letter-spacing:.01em}
+.item.match .alert-chip{display:inline-block}
+@media (prefers-reduced-motion:no-preference){.item .plain .hl,.tags li{transition:background-color 180ms ease-out}}
+
+/* sections */
+.section{padding-block:var(--s6);border-top:1px solid var(--rule)}
+.section-head{max-width:46rem}
+.section-head p{margin-top:var(--s2);font-size:1.125rem;max-width:34em}
+.lede{font-size:1.125rem}
+
+/* mechanism */
+.stages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s3);margin-top:var(--s4);counter-reset:stage}
+.stage{background:var(--paper);border:1px solid var(--rule-strong);padding:var(--s3);display:flex;flex-direction:column;gap:var(--s2);counter-increment:stage}
+.stage h3{display:flex;gap:.6rem;align-items:baseline;font-size:1rem}
+.stage h3::before{content:counter(stage);font-family:var(--mono);font-weight:400;color:var(--ink-2)}
+.stage{max-width:44rem}
+.stage .lbl{font-family:var(--mono);font-size:.8125rem;color:var(--ink-2)}
+.stage .official{font-family:var(--serif);line-height:1.4}
+.stage .official .caps{font-variant:small-caps;letter-spacing:.04em}
+.draft del{text-decoration:line-through;text-decoration-thickness:2px;color:var(--ink-2)}
+.draft ins{text-decoration:none;background:var(--mark-soft);box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.notes{list-style:none;display:grid;gap:.35rem;font-size:.9375rem;color:var(--ink-2);border-top:1px solid var(--rule);padding-top:var(--s2);margin-top:auto}
+.notes li::before{content:"— ";}
+.stamp{font-family:var(--mono);font-size:.875rem;border-top:1px solid var(--rule);padding-top:var(--s2);margin-top:auto;display:grid;gap:.4rem}
+.stamp a{font-family:var(--sans);font-size:1rem;font-weight:700}
+.checks{margin-top:var(--s4);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s4)}
+.checks h3{font-size:1.125rem;max-width:30ch}
+.checks .after{margin-top:var(--s2)}
+.checks ol{padding-left:1.4rem;display:grid;gap:.6rem;margin-top:var(--s2)}
+.checks ol li::marker{font-family:var(--mono);color:var(--ink-2)}
+
+/* alerts */
+.alerts{display:grid;grid-template-columns:minmax(0,11fr) minmax(0,9fr);gap:var(--s5);margin-top:var(--s4);align-items:start}
+.email{background:var(--paper);border:1px solid var(--rule-strong)}
+.email-head{padding:var(--s2) var(--s3);border-bottom:1px solid var(--rule);display:grid;gap:.2rem;font-size:.9375rem}
+.email-head .lbl{font-family:var(--mono);font-size:.8125rem;color:var(--ink-2)}
+.email-head .subject{font-weight:700;font-size:1.0625rem}
+.email-body{padding:var(--s3);display:grid;gap:var(--s2)}
+.email-body .item-line{font-weight:700}
+.email-body .item-line mark{background:var(--mark);padding:0 .1em;margin:0 -.1em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.email-body hr{border:0;border-top:1px solid var(--rule);margin:0}
+.email-body .fine{font-size:.9375rem;color:var(--ink-2)}
+.facts{display:grid;gap:var(--s3)}
+.facts dt{font-weight:700}
+.facts dd{margin:.35rem 0 0}
+.facts dd a{color:var(--ink)}
+
+/* final */
+.final .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s5);align-items:start}
+.final .signup{margin-top:0}
+
+/* footer */
+footer{border-top:1px solid var(--rule);padding-block:var(--s4);font-size:.9375rem;color:var(--ink-2)}
+footer .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--s3) var(--s5)}
+footer ul{list-style:none;display:flex;flex-wrap:wrap;gap:var(--s2) var(--s3)}
+footer a{color:var(--ink);padding-block:.35rem;display:inline-block}
+footer p+p{margin-top:.5rem}
+
+/* responsive */
+@media (max-width:1000px){
+  .brand span{display:none}
+  .hero .wrap{grid-template-columns:1fr;gap:var(--s4)}
+  .stages{grid-template-columns:1fr}
+  .alerts,.final .wrap{grid-template-columns:1fr;gap:var(--s4)}
+  .checks{grid-template-columns:1fr}
+  footer .wrap{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  :root{--s5:3rem;--s6:3.5rem}
+  .menu-btn{display:inline-block}
+  .top nav{flex-basis:100%;display:none;padding-bottom:var(--s2)}
+  .top nav.open{display:block}
+  .top nav ul{flex-direction:column;gap:0}
+  .top nav a{padding:.75rem 0;display:block;min-height:44px}
+  .brand span{display:none}
+  .item{grid-template-columns:1fr;gap:.4rem;padding:var(--s2) var(--s2) var(--s3)}
+  .digest-head{padding:var(--s2)}
+  .hero{padding-block:var(--s3) var(--s4)}
+  .signup .btn{justify-self:stretch}
+  .hero-copy .sub{font-size:1.0625rem}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Commonread, home"><strong>Commonread</strong><span>a nonprofit pilot in one city</span></a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" aria-label="Page">
+      <ul>
+        <li><a href="#checked">How it is checked</a></li>
+        <li><a href="#alerts">Alerts</a></li>
+        <li><a href="#original">The original item</a></li>
+        <li><a href="sample-agenda-item.html">Sample agenda</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="hero-copy">
+        <h1 id="h1">Know what the council will decide on your street, before they vote</h1>
+        <p class="sub">Commonread is a plain-language digest of the city council agenda: a model drafts each summary, a volunteer checks it, and every one links to the original item. Pick a neighbourhood and we email you when it comes up.</p>
+
+        <form class="signup" id="signup" novalidate aria-describedby="signup-note">
+          <label class="field" for="area-1"><span>Neighbourhood</span>
+            <select id="area-1" name="area" data-drives-digest required>
+              <option value="">Choose a neighbourhood</option>
+              <option value="eastside">Eastside</option>
+              <option value="riverbend">Riverbend</option>
+              <option value="north-hill">North Hill</option>
+              <option value="old-town">Old Town</option>
+              <option value="westgate">Westgate</option>
+            </select>
+          </label>
+          <label class="field" for="email-1"><span>Email</span>
+            <input id="email-1" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+          </label>
+          <button class="btn" type="submit">Get alerts for my neighbourhood</button>
+          <p class="beside" id="signup-note"><b>Always free.</b> One email per meeting, only when something matches. Unsubscribe in one click. Summaries are in English for now; <span lang="es">los resúmenes están en inglés por ahora</span>.</p>
+          <p class="status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="digest" id="digest" aria-labelledby="digest-h">
+        <div class="digest-head">
+          <div class="row">
+            <p class="digest-title" id="digest-h">City Council, regular meeting · Tue 21 Oct, 6:00 pm</p>
+            <span class="mono muted">Sample agenda</span>
+          </div>
+          <p class="digest-note">Four items from an illustrative agenda, written the way Commonread publishes them. Not a record of any real council.</p>
+          <p class="digest-status" id="digest-status" role="status" aria-live="polite">Choose a neighbourhood in the form to see which items would send you an alert.</p>
+        </div>
+        <ol class="items" id="items">
+          <li class="item" data-areas="eastside">
+            <span class="num" aria-label="Item 6.B">6.B</span>
+            <div>
+              <p class="official"><b>Ordinance 26-114.</b> An ordinance amending Chapter 17 (Zoning) to change the classification of parcels at 1400–1460 Elm Street from R-2 to MX-1; second reading and final adoption.</p>
+              <p class="plain"><span class="hl">The council takes a final vote on changing the zoning of six lots on Elm Street, between 14th and 15th, so that shops and apartments could be built there.</span> Today only houses and duplexes are allowed. City staff recommend approval. You can speak before the vote.</p>
+              <div class="meta">
+                <ul class="tags" aria-label="Tags"><li class="area" data-area="eastside">Eastside</li><li>Zoning</li><li>Elm Street</li></ul>
+                <span class="alert-chip">Alert: <span class="chip-area">your neighbourhood</span></span>
+                <span>Checked by M.R.</span>
+                <a href="sample-agenda-item.html">Open item 6.B in the packet</a>
+              </div>
+            </div>
+          </li>
+          <li class="item" data-areas="riverbend north-hill">
+            <span class="num" aria-label="Item 8.A">8.A</span>
+            <div>
+              <p class="official"><b>Resolution 26-301.</b> Authorizing a contract for the 2027 street resurfacing program, Districts 2 and 4, and appropriating funds therefor.</p>
+              <p class="plain"><span class="hl">The council votes on a contract to repave streets in Districts 2 and 4 next summer, which covers Riverbend and most of North Hill.</span> The list of streets is Attachment B to the item. This is a vote, not a hearing, but public comment is taken first.</p>
+              <div class="meta">
+                <ul class="tags" aria-label="Tags"><li class="area" data-area="riverbend">Riverbend</li><li class="area" data-area="north-hill">North Hill</li><li>Streets</li></ul>
+                <span class="alert-chip">Alert: <span class="chip-area">your neighbourhood</span></span>
+                <span>Checked by D.O.</span>
+                <a href="sample-agenda-item.html#item-8a">Open item 8.A in the packet</a>
+              </div>
+            </div>
+          </li>
+          <li class="item" data-areas="old-town">
+            <span class="num" aria-label="Item 9.C">9.C</span>
+            <div>
+              <p class="official"><b>Consent agenda.</b> Acceptance of a state Safe Routes grant for sidewalk repairs on Mill Road between Water Street and the rail crossing.</p>
+              <p class="plain"><span class="hl">The city accepts state money to fix sidewalks on Mill Road in Old Town.</span> Consent items are voted on together without discussion, unless a council member pulls one out. Accepting the grant does not set a start date.</p>
+              <div class="meta">
+                <ul class="tags" aria-label="Tags"><li class="area" data-area="old-town">Old Town</li><li>Sidewalks</li><li>Mill Road</li></ul>
+                <span class="alert-chip">Alert: <span class="chip-area">your neighbourhood</span></span>
+                <span>Checked by M.R.</span>
+                <a href="sample-agenda-item.html#item-9c">Open item 9.C in the packet</a>
+              </div>
+            </div>
+          </li>
+          <li class="item" data-areas="citywide">
+            <span class="num" aria-label="Item 11">11</span>
+            <div>
+              <p class="official"><b>Public hearing.</b> Proposed operating and capital budget for fiscal year 2027.</p>
+              <p class="plain"><span class="hl">This is a hearing, not a vote. Anyone can speak for up to three minutes about next year's city budget.</span> The council votes on the budget at a later meeting. Citywide items like this one are listed in every alert, in one line.</p>
+              <div class="meta">
+                <ul class="tags" aria-label="Tags"><li class="area" data-area="citywide">Citywide</li><li>Budget</li><li>Hearing</li></ul>
+                <span>Checked by A.L.</span>
+                <a href="sample-agenda-item.html#item-11">Open item 11 in the packet</a>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="checked" aria-labelledby="checked-h">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="checked-h">Every summary starts as a model's draft and is published with a volunteer's initials on it</h2>
+        <p>Here is item 6.B at each stage. The model writes from the agenda packet only. The volunteer strikes anything that is an opinion or is not in the packet, fixes names and dates, and signs it.</p>
+      </div>
+
+      <div class="stages">
+        <article class="stage">
+          <h3>From the agenda packet</h3>
+          <p class="lbl">Council wording, as published by the clerk</p>
+          <p class="official"><span class="caps">Ordinance No. 26-114.</span> An ordinance amending Chapter 17 of the City Code to change the zoning classification of parcels at 1400–1460 Elm Street from R-2 (Two-Family Residential) to MX-1 (Neighborhood Mixed Use); second reading and final adoption. Staff recommends approval. Public comment will be taken prior to the vote.</p>
+          <p class="official">Attachments: A, zoning map; B, staff report; C, planning commission minutes of 9 September.</p>
+          <div class="stamp"><span>Illustrative text, in the city's own format</span><a href="sample-agenda-item.html">Open the sample item page</a></div>
+        </article>
+
+        <article class="stage">
+          <h3>Model draft, as the volunteer saw it</h3>
+          <p class="lbl">Struck and added text shown</p>
+          <p class="draft">The council takes a final vote on changing the zoning of six lots on Elm Street<ins>, between 14th and 15th,</ins> so that shops and apartments could be built there. Today only houses and duplexes are allowed. <del>This would be a welcome boost for a tired block.</del> City staff recommend approval. <del>Neighbours have fought the change for months.</del> You can speak before the vote.</p>
+          <ul class="notes" aria-label="Volunteer's notes">
+            <li>Struck: an opinion.</li>
+            <li>Struck: not in the packet.</li>
+            <li>Added: the block range, from the zoning map.</li>
+          </ul>
+          <div class="stamp"><span>Checked by M.R. · Tue 14 Oct</span><a href="#items">Published as item 6.B in the digest above</a></div>
+        </article>
+      </div>
+
+      <div class="checks">
+        <div>
+          <h3>What the volunteer checks before signing</h3>
+          <ol>
+            <li>Every sentence traces to a line in the packet.</li>
+            <li>No opinion words: good, bad, finally, unfortunately, controversial.</li>
+            <li>The kind of decision is named: first reading, final vote, hearing, consent item.</li>
+            <li>Streets, dates, dollar figures and item numbers match the packet.</li>
+            <li>The link opens the item in the city's own packet.</li>
+          </ol>
+          <p class="after">A summary never says whether a decision is good or bad, never guesses what the council will do, and never adds anything a resident could not find in the packet. If a published summary turns out to be wrong, a correction goes to the same list under the same item number.</p>
+        </div>
+        <div id="original">
+          <h3>The city's packet stays the record; every summary links to it</h3>
+          <p class="after">A summary is a way in, not a replacement. Each one links to the item in the agenda packet the city publishes, so you can read the full text, the staff report and the attachments yourself. Commonread does not host copies of city documents and does not speak for the city or the council.</p>
+          <p>For city clerks: summaries are drafted from the packet as posted, and only after it is posted. Nothing in your record is rewritten, and the link goes to your page. If the packet format changes, summaries pause rather than guess.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="alerts" aria-labelledby="alerts-h">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="alerts-h">An alert is one short email, sent only when your neighbourhood is on the agenda</h2>
+        <p>You choose one neighbourhood. When an item names a street or area inside it, you get the summary, the meeting time, and the link to the original, the day the agenda is posted.</p>
+      </div>
+      <div class="alerts">
+        <figure class="email" aria-label="Sample alert email">
+          <div class="email-head">
+            <span class="lbl">Sample alert · illustrative</span>
+            <span><span class="muted">From:</span> Commonread alerts</span>
+            <span class="subject">Eastside: 1 item on Tuesday's council agenda</span>
+          </div>
+          <div class="email-body">
+            <p>The council meets Tue 21 Oct at 6:00 pm, Council Chambers, City Hall. Public comment sign-up opens at 5:30 pm.</p>
+            <p class="item-line"><mark>6.B · Final vote: rezoning 1400–1460 Elm Street</mark></p>
+            <p>The council takes a final vote on changing the zoning of six lots on Elm Street, between 14th and 15th, so that shops and apartments could be built there. Today only houses and duplexes are allowed. City staff recommend approval. You can speak before the vote.</p>
+            <p><a href="sample-agenda-item.html">Open item 6.B in the packet</a> · Checked by M.R.</p>
+            <hr>
+            <p class="fine">Also on this agenda, citywide: 11 · Public hearing on next year's budget.</p>
+            <p class="fine">You get this because you chose Eastside. One email per meeting. Unsubscribe in one click.</p>
+          </div>
+        </figure>
+        <dl class="facts">
+          <div>
+            <dt>How an item is matched to you</dt>
+            <dd>By the street names and address ranges in the item, checked against the neighbourhood boundaries the city publishes. An item that names no place is marked citywide and listed in one line at the bottom of every alert.</dd>
+          </div>
+          <div>
+            <dt>When it arrives</dt>
+            <dd>The day the agenda is posted. The email says how many days are left before the meeting and how to sign up to speak.</dd>
+          </div>
+          <div>
+            <dt>How often</dt>
+            <dd>At most one email per meeting, and none when nothing in your neighbourhood is on the agenda. No newsletters, no asks.</dd>
+          </div>
+          <div>
+            <dt>Your address</dt>
+            <dd>Used only to send these alerts. Not sold, not shared, and deleted when you unsubscribe.</dd>
+          </div>
+          <div>
+            <dt>Language</dt>
+            <dd>Summaries and alerts are in English for now. About a third of the pilot city speaks Spanish at home, and Spanish is the next thing on the list; volunteers who can check a Spanish summary are the step that unlocks it.</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section final" id="signup-again" aria-labelledby="final-h">
+    <div class="wrap">
+      <div>
+        <h2 id="final-h">Pick your neighbourhood and get the next agenda in plain language</h2>
+        <p class="lede" style="margin-top:var(--s2)">One neighbourhood, one email per meeting, and a link to the original every time. Free, and run by volunteers in one pilot city.</p>
+      </div>
+      <form class="signup" id="signup-2" novalidate aria-describedby="signup-note-2">
+        <label class="field" for="area-2"><span>Neighbourhood</span>
+          <select id="area-2" name="area" required>
+            <option value="">Choose a neighbourhood</option>
+            <option value="eastside">Eastside</option>
+            <option value="riverbend">Riverbend</option>
+            <option value="north-hill">North Hill</option>
+            <option value="old-town">Old Town</option>
+            <option value="westgate">Westgate</option>
+          </select>
+        </label>
+        <label class="field" for="email-2"><span>Email</span>
+          <input id="email-2" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+        </label>
+        <button class="btn" type="submit">Get alerts for my neighbourhood</button>
+        <p class="beside" id="signup-note-2"><b>Always free.</b> One email per meeting, only when something matches. Unsubscribe in one click. Summaries are in English for now; <span lang="es">los resúmenes están en inglés por ahora</span>.</p>
+        <p class="status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <p><strong style="color:var(--ink)">Commonread</strong> · a small nonprofit project that turns city council agendas into plain-language summaries, in one pilot city.</p>
+      <p>The agenda items, names and initials on this page are illustrative samples, not records of any city. Summaries are in English for now. <span lang="es">Los resúmenes están en inglés por ahora.</span></p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="#checked">How summaries are checked</a></li>
+        <li><a href="#alerts">What an alert looks like</a></li>
+        <li><a href="#original">The original item</a></li>
+        <li><a href="sample-agenda-item.html">Sample agenda item</a></li>
+        <li><a href="#signup">Sign up</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var NAMES = {eastside:'Eastside', riverbend:'Riverbend', 'north-hill':'North Hill', 'old-town':'Old Town', westgate:'Westgate'};
+  var items = Array.prototype.slice.call(document.querySelectorAll('#items .item'));
+  var digestStatus = document.getElementById('digest-status');
+
+  // Menu button (phones)
+  var menuBtn = document.querySelector('.menu-btn');
+  var nav = document.getElementById('site-nav');
+  if (menuBtn && nav) {
+    menuBtn.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') { nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+    });
+  }
+
+  // Neighbourhood choice highlights the items that would send an alert.
+  function applyArea(area) {
+    var hits = [];
+    items.forEach(function (it) {
+      var areas = (it.getAttribute('data-areas') || '').split(' ');
+      var on = !!area && areas.indexOf(area) !== -1;
+      it.classList.toggle('match', on);
+      if (on) hits.push(it.querySelector('.num').textContent.trim());
+      var chip = it.querySelector('.chip-area');
+      if (chip) chip.textContent = on ? NAMES[area] : 'your neighbourhood';
+      Array.prototype.forEach.call(it.querySelectorAll('.tags .area'), function (t) {
+        t.classList.toggle('on', !!area && t.getAttribute('data-area') === area);
+      });
+    });
+    if (!area) {
+      digestStatus.textContent = 'Choose a neighbourhood in the form to see which items would send you an alert.';
+    } else if (hits.length === 0) {
+      digestStatus.textContent = 'For ' + NAMES[area] + ', nothing on this agenda names your neighbourhood, so no alert would go out. The citywide hearing (item 11) would still be listed when something else matches.';
+    } else {
+      digestStatus.textContent = 'For ' + NAMES[area] + ', this agenda would send one alert with ' + (hits.length === 1 ? 'item ' + hits[0] : 'items ' + hits.join(' and ')) + ', and item 11 listed as citywide.';
+    }
+  }
+  var driver = document.querySelector('select[data-drives-digest]');
+  if (driver) {
+    driver.addEventListener('change', function () { applyArea(driver.value); });
+    if (driver.value) applyArea(driver.value);
+  }
+
+  // Sign-up forms: no mailing list is connected yet, so the result is a plain local statement.
+  Array.prototype.forEach.call(document.querySelectorAll('form.signup'), function (form) {
+    var status = form.querySelector('.status');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var area = form.querySelector('select').value;
+      var emailEl = form.querySelector('input[type=email]');
+      var email = emailEl.value.trim();
+      var okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      status.classList.remove('err');
+      if (!area) {
+        status.classList.add('err');
+        status.textContent = 'Choose a neighbourhood first.';
+        form.querySelector('select').focus();
+        return;
+      }
+      if (!okEmail) {
+        status.classList.add('err');
+        status.textContent = 'That email address does not look complete.';
+        emailEl.focus();
+        return;
+      }
+      status.textContent = 'Not sent yet. Sign-up is not connected to a mailing list, so nothing left this page and your address was not stored. When the pilot list is live, this button will subscribe ' + email + ' to ' + NAMES[area] + ' alerts.';
+    });
+  });
+})();
+</script>
+</body>
+</html>

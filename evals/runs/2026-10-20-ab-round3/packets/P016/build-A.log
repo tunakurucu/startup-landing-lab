@@ -1,0 +1,25 @@
+$ cp -al /home/claude/r3/stage/next-app/node_modules node_modules  (the round install from lockfile.json, hard-linked; built outside the repository in /home/claude/r3/pbuild/P016-A)
+$ npm run build
+
+> grainline-web@0.1.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.ts took 257ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 20.8s
+  Running TypeScript ...
+  Finished TypeScript in 9.1s ...
+  Collecting page data using 1 worker ...
+  Generating static pages using 1 worker (0/3) ...
+✓ Generating static pages using 1 worker (3/3) in 282ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+

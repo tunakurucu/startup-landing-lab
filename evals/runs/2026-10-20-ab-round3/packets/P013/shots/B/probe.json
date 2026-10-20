@@ -1,0 +1,80 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P013/B/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Security questionnaires drafted from your own policies. Every answer cited or flagged.",
+    "left": 16,
+    "right": 304,
+    "top": 208,
+    "bottom": 475,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 8.84,
+   "text_elements_under_12px": 11,
+   "body_text_length": 6546
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Security questionnaires drafted from your own policies. Every answer cited or flagged.",
+    "left": 18,
+    "right": 372,
+    "top": 149,
+    "bottom": 378,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 8.84,
+   "text_elements_under_12px": 11,
+   "body_text_length": 6546,
+   "axe": []
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Security questionnaires drafted from your own policies. Every answer cited or flagged.",
+    "left": 27,
+    "right": 741,
+    "top": 104,
+    "bottom": 232,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 8.84,
+   "text_elements_under_12px": 11,
+   "body_text_length": 6546
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Security questionnaires drafted from your own policies. Every answer cited or flagged.",
+    "left": 120,
+    "right": 643,
+    "top": 124,
+    "bottom": 311,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 8.84,
+   "text_elements_under_12px": 11,
+   "body_text_length": 6546,
+   "axe": []
+  }
+ }
+}

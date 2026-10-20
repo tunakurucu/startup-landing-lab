@@ -1,0 +1,86 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P011/B/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 63,
+   "h1": {
+    "text": "Every environment variable your code reads, checked against .env.example and CI.",
+    "left": 16,
+    "right": 304,
+    "top": 179,
+    "bottom": 369,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 5883
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Every environment variable your code reads, checked against .env.example and CI.",
+    "left": 20,
+    "right": 371,
+    "top": 132,
+    "bottom": 284,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 5883,
+   "axe": [
+    {
+     "id": "scrollable-region-focusable",
+     "impact": "serious",
+     "nodes": 4
+    }
+   ]
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Every environment variable your code reads, checked against .env.example and CI.",
+    "left": 38,
+    "right": 499,
+    "top": 145,
+    "bottom": 274,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 5970
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Every environment variable your code reads, checked against .env.example and CI.",
+    "left": 224,
+    "right": 761,
+    "top": 239,
+    "bottom": 508,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 6182,
+   "axe": []
+  }
+ }
+}

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shift handover logbook for restaurant managers – Shiftnote</title>
+  <meta name="description" content="Shiftnote is a shared shift logbook for restaurant managers: what ran out, who called in and what needs fixing, written at close on a phone and read by whoever opens.">
+  <meta name="theme-color" content="#FFFFFF">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Shiftnote">
+  <meta property="og:title" content="Nothing from tonight's close gets lost by tomorrow's open">
+  <meta property="og:description" content="A shift logbook for restaurant managers. What ran out, who called in, what needs fixing: written on a phone at close, read by whoever opens, owned until it's handled.">
+  <meta property="og:image" content="https://www.shiftnote.example/share.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Nothing from tonight's close gets lost by tomorrow's open">
+  <meta name="twitter:description" content="A shift logbook for restaurant managers, written at close and read at open.">
+  <meta name="twitter:image" content="https://www.shiftnote.example/share.png">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a href="#top" class="brand" aria-label="Shiftnote home">
+        <img src="logo.svg" alt="" width="32" height="32">
+        <span>Shiftnote</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Site">
+        <a href="#how">How it works</a>
+        <a href="#goes-in">What goes in it</a>
+        <a href="https://app.shiftnote.example/signup" class="btn btn-primary btn-small">Start a free trial</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="promise">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1 id="promise">Nothing from tonight’s close gets lost by tomorrow’s open.</h1>
+          <p class="lead">Shiftnote is a shift logbook for restaurant managers. Write what ran out, who called in and what needs fixing on your phone at close; whoever opens reads it first thing, and every item keeps an owner until it’s handled.</p>
+          <div class="action-row">
+            <a href="https://app.shiftnote.example/signup" class="btn btn-primary">Start a free trial</a>
+            <p class="action-note">Opens the signup page at <a href="https://app.shiftnote.example/signup">app.shiftnote.example</a>. No sales call; you set it up yourself.</p>
+          </div>
+        </div>
+
+        <figure class="note" aria-labelledby="note-title">
+          <div class="note-head">
+            <div class="note-kind" id="note-title">Close note</div>
+            <div class="note-meta">Tue 14 Oct · 10:52 pm · Priya M.</div>
+          </div>
+          <ol class="entries">
+            <li class="entry" data-state="info">
+              <div class="entry-top"><span class="tag">86</span><span class="entry-when">10:41 pm</span></div>
+              <p>Halibut special is gone. Short rib: 2 portions left, so keep it off the board.</p>
+              <div class="entry-foot"><span class="state">For whoever opens</span></div>
+            </li>
+            <li class="entry" data-state="open" data-item="Walk-in at 41°F">
+              <div class="entry-top"><span class="tag">Repair</span><span class="entry-when">10:44 pm</span></div>
+              <p>Walk-in reading 41°F at close. Reliable Refrigeration is coming Wed 10 am. Someone has to be in by 9:30 to let them in.</p>
+              <div class="entry-foot">
+                <span class="state" data-state-text>Open · Sam, opening Wed</span>
+                <button type="button" class="btn btn-ghost" data-handle>Mark handled</button>
+              </div>
+            </li>
+            <li class="entry" data-state="handled">
+              <div class="entry-top"><span class="tag">Staff</span><span class="entry-when">10:47 pm</span></div>
+              <p>Dani called out for Wed lunch. Marco is covering, confirmed by text.</p>
+              <div class="entry-foot"><span class="state">Handled · Marco, 7:10 am</span></div>
+            </li>
+            <li class="entry" data-state="open" data-item="Deposit in the safe">
+              <div class="entry-top"><span class="tag">Cash</span><span class="entry-when">10:50 pm</span></div>
+              <p>Deposit bag is in the safe, not dropped. The bank was closed by the time we counted.</p>
+              <div class="entry-foot">
+                <span class="state" data-state-text>Open · Sam, opening Wed</span>
+                <button type="button" class="btn btn-ghost" data-handle>Mark handled</button>
+              </div>
+            </li>
+            <li class="entry" data-state="info">
+              <div class="entry-top"><span class="tag">Guest</span><span class="entry-when">10:52 pm</span></div>
+              <p>Table 12 waited 40 minutes for mains. Comped two desserts; they were fine by the end.</p>
+              <div class="entry-foot"><span class="state">For whoever opens</span></div>
+            </li>
+          </ol>
+          <figcaption class="note-caption">Sample note, read as Sam on Wednesday morning. The restaurant and the people are made up; nothing you press here is saved or sent.</figcaption>
+          <p class="sr-only" role="status" aria-live="polite" id="note-status"></p>
+        </figure>
+
+        <p class="hero-status">Shiftnote is new, so there are no customer names or quotes on this page. The sample note is the kind of thing it was built for; press “Mark handled” on an open item to see what the closer sees next morning.</p>
+      </div>
+    </section>
+
+    <section class="section" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="how-title">One note, written once, read by three people who need different things from it.</h2>
+          <p>The closing manager writes it. The opening manager reads it before the first ticket. The owner reads the week, later, on a laptop.</p>
+        </div>
+
+        <article class="step" aria-labelledby="step1">
+          <div>
+            <span class="step-num">STEP 1 · 10:52 PM</span>
+            <h3 id="step1">Close writes it before the lights go off.</h3>
+            <p>Pick what kind of thing it is, type it the way you’d text it, and say who it’s for. The note is built so a close takes about as long as a text thread, with none of the scrolling.</p>
+          </div>
+          <div class="step-art">
+            <div class="composer">
+              <div class="composer-head">
+                <b>New entry</b>
+                <span class="note-meta">Tue 14 Oct · 10:52 pm · Priya M.</span>
+              </div>
+              <div class="composer-body">
+                <ul class="chips" aria-label="Kind of entry">
+                  <li><button type="button" class="chip" aria-pressed="true" data-chip="86">86</button></li>
+                  <li><button type="button" class="chip" aria-pressed="false" data-chip="Staff">Staff</button></li>
+                  <li><button type="button" class="chip" aria-pressed="false" data-chip="Repair">Repair</button></li>
+                  <li><button type="button" class="chip" aria-pressed="false" data-chip="Cash">Cash</button></li>
+                  <li><button type="button" class="chip" aria-pressed="false" data-chip="Guest">Guest</button></li>
+                </ul>
+                <label class="field" for="entry-text">
+                  <span>What does the next shift need to know?</span>
+                  <input id="entry-text" type="text" value="Out of burrata. Sub the stracciatella on the beet salad." autocomplete="off">
+                </label>
+                <div class="composer-foot">
+                  <button type="button" class="btn btn-ghost" id="add-entry">Add to tonight’s note</button>
+                  <p class="hint">Goes to whoever opens Wed. Sample only; nothing is sent.</p>
+                </div>
+              </div>
+              <div class="so-far">
+                <h4>Tonight’s note so far</h4>
+                <ol id="so-far-list"></ol>
+                <p class="empty" id="so-far-empty">Nothing added yet. Add the entry above to see it land here.</p>
+              </div>
+              <p class="sr-only" role="status" aria-live="polite" id="composer-status"></p>
+            </div>
+          </div>
+        </article>
+
+        <article class="step" aria-labelledby="step2">
+          <div>
+            <span class="step-num">STEP 2 · 9:38 AM</span>
+            <h3 id="step2">Open reads it before the first ticket.</h3>
+            <p>Whoever opens sees the items with their name on them first, then the rest of the note. Marking something handled puts a name and a time on it, so the closer doesn’t have to ask.</p>
+          </div>
+          <div class="step-art">
+            <div class="opening">
+              <div class="opening-head">
+                <span class="greet">Wed 15 Oct · Sam opened the note</span>
+                <span class="count">2 open items from Priya’s close</span>
+              </div>
+              <ul>
+                <li><span class="tag">Repair</span><span>Walk-in at 41°F; tech coming 10 am. Be in by 9:30.</span><span class="from">Priya · 10:44 pm · open, yours</span></li>
+                <li><span class="tag">Cash</span><span>Deposit bag is in the safe, not dropped.</span><span class="from">Priya · 10:50 pm · open, yours</span></li>
+                <li class="read"><span class="tag">86</span><span>Halibut gone; short rib has 2 left.</span><span class="from">for info</span></li>
+                <li class="read"><span class="tag">Staff</span><span>Dani out Wed lunch; Marco covering.</span><span class="from">handled by Marco, 7:10 am</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="step" aria-labelledby="step3">
+          <div>
+            <span class="step-num">STEP 3 · FRIDAY</span>
+            <h3 id="step3">The owner reads the week, not the chat.</h3>
+            <p>Every entry from every close, with who wrote it, who owned it and when it was handled. The ones nobody picked up are the ones that show.</p>
+          </div>
+          <div class="step-art">
+            <div class="week">
+              <div class="week-head">
+                <b>Week of 13 Oct</b>
+                <span class="note-meta">Two Forks Kitchen · 5 closes · 2 still open</span>
+              </div>
+              <div class="week-scroll">
+                <table>
+                  <thead>
+                    <tr><th scope="col">Entry</th><th scope="col">Written</th><th scope="col">Owner</th><th scope="col">Status</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Walk-in at 41°F, tech called</td><td class="when">Tue close · Priya</td><td>Sam</td><td><span class="st st-done">Handled Wed 10:40 am</span></td></tr>
+                    <tr><td>Deposit bag in the safe</td><td class="when">Tue close · Priya</td><td>Sam</td><td><span class="st st-done">Handled Wed 9:50 am</span></td></tr>
+                    <tr><td>Dani out, Marco covering</td><td class="when">Tue close · Priya</td><td>Marco</td><td><span class="st st-done">Handled Wed 7:10 am</span></td></tr>
+                    <tr><td>Dish machine low on rinse aid</td><td class="when">Thu close · Sam</td><td class="nobody">nobody yet</td><td><span class="st st-open">Open 2 days</span></td></tr>
+                    <tr><td>Patio heater 3 won’t light</td><td class="when">Fri close · Priya</td><td>Owner</td><td><span class="st st-open">Open</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="week-caption">Sample week. The owner usually reads this one on a laptop; on a phone it stacks.</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="goes-in" aria-labelledby="goes-in-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="goes-in-title">Five kinds of entry cover most of what gets lost between shifts.</h2>
+        </div>
+        <div class="scope">
+          <ul class="kinds">
+            <li><span class="tag">86</span><p><b>What ran out, and what’s nearly out.</b> So the opener fixes the board before the first table asks.</p></li>
+            <li><span class="tag">Staff</span><p><b>Call-outs, swaps and no-shows.</b> Who’s covering, and whether they confirmed.</p></li>
+            <li><span class="tag">Repair</span><p><b>Anything broken, and who’s been called.</b> Walk-ins, dish machines, heaters, the one toilet.</p></li>
+            <li><span class="tag">Cash</span><p><b>Deposits, over/short, the safe.</b> Where the money is when the closer isn’t.</p></li>
+            <li><span class="tag">Guest</span><p><b>Complaints, comps and the regular who’s coming back.</b> What was promised, so it gets kept.</p></li>
+          </ul>
+          <aside class="stays-out" aria-labelledby="stays-out-title">
+            <h3 id="stays-out-title">What stays out</h3>
+            <p>Schedules, the POS, inventory counts and payroll stay where they are. Shiftnote is the book between shifts, not another system to run.</p>
+            <p>It’s built for the manager on a phone at 11 pm and the owner on a laptop on Friday.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing" aria-labelledby="closing-title">
+      <div class="wrap">
+        <div class="closing-inner">
+          <h2 id="closing-title">Try it on tonight’s close.</h2>
+          <p>Open the signup page on your phone, write tonight’s note, and let whoever opens tomorrow read it.</p>
+          <div class="action-row">
+            <a href="https://app.shiftnote.example/signup" class="btn btn-primary">Start a free trial</a>
+            <p class="action-note">Opens the signup page at app.shiftnote.example. No sales call.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a href="#top" class="brand" aria-label="Shiftnote home">
+        <img src="logo.svg" alt="" width="24" height="24" loading="lazy">
+        <span>Shiftnote</span>
+      </a>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#how">How it works</a>
+        <a href="#goes-in">What goes in it</a>
+        <a href="https://app.shiftnote.example/signup">Start a free trial</a>
+      </nav>
+      <p class="footer-note">Every note, name and restaurant on this page is a sample. Shiftnote has no customer logos or quotes to show yet, so it doesn’t show any.</p>
+      <p class="copyright">© 2026 Shiftnote</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P004/A/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 68,
+   "h1": {
+    "text": "Your photo, stitchedsquare by square.",
+    "left": 16,
+    "right": 304,
+    "top": 154,
+    "bottom": 330,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 7,
+   "text_elements_under_12px": 31,
+   "body_text_length": 4208
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Your photo, stitchedsquare by square.",
+    "left": 16,
+    "right": 374,
+    "top": 134,
+    "bottom": 222,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 7,
+   "text_elements_under_12px": 31,
+   "body_text_length": 4208,
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 17
+    }
+   ]
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Your photo, stitchedsquare by square.",
+    "left": 16,
+    "right": 752,
+    "top": 162,
+    "bottom": 272,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 7,
+   "text_elements_under_12px": 31,
+   "body_text_length": 4278
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Your photo, stitchedsquare by square.",
+    "left": 176,
+    "right": 1264,
+    "top": 162,
+    "bottom": 329,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 7,
+   "text_elements_under_12px": 31,
+   "body_text_length": 4278,
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 17
+    }
+   ]
+  }
+ }
+}

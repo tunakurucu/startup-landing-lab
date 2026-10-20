@@ -1,0 +1,80 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P006/B/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Alert reviews an examiner can follow without you in the room.",
+    "left": 20,
+    "right": 300,
+    "top": 117,
+    "bottom": 273,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12.48,
+   "text_elements_under_12px": 0,
+   "body_text_length": 5049
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Alert reviews an examiner can follow without you in the room.",
+    "left": 20,
+    "right": 370,
+    "top": 117,
+    "bottom": 273,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12.48,
+   "text_elements_under_12px": 0,
+   "body_text_length": 5049,
+   "axe": []
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Alert reviews an examiner can follow without you in the room.",
+    "left": 20,
+    "right": 628,
+    "top": 117,
+    "bottom": 209,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12.48,
+   "text_elements_under_12px": 0,
+   "body_text_length": 5122
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Alert reviews an examiner can follow without you in the room.",
+    "left": 100,
+    "right": 587,
+    "top": 117,
+    "bottom": 362,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12.48,
+   "text_elements_under_12px": 0,
+   "body_text_length": 5176,
+   "axe": []
+  }
+ }
+}

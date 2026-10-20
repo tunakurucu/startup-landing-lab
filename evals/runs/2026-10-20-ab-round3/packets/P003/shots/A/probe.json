@@ -1,0 +1,80 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P003/A/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Heat water when power is cheap.Have it hot when you need it.",
+    "left": 16,
+    "right": 304,
+    "top": 199,
+    "bottom": 359,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 11,
+   "text_elements_under_12px": 1,
+   "body_text_length": 5670
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Heat water when power is cheap.Have it hot when you need it.",
+    "left": 16,
+    "right": 374,
+    "top": 199,
+    "bottom": 359,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 11,
+   "text_elements_under_12px": 1,
+   "body_text_length": 5670,
+   "axe": []
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Heat water when power is cheap.Have it hot when you need it.",
+    "left": 24,
+    "right": 744,
+    "top": 146,
+    "bottom": 238,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 11,
+   "text_elements_under_12px": 1,
+   "body_text_length": 5621
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Heat water when power is cheap.Have it hot when you need it.",
+    "left": 160,
+    "right": 1280,
+    "top": 146,
+    "bottom": 298,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 11,
+   "text_elements_under_12px": 1,
+   "body_text_length": 5621,
+   "axe": []
+  }
+ }
+}

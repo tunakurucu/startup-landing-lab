@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Commonread — your city council's agenda, in plain language</title>
+<meta name="description" content="Commonread turns Linden Falls city council agendas into short plain-language summaries and emails you when your street or a topic you follow comes up. Free, neutral, volunteer-checked.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23fff'/%3E%3Crect x='4' y='9' width='24' height='14' rx='2' fill='%23ffe24d'/%3E%3Crect x='4' y='19' width='24' height='4' fill='%231f4e79'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="#top" aria-label="Commonread, home"><span class="mark" aria-hidden="true"></span>Commonread</a>
+    <nav class="site-nav" aria-label="Page sections">
+      <a href="#how">How it works</a>
+      <a href="#summaries">This week's agenda</a>
+      <a href="#espanol" lang="es">En español</a>
+      <a href="#clerks">For clerks and funders</a>
+      <a class="nav-cta" href="#signup">Get alerts for your street</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-copy">
+      <h1>Know what your city council is about to decide, before the meeting.</h1>
+      <p class="lede">Linden Falls publishes its council agenda as a long PDF a few days before each meeting. Commonread reads it, writes each item in plain language, and emails you when your street or a topic you follow is on it.</p>
+
+      <form class="signup" id="signup" novalidate aria-labelledby="signup-title">
+        <h2 id="signup-title" class="visually-hidden">Sign up for alerts</h2>
+        <div class="row">
+          <div class="field" id="field-area">
+            <label for="area">Your neighbourhood</label>
+            <select id="area" name="area" required aria-describedby="area-error">
+              <option value="">Choose one</option>
+              <option value="Oakdale">Oakdale</option>
+              <option value="Mill District">Mill District</option>
+              <option value="Northside">Northside</option>
+              <option value="Riverview">Riverview</option>
+              <option value="Eastgate">Eastgate</option>
+              <option value="Downtown">Downtown</option>
+              <option value="Not sure">Not sure — all of Linden Falls</option>
+            </select>
+            <span class="error" id="area-error">Choose a neighbourhood so we know which items to send.</span>
+          </div>
+          <div class="field" id="field-email">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="email-error" placeholder="you@example.com">
+            <span class="error" id="email-error">Enter an email address we can send alerts to.</span>
+          </div>
+        </div>
+        <label class="check">
+          <input type="checkbox" id="es" name="es">
+          <span>Send the alert email in Spanish. <span class="es" lang="es">El aviso llega en español; el resumen, por ahora, en inglés.</span></span>
+        </label>
+        <div class="btn-row">
+          <button class="btn" type="submit">Send me alerts for my street</button>
+          <p class="fineprint">Free. At most one email per meeting. Reply "stop" to stop.</p>
+        </div>
+        <div class="signup-done" id="signup-done" role="status" aria-live="polite">
+          <p><strong>Almost there.</strong> Your email app should have opened with your request filled in. Send it and we'll add you to <span id="done-area">your neighbourhood</span>'s list by hand within a day. We're a small volunteer project; sign-up is still a person reading an inbox.</p>
+          <p class="manual">If nothing opened, email <a href="mailto:alerts@commonread.org">alerts@commonread.org</a> with your neighbourhood and we'll do the rest.</p>
+        </div>
+      </form>
+    </div>
+
+    <aside class="alert-sample" aria-labelledby="sample-cap">
+      <p class="caption" id="sample-cap">What an alert looks like. Pick a neighbourhood to see yours.</p>
+      <div class="alert-card" id="alert-card">
+        <div class="from">
+          <span>From: Commonread alerts</span>
+          <span id="alert-date">Thu, Oct 23</span>
+        </div>
+        <div class="subject" id="alert-subject">Oakdale is on next Tuesday's council agenda</div>
+        <div class="body">
+          <p id="alert-body">Item 7B: The council will hold a public hearing on changing the zoning of eight lots on <mark>Oakdale Avenue</mark> between 3rd and 5th Street, from single-family homes only to homes plus small shops. This is the first of two votes. Anyone can speak at the hearing.</p>
+          <p class="meta" id="alert-meta">Meeting: Tuesday, October 28, 6:30 pm, Council Chambers, 1 Civic Plaza.</p>
+        </div>
+        <div class="links">
+          <a href="#summaries">Read the full summary</a>
+          <a href="agenda/2026-10-28-item-7b.html">Open the original agenda item</a>
+        </div>
+      </div>
+      <p class="marker-legend"><i aria-hidden="true"></i> We highlight the street or topic that matched your alert.</p>
+    </aside>
+  </div>
+</section>
+
+<section class="section section-tint" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>From the agenda packet to a paragraph you can read in a minute</h2>
+      <p>Here is one real item from the October 28 agenda, next to the summary we sent. The original is always one click away, because the summary is a guide to the agenda, not a replacement for it.</p>
+    </div>
+
+    <div class="pair">
+      <div class="pair-col">
+        <p class="col-title"><strong>The agenda item</strong>, as the city publishes it (page 14 of 61)</p>
+        <div class="doc" aria-label="Excerpt from the city's agenda packet">
+          <div class="doc-head">
+            <strong>CITY OF LINDEN FALLS</strong>
+            <strong>CITY COUNCIL REGULAR MEETING</strong>
+            <span>TUESDAY, OCTOBER 28, 2026 — 6:30 P.M.</span>
+          </div>
+          <div class="doc-item">
+            <span class="doc-label">7. PUBLIC HEARINGS</span>
+          </div>
+          <div class="doc-item">
+            <span class="doc-label">7.B. ORDINANCE NO. 2026-118</span> — AN ORDINANCE OF THE CITY COUNCIL OF THE CITY OF LINDEN FALLS AMENDING TITLE 14 (ZONING) OF THE MUNICIPAL CODE AND THE OFFICIAL ZONING MAP TO REZONE ASSESSOR PARCELS 031-22-004 THROUGH 031-22-011, INCLUSIVE, LOCATED ON THE NORTH SIDE OF OAKDALE AVENUE BETWEEN THIRD STREET AND FIFTH STREET, FROM R-1 (SINGLE-FAMILY RESIDENTIAL) TO MU-2 (NEIGHBORHOOD MIXED USE), AND MAKING FINDINGS PURSUANT TO SECTION 14.90.040 THEREOF (PLN-2026-0412; APPLICANT: THIRD &amp; OAKDALE PARTNERS, LLC).
+          </div>
+          <div class="doc-item">
+            <span class="doc-label">RECOMMENDED ACTION:</span> Conduct the public hearing; adopt Resolution No. 2026-77 making the findings required by Section 14.90.040; waive full reading and introduce Ordinance No. 2026-118 by title only; and direct staff to return the ordinance for second reading and adoption.
+          </div>
+          <div class="doc-item">
+            <span class="doc-label">FISCAL IMPACT:</span> None to the General Fund. Applicant has paid processing fees in full per Resolution No. 2025-14.
+          </div>
+          <div class="doc-item doc-ref">Attachments: (1) Draft Ordinance; (2) Planning Commission Resolution PC-2026-19; (3) Staff Report; (4) Public Comments Received as of 10/16/2026.</div>
+          <div class="doc-foot">Agenda Packet Page 14 of 61 &nbsp;·&nbsp; Posted 10/23/2026 per Gov. Code §54954.2</div>
+        </div>
+      </div>
+
+      <div class="pair-col">
+        <p class="col-title"><strong>The Commonread summary</strong>, checked by a volunteer</p>
+        <article class="summary">
+          <p class="status" data-state="checked"><span class="dot" aria-hidden="true"></span>Checked against the original by Dana R. (volunteer), Oct 24</p>
+          <h3>Rezoning eight lots on Oakdale Avenue</h3>
+          <dl>
+            <dt>What's being decided</dt>
+            <dd>Whether to change the zoning of eight lots on the north side of <mark>Oakdale Avenue</mark>, between 3rd and 5th Street, from "single-family homes only" to "neighbourhood mixed use", which allows homes together with small shops or offices. A private developer asked for the change. The Planning Commission has already recommended it.</dd>
+            <dt>What happens at this meeting</dt>
+            <dd>A public hearing, then a first vote. If it passes, a second vote at a later meeting would make it final.</dd>
+            <dt>How to take part</dt>
+            <dd>Speak at the hearing (sign up at the chamber door before 6:30 pm) or email the city clerk before the meeting. Public comments received so far are in the packet.</dd>
+            <dt>Cost to the city</dt>
+            <dd>Staff say none; the applicant paid the fees.</dd>
+          </dl>
+          <div class="src">
+            <a href="agenda/2026-10-28-item-7b.html">Open the original agenda item</a>
+            <a href="mailto:corrections@commonread.org?subject=Correction%3A%20Oct%2028%20item%207B">Report an error in this summary</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="made">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>How each summary is made</h2>
+      <p>We're open about the process because you should know how much to trust what you read, and because city staff and funders ask.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>The agenda is posted</h3>
+        <p>The city clerk publishes the packet, usually 72 hours before the meeting, as a PDF. We download it the same day. <strong>We only work from the city's own posted document.</strong></p>
+      </div>
+      <div class="step">
+        <h3>A language model writes a first draft</h3>
+        <p>Each item gets a draft summary in a fixed shape: what's being decided, what happens at this meeting, how to take part, cost. The draft is never published on its own.</p>
+      </div>
+      <div class="step">
+        <h3>A volunteer checks it against the original</h3>
+        <p>A trained volunteer reads the draft next to the agenda text, fixes anything wrong or missing, and signs it. <strong>Every summary shows who checked it and when.</strong> If an item hasn't been checked yet, it says so.</p>
+      </div>
+    </div>
+    <div class="neutral">
+      <h3>What a summary never does</h3>
+      <p>It never says whether a decision is good or bad, and never recommends how to vote or what to tell the council. It describes what's on the agenda, who it affects and how to take part. Volunteers who are involved in an item, for or against, don't check that item.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint" id="summaries">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>This week's agenda, summarised</h2>
+      <p>Everything on the next regular meeting, in the order the council will take it. The full packet is 61 pages; this is all of it in about four minutes.</p>
+    </div>
+    <div class="meeting-bar">
+      <h3>Regular meeting — Tuesday, October 28, 2026, 6:30 pm</h3>
+      <span>Council Chambers, 1 Civic Plaza · <a href="agenda/2026-10-28-item-7b.html">City's posted agenda</a></span>
+    </div>
+    <ol class="items">
+      <li class="item">
+        <div class="where"><b>Items 5A–5B</b> Consent</div>
+        <div>
+          <h3>Approving the minutes and routine payments</h3>
+          <p>The council will approve, in one vote and without discussion, the minutes of the October 14 meeting and $1.9 million in routine bills already budgeted. Any council member can pull an item off the consent list for discussion.</p>
+          <div class="foot"><span class="tags"><span class="tag">Citywide</span></span><span class="checked">Checked by Dana R., Oct 24</span><a href="agenda/2026-10-28-item-7b.html#item-5a">Original item</a></div>
+        </div>
+      </li>
+      <li class="item">
+        <div class="where"><b>Item 6A</b> Presentation</div>
+        <div>
+          <h3>Update on the Mill Street bridge repairs</h3>
+          <p>Public Works will report on the bridge closure. No vote. The report in the packet says the bridge is expected to reopen to one lane in late November, and that the detour via Canal Road stays until then.</p>
+          <div class="foot"><span class="tags"><span class="tag">Mill District</span><span class="tag">Roads</span></span><span class="checked">Checked by Luis M., Oct 24</span><a href="agenda/2026-10-28-item-7b.html#item-6a">Original item</a></div>
+        </div>
+      </li>
+      <li class="item">
+        <div class="where"><b>Item 7B</b> Public hearing</div>
+        <div>
+          <h3>Rezoning eight lots on Oakdale Avenue</h3>
+          <p>A public hearing and first vote on changing eight lots on Oakdale Avenue, between 3rd and 5th Street, from single-family homes only to homes plus small shops. Anyone can speak. A second vote at a later meeting would make it final.</p>
+          <div class="foot"><span class="tags"><span class="tag">Oakdale</span><span class="tag">Zoning</span><span class="tag">Housing</span></span><span class="checked">Checked by Dana R., Oct 24</span><a href="agenda/2026-10-28-item-7b.html">Original item</a></div>
+        </div>
+      </li>
+      <li class="item">
+        <div class="where"><b>Item 8A</b> Business</div>
+        <div>
+          <h3>Paid parking on weekends in the Riverview lot</h3>
+          <p>The council will vote on charging $2 an hour on Saturdays and Sundays in the Riverview public lot, which is free today. Staff estimate it would bring in about $140,000 a year, set aside for lot maintenance. Residents with a permit would keep parking free.</p>
+          <div class="foot"><span class="tags"><span class="tag">Riverview</span><span class="tag">Parking</span></span><span class="checked">Checked by Priya S., Oct 24</span><a href="agenda/2026-10-28-item-7b.html#item-8a">Original item</a></div>
+        </div>
+      </li>
+      <li class="item">
+        <div class="where"><b>Item 8B</b> Business</div>
+        <div>
+          <h3>Hiring a contractor for the Northside library roof</h3>
+          <p>A vote to award a $412,000 contract to replace the roof of the Northside branch library, using money already set aside in this year's budget. Work would run January to March; the branch would stay open.</p>
+          <div class="foot"><span class="tags"><span class="tag">Northside</span><span class="tag">Library</span></span><span class="draft">Draft, not yet checked by a volunteer</span><a href="agenda/2026-10-28-item-7b.html#item-8b">Original item</a></div>
+        </div>
+      </li>
+    </ol>
+    <p class="items-foot">Items that are only about city staff procedure are summarised in one line. Nothing is left out.</p>
+  </div>
+</section>
+
+<section class="section espanol" id="espanol" lang="es">
+  <div class="wrap">
+    <div>
+      <h2>Si hablas español en casa</h2>
+      <p>Una de cada tres familias en Linden Falls habla español en casa. Queremos que Commonread sirva también en español, y preferimos decirte con claridad qué está listo y qué no.</p>
+      <ul class="status-list">
+        <li><span class="yes" aria-hidden="true">✓</span><span><strong>El aviso por correo</strong> (el mensaje que te dice que tu calle está en la agenda) puede llegar en español. Marca la casilla al registrarte.</span></li>
+        <li><span class="no" aria-hidden="true">✕</span><span><strong>Los resúmenes</strong> todavía están solo en inglés. No publicamos traducciones automáticas sin que una persona las revise, y por ahora no tenemos suficientes voluntarios bilingües.</span></li>
+        <li><span class="yes" aria-hidden="true">✓</span><span><strong>El documento original</strong> de la ciudad siempre está enlazado, y en las audiencias públicas puedes pedir intérprete al secretario municipal con 48 horas de anticipación.</span></li>
+      </ul>
+      <p class="mt">¿Eres bilingüe y tienes una hora cada dos semanas? Escríbenos a <a href="mailto:hola@commonread.org">hola@commonread.org</a>.</p>
+    </div>
+    <div class="en-aside" lang="en">
+      <h3>In English</h3>
+      <p>About a third of Linden Falls households speak Spanish at home. Alert emails can be sent in Spanish now. Summaries are English-only until we have enough bilingual volunteers to check translations; we don't publish unchecked machine translation. If you can help, write to <a href="mailto:hola@commonread.org">hola@commonread.org</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint" id="clerks">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>For city clerks and funders: where we are</h2>
+      <p>Commonread is a volunteer nonprofit project in its first pilot. We'd rather show you the honest state of things than a logo wall.</p>
+    </div>
+    <div class="status-grid">
+      <div>
+        <h3>The pilot</h3>
+        <table class="plain-table">
+          <tr><th scope="row">City</th><td>Linden Falls (one city so far)</td></tr>
+          <tr><th scope="row">Meetings covered</th><td>Every regular council meeting since September 2026</td></tr>
+          <tr><th scope="row">Partner cities</th><td>None yet</td></tr>
+          <tr><th scope="row">Funding</th><td>None yet; run by volunteers</td></tr>
+          <tr><th scope="row">Readers</th><td>Too few to quote honestly; we'll publish counts once sign-up is automated</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3>What we ask of a city</h3>
+        <ul>
+          <li>Nothing you don't already do. We work from the agenda packet you post publicly.</li>
+          <li>A contact in the clerk's office we can send corrections to, and who can send them to us.</li>
+          <li>Permission to say "we summarise the City of X's agenda". We never use the city seal or imply the city wrote the summaries.</li>
+        </ul>
+        <p class="mt-sm"><strong>If there's an error</strong> in a summary we fix it within one working day and leave a note on the summary saying what changed.</p>
+      </div>
+      <div>
+        <h3>What would help next</h3>
+        <ul>
+          <li>Automated sign-up and sending, so a volunteer isn't adding emails by hand.</li>
+          <li>Bilingual volunteers to check Spanish summaries.</li>
+          <li>A second city with a clerk willing to try it, ideally one that posts its packets as text rather than scans.</li>
+        </ul>
+        <p class="mt-sm">Talk to us: <a href="mailto:hello@commonread.org">hello@commonread.org</a>. We'll send the checking guidelines our volunteers use and a sample of corrected summaries.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <h3>Commonread</h3>
+      <p>Council agendas in plain language, with the original one click away. A volunteer nonprofit project piloting in Linden Falls.</p>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <ul>
+        <li><a href="mailto:alerts@commonread.org">alerts@commonread.org</a> — sign up or stop</li>
+        <li><a href="mailto:corrections@commonread.org">corrections@commonread.org</a></li>
+        <li><a href="mailto:hello@commonread.org">hello@commonread.org</a> — cities, funders, volunteers</li>
+      </ul>
+    </div>
+    <div>
+      <h3>How we handle your email</h3>
+      <ul>
+        <li>Used only to send alerts you asked for.</li>
+        <li>Never sold or shared, including with the city.</li>
+        <li>Deleted when you reply "stop".</li>
+      </ul>
+    </div>
+    <p class="legal">Commonread is independent and not part of the City of Linden Falls. The city's own posted agenda is the official record; our summaries are a reading aid and may contain errors, which we correct publicly. Summaries are drafted by a language model and checked by volunteers before publication, unless marked as unchecked drafts.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1401 @@
+Binary files /home/claude/startup-landing-lab/evals/round3/fixtures/redesign/icon-180.png and /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P007/B/icon-180.png differ
+diff -ruN -x BRIEF.md -x shots -x '*.log' -x 'check*.json' /home/claude/startup-landing-lab/evals/round3/fixtures/redesign/index.html /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P007/B/index.html
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/redesign/index.html	2026-10-20 02:28:53.816650811 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P007/B/index.html	2026-10-20 05:13:37.590626519 +0000
+@@ -2,145 +2,249 @@
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-  <title>Shiftnote - The All-in-One Platform for Restaurant Teams</title>
+-  <meta name="description" content="Shiftnote helps restaurant teams streamline communication and boost accountability.">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <title>Shift handover logbook for restaurant managers – Shiftnote</title>
++  <meta name="description" content="Shiftnote is a shared shift logbook for restaurant managers: what ran out, who called in and what needs fixing, written at close on a phone and read by whoever opens.">
++  <meta name="theme-color" content="#FFFFFF">
++  <meta property="og:type" content="website">
++  <meta property="og:site_name" content="Shiftnote">
++  <meta property="og:title" content="Nothing from tonight's close gets lost by tomorrow's open">
++  <meta property="og:description" content="A shift logbook for restaurant managers. What ran out, who called in, what needs fixing: written on a phone at close, read by whoever opens, owned until it's handled.">
++  <meta property="og:image" content="https://www.shiftnote.example/share.png">
++  <meta property="og:image:width" content="1200">
++  <meta property="og:image:height" content="630">
++  <meta name="twitter:card" content="summary_large_image">
++  <meta name="twitter:title" content="Nothing from tonight's close gets lost by tomorrow's open">
++  <meta name="twitter:description" content="A shift logbook for restaurant managers, written at close and read at open.">
++  <meta name="twitter:image" content="https://www.shiftnote.example/share.png">
+   <link rel="icon" href="logo.svg" type="image/svg+xml">
++  <link rel="apple-touch-icon" href="icon-180.png">
+   <link rel="stylesheet" href="styles.css">
+ </head>
+ <body>
+   <header class="site-header">
+-    <div class="container header-inner">
+-      <a href="#" class="logo">
++    <div class="wrap header-row">
++      <a href="#top" class="brand" aria-label="Shiftnote home">
+         <img src="logo.svg" alt="" width="32" height="32">
+         <span>Shiftnote</span>
+       </a>
+-      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+-        <span></span><span></span><span></span>
+-      </button>
+-      <nav id="site-nav" class="site-nav">
+-        <a href="#features">Features</a>
+-        <a href="#testimonials">Testimonials</a>
+-        <a href="#cta">Pricing</a>
+-        <a href="#" class="btn btn-primary btn-sm">Get started</a>
++      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
++      <nav id="site-nav" class="site-nav" aria-label="Site">
++        <a href="#how">How it works</a>
++        <a href="#goes-in">What goes in it</a>
++        <a href="https://app.shiftnote.example/signup" class="btn btn-primary btn-small">Start a free trial</a>
+       </nav>
+     </div>
+   </header>
+ 
+-  <main>
+-    <section class="hero">
+-      <div class="blob" aria-hidden="true"></div>
+-      <div class="container hero-inner">
+-        <span class="badge">&#10024; Now with smart checklists</span>
+-        <h1>Supercharge your <span class="gradient-text">restaurant operations</span></h1>
+-        <p class="lead">The all-in-one platform for seamless shift handoffs. Streamline communication, boost accountability, and empower your team to deliver exceptional experiences.</p>
+-        <div class="hero-actions">
+-          <a href="#" class="btn btn-primary">Get started</a>
+-          <a href="#features" class="btn btn-secondary">Learn more</a>
+-        </div>
+-        <div class="mockup" aria-hidden="true">
+-          <div class="mockup-bar"><i></i><i></i><i></i></div>
+-          <div class="mockup-body">
+-            <div class="mockup-side">
+-              <b></b><b></b><b></b><b></b>
+-            </div>
+-            <div class="mockup-main">
+-              <div class="mockup-row wide"></div>
+-              <div class="mockup-cards"><div></div><div></div><div></div></div>
+-              <div class="mockup-row"></div>
+-              <div class="mockup-row short"></div>
+-            </div>
++  <main id="top">
++    <section class="hero" aria-labelledby="promise">
++      <div class="wrap hero-grid">
++        <div class="hero-copy">
++          <h1 id="promise">Nothing from tonight’s close gets lost by tomorrow’s open.</h1>
++          <p class="lead">Shiftnote is a shift logbook for restaurant managers. Write what ran out, who called in and what needs fixing on your phone at close; whoever opens reads it first thing, and every item keeps an owner until it’s handled.</p>
++          <div class="action-row">
++            <a href="https://app.shiftnote.example/signup" class="btn btn-primary">Start a free trial</a>
++            <p class="action-note">Opens the signup page at <a href="https://app.shiftnote.example/signup">app.shiftnote.example</a>. No sales call; you set it up yourself.</p>
+           </div>
+         </div>
+-      </div>
+-    </section>
+ 
+-    <section class="logos">
+-      <div class="container">
+-        <p class="logos-title">Trusted by leading restaurants</p>
+-        <ul class="logo-strip">
+-          <li>The Copper Pot</li>
+-          <li>Harbor &amp; Vine</li>
+-          <li>Saltgrass Kitchen</li>
+-          <li>Little Fig</li>
+-          <li>Brasa Group</li>
+-          <li>Northside Diner</li>
+-        </ul>
++        <figure class="note" aria-labelledby="note-title">
++          <div class="note-head">
++            <div class="note-kind" id="note-title">Close note</div>
++            <div class="note-meta">Tue 14 Oct · 10:52 pm · Priya M.</div>
++          </div>
++          <ol class="entries">
++            <li class="entry" data-state="info">
++              <div class="entry-top"><span class="tag">86</span><span class="entry-when">10:41 pm</span></div>
++              <p>Halibut special is gone. Short rib: 2 portions left, so keep it off the board.</p>
++              <div class="entry-foot"><span class="state">For whoever opens</span></div>
++            </li>
++            <li class="entry" data-state="open" data-item="Walk-in at 41°F">
++              <div class="entry-top"><span class="tag">Repair</span><span class="entry-when">10:44 pm</span></div>
++              <p>Walk-in reading 41°F at close. Reliable Refrigeration is coming Wed 10 am. Someone has to be in by 9:30 to let them in.</p>
++              <div class="entry-foot">
++                <span class="state" data-state-text>Open · Sam, opening Wed</span>
++                <button type="button" class="btn btn-ghost" data-handle>Mark handled</button>
++              </div>
++            </li>
++            <li class="entry" data-state="handled">
++              <div class="entry-top"><span class="tag">Staff</span><span class="entry-when">10:47 pm</span></div>
++              <p>Dani called out for Wed lunch. Marco is covering, confirmed by text.</p>
++              <div class="entry-foot"><span class="state">Handled · Marco, 7:10 am</span></div>
++            </li>
++            <li class="entry" data-state="open" data-item="Deposit in the safe">
++              <div class="entry-top"><span class="tag">Cash</span><span class="entry-when">10:50 pm</span></div>
++              <p>Deposit bag is in the safe, not dropped. The bank was closed by the time we counted.</p>
++              <div class="entry-foot">
++                <span class="state" data-state-text>Open · Sam, opening Wed</span>
++                <button type="button" class="btn btn-ghost" data-handle>Mark handled</button>
++              </div>
++            </li>
++            <li class="entry" data-state="info">
++              <div class="entry-top"><span class="tag">Guest</span><span class="entry-when">10:52 pm</span></div>
++              <p>Table 12 waited 40 minutes for mains. Comped two desserts; they were fine by the end.</p>
++              <div class="entry-foot"><span class="state">For whoever opens</span></div>
++            </li>
++          </ol>
++          <figcaption class="note-caption">Sample note, read as Sam on Wednesday morning. The restaurant and the people are made up; nothing you press here is saved or sent.</figcaption>
++          <p class="sr-only" role="status" aria-live="polite" id="note-status"></p>
++        </figure>
++
++        <p class="hero-status">Shiftnote is new, so there are no customer names or quotes on this page. The sample note is the kind of thing it was built for; press “Mark handled” on an open item to see what the closer sees next morning.</p>
+       </div>
+     </section>
+ 
+-    <section id="features" class="features">
+-      <div class="container">
+-        <h2 class="section-title">Everything your team needs</h2>
+-        <p class="section-sub">Powerful features designed to help you work smarter, not harder.</p>
+-        <div class="feature-grid">
+-          <article class="card">
+-            <div class="icon">
+-              <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
++    <section class="section" id="how" aria-labelledby="how-title">
++      <div class="wrap">
++        <div class="section-head">
++          <h2 id="how-title">One note, written once, read by three people who need different things from it.</h2>
++          <p>The closing manager writes it. The opening manager reads it before the first ticket. The owner reads the week, later, on a laptop.</p>
++        </div>
++
++        <article class="step" aria-labelledby="step1">
++          <div>
++            <span class="step-num">STEP 1 · 10:52 PM</span>
++            <h3 id="step1">Close writes it before the lights go off.</h3>
++            <p>Pick what kind of thing it is, type it the way you’d text it, and say who it’s for. The note is built so a close takes about as long as a text thread, with none of the scrolling.</p>
++          </div>
++          <div class="step-art">
++            <div class="composer">
++              <div class="composer-head">
++                <b>New entry</b>
++                <span class="note-meta">Tue 14 Oct · 10:52 pm · Priya M.</span>
++              </div>
++              <div class="composer-body">
++                <ul class="chips" aria-label="Kind of entry">
++                  <li><button type="button" class="chip" aria-pressed="true" data-chip="86">86</button></li>
++                  <li><button type="button" class="chip" aria-pressed="false" data-chip="Staff">Staff</button></li>
++                  <li><button type="button" class="chip" aria-pressed="false" data-chip="Repair">Repair</button></li>
++                  <li><button type="button" class="chip" aria-pressed="false" data-chip="Cash">Cash</button></li>
++                  <li><button type="button" class="chip" aria-pressed="false" data-chip="Guest">Guest</button></li>
++                </ul>
++                <label class="field" for="entry-text">
++                  <span>What does the next shift need to know?</span>
++                  <input id="entry-text" type="text" value="Out of burrata. Sub the stracciatella on the beet salad." autocomplete="off">
++                </label>
++                <div class="composer-foot">
++                  <button type="button" class="btn btn-ghost" id="add-entry">Add to tonight’s note</button>
++                  <p class="hint">Goes to whoever opens Wed. Sample only; nothing is sent.</p>
++                </div>
++              </div>
++              <div class="so-far">
++                <h4>Tonight’s note so far</h4>
++                <ol id="so-far-list"></ol>
++                <p class="empty" id="so-far-empty">Nothing added yet. Add the entry above to see it land here.</p>
++              </div>
++              <p class="sr-only" role="status" aria-live="polite" id="composer-status"></p>
+             </div>
+-            <h3>Real-time sync</h3>
+-            <p>Keep everyone on the same page with instant updates across all your devices and locations.</p>
+-          </article>
+-          <article class="card">
+-            <div class="icon">
+-              <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
++          </div>
++        </article>
++
++        <article class="step" aria-labelledby="step2">
++          <div>
++            <span class="step-num">STEP 2 · 9:38 AM</span>
++            <h3 id="step2">Open reads it before the first ticket.</h3>
++            <p>Whoever opens sees the items with their name on them first, then the rest of the note. Marking something handled puts a name and a time on it, so the closer doesn’t have to ask.</p>
++          </div>
++          <div class="step-art">
++            <div class="opening">
++              <div class="opening-head">
++                <span class="greet">Wed 15 Oct · Sam opened the note</span>
++                <span class="count">2 open items from Priya’s close</span>
++              </div>
++              <ul>
++                <li><span class="tag">Repair</span><span>Walk-in at 41°F; tech coming 10 am. Be in by 9:30.</span><span class="from">Priya · 10:44 pm · open, yours</span></li>
++                <li><span class="tag">Cash</span><span>Deposit bag is in the safe, not dropped.</span><span class="from">Priya · 10:50 pm · open, yours</span></li>
++                <li class="read"><span class="tag">86</span><span>Halibut gone; short rib has 2 left.</span><span class="from">for info</span></li>
++                <li class="read"><span class="tag">Staff</span><span>Dani out Wed lunch; Marco covering.</span><span class="from">handled by Marco, 7:10 am</span></li>
++              </ul>
+             </div>
+-            <h3>Smart checklists</h3>
+-            <p>Automate repetitive tasks and ensure nothing falls through the cracks with intelligent checklists.</p>
+-          </article>
+-          <article class="card">
+-            <div class="icon">
+-              <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
++          </div>
++        </article>
++
++        <article class="step" aria-labelledby="step3">
++          <div>
++            <span class="step-num">STEP 3 · FRIDAY</span>
++            <h3 id="step3">The owner reads the week, not the chat.</h3>
++            <p>Every entry from every close, with who wrote it, who owned it and when it was handled. The ones nobody picked up are the ones that show.</p>
++          </div>
++          <div class="step-art">
++            <div class="week">
++              <div class="week-head">
++                <b>Week of 13 Oct</b>
++                <span class="note-meta">Two Forks Kitchen · 5 closes · 2 still open</span>
++              </div>
++              <div class="week-scroll">
++                <table>
++                  <thead>
++                    <tr><th scope="col">Entry</th><th scope="col">Written</th><th scope="col">Owner</th><th scope="col">Status</th></tr>
++                  </thead>
++                  <tbody>
++                    <tr><td>Walk-in at 41°F, tech called</td><td class="when">Tue close · Priya</td><td>Sam</td><td><span class="st st-done">Handled Wed 10:40 am</span></td></tr>
++                    <tr><td>Deposit bag in the safe</td><td class="when">Tue close · Priya</td><td>Sam</td><td><span class="st st-done">Handled Wed 9:50 am</span></td></tr>
++                    <tr><td>Dani out, Marco covering</td><td class="when">Tue close · Priya</td><td>Marco</td><td><span class="st st-done">Handled Wed 7:10 am</span></td></tr>
++                    <tr><td>Dish machine low on rinse aid</td><td class="when">Thu close · Sam</td><td class="nobody">nobody yet</td><td><span class="st st-open">Open 2 days</span></td></tr>
++                    <tr><td>Patio heater 3 won’t light</td><td class="when">Fri close · Priya</td><td>Owner</td><td><span class="st st-open">Open</span></td></tr>
++                  </tbody>
++                </table>
++              </div>
++              <div class="week-caption">Sample week. The owner usually reads this one on a laptop; on a phone it stacks.</div>
+             </div>
+-            <h3>Powerful analytics</h3>
+-            <p>Unlock actionable insights into your operations and make data-driven decisions with confidence.</p>
+-          </article>
+-        </div>
++          </div>
++        </article>
+       </div>
+     </section>
+ 
+-    <section id="testimonials" class="testimonials">
+-      <div class="container">
+-        <h2 class="section-title">Loved by teams everywhere</h2>
+-        <div class="testimonial-grid">
+-          <figure class="testimonial">
+-            <blockquote>&ldquo;Shiftnote completely transformed how our team communicates. I can't imagine running a shift without it.&rdquo;</blockquote>
+-            <figcaption><span class="avatar">MG</span><span><strong>Maria G.</strong><br>General Manager</span></figcaption>
+-          </figure>
+-          <figure class="testimonial">
+-            <blockquote>&ldquo;A total game-changer. Our handoffs are faster, smoother and more organized than ever before.&rdquo;</blockquote>
+-            <figcaption><span class="avatar">JT</span><span><strong>James T.</strong><br>Restaurant Owner</span></figcaption>
+-          </figure>
+-          <figure class="testimonial">
+-            <blockquote>&ldquo;Easy to use and super intuitive. The whole team was up and running in minutes!&rdquo;</blockquote>
+-            <figcaption><span class="avatar">SK</span><span><strong>Sarah K.</strong><br>Kitchen Manager</span></figcaption>
+-          </figure>
++    <section class="section" id="goes-in" aria-labelledby="goes-in-title">
++      <div class="wrap">
++        <div class="section-head">
++          <h2 id="goes-in-title">Five kinds of entry cover most of what gets lost between shifts.</h2>
++        </div>
++        <div class="scope">
++          <ul class="kinds">
++            <li><span class="tag">86</span><p><b>What ran out, and what’s nearly out.</b> So the opener fixes the board before the first table asks.</p></li>
++            <li><span class="tag">Staff</span><p><b>Call-outs, swaps and no-shows.</b> Who’s covering, and whether they confirmed.</p></li>
++            <li><span class="tag">Repair</span><p><b>Anything broken, and who’s been called.</b> Walk-ins, dish machines, heaters, the one toilet.</p></li>
++            <li><span class="tag">Cash</span><p><b>Deposits, over/short, the safe.</b> Where the money is when the closer isn’t.</p></li>
++            <li><span class="tag">Guest</span><p><b>Complaints, comps and the regular who’s coming back.</b> What was promised, so it gets kept.</p></li>
++          </ul>
++          <aside class="stays-out" aria-labelledby="stays-out-title">
++            <h3 id="stays-out-title">What stays out</h3>
++            <p>Schedules, the POS, inventory counts and payroll stay where they are. Shiftnote is the book between shifts, not another system to run.</p>
++            <p>It’s built for the manager on a phone at 11 pm and the owner on a laptop on Friday.</p>
++          </aside>
+         </div>
+       </div>
+     </section>
+ 
+-    <section id="cta" class="cta">
+-      <div class="container cta-inner">
+-        <h2>Ready to transform your shifts?</h2>
+-        <p>Join thousands of restaurant professionals who trust Shiftnote every day.</p>
+-        <a href="#" class="btn btn-light">Get started</a>
++    <section class="closing" aria-labelledby="closing-title">
++      <div class="wrap">
++        <div class="closing-inner">
++          <h2 id="closing-title">Try it on tonight’s close.</h2>
++          <p>Open the signup page on your phone, write tonight’s note, and let whoever opens tomorrow read it.</p>
++          <div class="action-row">
++            <a href="https://app.shiftnote.example/signup" class="btn btn-primary">Start a free trial</a>
++            <p class="action-note">Opens the signup page at app.shiftnote.example. No sales call.</p>
++          </div>
++        </div>
+       </div>
+     </section>
+   </main>
+ 
+   <footer class="site-footer">
+-    <div class="container footer-inner">
+-      <a href="#" class="logo logo-footer">
+-        <img src="logo.svg" alt="" width="24" height="24">
++    <div class="wrap footer-row">
++      <a href="#top" class="brand" aria-label="Shiftnote home">
++        <img src="logo.svg" alt="" width="24" height="24" loading="lazy">
+         <span>Shiftnote</span>
+       </a>
+       <nav class="footer-nav" aria-label="Footer">
+-        <a href="#features">Features</a>
+-        <a href="#testimonials">Testimonials</a>
+-        <a href="#">Privacy</a>
+-        <a href="#">Terms</a>
++        <a href="#how">How it works</a>
++        <a href="#goes-in">What goes in it</a>
++        <a href="https://app.shiftnote.example/signup">Start a free trial</a>
+       </nav>
+-      <p class="copyright">&copy; 2026 Shiftnote. All rights reserved.</p>
++      <p class="footer-note">Every note, name and restaurant on this page is a sample. Shiftnote has no customer logos or quotes to show yet, so it doesn’t show any.</p>
++      <p class="copyright">© 2026 Shiftnote</p>
+     </div>
+   </footer>
+ 
+diff -ruN -x BRIEF.md -x shots -x '*.log' -x 'check*.json' /home/claude/startup-landing-lab/evals/round3/fixtures/redesign/script.js /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P007/B/script.js
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/redesign/script.js	2026-10-20 02:28:53.817329865 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P007/B/script.js	2026-10-20 05:11:35.938629301 +0000
+@@ -1,17 +1,111 @@
+-// Mobile menu
+-const toggle = document.querySelector('.menu-toggle');
+-const nav = document.getElementById('site-nav');
++// Shiftnote homepage. Everything here is local: nothing is saved or sent.
++(function () {
++  'use strict';
+ 
+-toggle.addEventListener('click', () => {
+-  const open = nav.classList.toggle('is-open');
+-  toggle.setAttribute('aria-expanded', String(open));
+-  toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+-});
++  // --- Mobile menu ---------------------------------------------------------
++  var toggle = document.querySelector('.menu-toggle');
++  var nav = document.getElementById('site-nav');
++  if (toggle && nav) {
++    toggle.addEventListener('click', function () {
++      var open = nav.classList.toggle('is-open');
++      toggle.setAttribute('aria-expanded', String(open));
++      toggle.textContent = open ? 'Close' : 'Menu';
++    });
++    nav.querySelectorAll('a').forEach(function (link) {
++      link.addEventListener('click', function () {
++        nav.classList.remove('is-open');
++        toggle.setAttribute('aria-expanded', 'false');
++        toggle.textContent = 'Menu';
++      });
++    });
++    document.addEventListener('keydown', function (e) {
++      if (e.key === 'Escape' && nav.classList.contains('is-open')) {
++        nav.classList.remove('is-open');
++        toggle.setAttribute('aria-expanded', 'false');
++        toggle.textContent = 'Menu';
++        toggle.focus();
++      }
++    });
++  }
+ 
+-nav.querySelectorAll('a').forEach((link) => {
+-  link.addEventListener('click', () => {
+-    nav.classList.remove('is-open');
+-    toggle.setAttribute('aria-expanded', 'false');
+-    toggle.setAttribute('aria-label', 'Open menu');
++  // --- The close note: mark an open item handled, and undo it --------------
++  var noteStatus = document.getElementById('note-status');
++  document.querySelectorAll('.entry [data-handle]').forEach(function (button) {
++    var entry = button.closest('.entry');
++    var stateText = entry.querySelector('[data-state-text]');
++    var original = stateText.textContent;
++    var item = entry.getAttribute('data-item') || 'Item';
++    button.addEventListener('click', function () {
++      var handled = entry.getAttribute('data-state') === 'handled';
++      if (handled) {
++        entry.setAttribute('data-state', 'open');
++        stateText.textContent = original;
++        button.textContent = 'Mark handled';
++        if (noteStatus) noteStatus.textContent = item + ' is open again, with Sam.';
++      } else {
++        entry.setAttribute('data-state', 'handled');
++        stateText.textContent = 'Handled · Sam, ' + clock();
++        button.textContent = 'Undo';
++        if (noteStatus) noteStatus.textContent = item + ' marked handled by Sam at ' + clock() + '. Priya will see that when she next opens the note.';
++      }
++    });
+   });
+-});
++
++  // --- The composer: pick a kind, type an entry, add it to tonight's note --
++  var chips = document.querySelectorAll('.chip[data-chip]');
++  var kind = '86';
++  chips.forEach(function (chip) {
++    chip.addEventListener('click', function () {
++      chips.forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
++      chip.setAttribute('aria-pressed', 'true');
++      kind = chip.getAttribute('data-chip');
++    });
++  });
++  var input = document.getElementById('entry-text');
++  var addButton = document.getElementById('add-entry');
++  var list = document.getElementById('so-far-list');
++  var empty = document.getElementById('so-far-empty');
++  var composerStatus = document.getElementById('composer-status');
++  var suggestions = [
++    'Patio heater 3 won’t light. Told the Friday crew to keep table 9 and 10 off until it’s looked at.',
++    'Dish machine is low on rinse aid. Order is in; use the backup jug under the sink.',
++    'Mrs. Alvarez booked the big table for Sat 7 pm and asked for the corner again.'
++  ];
++  var next = 0;
++  function addEntry() {
++    if (!input || !list) return;
++    var text = input.value.trim();
++    if (!text) {
++      if (composerStatus) composerStatus.textContent = 'Write something first.';
++      input.focus();
++      return;
++    }
++    var li = document.createElement('li');
++    var tag = document.createElement('span');
++    tag.className = 'tag';
++    tag.textContent = kind;
++    var body = document.createElement('span');
++    body.textContent = text;
++    var meta = document.createElement('small');
++    meta.textContent = clock() + ' · Priya M. · open, for whoever opens Wed';
++    li.appendChild(tag);
++    li.appendChild(body);
++    li.appendChild(meta);
++    list.appendChild(li);
++    if (empty) empty.hidden = true;
++    if (composerStatus) composerStatus.textContent = 'Added a ' + kind + ' entry to tonight’s note: ' + text;
++    input.value = suggestions[next % suggestions.length];
++    next += 1;
++  }
++  if (addButton) addButton.addEventListener('click', addEntry);
++  if (input) input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); addEntry(); } });
++
++  function clock() {
++    var d = new Date();
++    var h = d.getHours();
++    var m = d.getMinutes();
++    var suffix = h >= 12 ? 'pm' : 'am';
++    h = h % 12 || 12;
++    return h + ':' + (m < 10 ? '0' : '') + m + ' ' + suffix;
++  }
++})();
+Binary files /home/claude/startup-landing-lab/evals/round3/fixtures/redesign/share.png and /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P007/B/share.png differ
+diff -ruN -x BRIEF.md -x shots -x '*.log' -x 'check*.json' /home/claude/startup-landing-lab/evals/round3/fixtures/redesign/styles.css /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P007/B/styles.css
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/redesign/styles.css	2026-10-20 02:28:53.817329865 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P007/B/styles.css	2026-10-20 05:14:57.558624690 +0000
+@@ -1,587 +1,385 @@
+-/* Shiftnote brand */
++/* Shiftnote — tokens
++   Brand: indigo (action, the current reader) and coral (an open item that still needs someone).
++   Ground: white, the colour of the note itself. Fine rules do the grouping; no shadows. */
+ :root {
+-  --shiftnote-indigo: #3B3FD9;
+-  --shiftnote-coral: #FF7A59;
++  --indigo: #3B3FD9;
++  --indigo-ink: #2F32B5;
++  --indigo-tint: #ECEDFB;
++  --coral: #FF7A59;
++  --coral-tint: #FFE9E2;
++
++  --ink: #15161F;
++  --ink-2: #4C4F5E;
++  --ink-3: #6B6E7C;
++  --rule: #D9DBE4;
++  --rule-soft: #E9EAF0;
++  --ground: #FFFFFF;
++  --panel: #F4F5F9;
++
++  --display: Charter, "Bitstream Charter", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
++  --text: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
++  --mono: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
++
++  --fs-body: 1.0625rem;              /* 17px */
++  --fs-small: 0.9375rem;             /* 15px */
++  --fs-meta: 0.8125rem;              /* 13px */
++  --fs-h1: clamp(2.375rem, 1.55rem + 3.4vw, 4.25rem);   /* 38px at 390, 68px at 1440 */
++  --fs-h2: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);     /* 28px to 44px */
++  --fs-h3: 1.375rem;
++
++  --s1: 0.5rem;
++  --s2: 1rem;
++  --s3: 1.5rem;
++  --s4: 2.5rem;
++  --s5: 4rem;
++  --section: clamp(3.5rem, 2rem + 5vw, 7rem);
++
++  --w-page: 1200px;
++  --gutter: clamp(1rem, 0.5rem + 2vw, 2rem);
++  --header-h: 64px;
+ 
+-  --text: #111827;
+-  --muted: #6B7280;
+-  --light: #9CA3AF;
+-  --border: #E5E7EB;
+-  --bg: #FFFFFF;
+-  --bg-soft: #F7F7FB;
+-  --radius: 16px;
+-  --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+-}
+-
+-*,
+-*::before,
+-*::after {
+-  box-sizing: border-box;
++  --radius: 6px;
++  --ease-out: cubic-bezier(.2, .7, .2, 1);
+ }
+ 
++*, *::before, *::after { box-sizing: border-box; }
++
+ html {
+-  scroll-behavior: smooth;
++  scroll-padding-top: calc(var(--header-h) + 8px);
++  -webkit-text-size-adjust: 100%;
++}
++
++@media (prefers-reduced-motion: no-preference) {
++  html { scroll-behavior: smooth; }
+ }
+ 
+ body {
+   margin: 0;
+-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+-  color: var(--text);
+-  background: var(--bg);
+-  line-height: 1.6;
++  font-family: var(--text);
++  font-size: var(--fs-body);
++  line-height: 1.55;
++  color: var(--ink);
++  background: var(--ground);
+   -webkit-font-smoothing: antialiased;
++  overflow-wrap: break-word;
+ }
+ 
+-img {
+-  max-width: 100%;
+-  display: block;
+-}
++img { max-width: 100%; display: block; }
++a { color: inherit; }
++p { margin: 0 0 var(--s2); }
++h1, h2, h3 { font-family: var(--display); font-weight: 700; margin: 0; overflow-wrap: break-word; }
++h1 { font-size: var(--fs-h1); line-height: 1.04; letter-spacing: -0.015em; text-wrap: balance; }
++h2 { font-size: var(--fs-h2); line-height: 1.12; letter-spacing: -0.01em; text-wrap: balance; }
++h3 { font-size: var(--fs-h3); line-height: 1.25; }
++.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
++.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+ 
+-a {
+-  color: inherit;
+-  text-decoration: none;
+-}
++:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+ 
+-.container {
++.wrap {
+   width: 100%;
+-  max-width: 1160px;
++  max-width: var(--w-page);
+   margin: 0 auto;
+-  padding: 0 24px;
++  padding-left: var(--gutter);
++  padding-right: var(--gutter);
+ }
+ 
+-/* Buttons */
++/* Actions */
+ .btn {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+-  padding: 14px 28px;
+-  border-radius: 999px;
+-  font-weight: 600;
+-  font-size: 16px;
+-  transition: all 0.2s ease;
+-  border: 1px solid transparent;
+-}
+-
+-.btn-primary {
+-  background: var(--shiftnote-indigo);
+-  color: #fff;
+-  box-shadow: 0 8px 20px rgba(59, 63, 217, 0.35);
+-}
+-
+-.btn-primary:hover {
+-  transform: translateY(-2px);
+-  box-shadow: 0 12px 28px rgba(59, 63, 217, 0.45);
+-}
+-
+-.btn-secondary {
+-  background: #fff;
+-  color: var(--text);
+-  border-color: var(--border);
+-}
+-
+-.btn-secondary:hover {
+-  border-color: var(--shiftnote-indigo);
+-  color: var(--shiftnote-indigo);
+-}
+-
+-.btn-light {
+-  background: #fff;
+-  color: var(--shiftnote-indigo);
+-}
+-
+-.btn-sm {
+-  padding: 10px 20px;
+-  font-size: 14px;
++  gap: 0.5rem;
++  min-height: 48px;
++  padding: 0.75rem 1.375rem;
++  border-radius: var(--radius);
++  border: 1.5px solid transparent;
++  font: 600 var(--fs-body)/1.2 var(--text);
++  text-decoration: none;
++  cursor: pointer;
++  color: var(--ink);
++  background: transparent;
++  transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out), color 160ms var(--ease-out);
++}
++.btn-primary { background: var(--indigo); border-color: var(--indigo); color: #fff; }
++.btn-ghost { border-color: var(--ink); background: transparent; min-height: 40px; padding: 0.5rem 0.875rem; font-size: var(--fs-small); }
++.btn-small { min-height: 40px; padding: 0.5rem 1rem; font-size: var(--fs-small); }
++@media (hover: hover) and (pointer: fine) {
++  .btn-primary:hover { background: var(--indigo-ink); border-color: var(--indigo-ink); }
++  .btn-ghost:hover { background: var(--indigo-tint); border-color: var(--indigo); color: var(--indigo-ink); }
+ }
+ 
+ /* Header */
+ .site-header {
+   position: sticky;
+   top: 0;
+-  z-index: 10;
+-  background: rgba(255, 255, 255, 0.85);
+-  backdrop-filter: blur(12px);
+-  border-bottom: 1px solid var(--border);
++  z-index: 20;
++  background: var(--ground);
++  border-bottom: 1px solid var(--rule);
+ }
+-
+-.header-inner {
++.header-row {
+   display: flex;
+   align-items: center;
+-  justify-content: space-between;
+-  height: 72px;
++  gap: var(--s3);
++  min-height: var(--header-h);
+ }
+-
+-.logo {
++.brand {
+   display: inline-flex;
+   align-items: center;
+-  gap: 10px;
++  gap: 0.625rem;
++  font-family: var(--display);
+   font-weight: 700;
+-  font-size: 20px;
+-  letter-spacing: -0.02em;
++  font-size: 1.375rem;
++  letter-spacing: -0.01em;
++  text-decoration: none;
++  margin-right: auto;
++  min-height: 44px;
+ }
+-
+-.site-nav {
+-  display: flex;
+-  align-items: center;
+-  gap: 32px;
+-  font-size: 15px;
+-  color: var(--muted);
++.site-nav { display: flex; align-items: center; gap: var(--s3); }
++.site-nav a:not(.btn) {
++  display: inline-flex; align-items: center; min-height: 44px;
++  color: var(--ink-2); text-decoration: none; font-weight: 500; font-size: var(--fs-small);
++  border-bottom: 2px solid transparent; padding: 0 2px;
+ }
+-
+-.site-nav a:not(.btn):hover {
+-  color: var(--text);
++@media (hover: hover) and (pointer: fine) {
++  .site-nav a:not(.btn):hover { color: var(--ink); border-bottom-color: var(--ink); }
+ }
+-
+-.site-nav .btn {
+-  color: #fff;
+-}
+-
+ .menu-toggle {
+   display: none;
+-  width: 44px;
+-  height: 44px;
+-  padding: 10px;
+-  background: none;
+-  border: 0;
++  min-height: 44px; min-width: 44px;
++  padding: 0 0.75rem;
++  border: 1.5px solid var(--rule);
++  border-radius: var(--radius);
++  background: var(--ground);
++  font: 600 var(--fs-small) var(--text);
++  color: var(--ink);
+   cursor: pointer;
+ }
+ 
+-.menu-toggle span {
+-  display: block;
+-  height: 2px;
+-  margin: 5px 0;
+-  background: var(--text);
+-  border-radius: 2px;
+-}
+-
+ /* Hero */
+-.hero {
+-  position: relative;
+-  overflow: hidden;
+-  padding: 96px 0 80px;
+-  text-align: center;
+-}
+-
+-.blob {
+-  position: absolute;
+-  top: -180px;
+-  left: 50%;
+-  width: 900px;
+-  height: 900px;
+-  transform: translateX(-50%);
+-  background: radial-gradient(circle at 30% 30%, rgba(59, 63, 217, 0.35), transparent 55%),
+-              radial-gradient(circle at 70% 60%, rgba(255, 122, 89, 0.35), transparent 55%);
+-  filter: blur(60px);
+-  z-index: -1;
+-}
+-
+-.hero-inner {
+-  position: relative;
+-}
+-
+-.badge {
+-  display: inline-block;
+-  padding: 6px 14px;
+-  border-radius: 999px;
+-  background: rgba(59, 63, 217, 0.08);
+-  color: var(--shiftnote-indigo);
+-  font-size: 14px;
+-  font-weight: 600;
+-  margin-bottom: 24px;
+-}
+-
+-.hero h1 {
+-  font-size: clamp(40px, 6vw, 68px);
+-  line-height: 1.08;
+-  letter-spacing: -0.03em;
+-  margin: 0 auto 24px;
+-  max-width: 14em;
+-}
+-
+-.gradient-text {
+-  background: linear-gradient(90deg, var(--shiftnote-indigo), var(--shiftnote-coral));
+-  -webkit-background-clip: text;
+-  background-clip: text;
+-  color: transparent;
+-}
+-
+-.lead {
+-  font-size: 20px;
+-  color: var(--muted);
+-  max-width: 640px;
+-  margin: 0 auto 40px;
+-}
+-
+-.hero-actions {
+-  display: flex;
+-  justify-content: center;
+-  gap: 16px;
+-  flex-wrap: wrap;
+-  margin-bottom: 64px;
+-}
+-
+-/* Product mockup */
+-.mockup {
+-  max-width: 920px;
+-  margin: 0 auto;
+-  border-radius: 20px;
+-  background: #fff;
+-  border: 1px solid var(--border);
+-  box-shadow: 0 30px 80px rgba(59, 63, 217, 0.18);
+-  overflow: hidden;
+-  text-align: left;
+-}
+-
+-.mockup-bar {
+-  display: flex;
+-  gap: 8px;
+-  padding: 14px 18px;
+-  border-bottom: 1px solid var(--border);
+-}
+-
+-.mockup-bar i {
+-  width: 12px;
+-  height: 12px;
+-  border-radius: 50%;
+-  background: var(--border);
+-}
+-
+-.mockup-body {
++.hero { padding: var(--section) 0 var(--s5); border-bottom: 1px solid var(--rule); }
++.hero-grid {
+   display: grid;
+-  grid-template-columns: 180px 1fr;
+-  min-height: 320px;
+-}
+-
+-.mockup-side {
+-  padding: 24px 18px;
+-  border-right: 1px solid var(--border);
+-  background: var(--bg-soft);
+-}
+-
+-.mockup-side b {
+-  display: block;
+-  height: 12px;
+-  margin-bottom: 18px;
+-  border-radius: 6px;
+-  background: var(--border);
+-}
+-
+-.mockup-side b:first-child {
+-  background: rgba(59, 63, 217, 0.3);
+-}
+-
+-.mockup-main {
+-  padding: 24px;
+-}
+-
+-.mockup-row {
+-  height: 14px;
+-  width: 70%;
+-  margin-bottom: 18px;
+-  border-radius: 7px;
+-  background: var(--border);
+-}
+-
+-.mockup-row.wide {
+-  width: 45%;
+-  height: 22px;
+-  background: rgba(17, 24, 39, 0.12);
+-}
+-
+-.mockup-row.short {
+-  width: 40%;
++  grid-template-columns: minmax(0, 1fr) 440px;
++  grid-template-rows: auto 1fr;
++  column-gap: clamp(2rem, 1rem + 4vw, 5rem);
++  row-gap: 0;
++  align-items: start;
++}
++.hero-copy { max-width: 40rem; grid-column: 1; grid-row: 1; }
++.hero-grid .note { grid-column: 2; grid-row: 1 / span 2; }
++.hero-grid .hero-status { grid-column: 1; grid-row: 2; }
++.hero-copy h1 { margin-bottom: var(--s3); }
++.lead { font-size: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem); line-height: 1.5; color: var(--ink-2); max-width: 34rem; margin-bottom: var(--s4); }
++.action-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3); }
++.action-note { margin: 0; font-size: var(--fs-small); color: var(--ink-2); max-width: 22rem; line-height: 1.4; }
++.action-note a { color: var(--indigo-ink); text-decoration: underline; text-underline-offset: 2px; }
++.hero-status {
++  margin: var(--s4) 0 0;
++  padding-top: var(--s3);
++  border-top: 1px solid var(--rule);
++  font-size: var(--fs-small);
++  color: var(--ink-2);
++  max-width: 34rem;
+ }
+ 
+-.mockup-cards {
+-  display: grid;
+-  grid-template-columns: repeat(3, 1fr);
+-  gap: 16px;
+-  margin-bottom: 24px;
+-}
+-
+-.mockup-cards div {
+-  height: 96px;
+-  border-radius: 12px;
+-  background: linear-gradient(135deg, rgba(59, 63, 217, 0.12), rgba(255, 122, 89, 0.12));
+-}
+-
+-/* Logos */
+-.logos {
+-  padding: 48px 0;
+-  border-top: 1px solid var(--border);
+-  border-bottom: 1px solid var(--border);
+-}
+-
+-.logos-title {
+-  text-align: center;
+-  font-size: 13px;
+-  font-weight: 600;
+-  text-transform: uppercase;
+-  letter-spacing: 0.12em;
+-  color: var(--light);
+-  margin: 0 0 24px;
+-}
+-
+-.logo-strip {
+-  list-style: none;
++/* The note: the product's own artifact. Drawn as a chit, not a phone. */
++.note {
+   margin: 0;
+-  padding: 0;
+-  display: flex;
+-  flex-wrap: wrap;
+-  justify-content: center;
+-  gap: 24px 56px;
+-  font-size: 20px;
+-  font-weight: 700;
+-  color: var(--light);
+-  letter-spacing: -0.01em;
+-}
++  border: 1.5px solid var(--ink);
++  border-radius: 4px;
++  background: var(--ground);
++}
++.note-head {
++  padding: 0.875rem 1.125rem 0.75rem;
++  border-bottom: 1.5px dashed var(--ink);
++  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.25rem 1rem;
++}
++.note-kind { font-family: var(--display); font-weight: 700; font-size: 1.25rem; }
++.note-meta, .entry-when { font-family: var(--mono); font-size: var(--fs-meta); color: var(--ink-2); letter-spacing: 0.01em; }
++.entries { list-style: none; margin: 0; padding: 0; }
++.entry { padding: 0.875rem 1.125rem 1rem; border-bottom: 1px solid var(--rule); }
++.entry:last-child { border-bottom: 0; }
++.entry-top { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.375rem; }
++.tag {
++  display: inline-block;
++  font: 700 var(--fs-meta)/1 var(--mono);
++  letter-spacing: 0.06em;
++  text-transform: uppercase;
++  padding: 0.3rem 0.45rem;
++  border: 1px solid var(--ink);
++  border-radius: 3px;
++}
++.entry p { margin: 0 0 0.625rem; font-size: 1rem; line-height: 1.45; }
++.entry-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; }
++.state { font-size: var(--fs-small); font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; }
++.state::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--rule); flex: none; }
++.entry[data-state="open"] .state::before { background: var(--coral); }
++.entry[data-state="open"] .state { color: var(--ink); }
++.entry[data-state="handled"] .state::before { background: var(--indigo); }
++.entry[data-state="handled"] .state { color: var(--indigo-ink); }
++.entry[data-state="info"] .state { color: var(--ink-3); font-weight: 500; }
++.entry[data-state="handled"] p { color: var(--ink-2); }
++.note-caption { padding: 0.75rem 1.125rem; border-top: 1px solid var(--rule); font-size: var(--fs-meta); color: var(--ink-2); background: var(--panel); border-radius: 0 0 3px 3px; }
+ 
+ /* Sections */
+-.features,
+-.testimonials {
+-  padding: 112px 0;
+-}
+-
+-.testimonials {
+-  background: var(--bg-soft);
+-}
+-
+-.section-title {
+-  text-align: center;
+-  font-size: clamp(32px, 4vw, 44px);
+-  letter-spacing: -0.02em;
+-  line-height: 1.15;
+-  margin: 0 0 16px;
+-}
++.section { padding: var(--section) 0; border-bottom: 1px solid var(--rule); }
++.section-head { max-width: 40rem; margin-bottom: var(--s4); }
++.section-head p { color: var(--ink-2); font-size: 1.125rem; margin-top: var(--s2); margin-bottom: 0; }
+ 
+-.section-sub {
+-  text-align: center;
+-  color: var(--muted);
+-  font-size: 18px;
+-  margin: 0 auto 64px;
+-  max-width: 560px;
+-}
+-
+-.feature-grid,
+-.testimonial-grid {
++/* Steps: narrow explanation beside the artifact state it describes; each row flips the reading mode. */
++.step {
+   display: grid;
+-  grid-template-columns: repeat(3, 1fr);
+-  gap: 24px;
+-}
+-
+-.testimonial-grid {
+-  margin-top: 56px;
+-}
+-
+-.card {
+-  padding: 32px;
+-  border-radius: var(--radius);
+-  border: 1px solid var(--border);
+-  background: #fff;
+-  box-shadow: var(--shadow);
+-  transition: all 0.2s ease;
+-}
+-
+-.card:hover {
+-  transform: translateY(-4px);
+-}
+-
+-.icon {
+-  display: inline-flex;
+-  align-items: center;
+-  justify-content: center;
+-  width: 48px;
+-  height: 48px;
+-  border-radius: 12px;
+-  background: linear-gradient(135deg, var(--shiftnote-indigo), var(--shiftnote-coral));
+-  color: #fff;
+-  margin-bottom: 20px;
+-}
+-
+-.card h3 {
+-  margin: 0 0 8px;
+-  font-size: 20px;
+-}
+-
+-.card p {
+-  margin: 0;
+-  color: var(--muted);
+-}
+-
+-.testimonial {
+-  margin: 0;
+-  padding: 32px;
+-  border-radius: var(--radius);
+-  background: #fff;
+-  box-shadow: var(--shadow);
+-  display: flex;
+-  flex-direction: column;
+-  justify-content: space-between;
+-  gap: 24px;
+-}
+-
+-.testimonial blockquote {
+-  margin: 0;
+-  font-size: 17px;
+-}
+-
+-.testimonial figcaption {
+-  display: flex;
+-  align-items: center;
+-  gap: 12px;
+-  font-size: 14px;
+-  color: var(--muted);
+-}
+-
+-.testimonial strong {
+-  color: var(--text);
+-}
+-
+-.avatar {
+-  flex: none;
+-  display: inline-flex;
+-  align-items: center;
+-  justify-content: center;
+-  width: 44px;
+-  height: 44px;
+-  border-radius: 50%;
+-  background: linear-gradient(135deg, var(--shiftnote-indigo), var(--shiftnote-coral));
+-  color: #fff;
+-  font-weight: 700;
+-}
+-
+-/* CTA */
+-.cta {
+-  padding: 96px 0;
+-}
+-
+-.cta-inner {
+-  text-align: center;
+-  padding: 72px 24px;
+-  border-radius: 28px;
+-  background: linear-gradient(120deg, var(--shiftnote-indigo), var(--shiftnote-coral));
+-  color: #fff;
+-}
+-
+-.cta h2 {
+-  font-size: clamp(30px, 4vw, 42px);
+-  margin: 0 0 12px;
+-  letter-spacing: -0.02em;
+-}
+-
+-.cta p {
+-  margin: 0 0 32px;
+-  font-size: 18px;
+-  opacity: 0.9;
+-}
++  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
++  gap: clamp(1.5rem, 1rem + 3vw, 4rem);
++  align-items: start;
++  padding: var(--s4) 0;
++  border-top: 1px solid var(--rule);
++}
++.step:last-of-type { padding-bottom: 0; }
++.step-num { font: 600 var(--fs-meta)/1 var(--mono); color: var(--ink-2); letter-spacing: 0.06em; margin-bottom: 0.75rem; display: block; }
++.step h3 { margin-bottom: 0.625rem; }
++.step p { color: var(--ink-2); max-width: 30rem; }
++.step-art { min-width: 0; }
++
++/* Composer (step 1) */
++.composer { border: 1.5px solid var(--ink); border-radius: 4px; background: var(--ground); }
++.composer-head { padding: 0.75rem 1.125rem; border-bottom: 1.5px dashed var(--ink); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.25rem 1rem; align-items: baseline; }
++.composer-body { padding: 1rem 1.125rem; }
++.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 0.875rem; padding: 0; list-style: none; }
++.chip {
++  min-height: 40px; padding: 0 0.875rem;
++  border: 1.5px solid var(--rule); border-radius: 999px;
++  background: transparent; color: var(--ink);
++  font: 600 var(--fs-small)/1 var(--text); cursor: pointer;
++  transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out);
++}
++.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
++@media (hover: hover) and (pointer: fine) { .chip:not([aria-pressed="true"]):hover { border-color: var(--ink); } }
++.field { display: block; margin-bottom: 0.875rem; }
++.field span { display: block; font-size: var(--fs-meta); font-weight: 600; color: var(--ink-2); margin-bottom: 0.375rem; }
++.field input {
++  width: 100%; min-height: 48px; padding: 0.625rem 0.75rem;
++  border: 1.5px solid var(--ink-3); border-radius: var(--radius);
++  font: 400 1rem/1.4 var(--text); color: var(--ink); background: var(--ground);
++}
++.composer-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem; }
++.composer-foot .hint { margin: 0; font-size: var(--fs-meta); color: var(--ink-2); }
++.so-far { border-top: 1px solid var(--rule); padding: 0.75rem 1.125rem 0.25rem; }
++.so-far h4 { margin: 0 0 0.5rem; font: 600 var(--fs-meta)/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
++.so-far ol { list-style: none; margin: 0; padding: 0; }
++.so-far li { display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; align-items: start; padding: 0.5rem 0; border-top: 1px solid var(--rule-soft); font-size: var(--fs-small); }
++.so-far li:first-child { border-top: 0; }
++.so-far li .tag { margin-top: 1px; }
++.so-far li small { grid-column: 2; font-family: var(--mono); font-size: var(--fs-meta); color: var(--ink-2); }
++.so-far .empty { color: var(--ink-3); font-size: var(--fs-small); padding: 0.25rem 0 0.5rem; margin: 0; }
++
++/* Opening view (step 2) */
++.opening { border: 1.5px solid var(--ink); border-radius: 4px; max-width: 30rem; }
++.opening-head { padding: 0.875rem 1.125rem; border-bottom: 1.5px dashed var(--ink); }
++.opening-head .greet { font-family: var(--display); font-weight: 700; font-size: 1.25rem; display: block; }
++.opening ul { list-style: none; margin: 0; padding: 0; }
++.opening li { padding: 0.75rem 1.125rem; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; align-items: baseline; font-size: 1rem; }
++.opening li:last-child { border-bottom: 0; }
++.opening li .from { grid-column: 2; font-family: var(--mono); font-size: var(--fs-meta); color: var(--ink-2); }
++.opening .read { background: var(--panel); color: var(--ink-2); font-size: var(--fs-small); }
++.opening .count { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.25rem; font-size: var(--fs-small); color: var(--ink-2); }
++.opening .count::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--coral); }
++
++/* Week view (step 3): the owner's laptop reading. */
++.week { border: 1.5px solid var(--ink); border-radius: 4px; overflow: hidden; }
++.week-head { padding: 0.875rem 1.125rem; border-bottom: 1.5px dashed var(--ink); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.25rem 1rem; align-items: baseline; }
++.week-head b { font-family: var(--display); font-size: 1.25rem; }
++.week-scroll { overflow-x: auto; }
++.week table { width: 100%; border-collapse: collapse; font-size: var(--fs-small); min-width: 540px; }
++.week th { text-align: left; font: 600 var(--fs-meta)/1.2 var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-2); padding: 0.625rem 0.75rem; border-bottom: 1px solid var(--rule); background: var(--panel); }
++.week td { padding: 0.7rem 0.75rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
++.week tr:last-child td { border-bottom: 0; }
++.week td:first-child { padding-left: 1.125rem; font-weight: 500; }
++.week th:first-child { padding-left: 1.125rem; }
++.week .when { font-family: var(--mono); font-size: var(--fs-meta); color: var(--ink-2); white-space: nowrap; }
++.week .st { display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap; font-weight: 600; }
++.week .st::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--rule); flex: none; }
++.week .st-open::before { background: var(--coral); }
++.week .st-done { color: var(--indigo-ink); }
++.week .st-done::before { background: var(--indigo); }
++.week .nobody { color: var(--ink-2); font-style: italic; }
++.week-caption { padding: 0.75rem 1.125rem; border-top: 1px solid var(--rule); font-size: var(--fs-meta); color: var(--ink-2); background: var(--panel); }
++
++/* Scope */
++.scope { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: start; }
++.kinds { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
++.kinds li { display: grid; grid-template-columns: 6.5rem 1fr; gap: 0.5rem 1rem; padding: 0.875rem 0; border-bottom: 1px solid var(--rule); align-items: start; }
++.kinds .tag { justify-self: start; }
++.kinds p { margin: 0; color: var(--ink-2); }
++.kinds p b { color: var(--ink); font-weight: 600; }
++.stays-out { background: var(--panel); border-radius: 4px; padding: var(--s3); }
++.stays-out h3 { margin-bottom: 0.5rem; }
++.stays-out p { color: var(--ink-2); margin: 0; }
++.stays-out p + p { margin-top: 0.75rem; }
++
++/* Final action */
++.closing { padding: var(--section) 0; }
++.closing-inner { max-width: 40rem; }
++.closing h2 { margin-bottom: var(--s2); }
++.closing p { color: var(--ink-2); font-size: 1.125rem; }
++.closing .action-row { margin-top: var(--s3); }
+ 
+ /* Footer */
+-.site-footer {
+-  padding: 40px 0;
+-  border-top: 1px solid var(--border);
+-  font-size: 14px;
+-  color: var(--muted);
+-}
+-
+-.footer-inner {
+-  display: flex;
+-  align-items: center;
+-  justify-content: space-between;
+-  flex-wrap: wrap;
+-  gap: 16px;
+-}
+-
+-.logo-footer {
+-  font-size: 16px;
+-  color: var(--text);
+-}
+-
+-.footer-nav {
+-  display: flex;
+-  gap: 24px;
+-}
+-
+-.copyright {
+-  margin: 0;
++.site-footer { border-top: 1px solid var(--rule); padding: var(--s4) 0 var(--s5); font-size: var(--fs-small); color: var(--ink-2); }
++.footer-row { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s5); align-items: flex-start; }
++.footer-row .brand { font-size: 1.125rem; margin-right: 0; }
++.footer-nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
++.footer-nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
++.footer-note { max-width: 32rem; margin: 0; }
++.copyright { width: 100%; margin: var(--s2) 0 0; color: var(--ink-3); }
++
++/* Reduced motion: state changes keep every state; nothing moves. */
++@media (prefers-reduced-motion: reduce) {
++  *, *::before, *::after { transition-duration: 0.01ms !important; animation: none !important; }
+ }
+ 
+ /* Responsive */
+-@media (max-width: 900px) {
+-  .feature-grid,
+-  .testimonial-grid {
+-    grid-template-columns: 1fr;
+-  }
+-
+-  .mockup-body {
+-    grid-template-columns: 1fr;
+-  }
+-
+-  .mockup-side {
+-    display: none;
+-  }
++@media (max-width: 960px) {
++  .hero-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
++  .hero-copy, .hero-grid .note, .hero-grid .hero-status { grid-column: 1; grid-row: auto; }
++  .hero-grid .note { margin-top: var(--s4); }
++  .note { max-width: 32rem; }
++  .step { grid-template-columns: 1fr; gap: var(--s3); }
++  .scope { grid-template-columns: 1fr; }
+ }
+-
+ @media (max-width: 720px) {
+-  .menu-toggle {
+-    display: block;
+-  }
+-
+-  .site-nav {
+-    display: none;
+-    position: absolute;
+-    top: 72px;
+-    left: 0;
+-    right: 0;
+-    flex-direction: column;
+-    align-items: stretch;
+-    gap: 0;
+-    padding: 8px 24px 24px;
+-    background: #fff;
+-    border-bottom: 1px solid var(--border);
+-    box-shadow: var(--shadow);
+-  }
+-
++  .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
++  .site-nav { display: none; }
+   .site-nav.is-open {
+-    display: flex;
+-  }
+-
+-  .site-nav a:not(.btn) {
+-    padding: 14px 0;
+-    border-bottom: 1px solid var(--border);
+-  }
+-
+-  .site-nav .btn {
+-    margin-top: 16px;
+-  }
+-
+-  .hero {
+-    padding: 64px 0 56px;
+-  }
+-
+-  .lead {
+-    font-size: 18px;
+-  }
+-
+-  .mockup-cards {
+-    grid-template-columns: 1fr 1fr;
+-  }
+-
+-  .mockup-cards div:last-child {
+-    display: none;
+-  }
+-
+-  .logo-strip {
+-    gap: 16px 32px;
+-    font-size: 17px;
+-  }
+-
+-  .features,
+-  .testimonials {
+-    padding: 80px 0;
+-  }
+-
+-  .footer-inner {
+-    flex-direction: column;
+-    align-items: flex-start;
+-  }
++    display: flex; flex-direction: column; align-items: stretch; gap: 0;
++    position: absolute; top: var(--header-h); left: 0; right: 0;
++    padding: 0.5rem var(--gutter) 1rem;
++    background: var(--ground); border-bottom: 1px solid var(--rule);
++  }
++  .site-nav.is-open a:not(.btn) { padding: 0.5rem 0; border-bottom: 1px solid var(--rule); font-size: var(--fs-body); }
++  .site-nav.is-open .btn-small { margin-top: 1rem; min-height: 48px; font-size: var(--fs-body); }
++  .hero { padding-top: var(--s4); }
++  .hero-copy h1 { margin-bottom: var(--s2); }
++  .lead { margin-bottom: var(--s3); }
++  .action-row { align-items: stretch; flex-direction: column; }
++  .action-row .btn-primary { width: 100%; }
++  .action-note { max-width: none; }
++  .hero-status { margin-top: var(--s3); }
++  .kinds li { grid-template-columns: 1fr; gap: 0.375rem; }
++  .entry-top { flex-wrap: wrap; }
++
++  /* The week view stacks: one block per entry, labels kept, nothing scrolls sideways. */
++  .week table { min-width: 0; display: block; }
++  .week thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
++  .week tbody, .week tr { display: block; }
++  .week tr { padding: 0.75rem 1.125rem; border-bottom: 1px solid var(--rule); }
++  .week tr:last-child { border-bottom: 0; }
++  .week td { display: block; padding: 0; border: 0; }
++  .week td:first-child { padding: 0; font-weight: 600; font-size: 1rem; margin-bottom: 0.25rem; }
++  .week td.when { margin-bottom: 0.25rem; }
++  .week td:nth-child(3) { display: inline; }
++  .week td:nth-child(3)::before { content: "Owner: "; color: var(--ink-2); font-weight: 400; }
++  .week td:nth-child(3)::after { content: " · "; color: var(--ink-3); }
++  .week td:nth-child(4) { display: inline; }
+ }

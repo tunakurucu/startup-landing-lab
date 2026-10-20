@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tankshift</title>
+<meta name="description" content="Tankshift is a controller an electrician adds to an electric water heater so it heats when power is cheapest and still has hot water ready when you need it.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <a class="wordmark" href="#top" aria-label="Tankshift, home">
+    <svg class="mark" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+      <rect x="6" y="2" width="16" height="24" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+      <rect x="9" y="14" width="10" height="9" rx="1.5" fill="var(--water)"/>
+    </svg>
+    Tankshift
+  </a>
+  <nav class="nav" aria-label="Page sections">
+    <a href="#how">How it works</a>
+    <a href="#electricians">Electricians</a>
+    <a href="#utilities">Utilities</a>
+    <a href="#status">Where we stand</a>
+    <a class="nav-cta" href="#join">Join the install list</a>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="top">
+<div class="wrap">
+  <div class="hero-text">
+    <h1>Heat water when power is cheap.<br>Have it hot when you need it.</h1>
+    <p class="lede">Tankshift is a controller your electrician adds to the electric water heater you already have. It learns when the house uses hot water and does the heating in the cheapest hours of your tariff, so the tank is hot at seven in the morning and the bill is not.</p>
+    <p class="hero-actions">
+      <a class="button primary" href="#join">Join the install list</a>
+      <a class="button quiet" href="#try">Try a day's schedule</a>
+    </p>
+  </div>
+</div>
+</section>
+
+<!-- ===== Interactive day ===== -->
+<section class="day" id="try" aria-labelledby="try-heading">
+<div class="wrap">
+  <div class="day-head">
+    <h2 id="try-heading">Try a day</h2>
+    <p>Tap the hours your house uses hot water. The strip shows when a standard heater would run and when Tankshift would run instead, on an example tariff. Your tariff and your usage will differ, which is why there is no savings figure on this page.</p>
+  </div>
+
+  <div class="strip-wrap">
+    <div class="strip" id="strip">
+      <!-- hour ruler -->
+      <div class="row row-ruler" aria-hidden="true">
+        <div class="row-label"></div>
+        <div class="cells" id="ruler"></div>
+      </div>
+
+      <!-- tariff bands -->
+      <div class="row row-tariff">
+        <div class="row-label">
+          <span class="label-main">Example tariff</span>
+          <span class="label-sub" id="tariff-name">Evening peak</span>
+        </div>
+        <div class="cells bands" id="bands" role="img" aria-label="Example tariff: off-peak from midnight to seven, shoulder from seven to four, peak from four to nine, shoulder until midnight"></div>
+      </div>
+
+      <!-- hot water usage toggles -->
+      <div class="row row-draws">
+        <div class="row-label">
+          <span class="label-main">Hot water used</span>
+          <span class="label-sub">tap the hours</span>
+        </div>
+        <div class="cells draws" id="draws" role="group" aria-label="Hours when the house uses hot water"></div>
+      </div>
+
+      <!-- standard heater -->
+      <div class="row row-heat">
+        <div class="row-label">
+          <span class="label-main">Standard heater</span>
+          <span class="label-sub">reheats right after each use</span>
+        </div>
+        <div class="cells heat" id="heat-standard" role="img" aria-live="polite"></div>
+      </div>
+
+      <!-- tankshift -->
+      <div class="row row-heat row-tankshift">
+        <div class="row-label">
+          <span class="label-main">With Tankshift</span>
+          <span class="label-sub">heats in the cheapest hours first</span>
+        </div>
+        <div class="cells heat" id="heat-tankshift" role="img" aria-live="polite"></div>
+      </div>
+
+      <!-- tank level -->
+      <div class="row row-level">
+        <div class="row-label">
+          <span class="label-main">Hot water in the tank</span>
+          <span class="label-sub">with Tankshift</span>
+        </div>
+        <div class="cells level" id="level" role="img" aria-label="Hot water held in the tank through the day with Tankshift"></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="swipe-note">Swipe the strip sideways to see the whole day.</p>
+
+  <div class="day-controls">
+    <div class="control-group">
+      <label for="tariff-select">Example tariff</label>
+      <select id="tariff-select">
+        <option value="evening">Evening peak</option>
+        <option value="twopeak">Morning and evening peaks</option>
+        <option value="midday">Cheap midday</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label for="usage-select">Usage pattern</label>
+      <select id="usage-select">
+        <option value="family">Family, morning showers</option>
+        <option value="couple">Two people, evening showers</option>
+        <option value="home">Working from home</option>
+        <option value="custom">Custom (tap the strip)</option>
+      </select>
+    </div>
+    <fieldset class="control-group">
+      <legend>Tank size</legend>
+      <div class="radio-row">
+        <label><input type="radio" name="tank" value="2"> Small <small>holds 2 uses</small></label>
+        <label><input type="radio" name="tank" value="3" checked> Standard <small>holds 3 uses</small></label>
+        <label><input type="radio" name="tank" value="4"> Large <small>holds 4 uses</small></label>
+      </div>
+    </fieldset>
+
+    <div class="readout" id="readout" aria-live="polite">
+      <table>
+        <caption>Hours of heating in each tariff band, for the day above</caption>
+        <thead>
+          <tr><th scope="col"><span class="visually-hidden">Tariff band</span></th><th scope="col">Standard</th><th scope="col">Tankshift</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row"><span class="swatch peak"></span>Peak</th><td id="r-peak-s">0</td><td id="r-peak-t">0</td></tr>
+          <tr><th scope="row"><span class="swatch shoulder"></span>Shoulder</th><td id="r-sh-s">0</td><td id="r-sh-t">0</td></tr>
+          <tr><th scope="row"><span class="swatch off"></span>Off-peak</th><td id="r-off-s">0</td><td id="r-off-t">0</td></tr>
+        </tbody>
+      </table>
+      <p class="readout-note" id="readout-note">Hot water was there for every use in both rows.</p>
+    </div>
+  </div>
+
+  <p class="example-note">This is a simplified example: one hour of heating per use, three price bands, no standby loss, and one use always kept in reserve for the unexpected. It shows the shape of what Tankshift does, not what you would pay.</p>
+</div>
+</section>
+
+<!-- ===== How it works ===== -->
+<section class="section" id="how" aria-labelledby="how-heading">
+<div class="wrap">
+  <div class="section-head">
+    <h2 id="how-heading">How it works</h2>
+  </div>
+  <div class="prose-grid">
+    <div>
+      <h3>Nothing changes about your hot water</h3>
+      <p>The tank, the plumbing and the taps stay as they are. Tankshift sits on the electrical side, between the circuit and the heater, and decides when the element runs. The heater's own thermostat and safety cut-out stay in charge of temperature.</p>
+    </div>
+    <div>
+      <h3>It learns your mornings</h3>
+      <p>A tank of hot water keeps for hours. Tankshift watches when the house actually draws hot water, then heats far enough ahead that the tank is ready, using the cheapest hours it can find before each use.</p>
+    </div>
+    <div>
+      <h3>It follows your tariff, not a guess</h3>
+      <p>Your electrician enters the peak and off-peak hours from your tariff, or the controller takes them from a utility programme. If the tariff changes, the schedule changes with it.</p>
+    </div>
+    <div>
+      <h3>About the savings</h3>
+      <p>How much this is worth depends on the gap between your peak and off-peak prices and on how much hot water you use. Those differ from house to house, so we don't print a number we can't stand behind. The strip above shows the shape of the change; your bill shows the size.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== Electricians ===== -->
+<section class="section band-section" id="electricians" aria-labelledby="el-heading">
+<div class="wrap">
+  <div class="section-head">
+    <h2 id="el-heading">For electricians</h2>
+    <p>You decide whether this goes in. Here is what the install involves, as it stands today.</p>
+  </div>
+  <div class="two-col">
+    <dl class="spec">
+      <div><dt>Fits</dt><dd>Electric storage water heaters, single or dual element, on their existing circuit.</dd></div>
+      <div><dt>Wiring</dt><dd>In line between the supply and the heater. The heater's thermostat and high-limit stay in circuit; Tankshift only decides whether power reaches them.</dd></div>
+      <div><dt>Plumbing</dt><dd>None. No mixing valve, no new tank.</dd></div>
+      <div><dt>Mounting</dt><dd>Beside the heater, near the existing disconnect.</dd></div>
+      <div><dt>Setup</dt><dd>Enter the tariff hours on the unit. No app for the homeowner, no account to create on site.</dd></div>
+      <div><dt>Override</dt><dd>A boost control on the unit heats now, for the odd day with visitors.</dd></div>
+    </dl>
+    <div class="note">
+      <h3>Preliminary</h3>
+      <p>Ratings, conductor sizes and the full install sheet are issued with the safety listing, which is still in progress. Nothing ships for customer install before it's listed.</p>
+      <p>Electricians on the install list get the install sheet first, and are the people we call when the first region opens.</p>
+      <a class="button quiet" href="#join">Join as an electrician</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== Utilities ===== -->
+<section class="section" id="utilities" aria-labelledby="ut-heading">
+<div class="wrap">
+  <div class="section-head">
+    <h2 id="ut-heading">For utility programmes</h2>
+    <p>Water heating is one of the largest loads in an all-electric home, and one of the few that can move several hours without anyone noticing.</p>
+  </div>
+  <div class="prose-grid">
+    <div>
+      <h3>Shifting you can count</h3>
+      <p>Each unit records its heating hours by tariff band. A programme gets the per-household figures it needs to pay a rebate on what was actually shifted, not on what was modelled.</p>
+    </div>
+    <div>
+      <h3>Event days</h3>
+      <p>Tankshift can take a signal to hold heating through a peak event, within the limit of keeping the household in hot water. The household's usage pattern sets that limit, not a fixed duration.</p>
+    </div>
+    <div>
+      <h3>One pilot, running now</h3>
+      <p>One utility is piloting Tankshift in customer homes. We can't name them yet. When the pilot reports, the figures go here, with the tariff and the usage behind them.</p>
+    </div>
+    <div>
+      <h3>Talk to us</h3>
+      <p>If you run a demand-response or time-of-use programme, join the list as a utility and say which. We'll bring the pilot's findings to the conversation as soon as we're allowed to.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== Status ===== -->
+<section class="section band-section" id="status" aria-labelledby="st-heading">
+<div class="wrap">
+  <div class="section-head">
+    <h2 id="st-heading">Where we stand</h2>
+    <p>The honest version, kept current.</p>
+  </div>
+  <ul class="status-list">
+    <li>
+      <span class="status-key">Utility pilot</span>
+      <span class="status-val">Running with one utility. Not named yet.</span>
+    </li>
+    <li>
+      <span class="status-key">Safety listing</span>
+      <span class="status-val">In progress. No customer installs before it's done.</span>
+    </li>
+    <li>
+      <span class="status-key">First region</span>
+      <span class="status-val">Not announced yet. The install list hears first.</span>
+    </li>
+    <li>
+      <span class="status-key">Customer stories</span>
+      <span class="status-val">None yet. Each one we publish will show the tariff and usage behind it.</span>
+    </li>
+    <li>
+      <span class="status-key">Savings figure</span>
+      <span class="status-val">None printed. It depends on your tariff and your hot water.</span>
+    </li>
+  </ul>
+</div>
+</section>
+
+<!-- ===== Join ===== -->
+<section class="section join" id="join" aria-labelledby="join-heading">
+<div class="wrap">
+  <div class="section-head">
+    <h2 id="join-heading">Join the install list</h2>
+    <p>We're opening one region first. Your postcode tells us whether you're in it; the list is told before anyone else.</p>
+  </div>
+
+  <form class="join-form" id="join-form" novalidate>
+    <fieldset class="field">
+      <legend>I am</legend>
+      <div class="radio-row">
+        <label><input type="radio" name="role" value="homeowner" checked> A homeowner</label>
+        <label><input type="radio" name="role" value="electrician"> An electrician</label>
+        <label><input type="radio" name="role" value="utility"> With a utility programme</label>
+      </div>
+    </fieldset>
+
+    <div class="field">
+      <label for="postcode">Postcode or ZIP</label>
+      <input id="postcode" name="postcode" type="text" autocomplete="postal-code" inputmode="text" required>
+      <p class="field-error" id="postcode-error" hidden>Enter a postcode or ZIP so we can tell you if you're in the first region.</p>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required>
+      <p class="field-error" id="email-error" hidden>Enter an email address we can reach you at.</p>
+    </div>
+
+    <div class="field">
+      <label for="heater">Your heater, if you know it <span class="optional">optional</span></label>
+      <input id="heater" name="heater" type="text" placeholder="e.g. 50 gallon electric, in the garage">
+    </div>
+
+    <p class="form-note">Early days: there is no list server yet. What you enter is kept in this browser only and is not sent anywhere. When the list goes live, this page will offer to send it.</p>
+
+    <button class="button primary" type="submit">Join the install list</button>
+  </form>
+
+  <div class="join-done" id="join-done" hidden tabindex="-1">
+    <h3>You're on the list on this device</h3>
+    <p id="join-summary"></p>
+    <p>Nothing was sent: there is no list server yet. Your entry stays in this browser, and when the list goes live this page will offer to send it. If you clear your browser data, it goes with it.</p>
+    <p><button class="button quiet" type="button" id="join-edit">Change my entry</button></p>
+  </div>
+</div>
+</section>
+
+</main>
+
+<footer class="foot">
+<div class="wrap">
+  <p>Tankshift. A controller for electric water heaters. Safety listing in progress; nothing ships before it's complete.</p>
+  <p>The day schedule on this page is a labelled example and not a quote.</p>
+</div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

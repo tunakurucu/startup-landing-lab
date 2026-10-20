@@ -1,0 +1,1012 @@
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/README.md /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/README.md
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/README.md	2026-10-20 02:28:53.816527486 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/README.md	2026-10-20 05:47:17.217758849 +0000
+@@ -14,3 +14,8 @@
+ - Brand colours and fonts live in `tailwind.config.ts` (`ink`, `wort`, `foam`, `barley`, `hop`, `steel`). Use the token names, not hex values.
+ - Buttons and button-styled links use `components/Button.tsx`.
+ - We are on Tailwind 3 and are not migrating yet.
++
++Homepage notes:
++
++- `components/EarlyAccessForm.tsx` has `EARLY_ACCESS_ENDPOINT` (empty until the request inbox exists; the form then says nothing was sent). `app/layout.tsx` has the site origin used for share-card URLs.
++- `components/sample-batch.ts` holds the one illustrative batch used by the hero pad and the record sheet.
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/app/globals.css /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/app/globals.css
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/app/globals.css	2026-10-20 02:28:53.816527486 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/app/globals.css	2026-10-20 04:25:21.182692766 +0000
+@@ -10,4 +10,59 @@
+   :focus-visible {
+     @apply outline outline-2 outline-offset-2 outline-wort;
+   }
++
++  /* On the ink (dark) tablet surface, wort does not reach 3:1; barley does. */
++  .on-ink :focus-visible {
++    @apply outline-barley;
++  }
++
++  h1,
++  h2,
++  h3 {
++    text-wrap: balance;
++    overflow-wrap: break-word;
++  }
++
++  p {
++    text-wrap: pretty;
++  }
++
++  /* Figures that line up or change use tabular numerals. */
++  .tabular {
++    font-variant-numeric: tabular-nums;
++  }
++}
++
++@layer utilities {
++  /* A logged row is marked with a short colour highlight (no movement, so it also runs under reduced motion). */
++  .row-new {
++    animation: row-new 900ms cubic-bezier(0.2, 0.7, 0.2, 1) 1;
++  }
++
++  @keyframes row-new {
++    from {
++      background-color: theme(colors.barley / 28%);
++    }
++    to {
++      background-color: transparent;
++    }
++  }
++}
++
++/* Movement only when the visitor allows it. Colour and opacity changes stay. */
++@media (prefers-reduced-motion: no-preference) {
++  .key:active {
++    transform: scale(0.97);
++    transition: transform 120ms cubic-bezier(0.2, 0.7, 0.2, 1);
++  }
++}
++
++@media (prefers-reduced-motion: reduce) {
++  *,
++  *::before,
++  *::after {
++    transition-duration: 0.01ms !important;
++    animation-duration: 0.01ms !important;
++    scroll-behavior: auto !important;
++  }
+ }
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/app/layout.tsx /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/app/layout.tsx
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/app/layout.tsx	2026-10-20 02:28:53.816650811 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/app/layout.tsx	2026-10-20 04:28:41.317221469 +0000
+@@ -1,10 +1,42 @@
+-import type { Metadata } from "next";
++import type { Metadata, Viewport } from "next";
++import tailwindConfig from "../tailwind.config";
+ import "./globals.css";
+ 
++// The site's public origin. Absolute share-card URLs are built from it; change it when the domain is known.
++const SITE_URL = "https://grainline.example";
++
++const TITLE = "Brew-day log for small craft breweries · Grainline";
++const DESCRIPTION =
++  "Grainline is a brew-day log for small craft breweries. Tap each reading on the brewhouse tablet as you take it, and the batch record builds itself by knockout.";
++
++const brand = (tailwindConfig.theme?.extend?.colors ?? {}) as Record<string, string>;
++
+ export const metadata: Metadata = {
+-  title: "Grainline",
+-  description: "Grainline is a brew-day log for small craft breweries.",
+-  icons: { icon: "/grainline-mark.svg" },
++  metadataBase: new URL(SITE_URL),
++  title: TITLE,
++  description: DESCRIPTION,
++  openGraph: {
++    type: "website",
++    url: "/",
++    siteName: "Grainline",
++    title: TITLE,
++    description: DESCRIPTION,
++    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Grainline: the brew sheet that fills itself in as you brew." }],
++  },
++  twitter: {
++    card: "summary_large_image",
++    title: TITLE,
++    description: DESCRIPTION,
++    images: ["/og.png"],
++  },
++  icons: {
++    icon: "/grainline-mark.svg",
++    apple: "/apple-touch-icon.png",
++  },
++};
++
++export const viewport: Viewport = {
++  themeColor: brand.foam,
+ };
+ 
+ export default function RootLayout({
+@@ -14,7 +46,7 @@
+ }>) {
+   return (
+     <html lang="en">
+-      <body className="min-h-screen font-sans">{children}</body>
++      <body id="top" className="min-h-screen font-sans text-body">{children}</body>
+     </html>
+   );
+ }
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/app/page.tsx /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/app/page.tsx
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/app/page.tsx	2026-10-20 02:28:53.816650811 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/app/page.tsx	2026-10-20 04:32:32.466614084 +0000
+@@ -1,15 +1,170 @@
+ import { Button } from "@/components/Button";
++import { BatchRecordSheet } from "@/components/BatchRecordSheet";
++import { BrewDayHero } from "@/components/BrewDayPad";
++import { EarlyAccessForm } from "@/components/EarlyAccessForm";
++import { SiteHeader } from "@/components/SiteHeader";
++import { NAV, PRIMARY_LABEL } from "@/components/site";
++import { BATCH, STEPS, deviation, format, formatTarget } from "@/components/sample-batch";
++
++const flaggedStep = STEPS.find((s) => s.note) ?? STEPS[3];
+ 
+-// Placeholder until the real homepage is built.
+ export default function Home() {
+   return (
+-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col items-start justify-center gap-6 px-6">
+-      <p className="font-mono text-sm text-steel">grainline.example</p>
+-      <h1 className="text-4xl font-semibold tracking-tight">Grainline</h1>
+-      <p className="text-lg text-steel">Homepage coming soon.</p>
+-      <Button href="#" variant="primary">
+-        Request early access
+-      </Button>
+-    </main>
++    <>
++      <SiteHeader />
++
++      <main>
++        {/* First screen: the promise beside the brewer's side of the product. */}
++        <section className="mx-auto max-w-page px-4 pb-section pt-6 sm:px-6 md:pt-10" aria-labelledby="promise">
++          <BrewDayHero
++            copy={
++              <>
++                <h1 id="promise" className="text-display">
++                  The brew sheet that fills itself in as you brew.
++                </h1>
++                <p className="max-w-measure text-lead text-ink/85">
++                  Grainline is a brew-day log for small craft breweries. Tap each reading on the brewhouse tablet as you
++                  take it, and the batch record builds itself by knockout.
++                </p>
++                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
++                  <Button href="#early-access" variant="primary" size="lg">
++                    {PRIMARY_LABEL}
++                  </Button>
++                  <p className="text-sm text-steel">Email and brewery name. No card, no sales call.</p>
++                </div>
++                <p className="hidden text-sm text-steel lg:block">
++                  Try the sample brew day: tap a reading into the tablet on the right, and watch the record below fill
++                  in.
++                </p>
++              </>
++            }
++          />
++        </section>
++
++        {/* The owner's side: the finished record of the same batch. */}
++        <section id="record" className="mx-auto max-w-page px-4 pb-section sm:px-6" aria-labelledby="record-heading">
++          <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
++            <div className="flex flex-col gap-5 lg:col-span-4">
++              <h2 id="record-heading" className="text-h2">
++                The batch record is finished at knockout and opens on the owner&rsquo;s laptop.
++              </h2>
++              <p className="max-w-measure text-body text-ink/85">
++                Today the sheet is written wet at the kettle, typed up dry in the evening and read a week late. Grainline keeps
++                one record per batch. Each reading the brewer logs lands on it with the time, the target it was checked
++                against and any note, so there is nothing to type up and nothing to decode.
++              </p>
++              <p className="max-w-measure text-body text-ink/85">
++                Grainline keeps the brew record. It does not file excise returns; it keeps the record readable for whoever
++                does.
++              </p>
++            </div>
++            <div className="lg:col-span-8">
++              <BatchRecordSheet />
++              <p className="mt-3 text-sm text-steel">
++                Sample batch record. On a live install the step names, units and target ranges are the brewery&rsquo;s own.
++              </p>
++            </div>
++          </div>
++        </section>
++
++        {/* The failure case: what happens when a reading is off. */}
++        <section id="flags" className="mx-auto max-w-page px-4 pb-section sm:px-6" aria-labelledby="flags-heading">
++          <div className="mx-auto grid max-w-[64rem] gap-10 md:grid-cols-2 md:gap-12">
++            <figure className="border border-ink/15 bg-white p-5 sm:p-7">
++              <p className="font-mono text-sm text-steel">
++                {flaggedStep.time} · {flaggedStep.name}
++              </p>
++              <p className="tabular mt-2 font-mono text-reading text-wort">
++                {format(flaggedStep.typical, flaggedStep.unit)} <span className="text-[0.5em] text-steel">{flaggedStep.unit}</span> ⚑
++              </p>
++              <p className="tabular mt-2 font-mono text-sm text-steel">
++                Target {formatTarget(flaggedStep)} · {deviation(flaggedStep, flaggedStep.typical)}
++              </p>
++              <figcaption className="mt-4 border-t border-ink/10 pt-4 text-body">
++                <span className="font-semibold">Brewer&rsquo;s note, added at {flaggedStep.noteTime}:</span> &ldquo;{flaggedStep.note}&rdquo;
++                <span className="mt-2 block text-sm text-steel">
++                  Row from the sample record for batch {BATCH.number}.
++                </span>
++              </figcaption>
++            </figure>
++            <div className="flex flex-col gap-5">
++              <h2 id="flags-heading" className="text-h2">
++                An off reading gets flagged, not blocked.
++              </h2>
++              <p className="max-w-measure text-body text-ink/85">
++                Targets come from the recipe, set once per beer. A reading outside its range is marked on the record and the
++                brew day carries on. The brewer adds a note when there is a quiet minute, and the owner sees the flag and
++                the note together, in the row where it happened.
++              </p>
++              <p className="max-w-measure text-body text-ink/85">
++                Nothing waits on the app. If a reading is wrong, the brewer changes it from the same step on the tablet.
++              </p>
++            </div>
++          </div>
++        </section>
++
++        {/* Conversion: who early access is for, what it costs today, and the request itself. */}
++        <section id="early-access" className="border-t border-ink/10 bg-foam">
++          <div className="mx-auto grid max-w-page gap-10 px-4 py-section sm:px-6 lg:grid-cols-12 lg:gap-12">
++            <div className="flex min-w-0 flex-col gap-6 lg:col-span-6">
++              <h2 id="early-access-heading" className="text-h2">
++                Early access is for breweries still on paper sheets.
++              </h2>
++              <dl className="flex max-w-measure flex-col gap-4 text-body text-ink/85">
++                <div>
++                  <dt className="font-semibold text-ink">Good fit</dt>
++                  <dd>A small brewhouse where readings still go on a clipboard or into a spreadsheet after the brew day.</dd>
++                </div>
++                <div>
++                  <dt className="font-semibold text-ink">Not for</dt>
++                  <dd>
++                    Breweries with a production system already logging the brewhouse, or anyone who needs excise reporting.
++                    Grainline does not do that.
++                  </dd>
++                </div>
++                <div>
++                  <dt className="font-semibold text-ink">What you get</dt>
++                  <dd>
++                    Grainline on your brewhouse tablet with your own step list and targets, and a direct line to the people
++                    building it.
++                  </dd>
++                </div>
++                <div>
++                  <dt className="font-semibold text-ink">Cost</dt>
++                  <dd>Pricing is not set yet. Early-access breweries hear first.</dd>
++                </div>
++              </dl>
++            </div>
++            <div className="min-w-0 lg:col-span-6">
++              <EarlyAccessForm />
++            </div>
++          </div>
++        </section>
++      </main>
++
++      <footer className="border-t border-ink/10">
++        <div className="mx-auto flex max-w-page flex-col gap-6 px-4 py-10 sm:px-6 md:flex-row md:items-start md:justify-between">
++          <div className="flex items-start gap-3">
++            {/* eslint-disable-next-line @next/next/no-img-element */}
++            <img src="/grainline-mark.svg" alt="" width={32} height={32} loading="lazy" className="h-8 w-8" />
++            <div>
++              <p className="font-bold">Grainline</p>
++              <p className="max-w-measure text-sm text-steel">A brew-day log for small craft breweries.</p>
++            </div>
++          </div>
++          <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
++            {NAV.map((n) => (
++              <a key={n.href} href={n.href} className="py-2 font-medium text-ink/85 underline-offset-4 hover:underline">
++                {n.label}
++              </a>
++            ))}
++            <a href="#flags" className="py-2 font-medium text-ink/85 underline-offset-4 hover:underline">
++              Flagged readings
++            </a>
++          </nav>
++          <p className="text-sm text-steel">&copy; 2026 Grainline</p>
++        </div>
++      </footer>
++    </>
+   );
+ }
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/BatchRecordSheet.tsx /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/BatchRecordSheet.tsx
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/BatchRecordSheet.tsx	1970-01-01 00:00:00.000000000 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/BatchRecordSheet.tsx	2026-10-20 04:30:22.576851430 +0000
+@@ -0,0 +1,103 @@
++import { BATCH, STEPS, deviation, format, formatTarget, outOfRange } from "@/components/sample-batch";
++
++// The owner's side: the finished record of the same sample batch, drawn as the sheet it replaces.
++// Static on purpose: it is what the day produced, not an interface to operate.
++
++export function BatchRecordSheet() {
++  const flagged = STEPS.filter((s) => outOfRange(s, s.typical)).length;
++  return (
++    <figure className="border border-ink/15 bg-white text-ink">
++      <figcaption className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-ink/15 px-5 py-4 sm:px-7">
++        <span className="font-mono text-sm">
++          <span className="font-semibold">Batch {BATCH.number}</span>
++          <span className="text-steel">
++            {" "}
++            · {BATCH.beer} · {BATCH.size} · brewed {BATCH.brewed}
++          </span>
++        </span>
++        <span className="font-mono text-xs text-steel">Sample batch record. Brewer {BATCH.brewer}.</span>
++      </figcaption>
++
++      {/* Desktop and tablet: a table. */}
++      <table className="tabular hidden w-full border-collapse font-mono text-sm sm:table">
++        <caption className="sr-only">
++          Readings for sample batch {BATCH.number}, with time, target range and notes
++        </caption>
++        <thead>
++          <tr className="text-left text-xs text-steel">
++            <th scope="col" className="px-7 py-3 font-medium">
++              Time
++            </th>
++            <th scope="col" className="py-3 pr-4 font-medium">
++              Step
++            </th>
++            <th scope="col" className="py-3 pr-4 font-medium">
++              Reading
++            </th>
++            <th scope="col" className="py-3 pr-4 font-medium">
++              Target
++            </th>
++            <th scope="col" className="py-3 pr-7 font-medium">
++              Note
++            </th>
++          </tr>
++        </thead>
++        <tbody>
++          {STEPS.map((s) => {
++            const off = outOfRange(s, s.typical);
++            return (
++              <tr key={s.id} className="border-t border-ink/10 align-top">
++                <td className="px-7 py-3 text-steel">{s.time}</td>
++                <td className="py-3 pr-4 font-sans font-semibold">{s.name}</td>
++                <td className={`whitespace-nowrap py-3 pr-4 ${off ? "font-semibold text-wort" : ""}`}>
++                  {format(s.typical, s.unit)} {s.unit}
++                  {off ? " ⚑" : ""}
++                </td>
++                <td className="whitespace-nowrap py-3 pr-4 text-steel">{formatTarget(s)}</td>
++                <td className="py-3 pr-7 font-sans">
++                  {off && <span className="font-semibold text-wort">{deviation(s, s.typical)}. </span>}
++                  {s.note ?? ""}
++                </td>
++              </tr>
++            );
++          })}
++        </tbody>
++      </table>
++
++      {/* Phones: one block per reading, so nothing is shrunk. */}
++      <ol className="tabular font-mono text-sm sm:hidden" aria-label={`Readings for sample batch ${BATCH.number}`}>
++        {STEPS.map((s) => {
++          const off = outOfRange(s, s.typical);
++          return (
++            <li key={s.id} className="border-t border-ink/10 px-5 py-3">
++              <div className="flex items-baseline justify-between gap-3">
++                <span className="font-sans font-semibold">{s.name}</span>
++                <span className="text-steel">{s.time}</span>
++              </div>
++              <div className="mt-1 flex items-baseline justify-between gap-3">
++                <span className={off ? "font-semibold text-wort" : ""}>
++                  {format(s.typical, s.unit)} {s.unit}
++                  {off ? " ⚑" : ""}
++                </span>
++                <span className="text-steel">target {formatTarget(s)}</span>
++              </div>
++              {off && (
++                <p className="mt-1 font-sans text-sm">
++                  <span className="font-semibold text-wort">{deviation(s, s.typical)}. </span>
++                  {s.note}
++                </p>
++              )}
++            </li>
++          );
++        })}
++      </ol>
++
++      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-ink/15 px-5 py-4 font-mono text-xs text-steel sm:px-7">
++        <span>
++          {STEPS.length} readings · {flagged} flagged · complete at {STEPS[STEPS.length - 1].time}
++        </span>
++        <span>Signed off: not yet</span>
++      </div>
++    </figure>
++  );
++}
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/BrewDayPad.tsx /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/BrewDayPad.tsx
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/BrewDayPad.tsx	1970-01-01 00:00:00.000000000 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/BrewDayPad.tsx	2026-10-20 04:34:41.402102430 +0000
+@@ -0,0 +1,267 @@
++"use client";
++
++import { useState } from "react";
++import { Button } from "@/components/Button";
++import { BATCH, LOGGED_ON_LOAD, STEPS, deviation, format, formatTarget, outOfRange, type Step } from "@/components/sample-batch";
++
++// The hero artifact: the brewer's side of Grainline on a brewhouse tablet, running on sample data.
++// Every control changes something visible at once. Nothing is sent or saved.
++
++type Logged = { value: number; time: string; flagged: boolean };
++
++type State = {
++  logged: Record<string, Logged>;
++  selected: string;
++  draft: string;
++  status: string;
++};
++
++function initial(): State {
++  const logged: Record<string, Logged> = {};
++  STEPS.slice(0, LOGGED_ON_LOAD).forEach((s) => {
++    logged[s.id] = { value: s.typical, time: s.time, flagged: outOfRange(s, s.typical) };
++  });
++  return { logged, selected: STEPS[LOGGED_ON_LOAD].id, draft: "", status: "" };
++}
++
++function nextUnlogged(logged: Record<string, Logged>): Step | undefined {
++  return STEPS.find((s) => !logged[s.id]);
++}
++
++const KEYS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0", "⌫"] as const;
++
++export function BrewDayHero({ copy }: { copy: React.ReactNode }) {
++  const [state, setState] = useState<State>(initial);
++  const step = STEPS.find((s) => s.id === state.selected) ?? STEPS[0];
++  const entry = state.logged[step.id];
++  const stepIndex = STEPS.indexOf(step);
++  const loggedCount = Object.keys(state.logged).length;
++  const flaggedCount = Object.values(state.logged).filter((l) => l.flagged).length;
++  const complete = loggedCount === STEPS.length;
++
++  function select(id: string) {
++    setState((s) => ({ ...s, selected: id, draft: "" }));
++  }
++
++  function press(key: string) {
++    setState((s) => {
++      if (key === "⌫") return { ...s, draft: s.draft.slice(0, -1) };
++      if (key === "." && (s.draft.includes(".") || s.draft === "")) return s;
++      if (s.draft.length >= 6) return s;
++      return { ...s, draft: s.draft + key };
++    });
++  }
++
++  function log(valueText: string) {
++    const value = Number(valueText);
++    if (valueText === "" || Number.isNaN(value)) {
++      setState((s) => ({ ...s, status: "Enter a reading before logging it." }));
++      return;
++    }
++    const flagged = outOfRange(step, value);
++    setState((s) => {
++      const logged = { ...s.logged, [step.id]: { value, time: step.time, flagged } };
++      const next = nextUnlogged(logged);
++      const shown = format(value, step.unit);
++      const status = flagged
++        ? `${step.name} logged: ${shown} ${step.unit} at ${step.time}. ${deviation(step, value)} target, flagged on the record.`
++        : `${step.name} logged: ${shown} ${step.unit} at ${step.time}.`;
++      const done = Object.keys(logged).length === STEPS.length;
++      return {
++        logged,
++        selected: next ? next.id : step.id,
++        draft: "",
++        status: done ? `${status} Batch ${BATCH.number} record complete.` : status,
++      };
++    });
++  }
++
++  function reset() {
++    setState({ ...initial(), status: "Sample reset to 08:40, with three readings logged." });
++  }
++
++  const entryPane = (
++    <div className="flex flex-col gap-4 border-t border-foam/15 pt-5 md:border-t-0 md:pt-0">
++      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
++        <p className="font-mono text-sm text-foam/70">
++          Step {stepIndex + 1} of {STEPS.length}
++        </p>
++        <p className="font-mono text-sm text-foam/70">Target {formatTarget(step)}</p>
++      </div>
++      <p className="text-h3 text-foam">{step.name}</p>
++
++      {entry ? (
++        <>
++          <p className="tabular font-mono text-reading text-barley">
++            {format(entry.value, step.unit)} <span className="text-[0.5em] text-foam/70">{step.unit}</span>
++          </p>
++          <p className="text-base text-foam/85">
++            Logged at {entry.time}.{" "}
++            {entry.flagged ? (
++              <span className="text-barley">
++                {deviation(step, entry.value)} target. Flagged on the record; the brew day carries on.
++              </span>
++            ) : (
++              "Inside target."
++            )}
++          </p>
++          <div className="flex flex-wrap gap-3 pt-1">
++            <Button
++              type="button"
++              variant="inverse"
++              onClick={() => setState((s) => ({ ...s, draft: format(entry.value, step.unit), logged: without(s.logged, step.id) }))}
++            >
++              Change this reading
++            </Button>
++            {complete && (
++              <Button type="button" variant="inverse-ghost" onClick={reset}>
++                Start the sample over
++              </Button>
++            )}
++          </div>
++        </>
++      ) : (
++        <>
++          <p className="tabular min-h-[1em] font-mono text-reading text-foam">
++            {state.draft || <span className="text-foam/40">{format(0, step.unit)}</span>}{" "}
++            <span className="text-[0.5em] text-foam/70">{step.unit}</span>
++          </p>
++          <div className="grid grid-cols-3 gap-2" role="group" aria-label="Number keys">
++            {KEYS.map((k) => (
++              <button
++                key={k}
++                type="button"
++                onClick={() => press(k)}
++                aria-label={k === "⌫" ? "Delete last digit" : k === "." ? "Decimal point" : k}
++                className="key tabular min-h-14 rounded-key bg-foam/10 font-mono text-2xl font-semibold text-foam transition-colors duration-swap ease-out hover:bg-foam/20 active:bg-foam/25"
++              >
++                {k}
++              </button>
++            ))}
++          </div>
++          <div className="flex flex-wrap items-center gap-3 pt-1">
++            <Button type="button" variant="inverse" size="lg" onClick={() => log(state.draft)} className="flex-1 md:flex-none">
++              Log reading
++            </Button>
++            <Button type="button" variant="inverse-ghost" onClick={() => log(format(step.typical, step.unit))}>
++              Use the sample reading
++            </Button>
++          </div>
++        </>
++      )}
++    </div>
++  );
++
++  const pad = (
++    <div className="on-ink rounded-tablet bg-ink p-4 text-foam sm:p-6" data-artifact="brew-day-pad">
++      <div className="mb-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-foam/15 pb-4">
++        <p className="font-mono text-sm">
++          <span className="font-semibold text-barley">Batch {BATCH.number}</span>
++          <span className="text-foam/70">
++            {" "}
++            · {BATCH.beer} · {BATCH.size}
++          </span>
++        </p>
++        <p className="font-mono text-xs text-foam/70">Sample batch. Runs in your browser; nothing is saved.</p>
++      </div>
++
++      <div className="grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] md:gap-8">
++        <ol className="flex flex-col gap-1" aria-label="Brew-day steps">
++          {STEPS.map((s, i) => {
++            const l = state.logged[s.id];
++            const isSelected = s.id === state.selected;
++            const isNext = !l && nextUnlogged(state.logged)?.id === s.id;
++            return (
++              <li key={s.id}>
++                <button
++                  type="button"
++                  onClick={() => select(s.id)}
++                  aria-pressed={isSelected}
++                  className={`flex w-full items-center gap-3 rounded-key px-3 py-2.5 text-left transition-colors duration-swap ease-out ${
++                    isSelected ? "bg-foam/15" : "hover:bg-foam/[0.07]"
++                  }`}
++                >
++                  <span
++                    className={`tabular w-7 shrink-0 font-mono text-sm ${l ? (l.flagged ? "text-barley" : "text-foam") : "text-foam/70"}`}
++                    aria-hidden="true"
++                  >
++                    {l ? (l.flagged ? "⚑" : "✓") : String(i + 1).padStart(2, "0")}
++                  </span>
++                  <span className="min-w-0 flex-1">
++                    <span className="block text-base font-semibold leading-tight text-foam">{s.name}</span>
++                    <span className="tabular block font-mono text-sm text-foam/70">
++                      {l ? `${format(l.value, s.unit)} ${s.unit} · ${l.time}${l.flagged ? " · flagged" : ""}` : isNext ? "up next" : "later"}
++                    </span>
++                  </span>
++                </button>
++                {isSelected && <div className="px-3 pb-4 pt-3 md:hidden">{entryPane}</div>}
++              </li>
++            );
++          })}
++        </ol>
++        <div className="hidden md:block">{entryPane}</div>
++      </div>
++
++      <p role="status" aria-live="polite" className="mt-4 min-h-[1.5rem] border-t border-foam/15 pt-3 text-sm text-foam/85">
++        {state.status}
++      </p>
++    </div>
++  );
++
++  // The owner's side of the same batch, filling in as readings are logged. Drawn as paper, not glass.
++  const record = (
++    <div className="border border-ink/15 bg-white">
++      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-ink/15 px-4 py-3">
++        <p className="font-mono text-sm font-semibold">Batch {BATCH.number} record</p>
++        <p className="tabular font-mono text-xs text-steel">
++          {loggedCount} of {STEPS.length} readings{flaggedCount ? ` · ${flaggedCount} flagged` : ""}
++          {complete ? " · complete" : ""}
++        </p>
++      </div>
++      <ol className="tabular flex flex-col px-2 py-1.5 font-mono text-sm" aria-label="Batch record rows">
++        {STEPS.filter((s) => state.logged[s.id]).map((s) => {
++          const l = state.logged[s.id];
++          return (
++            <li
++              key={`${s.id}-${l.time}-${l.value}`}
++              className="row-new grid grid-cols-[3.25rem_1fr_auto] items-baseline gap-x-3 rounded-md px-2 py-1.5"
++            >
++              <span className="text-steel">{l.time}</span>
++              <span className="min-w-0 font-sans font-medium">{s.name}</span>
++              <span className={l.flagged ? "font-semibold text-wort" : ""}>
++                {format(l.value, s.unit)} {s.unit}
++                {l.flagged ? " ⚑" : ""}
++              </span>
++            </li>
++          );
++        })}
++        {!complete && (
++          <li className="grid grid-cols-[3.25rem_1fr_auto] items-baseline gap-x-3 px-2 py-1.5 text-steel">
++            <span>{nextUnlogged(state.logged)?.time}</span>
++            <span className="font-sans">{nextUnlogged(state.logged)?.name}</span>
++            <span>waiting</span>
++          </li>
++        )}
++      </ol>
++    </div>
++  );
++
++  return (
++    <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
++      <div className="flex min-w-0 flex-col gap-6 lg:col-span-5 lg:pt-6">
++        {copy}
++        <div className="hidden lg:block">{record}</div>
++      </div>
++      <div id="brew-day" className="flex min-w-0 flex-col gap-4 lg:col-span-7">
++        {pad}
++        <div className="lg:hidden">{record}</div>
++      </div>
++    </div>
++  );
++}
++
++function without<T>(obj: Record<string, T>, key: string): Record<string, T> {
++  const copy = { ...obj };
++  delete copy[key];
++  return copy;
++}
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/Button.tsx /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/Button.tsx
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/Button.tsx	2026-10-20 02:28:53.816650811 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/Button.tsx	2026-10-20 04:30:22.576043147 +0000
+@@ -1,15 +1,19 @@
+ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
+ 
+-type Variant = "primary" | "secondary" | "ghost";
++// "inverse" and "inverse-ghost" are for actions placed on an ink (dark) surface, where wort
++// and the default ghost text would not reach 3:1 against the ground.
++type Variant = "primary" | "secondary" | "ghost" | "inverse" | "inverse-ghost";
+ type Size = "md" | "lg";
+ 
+ const base =
+-  "inline-flex items-center justify-center gap-2 rounded-btn font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50";
++  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-btn font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50";
+ 
+ const variants: Record<Variant, string> = {
+   primary: "bg-wort text-white hover:bg-wort-dark",
+   secondary: "border border-ink/20 bg-white text-ink hover:border-ink/40",
+   ghost: "text-wort underline-offset-4 hover:underline",
++  inverse: "bg-foam text-ink hover:bg-white",
++  "inverse-ghost": "text-barley underline-offset-4 hover:underline",
+ };
+ 
+ const sizes: Record<Size, string> = {
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/EarlyAccessForm.tsx /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/EarlyAccessForm.tsx
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/EarlyAccessForm.tsx	1970-01-01 00:00:00.000000000 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/EarlyAccessForm.tsx	2026-10-20 04:31:35.789495526 +0000
+@@ -0,0 +1,92 @@
++"use client";
++
++import { useState, type FormEvent } from "react";
++import { Button } from "@/components/Button";
++import { PRIMARY_LABEL } from "@/components/site";
++
++// Where early-access requests go. There is no inbox yet (see BRIEF.md), so this is empty on purpose:
++// the form then says plainly that nothing was sent. Set it to a form endpoint that accepts a POST of
++// `email` and `brewery` (any static-site form service, or your own) and the form submits there.
++export const EARLY_ACCESS_ENDPOINT = "";
++
++type Status = { kind: "idle" | "sending" | "sent" | "unsent" | "error"; text: string };
++
++export function EarlyAccessForm() {
++  const [status, setStatus] = useState<Status>({ kind: "idle", text: "" });
++
++  async function onSubmit(e: FormEvent<HTMLFormElement>) {
++    e.preventDefault();
++    const form = e.currentTarget;
++    if (!form.reportValidity()) return;
++    if (!EARLY_ACCESS_ENDPOINT) {
++      setStatus({
++        kind: "unsent",
++        text: "Nothing was sent. Early-access requests are not open yet, and nothing you typed has left this page.",
++      });
++      return;
++    }
++    setStatus({ kind: "sending", text: "Sending your request…" });
++    try {
++      const res = await fetch(EARLY_ACCESS_ENDPOINT, {
++        method: "POST",
++        headers: { Accept: "application/json" },
++        body: new FormData(form),
++      });
++      if (!res.ok) throw new Error(String(res.status));
++      form.reset();
++      setStatus({ kind: "sent", text: "Request sent. You will hear back by email." });
++    } catch {
++      setStatus({ kind: "error", text: "That did not send. Try again in a minute." });
++    }
++  }
++
++  return (
++    <form
++      method="post"
++      action={EARLY_ACCESS_ENDPOINT || undefined}
++      onSubmit={onSubmit}
++      noValidate={false}
++      className="flex flex-col gap-4 border border-ink/15 bg-white p-5 sm:p-7"
++      aria-labelledby="early-access-heading"
++    >
++      <div className="flex flex-col gap-1.5">
++        <label htmlFor="ea-email" className="text-base font-semibold">
++          Work email
++        </label>
++        <input
++          id="ea-email"
++          name="email"
++          type="email"
++          autoComplete="email"
++          inputMode="email"
++          required
++          className="w-full min-w-0 min-h-12 rounded-btn border border-ink/30 bg-white px-3.5 text-base text-ink placeholder:text-steel"
++          placeholder="you@yourbrewery.co.uk"
++        />
++      </div>
++      <div className="flex flex-col gap-1.5">
++        <label htmlFor="ea-brewery" className="text-base font-semibold">
++          Brewery
++        </label>
++        <input
++          id="ea-brewery"
++          name="brewery"
++          type="text"
++          autoComplete="organization"
++          required
++          className="w-full min-w-0 min-h-12 rounded-btn border border-ink/30 bg-white px-3.5 text-base text-ink placeholder:text-steel"
++          placeholder="Brewery name"
++        />
++      </div>
++      <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:gap-4">
++        <Button type="submit" variant="primary" size="lg" disabled={status.kind === "sending"}>
++          {PRIMARY_LABEL}
++        </Button>
++        <p className="text-sm text-steel">No card, no sales call. You hear back by email.</p>
++      </div>
++      <p role="status" aria-live="polite" className={`min-h-[1.5rem] text-base ${status.kind === "sent" ? "text-hop" : status.kind === "idle" ? "" : "text-wort"}`}>
++        {status.text}
++      </p>
++    </form>
++  );
++}
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/SiteHeader.tsx /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/SiteHeader.tsx
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/SiteHeader.tsx	1970-01-01 00:00:00.000000000 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/SiteHeader.tsx	2026-10-20 04:30:22.576438121 +0000
+@@ -0,0 +1,52 @@
++"use client";
++
++import { useState } from "react";
++import { Button } from "@/components/Button";
++import { NAV, PRIMARY_LABEL } from "@/components/site";
++
++export function SiteHeader() {
++  const [open, setOpen] = useState(false);
++  return (
++    <header className="mx-auto max-w-page px-4 sm:px-6">
++      <div className="flex min-h-[4.5rem] items-center justify-between gap-4">
++        <a href="#top" className="flex items-center gap-2.5 rounded-btn py-2 pr-2" aria-label="Grainline, back to top">
++          {/* eslint-disable-next-line @next/next/no-img-element */}
++          <img src="/grainline-mark.svg" alt="" width={32} height={32} className="h-8 w-8" />
++          <span className="text-lg font-bold tracking-tight">Grainline</span>
++        </a>
++
++        <nav aria-label="Site" className="hidden items-center gap-1 lg:flex">
++          {NAV.map((n) => (
++            <a key={n.href} href={n.href} className="rounded-btn px-3 py-2.5 text-base font-medium text-ink/85 hover:text-ink">
++              {n.label}
++            </a>
++          ))}
++          <Button href="#early-access" variant="primary" className="ml-3">
++            {PRIMARY_LABEL}
++          </Button>
++        </nav>
++
++        <button
++          type="button"
++          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-btn border border-ink/20 bg-white px-3 text-base font-semibold lg:hidden"
++          aria-expanded={open}
++          aria-controls="site-menu"
++          onClick={() => setOpen((o) => !o)}
++        >
++          {open ? "Close" : "Menu"}
++        </button>
++      </div>
++
++      <nav id="site-menu" aria-label="Site, phone menu" className={`${open ? "flex" : "hidden"} flex-col gap-1 border-t border-ink/10 py-3 lg:hidden`}>
++        {NAV.map((n) => (
++          <a key={n.href} href={n.href} onClick={() => setOpen(false)} className="rounded-btn px-3 py-3 text-lg font-medium text-ink">
++            {n.label}
++          </a>
++        ))}
++        <Button href="#early-access" variant="primary" size="lg" className="mt-2" onClick={() => setOpen(false)}>
++          {PRIMARY_LABEL}
++        </Button>
++      </nav>
++    </header>
++  );
++}
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/sample-batch.ts /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/sample-batch.ts
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/sample-batch.ts	1970-01-01 00:00:00.000000000 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/sample-batch.ts	2026-10-20 04:28:41.312862613 +0000
+@@ -0,0 +1,74 @@
++// One illustrative brew day, shared by the hero pad and the batch-record sheet so the same
++// batch recurs through the page. Everything here is sample data: no brewery, beer or brewer
++// is real. Step names, units and target ranges on a live install are the brewery's own.
++
++export type Unit = "°C" | "SG" | "hL";
++
++export type Step = {
++  id: string;
++  name: string;
++  unit: Unit;
++  /** Inclusive target range from the recipe. */
++  target: [number, number];
++  /** The reading in the sample record. Deliberately outside the range on one step. */
++  typical: number;
++  /** Clock time in the sample schedule (no live clock on the page). */
++  time: string;
++  /** Note the brewer added on the sample record, if any, and when. */
++  note?: string;
++  noteTime?: string;
++};
++
++export const BATCH = {
++  number: 231,
++  beer: "Harbour Pale",
++  size: "10 hL",
++  brewed: "14 Oct 2026",
++  brewer: "JM",
++};
++
++export const STEPS: Step[] = [
++  { id: "strike", name: "Strike water", unit: "°C", target: [75.0, 78.0], typical: 76.5, time: "06:40" },
++  { id: "mash", name: "Mash temperature", unit: "°C", target: [65.0, 67.0], typical: 66.5, time: "06:55" },
++  { id: "runnings", name: "First runnings", unit: "SG", target: [1.066, 1.076], typical: 1.072, time: "07:40" },
++  {
++    id: "preboil-sg",
++    name: "Pre-boil gravity",
++    unit: "SG",
++    target: [1.046, 1.05],
++    typical: 1.044,
++    time: "08:45",
++    note: "Short sparge. Topped up 0.4 hL from the HLT.",
++    noteTime: "09:10",
++  },
++  { id: "preboil-vol", name: "Pre-boil volume", unit: "hL", target: [12.0, 12.8], typical: 12.4, time: "08:47" },
++  { id: "og", name: "Original gravity", unit: "SG", target: [1.052, 1.056], typical: 1.054, time: "10:20" },
++  { id: "knockout", name: "Knockout temperature", unit: "°C", target: [18.0, 20.0], typical: 19.0, time: "10:35" },
++  { id: "fv", name: "Volume to FV", unit: "hL", target: [9.8, 10.6], typical: 10.2, time: "10:50" },
++];
++
++/** How many steps are already logged when the sample loads (the visitor picks it up mid-morning). */
++export const LOGGED_ON_LOAD = 3;
++
++export function decimals(unit: Unit): number {
++  return unit === "SG" ? 3 : 1;
++}
++
++export function format(value: number, unit: Unit): string {
++  return value.toFixed(decimals(unit));
++}
++
++export function formatTarget(step: Step): string {
++  return `${format(step.target[0], step.unit)}–${format(step.target[1], step.unit)} ${step.unit}`;
++}
++
++export function outOfRange(step: Step, value: number): boolean {
++  return value < step.target[0] || value > step.target[1];
++}
++
++/** "0.002 under" or "0.4 over", for a flagged reading. */
++export function deviation(step: Step, value: number): string {
++  const [lo, hi] = step.target;
++  const d = value < lo ? lo - value : value - hi;
++  return `${d.toFixed(decimals(step.unit))} ${value < lo ? "under" : "over"}`;
++}
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/site.ts /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/site.ts
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/components/site.ts	1970-01-01 00:00:00.000000000 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/components/site.ts	2026-10-20 04:27:38.270689631 +0000
+@@ -0,0 +1,9 @@
++// Shared site constants (no "use client" so both server and client components can import them).
++export const NAV = [
++  { href: "#brew-day", label: "Sample brew day" },
++  { href: "#record", label: "The record" },
++  { href: "#early-access", label: "Early access" },
++];
++
++// The one conversion label, worded the same wherever it appears.
++export const PRIMARY_LABEL = "Request early access";
+Binary files /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/public/apple-touch-icon.png and /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/public/apple-touch-icon.png differ
+Binary files /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/public/og.png and /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/public/og.png differ
+diff -ruN -x node_modules -x .next -x out -x package-lock.json -x '*.tsbuildinfo' -x next-env.d.ts -x BRIEF.md /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/tailwind.config.ts /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/tailwind.config.ts
+--- /home/claude/startup-landing-lab/evals/round3/fixtures/next-app/tailwind.config.ts	2026-10-20 02:28:53.816650811 +0000
++++ /home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P016/B/src/tailwind.config.ts	2026-10-20 04:36:41.029125753 +0000
+@@ -2,6 +2,8 @@
+ 
+ // Grainline brand tokens. Use these names in components instead of raw hex values.
+ const config: Config = {
++  // hover: styles only on devices that can hover, so touch screens never keep a stuck hover state.
++  future: { hoverOnlyWhenSupported: true },
+   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+   theme: {
+     extend: {
+@@ -18,8 +20,34 @@
+         sans: ["ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
+         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
+       },
++      // Type roles. Fluid sizes keep a rem term so text still scales with the visitor's settings;
++      // every max is under 2.5× its min.
++      fontSize: {
++        display: ["clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem)", { lineHeight: "1.02", letterSpacing: "-0.02em", fontWeight: "800" }],
++        h2: ["clamp(1.875rem, 1.3rem + 2vw, 3rem)", { lineHeight: "1.1", letterSpacing: "-0.015em", fontWeight: "700" }],
++        h3: ["1.375rem", { lineHeight: "1.25", fontWeight: "700" }],
++        lead: ["clamp(1.125rem, 1rem + 0.5vw, 1.375rem)", { lineHeight: "1.45" }],
++        body: ["1.0625rem", { lineHeight: "1.55" }],
++        reading: ["clamp(2.5rem, 2rem + 2vw, 3.5rem)", { lineHeight: "1", fontWeight: "600" }],
++      },
++      maxWidth: {
++        page: "82.5rem", // 1320px content width
++        measure: "36rem", // about 60 characters of body text
++      },
++      spacing: {
++        section: "clamp(4rem, 2.5rem + 6vw, 8rem)", // 64px on phones, 128px on desktop
++      },
+       borderRadius: {
+         btn: "0.5rem",
++        key: "0.75rem",
++        tablet: "1.5rem",
++      },
++      transitionTimingFunction: {
++        out: "cubic-bezier(.2,.7,.2,1)",
++      },
++      transitionDuration: {
++        swap: "180ms",
++        enter: "300ms",
+       },
+     },
+   },

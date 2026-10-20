@@ -1,0 +1,80 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P002/B/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "A lamp that wakes you the way a window does.",
+    "left": 16,
+    "right": 304,
+    "top": 119,
+    "bottom": 287,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13.6,
+   "text_elements_under_12px": 0,
+   "body_text_length": 4404
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "A lamp that wakes you the way a window does.",
+    "left": 16,
+    "right": 374,
+    "top": 100,
+    "bottom": 226,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13.6,
+   "text_elements_under_12px": 0,
+   "body_text_length": 4404,
+   "axe": []
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "A lamp that wakes you the way a window does.",
+    "left": 16,
+    "right": 752,
+    "top": 113,
+    "bottom": 208,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13.6,
+   "text_elements_under_12px": 0,
+   "body_text_length": 4471
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "A lamp that wakes you the way a window does.",
+    "left": 160,
+    "right": 597,
+    "top": 156,
+    "bottom": 465,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13.6,
+   "text_elements_under_12px": 0,
+   "body_text_length": 4471,
+   "axe": []
+  }
+ }
+}

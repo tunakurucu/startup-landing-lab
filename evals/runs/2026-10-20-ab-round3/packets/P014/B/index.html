@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sunrise lamp with one dial and no app — Morrow</title>
+<meta name="description" content="Morrow is a bedside lamp that wakes you with thirty minutes of rising light. No app, no screen, one dial. Reserve one from the first batch with a refundable $20 deposit.">
+<meta property="og:title" content="Morrow: a sunrise lamp with one dial and no app">
+<meta property="og:description" content="A bedside lamp that wakes you with thirty minutes of rising light. Turn the dial on the page and watch the room come up.">
+<meta property="og:image" content="https://morrow.example/og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Morrow: a sunrise lamp with one dial and no app">
+<meta name="twitter:description" content="A bedside lamp that wakes you with thirty minutes of rising light. No app, no screen, one dial.">
+<meta name="twitter:image" content="https://morrow.example/og.png">
+<meta name="theme-color" content="#0f1321">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --night:#0f1321; --night-ink:#f3eadb; --night-mute:#bfb4a0; --night-rule:#2a3045;
+  --dawn:#2a1a13;  --dawn-ink:#f6e9d4;  --dawn-mute:#cdb79c;  --dawn-rule:#4a3327;
+  --sand:#eddcc0;  --sand-ink:#1f1811;  --sand-mute:#5c4a38;  --sand-rule:#cdb690;
+  --morn:#fbf4e7;  --morn-ink:#1f1811;  --morn-mute:#5c4a38;  --morn-rule:#e3d6bf;
+  --accent:#d4781c; --accent-ink:#1a1208; --accent-deep:#b3620f;
+  --display:"Lora","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --text:"Carlito",Calibri,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --s-1:.5rem; --s0:.75rem; --s1:1rem; --s2:1.5rem; --s3:2.25rem; --s4:3.5rem; --s5:5.5rem;
+  --measure:34rem; --wide:76rem;
+  --fs-0:1.0625rem; --fs-1:1.125rem; --fs-2:clamp(1.25rem,1.05rem + .6vw,1.5rem);
+  --fs-h2:clamp(1.75rem,1.3rem + 1.9vw,2.75rem);
+  --fs-h1:clamp(2.5rem,1.5rem + 2.8vw,4rem);
+  --radius:.5rem;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:1rem}
+body{margin:0;background:var(--night);color:var(--night-ink);font-family:var(--text);font-size:var(--fs-1);line-height:1.55;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+h1,h2,h3{font-family:var(--display);font-weight:500;letter-spacing:-.005em;text-wrap:balance;margin:0}
+h1{font-size:var(--fs-h1);line-height:1.06;overflow-wrap:break-word}
+h2{font-size:var(--fs-h2);line-height:1.15}
+h3{font-size:var(--fs-2);line-height:1.25}
+p{margin:0}
+a{color:inherit}
+.wrap{width:min(100% - 2rem,var(--wide));margin-inline:auto}
+.measure{max-width:var(--measure)}
+.mute{color:var(--night-mute)}
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- actions ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3rem;padding:.7rem 1.25rem;border-radius:999px;font:inherit;font-weight:700;text-decoration:none;cursor:pointer;border:2px solid transparent}
+.btn-primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
+.btn-ghost{background:transparent;color:inherit;border-color:currentColor}
+.btn-ghost:hover{background:rgba(255,255,255,.06)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.sand :focus-visible,.morn :focus-visible,.reserve :focus-visible{outline-color:#1f1811}
+
+/* ---------- header ---------- */
+.site-head{padding:1.1rem 0}
+.site-head .wrap{display:flex;align-items:center;gap:1rem}
+.brand{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--display);font-weight:600;font-size:1.35rem;text-decoration:none;min-height:2.75rem}
+.brand svg{width:1.6rem;height:1.6rem}
+.site-nav{margin-left:auto;display:flex;align-items:center;gap:1.5rem}
+.site-nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1.5rem}
+.site-nav a:not(.btn){text-decoration:none;color:var(--night-mute);display:inline-block;padding:.6rem 0;min-height:2.75rem}
+.site-nav a:not(.btn):hover{color:var(--night-ink);text-decoration:underline}
+.menu-btn{display:none}
+
+/* ---------- hero ---------- */
+.hero{padding:var(--s3) 0 var(--s4)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s4);align-items:start}
+.hero-copy{padding-top:var(--s2)}
+.hero-copy p.lede{font-size:var(--fs-2);line-height:1.45;margin-top:var(--s2);max-width:30rem}
+.hero-cta{margin-top:var(--s3);display:flex;flex-direction:column;gap:.75rem;align-items:flex-start}
+.hero-cta .fine{font-size:var(--fs-0);color:var(--night-mute);max-width:26rem}
+
+/* the sunrise artifact */
+.sunrise{--t:0;--light:#b8400f;--glow:.35;--on:.6;--wall:#171c2e;--floor:#0d1019;--bed:#202638;--blanket:#262c40;--pillow:#30364a;--wood:#2a2520;--woodtop:#352e27;--frame:#2c3042;--shade:#3a3630;--sheet:#1b2033;
+  border:1px solid var(--night-rule);border-radius:1rem;overflow:hidden;background:#0b0e18}
+.scene{display:block;width:100%;aspect-ratio:800/520;background:var(--wall)}
+.scene *{transition:fill 180ms linear,opacity 180ms linear,stop-color 180ms linear}
+.scene .pointer{transition:none}
+.controls{padding:var(--s2);display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s1) var(--s2);align-items:center;border-top:1px solid var(--night-rule);background:var(--night)}
+.ctl-title{grid-column:1 / -1;font-family:var(--display);font-size:var(--fs-2);line-height:1.2}
+.dial-label{grid-row:span 2}
+.ctl-actions{grid-column:2}
+.ctl-slider{grid-column:1 / -1;display:grid;gap:.25rem;padding-top:var(--s1);border-top:1px solid var(--night-rule)}
+.ctl-slider label{font-size:var(--fs-0);color:var(--night-mute)}
+.sample-note{grid-column:1 / -1}
+.dial-label{display:block;cursor:grab;width:9rem;height:9rem;touch-action:none;user-select:none;-webkit-user-select:none}
+.dial-label:active{cursor:grabbing}
+.dial-label svg{width:100%;height:100%;display:block}
+.range{width:100%;max-width:30rem;height:44px;margin:0;accent-color:var(--accent);cursor:pointer}
+.readout{display:flex;flex-wrap:wrap;gap:.25rem .75rem;align-items:baseline;align-self:end}
+.readout .num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.25rem;font-weight:700;min-width:5.5ch}
+.readout .phase{color:var(--night-mute)}
+.ctl-actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;align-self:start}
+.sample-note{font-size:.95rem;color:var(--night-mute);max-width:36rem;margin:0}
+.scene-caption{display:flex;justify-content:space-between;gap:1rem;padding:.6rem var(--s2);font-size:.95rem;color:var(--night-mute);background:#0b0e18;border-top:1px solid var(--night-rule)}
+
+/* ---------- sections ---------- */
+section{padding:var(--s5) 0}
+.dawn{background:var(--dawn);color:var(--dawn-ink)}
+.dawn .mute{color:var(--dawn-mute)}
+.sand{background:var(--sand);color:var(--sand-ink);color-scheme:light}
+.sand .mute{color:var(--sand-mute)}
+.morn{background:var(--morn);color:var(--morn-ink);color-scheme:light}
+.morn .mute{color:var(--morn-mute)}
+.two{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--s4);align-items:start}
+.two > h2{grid-column:1}
+.steps{list-style:none;margin:0;padding:0;counter-reset:step}
+.steps li{display:grid;grid-template-columns:2.75rem minmax(0,1fr);gap:1rem;padding:1.1rem 0;border-top:1px solid var(--dawn-rule);font-size:var(--fs-2);line-height:1.4}
+.steps li:last-child{border-bottom:1px solid var(--dawn-rule)}
+.steps li::before{counter-increment:step;content:counter(step);font-family:var(--mono);font-size:1rem;color:var(--dawn-mute);padding-top:.35rem}
+.steps small{display:block;font-size:var(--fs-0);color:var(--dawn-mute);margin-top:.2rem;line-height:1.5}
+
+/* prototype */
+.proto{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:var(--s4);align-items:start}
+.drawing{border:1px solid var(--sand-rule);border-radius:1rem;padding:var(--s2);background:#f4e6cf}
+.drawing svg{width:100%;height:auto;display:block}
+.drawing figcaption{font-size:.95rem;color:var(--sand-mute);margin-top:var(--s1)}
+.callouts{list-style:none;margin:var(--s2) 0 0;padding:0;display:grid;gap:.75rem}
+.callouts li{display:grid;grid-template-columns:2rem minmax(0,1fr);gap:.75rem;align-items:baseline}
+.callouts b{font-family:var(--mono);font-weight:700;font-size:1rem;color:var(--sand-ink)}
+.status{margin-top:var(--s3);display:grid;gap:var(--s2)}
+.status h3{margin-bottom:.4rem}
+.status ul{margin:0;padding-left:1.1rem}
+.status li{margin:.25rem 0}
+
+/* why */
+.why .wrap{max-width:46rem}
+.why p{max-width:37rem}
+.why p + p{margin-top:var(--s2)}
+.why .aside{margin-top:var(--s3);padding-top:var(--s2);border-top:1px solid var(--morn-rule);color:var(--morn-mute)}
+
+/* reserve */
+.reserve{background:var(--morn);color:var(--morn-ink);color-scheme:light;padding-top:0}
+.reserve .panel{background:#fff;border:1px solid var(--morn-rule);border-radius:1.25rem;padding:var(--s4);display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:var(--s4);align-items:start}
+.terms{list-style:none;margin:var(--s2) 0 0;padding:0;display:grid}
+.terms li{padding:.8rem 0;border-top:1px solid var(--morn-rule)}
+.terms li:last-child{border-bottom:1px solid var(--morn-rule)}
+.terms b{display:block}
+.reserve-cta{display:flex;flex-direction:column;gap:.75rem;align-items:flex-start;padding:var(--s2);border-radius:1rem;background:var(--morn)}
+.reserve-cta .price{font-family:var(--display);font-size:var(--fs-h2);line-height:1.1}
+.reserve-cta .price small{display:block;font-family:var(--text);font-size:var(--fs-0);color:var(--morn-mute);margin-top:.3rem}
+.reserve-cta .fine{font-size:var(--fs-0);color:var(--morn-mute)}
+.faq{margin-top:var(--s4);border-top:1px solid var(--morn-rule)}
+.faq details{border-bottom:1px solid var(--morn-rule)}
+.faq summary{cursor:pointer;padding:1rem 0;font-family:var(--display);font-size:var(--fs-2);font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--mono);font-size:1.5rem;color:var(--morn-mute);flex:none}
+.faq details[open] summary::after{content:"−"}
+.faq details p{padding:0 0 1.1rem;max-width:var(--measure);color:#3a2e22}
+
+/* footer */
+footer{background:var(--night);color:var(--night-mute);padding:var(--s4) 0}
+footer .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--s2);align-items:start}
+footer ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.25rem 1.5rem}
+footer a{color:var(--night-ink);text-decoration:underline;text-underline-offset:.15em;display:inline-block;padding:.35rem 0}
+footer .brand{color:var(--night-ink)}
+footer p{max-width:30rem;margin-top:.5rem;font-size:var(--fs-0)}
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .btn{transition:background-color 160ms ease-out,border-color 160ms ease-out}
+}
+@media (prefers-reduced-motion:reduce){
+  .scene *{transition:none}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){
+  .hero .wrap{grid-template-columns:1fr;gap:var(--s3)}
+  .hero-copy{padding-top:0}
+  .two,.proto,.reserve .panel{grid-template-columns:1fr;gap:var(--s3)}
+}
+@media (max-width:760px){
+  section{padding:var(--s4) 0}
+  .site-nav{gap:.75rem}
+  .site-nav ul{display:none;position:absolute;left:1rem;right:1rem;top:4.5rem;background:#161b2c;border:1px solid var(--night-rule);border-radius:var(--radius);padding:.5rem 1rem;flex-direction:column;gap:0;z-index:5}
+  .site-nav.open ul{display:flex}
+  .site-head{position:relative}
+  .site-nav ul a{display:block;padding:.75rem 0}
+  .menu-btn{display:inline-flex;min-width:2.75rem;min-height:2.75rem;padding:.5rem .8rem;background:transparent;border:1px solid var(--night-rule);border-radius:var(--radius);color:var(--night-ink);font:inherit;cursor:pointer}
+  .site-nav .btn{min-height:2.75rem;padding:.55rem .8rem;font-size:.95rem;white-space:nowrap}
+  @media (max-width:560px){.site-nav .btn{display:none}}
+  .site-head .wrap{gap:.5rem}
+  .brand{font-size:1.2rem}
+  .hero{padding-top:var(--s2)}
+  .scene{aspect-ratio:4/3}
+  .controls{grid-template-columns:7rem minmax(0,1fr);padding:var(--s2) var(--s1)}
+  .dial-label{width:7rem;height:7rem;grid-row:auto}
+  .readout{align-self:center}
+  .ctl-actions{grid-column:1 / -1}
+  .reserve .panel{padding:var(--s2)}
+  footer .wrap{grid-template-columns:1fr}
+  .scene-caption{flex-direction:column;gap:.25rem}
+}
+</style>
+</head>
+<body>
+<a class="visually-hidden" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#main" aria-label="Morrow, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 22a12 12 0 0 1 24 0" fill="none" stroke="currentColor" stroke-width="3"/><path d="M2 26h28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="16" cy="22" r="4" fill="#d4781c"/></svg>
+      Morrow
+    </a>
+    <nav class="site-nav" id="nav" aria-label="Page">
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-list">Menu</button>
+      <ul id="nav-list">
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#prototype">The prototype</a></li>
+        <li><a href="#reserve">Price and deposit</a></li>
+      </ul>
+      <a class="btn btn-primary" href="#reserve">Reserve a Morrow</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap">
+    <div class="hero-copy">
+      <h1 id="h1">Wake to thirty minutes of sunrise. One dial, no app.</h1>
+      <p class="lede">Morrow is a bedside lamp. Turn the dial to the time you want to be up, and the light starts rising half an hour before, from a faint ember to full morning, with no app and no screen.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#reserve">Reserve a Morrow</a>
+        <p class="fine">$20 deposit, refunded whenever you ask. Checkout isn’t connected yet, so no card today.</p>
+      </div>
+    </div>
+
+    <figure class="sunrise" id="sunrise" aria-labelledby="sunrise-cap">
+      <svg class="scene" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="scene-title scene-desc">
+        <title id="scene-title">A bedroom before dawn, with Morrow lit on the nightstand</title>
+        <desc id="scene-desc">Drawing of a dark bedroom. Outside the window it is still night. On the nightstand beside the bed, a short cylindrical lamp with one dial glows; its light grows from ember to full morning as the dial is turned.</desc>
+        <defs>
+          <radialGradient id="glow" gradientUnits="userSpaceOnUse" cx="540" cy="250" r="470">
+            <stop offset="0" style="stop-color:var(--light);stop-opacity:.9"/>
+            <stop offset=".3" style="stop-color:var(--light);stop-opacity:.42"/>
+            <stop offset="1" style="stop-color:var(--light);stop-opacity:0"/>
+          </radialGradient>
+          <radialGradient id="tableglow" gradientUnits="userSpaceOnUse" cx="540" cy="362" r="150">
+            <stop offset="0" style="stop-color:var(--light);stop-opacity:.55"/>
+            <stop offset="1" style="stop-color:var(--light);stop-opacity:0"/>
+          </radialGradient>
+          <linearGradient id="shadeShine" x1="0" x2="1">
+            <stop offset="0" stop-color="#000" stop-opacity=".18"/>
+            <stop offset=".45" stop-color="#fff" stop-opacity=".05"/>
+            <stop offset="1" stop-color="#000" stop-opacity=".22"/>
+          </linearGradient>
+        </defs>
+        <!-- room -->
+        <rect width="800" height="470" style="fill:var(--wall)"/>
+        <rect y="470" width="800" height="50" style="fill:var(--floor)"/>
+        <rect y="462" width="800" height="8" style="fill:var(--frame)"/>
+        <rect width="800" height="520" fill="url(#glow)" style="opacity:var(--glow)"/>
+        <!-- window: outside stays night -->
+        <g>
+          <rect x="60" y="62" width="190" height="222" rx="6" style="fill:var(--frame)"/>
+          <rect x="72" y="74" width="166" height="198" fill="#070a14"/>
+          <rect x="153" y="74" width="4" height="198" style="fill:var(--frame)"/>
+          <rect x="72" y="170" width="166" height="4" style="fill:var(--frame)"/>
+          <circle cx="118" cy="120" r="15" fill="#e3dccb" opacity=".85"/>
+          <circle cx="112" cy="113" r="13" fill="#070a14"/>
+          <circle cx="200" cy="100" r="1.6" fill="#cfc7b4"/><circle cx="214" cy="138" r="1.2" fill="#cfc7b4"/><circle cx="92" cy="210" r="1.3" fill="#cfc7b4"/><circle cx="186" cy="230" r="1.5" fill="#cfc7b4"/>
+          <rect x="52" y="284" width="206" height="10" rx="3" style="fill:var(--frame)"/>
+        </g>
+        <!-- bed -->
+        <rect x="-30" y="356" width="400" height="124" rx="20" style="fill:var(--bed)"/>
+        <rect x="-30" y="386" width="400" height="94" rx="16" style="fill:var(--blanket)"/>
+        <path d="M-30 386 Q 170 368 370 386 L370 404 Q 170 392 -30 404 Z" style="fill:var(--sheet)"/>
+        <ellipse cx="282" cy="352" rx="64" ry="22" style="fill:var(--pillow)"/>
+        <!-- nightstand -->
+        <rect x="432" y="378" width="216" height="92" style="fill:var(--wood)"/>
+        <rect x="420" y="362" width="240" height="18" rx="4" style="fill:var(--woodtop)"/>
+        <rect x="420" y="362" width="240" height="18" rx="4" fill="url(#tableglow)" style="opacity:var(--glow)"/>
+        <rect x="452" y="398" width="176" height="2" style="fill:var(--wall)" opacity=".35"/>
+        <circle cx="540" cy="425" r="4" style="fill:var(--woodtop)"/>
+        <!-- a book on the stand, for scale -->
+        <rect x="596" y="346" width="52" height="16" rx="2" style="fill:var(--blanket)"/>
+        <rect x="596" y="350" width="52" height="2" style="fill:var(--pillow)" opacity=".5"/>
+        <!-- lamp -->
+        <ellipse cx="540" cy="364" rx="80" ry="7" fill="#000" opacity=".22"/>
+        <rect x="496" y="318" width="88" height="46" rx="10" style="fill:var(--shade)"/>
+        <rect x="496" y="318" width="88" height="46" rx="10" fill="#000" opacity=".45"/>
+        <rect x="462" y="176" width="156" height="150" rx="56" style="fill:var(--shade)"/>
+        <rect x="462" y="176" width="156" height="150" rx="56" style="fill:var(--light);opacity:var(--on)"/>
+        <rect x="462" y="176" width="156" height="150" rx="56" fill="url(#shadeShine)"/>
+        <!-- the dial -->
+        <circle cx="540" cy="341" r="15" fill="#15130f"/>
+        <circle cx="540" cy="341" r="13" style="fill:var(--shade)"/>
+        <circle cx="540" cy="341" r="13" fill="#000" opacity=".25"/>
+        <line class="pointer" id="lamp-pointer" x1="540" y1="341" x2="540" y2="330" stroke="#f3eadb" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <div class="scene-caption">
+        <span>Outside the window: still night. The light is all Morrow’s.</span>
+        <span>Drawing of the prototype; not a photo.</span>
+      </div>
+      <div class="controls">
+        <p class="ctl-title">Turn the dial. The room follows.</p>
+        <label class="dial-label" for="t" id="dial" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="56" fill="#161b2c" stroke="#2a3045" stroke-width="2"/>
+            <g stroke="#6b6350" stroke-width="2" stroke-linecap="round" id="dial-ticks"></g>
+            <circle cx="60" cy="60" r="38" fill="#0b0e18" stroke="#3a4157" stroke-width="2"/>
+            <g id="dial-pointer" style="transform-origin:60px 60px">
+              <line x1="60" y1="60" x2="60" y2="28" stroke="#d4781c" stroke-width="4" stroke-linecap="round"/>
+            </g>
+            <circle cx="60" cy="60" r="5" fill="#2a3045"/>
+          </svg>
+        </label>
+        <p class="readout"><span class="num" id="min">−18 min</span> <span class="phase" id="phase" role="status" aria-live="polite">Deep orange, like a candle across the room.</span></p>
+        <div class="ctl-actions">
+          <button class="btn btn-ghost" type="button" id="play">Play the thirty minutes</button>
+          <span class="mute" id="play-note">Runs the whole rise in fifteen seconds.</span>
+        </div>
+        <div class="ctl-slider">
+          <label for="t">Minutes before the time you set</label>
+          <input class="range" type="range" id="t" min="-30" max="0" step="1" value="-18" aria-describedby="phase">
+        </div>
+        <p class="sample-note" id="sunrise-cap">Drawn, not measured: the colours here illustrate the thirty-minute rise. The lamp’s real brightness will be specified before the first batch.</p>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="dawn" id="how" aria-labelledby="how-h">
+  <div class="wrap">
+    <div class="two">
+      <div>
+        <h2 id="how-h">Set it once before bed. The light does the rest, slowly.</h2>
+        <p class="measure" style="margin-top:1.5rem">There is nothing to pair and nothing to tap. The dial on the base is the whole interface: it sets the time you want to be up, and Morrow works back thirty minutes from there.</p>
+      </div>
+      <ol class="steps">
+        <li><div>Turn the dial to the time you want to be up.<small>Ten o’clock on a Sunday or six on a Monday; it is one turn either way. That sentence is the manual.</small></div></li>
+        <li><div>Sleep. The lamp stays off.<small>No clock face, no standby light, nothing glowing at three in the morning. Nothing to pair or update, either.</small></div></li>
+        <li><div>Thirty minutes before your time, the light begins.<small>A faint ember first, then orange, amber, gold.</small></div></li>
+        <li><div>At your time, the room is full morning.<small>No app was involved at any point.</small></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="sand" id="prototype" aria-labelledby="proto-h">
+  <div class="wrap proto">
+    <figure class="drawing">
+      <svg viewBox="0 0 520 420" role="img" aria-labelledby="draw-title draw-desc">
+        <title id="draw-title">Line drawing of the Morrow prototype, front view</title>
+        <desc id="draw-desc">A short, rounded cylinder diffuser sits on a slightly wider base. A single round dial is set into the front of the base. Three numbered callouts mark the diffuser, the dial and the base.</desc>
+        <g fill="none" stroke="#1f1811" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+          <!-- diffuser -->
+          <rect x="150" y="60" width="220" height="200" rx="78"/>
+          <path d="M170 110 Q 260 92 350 110" stroke-opacity=".35"/>
+          <path d="M170 210 Q 260 228 350 210" stroke-opacity=".35"/>
+          <!-- base -->
+          <rect x="182" y="258" width="156" height="58" rx="14"/>
+          <line x1="150" y1="316" x2="370" y2="316" stroke-opacity=".5"/>
+          <!-- dial -->
+          <circle cx="260" cy="287" r="17"/>
+          <line x1="260" y1="287" x2="260" y2="274"/>
+          <!-- callouts -->
+          <line x1="370" y1="140" x2="440" y2="110" stroke-opacity=".6"/>
+          <line x1="277" y1="287" x2="440" y2="330" stroke-opacity=".6"/>
+          <line x1="182" y1="300" x2="80" y2="360" stroke-opacity=".6"/>
+        </g>
+        <g font-family="ui-monospace,Menlo,Consolas,monospace" font-size="18" font-weight="700" fill="#1f1811" text-anchor="middle">
+          <circle cx="456" cy="104" r="16" fill="#1f1811"/><text x="456" y="110" fill="#f4e6cf">1</text>
+          <circle cx="456" cy="334" r="16" fill="#1f1811"/><text x="456" y="340" fill="#f4e6cf">2</text>
+          <circle cx="64" cy="366" r="16" fill="#1f1811"/><text x="64" y="372" fill="#f4e6cf">3</text>
+        </g>
+        <g font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#5c4a38" text-anchor="middle">
+          <line x1="150" y1="36" x2="370" y2="36" stroke="#5c4a38" stroke-width="1"/>
+          <line x1="150" y1="30" x2="150" y2="42" stroke="#5c4a38" stroke-width="1"/>
+          <line x1="370" y1="30" x2="370" y2="42" stroke="#5c4a38" stroke-width="1"/>
+          <text x="260" y="26">width: not final</text>
+        </g>
+      </svg>
+      <ol class="callouts">
+        <li><b>1</b><span>Diffuser. The whole surface lights, so the glow is broad and soft rather than a point.</span></li>
+        <li><b>2</b><span>The dial. Sets your wake time. It is the only control on the lamp.</span></li>
+        <li><b>3</b><span>Base. Weighted so a sleepy hand turning the dial doesn’t drag the lamp with it.</span></li>
+      </ol>
+      <figcaption>Drawn from the current CAD, not photographed. Shape, proportions and finish may change before the first batch.</figcaption>
+    </figure>
+    <div>
+      <h2 id="proto-h">The prototype works. The shape isn’t final.</h2>
+      <p class="measure" style="margin-top:1.5rem">We have a working Morrow on a nightstand: it runs the thirty-minute rise from one dial, with no app and no screen. What we don’t have yet is a photo we would stand behind, because the housing is still changing. So this page draws the lamp instead of pretending.</p>
+      <div class="status">
+        <div>
+          <h3>Settled</h3>
+          <ul>
+            <li>Thirty minutes of rising light, ending at the time you set.</li>
+            <li>One dial as the only control.</li>
+            <li>No app, no screen, no account.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Still changing</h3>
+          <ul>
+            <li>The housing’s exact shape, size and finish.</li>
+            <li>The final price. The $20 deposit is the only number we will put on the page today.</li>
+            <li>The ship date. The first batch is planned for next autumn; we will name a date when we can keep it.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="morn why" aria-labelledby="why-h">
+  <div class="wrap">
+    <h2 id="why-h">A sound alarm takes one second. Morrow takes thirty minutes, on purpose.</h2>
+    <p style="margin-top:1.5rem">An alarm goes from silence to noise in no time at all, and so do you. Morrow goes from dark to morning over half an hour, which is long enough that nothing about it is sudden. The first minutes are too dim to notice. The last minutes are hard to sleep through.</p>
+    <p>That is the whole idea. We built it because we wanted to wake up this way ourselves, with nothing on the nightstand that needs charging, updating, or looking at.</p>
+    <p class="aside">You will find no sleep-science claims on this page. We haven’t run a study, so we won’t quote one. Morrow is a lamp that gets brighter before the time you set; it is not a medical or sleep device.</p>
+  </div>
+</section>
+
+<section class="reserve" id="reserve" aria-labelledby="res-h">
+  <div class="wrap">
+    <div class="panel">
+      <div>
+        <h2 id="res-h">Reserve one for $20, refunded whenever you ask.</h2>
+        <ul class="terms">
+          <li><div><b>$20 holds a lamp from the first batch.</b>No subscription, no app, nothing else recurring.</div></li>
+          <li><div><b>Refunded whenever you ask.</b>Email us and the deposit comes back. No form to argue with.</div></li>
+          <li><div><b>First batch planned for next autumn.</b>We won’t print a date until it is one we can keep.</div></li>
+          <li><div><b>You’ll know the full price before we ask for anything more.</b>The deposit is the only charge until then.</div></li>
+        </ul>
+      </div>
+      <div class="reserve-cta">
+        <p class="price">$20<small>refundable deposit · first batch</small></p>
+        <a class="btn btn-primary" href="mailto:reserve@morrow.example?subject=Reserve%20a%20Morrow&amp;body=Please%20hold%20a%20Morrow%20for%20me%20from%20the%20first%20batch.">Reserve a Morrow</a>
+        <p class="fine">Checkout isn’t connected yet, so this opens an email to us. We hold your place in order of email, take nothing today, and send the $20 deposit link when it is ready.</p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2 class="visually-hidden">Questions before you reserve</h2>
+      <details>
+        <summary>Is that a product photo?</summary>
+        <p>No. Everything on this page is drawn from the current prototype’s CAD. The housing is still changing, so a photo today would show you something you wouldn’t receive.</p>
+      </details>
+      <details>
+        <summary>Does it need an app, an account or Wi‑Fi?</summary>
+        <p>No app, no account, no screen. The dial sets your wake time and that is the whole setup.</p>
+      </details>
+      <details>
+        <summary>When does it ship?</summary>
+        <p>The first batch is planned for next autumn. We would rather tell you a season and keep it than print a date and miss it. Reservation holders hear first when a date is fixed.</p>
+      </details>
+      <details>
+        <summary>Will it help me sleep better?</summary>
+        <p>We don’t know, and we won’t say so until we can show it. Morrow is a lamp that brightens over thirty minutes before the time you set. It isn’t a medical or sleep device.</p>
+      </details>
+      <details>
+        <summary>What happens after I reserve?</summary>
+        <p>Today, your email holds your place and nothing is charged. When checkout is connected, you get the $20 deposit link. You can ask for the deposit back at any point.</p>
+      </details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#main" aria-label="Morrow, back to top">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 22a12 12 0 0 1 24 0" fill="none" stroke="currentColor" stroke-width="3"/><path d="M2 26h28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="16" cy="22" r="4" fill="#d4781c"/></svg>
+        Morrow
+      </a>
+      <p>A sunrise lamp with one dial and no app. Prototype stage; first batch planned for next autumn. $20 refundable deposit, no subscription.</p>
+    </div>
+    <ul>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#prototype">The prototype</a></li>
+      <li><a href="#reserve">Price and deposit</a></li>
+      <li><a href="mailto:hello@morrow.example">Write to us</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var range=document.getElementById('t');
+  var fig=document.getElementById('sunrise');
+  var minEl=document.getElementById('min');
+  var phaseEl=document.getElementById('phase');
+  var pointer=document.getElementById('dial-pointer');
+  var lampPointer=document.getElementById('lamp-pointer');
+  var play=document.getElementById('play');
+  var note=document.getElementById('play-note');
+  var dial=document.getElementById('dial');
+  if(!range||!fig) return;
+
+  // dial ticks
+  var ticks=document.getElementById('dial-ticks');
+  for(var i=0;i<=30;i+=5){
+    var a=(-135+270*i/30)*Math.PI/180;
+    var r1=i%15===0?44:48, r2=52;
+    var l=document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',60+r1*Math.sin(a)); l.setAttribute('y1',60-r1*Math.cos(a));
+    l.setAttribute('x2',60+r2*Math.sin(a)); l.setAttribute('y2',60-r2*Math.cos(a));
+    ticks.appendChild(l);
+  }
+
+  // colour stops for the light, by t in 0..1
+  var stops=[[0,[58,54,48]],[.1,[74,22,6]],[.3,[184,64,15]],[.5,[230,134,28]],[.7,[246,180,90]],[.85,[251,214,143]],[1,[255,241,214]]];
+  function lerp(a,b,u){return a+(b-a)*u}
+  function mixRGB(a,b,u){return [Math.round(lerp(a[0],b[0],u)),Math.round(lerp(a[1],b[1],u)),Math.round(lerp(a[2],b[2],u))]}
+  function rgb(c){return 'rgb('+c[0]+','+c[1]+','+c[2]+')'}
+  function lightAt(t){
+    for(var i=1;i<stops.length;i++){ if(t<=stops[i][0]){ var u=(t-stops[i-1][0])/(stops[i][0]-stops[i-1][0]); return mixRGB(stops[i-1][1],stops[i][1],u); } }
+    return stops[stops.length-1][1];
+  }
+  var night={wall:[23,28,46],floor:[13,16,25],bed:[32,38,56],blanket:[38,44,64],pillow:[48,54,74],wood:[42,37,32],woodtop:[53,46,39],frame:[44,48,66],sheet:[27,32,51]};
+  var day={wall:[239,216,180],floor:[185,138,91],bed:[217,195,164],blanket:[201,141,94],pillow:[244,233,216],wood:[154,106,63],woodtop:[184,130,77],frame:[217,201,174],sheet:[236,222,200]};
+  var phases=[[-28,'Off. The room is as dark as you left it.'],[-22,'A faint ember behind the diffuser. Not enough to wake anyone.'],[-16,'Deep orange, like a candle across the room.'],[-11,'Amber. The room has edges again.'],[-6,'Warm gold, bright enough to read by.'],[-1,'Nearly full, still warm.'],[0,'Full brightness. This is the time you set.']];
+  var lastPhase=null;
+  function phaseFor(m){ for(var i=0;i<phases.length;i++){ if(m<=phases[i][0]) return phases[i][1]; } return phases[phases.length-1][1]; }
+  function render(){
+    var m=Number(range.value);        // -30..0
+    var t=(m+30)/30;                   // 0..1
+    var ease=t*t*(3-2*t);              // slow start, as a dawn is
+    var s=fig.style;
+    s.setProperty('--t',t);
+    s.setProperty('--light',rgb(lightAt(t)));
+    s.setProperty('--glow',(t<=0?0:0.12+0.88*ease).toFixed(3));
+    s.setProperty('--on',(t<=0?0:0.35+0.65*t).toFixed(3));
+    for(var k in night){ s.setProperty('--'+k,rgb(mixRGB(night[k],day[k],ease))); }
+    var deg=-135+270*t;
+    pointer.style.transform='rotate('+deg+'deg)';
+    lampPointer.setAttribute('transform','rotate('+deg+' 540 341)');
+    minEl.textContent=(m===0?'0':'−'+Math.abs(m))+' min';
+    var ph=phaseFor(m);
+    if(ph!==lastPhase){ phaseEl.textContent=ph; lastPhase=ph; }
+  }
+  range.addEventListener('input',function(){ stop(); render(); });
+  render();
+
+  // drag the dial itself
+  var dragging=false;
+  function angleToValue(e){
+    var b=dial.getBoundingClientRect();
+    var x=e.clientX-(b.left+b.width/2), y=e.clientY-(b.top+b.height/2);
+    var deg=Math.atan2(x,-y)*180/Math.PI; // 0 at top, clockwise
+    deg=Math.max(-135,Math.min(135,deg));
+    return Math.round((deg+135)/270*30)-30;
+  }
+  dial.addEventListener('pointerdown',function(e){ e.preventDefault(); stop(); dragging=true; dial.setPointerCapture(e.pointerId); range.value=angleToValue(e); render(); });
+  dial.addEventListener('pointermove',function(e){ if(!dragging) return; range.value=angleToValue(e); render(); });
+  function endDrag(e){ if(!dragging) return; dragging=false; try{ range.focus({preventScroll:true}); }catch(err){} }
+  dial.addEventListener('pointerup',endDrag); dial.addEventListener('pointercancel',endDrag);
+
+  // play the rise: thirty "minutes" in fifteen seconds, with a visible pause
+  var raf=null, t0=null, from=null, paused=false;
+  var DURATION=15000;
+  function stop(){ if(raf){ cancelAnimationFrame(raf); raf=null; } paused=false; play.textContent='Play the thirty minutes'; note.textContent='Runs the whole rise in fifteen seconds.'; }
+  function frame(now){
+    var elapsed=now-t0;
+    var span=(0-from)/30*DURATION;
+    var p=span>0?Math.min(1,elapsed/span):1;
+    range.value=Math.round(from+(0-from)*p);
+    render();
+    if(p<1){ raf=requestAnimationFrame(frame); }
+    else { raf=null; paused=false; play.textContent='Play it again'; note.textContent='Full brightness. Turn the dial to go back.'; }
+  }
+  function start(fromValue){
+    from=fromValue; range.value=from; render();
+    t0=performance.now(); play.textContent='Pause the sunrise'; note.textContent='Playing: thirty minutes in fifteen seconds.';
+    raf=requestAnimationFrame(frame);
+  }
+  play.addEventListener('click',function(){
+    if(raf){ cancelAnimationFrame(raf); raf=null; paused=true; play.textContent='Resume the sunrise'; note.textContent='Paused at '+minEl.textContent+'.'; return; }
+    if(paused){ paused=false; start(Number(range.value)); return; }
+    start(-30);
+  });
+
+  // phone menu
+  var nav=document.getElementById('nav');
+  var mb=nav&&nav.querySelector('.menu-btn');
+  if(mb){
+    mb.addEventListener('click',function(){ var open=nav.classList.toggle('open'); mb.setAttribute('aria-expanded',open?'true':'false'); });
+    nav.addEventListener('click',function(e){ if(e.target.closest('#nav-list a')){ nav.classList.remove('open'); mb.setAttribute('aria-expanded','false'); } });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&nav.classList.contains('open')){ nav.classList.remove('open'); mb.setAttribute('aria-expanded','false'); mb.focus(); } });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paperwren</title>
+<meta name="description" content="Paperwren drafts answers to enterprise security questionnaires from your own policies. Every sentence cites its source or is flagged for review, and your security lead approves each answer.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231C2430'/%3E%3Crect x='7' y='17' width='18' height='7' fill='%23FFE95C'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#demo">Skip to the demo</a>
+
+<header class="top">
+  <div class="wrap top-row">
+    <a class="wordmark" href="#" aria-label="Paperwren home">
+      <span class="wordmark-mark" aria-hidden="true"></span>
+      <span>Paperwren</span>
+    </a>
+    <nav class="top-nav" aria-label="Page">
+      <a href="#demo">How it works</a>
+      <a href="#review">For the reviewer</a>
+      <a href="#pilot">Pilot</a>
+    </nav>
+    <a class="btn btn-small" href="mailto:pilots@paperwren.example?subject=Paperwren%20pilot">Request a pilot</a>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Every answer cites your policy, <br class="br-wide">or it tells you it couldn't.</h1>
+    <div class="hero-grid">
+      <p class="lede">Paperwren drafts replies to the security questionnaires your enterprise buyers send, working only from the policies you already have. Each sentence links to the passage it came from. Anything the policies don't cover is flagged, not filled in. Your security lead approves every answer before it leaves.</p>
+      <div class="hero-cta">
+        <a class="btn" href="mailto:pilots@paperwren.example?subject=Paperwren%20pilot&amp;body=Company%3A%0AWho%20approves%20our%20questionnaire%20answers%3A%0AQuestionnaires%20per%20quarter%2C%20roughly%3A%0A">Request a pilot</a>
+        <p class="cta-note">Email <a href="mailto:pilots@paperwren.example">pilots@paperwren.example</a>. A person replies, usually the same day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section" id="demo" aria-labelledby="demo-heading">
+  <div class="wrap">
+    <div class="demo-intro">
+      <h2 id="demo-heading">One answer, drafted and checked</h2>
+      <p>This runs on a fictional vendor's policy library, built into the page. Nothing is uploaded, and nothing leaves your browser. The same five steps happen for every question in a real questionnaire.</p>
+    </div>
+
+    <div class="demo" id="demo-panel" data-step="0">
+      <div class="demo-head">
+        <ol class="steps" aria-label="Steps">
+          <li><button type="button" class="step" data-step="1"><span class="step-n">1</span><span class="step-label">Read the question</span></button></li>
+          <li><button type="button" class="step" data-step="2"><span class="step-n">2</span><span class="step-label">Find the policy</span></button></li>
+          <li><button type="button" class="step" data-step="3"><span class="step-n">3</span><span class="step-label">Draft</span></button></li>
+          <li><button type="button" class="step" data-step="4"><span class="step-n">4</span><span class="step-label">Check every sentence</span></button></li>
+          <li><button type="button" class="step" data-step="5"><span class="step-n">5</span><span class="step-label">Your call</span></button></li>
+        </ol>
+        <button type="button" class="replay" id="replay">Replay</button>
+        <p class="step-now" id="step-now" aria-hidden="true"></p>
+      </div>
+
+      <div class="demo-body">
+        <div class="answer-col">
+          <div class="q-block reveal" data-from="1">
+            <p class="q-meta">Vendor security questionnaire from a prospective customer. Section 7, Data protection. Item 7.3</p>
+            <p class="q-text">Is customer data encrypted at rest? Describe the encryption standard used and how encryption keys are managed.</p>
+            <p class="agent-note reveal" data-from="1" data-delay="1">Two things to answer: encryption at rest, and key management.</p>
+          </div>
+
+          <div class="draft reveal" data-from="3" aria-live="polite">
+            <p class="draft-label">Draft answer</p>
+            <p class="draft-text">
+              <span class="sent reveal" data-from="3" data-delay="0">Yes. All customer data in production databases and object storage is encrypted at rest using AES-256.<a class="cite" href="#src-1">1</a><span class="check" aria-label="Matches Data Protection Policy section 4.1">Matches §4.1</span></span>
+              <span class="sent reveal" data-from="3" data-delay="1">Encryption is enforced at the storage layer and cannot be disabled by application teams.<a class="cite" href="#src-1">1</a><span class="check" aria-label="Matches Data Protection Policy section 4.1">Matches §4.1</span></span>
+              <span class="sent reveal" data-from="3" data-delay="2">Encryption keys are generated and held in our cloud provider's key management service. Access to key operations is restricted to the platform security group and recorded in the central audit log.<a class="cite" href="#src-2">2</a><span class="check" aria-label="Matches Key Management Standard section 2.3">Matches §2.3</span></span>
+              <span class="sent sent-added reveal" data-from="5" data-delay="1">Keys are rotated annually by the platform team.<span class="added-tag">Added by reviewer</span></span>
+            </p>
+          </div>
+
+          <div class="flag reveal" data-from="4" data-delay="3">
+            <p class="flag-title"><span class="flag-title-open">Needs review: key rotation</span><span class="flag-title-resolved">Resolved by reviewer: key rotation</span></p>
+            <p class="flag-body-open">The question asks how keys are managed. Your Key Management Standard covers custody and access but doesn't state a rotation period, and no other document does. Paperwren left this out rather than guess.</p>
+            <p class="flag-body-resolved">The reviewer added the rotation sentence. It's marked as reviewer text, not policy text. Next time this question comes up, the draft will reuse the sentence and still show that the standard doesn't cover it.</p>
+          </div>
+
+          <p class="check-summary reveal" data-from="4" data-delay="3"><span class="flag-body-open">3 sentences cited. 1 gap flagged.</span><span class="flag-body-resolved">3 sentences cited. 1 sentence added by the reviewer.</span></p>
+
+          <div class="review reveal" data-from="5">
+            <div class="review-row">
+              <p class="review-who">Reviewer: Head of Security</p>
+              <div class="review-actions">
+                <button type="button" class="btn btn-small btn-approve" id="approve-btn" tabindex="-1">Approve</button>
+                <button type="button" class="btn btn-small btn-ghost" tabindex="-1">Send back</button>
+              </div>
+            </div>
+            <p class="approved reveal" data-from="5" data-delay="2">Approved. Added to the questionnaire with its sources. Your edit is saved for the next time this question comes up.</p>
+          </div>
+
+        </div>
+
+        <aside class="source-col" aria-label="Sources">
+          <p class="src-label">Policy library <span class="src-count">14 documents</span></p>
+          <ul class="src-list">
+            <li class="src-doc" data-doc="isp">Information Security Policy, v4.0</li>
+            <li class="src-doc src-hit" data-doc="dpp" id="src-1">
+              <span class="src-title">Data Protection Policy, v3.2 <span class="src-ref">[1]</span></span>
+              <blockquote class="src-passage reveal" data-from="2">
+                <p class="src-sec">Section 4.1, Encryption at rest</p>
+                <p><mark class="reveal" data-from="2" data-delay="1">All customer data stored in production databases and object storage is encrypted at rest using AES-256.</mark> <mark class="reveal" data-from="2" data-delay="2">Encryption is enforced at the storage layer and cannot be disabled by application teams.</mark> Backups inherit the encryption settings of their source.</p>
+              </blockquote>
+            </li>
+            <li class="src-doc src-hit" data-doc="kms" id="src-2">
+              <span class="src-title">Key Management Standard, v2.0 <span class="src-ref">[2]</span></span>
+              <blockquote class="src-passage reveal" data-from="2" data-delay="1">
+                <p class="src-sec">Section 2.3, Key custody</p>
+                <p><mark class="reveal" data-from="2" data-delay="3">Data encryption keys are generated and stored in the cloud provider's key management service.</mark> <mark class="reveal" data-from="2" data-delay="3">Access to key operations is restricted to the platform security group and logged to the central audit log.</mark></p>
+                <p class="src-gap reveal" data-from="4" data-delay="3">No section on rotation.</p>
+              </blockquote>
+            </li>
+            <li class="src-doc" data-doc="acp">Access Control Policy, v2.1</li>
+            <li class="src-doc" data-doc="irp">Incident Response Plan, v3.0</li>
+            <li class="src-doc" data-doc="bcp">Business Continuity Plan, v1.4</li>
+            <li class="src-doc src-more" data-doc="more">8 more</li>
+          </ul>
+          <p class="src-status" data-status></p>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="review-section" id="review" aria-labelledby="review-heading">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="review-heading">Written for the person who has to approve it</h2>
+      <p>Sales wants the questionnaire back by Friday. Security has to stand behind every line of it. Paperwren is designed around the second job, because that's the one that decides whether the answers go out at all.</p>
+    </div>
+    <div class="points">
+      <div class="point">
+        <h3>Nothing without a source</h3>
+        <p>Each sentence carries a citation to a named section of a named policy version. The passage sits beside the draft, so checking a claim is a glance, not a search through the shared drive.</p>
+      </div>
+      <div class="point">
+        <h3>Gaps are flagged, not filled</h3>
+        <p>When the policies don't cover what was asked, the draft says so and stops. It won't guess a key rotation period, assume a certification, or borrow an answer from a previous questionnaire you didn't write.</p>
+      </div>
+      <div class="point">
+        <h3>You approve, every time</h3>
+        <p>No answer is exported until a reviewer signs it. Your edits are kept with the question, so the next questionnaire starts from what you actually said, not from what the agent first drafted.</p>
+      </div>
+    </div>
+    <p class="aside-note">For the sales engineer waiting on all this: a draft that arrives already checked gets approved in one pass instead of three. The speed comes from fewer rounds, not from skipping the review.</p>
+  </div>
+</section>
+
+<section class="pilot-section" id="pilot" aria-labelledby="pilot-heading">
+  <div class="wrap pilot-grid">
+    <div>
+      <h2 id="pilot-heading">What a pilot looks like</h2>
+      <ol class="pilot-steps">
+        <li>You bring the last questionnaire you answered and the policies you answered it from.</li>
+        <li>Paperwren drafts it again. Your security lead reviews the drafts next to the answers you actually sent.</li>
+        <li>You see where it cited correctly, where it flagged, and where it would have been wrong. You keep the comparison whether or not you continue.</li>
+      </ol>
+      <p class="honest">Three design partners are running Paperwren on live questionnaires now. We won't name them yet, and we don't have accuracy or time-saved figures we'd put on a page. The pilot is how you get numbers for your own policies.</p>
+    </div>
+    <div class="pilot-cta">
+      <p class="pilot-cta-title">Request a pilot</p>
+      <p>Send a short email to <a href="mailto:pilots@paperwren.example">pilots@paperwren.example</a> with:</p>
+      <ul>
+        <li>your company</li>
+        <li>who approves questionnaire answers today</li>
+        <li>roughly how many questionnaires you get a quarter</li>
+      </ul>
+      <a class="btn" href="mailto:pilots@paperwren.example?subject=Paperwren%20pilot&amp;body=Company%3A%0AWho%20approves%20our%20questionnaire%20answers%3A%0AQuestionnaires%20per%20quarter%2C%20roughly%3A%0A">Open a pre-filled email</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-row">
+    <p><span class="wordmark-mark small" aria-hidden="true"></span> Paperwren</p>
+    <p><a href="mailto:pilots@paperwren.example">pilots@paperwren.example</a></p>
+    <p>The demo above uses a fictional vendor's policies. This page sets no cookies and loads nothing from the network.</p>
+  </div>
+</footer>
+
+<script src="demo.js"></script>
+</body>
+</html>

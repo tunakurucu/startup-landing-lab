@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Environment variable checker for your codebase and CI · envcensus</title>
+<meta name="description" content="envcensus is a command-line tool that finds every environment variable your code reads and checks it against .env.example and your CI config. Runs locally, sends nothing anywhere, fails the CI job when a variable is missing or unused.">
+<meta name="application-name" content="envcensus">
+<meta property="og:site_name" content="envcensus">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Find the env var set on your laptop and nowhere else">
+<meta property="og:description" content="A CLI that lists every environment variable your code reads and checks it against .env.example and CI. Runs locally. Fails the job when one is missing or unused.">
+<meta property="og:image" content="https://envcensus.dev/share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Find the env var set on your laptop and nowhere else">
+<meta name="twitter:description" content="A CLI that lists every environment variable your code reads and checks it against .env.example and CI. Runs locally. Fails the job when one is missing or unused.">
+<meta name="twitter:image" content="https://envcensus.dev/share.png">
+<meta name="theme-color" content="#f5f6f3">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  :root {
+    color-scheme: light;
+    --ground: #f5f6f3;
+    --pane: #ffffff;
+    --ink: #161916;
+    --muted: #4d534d;
+    --rule: #d3d7d0;
+    --rule-strong: #a9afa6;
+    --tint: #e4e8e0;
+    --hit: #fff1a8;
+    --bad: #b3261e;
+    --ok: #1b6e3a;
+    --font-sans: system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+    --step-0: 1.0625rem;                                   /* 17px body */
+    --step-1: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);  /* subhead, lead */
+    --step-2: clamp(1.5rem, 1.25rem + 1.1vw, 2.125rem);    /* h2 */
+    --step-3: clamp(2.25rem, 1.5rem + 2.6vw, 3.25rem);     /* h1: 36px at 390, 52px at 1440 */
+    --space-xs: 0.5rem;
+    --space-s: 1rem;
+    --space-m: 1.5rem;
+    --space-l: 3rem;
+    --space-xl: clamp(3.5rem, 2.5rem + 4vw, 6.5rem);
+    --width: 80rem;
+    --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+    --radius: 4px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: 1rem; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--step-0);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+  code, kbd, pre, .mono { font-family: var(--font-mono); }
+  p { max-width: 60ch; }
+  p { margin: 0 0 var(--space-s); }
+  h1, h2, h3 { font-family: var(--font-mono); font-weight: 700; margin: 0; text-wrap: balance; overflow-wrap: break-word; }
+  h1 { font-size: var(--step-3); line-height: 1.08; letter-spacing: -0.02em; max-width: 20ch; }
+  h2 { font-size: var(--step-2); line-height: 1.2; letter-spacing: -0.01em; max-width: 30ch; margin-bottom: var(--space-m); }
+  h3 { font-size: 1.0625rem; line-height: 1.35; }
+  .wrap { max-width: var(--width); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+  /* Header */
+  .site-header { border-bottom: 1px solid var(--rule); }
+  .site-header .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-m); min-height: 3.5rem; }
+  .brand { font-family: var(--font-mono); font-weight: 700; font-size: 1.125rem; text-decoration: none; padding: 0.625rem 0; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .brand svg { width: 1.25rem; height: 1.25rem; }
+  .site-nav { margin-left: auto; }
+  .site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 0.25rem; }
+  .site-nav a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.75rem; text-decoration: none; font-size: 0.9375rem; color: var(--muted); }
+  .site-nav li { max-width: none; }
+  .site-nav a:hover { color: var(--ink); text-decoration: underline; }
+  @media (max-width: 40em) {
+    .site-header .wrap { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+    .site-nav { flex-basis: 100%; }
+    .site-nav ul { gap: 0 0.75rem; }
+    .site-nav a { padding: 0; min-width: 2.75rem; }
+  }
+
+  /* Hero */
+  .hero { padding-top: var(--space-l); padding-bottom: var(--space-l); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 11fr) minmax(0, 13fr); gap: var(--space-l); align-items: start; }
+  .hero-copy { max-width: 42rem; padding-top: var(--space-l); }
+  @media (max-width: 64em) { .hero-grid { grid-template-columns: 1fr; } .hero-copy { padding-top: var(--space-s); } }
+  .hero .lead { font-size: var(--step-1); line-height: 1.5; max-width: 52ch; margin: var(--space-m) 0 var(--space-l); color: var(--ink); }
+  .cmd { display: flex; flex-wrap: wrap; align-items: stretch; gap: var(--space-s); }
+  .cmd-box { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--pane); border: 1px solid var(--rule-strong); border-radius: var(--radius); padding: 0.75rem 1rem; font-family: var(--font-mono); font-size: 1.0625rem; }
+  .cmd-box .prompt { color: var(--muted); user-select: none; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 3rem; padding: 0.625rem 1.25rem; border-radius: var(--radius); border: 1px solid var(--ink); background: var(--ink); color: #fff; font: inherit; font-weight: 600; font-size: 1rem; cursor: pointer; text-decoration: none; }
+  .btn:hover { background: #2a2e2a; }
+  .btn-quiet { background: transparent; color: var(--ink); border-color: var(--rule-strong); font-weight: 500; }
+  .btn-quiet:hover { background: var(--tint); }
+  .beside { margin: var(--space-s) 0 0; color: var(--muted); font-size: 0.9375rem; max-width: 60ch; }
+  .beside strong { color: var(--ink); font-weight: 600; }
+  .copy-status { display: block; min-height: 1.5rem; margin-top: var(--space-xs); font-size: 0.9375rem; color: var(--ok); font-weight: 600; }
+
+  /* Census artifact */
+  .census-head { border-top: 2px solid var(--ink); padding-top: var(--space-s); margin-bottom: var(--space-s); }
+  .census-head h2 { font-size: 1.5rem; letter-spacing: 0; margin: 0 0 0.25rem; max-width: none; }
+  .census-head .sample { font-size: 0.9375rem; color: var(--muted); margin: 0; max-width: 60ch; }
+  .report { background: var(--pane); border: 1px solid var(--rule-strong); border-radius: var(--radius); font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.5; }
+  .report .run { padding: 0.75rem 1rem; border-bottom: 1px solid var(--rule); color: var(--muted); display: flex; flex-wrap: wrap; gap: 0 1rem; }
+  .report .run b { color: var(--ink); font-weight: 600; }
+  .cols, .row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 0 0.75rem; align-items: center; padding: 0 1rem; }
+  .cols { color: var(--muted); font-size: 0.8125rem; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 0.625rem; padding-bottom: 0.375rem; border-bottom: 1px solid var(--rule); }
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .rows li { border-bottom: 1px solid var(--rule); max-width: none; }
+  .row { width: 100%; min-height: 2.75rem; padding-top: 0.5rem; padding-bottom: 0.5rem; background: transparent; border: 0; color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+  .row:hover { background: var(--tint); }
+  .row[aria-pressed="true"] { background: var(--hit); }
+  .row .var { font-weight: 700; overflow-wrap: break-word; }
+  .row .k { display: none; }
+  .row .bad { color: var(--bad); font-weight: 600; }
+  .row .ok { color: var(--ok); }
+  .row .none { color: var(--muted); }
+  .report .sum { padding: 0.75rem 1rem; display: flex; flex-wrap: wrap; gap: 0 1rem; }
+  .report .sum .bad { color: var(--bad); font-weight: 600; }
+  .report .sum .exit { margin-left: auto; color: var(--muted); }
+  .detail { margin: var(--space-s) 0 0; min-height: 3.2em; font-size: 0.9375rem; color: var(--ink); max-width: none; }
+  .detail code { background: var(--tint); padding: 0.05em 0.3em; border-radius: 3px; font-size: 0.9em; }
+
+  .sources { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-s); margin-top: var(--space-l); align-items: start; }
+  @media (max-width: 64em) { .sources { grid-template-columns: 1fr; } }
+  .pane { margin: 0; background: var(--pane); border: 1px solid var(--rule-strong); border-radius: var(--radius); overflow: hidden; }
+  .pane figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1rem; padding: 0.5rem 0.875rem; border-bottom: 1px solid var(--rule); font-family: var(--font-mono); font-size: 0.8125rem; }
+  .pane figcaption .file { font-weight: 600; }
+  .pane figcaption .state { color: var(--muted); }
+  .pane figcaption .state.bad { color: var(--bad); font-weight: 600; }
+  .pane figcaption .state.ok { color: var(--ok); }
+  .pane pre { margin: 0; padding: 0.625rem 0; overflow-x: auto; font-size: 0.875rem; line-height: 1.55; tab-size: 2; }
+  .pane .ln { display: block; padding: 0 0.875rem; white-space: pre; }
+  .pane .ln.hit { background: var(--hit); }
+  .pane .ln .c { color: var(--muted); }
+  .pane .ln .v { font-weight: 700; }
+  .pane .ln.hit .v { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
+
+  @media (max-width: 40em) {
+    .cols { display: none; }
+    .row { grid-template-columns: 1fr; gap: 0.15rem; padding-top: 0.625rem; padding-bottom: 0.625rem; }
+    .row .var { margin-bottom: 0.15rem; }
+    .row .c { display: flex; gap: 0.5rem; }
+    .row .k { display: inline-block; min-width: 7.5em; color: var(--muted); font-weight: 400; }
+    .report .sum .exit { margin-left: 0; flex-basis: 100%; }
+  }
+
+  /* Sections */
+  section.block { padding: var(--space-xl) 0; border-top: 1px solid var(--rule); }
+  .two { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-l); align-items: start; }
+  @media (max-width: 56em) { .two { grid-template-columns: 1fr; } }
+  .rules { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+  .rules th, .rules td { text-align: left; vertical-align: top; padding: 0.75rem 1rem 0.75rem 0; border-bottom: 1px solid var(--rule); }
+  .rules th { font-weight: 600; color: var(--muted); font-size: 0.8125rem; letter-spacing: 0.04em; text-transform: uppercase; border-bottom: 2px solid var(--ink); }
+  .rules td:first-child { font-family: var(--font-mono); font-weight: 700; white-space: nowrap; }
+  .rules td:first-child .bad { color: var(--bad); }
+  .rules code { background: var(--tint); padding: 0.05em 0.3em; border-radius: 3px; font-size: 0.9em; }
+  @media (max-width: 40em) {
+    .rules thead { display: none; }
+    .rules tr { display: block; padding: 0.75rem 0; border-bottom: 1px solid var(--rule); }
+    .rules td { display: block; border: 0; padding: 0.15rem 0; }
+    .rules td:first-child { white-space: normal; }
+    .rules td[data-col]::before { content: attr(data-col) " "; color: var(--muted); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.04em; display: block; margin-top: 0.4rem; }
+  }
+  .codeblock { margin: 0; background: var(--pane); border: 1px solid var(--rule-strong); border-radius: var(--radius); overflow: hidden; }
+  .codeblock figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.25rem 1rem; padding: 0.5rem 0.875rem; border-bottom: 1px solid var(--rule); font-family: var(--font-mono); font-size: 0.8125rem; }
+  .codeblock figcaption .file { font-weight: 600; }
+  .codeblock figcaption .note { color: var(--muted); }
+  .codeblock pre { margin: 0; padding: 0.75rem 0.875rem; overflow-x: auto; font-size: 0.875rem; line-height: 1.55; tab-size: 2; }
+  .codeblock .c { color: var(--muted); }
+  .codeblock .bad { color: var(--bad); font-weight: 600; }
+  .codeblock .ok { color: var(--ok); font-weight: 600; }
+  .codeblock .k { font-weight: 700; }
+  .stack { display: grid; gap: var(--space-s); }
+  .exit-codes { list-style: none; padding: 0; margin: var(--space-m) 0 0; font-family: var(--font-mono); font-size: 0.9375rem; max-width: 60ch; }
+  .exit-codes li { display: grid; grid-template-columns: 2.5rem 1fr; gap: 0.5rem; padding: 0.5rem 0; border-top: 1px solid var(--rule); }
+  .exit-codes b { font-weight: 700; }
+  .exit-codes span { font-family: var(--font-sans); }
+  .reference pre { font-size: 0.875rem; }
+  .reference .two { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+  @media (max-width: 56em) { .reference .two { grid-template-columns: 1fr; } }
+  .facts { list-style: none; padding: 0; margin: 0; max-width: 60ch; }
+  .facts li { padding: 0.75rem 0; border-top: 1px solid var(--rule); }
+  .facts li:last-child { border-bottom: 1px solid var(--rule); }
+  .facts b { font-weight: 600; }
+
+  /* Final action */
+  .closing { padding: var(--space-xl) 0; border-top: 2px solid var(--ink); }
+  .closing h2 { max-width: 28ch; }
+
+  /* Footer */
+  .site-footer { border-top: 1px solid var(--rule); padding: var(--space-m) 0 var(--space-l); font-size: 0.9375rem; color: var(--muted); }
+  .site-footer .wrap { display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-l); align-items: baseline; }
+  .site-footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 0; }
+  .site-footer li { max-width: none; }
+  .site-footer a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.75rem 0 0; margin-right: 0.75rem; }
+  .site-footer p { margin: 0; max-width: 60ch; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .row:hover .var { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .row, .pane .ln, .btn { transition: background-color 180ms cubic-bezier(.2,.7,.2,1); }
+  }
+</style>
+</head>
+<body>
+<a class="sr-only" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#main" aria-label="envcensus, home">
+      <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 7h10M5 10h7M5 13h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      envcensus
+    </a>
+    <nav class="site-nav" aria-label="Site">
+      <ul>
+        <li><a href="#how">How it decides</a></li>
+        <li><a href="#ci">In CI</a></li>
+        <li><a href="#reference">Reference</a></li>
+        <li><a href="https://www.npmjs.com/package/envcensus">npm</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero wrap" aria-labelledby="h1">
+    <div class="hero-grid">
+    <div class="hero-copy">
+      <h1 id="h1">Find the env var set on your laptop and nowhere else.</h1>
+      <p class="lead">envcensus is a command-line checker for environment variables. It scans your codebase for every variable it reads, compares that list with <code>.env.example</code> and your CI config, and exits non-zero when one is missing or unused.</p>
+      <div class="cmd">
+        <div class="cmd-box"><span class="prompt" aria-hidden="true">$</span><code id="scan-cmd">npx envcensus</code></div>
+        <button class="btn" type="button" data-copy="npx envcensus">Copy the scan command</button>
+        <a class="btn btn-quiet" href="#reference">Read the help output</a>
+      </div>
+      <span class="copy-status" role="status" aria-live="polite" data-copy-status></span>
+      <p class="beside"><strong>Runs on your machine and sends nothing anywhere.</strong> It reads your source files, <code>.env.example</code> and your CI config. Installing from npm is free; there is no account and no key.</p>
+    </div>
+      <div class="census" id="census">
+      <div class="census-head">
+        <h2>What a run prints, on a sample repo</h2>
+        <p class="sample">Example output. The column layout of the shipped build may differ. Select a variable to see where it is read and where it is set.</p>
+      </div>
+          <div class="report" aria-label="envcensus report">
+            <div class="run"><span><b>$ envcensus</b></span><span>scanned <b>src/</b> · compared with <b>.env.example</b> and <b>.github/workflows/ci.yml</b></span></div>
+            <div class="cols" aria-hidden="true"><span>Variable</span><span>Read in code</span><span>.env.example</span><span>ci.yml</span></div>
+            <ul class="rows" id="rows">
+              <li><button class="row" type="button" aria-pressed="false" data-var="DATABASE_URL" data-code="src/config.ts:2" data-example="listed" data-ci="set" data-detail="<code>DATABASE_URL</code> is read at src/config.ts:2, listed in .env.example and set in ci.yml. Nothing to fix.">
+                <span class="var">DATABASE_URL</span>
+                <span class="c"><span class="k">code</span><span>src/config.ts:2</span></span>
+                <span class="c"><span class="k">.env.example</span><span class="ok">listed</span></span>
+                <span class="c"><span class="k">ci.yml</span><span class="ok">set</span></span>
+              </button></li>
+              <li><button class="row" type="button" aria-pressed="false" data-var="REDIS_URL" data-code="src/config.ts:3" data-example="listed" data-ci="set" data-detail="<code>REDIS_URL</code> is read at src/config.ts:3, listed in .env.example and set in ci.yml. Nothing to fix.">
+                <span class="var">REDIS_URL</span>
+                <span class="c"><span class="k">code</span><span>src/config.ts:3</span></span>
+                <span class="c"><span class="k">.env.example</span><span class="ok">listed</span></span>
+                <span class="c"><span class="k">ci.yml</span><span class="ok">set</span></span>
+              </button></li>
+              <li><button class="row" type="button" aria-pressed="false" data-var="STRIPE_WEBHOOK_SECRET" data-code="src/config.ts:4" data-example="listed" data-ci="not set" data-detail="<code>STRIPE_WEBHOOK_SECRET</code> is read at src/config.ts:4 and listed in .env.example, but ci.yml never sets it. On your laptop it comes from your .env; in CI it is undefined. Add it to the workflow’s secrets.">
+                <span class="var">STRIPE_WEBHOOK_SECRET</span>
+                <span class="c"><span class="k">code</span><span>src/config.ts:4</span></span>
+                <span class="c"><span class="k">.env.example</span><span class="ok">listed</span></span>
+                <span class="c"><span class="k">ci.yml</span><span class="bad">not set</span></span>
+              </button></li>
+              <li><button class="row" type="button" aria-pressed="false" data-var="FEATURE_FLAGS_URL" data-code="src/config.ts:5" data-example="missing" data-ci="not set" data-detail="<code>FEATURE_FLAGS_URL</code> is read at src/config.ts:5 but appears in neither .env.example nor ci.yml. A new teammate will not know it exists. Add it to .env.example and to the workflow.">
+                <span class="var">FEATURE_FLAGS_URL</span>
+                <span class="c"><span class="k">code</span><span>src/config.ts:5</span></span>
+                <span class="c"><span class="k">.env.example</span><span class="bad">missing</span></span>
+                <span class="c"><span class="k">ci.yml</span><span class="bad">not set</span></span>
+              </button></li>
+              <li><button class="row" type="button" aria-pressed="false" data-var="LEGACY_SMTP_HOST" data-code="—" data-example="listed, unused" data-ci="—" data-detail="<code>LEGACY_SMTP_HOST</code> is listed in .env.example but no file under src/ reads it. Remove the line, or keep it and tell envcensus to ignore it.">
+                <span class="var">LEGACY_SMTP_HOST</span>
+                <span class="c"><span class="k">code</span><span class="none">not read</span></span>
+                <span class="c"><span class="k">.env.example</span><span class="bad">unused</span></span>
+                <span class="c"><span class="k">ci.yml</span><span class="none">—</span></span>
+              </button></li>
+            </ul>
+            <div class="sum"><span><span class="bad">3 problems</span>: 1 missing from .env.example, 2 not set in ci.yml, 1 unused</span><span class="exit">exit 1</span></div>
+          </div>
+          <p class="detail" id="detail" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <div class="sources" id="sources">
+          <figure class="pane" data-pane="code">
+            <figcaption><span class="file">src/config.ts</span><span class="state" data-state></span></figcaption>
+            <pre><code><span class="ln">export const config = {</span><span class="ln" data-vars="DATABASE_URL">  db:     process.env.<span class="v">DATABASE_URL</span>,</span><span class="ln" data-vars="REDIS_URL">  redis:  process.env.<span class="v">REDIS_URL</span>,</span><span class="ln" data-vars="STRIPE_WEBHOOK_SECRET">  stripe: process.env.<span class="v">STRIPE_WEBHOOK_SECRET</span>,</span><span class="ln" data-vars="FEATURE_FLAGS_URL">  flags:  process.env.<span class="v">FEATURE_FLAGS_URL</span>,</span><span class="ln">};</span></code></pre>
+          </figure>
+          <figure class="pane" data-pane="example">
+            <figcaption><span class="file">.env.example</span><span class="state" data-state></span></figcaption>
+            <pre><code><span class="ln" data-vars="DATABASE_URL"><span class="v">DATABASE_URL</span>=postgres://localhost:5432/app</span><span class="ln" data-vars="REDIS_URL"><span class="v">REDIS_URL</span>=redis://localhost:6379</span><span class="ln" data-vars="STRIPE_WEBHOOK_SECRET"><span class="v">STRIPE_WEBHOOK_SECRET</span>=</span><span class="ln" data-vars="LEGACY_SMTP_HOST"><span class="v">LEGACY_SMTP_HOST</span>=smtp.example.com</span></code></pre>
+          </figure>
+          <figure class="pane" data-pane="ci">
+            <figcaption><span class="file">.github/workflows/ci.yml</span><span class="state" data-state></span></figcaption>
+            <pre><code><span class="ln">env:</span><span class="ln" data-vars="DATABASE_URL">  <span class="v">DATABASE_URL</span>: ${{ secrets.DB_URL }}</span><span class="ln" data-vars="REDIS_URL">  <span class="v">REDIS_URL</span>: redis://localhost:6379</span><span class="ln">jobs:</span><span class="ln">  test:</span><span class="ln">    steps:</span><span class="ln">      - run: npm test</span></code></pre>
+          </figure>
+    </div>
+  </section>
+
+  <section class="block" id="how" aria-labelledby="how-h">
+    <div class="wrap two">
+      <div>
+        <h2 id="how-h">Three files, one list, three kinds of problem</h2>
+        <p>envcensus reads your source files for environment variable lookups and builds one list. It reads <code>.env.example</code> and your CI config the same way. Then it compares the three lists, name by name.</p>
+        <p>A variable passes when the code reads it, <code>.env.example</code> lists it, and CI sets it. Anything else is one of the three problems on the right, and each has a plain fix.</p>
+        <p>It does not read your <code>.env</code> values to decide, so the result is the same on every machine.</p>
+      </div>
+      <table class="rules">
+        <thead><tr><th>Finding</th><th>What envcensus saw</th><th>The fix</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="bad">missing</span> from .env.example</td>
+            <td data-col="What envcensus saw">The code reads <code>FEATURE_FLAGS_URL</code>; <code>.env.example</code> has no such line. A new teammate copies the example and the app breaks on first run.</td>
+            <td data-col="The fix">Add <code>FEATURE_FLAGS_URL=</code> to <code>.env.example</code>, with a sample value if one is safe to share.</td>
+          </tr>
+          <tr>
+            <td><span class="bad">not set</span> in CI</td>
+            <td data-col="What envcensus saw">The code reads <code>STRIPE_WEBHOOK_SECRET</code>; no <code>env:</code> entry in the workflow sets it. The job runs with <code>undefined</code>, and the failure shows up far from the cause.</td>
+            <td data-col="The fix">Set it in the workflow, usually from the CI’s secret store.</td>
+          </tr>
+          <tr>
+            <td><span class="bad">unused</span></td>
+            <td data-col="What envcensus saw"><code>LEGACY_SMTP_HOST</code> is in <code>.env.example</code> but nothing under <code>src/</code> reads it. Every new environment gets a value that does nothing.</td>
+            <td data-col="The fix">Delete the line, or list the name as ignored if a tool outside the repo needs it.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block" id="ci" aria-labelledby="ci-h">
+    <div class="wrap two">
+      <div>
+        <h2 id="ci-h">In CI, a missing or unused variable fails the job</h2>
+        <p>Add one step. envcensus exits <code>1</code> when it finds a problem, and any CI system treats a non-zero exit as a failed step. The log names the variable, the file and the line, so the fix is a one-line change in the pull request that caused it.</p>
+        <p>This is the step for the team that owns CI: it turns “works on my machine” into a check that runs on every push, with no service to host and no agent to install.</p>
+        <ul class="exit-codes" aria-label="Exit codes">
+          <li><b>0</b><span>Every variable the code reads is in <code>.env.example</code> and set in CI, and none is unused.</span></li>
+          <li><b>1</b><span>At least one problem was found. The step fails.</span></li>
+          <li><b>2</b><span>envcensus could not run: a path or file it was told to read does not exist.</span></li>
+        </ul>
+      </div>
+      <div class="stack">
+        <figure class="codeblock">
+          <figcaption><span class="file">.github/workflows/ci.yml</span><span class="note">Example step; adapt to your CI</span></figcaption>
+          <pre><code>steps:
+  - uses: actions/checkout@v4
+  - run: npm ci
+  <span class="k">- name: Check environment variables
+    run: npx envcensus --ci</span>
+  - run: npm test</code></pre>
+        </figure>
+        <figure class="codeblock">
+          <figcaption><span class="file">Job log</span><span class="note">Example output on the sample repo above</span></figcaption>
+          <pre><code>$ npx envcensus --ci
+<span class="bad">missing</span>  FEATURE_FLAGS_URL      read at src/config.ts:5, not in .env.example
+<span class="bad">not set</span>  FEATURE_FLAGS_URL      read at src/config.ts:5, not in ci.yml
+<span class="bad">not set</span>  STRIPE_WEBHOOK_SECRET  read at src/config.ts:4, not in ci.yml
+<span class="bad">unused</span>   LEGACY_SMTP_HOST       in .env.example, read nowhere under src/
+
+3 problems. <span class="bad">exit 1</span>
+<span class="c">##[error]Process completed with exit code 1.</span></code></pre>
+        </figure>
+        <button class="btn btn-quiet" type="button" data-copy="- name: Check environment variables
+  run: npx envcensus --ci">Copy the workflow step</button>
+        <span class="copy-status" role="status" aria-live="polite" data-copy-status></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block reference" id="reference" aria-labelledby="ref-h">
+    <div class="wrap">
+      <h2 id="ref-h">The help output is the documentation</h2>
+      <p>There is no docs site yet. Everything the tool accepts is in <code>envcensus --help</code>, reproduced here in its current shape. Flag names can change before 1.0; the shipped text wins.</p>
+      <div class="two" style="margin-top: var(--space-m)">
+        <figure class="codeblock">
+          <figcaption><span class="file">$ envcensus --help</span><span class="note">Example of the help text; run the command for the shipped version</span></figcaption>
+          <pre><code>envcensus — find every environment variable a codebase reads
+and check it against .env.example and CI.
+
+Usage
+  envcensus [dir] [options]
+
+Options
+  --example &lt;file&gt;   .env.example to compare with   (default: ./.env.example)
+  --ci &lt;file&gt;        CI config to compare with      (default: first file in .github/workflows/)
+  --ignore &lt;names&gt;   comma-separated names to skip  (for variables set outside the repo)
+  --fail-on &lt;list&gt;   which findings exit 1          (default: missing,not-set,unused)
+  --json             print the report as JSON
+  --help             show this text
+  --version          print the version
+
+Exit codes
+  0  no problems    1  at least one problem    2  could not run</code></pre>
+        </figure>
+        <ul class="facts" aria-label="Install and status">
+          <li><b>Install.</b> <code>npm install -g envcensus</code>, or run it once with <code>npx envcensus</code>. There is no Homebrew formula yet; npm is the only install path.</li>
+          <li><b>Where it runs.</b> On your machine or in a CI step. It makes no network calls and keeps no account. The only things it opens are your source files, <code>.env.example</code> and the CI config you point it at.</li>
+          <li><b>Source.</b> The repository is private until 1.0. Until then, the npm package and this help text are what there is to read.</li>
+          <li><b>Who it is for.</b> Any repo whose code reads environment variables and has a <code>.env.example</code>. If your variables live only in a secrets manager and never in the repo, envcensus has nothing to compare and is not for you yet.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing" aria-labelledby="go-h">
+    <div class="wrap">
+      <h2 id="go-h">Run it on your repo. It takes one command.</h2>
+      <p class="lead" style="margin-top: var(--space-s)">Open a terminal in any project with a <code>.env.example</code> and run the scan. The report is the one above, with your variables in it.</p>
+      <div class="cmd">
+        <div class="cmd-box"><span class="prompt" aria-hidden="true">$</span><code>npx envcensus</code></div>
+        <button class="btn" type="button" data-copy="npx envcensus">Copy the scan command</button>
+      </div>
+      <span class="copy-status" role="status" aria-live="polite" data-copy-status></span>
+      <p class="beside"><strong>Nothing leaves your machine.</strong> Installing from npm is free; there is no account and no key.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul aria-label="Footer">
+      <li><a href="https://www.npmjs.com/package/envcensus">envcensus on npm</a></li>
+      <li><a href="#reference">Help output</a></li>
+      <li><a href="#ci">CI step</a></li>
+      <li><a href="#how">How it decides</a></li>
+    </ul>
+    <p>envcensus is a command-line tool. Repository private until 1.0.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Census artifact: selecting a row highlights the variable in each source pane and explains the finding.
+  var rows = Array.prototype.slice.call(document.querySelectorAll('#rows .row'));
+  var panes = Array.prototype.slice.call(document.querySelectorAll('#sources .pane'));
+  var detail = document.getElementById('detail');
+  var STATE = {
+    code:    { 'src/config.ts:2': 'read here', 'src/config.ts:3': 'read here', 'src/config.ts:4': 'read here', 'src/config.ts:5': 'read here', '—': 'not read anywhere' },
+    example: { 'listed': 'listed', 'missing': 'missing here', 'listed, unused': 'listed, but unused' },
+    ci:      { 'set': 'set', 'not set': 'not set here', '—': 'not needed' }
+  };
+  function select(btn) {
+    var name = btn.getAttribute('data-var');
+    rows.forEach(function (r) { r.setAttribute('aria-pressed', r === btn ? 'true' : 'false'); });
+    panes.forEach(function (pane) {
+      var kind = pane.getAttribute('data-pane');
+      var hit = false;
+      Array.prototype.forEach.call(pane.querySelectorAll('.ln'), function (ln) {
+        var on = (ln.getAttribute('data-vars') || '') === name;
+        ln.classList.toggle('hit', on);
+        if (on) hit = true;
+      });
+      var raw = btn.getAttribute('data-' + kind);
+      var text = (STATE[kind] && STATE[kind][raw]) || raw;
+      var state = pane.querySelector('[data-state]');
+      state.textContent = name + ': ' + text;
+      var bad = /missing|not set|unused/.test(text);
+      state.className = 'state ' + (bad ? 'bad' : (hit ? 'ok' : ''));
+    });
+    detail.innerHTML = btn.getAttribute('data-detail');
+  }
+  rows.forEach(function (btn) { btn.addEventListener('click', function () { select(btn); }); });
+  select(rows[2]);
+
+  // Copy buttons: write to the clipboard and report the result beside the button.
+  Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function (btn) {
+    var status = btn.parentNode.querySelector('[data-copy-status]') || btn.parentNode.parentNode.querySelector('[data-copy-status]');
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      var done = function (ok) {
+        if (!status) return;
+        status.textContent = ok ? 'Copied: ' + text.split('\n')[0] + (text.indexOf('\n') > -1 ? ' …' : '') : 'Could not reach the clipboard. Select the command and copy it.';
+        clearTimeout(status._t);
+        status._t = setTimeout(function () { status.textContent = ''; }, 4000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(fallback(text)); });
+      } else done(fallback(text));
+    });
+  });
+  function fallback(text) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) { return false; }
+  }
+})();
+</script>
+</body>
+</html>

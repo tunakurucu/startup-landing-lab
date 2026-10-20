@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crossling — cross-stitch patterns from your photos</title>
+<meta name="description" content="Crossling turns a photo into a cross-stitch pattern in real thread colours, then lets you fix every square before you stitch. Try the editor on this page.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23f3eee4'/%3E%3Cpath d='M8 8l16 16M24 8L8 24' stroke='%23c43a2f' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#editor">Skip to the editor</a>
+
+<header class="site-head">
+  <a class="brand" href="#top" aria-label="Crossling home">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="7" fill="var(--linen-deep)"/>
+      <g stroke="var(--red)" stroke-width="5" stroke-linecap="round">
+        <path d="M8 8l16 16"/><path d="M24 8L8 24"/>
+      </g>
+    </svg>
+    <span class="brand-name">Crossling</span>
+    <span class="pill">beta</span>
+  </a>
+  <nav class="site-nav" aria-label="Page">
+    <a href="#editor">Editor</a>
+    <a href="#how">How it works</a>
+    <a href="#sellers">For sellers</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <a class="btn btn-primary btn-sm js-beta" href="#editor">Open the beta editor</a>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <p class="eyebrow">Cross-stitch patterns from photos</p>
+  <h1>Your photo, stitched<br>square by square.</h1>
+  <p class="lede">Crossling turns a photo into a cross-stitch chart in real thread colours, then hands you the squares. Fix a blotchy cheek, swap a thread you don't have, drop the colour count before you buy floss. The pattern below is live — click it.</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary btn-lg js-beta" href="#editor">Open the beta editor</a>
+    <a class="btn btn-ghost btn-lg" href="#how">How it works</a>
+  </div>
+  <p class="hero-note">Free while in beta. Everything on this page runs in your browser; nothing is uploaded.</p>
+</section>
+
+<!-- ============ EDITOR ============ -->
+<section class="workbench" id="editor" aria-labelledby="editor-title">
+  <div class="wb-head">
+    <h2 id="editor-title" class="wb-title">Try it: a pattern you can edit</h2>
+    <div class="wb-sources" role="group" aria-label="Load a pattern">
+      <span class="wb-label">Start from</span>
+      <button class="chip is-active" type="button" data-sample="sailboat">Sailboat</button>
+      <button class="chip" type="button" data-sample="pear">Pear</button>
+      <label class="chip chip-file">
+        <input type="file" id="photo-input" accept="image/*">
+        <span>Your own photo…</span>
+      </label>
+      <span class="wb-import">
+        <label>Width
+          <select id="import-width" aria-label="Stitches across for imported photo">
+            <option value="30">30 st</option>
+            <option value="40" selected>40 st</option>
+            <option value="60">60 st</option>
+          </select>
+        </label>
+        <label>Threads
+          <select id="import-colours" aria-label="Maximum threads for imported photo">
+            <option value="8">8</option>
+            <option value="12" selected>12</option>
+            <option value="16">16</option>
+            <option value="24">24</option>
+          </select>
+        </label>
+      </span>
+    </div>
+  </div>
+
+  <div class="wb-body">
+    <div class="wb-toolbar" role="toolbar" aria-label="Tools">
+      <div class="tool-group" role="radiogroup" aria-label="Tool">
+        <button class="tool is-active" type="button" data-tool="brush" role="radio" aria-checked="true" title="Brush (B)">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 17c2-.2 3.2-1 3.8-2.4L15.6 5.8a1.6 1.6 0 0 0-2.3-2.3L4.5 12.3C3.2 13 2.4 14.2 3 17z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          <span>Brush</span>
+        </button>
+        <button class="tool" type="button" data-tool="fill" role="radio" aria-checked="false" title="Fill (F)">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8.5 2.5l7 7-5.5 5.5a1.5 1.5 0 0 1-2.2 0L3.4 10.6a1.5 1.5 0 0 1 0-2.1l5.1-6zM3 9h11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16.5 12.5c0 1.2 1.2 2.2 1.2 3.2a1.2 1.2 0 0 1-2.4 0c0-1 1.2-2 1.2-3.2z" fill="currentColor"/></svg>
+          <span>Fill</span>
+        </button>
+        <button class="tool" type="button" data-tool="pick" role="radio" aria-checked="false" title="Pick a colour (I)">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5l3 3-7 7H5.5v-3l7-7zM11 6l3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          <span>Pick</span>
+        </button>
+        <button class="tool" type="button" data-tool="erase" role="radio" aria-checked="false" title="Unpick (E)">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 13l7-7 5 5-5 5H8.5L4 13zM7 16h9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          <span>Unpick</span>
+        </button>
+      </div>
+      <div class="tool-group">
+        <button class="tool" type="button" id="btn-undo" title="Undo (Ctrl+Z)">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5L3.5 8.5 7 12M4 8.5h8a4 4 0 0 1 0 8H9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Undo</span>
+        </button>
+        <button class="tool" type="button" id="btn-reset" title="Reset to the loaded pattern">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10a6 6 0 1 0 2-4.5M4 3v3.5h3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Reset</span>
+        </button>
+      </div>
+      <div class="tool-group tool-group-right">
+        <div class="seg" role="radiogroup" aria-label="View">
+          <button class="is-active" type="button" data-view="stitch" role="radio" aria-checked="true">Stitches</button>
+          <button type="button" data-view="chart" role="radio" aria-checked="false">Chart</button>
+        </div>
+        <label class="check"><input type="checkbox" id="chk-grid" checked> Grid</label>
+      </div>
+    </div>
+
+    <div class="wb-stage">
+      <div class="canvas-wrap" id="canvas-wrap">
+        <canvas id="pattern" tabindex="0" role="img" aria-label="Editable cross-stitch pattern. Use arrow keys to move, Enter to apply the current tool."></canvas>
+      </div>
+      <p class="stage-hint" id="stage-hint">Click or drag on the squares to stitch with the selected thread. Hold for the keyboard: arrows move, Enter stitches.</p>
+    </div>
+
+    <aside class="wb-side">
+      <div class="side-block">
+        <div class="side-head">
+          <h3>Threads in this pattern</h3>
+          <button class="link-btn" type="button" id="btn-catalogue" aria-expanded="false" aria-controls="catalogue">+ Add a thread</button>
+        </div>
+        <ul class="palette" id="palette" aria-label="Threads used"></ul>
+        <div class="swap-row" id="swap-row" hidden>
+          <span id="swap-label"></span>
+          <button class="btn btn-sm btn-ghost" type="button" id="btn-swap">Swap for another thread</button>
+        </div>
+        <div class="catalogue" id="catalogue" hidden>
+          <p class="catalogue-title" id="catalogue-title">Thread catalogue · click to use</p>
+          <div class="catalogue-grid" id="catalogue-grid"></div>
+        </div>
+      </div>
+
+      <div class="side-block">
+        <h3>Finished size</h3>
+        <div class="size-row">
+          <label>Fabric
+            <select id="fabric-count">
+              <option value="11">11-count aida</option>
+              <option value="14" selected>14-count aida</option>
+              <option value="16">16-count aida</option>
+              <option value="18">18-count aida</option>
+              <option value="28">28-count evenweave (over 2)</option>
+            </select>
+          </label>
+        </div>
+        <dl class="stats" id="stats">
+          <div><dt>Stitches</dt><dd id="stat-dims">—</dd></div>
+          <div><dt>Filled</dt><dd id="stat-count">—</dd></div>
+          <div><dt>Threads</dt><dd id="stat-threads">—</dd></div>
+          <div><dt>Size</dt><dd id="stat-size">—</dd></div>
+        </dl>
+      </div>
+
+      <div class="side-block side-actions">
+        <button class="btn btn-dark" type="button" id="btn-export">Download chart as PNG</button>
+        <p class="tiny">Symbols, 10-stitch guides and a thread key, ready to print.</p>
+      </div>
+    </aside>
+  </div>
+  <p class="wb-foot">Both sample patterns are drawn by us. Your own photo is converted right here, in your browser, and goes nowhere.</p>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section" id="how" aria-labelledby="how-title">
+  <div class="section-head">
+    <p class="eyebrow">How it works</p>
+    <h2 id="how-title">From photo to floss in three steps</h2>
+  </div>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-art" aria-hidden="true">
+        <svg viewBox="0 0 120 90">
+          <defs><linearGradient id="g1" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#bddded"/><stop offset=".55" stop-color="#c9e238"/><stop offset="1" stop-color="#2a7a3a"/></linearGradient></defs>
+          <rect x="10" y="10" width="100" height="70" rx="6" fill="url(#g1)"/>
+          <circle cx="86" cy="30" r="9" fill="#ffe300"/>
+          <path d="M10 62c20-18 36-18 56-4 14 10 28 8 44-6V80H10z" fill="#044d37" opacity=".8"/>
+        </svg>
+      </div>
+      <h3><span class="step-num">1</span> Drop in a photo</h3>
+      <p>Pick how wide the piece should be in stitches and how many threads you're willing to buy. Crossling sizes the photo to the grid.</p>
+    </li>
+    <li class="step">
+      <div class="step-art" aria-hidden="true">
+        <svg viewBox="0 0 120 90" id="step-art-2"></svg>
+      </div>
+      <h3><span class="step-num">2</span> Every square gets a real thread</h3>
+      <p>Colours are matched to a catalogue of threads you can actually buy, by number, not to whatever hex value the pixel happened to be.</p>
+    </li>
+    <li class="step">
+      <div class="step-art" aria-hidden="true">
+        <svg viewBox="0 0 120 90" id="step-art-3"></svg>
+      </div>
+      <h3><span class="step-num">3</span> Fix it before you stitch it</h3>
+      <p>Auto-conversion gets you most of the way. The last stretch is yours: smooth a jagged edge, fill a region, merge two near-identical threads, then download the chart.</p>
+    </li>
+  </ol>
+</section>
+
+<!-- ============ THREADS ============ -->
+<section class="section section-threads" aria-labelledby="threads-title">
+  <div class="split">
+    <div>
+      <p class="eyebrow">Real thread colours</p>
+      <h2 id="threads-title">A chart is only useful if the shop sells the colour</h2>
+      <p>Most photo converters quantise to arbitrary RGB values and leave you to guess which skein is closest. Crossling only ever picks from named catalogue threads, so the key you print is the shopping list you take to the store, and the colour you stitch is the colour you previewed.</p>
+      <p>When the matcher picks two threads that are nearly identical, that costs you a skein for a handful of stitches. Select one in the editor and swap it for the other; the whole pattern updates.</p>
+    </div>
+    <div class="thread-strip" id="thread-strip" aria-label="Thread catalogue sample"></div>
+  </div>
+</section>
+
+<!-- ============ SELLERS ============ -->
+<section class="section section-sellers" id="sellers" aria-labelledby="sellers-title">
+  <div class="sellers-card">
+    <p class="eyebrow">For pattern sellers</p>
+    <h2 id="sellers-title">Sell patterns? We haven't set commercial terms yet, and we'd rather say so.</h2>
+    <div class="sellers-cols">
+      <div>
+        <h3>What we can say now</h3>
+        <ul class="plain">
+          <li>A pattern you make from a photo you own is your work. Crossling doesn't claim anything over it.</li>
+          <li>The beta is free and has no commercial tier, which also means no commercial licence to point at yet.</li>
+          <li>We will not quietly change this later. When terms exist, they'll be written down here before they apply.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What we're still deciding</h3>
+        <ul class="plain">
+          <li>Whether selling patterns made in Crossling needs a paid plan, and what it should cost.</li>
+          <li>How to handle photos you didn't take. A converter can't check that; we'd rather be clear about where the responsibility sits.</li>
+          <li>Which export formats and chart layouts sellers need that hobbyists don't.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sellers-cta">
+      <a class="btn btn-primary js-contact" href="#" data-subject="Selling patterns made in Crossling">Tell us what a seller plan needs</a>
+      <p class="tiny">One email, no form. We're deciding this with the people who'd pay for it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section section-faq" id="faq" aria-labelledby="faq-title">
+  <div class="section-head">
+    <p class="eyebrow">Questions</p>
+    <h2 id="faq-title">The ones we keep getting</h2>
+  </div>
+  <div class="faq">
+    <details open>
+      <summary>Is the beta free?</summary>
+      <p>Yes. While it's a beta, Crossling is free to use, and we'll say in advance if that changes. Expect rough edges and the occasional moved button.</p>
+    </details>
+    <details>
+      <summary>Which threads does it use?</summary>
+      <p>Named, numbered threads from the common catalogues stitchers already buy. The editor on this page uses a short sample of the range so the demo stays quick; the beta editor matches against the full catalogue.</p>
+    </details>
+    <details>
+      <summary>What happens to my photo?</summary>
+      <p>On this page, nothing leaves your browser; the conversion runs locally. The beta editor keeps your photo only as long as it takes to build the pattern, and the pattern itself is yours to download and delete.</p>
+    </details>
+    <details>
+      <summary>Can I sell patterns I make with it?</summary>
+      <p>We haven't decided the commercial terms yet, and we'd rather not pretend otherwise. The section above explains what's settled and what isn't. If this matters to you, email us; it's the input we need most.</p>
+    </details>
+    <details>
+      <summary>Why not just use a free pixel converter?</summary>
+      <p>You can, and for a rough first pass they're fine. The difference is what happens after: a converter gives you pixels, Crossling gives you a chart with thread numbers you can edit square by square, so the hours you spend stitching go into a pattern you've already checked.</p>
+    </details>
+    <details>
+      <summary>Does it handle dark or low-contrast photos?</summary>
+      <p>Not magically. Limiting the thread count forces the matcher to choose, which often helps; so does cropping to the part you actually want to stitch. When it still looks muddy, that's what the fill tool and thread swap are for.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="section section-final" aria-labelledby="final-title">
+  <h2 id="final-title">Go stitch something you took yourself.</h2>
+  <p class="lede">Open the beta, drop in a photo, and spend your evening on the chart instead of on guessing thread numbers.</p>
+  <a class="btn btn-primary btn-lg js-beta" href="#editor">Open the beta editor</a>
+</section>
+
+</main>
+
+<footer class="site-foot">
+  <div>
+    <span class="brand-name">Crossling</span> <span class="pill">beta</span>
+    <p class="tiny">Cross-stitch patterns from photos, in real thread colours. All example patterns on this page are our own artwork.</p>
+  </div>
+  <nav aria-label="Footer">
+    <a href="#editor">Editor</a>
+    <a href="#how">How it works</a>
+    <a href="#sellers">For sellers</a>
+    <a href="#faq">FAQ</a>
+    <a class="js-contact" href="#" data-subject="Hello from the Crossling site">Contact</a>
+  </nav>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
