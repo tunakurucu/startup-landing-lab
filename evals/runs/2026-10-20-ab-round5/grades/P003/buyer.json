@@ -1,0 +1,50 @@
+{
+  "packet": "P003",
+  "persona": "buyer",
+  "A": {
+    "scores": {"clarity": 9, "fit": 8, "distinctiveness": 8, "proof": 9, "craft": 8, "mobile": 7, "honesty": 9, "interaction": 9, "copy": 8, "first_screen": 8},
+    "evidence": {
+      "clarity": "1440 and 390 first screen: H1 'Fail the CI job, not the 6 pm deploy.' plus bold lede 'Driftcheck is an open-source CLI for backend and platform engineers. It compares the schema your migrations will produce with the one production is running, and fails CI before a deploy that would break.' What, who and the next step (npx driftcheck + 'Copy command') are all stated before any scroll; nothing later contradicts it.",
+      "fit": "Every brief fact is used: npx driftcheck, Postgres and MySQL, free/MIT, 'Price: Free. There is no paid plan.', docs and GitHub URLs exactly as supplied, no usage numbers. The 'replaces the check script someone wrote once' section addresses both brief alternatives (6 pm failure, unmaintained script). Self-adopting engineer gets install, CI config tabs and a spec table; no sales or signup language. It does not mention which migration tools/folders it reads, which a platform engineer would ask next.",
+      "distinctiveness": "The hero artifact is a working drift bench on a sample orders table (chips 'Added an index / Changed a type / Dropped a column', SQL input, side-by-side migrations/ vs production table), plus an exit-code flow diagram and a 'your-release-process.md' diff. Structure comes from the product; the closing spec table and two-column hero are more familiar.",
+      "proof": "Within the first screen at 1440 the bench shows a failed check with exit 1 and a 'Why it would break' line. I clicked each chip: 'Nothing' -> 'driftcheck passed · deploy runs', exit 0; 'Changed a type' -> 'orders.currency is varchar(8) in production, char(3) in migrations/'; 'Dropped a column' -> 'orders.status ... missing in production'. Typed 'ALTER TABLE orders ADD COLUMN note text' and got a new difference with a correct table row highlighted. Labelled 'Sample database and example output, written for this page. It runs in your browser and connects to nothing.' Numbers are consistent (1 difference = 1 highlighted row).",
+      "craft": "Clean type scale, monospace for commands, consistent rules and spacing; no overflow at 320/390/768/1440 (probe 0px), smallest text 13px, axe clean. Minor: at 1440 the left column under the H1 is empty for ~170px beside the lede, and the bench is visually dense on first sight.",
+      "mobile": "390: H1, lede, install and 'Copy command' fit in the first screen, bench label and chips (48px tall) follow. But tapping a chip at y~708-812 updates the result box whose top is at y=824, so the change is at/below the fold; after 'Run check' the message says 'Result is above' and the result had scrolled off the top (top -103px). The bench plus stacked schema table make the page 5,600px long at 390.",
+      "honesty": "Sample label sits at the top of the bench at every width (visible at 390 above the bench title). Primary action 'Copy command' does exactly that and reports 'Copied: npx driftcheck. Paste it in your terminal or CI config.' States 'It needs to reach your production database to read its schema' rather than hiding it. No invented users, stars or numbers.",
+      "interaction": "Operated at 1440, 768 and 390: copy (status message), all four chips, Run check with empty input ('Type a statement first...'), 'DROP TABLE orders' (refused with reason), 'SELECT 1' ('changes rows, not the schema'), unknown table 'users', 200-char junk, a 70-char column name (refused citing Postgres 63-char limit), multi-statement ('One statement at a time'), duplicate index name (Postgres-style error), RENAME COLUMN, Reset ('Reset to the sample: an index someone added by hand.'). CI tabs GitHub Actions/GitLab CI/Any shell switch by click and ArrowRight. No console errors.",
+      "copy": "Specific and in the engineer's vocabulary: 'exit ≠ 0 They differ. The job fails before deploy.', 'keep a check_schema.sh that one person wrote and nobody updates', 'Every line that reads your database is on GitHub.' Error messages are written, not defaulted. Slight repetition: the 'replaces' diff restates the hero and lede.",
+      "first_screen": "1440: specific promise (fail CI before a breaking deploy), named audience (backend and platform engineers), 'Copy command' whose label matches the action, and a labelled failing check with exit 1 in view. 390: promise, audience and copy action in view, the bench label and chips visible but the actual failing output starts at the fold, so the believability element is only half in view."
+    },
+    "problems": [
+      "390: bench feedback lands out of view: chip results start at the fold, and after 'Run check' the result is above the viewport ('Result is above').",
+      "Does not say which migration tools or folder layouts it reads, or what database privileges it needs; the first practical doubt after 'it reads production' is sent to the docs.",
+      "Bench is dense on first sight and the page is long at 390 (~5,600px), slightly at odds with 'trust within ten seconds'."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {"clarity": 8, "fit": 8, "distinctiveness": 7, "proof": 7, "craft": 8, "mobile": 7, "honesty": 9, "interaction": 6, "copy": 8, "first_screen": 7},
+    "evidence": {
+      "clarity": "H1 is a two-line diff: struck '− Find out from a failed deploy at 6 pm.' / '+ Find out in CI, before you deploy.' The headline alone does not say what you find out about (schema drift is not named); the lede fixes it: 'compares the database schema your migrations will produce with the schema actually running in production. If they differ, it fails the CI job'. Audience is implied rather than named.",
+      "fit": "Uses all brief facts correctly (npx driftcheck, Postgres and MySQL, free/MIT, 'There is no paid plan', supplied docs and GitHub URLs). 'What you are installing: No sign-up, no account, no sales call.' and 'Run it against staging first and see what it finds.' fit a self-adopting engineer well. The comparison table resolves the replace-the-script tension directly. No migration-tool specifics either.",
+      "distinctiveness": "The diff-styled headline and the CI-log hero are product-derived. Below the hero it is a familiar sequence: numbered 4-step list beside YAML, a comparison table, a three-column facts row and a CTA box.",
+      "proof": "1440 first screen holds a CI log card ('ci / schema-check on main') that plays line by line and ends 'Failed', '3 differences. Failing the job.', exit code 1, with users.email, orders.refund_note and an index shown as − migrations / + production. Labelled 'Example output'. It is a playback, not operable: Replay re-runs the same text. On load it shows 'Running' and an empty panel for ~2s before the diff appears. At 390 the log starts below the first screen.",
+      "craft": "Tidy, consistent system type, clear rules and spacing, no overflow at any width, smallest text 13px. Weaknesses: the 1440 log card is mostly blank while 'Running'; the Replay link is 41x20px; the striked red headline line is the loudest thing on the page and it says 'failed deploy'.",
+      "mobile": "390: headline, lede, install and Copy (54px tall) plus 'Read the docs'/'Read the source on GitHub' are in the first screen; the log follows. The log <pre> is 414px wide in a 356px box, so lines like '(no migration creates this)' are cut off with no visible scroll cue (axe: scrollable-region-focusable, 2 nodes); the YAML 'DATABASE_URL: ${{ secrets.PROD_D...' is also clipped. Replay target is 20px tall.",
+      "honesty": "'Example output' label with the − / + legend sits in the log footer, visible at 1440 in the first screen and beside the log at 390. Copy button says Copy and copies. YAML openly shows DATABASE_URL from a production secret. No invented proof; 'Comparing 31 tables' is inside the labelled example.",
+      "interaction": "Operated at 1440, 768 and 390: Copy changes to 'Copied' for ~1.8s and announces via a live region; bottom Copy works the same; Replay hides lines and replays to 'Failed'. With prefers-reduced-motion the log is shown complete and Replay hidden. No console errors. That is the full set of controls: there is nothing to try, no states beyond the replay.",
+      "copy": "Concise and concrete: 'Including the column someone added by hand during an incident.', 'The person who wrote it, if they are still here', 'Use it at work, fork it, vendor it.' A few flourishes ('the schema-check script someone wrote two years ago') and the headline leaves the noun out.",
+      "first_screen": "1440: the promise, Copy action and the CI log are in view, but the log is an empty 'Running' panel for the first ~2s, which is when a visitor decides. 390: promise and Copy action in view, nothing that backs the promise until scrolling to the log."
+    },
+    "problems": [
+      "The only proof is a non-interactive log playback that starts empty ('Running') and at 390 sits below the first screen, with its lines clipped horizontally.",
+      "The headline never names what is being checked (schema/migration drift); the largest, reddest text reads 'failed deploy at 6 pm'.",
+      "Small and clipped mobile details: Replay target 20px tall, YAML and log lines cut off at 390 with no scroll affordance."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "A",
+  "confidence": "medium",
+  "reason": "As the platform engineer, A lets me prove to myself in a few clicks that it catches the exact drift I was burned by (a hand-added index, a changed type, a dropped column) with exit codes and a reason, all honestly labelled as a browser-only sample; B tells the same story well but only shows a canned log that starts empty. As the founder I would ship A tomorrow. I would change my mind if the interactive bench were judged too heavy for a ten-second decision and B's leaner page plus the 'run it against staging first' framing were preferred.",
+  "score_preference_note": ""
+}
