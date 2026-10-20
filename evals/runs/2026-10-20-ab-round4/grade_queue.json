@@ -1,0 +1,62 @@
+[
+ {
+  "packet": "P002",
+  "brief": "dockside",
+  "persona": "designer"
+ },
+ {
+  "packet": "P001",
+  "brief": "pantry",
+  "persona": "engineer"
+ },
+ {
+  "packet": "P003",
+  "brief": "escheat",
+  "persona": "buyer"
+ },
+ {
+  "packet": "P004",
+  "brief": "replay",
+  "persona": "buyer"
+ },
+ {
+  "packet": "P001",
+  "brief": "pantry",
+  "persona": "designer"
+ },
+ {
+  "packet": "P004",
+  "brief": "replay",
+  "persona": "designer"
+ },
+ {
+  "packet": "P003",
+  "brief": "escheat",
+  "persona": "engineer"
+ },
+ {
+  "packet": "P002",
+  "brief": "dockside",
+  "persona": "buyer"
+ },
+ {
+  "packet": "P001",
+  "brief": "pantry",
+  "persona": "buyer"
+ },
+ {
+  "packet": "P002",
+  "brief": "dockside",
+  "persona": "engineer"
+ },
+ {
+  "packet": "P003",
+  "brief": "escheat",
+  "persona": "designer"
+ },
+ {
+  "packet": "P004",
+  "brief": "replay",
+  "persona": "engineer"
+ }
+]

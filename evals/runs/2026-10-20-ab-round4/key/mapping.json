@@ -1,0 +1,48 @@
+{
+ "meta": {
+  "seed": 919235640,
+  "k": 1,
+  "retest": 0,
+  "python": "3.13.16",
+  "briefs": [
+   "dockside",
+   "escheat",
+   "pantry",
+   "replay"
+  ]
+ },
+ "packets": [
+  {
+   "kind": "primary",
+   "brief": "pantry",
+   "pair": "pantry-r1",
+   "A": "pantry/without-r1",
+   "B": "pantry/with-r1",
+   "packet": "P001"
+  },
+  {
+   "kind": "primary",
+   "brief": "dockside",
+   "pair": "dockside-r1",
+   "A": "dockside/with-r1",
+   "B": "dockside/without-r1",
+   "packet": "P002"
+  },
+  {
+   "kind": "primary",
+   "brief": "escheat",
+   "pair": "escheat-r1",
+   "A": "escheat/without-r1",
+   "B": "escheat/with-r1",
+   "packet": "P003"
+  },
+  {
+   "kind": "primary",
+   "brief": "replay",
+   "pair": "replay-r1",
+   "A": "replay/with-r1",
+   "B": "replay/without-r1",
+   "packet": "P004"
+  }
+ ]
+}

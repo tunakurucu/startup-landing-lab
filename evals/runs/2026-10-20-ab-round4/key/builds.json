@@ -1,0 +1,80 @@
+{
+ "meta": {
+  "seed": 919235640,
+  "k": 1,
+  "retest": 0,
+  "python": "3.13.16",
+  "briefs": [
+   "dockside",
+   "escheat",
+   "pantry",
+   "replay"
+  ]
+ },
+ "builds": {
+  "dockside/with-r1": {
+   "workdir": "W001",
+   "brief": "dockside",
+   "arm": "with",
+   "brief_file": "briefs/dockside/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "replay/with-r1": {
+   "workdir": "W002",
+   "brief": "replay",
+   "arm": "with",
+   "brief_file": "briefs/replay/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "replay/without-r1": {
+   "workdir": "W003",
+   "brief": "replay",
+   "arm": "without",
+   "brief_file": "briefs/replay/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "escheat/without-r1": {
+   "workdir": "W004",
+   "brief": "escheat",
+   "arm": "without",
+   "brief_file": "briefs/escheat/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "escheat/with-r1": {
+   "workdir": "W005",
+   "brief": "escheat",
+   "arm": "with",
+   "brief_file": "briefs/escheat/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "pantry/without-r1": {
+   "workdir": "W006",
+   "brief": "pantry",
+   "arm": "without",
+   "brief_file": "briefs/pantry/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "pantry/with-r1": {
+   "workdir": "W007",
+   "brief": "pantry",
+   "arm": "with",
+   "brief_file": "briefs/pantry/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "dockside/without-r1": {
+   "workdir": "W008",
+   "brief": "dockside",
+   "arm": "without",
+   "brief_file": "briefs/dockside/without.md",
+   "fixture": null,
+   "skill_installed": false
+  }
+ }
+}
