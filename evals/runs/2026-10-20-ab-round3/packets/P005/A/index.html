@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fill cancelled appointments from your waitlist by text – Chairtime</title>
+<meta name="description" content="Chairtime fills last-minute cancellations at small physical therapy clinics. When a patient cancels, it texts your waitlist one person at a time until someone takes the slot.">
+<meta property="og:site_name" content="Chairtime">
+<meta property="og:title" content="Fill cancelled appointments from your waitlist by text">
+<meta property="og:description" content="When a patient cancels, Chairtime texts your waitlist one person at a time until someone takes the slot, then tells the front desk who is coming.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://chairtime.example/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fill cancelled appointments from your waitlist by text">
+<meta name="twitter:description" content="Chairtime texts your waitlist one person at a time until someone takes the cancelled slot.">
+<meta name="twitter:image" content="https://chairtime.example/og.png">
+<meta name="theme-color" content="#f7f6f3">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  :root {
+    --paper: #f7f6f3;
+    --card: #ffffff;
+    --ink: #1b1b19;
+    --ink-2: #4a4945;
+    --ink-3: #6b6a65;
+    --rule: #d9d6cf;
+    --rule-2: #e9e7e1;
+    --bubble: #ecebe6;
+    --cancel: #a23b2a;
+    --cancel-bg: #f8e9e5;
+    --offer: #8a5a00;
+    --offer-bg: #fbf0d9;
+    --filled: #1e6b3a;
+    --filled-bg: #e3f1e7;
+    --serif: Charter, "Iowan Old Style", "TeX Gyre Schola", Caladea, Cambria, Georgia, serif;
+    --sans: "Helvetica Neue", Helvetica, "TeX Gyre Heros", Arial, "Liberation Sans", sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    --space-xs: 0.5rem;
+    --space-s: 1rem;
+    --space-m: 1.5rem;
+    --space-l: 2.5rem;
+    --space-xl: clamp(3.5rem, 2.5rem + 4vw, 7rem);
+    --measure: 36rem;
+    --max: 82.5rem;
+    --ease-out: cubic-bezier(.2,.7,.2,1);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: 1rem; background: #f7f6f3; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-weight: 500; margin: 0; overflow-wrap: break-word; }
+  h1 {
+    font-size: clamp(2.375rem, 1.3rem + 4.2vw, 4.75rem);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    max-width: 15em;
+  }
+  h2 {
+    font-size: clamp(1.75rem, 1.25rem + 1.8vw, 2.625rem);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    max-width: 18em;
+  }
+  h3 { font-size: 1.25rem; line-height: 1.3; }
+  p { margin: 0; max-width: var(--measure); text-wrap: pretty; }
+  p + p { margin-top: var(--space-s); }
+  a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.16em; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding-left: clamp(1rem, 0.4rem + 2.8vw, 3rem); padding-right: clamp(1rem, 0.4rem + 2.8vw, 3rem); }
+  .ui { font-family: var(--sans); }
+  .num { font-variant-numeric: tabular-nums; }
+  .muted { color: var(--ink-2); }
+  .small { font-size: 0.9375rem; line-height: 1.45; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: 3rem; padding: 0.7rem 1.25rem;
+    border: 1px solid var(--ink); border-radius: 0.375rem;
+    background: var(--ink); color: var(--paper);
+    font-family: var(--sans); font-size: 1rem; font-weight: 500; line-height: 1.2;
+    text-decoration: none; cursor: pointer;
+    transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out), border-color 120ms var(--ease-out);
+  }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover { background: #333330; border-color: #333330; color: #fff; }
+    .btn-ghost:hover { background: var(--card); color: var(--ink); border-color: var(--ink); }
+  }
+
+  /* Header */
+  .site-head { border-bottom: 1px solid var(--rule); background: var(--paper); }
+  .site-head .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--space-m); min-height: 4.5rem; flex-wrap: wrap; }
+  .brand { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; font-family: var(--serif); font-size: 1.375rem; font-weight: 500; letter-spacing: -0.01em; min-height: 2.75rem; }
+  .brand svg { width: 1.5rem; height: 1.5rem; }
+  .site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .site-nav a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.75rem; font-family: var(--sans); font-size: 0.9375rem; text-decoration: none; border-radius: 0.375rem; }
+  .site-nav a:hover { text-decoration: underline; }
+  .head-cta { white-space: nowrap; }
+  @media (max-width: 63.99em) { .head-cta { display: none; } }
+  @media (max-width: 47.99em) {
+    .site-head .wrap { padding-top: 0.5rem; padding-bottom: 0.5rem; row-gap: 0; }
+    .site-nav { flex-basis: 100%; }
+    .site-nav a { padding-left: 0; padding-right: 1rem; }
+  }
+
+  /* Hero */
+  .hero { padding-top: clamp(2rem, 1rem + 3vw, 3.5rem); padding-bottom: var(--space-xl); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-m) var(--space-l); align-items: end; }
+  @media (min-width: 64em) {
+    .hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+  }
+  .hero-sub { font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); line-height: 1.45; max-width: 30em; margin-top: var(--space-m); }
+  .hero-aside { display: grid; gap: var(--space-s); align-content: end; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-m); align-items: center; }
+  .hero-line { font-family: var(--sans); font-size: 0.9375rem; line-height: 1.45; color: var(--ink-2); max-width: 24em; }
+  .patients-link { font-family: var(--sans); font-size: 0.9375rem; }
+  .patients-link a { display: inline-block; padding: 0.375rem 0; }
+
+  /* The fill: signature artifact */
+  .fill { margin-top: var(--space-l); }
+  .sample { font-family: var(--sans); font-size: 0.875rem; line-height: 1.4; color: var(--ink-2); max-width: 30em; }
+  .stage { background: var(--card); border: 1px solid var(--rule); border-radius: 0.75rem; overflow: hidden; }
+
+  .strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-bottom: 1px solid var(--rule); }
+  .strip-day { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: var(--space-s); white-space: nowrap; padding: 0.75rem 1rem; font-family: var(--sans); font-size: 0.875rem; color: var(--ink-2); border-bottom: 1px solid var(--rule-2); }
+  .strip-day span:first-child { white-space: normal; }
+  .slot { padding: 0.875rem 1rem; border-right: 1px solid var(--rule-2); font-family: var(--sans); font-size: 0.9375rem; line-height: 1.35; min-height: 5.5rem; }
+  .slot:last-child { border-right: 0; }
+  .slot-time { display: block; font-family: var(--mono); font-size: 0.8125rem; letter-spacing: 0.02em; color: var(--ink-3); margin-bottom: 0.25rem; }
+  .slot-who { display: block; }
+  .slot-focus { background: var(--paper); }
+  .state { display: inline-block; margin-top: 0.375rem; padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.8125rem; font-weight: 500; }
+  .state[data-s="1"] { background: var(--cancel-bg); color: var(--cancel); }
+  .state[data-s="2"], .state[data-s="3"] { background: var(--offer-bg); color: var(--offer); }
+  .state[data-s="4"] { background: var(--filled-bg); color: var(--filled); }
+  @media (max-width: 43.74em) {
+    .strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .slot-edge { display: none; }
+  }
+
+  .stage-body { display: grid; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 48em) {
+    .stage-body { grid-template-columns: minmax(14rem, 19rem) minmax(0, 1fr); }
+    .rail { border-right: 1px solid var(--rule); }
+  }
+  .rail { padding: 1rem; display: grid; gap: 0.5rem; align-content: start; }
+  .rail-head { display: grid; gap: 0.375rem; padding: 0 0.25rem 0.5rem; }
+  .rail-head h2 { font-size: 1.5rem; line-height: 1.2; letter-spacing: 0; }
+  .step {
+    display: grid; grid-template-columns: auto 1fr; column-gap: 0.75rem; align-items: baseline; text-align: left;
+    width: 100%; min-height: 2.75rem; padding: 0.625rem 0.75rem;
+    background: transparent; color: var(--ink); border: 1px solid var(--rule); border-radius: 2px;
+    font-family: var(--sans); font-size: 0.9375rem; line-height: 1.3; cursor: pointer;
+    transition: background-color 150ms var(--ease-out), border-color 150ms var(--ease-out), color 150ms var(--ease-out);
+  }
+  .step-t { font-family: var(--mono); font-size: 0.8125rem; color: var(--ink-3); }
+  .step-n { font-weight: 500; }
+  .step[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .step[aria-pressed="true"] .step-t { color: #cfcdc5; }
+  .step.is-past { border-color: var(--ink-2); }
+  @media (hover: hover) and (pointer: fine) {
+    .step:not([aria-pressed="true"]):hover { background: var(--paper); }
+  }
+  .replay { margin-top: 0.5rem; justify-self: start; min-height: 2.75rem; padding: 0.5rem 0.875rem; font-size: 0.875rem; }
+  .step-note { font-family: var(--sans); font-size: 0.9375rem; line-height: 1.45; color: var(--ink-2); padding: 0.5rem 0.25rem 0; max-width: 24em; }
+  @media (max-width: 47.99em) {
+    .rail { grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--rule); }
+    .rail-head, .step-note, .replay { grid-column: 1 / -1; }
+    .step { grid-template-columns: 1fr; row-gap: 0.125rem; }
+  }
+
+  .thread { padding: 1rem; display: grid; gap: 0.75rem; align-content: start; background: #fbfaf8; }
+  .thread-title { font-family: var(--sans); font-size: 0.8125rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.25rem; }
+  .ev { display: grid; gap: 0.25rem; max-width: 34rem; }
+  .ev.is-future { display: none; }
+  .pending { font-family: var(--sans); font-size: 0.875rem; line-height: 1.45; color: var(--ink-3); font-style: italic; padding: 0.25rem 0.25rem 0; }
+  .pending[hidden] { display: none; }
+  .ev-meta { font-family: var(--sans); font-size: 0.8125rem; color: var(--ink-3); display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .ev-meta .t { font-family: var(--mono); letter-spacing: 0.02em; }
+  .msg { font-family: var(--sans); font-size: 0.9375rem; line-height: 1.45; padding: 0.625rem 0.875rem; border-radius: 1rem; max-width: 30rem; }
+  .msg-in { background: var(--bubble); color: var(--ink); border-bottom-left-radius: 0.25rem; justify-self: start; }
+  .msg-out { background: var(--filled); color: #fff; border-bottom-right-radius: 0.25rem; justify-self: end; }
+  .ev-out { justify-items: end; margin-left: auto; }
+  .desk { background: var(--paper); border-radius: 0 0.5rem 0.5rem 0; padding: 0.625rem 0.875rem; font-family: var(--sans); font-size: 0.9375rem; line-height: 1.45; max-width: 32rem; }
+  .desk-h { display: flex; gap: 0.5rem; align-items: baseline; font-size: 0.8125rem; color: var(--ink-3); margin-bottom: 0.25rem; }
+  .desk[data-s="1"] { box-shadow: inset 2px 0 0 var(--cancel); }
+  .desk[data-s="4"] { box-shadow: inset 2px 0 0 var(--filled); }
+  @media (prefers-reduced-motion: no-preference) {
+    .ev.is-new { animation: ev-in 180ms var(--ease-out); }
+    @keyframes ev-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ev.is-new { animation: ev-fade 160ms var(--ease-out); }
+    @keyframes ev-fade { from { opacity: 0.4; } to { opacity: 1; } }
+  }
+
+  /* Sections */
+  .section { padding-top: var(--space-xl); padding-bottom: var(--space-xl); border-top: 1px solid var(--rule); }
+  .section-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-l); }
+  @media (min-width: 60em) { .section-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+  .lede { margin-top: var(--space-m); }
+  .rules { list-style: none; margin: var(--space-m) 0 0; padding: 0; display: grid; gap: var(--space-s); max-width: var(--measure); }
+  .rules li { padding-left: 1.25rem; position: relative; }
+  .rules li::before { content: ""; position: absolute; left: 0; top: 0.7em; width: 0.5rem; height: 1px; background: var(--ink); }
+
+  .texts { display: grid; gap: var(--space-m); }
+  .text-card { background: var(--card); border: 1px solid var(--rule); border-radius: 0.75rem; padding: 1rem; display: grid; gap: 0.75rem; }
+  .text-card h3 { font-family: var(--sans); font-size: 0.8125rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); }
+  .text-card .msg { max-width: 32rem; }
+  .annot { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.375rem; font-family: var(--sans); font-size: 0.9375rem; line-height: 1.45; color: var(--ink-2); }
+  .annot li { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem; }
+  .annot b { font-weight: 500; color: var(--ink); }
+  .annot .k { font-family: var(--mono); font-size: 0.8125rem; color: var(--ink-3); padding-top: 0.15em; }
+
+  .data { margin-top: var(--space-l); padding-top: var(--space-m); border-top: 1px solid var(--rule); max-width: var(--measure); }
+  .data h3 { margin-bottom: var(--space-xs); }
+
+  .steps3 { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: s; }
+  .steps3 li { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: var(--space-s); padding: var(--space-m) 0; border-top: 1px solid var(--rule-2); }
+  .steps3 li:first-child { border-top: 0; padding-top: 0; }
+  .steps3 .n { font-family: var(--mono); font-size: 0.9375rem; color: var(--ink-3); padding-top: 0.35rem; }
+  .steps3 h3 { margin-bottom: 0.375rem; }
+  .steps3 p { max-width: 32em; }
+  .steps3 .sampleline { margin-top: 0.75rem; display: inline-block; font-family: var(--sans); font-size: 0.875rem; color: var(--ink-2); background: var(--card); border: 1px solid var(--rule); border-radius: 0.375rem; padding: 0.375rem 0.625rem; }
+
+  .patients .checks { list-style: none; margin: var(--space-m) 0 0; padding: 0; display: grid; gap: var(--space-s); max-width: var(--measure); }
+  .patients .checks li { display: grid; grid-template-columns: 1.5rem 1fr; gap: 0.5rem; }
+  .patients .checks .k { font-family: var(--sans); font-size: 0.875rem; font-weight: 500; color: var(--ink-3); padding-top: 0.2em; }
+  .replies { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1rem; margin: var(--space-m) 0 0; font-size: 1.0625rem; max-width: var(--measure); }
+  .replies dt { font-family: var(--mono); font-size: 0.9375rem; font-weight: 500; padding-top: 0.2em; }
+  .replies dd { margin: 0; }
+
+  .call .agenda { display: grid; gap: 0.75rem; margin: var(--space-m) 0 0; max-width: var(--measure); }
+  .call .agenda div { display: grid; grid-template-columns: 8rem 1fr; gap: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--rule-2); }
+  .call .agenda div:first-child { border-top: 0; padding-top: 0; }
+  .call .agenda dt { font-family: var(--mono); font-size: 0.9375rem; color: var(--ink-3); padding-top: 0.2em; }
+  .call .agenda dd { margin: 0; }
+  .book { background: var(--card); border: 1px solid var(--rule); border-radius: 0.75rem; padding: var(--space-m); display: grid; gap: var(--space-s); align-content: start; align-self: start; }
+  .book h3 { font-size: 1.375rem; }
+  .book .actions { display: flex; flex-wrap: wrap; gap: var(--space-s); align-items: center; }
+  .pricing { margin-top: var(--space-m); padding-top: var(--space-m); border-top: 1px solid var(--rule-2); }
+
+  /* Footer */
+  .site-foot { border-top: 1px solid var(--rule); padding: var(--space-l) 0; font-family: var(--sans); font-size: 0.9375rem; color: var(--ink-2); }
+  .site-foot .wrap { display: grid; gap: var(--space-m); }
+  @media (min-width: 48em) { .site-foot .wrap { grid-template-columns: minmax(0, 1fr) auto; align-items: start; } }
+  .site-foot ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
+  .site-foot a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+  .site-foot p { max-width: 36em; }
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Chairtime, home">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 3h10v9H5z M5 12h14v3H5z M6 15v6 M18 15v6 M5 7h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      Chairtime
+    </a>
+    <nav class="site-nav" aria-label="Page">
+      <ul>
+        <li><a href="#how">How a slot gets filled</a></li>
+        <li><a href="#patients">Got a text?</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul>
+    </nav>
+    <a class="btn head-cta" href="#setup-call">Book a 15-minute setup call</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>The 2:30 that just cancelled gets filled from your waitlist.</h1>
+        <p class="hero-sub">Chairtime is a cancellation-filling service for small physical therapy clinics. When a patient cancels, it texts your waitlist one person at a time until someone takes the slot, then tells the front desk who is coming.</p>
+      </div>
+      <div class="hero-aside">
+        <div class="hero-actions">
+          <a class="btn" href="#setup-call">Book a 15-minute setup call</a>
+          <p class="hero-line">A working session, not a pitch: we load your waitlist with you and send a test text to your phone.</p>
+        </div>
+        <p class="patients-link"><a href="#patients">Got a text from Chairtime? What it is and how to reply.</a></p>
+      </div>
+    </div>
+    <div class="wrap fill" id="how" aria-labelledby="how-h">
+      <div class="stage">
+        <div class="strip" role="group" aria-label="Tuesday afternoon schedule at the sample clinic">
+          <div class="strip-day"><span>Tuesday · Dana, PT · Northside PT (sample)</span><span class="num" id="clock">Now 1:31 PM</span></div>
+          <div class="slot slot-edge"><span class="slot-time">1:30 PM</span><span class="slot-who">Lena P.</span></div>
+          <div class="slot"><span class="slot-time">2:00 PM</span><span class="slot-who">R. Alvarez</span></div>
+          <div class="slot slot-focus"><span class="slot-time">2:30 PM</span><span class="slot-who" id="slot-who">Marcus O.</span><span class="state" id="slot-state" data-s="4">Filled 1:31</span></div>
+          <div class="slot"><span class="slot-time">3:00 PM</span><span class="slot-who">J. Whitfield</span></div>
+          <div class="slot slot-edge"><span class="slot-time">3:30 PM</span><span class="slot-who">T. Nguyen</span></div>
+        </div>
+
+        <div class="stage-body">
+          <div class="rail">
+            <div class="rail-head">
+              <h2 id="how-h">Cancelled at 1:12, filled by 1:31.</h2>
+              <p class="sample">Step by step, in a sample clinic with made-up patients. The times are an example, not a measured result.</p>
+            </div>
+            <button class="step" type="button" data-step="1" aria-pressed="false" aria-controls="thread"><span class="step-t">1:12</span><span class="step-n">M. Reyes cancels 2:30</span></button>
+            <button class="step" type="button" data-step="2" aria-pressed="false" aria-controls="thread"><span class="step-t">1:14</span><span class="step-n">First on the waitlist gets a text</span></button>
+            <button class="step" type="button" data-step="3" aria-pressed="false" aria-controls="thread"><span class="step-t">1:19</span><span class="step-n">She passes, the next person is texted</span></button>
+            <button class="step" type="button" data-step="4" aria-pressed="true" aria-controls="thread"><span class="step-t">1:31</span><span class="step-n">He says yes, the slot is filled</span></button>
+            <button class="btn btn-ghost replay" type="button" id="replay">Replay the fill</button>
+            <p class="step-note" id="step-note" role="status">Step 4 of 4. Marcus is confirmed, the front desk sees who is coming, and the texting stops. Nobody else is offered the slot.</p>
+          </div>
+
+          <div class="thread" id="thread" aria-label="Text messages, sample">
+            <div class="thread-title">Texts as the patients see them</div>
+
+            <div class="ev" data-step="1">
+              <div class="desk" data-s="1"><div class="desk-h"><span class="t num">1:12 PM</span><span>Front desk</span></div>2:30 PM with Dana marked cancelled. M. Reyes called to move to next week. Chairtime starts offering the slot.</div>
+              <p class="pending" data-pending="1" hidden>Next: the first person on the waitlist for this time is texted.</p>
+            </div>
+
+            <div class="ev" data-step="2">
+              <div class="ev-meta"><span class="t">1:14 PM</span><span>To Priya S. · first on the waitlist for weekday afternoons</span></div>
+              <div class="msg msg-in">Northside PT: a 2:30 PM appointment with Dana opened up today. Reply YES to take it or NO to pass. Sent via Chairtime for Northside PT.</div>
+              <p class="pending" data-pending="2" hidden>Waiting for Priya's reply. Her window closes at 1:29 PM; silence passes the slot on.</p>
+            </div>
+
+            <div class="ev ev-out" data-step="3">
+              <div class="ev-meta"><span class="t">1:19 PM</span><span>Priya S.</span></div>
+              <div class="msg msg-out">NO, can't make today, keep me on the list</div>
+            </div>
+            <div class="ev" data-step="3">
+              <div class="ev-meta"><span class="t">1:19 PM</span><span>To Priya S.</span></div>
+              <div class="msg msg-in">Got it. You stay on the waitlist. Reply STOP any time to end these texts.</div>
+            </div>
+            <div class="ev" data-step="3">
+              <div class="ev-meta"><span class="t">1:19 PM</span><span>To Marcus O. · next on the waitlist for weekday afternoons</span></div>
+              <div class="msg msg-in">Northside PT: a 2:30 PM appointment with Dana opened up today. Reply YES to take it or NO to pass. Sent via Chairtime for Northside PT.</div>
+              <p class="pending" data-pending="3" hidden>Waiting for Marcus's reply. His window closes at 1:34 PM. Nobody else is texted meanwhile.</p>
+            </div>
+
+            <div class="ev ev-out" data-step="4">
+              <div class="ev-meta"><span class="t">1:31 PM</span><span>Marcus O.</span></div>
+              <div class="msg msg-out">YES</div>
+            </div>
+            <div class="ev" data-step="4">
+              <div class="ev-meta"><span class="t">1:31 PM</span><span>To Marcus O.</span></div>
+              <div class="msg msg-in">You're booked: today, 2:30 PM with Dana at Northside PT, 410 Elm St. Reply CANCEL if your plans change.</div>
+            </div>
+            <div class="ev" data-step="4">
+              <div class="desk" data-s="4"><div class="desk-h"><span class="t num">1:31 PM</span><span>Front desk</span></div>2:30 PM filled by Marcus O. (confirmed by text at 1:31). No one else is offered this slot.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="rules" aria-labelledby="rules-h">
+    <div class="wrap section-grid">
+      <div>
+        <h2 id="rules-h">One patient is offered the slot at a time, so nobody is booked twice.</h2>
+        <p class="lede">Chairtime works down your waitlist in order. Each person gets a reply window; a NO or silence passes the slot to the next person. The first YES books the slot and the texting stops.</p>
+        <ul class="rules">
+          <li>Who gets texted first follows the order of your waitlist and what each person said they are waiting for (days, times, a particular therapist).</li>
+          <li>The reply window is set per clinic. In the example above it is fifteen minutes.</li>
+          <li>Your front desk can see every offer and reply, and can stop the offers at any point.</li>
+        </ul>
+        <div class="data">
+          <h3>What a text contains, and what Chairtime keeps</h3>
+          <p>A text carries your clinic's name, the time on offer, the therapist's first name and the reply options. It does not mention a diagnosis, a visit note or a balance. Chairtime keeps a patient's name, mobile number and the days and times they are waiting for.</p>
+          <p>Our HIPAA risk assessment is still in progress, so this page makes no HIPAA compliance claim. Ask on the setup call and we will tell you exactly where it stands.</p>
+        </div>
+      </div>
+      <div class="texts" aria-label="The three texts Chairtime sends, sample">
+        <div class="text-card">
+          <h3>The offer</h3>
+          <div class="msg msg-in">Northside PT: a 2:30 PM appointment with Dana opened up today. Reply YES to take it or NO to pass. Sent via Chairtime for Northside PT.</div>
+          <ul class="annot">
+            <li><span class="k">01</span><span><b>Your clinic's name</b> opens every text, so patients know who is asking.</span></li>
+            <li><span class="k">02</span><span><b>One time, one therapist.</b> Nothing about why the patient is coming in.</span></li>
+            <li><span class="k">03</span><span><b>Two replies.</b> YES books it. NO, or no reply inside the window, passes it on.</span></li>
+          </ul>
+        </div>
+        <div class="text-card">
+          <h3>The confirmation</h3>
+          <div class="msg msg-in">You're booked: today, 2:30 PM with Dana at Northside PT, 410 Elm St. Reply CANCEL if your plans change.</div>
+          <ul class="annot">
+            <li><span class="k">04</span><span><b>The address is repeated</b> so the patient has no reason to call the desk.</span></li>
+            <li><span class="k">05</span><span><b>CANCEL reopens the slot</b> and the offers start again from the next person.</span></li>
+          </ul>
+        </div>
+        <div class="text-card">
+          <h3>What the front desk sees</h3>
+          <div class="desk" data-s="4"><div class="desk-h"><span class="t num">1:31 PM</span><span>Front desk</span></div>2:30 PM filled by Marcus O. (confirmed by text at 1:31). No one else is offered this slot.</div>
+          <ul class="annot">
+            <li><span class="k">06</span><span><b>Nothing to do</b> except greet Marcus at 2:30. The texting already stopped.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="desk" aria-labelledby="desk-h">
+    <div class="wrap section-grid">
+      <div>
+        <h2 id="desk-h">Your front desk marks the cancellation. That is the whole job.</h2>
+        <p class="lede">No calling down a list between patients. Chairtime does the texting, the waiting and the stopping.</p>
+      </div>
+      <ol class="steps3">
+        <li>
+          <span class="n">1</span>
+          <div>
+            <h3>Load your waitlist once</h3>
+            <p>A name, a mobile number and what the person is waiting for. We load the first version with you on the setup call; after that the front desk adds people as they ask.</p>
+            <span class="sampleline">Priya S. · weekday afternoons · any therapist · added Oct 2 (sample)</span>
+          </div>
+        </li>
+        <li>
+          <span class="n">2</span>
+          <div>
+            <h3>Mark the slot cancelled</h3>
+            <p>When a patient cancels, the front desk tells Chairtime the slot is open. The offers go out from that moment, in waitlist order.</p>
+          </div>
+        </li>
+        <li>
+          <span class="n">3</span>
+          <div>
+            <h3>See who is coming</h3>
+            <p>The front desk gets the name and the confirmation time as soon as someone says YES. If nobody takes the slot before the appointment, you are told that too, and the chair was no emptier than it would have been.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section patients" id="patients" aria-labelledby="patients-h">
+    <div class="wrap section-grid">
+      <div>
+        <h2 id="patients-h">Got a text from Chairtime? Here is what it is and how to reply.</h2>
+        <p class="lede">Your physical therapy clinic uses Chairtime to offer cancelled appointment times to patients who asked to be told about openings. The text comes from Chairtime on the clinic's behalf.</p>
+        <ul class="checks">
+          <li><span class="k">1</span><span>It names your clinic and offers one date and time. If the clinic named is not yours, ignore it.</span></li>
+          <li><span class="k">2</span><span>It never asks for a card number, insurance details, a password or anything about your health. A text that does is not from Chairtime.</span></li>
+          <li><span class="k">3</span><span>Unsure? Call the clinic at the number you already use. The front desk can see the offer on their side.</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>How to reply</h3>
+        <dl class="replies">
+          <dt>YES</dt><dd>Takes the appointment. You get a confirmation text with the time and address.</dd>
+          <dt>NO</dt><dd>Passes it to the next person. You stay on the waitlist for the next opening.</dd>
+          <dt>CANCEL</dt><dd>After a YES, gives the slot back so it can be offered to someone else.</dd>
+          <dt>STOP</dt><dd>Ends all Chairtime texts for you. Tell the clinic if you want them again.</dd>
+        </dl>
+        <p class="lede small muted">If you do not reply inside the clinic's reply window, the offer simply moves on. There is nothing to undo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section call" id="setup-call" aria-labelledby="call-h">
+    <div class="wrap section-grid">
+      <div>
+        <h2 id="call-h">The setup call takes 15 minutes and ends with your waitlist loaded.</h2>
+        <dl class="agenda">
+          <div><dt>Minutes 0–5</dt><dd>Your schedule, how cancellations reach the front desk today, and who is on the waitlist.</dd></div>
+          <div><dt>Minutes 5–12</dt><dd>We load the first names together and send a test offer to your own phone, so you see exactly what a patient sees.</dd></div>
+          <div><dt>Minutes 12–15</dt><dd>Pricing, our HIPAA assessment status, and whether it is a fit. If it is not, you keep the loaded list.</dd></div>
+        </dl>
+        <div class="pricing" id="pricing">
+          <h3>What it costs</h3>
+          <p>Pricing is quoted on the call, before anything is set up, so you can decide with the number in front of you.</p>
+        </div>
+      </div>
+      <div class="book">
+        <h3>Book a 15-minute setup call</h3>
+        <p>Pick a time that suits the front desk as well as you; it helps if the person who handles cancellations is on the call.</p>
+        <div class="actions">
+          <a class="btn" href="#setup-call">Book a 15-minute setup call</a>
+        </div>
+        <p class="small muted">Our calendar link is being connected. Until it is live, this page cannot take a booking; the agenda on the left is what the call covers.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <p><strong>Chairtime</strong> fills last-minute cancellations at small physical therapy clinics by texting the waitlist until someone takes the slot.</p>
+      <p class="small">Patients: reply STOP to any Chairtime text to end them. Every example on this page uses a sample clinic and made-up patients.</p>
+    </div>
+    <ul>
+      <li><a href="#how">How a slot gets filled</a></li>
+      <li><a href="#rules">The texting rules</a></li>
+      <li><a href="#patients">For patients</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#setup-call">Setup call</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
+  var events = Array.prototype.slice.call(document.querySelectorAll('#thread .ev'));
+  var pendings = Array.prototype.slice.call(document.querySelectorAll('#thread .pending'));
+  var slotState = document.getElementById('slot-state');
+  var slotWho = document.getElementById('slot-who');
+  var clock = document.getElementById('clock');
+  var note = document.getElementById('step-note');
+  var replay = document.getElementById('replay');
+  if (!steps.length || !slotState) return;
+
+  var SLOT = {
+    1: {state: 'Cancelled 1:12', who: 'M. Reyes (cancelled)', clock: 'Now 1:12 PM'},
+    2: {state: 'Offering', who: 'Open', clock: 'Now 1:14 PM'},
+    3: {state: 'Offering, 2nd person', who: 'Open', clock: 'Now 1:19 PM'},
+    4: {state: 'Filled 1:31', who: 'Marcus O.', clock: 'Now 1:31 PM'}
+  };
+  var NOTES = {
+    1: 'Step 1 of 4. The front desk marks the 2:30 cancelled. Nothing else is typed; the waitlist is already loaded.',
+    2: 'Step 2 of 4. Priya is first in line for weekday afternoons, so only she is texted. She has fifteen minutes to answer in this example.',
+    3: 'Step 3 of 4. Priya passes, so the same offer goes to Marcus. One person at a time means no one is booked twice.',
+    4: 'Step 4 of 4. Marcus is confirmed, the front desk sees who is coming, and the texting stops. Nobody else is offered the slot.'
+  };
+  var current = 4;
+  var timer = null;
+
+  function show(n, animate) {
+    n = Number(n);
+    steps.forEach(function (b) {
+      var k = Number(b.getAttribute('data-step'));
+      b.setAttribute('aria-pressed', k === n ? 'true' : 'false');
+      b.classList.toggle('is-past', k < n);
+    });
+    events.forEach(function (ev) {
+      var k = Number(ev.getAttribute('data-step'));
+      var wasHidden = ev.classList.contains('is-future');
+      ev.classList.toggle('is-future', k > n);
+      ev.classList.remove('is-new');
+      if (animate && wasHidden && k <= n) {
+        void ev.offsetWidth;
+        ev.classList.add('is-new');
+      }
+    });
+    pendings.forEach(function (el) { el.hidden = Number(el.getAttribute('data-pending')) !== n; });
+    slotState.textContent = SLOT[n].state;
+    slotState.setAttribute('data-s', String(n));
+    slotWho.textContent = SLOT[n].who;
+    clock.textContent = SLOT[n].clock;
+    note.textContent = NOTES[n];
+    current = n;
+  }
+  function stop() { if (timer) { clearInterval(timer); timer = null; replay.textContent = 'Replay the fill'; } }
+
+  steps.forEach(function (b) {
+    b.addEventListener('click', function () { stop(); show(b.getAttribute('data-step'), true); });
+  });
+  replay.addEventListener('click', function () {
+    if (timer) { stop(); return; }
+    show(1, true);
+    replay.textContent = 'Stop the replay';
+    timer = setInterval(function () {
+      if (current >= 4) { stop(); return; }
+      show(current + 1, true);
+      if (current >= 4) stop();
+    }, 900);
+  });
+})();
+</script>
+</body>
+</html>
