@@ -1,0 +1,216 @@
+{
+ "meta": {
+  "seed": 593854993,
+  "k": 1,
+  "retest": 4,
+  "python": "3.13.16",
+  "briefs": [
+   "agenda",
+   "alerts",
+   "brewday",
+   "cancellations",
+   "envvars",
+   "handover",
+   "heater",
+   "kitchens",
+   "nightly",
+   "questionnaire",
+   "stitch",
+   "sunrise"
+  ]
+ },
+ "builds": {
+  "kitchens/without-r1": {
+   "workdir": "W001",
+   "brief": "kitchens",
+   "arm": "without",
+   "brief_file": "briefs/kitchens/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "alerts/without-r1": {
+   "workdir": "W002",
+   "brief": "alerts",
+   "arm": "without",
+   "brief_file": "briefs/alerts/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "brewday/without-r1": {
+   "workdir": "W003",
+   "brief": "brewday",
+   "arm": "without",
+   "brief_file": "briefs/brewday/without.md",
+   "fixture": "next-app",
+   "skill_installed": false
+  },
+  "nightly/without-r1": {
+   "workdir": "W004",
+   "brief": "nightly",
+   "arm": "without",
+   "brief_file": "briefs/nightly/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "envvars/without-r1": {
+   "workdir": "W005",
+   "brief": "envvars",
+   "arm": "without",
+   "brief_file": "briefs/envvars/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "nightly/with-r1": {
+   "workdir": "W006",
+   "brief": "nightly",
+   "arm": "with",
+   "brief_file": "briefs/nightly/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "questionnaire/without-r1": {
+   "workdir": "W007",
+   "brief": "questionnaire",
+   "arm": "without",
+   "brief_file": "briefs/questionnaire/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "agenda/without-r1": {
+   "workdir": "W008",
+   "brief": "agenda",
+   "arm": "without",
+   "brief_file": "briefs/agenda/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "stitch/without-r1": {
+   "workdir": "W009",
+   "brief": "stitch",
+   "arm": "without",
+   "brief_file": "briefs/stitch/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "brewday/with-r1": {
+   "workdir": "W010",
+   "brief": "brewday",
+   "arm": "with",
+   "brief_file": "briefs/brewday/with.md",
+   "fixture": "next-app",
+   "skill_installed": true
+  },
+  "heater/with-r1": {
+   "workdir": "W011",
+   "brief": "heater",
+   "arm": "with",
+   "brief_file": "briefs/heater/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "envvars/with-r1": {
+   "workdir": "W012",
+   "brief": "envvars",
+   "arm": "with",
+   "brief_file": "briefs/envvars/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "stitch/with-r1": {
+   "workdir": "W013",
+   "brief": "stitch",
+   "arm": "with",
+   "brief_file": "briefs/stitch/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "sunrise/with-r1": {
+   "workdir": "W014",
+   "brief": "sunrise",
+   "arm": "with",
+   "brief_file": "briefs/sunrise/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "questionnaire/with-r1": {
+   "workdir": "W015",
+   "brief": "questionnaire",
+   "arm": "with",
+   "brief_file": "briefs/questionnaire/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "agenda/with-r1": {
+   "workdir": "W016",
+   "brief": "agenda",
+   "arm": "with",
+   "brief_file": "briefs/agenda/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "handover/with-r1": {
+   "workdir": "W017",
+   "brief": "handover",
+   "arm": "with",
+   "brief_file": "briefs/handover/with.md",
+   "fixture": "redesign",
+   "skill_installed": true
+  },
+  "alerts/with-r1": {
+   "workdir": "W018",
+   "brief": "alerts",
+   "arm": "with",
+   "brief_file": "briefs/alerts/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "handover/without-r1": {
+   "workdir": "W019",
+   "brief": "handover",
+   "arm": "without",
+   "brief_file": "briefs/handover/without.md",
+   "fixture": "redesign",
+   "skill_installed": false
+  },
+  "cancellations/without-r1": {
+   "workdir": "W020",
+   "brief": "cancellations",
+   "arm": "without",
+   "brief_file": "briefs/cancellations/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "sunrise/without-r1": {
+   "workdir": "W021",
+   "brief": "sunrise",
+   "arm": "without",
+   "brief_file": "briefs/sunrise/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "heater/without-r1": {
+   "workdir": "W022",
+   "brief": "heater",
+   "arm": "without",
+   "brief_file": "briefs/heater/without.md",
+   "fixture": null,
+   "skill_installed": false
+  },
+  "kitchens/with-r1": {
+   "workdir": "W023",
+   "brief": "kitchens",
+   "arm": "with",
+   "brief_file": "briefs/kitchens/with.md",
+   "fixture": null,
+   "skill_installed": true
+  },
+  "cancellations/with-r1": {
+   "workdir": "W024",
+   "brief": "cancellations",
+   "arm": "with",
+   "brief_file": "briefs/cancellations/with.md",
+   "fixture": null,
+   "skill_installed": true
+  }
+ }
+}

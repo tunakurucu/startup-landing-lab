@@ -1,0 +1,98 @@
+[
+ {
+  "workdir": "W001",
+  "run": "kitchens/without-r1"
+ },
+ {
+  "workdir": "W002",
+  "run": "alerts/without-r1"
+ },
+ {
+  "workdir": "W003",
+  "run": "brewday/without-r1"
+ },
+ {
+  "workdir": "W004",
+  "run": "nightly/without-r1"
+ },
+ {
+  "workdir": "W005",
+  "run": "envvars/without-r1"
+ },
+ {
+  "workdir": "W006",
+  "run": "nightly/with-r1"
+ },
+ {
+  "workdir": "W007",
+  "run": "questionnaire/without-r1"
+ },
+ {
+  "workdir": "W008",
+  "run": "agenda/without-r1"
+ },
+ {
+  "workdir": "W009",
+  "run": "stitch/without-r1"
+ },
+ {
+  "workdir": "W010",
+  "run": "brewday/with-r1"
+ },
+ {
+  "workdir": "W011",
+  "run": "heater/with-r1"
+ },
+ {
+  "workdir": "W012",
+  "run": "envvars/with-r1"
+ },
+ {
+  "workdir": "W013",
+  "run": "stitch/with-r1"
+ },
+ {
+  "workdir": "W014",
+  "run": "sunrise/with-r1"
+ },
+ {
+  "workdir": "W015",
+  "run": "questionnaire/with-r1"
+ },
+ {
+  "workdir": "W016",
+  "run": "agenda/with-r1"
+ },
+ {
+  "workdir": "W017",
+  "run": "handover/with-r1"
+ },
+ {
+  "workdir": "W018",
+  "run": "alerts/with-r1"
+ },
+ {
+  "workdir": "W019",
+  "run": "handover/without-r1"
+ },
+ {
+  "workdir": "W020",
+  "run": "cancellations/without-r1"
+ },
+ {
+  "workdir": "W021",
+  "run": "sunrise/without-r1"
+ },
+ {
+  "workdir": "W022",
+  "run": "heater/without-r1"
+ },
+ {
+  "workdir": "W023",
+  "run": "kitchens/with-r1"
+ },
+ {
+  "workdir": "W024",
+  "run": "cancellations/with-r1"
+ }
+]

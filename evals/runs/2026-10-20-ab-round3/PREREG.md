@@ -12,3 +12,4 @@ Written and committed before any build. After this commit nothing in the skill, 
 - Image: Node v22.22.0, Python 3.13.16, Playwright 1.56.1, Chromium build 1194 (Playwright bundle).
 - Skill arm: the skill folder is copied read-only to a path outside every working folder; builders are told it is installed there. No-skill arm: no skill folder exists on the machine path they are given.
 - Builds run at most three at a time (2 CPUs, 8 GB), interleaved by arm in the seeded build order.
+- brewday lockfile sha256: 6f1064586c5772f3… (package-lock.json kept in the run folder as lockfile.json)

@@ -1,0 +1,152 @@
+{
+ "meta": {
+  "seed": 593854993,
+  "k": 1,
+  "retest": 4,
+  "python": "3.13.16",
+  "briefs": [
+   "agenda",
+   "alerts",
+   "brewday",
+   "cancellations",
+   "envvars",
+   "handover",
+   "heater",
+   "kitchens",
+   "nightly",
+   "questionnaire",
+   "stitch",
+   "sunrise"
+  ]
+ },
+ "packets": [
+  {
+   "kind": "primary",
+   "brief": "kitchens",
+   "pair": "kitchens-r1",
+   "A": "kitchens/without-r1",
+   "B": "kitchens/with-r1",
+   "packet": "P001"
+  },
+  {
+   "kind": "primary",
+   "brief": "sunrise",
+   "pair": "sunrise-r1",
+   "A": "sunrise/with-r1",
+   "B": "sunrise/without-r1",
+   "packet": "P002"
+  },
+  {
+   "kind": "primary",
+   "brief": "heater",
+   "pair": "heater-r1",
+   "A": "heater/without-r1",
+   "B": "heater/with-r1",
+   "packet": "P003"
+  },
+  {
+   "kind": "primary",
+   "brief": "stitch",
+   "pair": "stitch-r1",
+   "A": "stitch/without-r1",
+   "B": "stitch/with-r1",
+   "packet": "P004"
+  },
+  {
+   "kind": "primary",
+   "brief": "cancellations",
+   "pair": "cancellations-r1",
+   "A": "cancellations/with-r1",
+   "B": "cancellations/without-r1",
+   "packet": "P005"
+  },
+  {
+   "kind": "primary",
+   "brief": "alerts",
+   "pair": "alerts-r1",
+   "A": "alerts/without-r1",
+   "B": "alerts/with-r1",
+   "packet": "P006"
+  },
+  {
+   "kind": "retest",
+   "brief": "handover",
+   "pair": "handover-r1",
+   "A": "handover/without-r1",
+   "B": "handover/with-r1",
+   "packet": "P007"
+  },
+  {
+   "kind": "retest",
+   "brief": "questionnaire",
+   "pair": "questionnaire-r1",
+   "A": "questionnaire/with-r1",
+   "B": "questionnaire/without-r1",
+   "packet": "P008"
+  },
+  {
+   "kind": "primary",
+   "brief": "handover",
+   "pair": "handover-r1",
+   "A": "handover/with-r1",
+   "B": "handover/without-r1",
+   "packet": "P009"
+  },
+  {
+   "kind": "primary",
+   "brief": "nightly",
+   "pair": "nightly-r1",
+   "A": "nightly/with-r1",
+   "B": "nightly/without-r1",
+   "packet": "P010"
+  },
+  {
+   "kind": "primary",
+   "brief": "envvars",
+   "pair": "envvars-r1",
+   "A": "envvars/with-r1",
+   "B": "envvars/without-r1",
+   "packet": "P011"
+  },
+  {
+   "kind": "primary",
+   "brief": "agenda",
+   "pair": "agenda-r1",
+   "A": "agenda/with-r1",
+   "B": "agenda/without-r1",
+   "packet": "P012"
+  },
+  {
+   "kind": "primary",
+   "brief": "questionnaire",
+   "pair": "questionnaire-r1",
+   "A": "questionnaire/without-r1",
+   "B": "questionnaire/with-r1",
+   "packet": "P013"
+  },
+  {
+   "kind": "retest",
+   "brief": "sunrise",
+   "pair": "sunrise-r1",
+   "A": "sunrise/without-r1",
+   "B": "sunrise/with-r1",
+   "packet": "P014"
+  },
+  {
+   "kind": "retest",
+   "brief": "agenda",
+   "pair": "agenda-r1",
+   "A": "agenda/without-r1",
+   "B": "agenda/with-r1",
+   "packet": "P015"
+  },
+  {
+   "kind": "primary",
+   "brief": "brewday",
+   "pair": "brewday-r1",
+   "A": "brewday/without-r1",
+   "B": "brewday/with-r1",
+   "packet": "P016"
+  }
+ ]
+}
