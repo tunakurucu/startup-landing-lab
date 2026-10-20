@@ -102,7 +102,7 @@ CHECKS = [
   ('TY-09', 'Weights under 400 appear only at 28px and up; smaller text is 400 or heavier.', 'auto', 'warn', 'JK'),
   ('TY-10', 'A display face that is everywhere (Inter, Space Grotesk, Fraunces, Roboto, Poppins, Montserrat) has a stated reason, and every face has a role (display, text, data).', 'auto', 'warn', 'IMP GST AFD'),
   # Layout
-  ('LY-01', 'No horizontal scroll at 390px.', 'auto', 'block', 'GST VWG'),
+  ('LY-01', 'No horizontal scroll at 390px, at 1× and at 3× pixel density.', 'auto', 'block', 'GST VWG'),
   ('LY-02', 'No horizontal scroll at 320px.', 'auto', 'block', 'EK WCAG'),
   ('LY-03', 'No text is cut off by its container.', 'auto', 'block', 'IMP'),
   ('LY-04', 'Body text keeps at least 12px from the screen edge on phones.', 'auto', 'block', 'IMP'),

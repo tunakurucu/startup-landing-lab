@@ -77,7 +77,7 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 
 | ID | Check | Verify | Severity | Credit |
 | --- | --- | --- | --- | --- |
-| LY-01 | No horizontal scroll at 390px. | auto | block | GST VWG |
+| LY-01 | No horizontal scroll at 390px, at 1× and at 3× pixel density. | auto | block | GST VWG |
 | LY-02 | No horizontal scroll at 320px. | auto | block | EK WCAG |
 | LY-03 | No text is cut off by its container. | auto | block | IMP |
 | LY-04 | Body text keeps at least 12px from the screen edge on phones. | auto | block | IMP |

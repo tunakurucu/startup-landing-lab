@@ -432,7 +432,7 @@
  },
  {
   "id": "LY-01",
-  "check": "No horizontal scroll at 390px.",
+  "check": "No horizontal scroll at 390px, at 1× and at 3× pixel density.",
   "verify": "auto",
   "severity": "block",
   "credit": [

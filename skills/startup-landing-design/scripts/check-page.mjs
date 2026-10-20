@@ -473,7 +473,11 @@ try {
       check('TY-06', r.tiny.length === 0, r.tiny);
       check('TY-08', r.leading.length === 0, r.leading);
       check('TY-09', r.thinSmall.length === 0, r.thinSmall);
-      check('LY-01', !r.overflow, 'at 390');
+      // Pages that size canvases or images from devicePixelRatio break only on dense screens; phones are 2–3×.
+      const dense = await open({width: 390, height: 844}, {deviceScaleFactor: 3, isMobile: true, hasTouch: true});
+      let denseWidth = null;
+      try { await dense.page.waitForTimeout(600); denseWidth = await dense.page.evaluate(() => document.documentElement.scrollWidth); } finally { await dense.ctx.close(); }
+      check('LY-01', !r.overflow && (denseWidth === null || denseWidth <= 391), {at: '390 at 1× and 3× pixel density', scroll_width_3x: denseWidth});
       check('LY-03', r.clipped.length === 0, r.clipped);
       check('LY-04', r.nearEdge.length === 0, r.nearEdge);
       check('MO-02', r.hiddenShare <= 0.05, {share: Math.round(r.hiddenShare * 100) + '%', sample: r.hiddenSample});
