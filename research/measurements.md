@@ -5,29 +5,29 @@
 Known limits found while auditing against these numbers: `sticky_nav` misses a nav pinned through a wrapper element (several reference sites were recorded false while their bar stayed pinned); `nav_height_px` is wrong where the header element wraps the hero; a page that scrolls inside an inner container (for example mmm.page) reports a one-screen height and zero sections; `dark_background` comes from the first-screen capture and can disagree with what a person sees on pages whose hero loads late; `animations_on_load` counts animations the browser reports, including ones with no visible effect. Audited records note each disagreement in their limitations.
 
 <!-- summary:start -->
-## What 211 startup homepages actually do
+## What 328 startup homepages actually do
 
 | Measure | 10th pct | 25th | Median | 75th | 90th |
 | --- | --- | --- | --- | --- | --- |
 | Desktop h1 size (px) | 44 | 54 | **64** | 76 | 96 |
 | Desktop h1 weight | 400 | 400 | **500** | 600 | 700 |
 | Desktop h1 tracking (em) | −0.05 | −0.035 | **−0.025** | −0.01 | 0 |
-| h1 ÷ body size | 2.1 | 3.0 | **3.7** | 4.5 | 5.4 |
-| Desktop body size (px) | 14.0 | 16.0 | **17.0** | 18.0 | 20.0 |
-| Body characters per line | 42 | 48 | **58** | 68 | 80 |
-| Phone h1 size (px) | 26 | 32 | **38** | 44 | 48 |
-| Phone h1 ÷ desktop h1 | 0.45 | 0.50 | **0.57** | 0.67 | 0.80 |
-| Phone body size (px) | 14.0 | 14.4 | **16.0** | 17.0 | 18.0 |
+| h1 ÷ body size | 2.2 | 3.0 | **3.7** | 4.5 | 5.4 |
+| Desktop body size (px) | 14.0 | 16.0 | **17.0** | 19.0 | 22.0 |
+| Body characters per line | 36 | 45 | **56** | 67 | 82 |
+| Phone h1 size (px) | 26 | 32 | **38** | 44 | 49 |
+| Phone h1 ÷ desktop h1 | 0.45 | 0.50 | **0.59** | 0.67 | 0.80 |
+| Phone body size (px) | 14.0 | 14.5 | **16.0** | 17.0 | 18.0 |
 | Font families in use | 1 | 2 | **2** | 3 | 4 |
-| Top-level sections | 2 | 6 | **7** | 9 | 11 |
-| Desktop nav height (px) | 46 | 58 | **71** | 87 | 217 |
+| Top-level sections | 1 | 5 | **7** | 9 | 11 |
+| Desktop nav height (px) | 44 | 58 | **69** | 87 | 413 |
 
-- A `prefers-reduced-motion` rule was found on 161 of 211 pages (31 had none; 19 could not be inspected because their CSS is cross-origin).
-- 85 heroes sit on a dark ground and 126 on a light one (median luminance of the first-screen capture).
-- 128 headers are sticky or fixed.
-- 168 pages had animations running at load; 108 contain a `<video>`, 77 a `<canvas>`.
-- Pages that scrolled sideways at 390 px: 2.
-- The most common first or second family is Inter (53 pages), then Geist (28). A monospace family is first or second on 62.
+- A `prefers-reduced-motion` rule was found on 235 of 328 pages (60 had none; 33 could not be inspected because their CSS is cross-origin).
+- 127 heroes sit on a dark ground and 201 on a light one (median luminance of the first-screen capture).
+- 182 headers are sticky or fixed.
+- 252 pages had animations running at load; 155 contain a `<video>`, 113 a `<canvas>`.
+- Pages that scrolled sideways at 390 px: 7.
+- The most common first or second family is Inter (76 pages), then Geist (43). A monospace family is first or second on 96.
 <!-- summary:end -->
 
 <!-- reference:start -->
@@ -41,7 +41,7 @@ Product companies chosen for the design of their sites (each audited record name
 | Desktop h1 weight | 400 | **400** | 600 | 500 |
 | Desktop h1 tracking (em) | −0.04 | **−0.02** | −0.003 | −0.025 |
 | Desktop body size (px) | 15.0 | **16.0** | 18.0 | 17.0 |
-| Body characters per line | 45 | **49** | 58 | 58 |
+| Body characters per line | 45 | **49** | 58 | 56 |
 | Phone h1 size (px) | 32 | **40** | 46 | 38 |
 | Top-level sections | 4 | **7** | 9 | 7 |
 
