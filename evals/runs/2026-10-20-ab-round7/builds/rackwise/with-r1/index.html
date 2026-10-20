@@ -1,0 +1,796 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample location map for lab −80 °C freezers | Rackwise</title>
+<meta name="description" content="Rackwise is a live map of the −80 °C freezers in small biotech and university labs: every rack, box and tube position, who put each tube there, and when. Early access by request.">
+<meta name="theme-color" content="#EBF0F2">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rackwise: find the tube before you open the door">
+<meta property="og:description" content="A live map of your lab's −80 °C freezers: every rack, box and tube position, who put each tube there, and when.">
+<meta property="og:url" content="https://rackwise.example/">
+<meta property="og:image" content="https://rackwise.example/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rackwise: find the tube before you open the door">
+<meta name="twitter:description" content="A live map of your lab's −80 °C freezers: every rack, box and tube position, who put each tube there, and when.">
+<meta name="twitter:image" content="https://rackwise.example/og.png">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+@font-face{font-family:"TeX Gyre Heros Cn";src:url(fonts/texgyreheroscn-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"TeX Gyre Heros Cn";src:url(fonts/texgyreheroscn-regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"TeX Gyre Schola";src:url(fonts/texgyreschola-regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"TeX Gyre Schola";src:url(fonts/texgyreschola-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"TeX Gyre Schola";src:url(fonts/texgyreschola-italic.woff) format("woff");font-weight:400;font-style:italic;font-display:swap}
+
+:root{
+  --frost:#EBF0F2;      /* ground: the inside of a defrosted −80 */
+  --paper:#FAFBFB;      /* label stock */
+  --ink:#121C24;
+  --ink-2:#3E4C57;
+  --rule:#9AABB5;
+  --rule-2:#C9D4DA;
+  --tone:#D9E2E7;       /* shelf steel, flat tone */
+  --tone-2:#B9C8D0;
+  --cap:#56697A;        /* tube caps */
+  --accent:#C2410C;     /* cryobox orange: the thing you are looking for, and the action */
+  --accent-ink:#9A330A;
+  --accent-tint:#FBE5D9;
+  --display:"TeX Gyre Heros Cn","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --text:"TeX Gyre Schola","Century Schoolbook",Georgia,serif;
+  --s-2xs:4px;--s-xs:8px;--s-s:12px;--s-m:20px;--s-l:32px;--s-xl:56px;--s-2xl:clamp(56px,4rem + 3vw,120px);
+  --gutter:clamp(16px,3.2vw,40px);
+  --wide:1240px;
+  --radius:4px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul{margin:0}
+ol,ul{padding:0;list-style:none}
+img,svg,video,canvas{display:block;max-width:100%}
+input,button,textarea,select{font:inherit;color:inherit}
+:where(p,li,dd,td,output,[role=status]){overflow-wrap:break-word;min-width:0}
+.echo{overflow-wrap:anywhere}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{background:var(--frost);color:var(--ink);font-family:var(--text);font-size:1.0625rem;line-height:1.55;font-variant-numeric:lining-nums}
+a{color:inherit}
+p a,dd a,li p a{color:var(--accent-ink);text-decoration-thickness:1.5px;text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px var(--paper)}
+.skip{position:absolute;left:12px;top:-80px;padding:12px 16px;background:var(--ink);color:var(--paper);z-index:100;font-family:var(--display);font-weight:700;text-decoration:none}
+.skip:focus{top:12px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+main:focus{outline:none}
+.wrap{max-width:var(--wide);margin-inline:auto;padding-inline:var(--gutter)}
+
+h1,h2,h3{font-family:var(--display);font-weight:700;color:var(--ink);text-wrap:balance}
+h1{font-size:clamp(2.375rem,1.6rem + 3.4vw,4.5rem);line-height:1.02;letter-spacing:-0.005em;overflow-wrap:break-word}
+h2{font-size:clamp(1.875rem,1.4rem + 2vw,3rem);line-height:1.06;letter-spacing:0}
+h3{font-size:1.375rem;line-height:1.2}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:var(--radius);background:var(--accent);color:#fff;font-family:var(--display);font-weight:700;font-size:1.1875rem;letter-spacing:.01em;text-decoration:none;border:2px solid var(--accent);cursor:pointer}
+.btn:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.btn:hover{background:var(--accent-ink);border-color:var(--accent-ink)}}
+.btn-quiet{background:transparent;color:var(--ink);border:1.5px solid var(--ink-2)}
+@media (hover:hover) and (pointer:fine){.btn-quiet:hover{background:var(--paper);border-color:var(--ink)}}
+
+/* Header */
+.site-head{border-bottom:1px solid var(--rule-2)}
+.head-row{display:flex;align-items:center;justify-content:space-between;gap:var(--s-m);min-height:64px}
+.brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;text-decoration:none;font-family:var(--display);font-weight:700;font-size:1.5rem;letter-spacing:.01em}
+.brand svg{width:26px;height:26px}
+.menu-btn{display:none}
+#site-menu{display:flex;align-items:center;gap:var(--s-xs)}
+#site-menu a:not(.btn){display:inline-flex;align-items:center;min-height:44px;padding:0 12px;font-family:var(--display);font-size:1.0625rem;text-decoration:none;color:var(--ink)}
+@media (hover:hover) and (pointer:fine){#site-menu a:not(.btn):hover{text-decoration:underline;text-underline-offset:4px}}
+#site-menu .btn{margin-left:var(--s-xs);min-height:44px;font-size:1.0625rem}
+@media (max-width:859px){
+  .menu-btn{display:inline-flex;align-items:center;min-height:44px;min-width:44px;padding:0 14px;border:1.5px solid var(--ink-2);border-radius:var(--radius);background:transparent;font-family:var(--display);font-weight:700;font-size:1.0625rem;cursor:pointer}
+  .head-row{position:relative;flex-wrap:wrap}
+  .js #site-menu{position:absolute;top:100%;right:0;left:0;z-index:20;flex-direction:column;align-items:stretch;gap:0;padding:var(--s-xs) 0 var(--s-m);background:var(--paper);border:1px solid var(--rule-2);border-top:0;box-shadow:0 12px 24px -12px rgba(18,28,36,.25)}
+  .js #site-menu[hidden]{display:none}
+  .js #site-menu a:not(.btn){padding:0 var(--gutter);min-height:48px}
+  .js #site-menu .btn{margin:var(--s-xs) var(--gutter) 0}
+  html:not(.js) #site-menu{flex-wrap:wrap;width:100%;padding-bottom:var(--s-xs)}
+  html:not(.js) .menu-btn{display:none}
+}
+
+/* Hero */
+.hero{padding-block:clamp(20px,1rem + 2vw,48px) clamp(32px,1rem + 2vw,48px)}
+#today{padding-top:clamp(40px,1.5rem + 2vw,64px)}
+.hero-grid{display:grid;gap:clamp(24px,2vw + 1rem,56px);align-items:start}
+.hero-copy{display:grid;gap:var(--s-m);align-content:start;max-width:36rem}
+.lede{font-size:clamp(1.0625rem,1rem + .3vw,1.25rem);line-height:1.5;max-width:34em}
+.payer{color:var(--ink-2);font-size:1rem;line-height:1.5;max-width:34em}
+.cta-row{display:grid;gap:var(--s-s);justify-items:start;margin-top:var(--s-2xs)}
+.cta-note{font-size:.9375rem;line-height:1.45;color:var(--ink-2);max-width:30em}
+@media (min-width:1040px){
+  .hero-grid{grid-template-columns:minmax(0,.7fr) minmax(0,1fr)}
+  .hero-copy{padding-top:var(--s-l)}
+}
+
+/* The finder: the signature artifact */
+.finder{background:var(--paper);border:1.5px solid var(--ink);border-radius:6px;padding:var(--s-s) var(--s-s) var(--s-m);display:grid;gap:var(--s-s);min-width:0}
+.finder-top{display:flex;align-items:center;justify-content:space-between;gap:var(--s-s)}
+.finder-title{font-size:.9375rem;line-height:1.35;color:var(--ink-2)}
+.finder-title strong{font-family:var(--display);font-size:1.125rem;color:var(--ink);font-weight:700;margin-right:6px}
+.reset{min-height:44px;min-width:44px;padding:0 14px;border:1.5px solid var(--rule);border-radius:var(--radius);background:transparent;font-family:var(--display);font-size:1rem;cursor:pointer;flex:none}
+@media (hover:hover) and (pointer:fine){.reset:hover{border-color:var(--ink)}}
+
+.strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1.5px solid var(--ink);border-radius:2px;overflow:hidden;background:#fff}
+.strip li{display:grid;gap:0;padding:6px 8px 6px;border-left:1px solid var(--rule-2);min-width:0}
+.strip li:first-child{border-left:0}
+.strip .k{font-family:var(--display);font-weight:400;font-size:.75rem;line-height:1.2;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.strip .v{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,1.1rem + 1.6vw,2.375rem);line-height:1.05;font-variant-numeric:tabular-nums}
+.strip .well-cell{background:var(--accent);border-left-color:var(--accent)}
+.strip .well-cell .k,.strip .well-cell .v{color:#fff}
+.strip.is-empty .well-cell{background:#fff;border-left-color:var(--rule-2)}
+.strip.is-empty .well-cell .k{color:var(--ink-2)}
+.strip.is-empty .v,.strip.is-empty .well-cell .v{color:var(--rule)}
+.strip.is-out .well-cell{background:var(--accent-tint)}
+.strip.is-out .well-cell .k,.strip.is-out .well-cell .v{color:var(--accent-ink)}
+
+.finder-fig{display:grid;grid-template-columns:minmax(0,1fr) 104px;grid-template-areas:"grid elev";gap:var(--s-s);align-items:start;border-top:1px solid var(--rule-2);padding-top:var(--s-s)}
+.fig-grid{grid-area:grid}
+.fig-elev{grid-area:elev}
+.fig-info{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--s-s);align-items:center}
+.fig-cap{font-family:var(--display);font-size:.8125rem;line-height:1.3;color:var(--ink-2);margin-top:4px;text-align:center}
+@media (max-width:479px){.fig-info{grid-template-columns:minmax(0,1fr)}.take{justify-self:start}}
+@media (min-width:600px){
+  .finder{padding:var(--s-m)}
+  .finder{grid-template-columns:132px minmax(0,1fr);grid-template-areas:"top top" "strip strip" "elev info" "elev grid" "search search" "chips chips" "matches matches";column-gap:var(--s-m)}
+  .finder-top{grid-area:top}.strip{grid-area:strip}.fig-info{grid-area:info;grid-template-columns:minmax(0,1fr);align-content:start}
+  .finder-fig{display:contents}
+  .fig-elev{grid-area:elev;align-self:start}
+  .fig-grid{grid-area:grid;max-width:300px}
+  .search{grid-area:search}.chips{grid-area:chips}.matches{grid-area:matches}
+}
+@media (min-width:1040px){
+  .finder{grid-template-columns:112px minmax(0,256px) minmax(0,1fr);grid-template-areas:"top top top" "strip strip strip" "elev grid info" "search search search" "chips chips chips" "matches matches matches"}
+}
+
+.info{display:grid;gap:4px;align-content:start;min-height:4.5rem}
+.info-name{font-family:var(--display);font-weight:700;font-size:1.5rem;line-height:1.1}
+.info-meta{font-size:.9375rem;line-height:1.45;color:var(--ink-2)}
+.info-meta b{color:var(--ink);font-weight:700}
+.take{min-height:48px;padding:0 12px;border-radius:var(--radius);border:2px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--display);font-weight:700;font-size:1.0625rem;cursor:pointer;justify-self:start}
+.take[aria-pressed=true]{background:#fff;color:var(--ink)}
+.take:disabled{background:var(--tone);border-color:var(--tone);color:var(--ink-2);cursor:not-allowed}
+.take:active:not(:disabled){transform:scale(.97)}
+
+.search{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px var(--s-xs);align-items:end;border-top:1px solid var(--rule-2);padding-top:var(--s-s)}
+.search label{grid-column:1/-1;font-family:var(--display);font-size:.9375rem;color:var(--ink-2)}
+.search input{min-height:48px;width:100%;min-width:0;padding:0 12px;border:1.5px solid var(--ink-2);border-radius:var(--radius);background:#fff;font-family:var(--display);font-size:1.25rem}
+.search button{min-height:48px;padding:0 18px;border-radius:var(--radius);border:2px solid var(--ink);background:#fff;font-family:var(--display);font-weight:700;font-size:1.0625rem;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:var(--s-xs)}
+.chip{min-height:44px;padding:0 12px;border-radius:var(--radius);border:1.5px solid var(--rule);background:#fff;font-family:var(--display);font-size:1rem;cursor:pointer}
+.chip[aria-pressed=true]{border-color:var(--ink);box-shadow:inset 0 -3px 0 var(--accent)}
+@media (hover:hover) and (pointer:fine){.chip:hover,.search button:hover{border-color:var(--ink)}}
+.matches{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-xs)}
+.matches[hidden]{display:none}
+.matches-lab{font-size:.9375rem;color:var(--ink-2);width:100%}
+
+/* SVG drawing language: one line weight, flat tone steps, orange only for the thing being found */
+.grid-svg,.elev-svg,.draw svg{width:100%;height:auto;overflow:visible}
+.box-outline{fill:#fff;stroke:var(--ink);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.g-lab,.e-lab{font-family:var(--display);font-size:14px;fill:var(--ink-2)}
+.well{fill:#fff;stroke:var(--rule);stroke-width:1.25;vector-effect:non-scaling-stroke}
+.well.on{fill:var(--cap);stroke:var(--cap)}
+.well.hit{fill:var(--accent);stroke:var(--accent)}
+.well.out{fill:#fff;stroke:var(--accent);stroke-dasharray:3 3}
+.ring{fill:none;stroke:var(--accent);stroke-width:2.5;vector-effect:non-scaling-stroke}
+.cab{fill:var(--tone);stroke:var(--ink);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.cab-in{fill:#fff;stroke:var(--ink-2);stroke-width:1;vector-effect:non-scaling-stroke}
+.door{fill:var(--tone-2);stroke:var(--ink);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.foot{stroke:var(--ink);stroke-width:3;fill:none}
+.shelf{fill:var(--frost);stroke:var(--rule);stroke-width:1;vector-effect:non-scaling-stroke}
+.shelf-hit{fill:var(--accent-tint);stroke:var(--accent)}
+.rack{fill:var(--tone-2);stroke:var(--ink-2);stroke-width:1;vector-effect:non-scaling-stroke}
+.rack-hit{fill:var(--accent);stroke:var(--accent-ink)}
+@media (prefers-reduced-motion:no-preference){
+  .ring-hit{animation:ring-in 220ms cubic-bezier(.2,.7,.2,1) both;transform-box:fill-box;transform-origin:center}
+  .rack-hit,.shelf-hit{transition:fill 160ms ease-out}
+}
+@keyframes ring-in{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* Sections */
+.sec{padding-block:var(--s-2xl)}
+.sec + .sec{border-top:1px solid var(--rule-2)}
+.sec-head{display:grid;gap:var(--s-s);max-width:44rem;margin-bottom:var(--s-l)}
+.sec-head p{max-width:36em}
+
+/* Before / now */
+.compare{display:grid;gap:var(--s-m)}
+@media (min-width:760px){.compare{grid-template-columns:1fr 1fr}}
+.panel{background:var(--paper);border:1px solid var(--rule-2);border-radius:6px;padding:var(--s-m);display:grid;gap:var(--s-m);align-content:start}
+.panel h3{font-size:1.25rem}
+.panel-sub{font-size:.9375rem;color:var(--ink-2)}
+.old-pair{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:var(--s-m);align-items:center}
+.sheet{width:100%;border-collapse:collapse;font-family:var(--display);font-size:1rem;background:#fff}
+.sheet caption{text-align:left;font-family:var(--text);font-size:.875rem;color:var(--ink-2);padding-bottom:6px}
+.sheet th,.sheet td{border:1px solid var(--rule-2);padding:6px 8px;text-align:left;font-weight:400;vertical-align:top}
+.sheet th{background:var(--tone);font-weight:700}
+.sheet .stale{color:var(--accent-ink)}
+@media (max-width:479px){.old-pair{grid-template-columns:110px minmax(0,1fr);gap:var(--s-s)}}
+.record{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:1rem}
+.record dt{font-family:var(--display);font-size:.8125rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);padding-top:3px}
+.record dd{font-family:var(--display);font-size:1.125rem;line-height:1.3}
+.record dd.big{font-size:1.75rem;font-weight:700;line-height:1.1}
+.tag{display:inline-block;font-family:var(--display);font-size:.8125rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--rule);border-radius:3px;padding:2px 6px;margin-left:6px;vertical-align:2px}
+
+/* At the freezer */
+.door-grid{display:grid;gap:var(--s-l);align-items:center}
+@media (min-width:900px){.door-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr)}}
+.steps{display:grid;gap:var(--s-m);counter-reset:step}
+.steps li{display:grid;grid-template-columns:44px 1fr;gap:4px var(--s-s);counter-increment:step}
+.steps li::before{content:counter(step);grid-row:1/3;display:grid;place-items:center;width:44px;height:44px;border:1.5px solid var(--ink);border-radius:50%;font-family:var(--display);font-weight:700;font-size:1.25rem;background:var(--paper)}
+.steps h3{align-self:center}
+.steps p{max-width:32em}
+.draw{background:var(--paper);border:1px solid var(--rule-2);border-radius:6px;padding:var(--s-m)}
+.draw figcaption{font-size:.9375rem;color:var(--ink-2);margin-top:var(--s-s)}
+.d-line{fill:none;stroke:var(--ink);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.d-thin{fill:none;stroke:var(--ink-2);stroke-width:1;vector-effect:non-scaling-stroke}
+.d-tone{fill:var(--tone);stroke:var(--ink);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.d-tone2{fill:var(--tone-2);stroke:var(--ink-2);stroke-width:1;vector-effect:non-scaling-stroke}
+.d-white{fill:#fff;stroke:var(--ink);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.d-hit{fill:var(--accent);stroke:var(--accent-ink);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.d-dash{fill:none;stroke:var(--ink-2);stroke-width:1.25;stroke-dasharray:4 4;vector-effect:non-scaling-stroke}
+.d-lab{font-family:var(--display);font-size:15px;fill:var(--ink)}
+.d-lab-w{font-family:var(--display);font-size:15px;font-weight:700;fill:#fff}
+.d-lab-s{font-family:var(--display);font-size:13px;fill:var(--ink-2)}
+.marker{font-family:var(--display);font-weight:700;fill:#1f3f8a;opacity:.32}
+.frost{fill:#fff;opacity:.8}
+
+/* Lab manager log */
+.logbox{display:grid;gap:var(--s-m);background:var(--paper);border:1.5px solid var(--ink);border-radius:6px;padding:var(--s-m)}
+.log-top{display:grid;gap:var(--s-s)}
+.log-title{font-family:var(--display);font-size:1.125rem}
+.log-title span{color:var(--ink-2);font-weight:400}
+.filters{display:flex;flex-wrap:wrap;gap:var(--s-xs)}
+.log-body{display:grid;gap:var(--s-m);align-items:start}
+@media (min-width:760px){.log-body{grid-template-columns:minmax(0,240px) minmax(0,1fr)}}
+.log-grid{max-width:240px}
+@media (max-width:759px){.log-grid{max-width:210px}}
+.log-status{font-size:.9375rem;color:var(--ink-2)}
+.log{display:grid;border-top:1px solid var(--rule-2)}
+.log li{display:grid;grid-template-columns:8.5rem minmax(0,1fr) 3rem;gap:2px var(--s-s);padding:10px 0;border-bottom:1px solid var(--rule-2);font-family:var(--display);font-size:1.0625rem;line-height:1.3;align-items:baseline}
+.log li[hidden]{display:none}
+.log .when{color:var(--ink-2);font-variant-numeric:tabular-nums}
+.log .pos{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.log .you .what,.log .you .when{color:var(--accent-ink)}
+@media (max-width:479px){
+  .log li{grid-template-columns:minmax(0,1fr) 2.75rem}
+  .log .when{grid-column:1/-1;font-size:.9375rem}
+}
+.sec-note{margin-top:var(--s-m);max-width:40em}
+
+/* Answers */
+.answers{display:grid;gap:0;max-width:52rem;border-top:1.5px solid var(--ink)}
+.answers > div{display:grid;gap:6px var(--s-l);padding:var(--s-m) 0;border-bottom:1px solid var(--rule-2)}
+@media (min-width:760px){.answers > div{grid-template-columns:minmax(0,16rem) minmax(0,1fr)}}
+.answers dt{font-family:var(--display);font-weight:700;font-size:1.25rem;line-height:1.25}
+.answers dd{max-width:36em}
+
+/* Close */
+.close{display:grid;gap:var(--s-m);justify-items:start}
+.close .cta-row{margin-top:0}
+
+/* Footer */
+.site-foot{border-top:1.5px solid var(--ink);padding-block:var(--s-l) var(--s-xl);background:var(--paper)}
+.foot-grid{display:grid;gap:var(--s-m)}
+@media (min-width:860px){.foot-grid{grid-template-columns:1fr auto;align-items:start}}
+.foot-links{display:flex;flex-wrap:wrap;gap:0 var(--s-xs)}
+.foot-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px 0 0;font-family:var(--display);font-size:1.0625rem}
+.foot-small{font-size:.9375rem;color:var(--ink-2);max-width:40em}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap head-row">
+    <a class="brand" href="#top" aria-label="Rackwise, back to top"><svg viewBox="0 0 26 26" aria-hidden="true" focusable="false"><path d="M6 1.5H24.5V24.5H1.5V6Z" fill="#fff" stroke="#121C24" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="#56697A"/><circle cx="13.5" cy="8" r="2" fill="#56697A"/><circle cx="19" cy="8" r="2" fill="#56697A"/><circle cx="8" cy="13.5" r="2" fill="#56697A"/><circle cx="13.5" cy="13.5" r="2" fill="#56697A"/><circle cx="19" cy="13.5" r="2" fill="#56697A"/><circle cx="8" cy="19" r="2" fill="#56697A"/><circle cx="13.5" cy="19" r="2" fill="#56697A"/><circle cx="19" cy="19" r="2" fill="#C2410C"/></svg><span>Rackwise</span></a>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Main">
+      <a href="#freezer">At the freezer</a>
+      <a href="#managers">For lab managers</a>
+      <a href="#questions">Questions</a>
+      <a class="btn" href="https://rackwise.example/early-access">Request early access</a>
+    </nav>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+  <section class="hero" id="top" aria-labelledby="h1">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 id="h1">Find the tube before you open the door</h1>
+        <p class="lede">Rackwise is a live map of the −80 °C freezers in small biotech and university labs: every rack, box and tube position, who put each tube there, and when.</p>
+        <p class="payer">For lab managers, it replaces the shared spreadsheet that is always out of date and the box labels that fade in the cold.</p>
+        <div class="cta-row">
+          <a class="btn" href="https://rackwise.example/early-access">Request early access</a>
+          <p class="cta-note">Opens the request page on rackwise.example. Four labs are testing Rackwise now.</p>
+        </div>
+      </div>
+      
+<section class="finder" data-signature aria-labelledby="finder-title">
+  <div class="finder-top">
+    <p class="finder-title" id="finder-title"><strong>Find a sample</strong> Sample freezer, made up for this page</p>
+    <button type="button" class="reset">Reset</button>
+  </div>
+  <ol class="strip" aria-hidden="true">
+    <li><span class="k">Freezer</span><span class="v">2</span></li>
+    <li><span class="k">Shelf</span><span class="v">3</span></li>
+    <li><span class="k">Rack</span><span class="v">C</span></li>
+    <li><span class="k">Box</span><span class="v">4</span></li>
+    <li class="well-cell"><span class="k">Well</span><span class="v">E6</span></li>
+  </ol>
+  <div class="fig-info">
+    <div class="info" role="status" aria-live="polite">
+      <p class="info-name echo">HEK293 p12</p>
+      <p class="info-meta">Put here by <b>M. Okafor</b>, Wed 14 Oct 2026.</p>
+      <p class="sr-only">Freezer 2, shelf 3, rack C, box 4, well E6.</p>
+    </div>
+    <button type="button" class="take" aria-pressed="false">Log it as taken out</button>
+  </div>
+  <form class="search" role="search">
+    <label for="q">Sample name, or a well such as E5</label>
+    <input id="q" name="q" type="search" value="HEK293 p12" maxlength="60" autocomplete="off" spellcheck="false">
+    <button type="submit">Find</button>
+  </form>
+  <div class="chips"><button type="button" class="chip" data-q="HEK293 p12" data-id="hek12" aria-pressed="true">HEK293 p12</button><button type="button" class="chip" data-q="pUC19" data-id="puc" aria-pressed="false">pUC19</button><button type="button" class="chip" data-q="Anti-GFP" data-id="gfp" aria-pressed="false">Anti-GFP</button><button type="button" class="chip" data-q="Liver lysate M7" data-id="lys" aria-pressed="false">Liver lysate M7</button><button type="button" class="chip" data-q="HEK293" data-id="all-hek" aria-pressed="false">HEK293</button></div>
+  <div class="matches" hidden></div>
+  <div class="finder-fig">
+    <figure class="fig-elev"><div class="draw-slot"><svg class="elev-svg" viewBox="0 0 196 330" aria-hidden="true" focusable="false"><rect class="cab" x="22" y="6" width="168" height="306" rx="5"/><rect class="cab-in" x="32" y="16" width="148" height="284" rx="2"/><path class="door" d="M22 10 L4 22 L4 300 L22 310"/><path class="foot" d="M34 312v10M178 312v10"/><rect class="shelf" x="36" y="22" width="140" height="48.4" rx="1.5"/><text class="e-lab" x="13" y="50.2" text-anchor="middle">1</text><rect class="rack" x="40" y="26" width="30" height="40.4" rx="1"/><text class="e-lab" x="55" y="51.2" text-anchor="middle">A</text><rect class="rack" x="74" y="26" width="30" height="40.4" rx="1"/><text class="e-lab" x="89" y="51.2" text-anchor="middle">B</text><rect class="rack" x="108" y="26" width="30" height="40.4" rx="1"/><text class="e-lab" x="123" y="51.2" text-anchor="middle">C</text><rect class="rack" x="142" y="26" width="30" height="40.4" rx="1"/><text class="e-lab" x="157" y="51.2" text-anchor="middle">D</text><rect class="shelf" x="36" y="76.4" width="140" height="48.4" rx="1.5"/><text class="e-lab" x="13" y="104.60000000000001" text-anchor="middle">2</text><rect class="rack" x="40" y="80.4" width="30" height="40.4" rx="1"/><rect class="rack" x="74" y="80.4" width="30" height="40.4" rx="1"/><rect class="rack" x="108" y="80.4" width="30" height="40.4" rx="1"/><rect class="rack" x="142" y="80.4" width="30" height="40.4" rx="1"/><rect class="shelf shelf-hit" x="36" y="130.8" width="140" height="48.4" rx="1.5"/><text class="e-lab" x="13" y="159" text-anchor="middle">3</text><rect class="rack" x="40" y="134.8" width="30" height="40.4" rx="1"/><rect class="rack" x="74" y="134.8" width="30" height="40.4" rx="1"/><rect class="rack rack-hit" x="108" y="134.8" width="30" height="40.4" rx="1"/><rect class="rack" x="142" y="134.8" width="30" height="40.4" rx="1"/><rect class="shelf" x="36" y="185.2" width="140" height="48.4" rx="1.5"/><text class="e-lab" x="13" y="213.39999999999998" text-anchor="middle">4</text><rect class="rack" x="40" y="189.2" width="30" height="40.4" rx="1"/><rect class="rack" x="74" y="189.2" width="30" height="40.4" rx="1"/><rect class="rack" x="108" y="189.2" width="30" height="40.4" rx="1"/><rect class="rack" x="142" y="189.2" width="30" height="40.4" rx="1"/><rect class="shelf" x="36" y="239.6" width="140" height="48.4" rx="1.5"/><text class="e-lab" x="13" y="267.8" text-anchor="middle">5</text><rect class="rack" x="40" y="243.6" width="30" height="40.4" rx="1"/><rect class="rack" x="74" y="243.6" width="30" height="40.4" rx="1"/><rect class="rack" x="108" y="243.6" width="30" height="40.4" rx="1"/><rect class="rack" x="142" y="243.6" width="30" height="40.4" rx="1"/></svg></div><figcaption class="fig-cap">Freezer 2, door open</figcaption></figure>
+    <figure class="fig-grid"><div class="draw-slot"><svg class="grid-svg" viewBox="0 0 292 292" aria-hidden="true" focusable="false"><path class="box-outline" d="M40 24H286V284H26V38Z"/><text class="g-lab" x="44" y="16" text-anchor="middle">1</text><text class="g-lab" x="72" y="16" text-anchor="middle">2</text><text class="g-lab" x="100" y="16" text-anchor="middle">3</text><text class="g-lab" x="128" y="16" text-anchor="middle">4</text><text class="g-lab" x="156" y="16" text-anchor="middle">5</text><text class="g-lab" x="184" y="16" text-anchor="middle">6</text><text class="g-lab" x="212" y="16" text-anchor="middle">7</text><text class="g-lab" x="240" y="16" text-anchor="middle">8</text><text class="g-lab" x="268" y="16" text-anchor="middle">9</text><text class="g-lab" x="12" y="46" text-anchor="middle">A</text><text class="g-lab" x="12" y="74" text-anchor="middle">B</text><text class="g-lab" x="12" y="102" text-anchor="middle">C</text><text class="g-lab" x="12" y="130" text-anchor="middle">D</text><text class="g-lab" x="12" y="158" text-anchor="middle">E</text><text class="g-lab" x="12" y="186" text-anchor="middle">F</text><text class="g-lab" x="12" y="214" text-anchor="middle">G</text><text class="g-lab" x="12" y="242" text-anchor="middle">H</text><text class="g-lab" x="12" y="270" text-anchor="middle">I</text><circle class="well on" data-w="A1" cx="44" cy="42" r="10"/><circle class="well on" data-w="A2" cx="72" cy="42" r="10"/><circle class="well on" data-w="A3" cx="100" cy="42" r="10"/><circle class="well" data-w="A4" cx="128" cy="42" r="10"/><circle class="well on" data-w="A5" cx="156" cy="42" r="10"/><circle class="well on" data-w="A6" cx="184" cy="42" r="10"/><circle class="well on" data-w="A7" cx="212" cy="42" r="10"/><circle class="well on" data-w="A8" cx="240" cy="42" r="10"/><circle class="well on" data-w="A9" cx="268" cy="42" r="10"/><circle class="well on" data-w="B1" cx="44" cy="70" r="10"/><circle class="well on" data-w="B2" cx="72" cy="70" r="10"/><circle class="well" data-w="B3" cx="100" cy="70" r="10"/><circle class="well" data-w="B4" cx="128" cy="70" r="10"/><circle class="well" data-w="B5" cx="156" cy="70" r="10"/><circle class="well" data-w="B6" cx="184" cy="70" r="10"/><circle class="well" data-w="B7" cx="212" cy="70" r="10"/><circle class="well" data-w="B8" cx="240" cy="70" r="10"/><circle class="well on" data-w="B9" cx="268" cy="70" r="10"/><circle class="well on" data-w="C1" cx="44" cy="98" r="10"/><circle class="well" data-w="C2" cx="72" cy="98" r="10"/><circle class="well" data-w="C3" cx="100" cy="98" r="10"/><circle class="well" data-w="C4" cx="128" cy="98" r="10"/><circle class="well on" data-w="C5" cx="156" cy="98" r="10"/><circle class="well" data-w="C6" cx="184" cy="98" r="10"/><circle class="well on" data-w="C7" cx="212" cy="98" r="10"/><circle class="well on" data-w="C8" cx="240" cy="98" r="10"/><circle class="well" data-w="C9" cx="268" cy="98" r="10"/><circle class="well on" data-w="D1" cx="44" cy="126" r="10"/><circle class="well on" data-w="D2" cx="72" cy="126" r="10"/><circle class="well on" data-w="D3" cx="100" cy="126" r="10"/><circle class="well on" data-w="D4" cx="128" cy="126" r="10"/><circle class="well" data-w="D5" cx="156" cy="126" r="10"/><circle class="well on" data-w="D6" cx="184" cy="126" r="10"/><circle class="well" data-w="D7" cx="212" cy="126" r="10"/><circle class="well" data-w="D8" cx="240" cy="126" r="10"/><circle class="well on" data-w="D9" cx="268" cy="126" r="10"/><circle class="well" data-w="E1" cx="44" cy="154" r="10"/><circle class="well" data-w="E2" cx="72" cy="154" r="10"/><circle class="well on" data-w="E3" cx="100" cy="154" r="10"/><circle class="well" data-w="E4" cx="128" cy="154" r="10"/><circle class="well" data-w="E5" cx="156" cy="154" r="10"/><circle class="well on hit" data-w="E6" cx="184" cy="154" r="10"/><circle class="ring ring-hit" cx="184" cy="154" r="13.5"/><circle class="well on" data-w="E7" cx="212" cy="154" r="10"/><circle class="well on" data-w="E8" cx="240" cy="154" r="10"/><circle class="well on" data-w="E9" cx="268" cy="154" r="10"/><circle class="well on" data-w="F1" cx="44" cy="182" r="10"/><circle class="well" data-w="F2" cx="72" cy="182" r="10"/><circle class="well on" data-w="F3" cx="100" cy="182" r="10"/><circle class="well" data-w="F4" cx="128" cy="182" r="10"/><circle class="well" data-w="F5" cx="156" cy="182" r="10"/><circle class="well" data-w="F6" cx="184" cy="182" r="10"/><circle class="well" data-w="F7" cx="212" cy="182" r="10"/><circle class="well on" data-w="F8" cx="240" cy="182" r="10"/><circle class="well on" data-w="F9" cx="268" cy="182" r="10"/><circle class="well on" data-w="G1" cx="44" cy="210" r="10"/><circle class="well" data-w="G2" cx="72" cy="210" r="10"/><circle class="well" data-w="G3" cx="100" cy="210" r="10"/><circle class="well on" data-w="G4" cx="128" cy="210" r="10"/><circle class="well" data-w="G5" cx="156" cy="210" r="10"/><circle class="well" data-w="G6" cx="184" cy="210" r="10"/><circle class="well" data-w="G7" cx="212" cy="210" r="10"/><circle class="well" data-w="G8" cx="240" cy="210" r="10"/><circle class="well" data-w="G9" cx="268" cy="210" r="10"/><circle class="well" data-w="H1" cx="44" cy="238" r="10"/><circle class="well on" data-w="H2" cx="72" cy="238" r="10"/><circle class="well" data-w="H3" cx="100" cy="238" r="10"/><circle class="well on" data-w="H4" cx="128" cy="238" r="10"/><circle class="well" data-w="H5" cx="156" cy="238" r="10"/><circle class="well" data-w="H6" cx="184" cy="238" r="10"/><circle class="well on" data-w="H7" cx="212" cy="238" r="10"/><circle class="well" data-w="H8" cx="240" cy="238" r="10"/><circle class="well on" data-w="H9" cx="268" cy="238" r="10"/><circle class="well" data-w="I1" cx="44" cy="266" r="10"/><circle class="well on" data-w="I2" cx="72" cy="266" r="10"/><circle class="well" data-w="I3" cx="100" cy="266" r="10"/><circle class="well on" data-w="I4" cx="128" cy="266" r="10"/><circle class="well" data-w="I5" cx="156" cy="266" r="10"/><circle class="well" data-w="I6" cx="184" cy="266" r="10"/><circle class="well on" data-w="I7" cx="212" cy="266" r="10"/><circle class="well on" data-w="I8" cx="240" cy="266" r="10"/><circle class="well on" data-w="I9" cx="268" cy="266" r="10"/></svg></div><figcaption class="fig-cap">Box 4, top view</figcaption></figure>
+  </div>
+</section>
+    </div>
+  </section>
+
+  <section class="sec" id="today" aria-labelledby="today-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="today-h">The spreadsheet is a week behind and the marker has faded</h2>
+        <p>Someone takes a tube and forgets the sheet. The lid was labelled in March and has frosted over at every door opening since. So you stand at the open door, scraping frost off lids to read them.</p>
+      </div>
+      <div class="compare">
+        <div class="panel">
+          <h3>What you have now</h3>
+          <div class="old-pair">
+            <figure><svg viewBox="0 0 200 200" role="img" aria-label="A frosted cryobox lid. The marker label has faded to something like HEK p1, with initials M.O. and a date in March.">
+  <defs><filter id="smudge" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter></defs>
+  <path class="d-tone" d="M22 8H192V192H8V22Z"/>
+  <path class="d-thin" d="M30 18H184V184H18V30Z"/>
+  <g transform="rotate(-4 100 96)">
+    <rect x="34" y="58" width="132" height="76" rx="2" fill="#fff" stroke="#9AABB5"/>
+    <g filter="url(#smudge)">
+      <text class="marker" x="46" y="92" font-size="30">HEK p1?</text>
+      <text class="marker" x="48" y="122" font-size="20">M.O.  3/26</text>
+    </g>
+  </g>
+  <path class="frost" d="M120 40c14-6 30 2 34 12s-6 20-20 18-24 6-30-4 2-20 16-26z"/>
+  <path class="frost" d="M30 120c10-4 22 4 30 12s14 20 2 26-26-2-32-12-8-22 0-26z"/>
+  <path class="frost" d="M140 140c8-2 18 6 18 14s-10 14-18 10-10-22 0-24z"/>
+  <path class="frost" d="M60 30c6-2 12 2 12 6s-8 6-12 4-6-8 0-10z"/>
+</svg></figure>
+            <table class="sheet">
+              <caption>The shared sheet (illustration)</caption>
+              <tr><th scope="row">Box</th><td>4</td></tr>
+              <tr><th scope="row">Where</th><td class="stale">Shelf 2?</td></tr>
+              <tr><th scope="row">What</th><td>HEK lines</td></tr>
+              <tr><th scope="row">Edited</th><td class="stale">12 Mar 2026</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>What Rackwise keeps for the same box <span class="tag">Sample record</span></h3>
+          <dl class="record">
+            <dt>Box</dt><dd class="big">Box 4</dd>
+            <dt>Where</dt><dd>Freezer 2, Shelf 3, Rack C</dd>
+            <dt>Filled</dt><dd>41 of 81 positions</dd>
+            <dt>Last change</dt><dd>Wed 14 Oct 2026: M. Okafor put HEK293 p12 in E6</dd>
+            <dt>Each tube</dt><dd>Its position, who put it there, and when</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="freezer" aria-labelledby="freezer-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="freezer-h">Open the door knowing which rack to pull</h2>
+        <p>You are in gloves, the door is open, and warm air is getting in. Rackwise moves the searching to before the door opens.</p>
+      </div>
+      <div class="door-grid">
+        <ol class="steps">
+          <li><h3>Look it up with the door shut</h3><p>Search the sample name. The answer is one line: freezer, shelf, rack, box and well.</p></li>
+          <li><h3>Pull one rack</h3><p>Open the door, pull Rack C from Shelf 3 and count down to Box 4. The door is open for the pull, not for the search.</p></li>
+          <li><h3>Log the tube as you take it</h3><p>Mark it taken out, or put back. The map changes for everyone, so the next person is not working from last month’s version.</p></li>
+        </ol>
+        <figure class="draw"><svg viewBox="0 0 420 340" role="img" aria-label="Diagram: Shelf 3 of Freezer 2 seen from the front with the slot for Rack C empty, and Rack C pulled out beside it holding five boxes stacked top to bottom. Box 4, fourth from the top, is marked.">
+  <text class="d-lab-s" x="12" y="58">Freezer 2, Shelf 3</text>
+  <rect class="d-tone" x="10" y="68" width="210" height="132" rx="3"/>
+  <rect class="d-white" x="20" y="78" width="190" height="112" rx="2"/>
+  <rect class="d-tone2" x="30" y="86" width="36" height="96" rx="1"/><text class="d-lab" x="48" y="140" text-anchor="middle">A</text><rect class="d-tone2" x="75" y="86" width="36" height="96" rx="1"/><text class="d-lab" x="93" y="140" text-anchor="middle">B</text><rect class="d-dash" x="120" y="86" width="36" height="96" rx="1"/><text class="d-lab" x="138" y="140" text-anchor="middle">C</text><rect class="d-tone2" x="165" y="86" width="36" height="96" rx="1"/><text class="d-lab" x="183" y="140" text-anchor="middle">D</text>
+  <path class="d-line" d="M138 200 C150 260 220 270 262 250" marker-end="url(#arrow)"/>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#121C24"/></marker></defs>
+  <text class="d-lab-s" x="150" y="296">pulled out</text>
+  <path class="d-line" d="M290 22 v-10 h60 v10"/>
+  <rect class="d-tone" x="276" y="22" width="88" height="306" rx="3"/>
+  <rect class="d-white" x="284" y="30" width="72" height="52" rx="2"/><text class="d-lab" x="320" y="61" text-anchor="middle">Box 1</text><rect class="d-white" x="284" y="89" width="72" height="52" rx="2"/><text class="d-lab" x="320" y="120" text-anchor="middle">Box 2</text><rect class="d-white" x="284" y="148" width="72" height="52" rx="2"/><text class="d-lab" x="320" y="179" text-anchor="middle">Box 3</text><rect class="d-hit" x="284" y="207" width="72" height="52" rx="2"/><text class="d-lab-w" x="320" y="231" text-anchor="middle">Box 4</text><text class="d-lab-w" x="320" y="249" text-anchor="middle">E6</text><rect class="d-white" x="284" y="266" width="72" height="52" rx="2"/><text class="d-lab" x="320" y="297" text-anchor="middle">Box 5</text>
+  <text class="d-lab" x="372" y="40">Rack C</text>
+  <path class="d-thin" d="M370 46 h-8"/>
+</svg><figcaption>Shelf 3 of Freezer 2, with Rack C pulled out. Box 4 is fourth from the top.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="managers" aria-labelledby="managers-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="managers-h">Lab managers see who put each tube where, and when</h2>
+        <p>Every position keeps its history. When a box looks wrong or someone leaves the lab, you read the log instead of asking around.</p>
+      </div>
+      <div class="logbox">
+        <div class="log-top">
+          <p class="log-title"><strong>Box 4 log</strong> <span>Freezer 2, Shelf 3, Rack C. Sample entries.</span></p>
+          <div class="filters" role="group" aria-label="Show entries by">
+            <button type="button" class="chip" data-by-filter="all" aria-pressed="true">Everyone</button>
+            <button type="button" class="chip" data-by-filter="M. Okafor" aria-pressed="false">M. Okafor</button><button type="button" class="chip" data-by-filter="T. Lindqvist" aria-pressed="false">T. Lindqvist</button><button type="button" class="chip" data-by-filter="J. Reyes" aria-pressed="false">J. Reyes</button>
+          </div>
+          <p class="log-status" role="status">Showing every entry for Box 4.</p>
+        </div>
+        <div class="log-body">
+          <div class="log-grid" role="img" aria-label="Box 4 from above, 9 by 9 positions"><svg class="grid-svg" viewBox="0 0 292 292" aria-hidden="true" focusable="false"><path class="box-outline" d="M40 24H286V284H26V38Z"/><text class="g-lab" x="44" y="16" text-anchor="middle">1</text><text class="g-lab" x="72" y="16" text-anchor="middle">2</text><text class="g-lab" x="100" y="16" text-anchor="middle">3</text><text class="g-lab" x="128" y="16" text-anchor="middle">4</text><text class="g-lab" x="156" y="16" text-anchor="middle">5</text><text class="g-lab" x="184" y="16" text-anchor="middle">6</text><text class="g-lab" x="212" y="16" text-anchor="middle">7</text><text class="g-lab" x="240" y="16" text-anchor="middle">8</text><text class="g-lab" x="268" y="16" text-anchor="middle">9</text><text class="g-lab" x="12" y="46" text-anchor="middle">A</text><text class="g-lab" x="12" y="74" text-anchor="middle">B</text><text class="g-lab" x="12" y="102" text-anchor="middle">C</text><text class="g-lab" x="12" y="130" text-anchor="middle">D</text><text class="g-lab" x="12" y="158" text-anchor="middle">E</text><text class="g-lab" x="12" y="186" text-anchor="middle">F</text><text class="g-lab" x="12" y="214" text-anchor="middle">G</text><text class="g-lab" x="12" y="242" text-anchor="middle">H</text><text class="g-lab" x="12" y="270" text-anchor="middle">I</text><circle class="well on" data-w="A1" cx="44" cy="42" r="10"/><circle class="well on" data-w="A2" cx="72" cy="42" r="10"/><circle class="well on" data-w="A3" cx="100" cy="42" r="10"/><circle class="well" data-w="A4" cx="128" cy="42" r="10"/><circle class="well on" data-w="A5" cx="156" cy="42" r="10"/><circle class="well on" data-w="A6" cx="184" cy="42" r="10"/><circle class="well on" data-w="A7" cx="212" cy="42" r="10"/><circle class="well on" data-w="A8" cx="240" cy="42" r="10"/><circle class="well on" data-w="A9" cx="268" cy="42" r="10"/><circle class="well on" data-w="B1" cx="44" cy="70" r="10"/><circle class="well on" data-w="B2" cx="72" cy="70" r="10"/><circle class="well" data-w="B3" cx="100" cy="70" r="10"/><circle class="well" data-w="B4" cx="128" cy="70" r="10"/><circle class="well" data-w="B5" cx="156" cy="70" r="10"/><circle class="well" data-w="B6" cx="184" cy="70" r="10"/><circle class="well" data-w="B7" cx="212" cy="70" r="10"/><circle class="well" data-w="B8" cx="240" cy="70" r="10"/><circle class="well on" data-w="B9" cx="268" cy="70" r="10"/><circle class="well on" data-w="C1" cx="44" cy="98" r="10"/><circle class="well" data-w="C2" cx="72" cy="98" r="10"/><circle class="well" data-w="C3" cx="100" cy="98" r="10"/><circle class="well" data-w="C4" cx="128" cy="98" r="10"/><circle class="well on" data-w="C5" cx="156" cy="98" r="10"/><circle class="well" data-w="C6" cx="184" cy="98" r="10"/><circle class="well on" data-w="C7" cx="212" cy="98" r="10"/><circle class="well on" data-w="C8" cx="240" cy="98" r="10"/><circle class="well" data-w="C9" cx="268" cy="98" r="10"/><circle class="well on" data-w="D1" cx="44" cy="126" r="10"/><circle class="well on" data-w="D2" cx="72" cy="126" r="10"/><circle class="well on" data-w="D3" cx="100" cy="126" r="10"/><circle class="well on" data-w="D4" cx="128" cy="126" r="10"/><circle class="well" data-w="D5" cx="156" cy="126" r="10"/><circle class="well on" data-w="D6" cx="184" cy="126" r="10"/><circle class="well" data-w="D7" cx="212" cy="126" r="10"/><circle class="well" data-w="D8" cx="240" cy="126" r="10"/><circle class="well on" data-w="D9" cx="268" cy="126" r="10"/><circle class="well" data-w="E1" cx="44" cy="154" r="10"/><circle class="well" data-w="E2" cx="72" cy="154" r="10"/><circle class="well on" data-w="E3" cx="100" cy="154" r="10"/><circle class="well" data-w="E4" cx="128" cy="154" r="10"/><circle class="well" data-w="E5" cx="156" cy="154" r="10"/><circle class="well on" data-w="E6" cx="184" cy="154" r="10"/><circle class="well on" data-w="E7" cx="212" cy="154" r="10"/><circle class="well on" data-w="E8" cx="240" cy="154" r="10"/><circle class="well on" data-w="E9" cx="268" cy="154" r="10"/><circle class="well on" data-w="F1" cx="44" cy="182" r="10"/><circle class="well" data-w="F2" cx="72" cy="182" r="10"/><circle class="well on" data-w="F3" cx="100" cy="182" r="10"/><circle class="well" data-w="F4" cx="128" cy="182" r="10"/><circle class="well" data-w="F5" cx="156" cy="182" r="10"/><circle class="well" data-w="F6" cx="184" cy="182" r="10"/><circle class="well" data-w="F7" cx="212" cy="182" r="10"/><circle class="well on" data-w="F8" cx="240" cy="182" r="10"/><circle class="well on" data-w="F9" cx="268" cy="182" r="10"/><circle class="well on" data-w="G1" cx="44" cy="210" r="10"/><circle class="well" data-w="G2" cx="72" cy="210" r="10"/><circle class="well" data-w="G3" cx="100" cy="210" r="10"/><circle class="well on" data-w="G4" cx="128" cy="210" r="10"/><circle class="well" data-w="G5" cx="156" cy="210" r="10"/><circle class="well" data-w="G6" cx="184" cy="210" r="10"/><circle class="well" data-w="G7" cx="212" cy="210" r="10"/><circle class="well" data-w="G8" cx="240" cy="210" r="10"/><circle class="well" data-w="G9" cx="268" cy="210" r="10"/><circle class="well" data-w="H1" cx="44" cy="238" r="10"/><circle class="well on" data-w="H2" cx="72" cy="238" r="10"/><circle class="well" data-w="H3" cx="100" cy="238" r="10"/><circle class="well on" data-w="H4" cx="128" cy="238" r="10"/><circle class="well" data-w="H5" cx="156" cy="238" r="10"/><circle class="well" data-w="H6" cx="184" cy="238" r="10"/><circle class="well on" data-w="H7" cx="212" cy="238" r="10"/><circle class="well" data-w="H8" cx="240" cy="238" r="10"/><circle class="well on" data-w="H9" cx="268" cy="238" r="10"/><circle class="well" data-w="I1" cx="44" cy="266" r="10"/><circle class="well on" data-w="I2" cx="72" cy="266" r="10"/><circle class="well" data-w="I3" cx="100" cy="266" r="10"/><circle class="well on" data-w="I4" cx="128" cy="266" r="10"/><circle class="well" data-w="I5" cx="156" cy="266" r="10"/><circle class="well" data-w="I6" cx="184" cy="266" r="10"/><circle class="well on" data-w="I7" cx="212" cy="266" r="10"/><circle class="well on" data-w="I8" cx="240" cy="266" r="10"/><circle class="well on" data-w="I9" cx="268" cy="266" r="10"/></svg></div>
+          <ul class="log"><li data-by="M. Okafor"><span class="when">Wed 14 Oct 2026</span><span class="what">M. Okafor: put in HEK293 p12</span><span class="pos">E6</span></li><li data-by="T. Lindqvist"><span class="when">Tue 13 Oct 2026</span><span class="what">T. Lindqvist: took out HEK293 p10</span><span class="pos">E5</span></li><li data-by="J. Reyes"><span class="when">Fri 9 Oct 2026</span><span class="what">J. Reyes: put in HEK293 p10</span><span class="pos">E5</span></li><li data-by="M. Okafor"><span class="when">Tue 6 Oct 2026</span><span class="what">M. Okafor: put in HEK293 p8</span><span class="pos">D2</span></li><li data-by="T. Lindqvist"><span class="when">Mon 5 Oct 2026</span><span class="what">T. Lindqvist: put in HEK293 p6</span><span class="pos">A1</span></li><li data-by="J. Reyes"><span class="when">Fri 2 Oct 2026</span><span class="what">J. Reyes: put in HEK293 p4</span><span class="pos">A2</span></li></ul>
+        </div>
+      </div>
+      <p class="sec-note">Take a tube out with the finder at the top of this page and it shows up here as yours.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="questions" aria-labelledby="questions-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="questions-h">It maps where samples are. It does not watch the temperature.</h2>
+      </div>
+      <dl class="answers">
+        <div><dt>Does Rackwise monitor freezer temperature?</dt><dd>No. Rackwise is a map of positions: racks, boxes, tubes, who put them there and when. It has no temperature readings and no alarms, so keep the monitoring you rely on now.</dd></div>
+        <div><dt>Is anyone using it?</dt><dd>Four labs are testing it now. They are not named here, and there are no figures from them yet.</dd></div>
+        <div><dt>What does it cost?</dt><dd>Pricing is not published yet.</dd></div>
+        <div><dt>What happens when I request early access?</dt><dd>The button opens the request page at <a href="https://rackwise.example/early-access">rackwise.example/early-access</a>. Nothing is sent from this page.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec" id="access" aria-labelledby="access-h">
+    <div class="wrap close">
+      <h2 id="access-h">Put your lab’s −80 freezers on one map</h2>
+      <p>Early access is by request, for lab managers at small biotech companies and university labs.</p>
+      <div class="cta-row">
+        <a class="btn" href="https://rackwise.example/early-access">Request early access</a>
+        <p class="cta-note">Opens the request page on rackwise.example. Four labs are testing Rackwise now.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="brand" href="#top" aria-label="Rackwise, back to top"><svg viewBox="0 0 26 26" aria-hidden="true" focusable="false"><path d="M6 1.5H24.5V24.5H1.5V6Z" fill="#fff" stroke="#121C24" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="#56697A"/><circle cx="13.5" cy="8" r="2" fill="#56697A"/><circle cx="19" cy="8" r="2" fill="#56697A"/><circle cx="8" cy="13.5" r="2" fill="#56697A"/><circle cx="13.5" cy="13.5" r="2" fill="#56697A"/><circle cx="19" cy="13.5" r="2" fill="#56697A"/><circle cx="8" cy="19" r="2" fill="#56697A"/><circle cx="13.5" cy="19" r="2" fill="#56697A"/><circle cx="19" cy="19" r="2" fill="#C2410C"/></svg><span>Rackwise</span></a>
+      <p class="foot-small">A live map of where every sample sits in your lab’s −80 °C freezers. Rackwise does not monitor freezer temperature.</p>
+      <p class="foot-small">© 2026 Rackwise</p>
+    </div>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="#freezer">At the freezer</a>
+      <a href="#managers">For lab managers</a>
+      <a href="#questions">Questions</a>
+      <a href="https://rackwise.example/early-access">Request early access</a>
+    </nav>
+  </div>
+</footer>
+<script>
+/* Rackwise sample data and drawing functions. Shared by the build (static first paint) and the page script. */
+var RW = (function () {
+  var ROWS = 'ABCDEFGHI';
+  var FREEZER = { id: 2, shelves: 5, racks: ['A', 'B', 'C', 'D'], boxes: 5 };
+
+  // Sample freezer, written for this page. Every date is a real 2026 date with its weekday.
+  var SAMPLES = [
+    { id: 'hek12', name: 'HEK293 p12', shelf: 3, rack: 'C', box: 4, well: 'E6', by: 'M. Okafor', on: 'Wed 14 Oct 2026' },
+    { id: 'hek8', name: 'HEK293 p8', shelf: 3, rack: 'C', box: 4, well: 'D2', by: 'M. Okafor', on: 'Tue 6 Oct 2026' },
+    { id: 'hek6', name: 'HEK293 p6', shelf: 3, rack: 'C', box: 4, well: 'A1', by: 'T. Lindqvist', on: 'Mon 5 Oct 2026' },
+    { id: 'hek4', name: 'HEK293 p4', shelf: 3, rack: 'C', box: 4, well: 'A2', by: 'J. Reyes', on: 'Fri 2 Oct 2026' },
+    { id: 'puc', name: 'pUC19 miniprep 3', shelf: 1, rack: 'A', box: 2, well: 'B3', by: 'J. Reyes', on: 'Mon 12 Oct 2026' },
+    { id: 'gfp', name: 'Anti-GFP aliquot 7', shelf: 2, rack: 'B', box: 1, well: 'A9', by: 'S. Haddad', on: 'Thu 8 Oct 2026' },
+    { id: 'lys', name: 'Liver lysate M7', shelf: 4, rack: 'D', box: 3, well: 'H2', by: 'J. Reyes', on: 'Fri 9 Oct 2026' },
+    { id: 'dh10b', name: 'DH10B competent cells', shelf: 1, rack: 'D', box: 5, well: 'C4', by: 'S. Haddad', on: 'Fri 2 Oct 2026' },
+    { id: 'qc3', name: 'Plasma pool QC-3', shelf: 5, rack: 'A', box: 1, well: 'F7', by: 'T. Lindqvist', on: 'Mon 19 Oct 2026' },
+    { id: 'g14', name: 'gRNA 14', shelf: 2, rack: 'C', box: 3, well: 'G5', by: 'T. Lindqvist', on: 'Thu 15 Oct 2026' }
+  ];
+
+  // Positions that were emptied, with what left them (keeps the well lookup and the box log in step).
+  var EMPTIED = {
+    '3C4:E5': { name: 'HEK293 p10', by: 'T. Lindqvist', on: 'Tue 13 Oct 2026' }
+  };
+
+  // The Box 4 log the lab manager reads. Newest first.
+  var LOG = [
+    { on: 'Wed 14 Oct 2026', by: 'M. Okafor', act: 'Put in', name: 'HEK293 p12', well: 'E6' },
+    { on: 'Tue 13 Oct 2026', by: 'T. Lindqvist', act: 'Took out', name: 'HEK293 p10', well: 'E5' },
+    { on: 'Fri 9 Oct 2026', by: 'J. Reyes', act: 'Put in', name: 'HEK293 p10', well: 'E5' },
+    { on: 'Tue 6 Oct 2026', by: 'M. Okafor', act: 'Put in', name: 'HEK293 p8', well: 'D2' },
+    { on: 'Mon 5 Oct 2026', by: 'T. Lindqvist', act: 'Put in', name: 'HEK293 p6', well: 'A1' },
+    { on: 'Fri 2 Oct 2026', by: 'J. Reyes', act: 'Put in', name: 'HEK293 p4', well: 'A2' }
+  ];
+
+  function boxKey(s) { return '' + s.shelf + s.rack + s.box; }
+
+  function hash(str) {
+    var h = 2166136261;
+    for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return h >>> 0;
+  }
+
+  // Which positions in a box hold a tube. Seeded per box, so every load shows the same freezer.
+  function occupancy(key) {
+    var s = hash('box' + key), set = {};
+    for (var r = 0; r < 9; r++) for (var c = 1; c <= 9; c++) {
+      s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+      if (s / 4294967296 < 0.56) set[ROWS[r] + c] = true;
+    }
+    SAMPLES.forEach(function (x) { if (boxKey(x) === key) set[x.well] = true; });
+    Object.keys(EMPTIED).forEach(function (k) { var p = k.split(':'); if (p[0] === key) delete set[p[1]]; });
+    return set;
+  }
+
+  function sampleAt(key, well) {
+    for (var i = 0; i < SAMPLES.length; i++) if (boxKey(SAMPLES[i]) === key && SAMPLES[i].well === well) return SAMPLES[i];
+    return null;
+  }
+
+  // 9 x 9 cryobox, top view, cut corner at A1 like the real boxes.
+  // opts: target (well), taken (bool), rings ({well:true}), label (bool)
+  function gridSVG(key, opts) {
+    opts = opts || {};
+    var occ = occupancy(key), out = [];
+    out.push('<svg class="grid-svg" viewBox="0 0 292 292" aria-hidden="true" focusable="false">');
+    out.push('<path class="box-outline" d="M40 24H286V284H26V38Z"/>');
+    for (var c = 0; c < 9; c++) out.push('<text class="g-lab" x="' + (44 + c * 28) + '" y="16" text-anchor="middle">' + (c + 1) + '</text>');
+    for (var r = 0; r < 9; r++) out.push('<text class="g-lab" x="12" y="' + (46 + r * 28) + '" text-anchor="middle">' + ROWS[r] + '</text>');
+    for (r = 0; r < 9; r++) for (c = 0; c < 9; c++) {
+      var w = ROWS[r] + (c + 1), cx = 44 + c * 28, cy = 42 + r * 28;
+      var isT = opts.target === w, filled = occ[w] && !(isT && opts.taken);
+      var cls = 'well' + (filled ? ' on' : '') + (isT ? (opts.taken ? ' out' : ' hit') : '');
+      out.push('<circle class="' + cls + '" data-w="' + w + '" cx="' + cx + '" cy="' + cy + '" r="10"/>');
+      if (isT || (opts.rings && opts.rings[w])) out.push('<circle class="ring' + (isT ? ' ring-hit' : '') + '" cx="' + cx + '" cy="' + cy + '" r="13.5"/>');
+    }
+    out.push('</svg>');
+    return out.join('');
+  }
+
+  // Upright freezer, front elevation with the outer door open: five shelves, racks A–D on each.
+  function elevSVG(shelf, rack) {
+    var out = [];
+    out.push('<svg class="elev-svg" viewBox="0 0 196 330" aria-hidden="true" focusable="false">');
+    out.push('<rect class="cab" x="22" y="6" width="168" height="306" rx="5"/>');
+    out.push('<rect class="cab-in" x="32" y="16" width="148" height="284" rx="2"/>');
+    out.push('<path class="door" d="M22 10 L4 22 L4 300 L22 310"/>');
+    out.push('<path class="foot" d="M34 312v10M178 312v10"/>');
+    var top = 22, h = 54.4;
+    for (var s = 1; s <= 5; s++) {
+      var y = top + (s - 1) * h;
+      var cur = s === shelf;
+      out.push('<rect class="shelf' + (cur ? ' shelf-hit' : '') + '" x="36" y="' + (y) + '" width="140" height="' + (h - 6) + '" rx="1.5"/>');
+      out.push('<text class="e-lab" x="13" y="' + (y + h / 2 + 1) + '" text-anchor="middle">' + s + '</text>');
+      for (var k = 0; k < 4; k++) {
+        var rx = 40 + k * 34, hit = cur && FREEZER.racks[k] === rack;
+        out.push('<rect class="rack' + (hit ? ' rack-hit' : '') + '" x="' + rx + '" y="' + (y + 4) + '" width="30" height="' + (h - 14) + '" rx="1"/>');
+        if (s === 1) out.push('<text class="e-lab" x="' + (rx + 15) + '" y="' + (y + h / 2 + 2) + '" text-anchor="middle">' + FREEZER.racks[k] + '</text>');
+      }
+    }
+    out.push('</svg>');
+    return out.join('');
+  }
+
+  function tokens(s) { return String(s).toLowerCase().split(/[^a-z0-9]+/).filter(Boolean); }
+
+  // Whole-token search: "14" finds gRNA 14, never 140; letters may be a prefix ("lys" finds lysate).
+  function search(q) {
+    var qt = tokens(q);
+    if (!qt.length) return [];
+    return SAMPLES.filter(function (s) {
+      var nt = tokens(s.name);
+      return qt.every(function (t) {
+        return nt.some(function (n) { return n === t || (/^[a-z]/.test(t) && t.length >= 3 && n.indexOf(t) === 0); });
+      });
+    });
+  }
+
+  return { ROWS: ROWS, FREEZER: FREEZER, SAMPLES: SAMPLES, EMPTIED: EMPTIED, LOG: LOG, boxKey: boxKey, occupancy: occupancy,
+    sampleAt: sampleAt, gridSVG: gridSVG, elevSVG: elevSVG, search: search, tokens: tokens };
+})();
+if (typeof module !== 'undefined') module.exports = RW;
+
+(function () {
+  'use strict';
+  /* Menu: closed only once script runs; Escape, outside click and tabbing out close it. */
+  var mb = document.querySelector('.menu-btn'), menu = document.getElementById('site-menu');
+  if (mb && menu) {
+    var mq = window.matchMedia('(max-width: 859px)');
+    var set = function (open) { mb.setAttribute('aria-expanded', String(open)); menu.hidden = mq.matches ? !open : false; };
+    set(false);
+    mq.addEventListener ? mq.addEventListener('change', function () { set(false); }) : mq.addListener(function () { set(false); });
+    mb.addEventListener('click', function () { set(mb.getAttribute('aria-expanded') !== 'true'); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mb.getAttribute('aria-expanded') === 'true') { set(false); mb.focus(); } });
+    document.addEventListener('click', function (e) { if (mb.getAttribute('aria-expanded') === 'true' && !menu.contains(e.target) && !mb.contains(e.target)) set(false); });
+    menu.addEventListener('focusout', function (e) { if (mb.getAttribute('aria-expanded') === 'true' && !menu.contains(e.relatedTarget) && e.relatedTarget !== mb) set(false); });
+    menu.addEventListener('click', function (e) { if (e.target.closest('a') && mq.matches) set(false); });
+  }
+
+  /* The finder */
+  var F = document.querySelector('[data-signature]');
+  if (!F) return;
+  var $ = function (s, r) { return (r || F).querySelector(s); };
+  var strip = $('.strip'), gridFig = $('.fig-grid .draw-slot'), elevFig = $('.fig-elev .draw-slot'),
+      gridCap = $('.fig-grid .fig-cap'), info = $('.info'), take = $('.take'), form = $('.search'),
+      q = $('#q'), matches = $('.matches'), chips = F.querySelectorAll('.chip');
+  var DEFAULT_Q = 'HEK293 p12';
+  var state = { sample: 'hek12', key: '3C4', well: 'E6', list: [], taken: {}, mode: 'found', echo: '' };
+
+  function byId(id) { for (var i = 0; i < RW.SAMPLES.length; i++) if (RW.SAMPLES[i].id === id) return RW.SAMPLES[i]; return null; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function setStrip(vals, cls) {
+    var v = strip.querySelectorAll('.v');
+    for (var i = 0; i < 5; i++) v[i].textContent = vals[i];
+    strip.className = 'strip' + (cls ? ' ' + cls : '');
+  }
+
+  function render() {
+    var s = state.sample ? byId(state.sample) : null;
+    var key = state.key, shelf = +key[0], rack = key[1], box = key.slice(2);
+    if (state.mode === 'found' && s) {
+      var out = !!state.taken[s.id];
+      setStrip(['2', String(s.shelf), s.rack, String(s.box), s.well], out ? 'is-out' : '');
+      gridFig.innerHTML = RW.gridSVG(key, { target: s.well, taken: out });
+      elevFig.innerHTML = RW.elevSVG(s.shelf, s.rack);
+      gridCap.textContent = 'Box ' + s.box + ', top view';
+      info.innerHTML = '<p class="info-name echo">' + esc(s.name) + '</p>' +
+        (out ? '<p class="info-meta"><b>Taken out by you, just now.</b> Put here by ' + esc(s.by) + ', ' + s.on + '.</p>'
+             : '<p class="info-meta">Put here by <b>' + esc(s.by) + '</b>, ' + s.on + '.</p>') +
+        '<p class="sr-only">Freezer 2, shelf ' + s.shelf + ', rack ' + s.rack + ', box ' + s.box + ', well ' + s.well + (out ? ', marked as taken out.' : '.') + '</p>';
+      take.disabled = false;
+      take.setAttribute('aria-pressed', String(out));
+      take.textContent = out ? 'Log it as put back' : 'Log it as taken out';
+    } else if (state.mode === 'well') {
+      setStrip(['2', String(shelf), rack, box, state.well], 'is-plain');
+      gridFig.innerHTML = RW.gridSVG(key, { target: state.well, taken: !RW.occupancy(key)[state.well] });
+      elevFig.innerHTML = RW.elevSVG(shelf, rack);
+      gridCap.textContent = 'Box ' + box + ', top view';
+      var em = RW.EMPTIED[key + ':' + state.well], occ = RW.occupancy(key)[state.well];
+      info.innerHTML = occ
+        ? '<p class="info-name">' + state.well + ' holds a tube</p><p class="info-meta">This sample freezer names ten tubes. Try one of the names below.</p>'
+        : '<p class="info-name">' + state.well + ' is empty</p><p class="info-meta">' + (em ? esc(em.name) + ' was taken out by <b>' + esc(em.by) + '</b>, ' + em.on + '.' : 'Nothing has been logged here.') + '</p>';
+      take.disabled = true; take.setAttribute('aria-pressed', 'false'); take.textContent = 'Log it as taken out';
+    } else {
+      setStrip(['2', '–', '–', '–', '–'], 'is-empty');
+      gridFig.innerHTML = RW.gridSVG(key, {});
+      elevFig.innerHTML = RW.elevSVG(0, '');
+      gridCap.textContent = 'Last box shown: Box ' + box;
+      info.innerHTML = state.mode === 'empty'
+        ? '<p class="info-name">Type a sample name</p><p class="info-meta">For example HEK293, pUC19, or a well such as E5.</p>'
+        : state.mode === 'range'
+          ? '<p class="info-name echo">There is no ' + esc(state.echo) + '</p><p class="info-meta">Boxes in this freezer are 9 × 9: rows A to I, columns 1 to 9.</p>'
+          : '<p class="info-name echo">Nothing called “' + esc(state.echo) + '”</p><p class="info-meta">It is not in this sample freezer. Try HEK293, pUC19, or a well such as E5.</p>';
+      take.disabled = true; take.setAttribute('aria-pressed', 'false'); take.textContent = 'Log it as taken out';
+    }
+    // Chips and match list
+    var qv = q.value.trim().toLowerCase();
+    for (var i = 0; i < chips.length; i++) chips[i].setAttribute('aria-pressed', String(chips[i].getAttribute('data-q').toLowerCase() === qv));
+    if (state.list.length > 1) {
+      matches.hidden = false;
+      matches.innerHTML = '<p class="matches-lab">' + state.list.length + ' tubes match. Showing ' + esc(byId(state.sample).name) + '.</p>' +
+        state.list.map(function (x) { return '<button type="button" class="chip" data-pick="' + x.id + '" aria-pressed="' + (x.id === state.sample) + '">' + esc(x.name) + '</button>'; }).join('');
+    } else { matches.hidden = true; matches.innerHTML = ''; }
+    syncLog();
+  }
+
+  function show(id, list) {
+    var s = byId(id);
+    state.sample = id; state.key = RW.boxKey(s); state.well = s.well; state.mode = 'found'; state.list = list || [];
+    render();
+  }
+
+  function run(raw) {
+    var v = String(raw || '').trim().slice(0, 60);
+    state.echo = v;
+    if (!v) { state.mode = 'empty'; state.sample = null; state.list = []; return render(); }
+    var m = v.match(/^well\s*([a-z])\s*-?\s*(\d{1,4})$/i) || v.match(/^([a-z])\s*-?\s*(\d{1,4})$/i);
+    if (m) {
+      var row = m[1].toUpperCase(), col = +m[2], w = row + col;
+      state.echo = w; state.list = []; state.sample = null;
+      if (RW.ROWS.indexOf(row) < 0 || col < 1 || col > 9) { state.mode = 'range'; return render(); }
+      var hit = RW.sampleAt(state.key, w);
+      if (hit) return show(hit.id, []);
+      state.mode = 'well'; state.well = w; return render();
+    }
+    var found = RW.search(v);
+    if (!found.length) { state.mode = 'none'; state.sample = null; state.list = []; return render(); }
+    show(found[0].id, found);
+  }
+
+  form.addEventListener('submit', function (e) { e.preventDefault(); run(q.value); });
+  F.addEventListener('click', function (e) {
+    var c = e.target.closest('.chip');
+    if (c && c.hasAttribute('data-pick')) { var keep = state.list; show(c.getAttribute('data-pick'), keep); var nb = F.querySelector('[data-pick="' + c.getAttribute('data-pick') + '"]'); if (nb) nb.focus(); return; }
+    if (c && c.hasAttribute('data-q')) { q.value = c.getAttribute('data-q'); run(q.value); return; }
+  });
+  take.addEventListener('click', function () {
+    if (!state.sample) return;
+    state.taken[state.sample] = !state.taken[state.sample];
+    render();
+  });
+  $('.reset').addEventListener('click', function () {
+    state = { sample: 'hek12', key: '3C4', well: 'E6', list: [], taken: {}, mode: 'found', echo: '' };
+    q.value = DEFAULT_Q;
+    render();
+  });
+
+  /* The Box 4 log for lab managers, kept in step with the finder */
+  var L = document.querySelector('.logbox');
+  var filter = 'all', lastSig = null;
+  function syncLog(force) {
+    if (!L) return;
+    // Only touch the log when the finder changed what it holds, so its status line never speaks off-screen.
+    var sig = filter + '|' + RW.SAMPLES.filter(function (s) { return state.taken[s.id]; }).map(function (s) { return s.id; }).join(',');
+    if (sig === lastSig && !force) return;
+    lastSig = sig;
+    var list = L.querySelector('.log'), you = list.querySelectorAll('.you');
+    for (var i = 0; i < you.length; i++) you[i].remove();
+    var takenHere = RW.SAMPLES.filter(function (s) { return RW.boxKey(s) === '3C4' && state.taken[s.id]; });
+    takenHere.slice().reverse().forEach(function (s) {
+      var li = document.createElement('li');
+      li.className = 'you'; li.setAttribute('data-by', 'you');
+      li.innerHTML = '<span class="when">Just now</span><span class="what">You took out ' + esc(s.name) + '</span><span class="pos">' + s.well + '</span>';
+      list.insertBefore(li, list.firstChild);
+    });
+    var rows = list.querySelectorAll('li'), shown = 0, rings = {};
+    for (i = 0; i < rows.length; i++) {
+      var ok = filter === 'all' || rows[i].getAttribute('data-by') === filter || rows[i].getAttribute('data-by') === 'you' && filter === 'all';
+      rows[i].hidden = !ok;
+      if (ok) { shown++; rings[rows[i].querySelector('.pos').textContent] = true; }
+    }
+    var g = RW.gridSVG('3C4', { rings: filter === 'all' ? {} : rings });
+    // Tubes the visitor took out leave their wells empty here too.
+    if (takenHere.length) {
+      var tmp = document.createElement('div'); tmp.innerHTML = g;
+      takenHere.forEach(function (s) { var c = tmp.querySelector('[data-w="' + s.well + '"]'); if (c) c.setAttribute('class', 'well'); });
+      g = tmp.innerHTML;
+    }
+    L.querySelector('.log-grid').innerHTML = g;
+    var total = rows.length;
+    var msg = filter === 'all'
+      ? 'Showing every entry for Box 4.'
+      : shown + ' of ' + total + ' entries are by ' + filter + '. Their positions are ringed.';
+    var st = L.querySelector('.log-status');
+    if (st.textContent !== msg) st.textContent = msg;
+  }
+  if (L) {
+    L.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-by-filter]'); if (!b) return;
+      filter = b.getAttribute('data-by-filter');
+      var bs = L.querySelectorAll('[data-by-filter]');
+      for (var i = 0; i < bs.length; i++) bs[i].setAttribute('aria-pressed', String(bs[i] === b));
+      syncLog();
+    });
+  }
+  render();
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+import {chromium} from '/home/claude/r3/deps/node_modules/playwright/index.mjs';
+const dir = new URL('..', import.meta.url).pathname;
+const b = await chromium.launch();
+let p = await b.newPage({viewport: {width: 1200, height: 630}});
+await p.goto('file://' + dir + 'src/og.html'); await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(300);
+await p.screenshot({path: dir + 'og.png'});
+p = await b.newPage({viewport: {width: 180, height: 180}});
+await p.goto('file://' + dir + 'src/icon.html'); await p.waitForTimeout(300);
+await p.screenshot({path: dir + 'apple-touch-icon.png'});
+await b.close();
