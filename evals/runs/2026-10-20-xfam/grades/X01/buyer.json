@@ -1,0 +1,77 @@
+{
+  "packet": "X01",
+  "persona": "buyer",
+  "A": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 8,
+      "craft": 8,
+      "mobile": 7,
+      "honesty": 6,
+      "interaction": 7,
+      "copy": 9,
+      "first_screen": 6
+    },
+    "evidence": {
+      "clarity": "1440 and 390: the headline promises the CI failure on my laptop; the next paragraph explicitly identifies a free command-line tool for backend engineers and explains inputs, timing and network responses. The install command supplies the next step.",
+      "fit": "Laptop buyer pass: switching to npm test (no rerun) makes the local assertion pass, while rerun reproduces the failure, answering why I should try this rather than rerun tests normally. Founder pass: MIT, the supplied docs/source destinations, and planned-but-unbuilt hosted version are explicit; the scope limitations give an engineer a useful fit check.",
+      "distinctiveness": "1440: the event-by-event CI versus laptop comparison, including the midnight coupon failure and six differing local events, gives the page a product-specific identity beyond its conventional sections.",
+      "proof": "1440, 768 and 390: I scrubbed all seven steps, ran both modes, stopped playback and replayed to completion. The resulting FAIL reproduced versus PASS not reproduced outcomes concretely explain the benefit. The sample disclosure appears after the entire event list rather than beside the first claim.",
+      "craft": "1440: strong headline and legible comparison columns; 768 and 390: the event table becomes labelled CI run/Laptop rows and the outcome moves above the controls. The phone page is very long and the installation card consumes considerable space before the example.",
+      "mobile": "390: the menu opens and choosing Limits closes it and reaches that section; mode buttons, replay and slider all work. The promise and installation action are visible initially, but the actual replay controls are below the first viewport. The supplied 320 shot shows the command requiring horizontal space.",
+      "honesty": "390: the explicit sample recording written for this page disclosure sits beneath seven long event cards, well after the visitor first sees a reproduced-failure claim. The price section clearly states that the hosted team version is planned, not built, with no date.",
+      "interaction": "At all three widths I operated both radios, every integer slider step, replay, stop, and replay again; READY, stopped, matching and differing outcomes appeared. Keyboard Space activates replay and the mode radio. Both copy controls were exercised; in this delivered browser the primary copy action reported Could not copy and provided manual-copy instructions. Docs/source use the supplied destinations.",
+      "copy": "Laptop reading: the explanation that the afternoon clock never crosses midnight makes the flaky test understandable. Founder reading: What a replay cannot do yet and Recordings contain real data directly address adoption concerns with concrete engineering language.",
+      "first_screen": "1440: promise, install action and the beginning of the CI/laptop comparison share the viewport. 390: the outcome and install action are clear, but only the example heading begins near the bottom; no event comparison backs the promise without scrolling."
+    },
+    "problems": [
+      "The sample disclosure arrives after the full example, especially late on a phone.",
+      "The phone first screen devotes most space to explanation and installation before showing product evidence.",
+      "Copying failed in the delivered browser; the honest manual-copy fallback adds friction to the main action."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 6,
+      "distinctiveness": 7,
+      "proof": 4,
+      "craft": 8,
+      "mobile": 6,
+      "honesty": 2,
+      "interaction": 7,
+      "copy": 7,
+      "first_screen": 6
+    },
+    "evidence": {
+      "clarity": "1440 and 390: the headline describes a CI-only failure reproduced on a laptop, and the supporting paragraph explains recorded inputs/timing/network plus free MIT licensing. The exact supplied npm installation command is immediately available.",
+      "fit": "Cold laptop buyer pass: the terminal and three setup steps make the workflow clear, and every FAQ is directly relevant to adoption. Founder pass: the hosted product is correctly called planned and unbuilt, but performance measurements and support/project facts absent from the brief prevent publishing this under my name.",
+      "distinctiveness": "1440: restrained serif copy, a small red recording indicator and a large scrub-able terminal form a recognizable engineering editorial page. The terminal playback is product-specific, though the sections beneath are familiar two-column explanation tables.",
+      "proof": "At all three widths I paused, scrubbed to the beginning and end, cycled 1x/2x/4x speeds and replayed. The terminal shows a failed assertion and 2,114 compared values with zero differences, but calls itself a real replay session instead of an illustrative example; the brief supplies no such recording. This weakens its value as trustworthy proof.",
+      "craft": "1440 and 768: readable type and consistent rules divide the narrative; the terminal occupies substantial height while initially displaying only a few lines. 390: headings and body remain readable, while long terminal lines and setup commands require horizontal exploration.",
+      "mobile": "390: the promise, installation control and beginning of the terminal fit the first viewport, but transport controls and explanation are below it. I used every transport control and expanded all six FAQs. There is no collapsed phone menu; the three navigation links remain directly visible. The supplied 320 shot truncates the visible installation command.",
+      "honesty": "At 1440, 768 and 390, opening How much does recording slow down CI? reveals roughly 2\u20134% overhead in our measurements on 500\u20135,000-test Jest suites, a performance claim not supplied by the brief. The terminal caption also describes a real replay session rather than a sample.",
+      "interaction": "At all three widths I used both copy buttons, pause/play/replay, slider Home/End, each playback speed, all six FAQ open/close states and the FAQ anchor. Copy changed to Copied, transport updated times/output, and keyboard Space/Enter operated play/speed. At desktop, focusing and pressing Enter on the terminal after resize did not resume playback, although its mouse click did. No page errors were observed.",
+      "copy": "The FAQ questions about data leaving CI, passing on replay and retrying tests match a skeptical engineer's first doubts. The copy is generally specific, but claims such as typical 1\u20135 MB recordings and measured overhead add unjustified certainty, and the caption says the tick is 2,003 ms in while playback places it later in the session.",
+      "first_screen": "1440 and 390: a specific CI-to-laptop promise and the install action are visible, with the top of the terminal. At either width the first viewport does not show the failed assertion or comparison result, and the claimed reality of the replay lacks supporting provenance."
+    },
+    "problems": [
+      "Unsupplied measured performance claims and a purported real replay undermine trust and require correction before publication.",
+      "The phone terminal reveals long lines only through horizontal exploration and places transport controls below the first viewport.",
+      "A large initially sparse terminal delays the actual failed assertion and comparison that would make the promise convincing."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF2",
+        "evidence": "The expanded overhead FAQ claims roughly 2\u20134% on the test run itself, in our measurements on Jest suites between 500 and 5,000 tests, and says benchmark numbers/script are in the repository. The brief supplies no performance measurements; this is presented as measured fact, not sample data.",
+        "steps": "Open packets/X01/B/index.html from disk at 1440x900 (also reproduced at 768x1024 and 390x844). Follow FAQ in the header, then expand How much does recording slow down CI? Read the answer containing the 2\u20134% measurement and benchmark claim."
+      }
+    ]
+  },
+  "preference": "A",
+  "confidence": "high",
+  "reason": "A earns more trust by making the same recorded inputs and the misleading local pass inspectable, then explaining the midnight failure. B has an appealing concise workflow, but I would need its claimed measurements and real recording replaced with honest example material before shipping it; A mainly needs earlier disclosure and a faster mobile route to the proof."
+}

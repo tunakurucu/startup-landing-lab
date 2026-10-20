@@ -1,0 +1,84 @@
+{
+  "packet": "X11",
+  "persona": "designer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 9,
+      "proof": 9,
+      "craft": 9,
+      "mobile": 9,
+      "honesty": 7,
+      "interaction": 9,
+      "copy": 9,
+      "first_screen": 9
+    },
+    "evidence": {
+      "clarity": "At 390 the headline says one small evening question is kept on the phone; the paragraph identifies the iPhone app and the next action requests a TestFlight invite.",
+      "fit": "The 390 hero offers both the invite path and tonight\u2019s question; the answer remains on this page, but the invite address is an unsupported operational detail.",
+      "distinctiveness": "The dark plum field, lamp/grid symbol, editorial serif type and sample week give Lamplit a distinctive evening-journal identity.",
+      "proof": "At 390 the question textarea and \u201cKeep tonight\u2019s answer\u201d appear directly below the invite; submitting puts the answer in the week below and says it is on this page only.",
+      "craft": "At 1440 the contrast between warm type and plum background is strong, with spacing and type hierarchy held at 390; no axe violations or overflow are reported.",
+      "mobile": "At 390 the headline, invite CTA and question card begin within the opening view; navigation stays as small inline links, with no clipped content.",
+      "honesty": "The CTA explains that it opens the mail app, while its nearby \u201cFree during beta\u201d claim is not in the brief; after submit the answer copy accurately says page-only.",
+      "interaction": "At 390 an empty submit gives a useful \u201cNothing to keep yet\u201d message; a long entry truncates at 240 characters and updates the sample-week row without errors.",
+      "copy": "\u201cOne small question a night\u201d and the example prompts suit the low-pressure product; \u201cFree during the beta\u201d is unsupported by the brief.",
+      "first_screen": "At 390 the specific evening prompt and invite action are visible beside a working answer card, giving a concrete product demonstration before scrolling."
+    },
+    "problems": [
+      "B hides its invite action below the sample week on mobile.",
+      "A\u2019s invite CTA uses an email address absent from the client brief.",
+      "A\u2019s \u201cFree during the beta\u201d detail is not established by the brief."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "The first-screen \u201cRequest a TestFlight invite\u201d link opens mailto:invites@lamplit.app, an address the brief did not supply.",
+        "steps": "At 390, tap \u201cRequest a TestFlight invite\u201d in the hero; inspect the mailto target. At 1440, the same CTA appears in the hero."
+      }
+    ]
+  },
+  "B": {
+    "scores": {
+      "clarity": 8,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 7,
+      "mobile": 8,
+      "honesty": 8,
+      "interaction": 9,
+      "copy": 8,
+      "first_screen": 7
+    },
+    "evidence": {
+      "clarity": "At 390 the question is immediate, while the paragraph below identifies Lamplit as an evening iPhone app that keeps answers on the phone; invite action is below the first screen.",
+      "fit": "The demo and sample week work without sending answers; invite CTA is present lower down, though its mail address was not provided by the brief.",
+      "distinctiveness": "The pendant lamp illustration, warm paper card and chronological week form a coherent identity, though the centered layout is familiar.",
+      "proof": "At 390 the question card is immediately interactive; six nights are explicitly labeled made-up and the live answer is stored in browser localStorage.",
+      "craft": "At 1440 and 390 the lamp/card composition is tidy, but the probe finds four serious contrast nodes at both 390 and 1440.",
+      "mobile": "At 390 the question card and answer control fit without overflow; the invite request and week are farther down the page, so the key action is not in the opening viewport.",
+      "honesty": "The question samples are labeled and the card says storage stays in this browser; the invite email opens a mail app and is disclosed near the lower action.",
+      "interaction": "At 390 typing enables Keep, saving updates the week, Change returns focus to the field, and Clear removes the answer; no console or page errors.",
+      "copy": "The writing is warm and specific; \u201cTesting on TestFlight\u201d and \u201cA week of answers\u201d explain the stage and sample, though the heading gives no immediate product action.",
+      "first_screen": "At 390 the opening viewport shows the question, answer field and storage disclosure, which makes the demo promise credible, but no invite action is visible."
+    },
+    "problems": [
+      "A gives the invite action and working question a strong first-screen hierarchy.",
+      "A\u2019s bespoke editorial lamp treatment makes the evening ritual feel like the product."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "The invite action links to mailto:invites@lamplit.app, an address the brief did not supply.",
+        "steps": "At any width scroll to the invite section and activate \u201cAsk for a TestFlight invite\u201d; inspect the mailto target."
+      }
+    ]
+  },
+  "preference": "B",
+  "confidence": "medium",
+  "reason": "A gives the invite action and working question a strong first-screen hierarchy. A\u2019s bespoke editorial lamp treatment makes the evening ritual feel like the product.",
+  "score_preference_note": "I prefer B because its answer is retained in browser storage with explicit edit and clear controls; the stronger first-screen art and visible invite path in A do not outweigh that privacy/retention clarity for this product."
+}

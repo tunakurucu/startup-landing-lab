@@ -1,0 +1,83 @@
+{
+  "packet": "X15",
+  "persona": "engineer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 8,
+      "fit": 7,
+      "distinctiveness": 8,
+      "proof": 6,
+      "craft": 8,
+      "mobile": 9,
+      "honesty": 4,
+      "interaction": 4,
+      "copy": 8,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "At 390 the headline names the outcome, and the lede explains that brewers log readings on a tablet and the batch record builds by fermentation.",
+      "fit": "A shows a brew-day record and serves both brewery owner and head brewer, but no brewhouse-side logging control is available in the sample.",
+      "distinctiveness": "The dark batch ledger and amber readings feel tied to Grainline\u2019s brewing workflow rather than a generic startup page.",
+      "proof": "At 1440 a batch ledger lists timed readings and derived metrics, captioned as a worked example rather than a customer batch.",
+      "craft": "At 1440 the tablet-like ledger, generous cream field and amber values are clean; probe shows no errors, overflow or axe issues.",
+      "mobile": "At 390 the CTA and sample ledger stack cleanly without overflow; all listed values remain at least 14px per probe.",
+      "honesty": "The example is labeled, but the CTA opens an unsupplied placeholder email address despite the brief saying no early-access inbox exists.",
+      "interaction": "At each width the main artifact is a static reading list; there are no input, edit, error, or reset controls to exercise.",
+      "copy": "\u201cReadings as they went in\u201d and specific values like first runnings/knockout gravity suit brewers; the CTA\u2019s actual destination is not explained.",
+      "first_screen": "At 1440 the promise, access action and completed record share the first viewport; at 390 the record begins within the opening screen."
+    },
+    "problems": [
+      "A uses the existing Button and tokens but its email constant is an unsupplied placeholder.",
+      "A\u2019s `BatchRecord` is read-only, so there are no input/reset/error states to test.",
+      "A build succeeds as static export; probe is clean at 320/390."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "The first-screen \u201cRequest early access\u201d button opens mailto:hello@grainline.example, an address not supplied in the brief; the brief says there is nowhere to send requests yet.",
+        "steps": "At 390, 768 or 1440 activate \u201cRequest early access\u201d and inspect the link target. It is mailto:hello@grainline.example, not a brief-provided destination."
+      }
+    ]
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 9,
+      "mobile": 9,
+      "honesty": 4,
+      "interaction": 9,
+      "copy": 9,
+      "first_screen": 9
+    },
+    "evidence": {
+      "clarity": "At 390 the headline explains that the brew sheet fills itself in, and the lede names the tablet, readings and batch completion.",
+      "fit": "The live sample suits a head brewer on the floor and the changing batch record suits an owner; no excise reporting claim appears.",
+      "distinctiveness": "The keyboard-sized numeric pad, highlighted next step and parallel paper record make the brewhouse workflow distinct and legible.",
+      "proof": "At 390 the sample starts with three logged readings; entering a value visibly updates the live record and a zero reading is flagged against target.",
+      "craft": "At 1440 the dark pad and paper output contrast clearly; probe reports no axe issues or runtime errors at any width.",
+      "mobile": "At 390 the large keys and record fit the viewport width, with no overflow and 12px minimum text; the Menu button expands a vertical nav.",
+      "honesty": "At 390 the artifact says it is a sample and runs in the browser without saving; however the access form only reveals after submit that nothing was sent.",
+      "interaction": "At 390 empty log shows a prompt; a 0.000 SG is flagged; sample readings complete the record; reset is available; valid form submission reports nothing sent.",
+      "copy": "Terms like mash temperature, pre-boil gravity and volume to FV fit a brewing audience; the form\u2019s \u201cYou hear back by email\u201d contradicts the post-submit result.",
+      "first_screen": "At 1440 the brewhouse keypad and live batch record sit beside the promise; at 390 the large hero action and editor start immediately below."
+    },
+    "problems": [
+      "B build succeeds as a static Next.js export; the interactive pieces use client components and existing Button/Tailwind tokens without a new dependency.",
+      "B\u2019s keypad flags 0.000 SG and can complete/reset the sample; at 720px effective width no overflow, but Escape leaves the phone menu expanded."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "The first-screen request form accepts an email and brewery, but after valid submission says \u201cNothing was sent\u201d and discards the entered data; beforehand nearby copy says \u201cYou hear back by email.\u201d",
+        "steps": "At any width use the hero \u201cRequest early access\u201d action, enter a valid work email and brewery, submit, and observe the status. It reports nothing was sent and no request is stored or delivered."
+      }
+    ]
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B build succeeds as a static Next.js export; the interactive pieces use client components and existing Button/Tailwind tokens without a new dependency. B\u2019s keypad flags 0.000 SG and can complete/reset the sample; at 720px effective width no overflow, but Escape leaves the phone menu expanded."
+}

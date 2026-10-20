@@ -1,0 +1,52 @@
+{
+  "packet": "X05",
+  "persona": "designer",
+  "A": {
+    "scores": {"clarity": 9, "fit": 8, "distinctiveness": 7, "proof": 8, "craft": 7, "mobile": 5, "honesty": 8, "interaction": 7, "copy": 8, "first_screen": 6},
+    "evidence": {
+      "clarity": "1440 and 390: 'Heat water when power is cheap. Have it hot when you need it' is immediately followed by the electrician-added controller explanation; the prominent install-list link takes me to the join form.",
+      "fit": "1440: changing all three tariffs, four usage choices and three tank sizes makes the example show different heating bands, including peak heating for heavier use. Dedicated electrician and utility sections address the installation gatekeepers, and the join form explains local-only storage before submission.",
+      "distinctiveness": "1440: the droplet hour buttons, heater-run strips and tank-reserve bars give this a recognisable water-heating artifact; restrained ink/blue/red and ruled specification sections suit the product, although the remaining stacked text sections are conventional.",
+      "proof": "1440: the schedule starts in the first viewport and updating Morning and evening peaks changes the standard/shifted peak hours from 1/0 to 3/1. At 390 the example remains available but requires scrolling down and horizontally through its hours.",
+      "craft": "1440 and 768: the condensed headline, serif explanations and thin table rules form a consistent editorial hierarchy. At 390 the navigation occupies several lines and the schedule's fixed label column leaves a narrow slice of the graph; the form and lower sections remain aligned and readable.",
+      "mobile": "390: the expanded navigation consumes about 170px and the first viewport only reaches the 'Try a day' heading. In the demo I had to move sideways to reach later hour buttons; the 320 supplied top view pushes even the hero actions below its crop.",
+      "honesty": "390 and 1440: 'Example tariff' and the simplified-model explanation accompany the schedule, and no bill-savings number is promised. Submitting the join form displays 'You're on the list on this device' and 'Nothing was sent'; the local-only warning was already visible before pressing submit, but not beside the hero CTA.",
+      "interaction": "At 1440, 768 and 390 I operated every tariff, usage preset, tank size and all 24 hour buttons. Clearing selected hours gave zeros in the heating table, Space toggled a focused hour, and presets restored a schedule. Empty join submission marked two inputs invalid and valid submission allowed 'Change my entry'; 'Join as an electrician' scrolled to the form but left Homeowner selected.",
+      "copy": "1440: 'It follows your tariff, not a guess', 'No mixing valve, no new tank' and 'nothing ships before it's complete' are concrete and useful. The separate 'Where we stand' inventory repeats several caveats already given in the electrician and utility sections.",
+      "first_screen": "1440: both the specific cheap-power/hot-water promise and the beginning of its operable schedule are visible. At 390 the same promise and both actions fit, but only the next section heading appears at the bottom, with no heating result yet visible."
+    },
+    "problems": [
+      "390: the main schedule needs horizontal scrolling to expose the later hot-water hour controls, making comparison of use and heating across the whole day difficult.",
+      "390: the multirow navigation and long hero explanation use the first screen before any convincing schedule result appears.",
+      "1440, 768 and 390: 'Join as an electrician' reaches the generic form without selecting the electrician role, losing the context of that action."
+    ],
+    "hard_fail_flags": [
+      {"code": "HF3", "evidence": "At 390 the main demo clips its 24-hour interactive strip inside a horizontal scroller. Later hot-water hour buttons are reachable only by scrolling sideways; the page itself instructs 'Swipe the strip sideways to see the whole day.'", "steps": "Open A/index.html at 390x844, activate 'Try a day's schedule', and inspect the Hot water used row. The later hours are beyond the visible right edge. Scroll the strip sideways to reach and toggle the evening hour buttons."}
+    ]
+  },
+  "B": {
+    "scores": {"clarity": 9, "fit": 9, "distinctiveness": 8, "proof": 9, "craft": 8, "mobile": 8, "honesty": 8, "interaction": 7, "copy": 9, "first_screen": 7},
+    "evidence": {
+      "clarity": "1440 and 390: 'A water heater that waits for cheap power' and the next paragraph identify the controller, electrician and time-shifting job. The blue 'Join the install list' action scrolls to a clearly labelled first-region form.",
+      "fit": "1440: the labelled day model shows price bands, heater activity, tank level, peak top-ups and unmet draws; dedicated installer diagram and utility example log explain what those audiences receive. The form states that it saves details on the device and sends nothing before the list opens.",
+      "distinctiveness": "1440: the engineering-figure treatment, blue controller, yellow peak-price bands and numbered installation/rule explanations derive from the product rather than ornamental startup cards. At 390 the electrical diagram becomes a vertical circuit rather than a miniature desktop image.",
+      "proof": "1440, 768 and 390: all nine tariff/household combinations update the chart and table. Night rate plus Evening showers exposes one peak top-up and one short draw, while the default shows 1.8 to 0.0 kWh at peak. 'FIG. 1 · EXAMPLE ONLY' and the model caveat keep those numbers contextualised.",
+      "craft": "1440: the split headline/explanation and large boxed chart establish strong hierarchy, with legible blue emphasis in the result table. At 768 the chart and result reflow vertically; at 390 the selector groups stay comfortably tappable. The desktop installer sketch has crowded heating/hold labels, and chart labels are noticeably small.",
+      "mobile": "390: opening Menu reveals the navigation and choosing Example day closes it. The demo has full-width tariff and household segments, a complete-day graph and then its result table, without needing sideways panning; the 320 supplied top view retains the headline and primary action. The actual graph still sits below the first viewport.",
+      "honesty": "1440 and 390: the bold '100%' result is explicitly limited to 'in this example'; the table says the model is not a bill forecast. Safety listing is visibly in progress. The join form discloses device-only storage before submission and confirms 'nothing was sent', although this qualification is absent beside the hero action.",
+      "interaction": "At all three required widths I selected all tariffs and households, expanded/collapsed the hot-water-use list, submitted the form and changed its audience select. ArrowRight changed the focused tariff; empty submission at 1440 exposed two invalid fields and valid submission produced a nearby local-save message. At 768 and 390 Escape did not close the open menu, though the Menu button and choosing a link did.",
+      "copy": "1440: 'A hot shower outranks a cheap one', 'Measured, not modelled' and 'Price is set with each region's rebate programme' explain the actual tradeoffs in the visitor's vocabulary. The eligibility checklist and local-save confirmation give the conversion useful context rather than generic reassurance.",
+      "first_screen": "1440: the specific cheap-hours promise, install-list action and working example with result are presented together. At 390 the promise and action remain clear and the example label plus tariff choices appear near the bottom, but the chart and numerical evidence require another scroll."
+    },
+    "problems": [
+      "390: the first viewport only starts the example controls; its actual heating comparison and result arrive after scrolling, weakening the opening proof.",
+      "1440 and 390: the plot's small monospaced labels and dense legend require more reading effort than the large headings and buttons; desktop heating/hold labels also crowd each other in the installer sketch.",
+      "768 and 390: Escape leaves Menu expanded; dismissal requires pressing Menu again or selecting a navigation link."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B makes the product's mechanism and limitations more tangible through a complete-day graph, explicit exception states and an installer diagram that is recomposed for the phone. Its more disciplined navigation and larger mobile demo controls make it the stronger design to ship; bringing chart evidence into the phone's first screen and improving small annotations would strengthen it further.",
+  "score_preference_note": ""
+}

@@ -222,3 +222,7 @@ Pre-registered (`runs/2026-10-20-ab-round6/PREREG.md`), four new briefs: a sea-s
 
 The person then raised the target to 91 and asked to keep rebuilding the same sites on the graders' feedback. v0.8 was written from round 6's notes, and round 7 rebuilds these four skill pages with it.
 
+## Cross-family check: GPT re-grades rounds 3 and 4
+
+All 16 primary packets from rounds 3 and 4 were re-graded blind by GPT graders with the same rubric and personas (48 grader runs; 33 of them recorded as `gpt-6-luna`). GPT graders preferred the skill page in 40 of 48 runs (Claude graders: 45 of 48), agreed with the Claude grader's choice in 41 of 48, and by the score-and-vote rule gave 13 wins, 2 ties and 1 loss (Claude: 14 wins, 2 ties). GPT scores both pages higher and the gap slightly smaller (+8.8 against +10.7). The one reversed verdict is the handover redesign. GPT hard-fail flags were not adjudicated. Details and the comparison script: `runs/2026-10-20-xfam/`.
+

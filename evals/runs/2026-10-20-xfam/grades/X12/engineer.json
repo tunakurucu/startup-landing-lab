@@ -1,0 +1,77 @@
+{
+  "packet": "X12",
+  "persona": "engineer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 8,
+      "fit": 7,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 5,
+      "mobile": 5,
+      "honesty": 7,
+      "interaction": 8,
+      "copy": 7,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "At 390 the headline promises a photo-based stitch pattern, the lede explains colour and square-by-square edits, and \u201cOpen the beta editor\u201d scrolls to the live canvas.",
+      "fit": "The hero and page editor provide a maker path, and the seller section says commercial terms are undecided; \u201cFree while in beta\u201d is more definite than the brief.",
+      "distinctiveness": "The custom cross-stitch canvas, thread palette and stitch-grid motif are product-specific and recognizable at 390.",
+      "proof": "At 390 the Sailboat/Pear canvas can be edited and the editor reports stitch dimensions, filled count, threads and finished size.",
+      "craft": "At 1440 the patterned paper, serif headline and red thread controls are cohesive, but the probe finds 17 serious contrast nodes and tiny 7px interface text.",
+      "mobile": "At 390 the editor stacks below the hero and runs without horizontal overflow; at 320 the probe finds 68px horizontal overflow, while 390 still has 31 sub-12px text nodes.",
+      "honesty": "The examples are labeled original artwork, and copy says images are processed in the browser; the beta-free claim is not stated in the brief.",
+      "interaction": "At all three widths switching samples, tools, chart view, grid, thread catalogue, fabric count, undo, reset and PNG export responded; photo import with an image updated dimensions.",
+      "copy": "\u201cSquare by square,\u201d \u201cthread colour,\u201d and \u201cunpick\u201d are relevant to stitchers, but the headline visually joins \u201cstitchedsquare\u201d without a space.",
+      "first_screen": "At 1440 and 390 the headline, live pattern preview and editor action make the photo-to-pattern promise concrete, although the editor begins below the hero."
+    },
+    "problems": [
+      "A\u2019s probe reports 17 serious color-contrast nodes and 31 sub-12px text nodes.",
+      "A overflows by 68px at 320 and its one-file artifact bundles styles separately but the editor logic is a sizable script.",
+      "A\u2019s mobile thread data remains difficult to read."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF3",
+        "evidence": "At 390 the thread-count and palette labels in the editor render as tiny text; the probe reports 31 text nodes below 12px and a smallest size of 7px.",
+        "steps": "Open A at 390\u00d7844 and scroll to the editor thread palette and finished-size summary; inspect the repeated thread labels/codes. The page probe reports 31 text elements under 12px at 390."
+      }
+    ]
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 9,
+      "mobile": 9,
+      "honesty": 8,
+      "interaction": 9,
+      "copy": 8,
+      "first_screen": 9
+    },
+    "evidence": {
+      "clarity": "At 390 the headline explains photo-to-cross-stitch and editing; the adjacent text clarifies this is a sample drawing and that beta accepts photos.",
+      "fit": "The sample is clearly local and the commercial-use uncertainty is explicit for sellers; the separate hobbyist and seller paths are both described.",
+      "distinctiveness": "The original pear drawing and woven chart are recognizably stitch-specific; the surrounding editor resembles a practical workbench.",
+      "proof": "At 390 the first viewport contains the live 22\u00d722 sample with stitch/chart and thread-count controls; each control visibly alters the chart.",
+      "craft": "The restrained paper palette and dense editor are orderly; probe reports no serious accessibility issues, no overflow, and 13px minimum text.",
+      "mobile": "At 390 the sample editor and key controls fit within the page width; its menu expands and Escape closes it, with no horizontal scrolling.",
+      "honesty": "The sample source is labeled a drawing, the page says nothing uploads, and commercial terms remain undecided; \u201cfree beta\u201d is not in the supplied brief.",
+      "interaction": "At all widths thread-count and chart-view controls update the canvas, thread/tool choices respond, keyboard edit and reset work, and no errors were logged.",
+      "copy": "Copy names stitch counts, thread colours, sellers and commercial use plainly; \u201cthe sample is the real engine\u201d is a slightly promotional phrase.",
+      "first_screen": "At 1440 and 390 a specific photo-to-pattern claim, working sample chart and action to try that chart sit in the first screen."
+    },
+    "problems": [
+      "B\u2019s probe reports no errors, no overflow through 320 and no axe violations at 390 or 1440.",
+      "At 200%-equivalent 720px width B had no document overflow; reduced-motion preference is honored and Escape closes the mobile menu."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B\u2019s probe reports no errors, no overflow through 320 and no axe violations at 390 or 1440. At 200%-equivalent 720px width B had no document overflow; reduced-motion preference is honored and Escape closes the mobile menu."
+}

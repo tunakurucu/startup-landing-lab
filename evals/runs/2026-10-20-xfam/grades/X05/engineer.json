@@ -1,0 +1,50 @@
+{
+  "packet": "X05",
+  "persona": "engineer",
+  "A": {
+    "scores": {"clarity":8,"fit":8,"distinctiveness":7,"proof":8,"craft":7,"mobile":4,"honesty":8,"interaction":7,"copy":8,"first_screen":6},
+    "evidence": {
+      "clarity":"1440 and 390: the headline promises cheap-hour heating with hot water ready, the supporting paragraph identifies an electrician-installed controller, and both Join the install list links reached the actual #join form.",
+      "fit":"At all three widths I changed every tariff, usage preset and tank size and toggled all 24 use hours. The example supplies the requested comparison; electrician and utility sections have substantive details, and the form explains browser-only storage before submission.",
+      "distinctiveness":"1440: the main artifact is a custom 24-hour strip with tariff bands, draw buttons, two heating rows and reserve bars rather than a generic marketing mockup; the surrounding sections are simpler prose grids and specification lists.",
+      "proof":"1440/768/390: Evening peak with the default family preset showed standard peak heating 1 hour versus Tankshift 0; changing to two peaks changed that to 3 versus 1. Removing every draw gave 'No hot water used, so no heating'; selecting a preset restored the model.",
+      "craft":"The delivered 42.7 KB HTML/CSS/JS uses semantic sections, ordered h1/h2/h3 headings, labelled controls, CSS tokens and local system-font stacks, with no dependencies or external requests. Probes show no errors or axe violations and zero page overflow at 320/390. Reduced motion removed transitions; 200% equivalent reflow had no page overflow, but the fixed-minimum strip still needed internal scrolling.",
+      "mobile":"390: I tapped an hourly use successfully, but the strip viewport measured 358px against 700px content, leaving evening controls and tariff bands off-screen until swiped sideways. Hour buttons are only about 21px wide and 40px high. Navigation wraps into two rows without a collapsible menu; its links worked.",
+      "honesty":"390: before the final submit button the form says there is no list server and data stays in this browser. Pasting a valid email/postcode produced 'You're on the list on this device' and 'Nothing was sent'. The example's simplified assumptions and unpublished listing/pilot status are explicit.",
+      "interaction":"At 1440/768/390 every preset and tank size changed output, all-empty/all-24-hour draw states rendered without errors, and empty/zero/negative/1000-character invalid form inputs produced specific errors. A valid pasted entry saved and Change my entry restored its values. Tab traversed the CTA and all 24 buttons with solid visible outlines; Space toggled a draw without a trap. Code catches storage errors but discards writeSaved's failure result before displaying the saved confirmation.",
+      "copy":"390: form errors name the missing postcode or reachable email, and the empty schedule says 'Tap an hour on the strip to add a hot water use.' The success summary rendered the selected utility role awkwardly as 'as with a utility programme'.",
+      "first_screen":"The supplied 1440 screenshot includes the working example's tariff/draw rows alongside the specific promise and CTA. At 390 the first viewport shows the promise and actions but no artifact; the demo requires scrolling beyond the hero."
+    },
+    "problems":[
+      "390: the main interactive strip requires sideways scrolling to reach many actual hour controls and read the evening tariff; its small hourly hit areas also make precise touch difficult.",
+      "app.js ignores the false return from writeSaved, so storage failure still leads to the same device-list confirmation rather than an unsaved state; there is no clear/delete-entry control.",
+      "The phone header consumes two navigation rows and the hero pushes all product evidence below the first screen; the electrician-specific CTA also merely scrolls to a form still defaulted to homeowner."
+    ],
+    "hard_fail_flags":[{"code":"HF3","evidence":"At 390x844 actual demo controls and tariff text are reachable only by scrolling sideways inside .strip-wrap (358px viewport, 700px content), rather than decorative overflow.","steps":"Open A/index.html at 390x844, activate Try a day's schedule, and scroll to Hot water used. Only approximately the first ten hours fit. To reach the 20:00 use button and see the evening peak band, scroll the strip horizontally; the page itself has no horizontal overflow."}]
+  },
+  "B": {
+    "scores":{"clarity":8,"fit":8,"distinctiveness":8,"proof":8,"craft":7,"mobile":8,"honesty":8,"interaction":7,"copy":8,"first_screen":7},
+    "evidence":{
+      "clarity":"1440 and 390: 'A water heater that waits for cheap power' is immediately explained as an electrician-added controller. Join the install list reached #join, with role choices for homeowner, electrician and utility; the form explicitly describes its local-only result.",
+      "fit":"1440/768/390: all nine tariff-household combinations ran, including visible peak top-ups. The electrician section includes a labelled installation sketch and pending-listing disclosure, while utilities get an illustrative switching log and opt-in explanation; the conversion uses browser storage instead of pretending to contact a backend.",
+      "distinctiveness":"1440: the primary custom SVG combines tariff, draws, switching and tank-level lines with a numeric comparison table. At 390 the wiring illustration changes to a vertical sketch and the chart labels move above rows, which is a product-specific adaptation rather than shrinking the desktop image.",
+      "proof":"All three widths: Two adults/Evening peak showed 1.8 kWh versus 0.0 kWh at peak. Evening showers/Evening peak showed 65% moved and one peak top-up. Night rate/Evening showers exposed one draw running short; that honest visible output qualifies the nearby promise that showers stay hot. Example-only labels remain adjacent to the demo and utility log.",
+      "craft":"The approximately 52.8 KB self-contained HTML uses tokenized CSS, system fonts, semantic sections, labelled forms and SVG title/description alternatives; no build or diff files apply to either static delivery. Probes report no errors/requests and zero overflow at 320/390, but one serious desktop color-contrast violation. My runs had no script errors; reduced motion removed chart transitions. 200% equivalent reflow at 720 CSS pixels had zero page overflow, while an additional CSS-zoom stress test at 1440 caused a 666px header overflow.",
+      "mobile":"390: I tapped Menu, followed Example day, and tapped Night rate plus Evening showers; the chart and status updated without needing horizontal chart scrolling. Tariff/household options use 44px-high phone targets, the form remains readable and the wiring sketch stacks. My fallback-font environment showed 3px document overflow, versus zero in supplied probes, without reproduced clipped primary text or controls.",
+      "honesty":"390: the example is tagged 'Example only'; the comparison caption says figures are modelled rather than metered, and the utility table is labelled illustrative. Before submitting, the form says details are kept on this device and nothing is sent. Submission and reload confirmed exactly that local save, while listing status remains in progress.",
+      "interaction":"At every width the nine combinations, expandable draw list, role selection and all visible section/CTA links worked. Empty, zero, negative and 1000-character invalid emails showed an error; short postcodes were rejected, a long postcode was accepted, pasted valid details persisted on reload and could be amended. Tab focus was visible, radio arrows updated the chart, and touch worked. At 768 and 390, Escape did not close the open Menu (aria-expanded stayed true); choosing a link did close it.",
+      "copy":"At 390 the top-up rule says 'A hot shower outranks a cheap one', while the readout separately reports shortages rather than hiding them. Error copy gives 'name@example.com'. The utility note asks visitors to 'say so on the install list form' about an export format, but that form has no message field.",
+      "first_screen":"The supplied 1440 first screen contains a concrete controller promise, primary action and most of the example panel. At 390 the promise/action and the start of an explicitly labelled example appear, but the actual plotted behavior is further down, so mobile belief still requires scrolling."
+    },
+    "problems":[
+      "768/390: Menu lacks an Escape handler; after opening it with keyboard or touch, Escape leaves it expanded. This is a reproducible keyboard interaction omission.",
+      "Night rate plus Evening showers reports one draw running short, which needs clearer reconciliation with the hero's unqualified showers-stay-hot promise and the top-up rule.",
+      "Accessibility polish remains: the supplied desktop axe probe reports a serious contrast violation, form validation uses one alert without field-level aria-invalid association, and there is no clear/delete saved-entry control."
+    ],
+    "hard_fail_flags":[]
+  },
+  "preference":"B",
+  "confidence":"high",
+  "reason":"B's chart and controls are substantially more usable on a phone, and its labelled model exposes peak top-ups and shortages while keeping readable textual alternatives. Both load locally and handle ordinary form errors well; I would revisit this choice after A recomposes its hourly strip and B fixes menu dismissal and reconciles the shortage state with its promise.",
+  "score_preference_note":""
+}

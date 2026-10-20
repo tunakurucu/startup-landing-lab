@@ -1,0 +1,84 @@
+{
+  "packet": "X08",
+  "persona": "buyer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 8,
+      "honesty": 8,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 7
+    },
+    "evidence": {
+      "clarity": "The lede says it is a bedside lamp that starts rising half an hour before the chosen time, with no app or screen.",
+      "fit": "As a phone buyer burned by delayed hardware, I see a $20 refundable deposit, “no card today,” an explicitly planned season, and disclosure that the image is a drawing.",
+      "distinctiveness": "The page makes the dawn ramp and one physical dial the visual and interaction motif instead of adding generic sleep claims.",
+      "proof": "At 390 the drawn room and dial let me preview what setting a wake time does; the text says the color is illustrative and final brightness is not yet set.",
+      "craft": "At all widths the navy hero and warm neutral product section feel consistent; the phone version keeps the headline, action and deposit caveat readable.",
+      "mobile": "390: I can reach Menu and reserve from the first screen, but the full light simulation is lower on the page and requires scrolling.",
+      "honesty": "The copy states “checkout isn’t connected yet, so no card today” and explains the email step; however the target `reserve@morrow.example` is not supplied by the brief.",
+      "interaction": "At 390 the native range goes to -30 (Off) and 0 (Full brightness); Play can be paused, and the CTA goes to the reservation section with its email explanation.",
+      "copy": "It directly answers whether this is a product photo, whether it uses an app, how the deposit is refunded and why there is no exact ship date.",
+      "first_screen": "390: the promise and refundable-deposit CTA are above the fold, while the full lamp-and-dial experience extends below it."
+    },
+    "problems": [
+      "The reservation link ultimately sends to an address that is not supplied in the client brief.",
+      "There is no actual product photo or final shape yet; the page appropriately labels the CAD drawing, but a buyer still has to trust the planned batch.",
+      "The detailed mechanism and sample ramp require a scroll on mobile."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "The repeated “Reserve a Morrow” action ultimately opens `mailto:reserve@morrow.example`, an address that the client brief does not supply.",
+        "steps": "At 390 or 1440, click the hero “Reserve a Morrow” anchor, then click the button in the reserve section. It resolves to `mailto:reserve@morrow.example`; the X08 brief provides no reservation email address."
+      }
+    ]
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 6,
+      "honesty": 3,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 6
+    },
+    "evidence": {
+      "clarity": "390: the headline and lede say it is a lamp that wakes the visitor gradually; “Reserve a place” becomes visible after scrolling.",
+      "fit": "The deposit terms and planned season are clear, and the page says the design is drawn rather than photographed; the email capture itself has no connected backend.",
+      "distinctiveness": "The working circular dial and animated room make the thirty-minute rise understandable without claiming medical effects.",
+      "proof": "The dial and play button let me see a dark room move toward warm morning; the caption says the lamp is drawn and the final shape is still being decided.",
+      "craft": "1440: the dusk scene and warm cream sections are coherent and visually distinctive; 390 keeps the nav visible but moves reservation below the scene.",
+      "mobile": "At 390 the nav, headline and large scene consume the opening; the reservation action and its form are several scrolls lower.",
+      "honesty": "After valid submit, “Your place is held” promises emails, but the page stores the address only in localStorage and sends no request.",
+      "interaction": "At 390, End/Home change dial time and brightness, Play toggles animation, and the form validates and can be undone; the success state is local only.",
+      "copy": "“Hardware runs late” and the no-month-until-factory-commitment language address the crowdfund shipping concern plainly.",
+      "first_screen": "1440 includes the dial and illustration near the promise; at 390 no reservation action or signup form is in the first viewport."
+    },
+    "problems": [
+      "The form gives a false held-place confirmation and future email promises while keeping the address on this device only.",
+      "The mobile reservation path is well below the headline and illustration, which asks a cautious buyer to scroll before seeing the terms.",
+      "The phone navigation has no collapsed menu and competes with the hero headline for space."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "After a valid email, the page announces “Your place is held” and promises future emails, but the script only writes the value to localStorage; `HOLD_ENDPOINT` is empty and no request or backend receives it.",
+        "steps": "Open B/index.html, scroll to Reserve, submit a valid email, then inspect the confirmation and `localStorage.morrow.held`. The form hides and promises future mail while no network submission occurs; reload in a fresh browser context and the place is gone."
+      }
+    ]
+  },
+  "preference": "A",
+  "confidence": "high",
+  "reason": "A is the more trustworthy choice for someone wary of delayed hardware: it names the $20 refund, refuses an exact ship date and says checkout opens email without charging today. B’s local-only confirmation claims a place and future emails that cannot be delivered; I would reconsider if it connected to a collector or clearly said nothing was sent."
+}

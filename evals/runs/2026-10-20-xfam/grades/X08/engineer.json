@@ -1,0 +1,84 @@
+{
+  "packet": "X08",
+  "persona": "engineer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 8,
+      "honesty": 8,
+      "interaction": 9,
+      "copy": 8,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "At 1440 and 390, the headline, native range and play control convey a lamp that gradually lights the room before a set wake time.",
+      "fit": "The site loads locally with no backend; the reservation copy correctly says no card is taken and explains that the action opens email.",
+      "distinctiveness": "The SVG light scene is tied to the product, and the range input provides native keyboard and touch behavior.",
+      "proof": "The range endpoints update the image/readout from Off at -30 to Full brightness at 0; probe reports no runtime errors or overflow.",
+      "craft": "The 50KB single HTML contains SVG, semantic sections, form-like range control, CSS and JS; axe reports no issues, but CSS/JS are embedded together.",
+      "mobile": "390/320 have no overflow and text bottoms at 13px; the menu opens on phone, and the SVG/range stack without clipping.",
+      "honesty": "The page labels its image as drawn and the light colors as illustrative; its final mailto destination is not present in the brief.",
+      "interaction": "At all widths, range min/max and Play/Pause work; Escape closes the open mobile menu. There is no email form, so email edge-input tests do not apply.",
+      "copy": "The controls are native and named, and the animation has a reduced-motion path; the page has no network-dependent code.",
+      "first_screen": "At 1440 the scene, dial and reservation action are in the opening view; at 390 the action appears, but the readout is lower."
+    },
+    "problems": [
+      "The reserve CTA eventually uses an email destination absent from the brief.",
+      "All design and behavior live in one large HTML file, including the SVG scene and script.",
+      "The mobile illustration and its dial extend beyond the first viewport, so the full motion proof needs scrolling."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "The repeated “Reserve a Morrow” action ultimately opens `mailto:reserve@morrow.example`, an address that the client brief does not supply.",
+        "steps": "At 390 or 1440, click the hero “Reserve a Morrow” anchor, then click the button in the reserve section. It resolves to `mailto:reserve@morrow.example`; the X08 brief provides no reservation email address."
+      }
+    ]
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 7,
+      "distinctiveness": 8,
+      "proof": 8,
+      "craft": 7,
+      "mobile": 6,
+      "honesty": 2,
+      "interaction": 7,
+      "copy": 8,
+      "first_screen": 6
+    },
+    "evidence": {
+      "clarity": "The headline/lede state the bedside-lamp purpose and gradual dawn effect; the reserve form is the only way to express interest.",
+      "fit": "The page honors the no-checkout-yet constraint about payment, but its local-only list state is not disclosed and cannot email the buyer.",
+      "distinctiveness": "The custom dial is an accessible product-specific artifact, though the page is one inline HTML/CSS/JS file.",
+      "proof": "End/Home and Play/Pause visibly change time/light; probe shows no overflow or errors at 390/320, but the form’s confirmation is not backed by a service.",
+      "craft": "The custom slider has keyboard control and focus indication, the email is labeled, and axe reports no violations; HTML/CSS/JS are bundled in one file.",
+      "mobile": "At 390 no horizontal overflow occurs, but the header has no phone menu and the reservation form sits far below the interactive scene.",
+      "honesty": "The “place is held” confirmation and promise of emails are false in this delivered page: HOLD_ENDPOINT is empty and only localStorage changes.",
+      "interaction": "Empty, zero, negative and malformed emails show a nearby error; a 2,000-character syntactically valid value is accepted, paste succeeds, and undo removes the saved value.",
+      "copy": "“No account, no app” and “hardware runs late” are concrete; the success microcopy overstates what has happened.",
+      "first_screen": "1440 shows the simulator beside the promise; at 390 the signup action is absent from the opening view."
+    },
+    "problems": [
+      "The confirmation promises a queue place and future email without transmitting or persisting beyond localStorage.",
+      "Valid email lengths have no upper bound, and success focus moves into the confirmation without stating the device-only storage.",
+      "The long mobile hero delays the form and uses an always-visible nav instead of a compact menu."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "After a valid email, the page announces “Your place is held” and promises future emails, but the script only writes the value to localStorage; `HOLD_ENDPOINT` is empty and no request or backend receives it.",
+        "steps": "Open B/index.html, scroll to Reserve, submit a valid email, then inspect the confirmation and `localStorage.morrow.held`. The form hides and promises future mail while no network submission occurs; reload in a fresh browser context and the place is gone."
+      }
+    ]
+  },
+  "preference": "A",
+  "confidence": "medium",
+  "reason": "A uses a native range and handles reduced motion, while B has a more elaborate keyboard-capable dial and an undo path. B’s form nevertheless promises a server-side reservation without making a request, so I would favor A despite its monolithic file; an explicit local-only result or a real backend would change the decision."
+}

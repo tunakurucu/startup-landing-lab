@@ -1,0 +1,78 @@
+{
+  "packet": "X07",
+  "persona": "engineer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 8,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 8,
+      "craft": 7,
+      "mobile": 8,
+      "honesty": 9,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "File:// loads at all required widths with no console/page errors; the probe reports zero overflow at 320, 390, 768 and 1440.",
+      "fit": "The page is static with no server or dependency; it describes local reads and no network activity and uses the supplied npm package name.",
+      "distinctiveness": "Five buttons map a variable to source code, `.env.example` and CI; selecting one highlights matching lines and updates an aria-live detail.",
+      "proof": "Probe output is labeled “Example output”; live row selection exposes the three sources and handles missing/unused cases.",
+      "craft": "The 36KB page has semantic sections, headings and CSS tokens, but inline CSS/JS; axe flags `scrollable-region-focusable` at 1440 and 390.",
+      "mobile": "At 390 report rows stack with labels and no overflow; horizontally scrollable source panes are not keyboard-focusable per axe.",
+      "honesty": "The sample and private-repo status are explicit; the page makes no unsupported user, star or performance claims.",
+      "interaction": "At all widths, Space on each row selects it and updates the detail; copy confirms `npx envcensus` and has an error fallback. No forms or menus exist.",
+      "copy": "The help output is embedded; the copy handler uses Clipboard API with a fallback and displays nearby failure text.",
+      "first_screen": "1440 shows command plus report; 390 shows the action, while the report starts below the first viewport."
+    },
+    "problems": [
+      "Scrollable source panes are not keyboard-focusable; the probe flags this at desktop and phone widths.",
+      "All styling and JavaScript are embedded in the HTML, which makes content, presentation and behavior harder to maintain separately.",
+      "At 390 the source panes still require horizontal panning even though the report itself reflows."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 6,
+      "craft": 7,
+      "mobile": 5,
+      "honesty": 2,
+      "interaction": 7,
+      "copy": 8,
+      "first_screen": 7
+    },
+    "evidence": {
+      "clarity": "The static file loads without console/page errors at 1440, 768 and 390; probe shows 0 overflow at 390 and 63px at 320.",
+      "fit": "It needs no server or dependency and has a single copy control for the supplied `npx envcensus` command.",
+      "distinctiveness": "The ledger shows concrete mismatches but contains no interactive row state or source mapping.",
+      "proof": "It reports a named repo and 212 files without a sample label; its CI code examples are static.",
+      "craft": "Visible focus and copy feedback work; axe flags a serious scrollable-region issue at 390, and the 320 page overflows.",
+      "mobile": "HTML, CSS and JS are inline in the 28KB file; the layout is legible at desktop, but the 320 overflow is a robustness defect.",
+      "honesty": "The specific repo and scan tally are not supported or labeled as examples, so the displayed result is not safe evidence.",
+      "interaction": "Keyboard Enter on Copy writes `npx envcensus` and announces “Copied”; no form, menu or dialog exists, and the report has no state/reset path.",
+      "copy": "“Needs Node.js and npm. No account, no config file, no network” is useful setup copy; help output offers concrete command examples.",
+      "first_screen": "1440 shows the command and top of the report; at 390 the report is below the initial viewport."
+    },
+    "problems": [
+      "The report has unsupported real-run details without an example label.",
+      "The 320px viewport overflows by 63px, and the probe flags a serious scrollable-region accessibility issue at 390.",
+      "The static ledger cannot show details or receive keyboard selection for its mismatch rows."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF2",
+        "evidence": "B presents `~/code/orders-api` and “scanned 212 files in 3 directories” as a real run; neither repository nor scan count is supplied in the brief, and no sample label appears beside the ledger.",
+        "steps": "Open B/index.html and read the ledger beneath the hero. It names `~/code/orders-api` and reports 212 files; compare with the X07 brief, which supplies no repository data or scan result."
+      }
+    ]
+  },
+  "preference": "A",
+  "confidence": "high",
+  "reason": "A lets me trace a mismatch with keyboard-operable rows and a clipboard fallback, while its sample is clearly labeled. B has a simpler copy action but a 320px overflow, an accessibility issue and unsupported run output; a labeled fixture and responsive repair could change my choice."
+}

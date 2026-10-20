@@ -1,0 +1,72 @@
+{
+  "packet": "X03",
+  "persona": "designer",
+  "A": {
+    "scores": {
+      "clarity": 8,
+      "fit": 7,
+      "distinctiveness": 7,
+      "proof": 7,
+      "craft": 7,
+      "mobile": 6,
+      "honesty": 7,
+      "interaction": 7,
+      "copy": 8,
+      "first_screen": 6
+    },
+    "evidence": {
+      "clarity": "1440: 'Dinner is already in your fridge' is immediately explained by the line about planning dinners and buying only what's missing; the orange action explicitly says 'Join the iPhone waitlist'. The parent/picky-child audience only becomes explicit farther down.",
+      "fit": "390: the ingredient selector remains available and the later 'somebody won't eat the green bits' section speaks directly to picky households. The costs section explains free now and a later shared-list plan with no set price, but the demo does not let a parent try the picky-child rules described below it.",
+      "distinctiveness": "1440: the yellow field, navy refrigerator outline, slightly tilted ingredient magnets and taped green shopping note form a coherent kitchen-specific visual idea. The lower how-it-works and FAQ sections become a more conventional text-led marketing stack.",
+      "proof": "At 1440, ingredient choices and the first dinner are already visible. At 1440, 768 and 390 I toggled all 21 ingredients both ways and used Shuffle: dinners and missing ingredients changed, selecting everything removed the shopping list, and selecting nothing produced explicit prompts. On the phone the actual dinner result is far below the first viewport.",
+      "craft": "1440: the large navy headline has strong contrast against yellow and aligns with a generously framed artifact, though the very tall fridge leaves a large empty yellow area under the left-column CTA. At 768 and 390 the dinner and shopping panels remain aligned without clipping; long dish names wrap to several lines inside the narrow phone panel.",
+      "mobile": "390: the headline, explanatory line and orange action fit comfortably; the fridge begins at about y480, but its ingredient inventory pushes dinner results and then the shopping note well down the page. Ingredient targets measured roughly 33\u201335px high, below 44px. The 320 screenshot retains the full headline/action, with the header waitlist wrapping.",
+      "honesty": "1440 and 390: waitlist links use the supplied URL and the page says 'Free to use. iPhone first.' The example-dinner disclosure sits at the bottom of the entire tall fridge, so a phone visitor chooses ingredients long before seeing that label; the later costs paragraph clearly discloses the future paid plan.",
+      "interaction": "Across all three widths, every ingredient and Shuffle responded; the empty shelf showed 'Tap a few things above to start' and the all-selected state said the week was already in the house. At 390, tapping Milk selected it and Space deselected it. Clicking the shopping item's square/row did not check it; it is a static list. There is no explicit sample-reset control, so I restored the initial state by reloading.",
+      "copy": "1440/390: 'Half a bag of spinach', 'Nothing to buy', 'Keep it apart' and 'Repeat the wins' use concrete household language. The phone-friendly picky-eater advice is specific; the action stays consistently named. 'Swap any night' describes finer control than the demo's single whole-week Shuffle affords.",
+      "first_screen": "1440: the fridge promise, waitlist action, ingredient selector and first dinner support each other in one viewport. At 390 the promise and action remain visible, but only the opening ingredient choices fit; neither the planned dinners nor the shopping gap is visible without scrolling."
+    },
+    "problems": [
+      "390: the tall ingredient inventory separates a tap from the dinner/list feedback by a long scroll, and the 33\u201335px ingredient targets are small for use in a kitchen.",
+      "The example disclosure is placed beneath the complete fridge artifact; move it beside the opening demo invitation so it is visible before interaction on a phone.",
+      "The shopping-note squares look checkable but clicking a row does nothing, while the demo offers no reset and no individual-night swap despite the surrounding copy."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 9,
+      "proof": 8,
+      "craft": 8,
+      "mobile": 7,
+      "honesty": 9,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 6
+    },
+    "evidence": {
+      "clarity": "1440 and 390: the headline specifies planning the week's dinners from the fridge; the first supporting paragraph explicitly names a free iPhone app for parents of picky kids and a list containing only what's missing. The visible action says 'Join the iPhone waitlist'.",
+      "fit": "1440, 768 and 390: the shelf demo includes food inventory plus 'No mushrooms', 'Nothing spicy' and 'Nothing mixed in'. Turning on Nothing mixed in adds KIDS instructions; the adjacent costs copy explains the future paid shared-list plan and unset price. This makes the picky-child tension part of the demonstration itself.",
+      "distinctiveness": "1440: chunky serif headlines, illustrated ingredient pills, a pale shelf panel, pinned cream dinner sheet and later pinned children's no-lists all come from planning a family kitchen. The same visual vocabulary carries through the shopping and pricing artifacts rather than relying on decorative startup graphics.",
+      "proof": "1440: shelf choices and several planned dinners appear together early. At each required width I exercised all 15 checkboxes, emptied the shelf, selected everything and reset: empty produces 'Nothing on the shelf, so no plan yet', reset restores nine ingredients, and Nothing spicy changes the shopping count. At 390, spinach alone produces two dinners and explains why the week is incomplete.",
+      "craft": "1440: the broad serif headline balances a compact explanatory/CTA column, then two complementary panels; navy, warm yellow, cream and pale blue have clear roles. At 768 the panels stack cleanly; at 390 long meal names and ingredient text wrap legibly. The fully stacked phone page is very long, and its dominant headline plus conversion disclosure consumes most of the initial viewport.",
+      "mobile": "390: the shelf is recomposed into two ingredient columns with measured targets of at least 44px, and Menu opens a legible cream navigation panel; Escape closes it and Picky eaters reaches #picky. The dinner sheet is below the entire input panel, so feedback from inventory/picky toggles requires scrolling. The 320 screenshot keeps the full CTA readable but has no artifact in its first screen.",
+      "honesty": "390: 'A sample fridge. Tap what you have.' appears directly above the ingredient controls, while the sheet also says 'Sample shelf, sample dinners'. Before the waitlist action the page explains one email address, a message when the app is ready, and a later paid plan with no set price. Clicks request the brief's exact waitlist URL.",
+      "interaction": "1440, 768 and 390: all ingredient/picky checkboxes update the sheet, Put the sample back restores nine selections, and all four FAQ rows open/close with their answers. At 390 a touch tap turns Six eggs off and Space turns it on again; Menu toggles and Escape dismisses it. Feedback is useful but sits below the full input panel on the phone.",
+      "copy": "1440/390: 'Picky eaters get a veto, not a lecture', 'Nothing mixed in' and 'broth separate' make the parent problem concrete. Empty/partial outputs explain their state instead of merely showing blanks. A spinach-only result lists 'leftover rice' as something to buy, an awkward mismatch between the input's household-leftover wording and shopping-list language.",
+      "first_screen": "1440: a specific fridge-to-week promise and waitlist CTA are supported by the shelf and several dinner rows starting around y450. At 390 the same promise, audience and action are readable, but only two ingredient rows begin near the viewport bottom; no dinner/list result demonstrates the outcome in that first screen."
+    },
+    "problems": [
+      "390: the headline, paragraph and conversion disclosure put the shelf near y628, and dinner/list feedback comes after the complete input panel; compress the opening and bring a result summary alongside the controls.",
+      "The long phone stack repeats the shelf/planning/list story in multiple mini-artifacts; reducing that repetition would improve scanning and spacing rhythm.",
+      "In the sparse-shelf state, a spinach-only selection puts 'leftover rice' on the buy list; rewrite shopping labels for ingredients that a parent can actually purchase."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B gives Pantrywise a more recognisable family-kitchen identity and makes picky-eater preferences visible, operable product evidence. Its honest sample labelling and deliberate reset/empty states make it closer to ready to ship, although a shorter phone opening with nearby dinner feedback would materially improve it.",
+  "score_preference_note": ""
+}

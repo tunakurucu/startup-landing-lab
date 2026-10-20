@@ -1,0 +1,50 @@
+{
+  "packet": "X02",
+  "persona": "engineer",
+  "A": {
+    "scores": {"clarity": 9, "fit": 8, "distinctiveness": 8, "proof": 9, "craft": 8, "mobile": 8, "honesty": 6, "interaction": 8, "copy": 8, "first_screen": 6},
+    "evidence": {
+      "clarity": "1440 and 390: the headline names the cancelled 2:30 and waitlist; the supporting paragraph explicitly names small physical therapy clinics and sequential texts. Clicking Got a text reaches the patient instructions, and the setup action reaches #setup-call.",
+      "fit": "At 1440, 768 and 390 I operated cancellation, first offer, pass/second offer and confirmation, plus replay and stop. The made-up clinic/patients and illustrative times are explicitly labelled; the privacy section says the HIPAA risk assessment is still in progress. The booking limitation is disclosed only at the destination.",
+      "distinctiveness": "1440: the five-slot schedule and time-labelled step rail are built around a particular cancelled appointment. At 390 the schedule deliberately becomes three slots and the steps become a two-column control grid, rather than shrinking the desktop artifact.",
+      "proof": "1440: the labelled sample begins at y558, with the filled 2:30 visible. At every tested width, selecting each of four buttons updated the schedule, visible message history, pending text and status note consistently; replay reset to Cancelled 1:12 and Stop preserved the current state.",
+      "craft": "Supplied probes report no errors, blocked requests, overflow or axe violations at 390/1440, and no overflow at 320. My file/no-network loads and operated states also produced no errors or horizontal overflow at 1440/768/390. Source has coherent colour/spacing tokens, native links/buttons, ordered headings and main/header/footer landmarks; the 35.6 KB HTML uses system fonts and no dependencies. At 200% magnification there was no horizontal loss, although CSS-only zoom made desktop columns excessively narrow; 720 CSS-pixel reflow was readable.",
+      "mobile": "390: all four step buttons and replay were keyboard and pointer operable with at least 44px height, visible focus and a nearby changing status paragraph. The sample starts at y705, so only its schedule reaches the first viewport; the full confirmation thread becomes very long. The 320 supplied screenshot remains readable with no side scrolling. There is no collapsed menu: the three visible navigation links wrap and work.",
+      "honesty": "390: sample clinic is marked in the schedule and the rail explicitly says times are an example, not a measured result. No invented endorsement or compliance claim appears. The hero says Book a 15-minute setup call, but clicking it only reaches a section where the unavailable calendar is finally disclosed; its repeated booking link targets that same section.",
+      "interaction": "Keyboard Tab traversal at 1440 showed a visible 2px outline on every actionable stop, and Space operated all four demo buttons at 390. No trap or dialog/menu requiring Escape exists. Replay/stop/reset worked at all three widths; reduced motion retained the complete example. There are no input, textarea, select or editable fields, so empty/long/zero/negative/pasted input cases are not applicable. The repeated booking anchor provides no new feedback.",
+      "copy": "390: explicit status copy explains whose turn it is, the reply deadline and why nobody else is texted. YES, NO, CANCEL and STOP have distinct explanations in the patient section. The setup heading promises a loaded waitlist before the page explains it cannot currently take a booking, which weakens otherwise concrete wording.",
+      "first_screen": "1440: promise, audience, action and part of the labelled completed appointment example are visible together. At 390, the headline and setup action are visible but the sample's explanatory step controls and messages are below 844px; the booking action also overstates the available next step."
+    },
+    "problems": [
+      "1440/390: disclose that booking is unavailable beside the first setup action; the final repeated Book link merely targets its own #setup-call section and adds no feedback.",
+      "390: the explanatory demo controls/messages sit below the first viewport, and the completed conversation is a long vertical read; bring the decisive offer/confirmation closer to the promise and controls.",
+      "Keyboard: add a skip-to-main link so returning users can bypass the header/navigation before reaching the substantive content."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {"clarity": 8, "fit": 8, "distinctiveness": 7, "proof": 8, "craft": 8, "mobile": 6, "honesty": 6, "interaction": 7, "copy": 8, "first_screen": 6},
+    "evidence": {
+      "clarity": "1440/390: the opening paragraph explains one-at-a-time texts and ordinary front-desk booking, and the small supporting line identifies physical therapy clinics. I followed the patient action to #patients; all setup actions instead opened Booking opens shortly.",
+      "fit": "At 1440, 768 and 390 I selected every one of seven example stages, replayed, paused and followed every setup action. The example uses no real clinic/patients, both audiences receive specific guidance, and the HIPAA section explicitly says the formal risk assessment is unfinished. The absence of scheduling is handled by a notice, but only after clicking.",
+      "distinctiveness": "1440: an appointment-and-waitlist board sits beside the headline rather than relying on stock imagery, and its state changes are specific to the 2:30 example. The rest follows a conventional stacked how-it-works, rules, patient, FAQ and call layout.",
+      "proof": "1440: the schedule and waitlist are visible in the first viewport, with a nearby made-up-example label. Selecting seven stages at each width showed cancellation, timed offer to Dana, pass, Luis offer, YES and final filled state; replay restored the initial booked state. At 390 the controls and example label sit at the bottom of a board taller than one screen.",
+      "craft": "Supplied probes show zero axe violations, errors, blocked requests or overflow at 390/1440, and zero overflow at 320. My file/no-network operations at all three widths also had no errors/overflow. Source is separated into semantic HTML, token-first component CSS and a 7.5 KB state-driven script, with system font fallbacks and no external dependencies; total source is about 42 KB. Reduced motion immediately shows the final example and disables animation. The 200%/720-CSS-pixel reflow retained readable content without horizontal loss.",
+      "mobile": "390: the board stacks schedule, waitlist, fixed-height scrolling text thread and then controls; its top begins at y630, so the example's action and disclosure are far below the fold. Step targets are only 22x22px and play is 34x34px. Header content links are hidden below 640px without a menu replacement; the visible hero patient link and footer navigation still work. Supplied 320 shot has no clipping.",
+      "honesty": "At all three widths the board says An example, not a live clinic, and the HIPAA section makes no compliance claim. Every Book action opens an explicit scheduling-not-connected notice and reports no fictitious success. The limitation is absent before the click, while the call section still says Pick a time and We'll call you.",
+      "interaction": "Keyboard traversal has a visible 3px outline and a working skip link; Space selected all seven stages at 390. The native dialog traps traversal within its links/Okay, Escape closes it and returns focus to the booking action. Replay and pause work at every width. Reproducibly, selecting stage 6, focusing Play and pressing Space lets the final tick hide the focused control and move focus to BODY. No editable fields exist, so empty/long/zero/negative/pasted-value tests are not applicable.",
+      "copy": "The patient section explains YES/NO/STOP and independently verifying an offer by calling the clinic's familiar number. Captions such as Dana passes. She keeps her place for next time explain state clearly. Booking opens shortly implies a time expectation that the brief does not establish, and Pick a time precedes a notice that no scheduling tool is connected.",
+      "first_screen": "1440: the specific cancelled-slot promise and an operable labelled board share the viewport. At 390: promise, clinic audience and action are visible, but only the top booked schedule appears before 844px; the offer/filled evidence, controls and sample disclosure require scrolling. The primary action cannot yet book a call."
+    },
+    "problems": [
+      "1440/390: place the unavailable-booking disclosure beside the first setup action, and replace Pick a time/Booking opens shortly with a next step that accurately describes the current notice.",
+      "390: enlarge the 22px step targets and 34px play target to at least 44px; compact/recompose the tall board so users can see the result, sample label and controls together.",
+      "Keyboard: when the final playback tick hides #play, transfer focus to Replay or retain the focused control; stage 6 -> focus Play -> Space -> wait 2.6 seconds currently leaves focus on BODY."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "A",
+  "confidence": "medium",
+  "reason": "A's explicit, large step controls preserve keyboard focus and put explanatory feedback closer to the interaction on phones. B has cleaner separated source files and a useful skip link/dialog, but its tiny controls, tall mobile board and reproducible end-of-playback focus loss make it less ready to maintain and ship. Fixing those issues would materially narrow the difference; both need earlier booking disclosure.",
+  "score_preference_note": ""
+}

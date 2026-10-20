@@ -1,0 +1,78 @@
+{
+  "packet": "X09",
+  "persona": "engineer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 8,
+      "honesty": 9,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "All file:// opens succeed at the required widths with no page or console errors; A probe reports zero overflow at 320, 390, 768 and 1440.",
+      "fit": "The one-file page is self-contained and describes the sample state; the demo and carrier destinations match the brief URLs.",
+      "distinctiveness": "The sample is implemented as a door-by-time grid, native range clock and labeled door buttons linked to an SVG dock face.",
+      "proof": "At each width I operated all six doors and every currently bookable slot; a selected slot opens a form and returns a local reference; Reset restores initial bookings and time.",
+      "craft": "A is a large single HTML document with inline SVG/CSS/JS; landmarks and input labels exist, but the probe flags one serious color-contrast node at 1440.",
+      "mobile": "At 390 doors collapse into a single selected-door list, 13px is the probe minimum and there is no horizontal overflow; keyboard focus is visible.",
+      "honesty": "The action states “nothing is sent” and “sample day,” and the page labels the pilot status and lack of measured outcomes.",
+      "interaction": "Empty carrier focuses its input and shows a specific error; a 100-character carrier is capped at 40; zero carrier and negative reference are accepted; reset works. Escape closes the booking sheet but not the phone menu.",
+      "copy": "The event handlers update an aria-live status and move focus to the booking/done panel; `innerHTML` is used for static structure while carrier values are set with textContent.",
+      "first_screen": "At 1440 the CTA and board are together; at 390 the promise and simulator are visible, but booking actions sit lower on the page."
+    },
+    "problems": [
+      "The phone menu stays open on Escape even though the booking sheet itself supports Escape.",
+      "Inline SVG, styling and script in one HTML file make the large implementation harder to review and maintain.",
+      "Axe finds a serious color-contrast issue at 1440; identify and correct the offending text color before release."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 8,
+      "craft": 6,
+      "mobile": 3,
+      "honesty": 8,
+      "interaction": 7,
+      "copy": 8,
+      "first_screen": 7
+    },
+    "evidence": {
+      "clarity": "B’s HTML, styles and app script load from disk without console/page errors; probe finds no page overflow at 390, though the inner board is horizontally scrollable.",
+      "fit": "The local-only demo needs no backend and its links use the two brief-supplied URLs; no remote asset request is required.",
+      "distinctiveness": "CSS and app.js are separated; generated schedule controls have door/time labels and the booking drawer is a form with visible labels.",
+      "proof": "All 16 open windows respond and open the drawer. Empty PO gets `aria-invalid` and a requirement placeholder; valid booking updates the sample board and “another” returns to it.",
+      "craft": "Probe reports `scrollable-region-focusable` at 390, 11px smallest text, 44 under-12px elements and 0 contrast violations; small booked-cell metadata is truncated.",
+      "mobile": "The outer page has no horizontal overflow but the board itself must pan sideways at 390; at 320 as well, the schedule is an independently scrolling region.",
+      "honesty": "The script says “sample board” and “nothing leaves the page”; the pilot statement matches the brief’s two unnamed warehouses.",
+      "interaction": "At 390 keyboard focus reaches the board and open cells; Enter opens the form, but Escape does not close it. PO 0 and -1 are accepted, 300-character PO is unbounded, and pallet 0/-1 is rejected by native constraints.",
+      "copy": "`app.js` isolates generated sample data and handlers, and CSS variables define the palette and schedule widths; it has no server error path because no backend is used.",
+      "first_screen": "1440 shows promise, CTA and booking board; 390 keeps the CTA but the visible schedule exposes only early times and a sideways scroll region."
+    },
+    "problems": [
+      "The mobile board requires sideways panning to reach later booking windows, and its repeated 11px details are below the unreadable-mobile threshold.",
+      "Escape does not dismiss the booking drawer after an open slot is selected; the user must find and activate Close.",
+      "The PO/BOL field accepts 0, -1 and very long text; only pallet count has native 1–30 bounds."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF3",
+        "evidence": "At 390 the core booking board is a horizontally scrollable 22-column schedule; only early times fit in the visible strip, later booking buttons require sideways scrolling, and the probe finds 44 text elements below 12px (11px minimum) in the repeated slot details.",
+        "steps": "Open B/index.html at 390×844 and inspect the board. The initial view shows 06:00–08:00 while the schedule continues to 17:00; scroll `.board-scroll` horizontally to expose later times and booking buttons. The probe reports 44 elements under 12px."
+      }
+    ]
+  },
+  "preference": "A",
+  "confidence": "medium",
+  "reason": "A has a maintainability cost because it is a single large file, and its menu misses Escape, but its board reflows and its state/reset path works. B separates files and labels its sample well; the 390 board still requires sideways scrolling and has 11px repeated details, which makes A the safer implementation to ship."
+}

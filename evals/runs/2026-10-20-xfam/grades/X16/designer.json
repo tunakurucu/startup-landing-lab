@@ -1,0 +1,83 @@
+{
+  "packet": "X16",
+  "persona": "designer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 9,
+      "proof": 7,
+      "craft": 8,
+      "mobile": 7,
+      "honesty": 8,
+      "interaction": 6,
+      "copy": 8,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "At 390 the headline names uncashed checks, dormant balances and state deadlines; the lede identifies controllers/accounting managers and the audit-letter trigger.",
+      "fit": "A gives controllers an assessment URL supplied by the brief and addresses CFO/auditor concerns with rule sources, notices, reports and no-legal-advice boundaries.",
+      "distinctiveness": "The reporting-year timeline and formal register tables fit the finance/compliance subject and distinguish Holdfast from a generic SaaS landing page.",
+      "proof": "At 1440 the annual deadline graphic and later example report show the process; the first artifact is illustrative and the state-rule table is static.",
+      "craft": "At 1440 the editorial type, green stamp color and paper register are cohesive; one serious contrast issue is reported at 390.",
+      "mobile": "At 390 the hero, action and timeline stack without page overflow; the later multi-column ledger is 649px wide in a 340px scroll region.",
+      "honesty": "The graphic says illustrative and the state-rule section supplies verification dates and a counsel disclaimer; the general \u201c60 to 120 days\u201d notice statement is qualified as most states.",
+      "interaction": "At 390 the Menu opens and closes with Escape, and FAQ details expand; the year chart and register examples themselves do not recalculate.",
+      "copy": "\u201cHolder report,\u201d \u201cdormancy,\u201d \u201cowner notice\u201d and the audit-letter context suit the controller audience; several sections explain the same rule flow.",
+      "first_screen": "At 1440 and 390 the specific state-deadline promise and supplied assessment URL are visible; the annual calendar supports the promise in the first scroll."
+    },
+    "problems": [
+      "A\u2019s check ledger needs sideways scrolling on a phone.",
+      "The hero\u2019s long lede and formal calendar create a slow route to the detailed product output.",
+      "The mobile probe reports one serious contrast finding."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF3",
+        "evidence": "At 390 the outstanding-check ledger is a horizontal scroll region: its container is 340px wide while the table is 649px wide, so deadline/status columns require sideways scrolling.",
+        "steps": "Open A at 390\u00d7844, scroll to the outstanding-check ledger and swipe horizontally within it; the table width is 649px in a 340px container, exposing additional columns only after sideways scrolling."
+      }
+    ]
+  },
+  "B": {
+    "scores": {
+      "clarity": 8,
+      "fit": 9,
+      "distinctiveness": 9,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 7,
+      "honesty": 9,
+      "interaction": 9,
+      "copy": 8,
+      "first_screen": 9
+    },
+    "evidence": {
+      "clarity": "At 390 the headline says each stale check has a state deadline; the lede explains tracking checks and balances, assigning them to states and preparing reports.",
+      "fit": "B speaks to controllers through a register and CFOs through a current summary, while including a counsel disclaimer and the exact assessment URL from the brief.",
+      "distinctiveness": "The live register, date/state filters and report preview make the finance workflow feel specific rather than a compliance template.",
+      "proof": "At 390 the sample register is labeled with company/sample status and an as-of date; changing the date and incorporation state updates the past-due/next-filing summary.",
+      "craft": "At 1440 the status colors, ledger and sample summary are consistent; the probe reports no errors or axe findings at 1440, with two scroll-region findings at 390.",
+      "mobile": "At 390 the headline, CTA and register fit without page overflow and the Menu works; state-rule and report tables later require horizontal swipes.",
+      "honesty": "The visible list says sample data with an as-of date; state-rule copy gives a last-checked date and asks users to confirm with counsel.",
+      "interaction": "At 390 sorting by bank reconciliation, date, incorporation state and Reset update the list; an out-of-range date preserves the last valid result and explains the range.",
+      "copy": "\u201cPast due,\u201d \u201cNext filing,\u201d \u201cDormant,\u201d and \u201cstate of incorporation\u201d map directly to the controller\u2019s audit-letter task; the supplied URL action is direct.",
+      "first_screen": "At 1440 and 390 the specific stale-check deadline claim, live summary/list and assessment action share the opening view."
+    },
+    "problems": [
+      "B puts the changing register and deadline summary in the first screen.",
+      "The dark green/ink status system and live totals make the product\u2019s central job visually legible."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF3",
+        "evidence": "At 390 the state-rule table and report table are horizontal scroll regions wider than their containers: 678px and 635px in 353px containers.",
+        "steps": "Open B at 390\u00d7844 and scroll to State rules, then the report preview; swipe horizontally within each table. The rules table is 678px wide and report table 635px wide inside 353px containers."
+      }
+    ]
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B puts the changing register and deadline summary in the first screen. The dark green/ink status system and live totals make the product\u2019s central job visually legible."
+}

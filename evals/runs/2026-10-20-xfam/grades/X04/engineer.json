@@ -1,0 +1,78 @@
+{
+  "packet": "X04",
+  "persona": "engineer",
+  "A": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 6,
+      "honesty": 8,
+      "interaction": 5,
+      "copy": 8,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "1440 and 390: the hero names a shift logbook for restaurant managers, describes closing/opening, and Start a free trial links to the supplied signup URL.",
+      "fit": "Diff review confirms the old template claims and selectors were removed, the original logo.svg is byte-identical, and CSS keeps #3B3FD9 and #FF7A59. The opening and owner-week examples give both audiences a path.",
+      "distinctiveness": "1440: close-note entries, timestamped categories and the owner week table replace the old gradient mockup and testimonial grid; at 390 the week table becomes labelled blocks.",
+      "proof": "At all three required widths I toggled both Mark handled buttons to Undo and back, selected all five composer categories and added an entry. The note demonstrates owner and handled states with local sample disclosure.",
+      "craft": "Default probes show no errors, requests, overflow or axe violations at 390/1440; 320 also has zero overflow and 13px minimum text. Source uses grouped CSS tokens, system fonts, semantic sections and a labelled input; the 200% desktop-equivalent layout retained readable content without overflow.",
+      "mobile": "390 default content fits and Menu opens, Escape closes it and returns focus; selecting a menu anchor also closes it. Chips and handled buttons are only 40px high. Adding 200 unbroken X characters creates 1691px horizontal overflow and makes the new entry require sideways scrolling.",
+      "honesty": "390: the CTA explains that it opens signup before clicking; the sample note says nothing is saved or sent, and the composer repeats this beside its action. The note disclosure comes after all five entries rather than at its heading.",
+      "interaction": "Keyboard Tab reached primary links, both state buttons, five chips, the labelled text field and Add; the CSS supplies a 3px focus-visible outline. Empty input announces Write something first, 0/-1 and pasted markup are rendered as text, and reload resets additions. A 10000-character unbroken input caused 99691px overflow; there is no in-page reset for composed entries. Reduced motion leaves all five entries visible and disables smooth scrolling.",
+      "copy": "1440: repair, deposit, short rib and cover-shift examples communicate concrete handover tasks. Empty-field feedback is specific, but added entries replace the field with another suggestion, which makes repeated entry behavior less predictable.",
+      "first_screen": "1440: outcome, audience, signup action and actionable close note appear together. At 390 the first note entry is visible below the CTA, but the sample disclosure and handled controls require scrolling."
+    },
+    "problems": [
+      "An unbroken composed entry escapes its grid column and creates substantial page-wide horizontal overflow on a phone.",
+      "Composer additions have no local clear/reset action; reload is required, and the field changes to unsolicited suggested text after adding.",
+      "Several demo targets are 40px high, and the sample-note disclosure is below the whole note on mobile."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF3",
+        "evidence": "At 390x844, an added unbroken 200-character entry extends beyond the viewport; document scrollWidth exceeds viewport width by 1691px and its text is reachable only sideways.",
+        "steps": "Open A/index.html from disk at 390x844. Scroll to New entry, replace its input with 200 consecutive uppercase X characters, and click Add to tonight\u2019s note. Inspect Tonight\u2019s note so far and scroll horizontally to reach the rest of the entry."
+      }
+    ]
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 8,
+      "proof": 8,
+      "craft": 8,
+      "mobile": 8,
+      "honesty": 7,
+      "interaction": 7,
+      "copy": 8,
+      "first_screen": 9
+    },
+    "evidence": {
+      "clarity": "1440 and 390: the supporting paragraph explicitly defines the restaurant-manager logbook and what gets recorded; Start a free trial explains that it takes visitors to signup.",
+      "fit": "Diff inspection shows template testimonials, names and old visual selectors removed; logo.svg matches before exactly and the CSS retains both required brand colors. The three-step sequence covers closing manager, opening manager and laptop-reading owner.",
+      "distinctiveness": "1440 and 390: the ruled-paper example uses a coral margin, timestamp column and restaurant-specific notes, extending that logbook structure into What goes in the log.",
+      "proof": "1440: the labelled Example handover sits alongside the hero. At 768 and 390 I activated Read an example handover and reached #example; its four records are real readable sample material, though there is no editable product state to test.",
+      "craft": "File loading and all three viewport passes produced no page errors; probes also report no blocked/failed requests, zero overflow including 320, and no axe violations. Source has landmark/heading structure, decorative empty-alt brand images, tokenised CSS and system fonts; delivered HTML/CSS/logo total about 18KB. The desktop 200% equivalent reflow remains readable without overflow.",
+      "mobile": "390: the signup stays in the header and hero, the labelled example begins within the first viewport, and the time/content columns remain readable; 320 retains the headline and CTA without overflow. Navigation links are hidden on phone with no replacement menu, although the content remains in normal page flow.",
+      "honesty": "390: Example handover is visible immediately above its invented records, and CTA destination disclosure appears before acting. No template customer proof remains, but the closing No logos to show you / No case studies yet section foregrounds absence rather than product confidence.",
+      "interaction": "At 1440, 768 and 390 all nine tested signup links used https://app.shiftnote.example/signup; internal navigation links responded. Keyboard Tab reaches a visible skip link and links with 3px outlines, without a trap; there are no inputs, dialogs or reset states. Reduced motion keeps all four entries visible, but computed scroll-behavior remains smooth. Keyboard traversal sometimes left a footer CTA below the viewport during the smooth-scroll sequence.",
+      "copy": "The 390 sample names the halibut, limes, sick cover and walk-in compressor; labels match the later four categories. The owner gets a clear whole-week description, though its view is described rather than demonstrated.",
+      "first_screen": "1440 and 390: named audience, closing-to-opening outcome, signup action with destination and a clearly labelled handover sample all appear before scrolling."
+    },
+    "problems": [
+      "Reduced-motion preference leaves global smooth scrolling enabled; disable it for that preference.",
+      "Phone navigation hides the section links without a menu or equivalent shortcut, and the static example cannot demonstrate writing or completion states.",
+      "The closing conversion section leads with missing logos and case studies; a concrete product task would provide stronger confidence."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B offers a much smaller, semantic static page with clean offline loading and responsive examples, and it avoids the reproducible mobile overflow in A\u2019s composer. Fixing A\u2019s unbroken-input wrapping and adding an in-page reset would make its richer demonstration more competitive.",
+  "score_preference_note": ""
+}

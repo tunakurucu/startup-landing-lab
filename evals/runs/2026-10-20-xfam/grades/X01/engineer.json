@@ -1,0 +1,82 @@
+{
+  "packet": "X01",
+  "persona": "engineer",
+  "A": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 8,
+      "craft": 8,
+      "mobile": 7,
+      "honesty": 8,
+      "interaction": 7,
+      "copy": 8,
+      "first_screen": 7
+    },
+    "evidence": {
+      "clarity": "1440 and 390: headline describes bringing the CI failure onto the laptop; supporting line explicitly names backend engineers and command-line tool. Copy install command names the immediate action.",
+      "fit": "Opened file:// offline at 1440, 768 and 390; no script errors or network dependency. Correct npm command, supplied docs/source destinations, MIT/free status and planned-not-built hosted version are present. Detailed Node-only scope and limitations go beyond the supplied brief.",
+      "distinctiveness": "1440: the comparison tape shows individual clock, environment, network and assertion events; choosing npm test changes six of seven rows and the outcome, a product-specific artifact rather than generic cards.",
+      "proof": "1440: completed comparison is visible in the initial viewport and replay/stop, both modes and seven-step range worked at all three widths. Sample disclosure is below seven event rows, far below the 390 controls; the network replay says 0 ms beside a recorded 61 ms despite same-timing positioning.",
+      "craft": "1440/768/390 supplied screenshots and operated states have clear hierarchy and no page overflow. Probe reports no axe violations, console/page errors or blocked requests at 390/1440, zero overflow at 320/390, minimum text 13px. Code uses grouped CSS tokens, system fonts, semantic headings/main/footer, labelled range and radios, live outcome, bounded state and copy error handling. Reduced-motion test retains full content with zero animations; 200% equivalent reflow at 720 CSS px/1440 physical px has no overflow or overlap. Standalone HTML weighs 41,419 bytes, with no external fonts or libraries; one unused secondary copy-status node is minor dead markup. No raster content images require alt text; decorative inline icons are aria-hidden. Navigation links lack a nav landmark and there is no skip link.",
+      "mobile": "390: mode choices, replay, slider and menu measure at least 44px high; outcome moves above controls and rows recompose into labelled CI/laptop pairs. The tall seven-row artifact puts its example disclosure far away. At 320 the supplied screenshot remains readable without page overflow.",
+      "honesty": "The tape ultimately says Sample recording written for this page and command examples explicitly say illustrative; planned hosted status is plain. At 390 this disclosure is separated from the first apparent replay result by all seven event rows. Offline copy failure displays Could not copy with a manual-copy path rather than claiming success.",
+      "interaction": "1440/768/390: both modes, replay, Stop, range Home/End/arrows and reset-to-zero worked without errors; empty/long/negative/text values stay within 0..7 and paste cannot inject text into a native range. Tab focus is visible and no trap; at 390 Menu opens and closes after a link, but Escape leaves it open. Both install copies report clipboard unavailability in this browser. Radio ArrowRight also switches modes by keyboard; docs and both source CTAs request the exact brief-supplied URLs.",
+      "copy": "390: READY, STOPPED AT 1/7 and FAIL reproduced give specific state explanations; limitations name child processes/native addons and recording data. Long mechanism prose adds some unsupported specifics beyond the compact brief.",
+      "first_screen": "1440: specific CI-to-laptop outcome, install action and event comparison occupy the first viewport. At 390 the promise and copy action fit, but the viewport reaches only the demo introduction; the comparison evidence is below the fold."
+    },
+    "problems": [
+      "At 390 the example disclosure sits below seven large event cards rather than beside the first apparent result.",
+      "The phone Menu does not close on Escape.",
+      "The demo's replay network row says 0 ms against the recorded 61 ms, weakening the same-timing explanation."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {
+      "clarity": 8,
+      "fit": 6,
+      "distinctiveness": 7,
+      "proof": 3,
+      "craft": 7,
+      "mobile": 5,
+      "honesty": 2,
+      "interaction": 7,
+      "copy": 7,
+      "first_screen": 6
+    },
+    "evidence": {
+      "clarity": "1440/390: headline and supporting paragraph describe recording failing CI tests and replaying them locally, with the exact npm install command immediately below. Backend-engineer audience is implied by CI/breakpoint language rather than named.",
+      "fit": "Opened from file:// without network at 1440, 768 and 390; source and docs actions request the exact supplied destinations and install uses @rerun/cli. Free/MIT and hosted planned-not-built status match the brief, but claimed measurements, support scope and maintainer promises are invented beyond it.",
+      "distinctiveness": "1440: serif editorial typography and dark timed terminal playback create a recognisable engineering essay; the three commands and replay output are specific to this CLI, although the remainder is conventional stacked explanatory sections.",
+      "proof": "1440/768/390: play/pause, replay, scrub and 1x/2x/4x all work and reveal failure plus zero-difference output. However the text calls this a real replay session rather than an illustrative script; source contains hard-coded EVENTS, and no recording was supplied by the brief. The note says the red tick is 2,003 ms in but the marker is coded at 5,620 ms.",
+      "craft": "Probe shows zero overflow at 320/390, no console/page errors or blocked requests, minimum text 13px; axe has two serious scrollable-region-focusable nodes at 390 and none at 1440. Own loaded 768 state measured 59px page overflow. Code is a compact 30,650-byte standalone HTML with system fonts, grouped CSS variables, ordered headings, header/nav/main/footer, labels and skip link. Reduced motion renders the full output with zero animations; 200% equivalent reflow at 720 CSS px/1440 physical px has no page overflow or overlapping text. No content images require alt text; muted terminal text remains legible against its dark background in tested states.",
+      "mobile": "390: header remains a readable three-link nav (no collapsed menu), primary copy button is 46px tall, but Play and speed are only 25px tall and slider 28px. Completed terminal is 574px wide inside a 358px scroll region, so important output including identical-to-CI and zero-difference text requires sideways scrolling. Supplied 320 screenshot has the same narrow terminal treatment.",
+      "honesty": "Opening How much does recording slow down CI? at every width reveals roughly 2\u20134% measured on 500\u20135,000 tests; no such numbers are in the brief. The demo is called a real replay session, and typical recordings are claimed as 1\u20135 MB. Planned hosted status is honest, but it does not cure these fabricated performance/proof claims.",
+      "interaction": "All three widths: both copy buttons display Copied, all six FAQs open/close, terminal click/Space toggles playback, speed cycles 2x/4x/1x, Home resets scrub to zero and End reveals complete output; ArrowRight advances by 10ms. Empty/pasted text range values normalise to midpoint, long values to 8800, negative/zero to zero. Visible keyboard focus, no trap or dialogs; native FAQs operate with keyboard. Copy fallback calls done even when execCommand returns false, so its error path can claim success. No page errors occurred.",
+      "copy": "1440/390: three commands and FAQ titles address concrete engineering questions; button states Play/Pause/Replay and numbered time are precise. The 2,003-ms tick description contradicts its 5,620-ms location, and typical-size/overhead/response-time assertions undermine otherwise specific writing.",
+      "first_screen": "1440: a specific CI-to-laptop promise and copy action appear above the terminal, but the outcome and real-session claim lie farther down. At 390 the terminal begins in the initial viewport but playback controls and useful failed assertion are below it; a reader cannot assess the claimed identical replay without scrolling."
+    },
+    "problems": [
+      "Fabricated benchmark numbers and an invented real replay recording are presented as factual proof.",
+      "390 terminal output requires horizontal scrolling and playback targets are 25\u201328px high.",
+      "The red failure marker is at 5,620ms while adjacent explanation says 2,003ms; copy fallback also reports success without checking execCommand's result."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF2",
+        "evidence": "FAQ claims measured 2\u20134% recording overhead on Jest suites of 500\u20135,000 tests; recording-size claims and the purported real replay session are also not supplied by the brief.",
+        "steps": "Open B/index.html from disk at 390x844 or 1440x900. Scroll to Questions engineers ask first and open How much does recording slow down CI? Read the claimed measurements. Also read the real replay session sentence immediately below the terminal and typical recording 1\u20135 MB paragraph in What a recording contains. Compare with brief.md, which supplies no recording or performance measurements."
+      },
+      {
+        "code": "HF3",
+        "evidence": "At 390x844 the completed main terminal has clientWidth 358 and scrollWidth 574; result lines including identical to CI run 4821 and 0 differ extend past the right edge and require sideways scrolling.",
+        "steps": "Open B/index.html at 390x844, scroll to the terminal controls, focus Scrub the replay and press End. Inspect the result lines: the right-hand text is cut off. Scroll the terminal horizontally to reveal it."
+      }
+    ]
+  },
+  "preference": "A",
+  "confidence": "high",
+  "reason": "A offers a bounded, labelled comparison demo with stronger native control sizing, specific live feedback and no fabricated benchmarks. B works mechanically but its unsupported proof claims, narrow terminal output and small playback controls make it harder to ship responsibly; genuine supplied evidence and a recomposed phone terminal would narrow the gap."
+}

@@ -1,0 +1,78 @@
+{
+  "packet": "X06",
+  "persona": "buyer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 8,
+      "fit": 6,
+      "distinctiveness": 7,
+      "proof": 8,
+      "craft": 8,
+      "mobile": 8,
+      "honesty": 7,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 7
+    },
+    "evidence": {
+      "clarity": "390: the headline says what the council will decide on your street, and the lede explains the plain-language digest and neighbourhood alert. The form makes the next step explicit.",
+      "fit": "The page addresses residents and the English-only summary limit, but gives city clerks/funders no separate material and does not offer the Spanish alert email that a Spanish-speaking resident could use.",
+      "distinctiveness": "The yellow-highlighted agenda entries and source links make the digest specific to council items; the visual language is neutral and does not suggest support for either side of a vote.",
+      "proof": "At 1440 the labeled sample agenda is visible beside signup; selecting Riverbend changes the alert to item 8.A, and its “Open item” link leads to the supplied sample agenda-item page.",
+      "craft": "At 390 the two-column desktop hero becomes a clear single column with a compact Menu button; the labels and 48px controls remain legible and the form stays within the viewport.",
+      "mobile": "390: the Menu button opens the page links and closes when pressed again; the alert artifact is below the first screen, but the neighborhood, email, CTA and English-only notice are visible before scrolling.",
+      "honesty": "The sample says it is illustrative and “Not a record of any real council.” A valid submit then says “Not sent yet” and that the address was not stored, but this fact comes after pressing the button.",
+      "interaction": "At 390, empty submission says “Choose a neighbourhood first”; after selecting Riverbend and entering an address it explicitly says nothing was sent, and changing to Old Town highlights item 9.C. At 1440/768 the five options also update matches.",
+      "copy": "“A model drafts each summary, a volunteer checks it” and “every one links to the original item” answer what the service does without promising a political conclusion; “Always free” and the one-email frequency are clear.",
+      "first_screen": "1440: the CTA and labelled example digest share the first view. At 390 the CTA is visible but the sample artifact is not, so a phone visitor cannot yet judge the kind of alert."
+    },
+    "problems": [
+      "Sign-up only displays that nothing was sent and the address was not stored, leaving the resident with no path to actually join the list.",
+      "No separate clerk/funder section explains the pilot, its lack of partners or how a city could work with it.",
+      "A Spanish-speaking resident can read the English-only caveat, but cannot request an alert email in Spanish."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 7,
+      "craft": 8,
+      "mobile": 5,
+      "honesty": 3,
+      "interaction": 8,
+      "copy": 9,
+      "first_screen": 6
+    },
+    "evidence": {
+      "clarity": "1440: the lede says the city agenda is converted from a long PDF into plain-language items and emailed by neighbourhood/topic; the form asks for the neighbourhood and email.",
+      "fit": "The Spanish checkbox requests Spanish alert mail and says summaries remain English; “For clerks and funders” separately states no partner cities, no funding and no reader counts, which is useful to both buyer audiences.",
+      "distinctiveness": "The alert card resembles an actual email and the agenda/summary pairing explains the product’s job, with the highlighted street carried through the example.",
+      "proof": "1440: selecting Mill District changes the alert subject and highlighted location, and “Open the original agenda item” loads the local agenda page. However the later section calls this a real item although its details are absent from the brief.",
+      "craft": "1440: the serif display text, pale-blue card and yellow match highlight create a credible civic-publication feel; the probe reports one serious contrast violation and the mobile header becomes several lines.",
+      "mobile": "390: all navigation links stay expanded above the hero, and the primary action and alert card fall below the first viewport. At 320 the same stacked header takes substantial space.",
+      "honesty": "The “How it works” section calls the October 28 item real and identifies Linden Falls and volunteer checkers even though none of those facts appears in the client brief; this undermines the trust expected of a neutral public-interest service.",
+      "interaction": "At 390, “Get alerts for your street” scrolls to the form; choosing Eastgate changes the alert to “Nothing about Eastgate,” the Spanish checkbox toggles, and a valid address reveals a manual email handoff. All seven areas update at 1440 and 768 too.",
+      "copy": "The form’s Spanish microcopy separates alert language from summary language; clerk/funder copy directly says “None yet” for partners and funding and explains what a city would be asked to do.",
+      "first_screen": "1440: the decision-specific promise, alert card and form are together. At 390 the headline is visible, but the stacked navigation and lede keep the action and proof outside the first screen."
+    },
+    "problems": [
+      "The page calls the October 28 agenda item real and names a city and volunteer checkers that the brief never supplies.",
+      "At 390 the expanded navigation pushes signup and the alert sample out of the opening viewport.",
+      "The form only explains the hand-written email handoff after submission, so the resident cannot see that commitment before tapping."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF2",
+        "evidence": "B says “Here is one real item from the October 28 agenda,” identifies Linden Falls and named volunteer checkers, and includes specific agenda content that the brief does not supply.",
+        "steps": "Open B/index.html and follow “How it works” to the agenda/summary comparison. Read the sentence above the pair and the city/volunteer attribution; compare those claimed facts with the client brief, which names no city, agenda item or volunteers."
+      }
+    ]
+  },
+  "preference": "A",
+  "confidence": "medium",
+  "reason": "A is the safer page to place under the founder’s name because it labels its agenda as illustrative and does not pass invented pilot material off as a real city record. B offers the more useful Spanish-alert option, a manual signup route and a strong clerk/funder path, but the false provenance is a serious trust break; I would reconsider if the example facts were substantiated and the mobile signup moved into view."
+}

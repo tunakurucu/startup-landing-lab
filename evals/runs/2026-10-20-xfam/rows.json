@@ -1,0 +1,1340 @@
+[
+ {
+  "x": "X01",
+  "round": "round4",
+  "packet": "P004",
+  "brief": "replay",
+  "persona": "designer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 79,
+  "gpt_without": 64,
+  "cl_with": 80,
+  "cl_without": 61,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF2",
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X01",
+  "round": "round4",
+  "packet": "P004",
+  "brief": "replay",
+  "persona": "buyer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 76,
+  "gpt_without": 62,
+  "cl_with": 79,
+  "cl_without": 59,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF2",
+    "HF3"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X01",
+  "round": "round4",
+  "packet": "P004",
+  "brief": "replay",
+  "persona": "engineer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 78,
+  "gpt_without": 58,
+  "cl_with": 79,
+  "cl_without": 61,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF2",
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X02",
+  "round": "round3",
+  "packet": "P005",
+  "brief": "cancellations",
+  "persona": "designer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 73,
+  "gpt_without": 75,
+  "cl_with": 75,
+  "cl_without": 73,
+  "gpt_pref": "without",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "medium",
+  "cl_conf": "low"
+ },
+ {
+  "x": "X02",
+  "round": "round3",
+  "packet": "P005",
+  "brief": "cancellations",
+  "persona": "buyer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 74,
+  "gpt_without": 77,
+  "cl_with": 77,
+  "cl_without": 74,
+  "gpt_pref": "without",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF2"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X02",
+  "round": "round3",
+  "packet": "P005",
+  "brief": "cancellations",
+  "persona": "engineer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 78,
+  "gpt_without": 72,
+  "cl_with": 72,
+  "cl_without": 72,
+  "gpt_pref": "with",
+  "cl_pref": "without",
+  "gpt_hf": {
+   "with": [],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF2"
+   ]
+  },
+  "gpt_conf": "medium",
+  "cl_conf": "low"
+ },
+ {
+  "x": "X03",
+  "round": "round4",
+  "packet": "P001",
+  "brief": "pantry",
+  "persona": "designer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 81,
+  "gpt_without": 70,
+  "cl_with": 79,
+  "cl_without": 65,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X03",
+  "round": "round4",
+  "packet": "P001",
+  "brief": "pantry",
+  "persona": "buyer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 84,
+  "gpt_without": 73,
+  "cl_with": 80,
+  "cl_without": 69,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X03",
+  "round": "round4",
+  "packet": "P001",
+  "brief": "pantry",
+  "persona": "engineer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 81,
+  "gpt_without": 70,
+  "cl_with": 77,
+  "cl_without": 62,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X04",
+  "round": "round3",
+  "packet": "P009",
+  "brief": "handover",
+  "persona": "designer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 79,
+  "gpt_without": 81,
+  "cl_with": 84,
+  "cl_without": 77,
+  "gpt_pref": "without",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF3"
+   ],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X04",
+  "round": "round3",
+  "packet": "P009",
+  "brief": "handover",
+  "persona": "buyer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 79,
+  "gpt_without": 82,
+  "cl_with": 80,
+  "cl_without": 74,
+  "gpt_pref": "without",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF3"
+   ],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X04",
+  "round": "round3",
+  "packet": "P009",
+  "brief": "handover",
+  "persona": "engineer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 78,
+  "gpt_without": 81,
+  "cl_with": 75,
+  "cl_without": 68,
+  "gpt_pref": "without",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF3"
+   ],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X05",
+  "round": "round3",
+  "packet": "P003",
+  "brief": "heater",
+  "persona": "designer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 82,
+  "gpt_without": 73,
+  "cl_with": 78,
+  "cl_without": 73,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X05",
+  "round": "round3",
+  "packet": "P003",
+  "brief": "heater",
+  "persona": "buyer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 83,
+  "gpt_without": 75,
+  "cl_with": 77,
+  "cl_without": 72,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X05",
+  "round": "round3",
+  "packet": "P003",
+  "brief": "heater",
+  "persona": "engineer",
+  "model": "unrecorded (X01-X05)",
+  "gpt_with": 77,
+  "gpt_without": 71,
+  "cl_with": 77,
+  "cl_without": 72,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X06",
+  "round": "round3",
+  "packet": "P012",
+  "brief": "agenda",
+  "persona": "designer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 80,
+  "gpt_without": 71,
+  "cl_with": 75,
+  "cl_without": 64,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF1",
+    "HF2"
+   ]
+  },
+  "gpt_conf": "medium",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X06",
+  "round": "round3",
+  "packet": "P012",
+  "brief": "agenda",
+  "persona": "buyer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 75,
+  "gpt_without": 71,
+  "cl_with": 75,
+  "cl_without": 57,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF1",
+    "HF2"
+   ]
+  },
+  "gpt_conf": "medium",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X06",
+  "round": "round3",
+  "packet": "P012",
+  "brief": "agenda",
+  "persona": "engineer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 75,
+  "gpt_without": 65,
+  "cl_with": 74,
+  "cl_without": 64,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF1",
+    "HF2"
+   ]
+  },
+  "gpt_conf": "medium",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X07",
+  "round": "round3",
+  "packet": "P011",
+  "brief": "envvars",
+  "persona": "designer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 86,
+  "gpt_without": 71,
+  "cl_with": 78,
+  "cl_without": 69,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "medium",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X07",
+  "round": "round3",
+  "packet": "P011",
+  "brief": "envvars",
+  "persona": "buyer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 85,
+  "gpt_without": 70,
+  "cl_with": 80,
+  "cl_without": 73,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X07",
+  "round": "round3",
+  "packet": "P011",
+  "brief": "envvars",
+  "persona": "engineer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 80,
+  "gpt_without": 67,
+  "cl_with": 78,
+  "cl_without": 67,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X08",
+  "round": "round3",
+  "packet": "P002",
+  "brief": "sunrise",
+  "persona": "designer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 87,
+  "gpt_without": 76,
+  "cl_with": 79,
+  "cl_without": 62,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "medium",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X08",
+  "round": "round3",
+  "packet": "P002",
+  "brief": "sunrise",
+  "persona": "buyer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 82,
+  "gpt_without": 73,
+  "cl_with": 79,
+  "cl_without": 68,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X08",
+  "round": "round3",
+  "packet": "P002",
+  "brief": "sunrise",
+  "persona": "engineer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 83,
+  "gpt_without": 68,
+  "cl_with": 78,
+  "cl_without": 64,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "medium",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X09",
+  "round": "round4",
+  "packet": "P002",
+  "brief": "dockside",
+  "persona": "designer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 86,
+  "gpt_without": 78,
+  "cl_with": 78,
+  "cl_without": 70,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "gpt_conf": "medium",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X09",
+  "round": "round4",
+  "packet": "P002",
+  "brief": "dockside",
+  "persona": "buyer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 87,
+  "gpt_without": 76,
+  "cl_with": 80,
+  "cl_without": 73,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X09",
+  "round": "round4",
+  "packet": "P002",
+  "brief": "dockside",
+  "persona": "engineer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 83,
+  "gpt_without": 72,
+  "cl_with": 79,
+  "cl_without": 64,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "gpt_conf": "medium",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X10",
+  "round": "round3",
+  "packet": "P001",
+  "brief": "kitchens",
+  "persona": "designer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 86,
+  "gpt_without": 80,
+  "cl_with": 79,
+  "cl_without": 62,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF1"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X10",
+  "round": "round3",
+  "packet": "P001",
+  "brief": "kitchens",
+  "persona": "buyer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 83,
+  "gpt_without": 77,
+  "cl_with": 76,
+  "cl_without": 60,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF1"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X10",
+  "round": "round3",
+  "packet": "P001",
+  "brief": "kitchens",
+  "persona": "engineer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 84,
+  "gpt_without": 78,
+  "cl_with": 76,
+  "cl_without": 60,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF1"
+   ]
+  },
+  "cl_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X11",
+  "round": "round3",
+  "packet": "P010",
+  "brief": "nightly",
+  "persona": "designer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 87,
+  "gpt_without": 80,
+  "cl_with": 72,
+  "cl_without": 76,
+  "gpt_pref": "without",
+  "cl_pref": "without",
+  "gpt_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "cl_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "medium",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X11",
+  "round": "round3",
+  "packet": "P010",
+  "brief": "nightly",
+  "persona": "buyer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 81,
+  "gpt_without": 80,
+  "cl_with": 69,
+  "cl_without": 70,
+  "gpt_pref": "without",
+  "cl_pref": "without",
+  "gpt_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "cl_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "medium",
+  "cl_conf": "low"
+ },
+ {
+  "x": "X11",
+  "round": "round3",
+  "packet": "P010",
+  "brief": "nightly",
+  "persona": "engineer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 83,
+  "gpt_without": 80,
+  "cl_with": 73,
+  "cl_without": 69,
+  "gpt_pref": "without",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "cl_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "medium",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X12",
+  "round": "round3",
+  "packet": "P004",
+  "brief": "stitch",
+  "persona": "designer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 87,
+  "gpt_without": 77,
+  "cl_with": 79,
+  "cl_without": 63,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X12",
+  "round": "round3",
+  "packet": "P004",
+  "brief": "stitch",
+  "persona": "buyer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 86,
+  "gpt_without": 74,
+  "cl_with": 78,
+  "cl_without": 68,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X12",
+  "round": "round3",
+  "packet": "P004",
+  "brief": "stitch",
+  "persona": "engineer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 87,
+  "gpt_without": 72,
+  "cl_with": 70,
+  "cl_without": 65,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": [
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [
+    "HF3"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "low"
+ },
+ {
+  "x": "X13",
+  "round": "round3",
+  "packet": "P006",
+  "brief": "alerts",
+  "persona": "designer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 90,
+  "gpt_without": 81,
+  "cl_with": 81,
+  "cl_without": 71,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X13",
+  "round": "round3",
+  "packet": "P006",
+  "brief": "alerts",
+  "persona": "buyer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 90,
+  "gpt_without": 80,
+  "cl_with": 82,
+  "cl_without": 71,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X13",
+  "round": "round3",
+  "packet": "P006",
+  "brief": "alerts",
+  "persona": "engineer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 90,
+  "gpt_without": 78,
+  "cl_with": 78,
+  "cl_without": 66,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X14",
+  "round": "round3",
+  "packet": "P013",
+  "brief": "questionnaire",
+  "persona": "designer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 89,
+  "gpt_without": 80,
+  "cl_with": 83,
+  "cl_without": 66,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X14",
+  "round": "round3",
+  "packet": "P013",
+  "brief": "questionnaire",
+  "persona": "buyer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 89,
+  "gpt_without": 77,
+  "cl_with": 80,
+  "cl_without": 67,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X14",
+  "round": "round3",
+  "packet": "P013",
+  "brief": "questionnaire",
+  "persona": "engineer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 89,
+  "gpt_without": 77,
+  "cl_with": 83,
+  "cl_without": 64,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [],
+   "without": []
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF2"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X15",
+  "round": "round3",
+  "packet": "P016",
+  "brief": "brewday",
+  "persona": "designer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 84,
+  "gpt_without": 72,
+  "cl_with": 77,
+  "cl_without": 66,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X15",
+  "round": "round3",
+  "packet": "P016",
+  "brief": "brewday",
+  "persona": "buyer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 84,
+  "gpt_without": 71,
+  "cl_with": 78,
+  "cl_without": 65,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "cl_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X15",
+  "round": "round3",
+  "packet": "P016",
+  "brief": "brewday",
+  "persona": "engineer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 83,
+  "gpt_without": 70,
+  "cl_with": 76,
+  "cl_without": 64,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "cl_hf": {
+   "with": [
+    "HF1"
+   ],
+   "without": [
+    "HF1"
+   ]
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X16",
+  "round": "round4",
+  "packet": "P003",
+  "brief": "escheat",
+  "persona": "designer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 85,
+  "gpt_without": 79,
+  "cl_with": 78,
+  "cl_without": 64,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF3"
+   ],
+   "without": [
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ },
+ {
+  "x": "X16",
+  "round": "round4",
+  "packet": "P003",
+  "brief": "escheat",
+  "persona": "buyer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 86,
+  "gpt_without": 79,
+  "cl_with": 82,
+  "cl_without": 64,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF3"
+   ],
+   "without": [
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "medium"
+ },
+ {
+  "x": "X16",
+  "round": "round4",
+  "packet": "P003",
+  "brief": "escheat",
+  "persona": "engineer",
+  "model": "gpt-6-luna-wm; effort setting not exposed",
+  "gpt_with": 87,
+  "gpt_without": 76,
+  "cl_with": 79,
+  "cl_without": 69,
+  "gpt_pref": "with",
+  "cl_pref": "with",
+  "gpt_hf": {
+   "with": [
+    "HF3"
+   ],
+   "without": [
+    "HF3"
+   ]
+  },
+  "cl_hf": {
+   "with": [],
+   "without": []
+  },
+  "gpt_conf": "high",
+  "cl_conf": "high"
+ }
+]

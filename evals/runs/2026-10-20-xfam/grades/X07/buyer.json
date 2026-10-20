@@ -1,0 +1,78 @@
+{
+  "packet": "X07",
+  "persona": "buyer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 8,
+      "honesty": 9,
+      "interaction": 9,
+      "copy": 8,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "The headline and lede explain that envcensus finds variables read in code and compares them with `.env.example` and CI.",
+      "fit": "“Runs on your machine and sends nothing anywhere,” no-account/no-key copy, npm install and private-until-1.0 status fit the brief.",
+      "distinctiveness": "The report ties each variable to a source line, example file and CI config rather than using a generic SaaS dashboard image.",
+      "proof": "The explicitly labeled sample shows missing and unused variables; selecting a row explains where it is read and what to fix.",
+      "craft": "At 1440 the command and report share the page; at 390 data reflows into labeled rows rather than squeezing desktop columns.",
+      "mobile": "390: copy is above the fold, but the report itself requires scrolling before a developer can inspect the mismatches.",
+      "honesty": "The output is labeled “Example output” on a “sample repo”; it does not imply stars, users or scan-speed benchmarks.",
+      "interaction": "At each required width I selected all five variables; FEATURE_FLAGS_URL explains its absence from both example and CI, and clipboard copy confirms the command.",
+      "copy": "The help section names the real use case and gives specific remediation for missing and unused values.",
+      "first_screen": "1440: command and labeled report are both visible; 390 shows the install command first and evidence below the fold."
+    },
+    "problems": [
+      "The 390 first screen has no visible report, so the developer has to scroll before seeing what the CLI produces.",
+      "There is no prominent first-screen path for the platform engineer deciding whether to add it to many pipelines.",
+      "The private repository means the embedded help output is the only documentation until 1.0."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 6,
+      "craft": 8,
+      "mobile": 6,
+      "honesty": 3,
+      "interaction": 7,
+      "copy": 8,
+      "first_screen": 7
+    },
+    "evidence": {
+      "clarity": "The headline says every code-read variable is checked against `.env.example` and CI; the lede explains unset and unused findings.",
+      "fit": "It explains local operation, CI failure behavior, and help output, and names Node.js/npm without claiming a public repo or Homebrew.",
+      "distinctiveness": "The technical ledger and restrained palette make the product feel like a command-line tool rather than an app screenshot.",
+      "proof": "The report shows mismatches, but `orders-api` and the 212-file count are not labeled as sample data.",
+      "craft": "At 390 the copy button remains visible and the page fits; at 320 the probe measures 63px overflow.",
+      "mobile": "390 keeps the page within the viewport, but the report is below the hero; at 320 the nav/report cause horizontal overflow.",
+      "honesty": "The report claims a specific repository and scan count that are not supplied by the brief and appear as live output.",
+      "interaction": "At 390 Copy puts `npx envcensus` on the clipboard and confirms it; the report has no selectable explanation or reset state.",
+      "copy": "“No account, no config file, no network” addresses install concerns in plain language; CI examples use practical terminology.",
+      "first_screen": "1440 shows the action with report evidence beginning; 390 shows the headline and action but not the report."
+    },
+    "problems": [
+      "The unnamed example ledger reads as a real repository scan, which undermines trust in a developer tool.",
+      "At 320 horizontal overflow is 63px, and at 390 the report proof is below the fold.",
+      "The report rows are static, so a developer cannot inspect the source of a mismatch."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF2",
+        "evidence": "B presents `~/code/orders-api` and “scanned 212 files in 3 directories” as a real run; neither repository nor scan count is supplied in the brief, and no sample label appears beside the ledger.",
+        "steps": "Open B/index.html and read the ledger beneath the hero. It names `~/code/orders-api` and reports 212 files; compare with the X07 brief, which supplies no repository data or scan result."
+      }
+    ]
+  },
+  "preference": "A",
+  "confidence": "high",
+  "reason": "A shows how the tool helps a developer fix a missing value without inventing a customer or benchmark, and it explains the private-repository and local-only limits. B describes the category well but presents an unsupported repository scan as fact; I would change my choice if that output were labeled as illustrative."
+}

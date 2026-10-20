@@ -1,0 +1,71 @@
+{
+  "packet": "X14",
+  "persona": "designer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 8,
+      "fit": 8,
+      "distinctiveness": 9,
+      "proof": 8,
+      "craft": 7,
+      "mobile": 8,
+      "honesty": 7,
+      "interaction": 9,
+      "copy": 8,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "At 390 the headline says each answer cites policy or is flagged; the lede explains source-linked drafts and security-lead approval, with a pilot action.",
+      "fit": "At 390 both sales engineering and security approval are addressed, and the demo avoids uploading; the claim that a person replies usually the same day is unsupported.",
+      "distinctiveness": "The document-card layout, vivid yellow source highlight and progressive case timeline make the policy-to-answer workflow product-specific.",
+      "proof": "At 1440 the demo reveals the question, matched policy passages, draft and review step; at 390 the interactive artifact begins below the fold.",
+      "craft": "At 1440 type and spacing are confident, but the probe reports 12 serious contrast nodes at 1440 and 8 at 390.",
+      "mobile": "At 390 the text and CTA fit with no overflow and 12px minimum text; users must scroll below the opening message to reach the actual demo.",
+      "honesty": "At 390 the example is disclosed as a fictional vendor policy library and no upload; the nearby \u201cusually the same day\u201d reply claim has no brief support.",
+      "interaction": "At 390 selecting steps 1\u20135 and Replay changes the demo; citation links can reveal source passages and the approve control responds at the final step.",
+      "copy": "Terms such as \u201csource,\u201d \u201cpolicy passage,\u201d \u201cflagged\u201d and \u201creviewer\u201d suit both roles; \u201cusually the same day\u201d adds unsupported reassurance.",
+      "first_screen": "At 1440 and 390 a clear answer-integrity promise and pilot CTA are visible; the sample that substantiates it is farther down the page."
+    },
+    "problems": [
+      "A\u2019s sample sits below a tall hero and does not support the claim in the opening viewport.",
+      "A\u2019s contrast probe reports 12 serious nodes at desktop and 8 on phone.",
+      "A promises same-day replies without brief support."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 9,
+      "proof": 9,
+      "craft": 9,
+      "mobile": 8,
+      "honesty": 9,
+      "interaction": 9,
+      "copy": 9,
+      "first_screen": 9
+    },
+    "evidence": {
+      "clarity": "At 390 the headline and lede describe an AI agent drafting from vendor policy, citing or flagging, with security-lead review and a pilot email action.",
+      "fit": "B gives sales engineers a pilot path and makes the security lead\u2019s approval explicit; it says email requests are manual and no data is uploaded.",
+      "distinctiveness": "The side-by-side questionnaire, answer, source passages and review status resemble real security review work rather than a generic AI hero.",
+      "proof": "At 1440 the labeled sample questionnaire, source citations and flagged second question are visible alongside the promise; both tabs operate.",
+      "craft": "At 1440 and 390 the card hierarchy is compact and consistent; probe reports no axe violations, errors or overflow, with 8.84px limited to small labels.",
+      "mobile": "At 390 the CTA, explanatory email text and top of the sample fit without horizontal overflow; the full case record continues vertically.",
+      "honesty": "At 390 the sample explicitly says made-up questionnaire/policies and nothing is uploaded; CTA says blank email to the supplied address.",
+      "interaction": "At 390 selecting Q 9.1 shows no-source flagging; \u201cWrite the answer\u201d produces a human-answer status, and Q 4.3 can be approved.",
+      "copy": "The use of \u201ccited,\u201d \u201cflagged,\u201d \u201csource,\u201d and \u201csecurity lead\u201d is precise; the approval and email microcopy explains what follows.",
+      "first_screen": "At 1440 the headline, operational sample and email CTA share the opening viewport; at 390 the exact claim and CTA remain visible before the sample begins."
+    },
+    "problems": [
+      "B gives the product proof its own full first-screen area and layers the sample details without losing the decision path.",
+      "B\u2019s type and source-panel treatment feel like a working questionnaire, not a generic AI landing page."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B gives the product proof its own full first-screen area and layers the sample details without losing the decision path. B\u2019s type and source-panel treatment feel like a working questionnaire, not a generic AI landing page."
+}

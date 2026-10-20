@@ -1,0 +1,84 @@
+{
+  "packet": "X08",
+  "persona": "designer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 9,
+      "proof": 9,
+      "craft": 9,
+      "mobile": 8,
+      "honesty": 8,
+      "interaction": 9,
+      "copy": 9,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "1440 and 390: “Wake to thirty minutes of sunrise. One dial, no app” identifies the bedside product and the one control; the CTA names reservation.",
+      "fit": "The page states the $20 is refundable, says no card is taken because checkout is not connected, and avoids a firm shipment date or sleep claim.",
+      "distinctiveness": "The dark-bedroom illustration, one-dial simulation and cream prototype section give the page a recognisable bedside-light language.",
+      "proof": "The animated room scene and range control show off, ember and full brightness; its caption says the colour rise is drawn, not measured.",
+      "craft": "1440: high-contrast cream serif type on navy, copper action buttons and a parchment prototype section create clear visual hierarchy; at 390 the CTA remains prominent.",
+      "mobile": "At 390 the phone menu opens, the promise and reserve CTA remain readable, and the illustration/dial stack vertically; the more detailed prototype explanation is below the fold.",
+      "honesty": "The page says the CAD drawing is not the final shape, the colors are illustrative and checkout opens email without taking a card; the destination address itself is not in the brief.",
+      "interaction": "At all widths, dragging the range from -30 to 0 changes the readout from Off to Full brightness; Play pauses/resumes and the mobile Menu toggles.",
+      "copy": "“Set it once before bed” and “The lamp’s real brightness will be specified before the first batch” distinguish the intended experience from prototype evidence.",
+      "first_screen": "1440: the scene and controls sit with the promise and CTA. At 390 the action is visible and the drawing begins, but the dial/readout needs scrolling."
+    },
+    "problems": [
+      "The final reserve action uses an email address not provided in the brief, so visitors cannot be sure the displayed placeholder can accept their request.",
+      "The interactive lamp scene and dial are lower on the phone than the headline, so the wake-up experience is not fully demonstrated in the first viewport.",
+      "The long bottom-half prototype and FAQ sections make the reservation terms require a substantial scroll."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "The repeated “Reserve a Morrow” action ultimately opens `mailto:reserve@morrow.example`, an address that the client brief does not supply.",
+        "steps": "At 390 or 1440, click the hero “Reserve a Morrow” anchor, then click the button in the reserve section. It resolves to `mailto:reserve@morrow.example`; the X08 brief provides no reservation email address."
+      }
+    ]
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 9,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 6,
+      "honesty": 4,
+      "interaction": 9,
+      "copy": 8,
+      "first_screen": 6
+    },
+    "evidence": {
+      "clarity": "1440: “A lamp that wakes you the way a window does” is followed by the thirty-minute dawn description and the “Reserve a place” action.",
+      "fit": "The page explains deposits are not open, no payment is due today, the $20 is refundable, and the housing design is still unsettled.",
+      "distinctiveness": "The bedroom illustration, working dial and light progression are specific to this product; the label says drawn, not photographed.",
+      "proof": "The custom dial changes time and room brightness; End reaches 7:00/full light and Home returns to 6:30/dark, and Play animates the rise.",
+      "craft": "1440: a restrained night palette transitions to warm dawn and a cream planning section; at 390 the oversized scene pushes the controls and CTA down.",
+      "mobile": "390 has no overflow, but the full nav stays visible and the large illustration plus text pushes the reserve control below the first screen.",
+      "honesty": "The page accurately says deposits are not open, but a valid form claims “Your place is held” and promises emails while saving only to localStorage.",
+      "interaction": "At 1440, 768 and 390, the dial responds to keyboard Home/End and Play/Pause works; empty/bad email errors, valid submit confirms, and “wrong address” clears it.",
+      "copy": "“Hardware runs late” and “we are not going to print a month we might miss” address the buyer’s shipping concern; no sleep-science or review claims appear.",
+      "first_screen": "1440: the promise, drawn room and dial are visible; at 390 the reserve action is not in the first screen and the email form is much farther down."
+    },
+    "problems": [
+      "The local-only confirmation says the visitor is held in line and promises future emails, though the data never leaves the browser.",
+      "At 390 the hero has no visible reserve CTA before the large illustration and dial; the main conversion path is several screens down.",
+      "The headline is evocative but does not say “bedside wake-up lamp” until the lede."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "After a valid email, the page announces “Your place is held” and promises future emails, but the script only writes the value to localStorage; `HOLD_ENDPOINT` is empty and no request or backend receives it.",
+        "steps": "Open B/index.html, scroll to Reserve, submit a valid email, then inspect the confirmation and `localStorage.morrow.held`. The form hides and promises future mail while no network submission occurs; reload in a fresh browser context and the place is gone."
+      }
+    ]
+  },
+  "preference": "A",
+  "confidence": "medium",
+  "reason": "A balances the warm bedroom drawing, touchable light ramp and reservation terms in a clearer phone composition. B’s hand-drawn scene is also effective, but its reservation control is pushed below the mobile opening and its confirmation is not honest; I would reconsider if the form disclosed local-only storage and the action moved higher."
+}

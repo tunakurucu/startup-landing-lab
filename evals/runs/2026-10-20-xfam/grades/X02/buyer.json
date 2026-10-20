@@ -1,0 +1,77 @@
+{
+  "packet": "X02",
+  "persona": "buyer",
+  "A": {
+    "scores": {
+      "clarity": 9,
+      "fit": 7,
+      "distinctiveness": 8,
+      "proof": 8,
+      "craft": 8,
+      "mobile": 7,
+      "honesty": 6,
+      "interaction": 7,
+      "copy": 8,
+      "first_screen": 6
+    },
+    "evidence": {
+      "clarity": "1440 and 390: the headline names the cancelled 2:30 and the supporting paragraph explicitly identifies small physical therapy clinics, sequential waitlist texting and front-desk notification. The setup-call CTA gives the next intended step.",
+      "fit": "As clinic owner I could follow the cancellation, offer, pass and confirmation; as a patient at 390 I followed Got a text? to clinic verification and YES/NO/CANCEL/STOP instructions. As founder I found the unfinished HIPAA assessment stated plainly, but the booking action still presents an unavailable appointment as bookable.",
+      "distinctiveness": "1440: the large serif 2:30 headline, horizontal appointment strip and paired timeline/text transcript make a recognisable clinic cancellation story rather than a generic software feature grid.",
+      "proof": "At all three operated widths I selected each of four steps: the slot changed from Cancelled 1:12 to Offering, Offering, 2nd person and Filled 1:31. The sample-clinic/made-up-patients disclosure explicitly says the times are not measured results.",
+      "craft": "1440, 768 and 390: the restrained black, cream and green treatment keeps schedule, timeline and messages distinguishable without clipping. At 390 the long serif sections remain readable, although the repeated offer/confirmation explanations make a visually lengthy page.",
+      "mobile": "390: the patient link reaches readable verification advice and the demo buttons remain usable with no horizontal overflow; the supplied 320 top also retains the headline and CTA. There is no collapsible menu: the navigation wraps openly. Only the top of the schedule reaches the first 844px, with the actual text exchange further below.",
+      "honesty": "1440: the example is labelled beside its numbers and the HIPAA wording avoids a compliance claim. The hero Book a 15-minute setup call first scrolls to an agenda; only there does the page say its calendar link is being connected and no booking can be taken.",
+      "interaction": "1440, 768 and 390: all four demo steps responded, Replay the fill changed to Stop the replay and could be stopped, and patient/setup links reached existing anchors. The final booking link points back to its own setup section, producing no booking or additional response; no page errors occurred in the operated flows.",
+      "copy": "390 patient reading: If the clinic named is not yours, ignore it and Call the clinic at the number you already use directly address legitimacy. Owner copy explains the reply window and waitlist preferences, but repeats the offer/confirmation mechanics across multiple sections.",
+      "first_screen": "1440: the cancelled-2:30 promise, clinic audience and labelled example appear together. At 390 the CTA and promise are visible, but only the schedule edge appears before 844px; there is no visible offer-to-fill evidence and the booking limitation is far below."
+    },
+    "problems": [
+      "The setup-call CTA overpromises an unavailable booking. Its final repeat links to the section already being viewed and gives no new response; make the current action and unavailable scheduling clear at the hero.",
+      "The phone first screen offers very little product evidence: the schedule begins near the bottom and the text exchange and step controls require more scrolling.",
+      "The owner must read repeated messages, annotations and workflow descriptions to establish front-desk work; a concise statement of scheduling integration and remaining manual booking work would answer the purchase doubt sooner."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "The repeated primary Book a 15-minute setup call inside the setup-call section is a self-link; after arriving there, activating it leaves the same URL and section with no booking, dialog or new feedback.",
+        "steps": "Open A at 1440x900. Activate the header Book a 15-minute setup call to reach #setup-call. Activate the identically labelled black link inside that section. It targets #setup-call again and produces no further action."
+      }
+    ]
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 6,
+      "honesty": 6,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 7
+    },
+    "evidence": {
+      "clarity": "1440 and 390: the cancelled-2:30 headline is immediately explained as one-at-a-time waitlist texting, with patients replying by a word and the front desk booking as usual. For small physical therapy clinics and the 15-minute call CTA identify buyer and next step.",
+      "fit": "The owner full reading explicitly answers Does it connect to my scheduling software? with Not today and explains manual booking. The phone patient path includes reply and verification advice; the founder reading finds a prominent unfinished-HIPAA-assessment section and clearly made-up demonstration. Booking availability is still disclosed after the CTA.",
+      "distinctiveness": "1440: the teal clinic board visibly combines Today, Waitlist and Texts; its sequence removes Priya and ends with Luis taking the 2:30 while Hannah stays uncontacted. This is specific product storytelling even within a familiar alternating-section layout.",
+      "proof": "At 1440, 768 and 390 I operated all seven step selectors: baseline, Priya cancellation, Dana offer, Dana pass, Luis offer, Luis yes and confirmation. The nearby caption calls the clinic and patients made up; the final explanation says Hannah was never bothered, answering an owner concern about indiscriminate texting.",
+      "craft": "1440 and 768: strong teal/dark-green hierarchy, aligned table rows and clearly separated explanation sections make the workflow easy to scan. 390 retains readable text and no horizontal overflow, but the vertically stacked board has substantial empty space before its controls.",
+      "mobile": "390: the header keeps a setup CTA and the hero keeps a patient link, with no menu drawer to open. The board stacks appointments above texts, pushing the seven tiny dot selectors and sample caption well below the first viewport; the supplied 320 top wraps the CTA without clipping.",
+      "honesty": "1440 and 390: clicking every visible booking repeat opens Booking opens shortly and accurately says a scheduling tool is still being chosen; nothing claims a booking succeeded. That limitation is absent before the click. The patient introduction It's real, and it came from your clinic is more categorical than the later verification advice warrants.",
+      "interaction": "At all three widths, seven selectors, play/pause and Replay changed the board; each booking repeat opened a dismissible dialog. Okay closed it, Escape closed it at 390, and its agenda/how-it-works links closed the dialog and reached #call/#how. No page errors occurred in these flows, though dot controls are small.",
+      "copy": "The full owner reading explains consent, reply window, minimum notice, quiet hours, unanswered offers and lack of scheduling integration in ordinary clinic language. At 390 the patient reading gives YES/NO/STOP plus calling the clinic, but It's real is overconfident and Most clinics pick five to fifteen minutes sounds like an unsubstantiated customer norm.",
+      "first_screen": "1440: the specific empty-2:30 promise sits beside an operable, explicitly labelled sample board and a call CTA. At 390 the promise, audience and both paths remain visible, but only the appointment portion of the demo is in view, with no actual offer or confirmation yet."
+    },
+    "problems": [
+      "The hero and footer invite a booking and say We'll call you, while scheduling is unavailable; show the current limitation before a visitor clicks, not only in the dialog.",
+      "At 390 the demo becomes a long stack; text activity, the example caption and small step dots are far below the initial schedule. Bring the cancellation and outcome closer to the phone promise.",
+      "Patient copy opens with It's real before verifying a particular message, and does not explain CANCEL outside the sample bubble. Lead with the clinic-check guidance and explain the post-confirmation cancellation path."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B answers my clinic-owner buying doubts more directly: it identifies the manual scheduling work, explains consent and contact limits, and demonstrates how a second patient fills the slot without bothering the whole waitlist. Its patient route provides practical verification advice, and its unavailable-booking dialog at least responds clearly; I would reconsider A if its booking repeat produced an honest useful response and its workflow explanation were shorter."
+}

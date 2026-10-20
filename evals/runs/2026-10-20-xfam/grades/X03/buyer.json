@@ -1,0 +1,78 @@
+{
+  "packet": "X03",
+  "persona": "buyer",
+  "A": {
+    "scores": {
+      "clarity": 8,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 7,
+      "craft": 8,
+      "mobile": 6,
+      "honesty": 6,
+      "interaction": 7,
+      "copy": 8,
+      "first_screen": 7
+    },
+    "evidence": {
+      "clarity": "1440 and 390: the fridge headline, supporting explanation of weekly dinners and missing-only shopping, and Join the iPhone waitlist made the product and next step clear. The parent/picky-child audience becomes explicit farther down the page.",
+      "fit": "As the kitchen-phone parent, I found the keep-it-apart and repeat-the-wins explanations relevant to why I abandoned recipe apps. As founder, I found the supplied waitlist destination and free-now/paid-shared-lists-later pricing reflected correctly, but could not try a picky-eater setting in the demo.",
+      "distinctiveness": "1440: the yellow field, refrigerator-framed ingredient selector, slightly irregular ingredient labels and green taped shopping note form a recognisable kitchen identity; the green-bits heading reinforces that voice.",
+      "proof": "At 1440, toggling all 21 ingredients changed the five dinners and missing list; clearing them produced Tap a few things above to start. With the default selection, the selected spinach was absent from the displayed five dinners despite the later claim that it gets used on Tuesday.",
+      "craft": "Supplied 1440, 768 and 390 screenshots show strong navy/yellow hierarchy and readable dinner rows without clipped main content. At 390 the inner refrigerator padding narrows the dinner column and wraps titles substantially.",
+      "mobile": "390: the promise and waitlist fit above the ingredient selector, but the five dinner results and shopping list require substantial scrolling past all three ingredient groups. Ingredient targets and Shuffle are relatively small; 320 screenshot retains the main action without clipping.",
+      "honesty": "390: the example-dinner disclosure is after the entire plan and shopping list rather than beside the selector. All four waitlist links use the brief-supplied URL, but How a week gets planned states about a minute for initial setup without support in the brief.",
+      "interaction": "At all three widths I toggled every ingredient off/on, cleared the selection, selected everything, and used Shuffle three times; dinners and missing items responded. At 390 Space toggled Eggs. Tapping the checkbox-looking An onion shopping row did nothing, and there is no reset button.",
+      "copy": "The green-bits heading and Keep it apart speak directly to a parent. Reading the full page revealed a concrete inconsistency: Less in the bin says spinach gets used on Tuesday, while the initial Tuesday is Egg and cheese wraps without spinach.",
+      "first_screen": "1440: a specific fridge-to-week promise, waitlist and first dinner rows share the viewport. At 390 the same promise and action remain, but only the upper ingredient choices are visible; no planned dinner or missing-only output is yet visible."
+    },
+    "problems": [
+      "The one-minute first-use claim is unsupported, and the example disclosure arrives after the complete demo; I would correct those before publishing under my name.",
+      "The core picky-eater doubt is answered in prose only; the default selected spinach is not used in the shown week, contradicting the Tuesday spinach example farther down.",
+      "On a phone, results sit below the long ingredient inventory and the shopping list sits below all dinners. The drawn shopping checkboxes do not respond to a tap."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF2",
+        "evidence": "The Take stock step states: It takes about a minute the first time. This is an unqualified numerical setup-performance claim not supplied by the brief, outside the labelled example dinners.",
+        "steps": "Open A/index.html at 1440x900 or 390x844. Scroll below the refrigerator demo to How a week gets planned, then read step 1, Take stock. Compare its about-a-minute first-use assertion with the supplied brief, which contains no timing evidence."
+      }
+    ]
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 9,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 7,
+      "honesty": 9,
+      "interaction": 8,
+      "copy": 9,
+      "first_screen": 7
+    },
+    "evidence": {
+      "clarity": "1440 and 390: the first supporting paragraph names a free iPhone app for parents of picky kids, explains the shelf-to-seven-dinners-to-missing-list workflow, and places Join the iPhone waitlist immediately below.",
+      "fit": "As the parent, I could test Nothing mixed in and see egg and peas on the side added to Monday, directly addressing my first doubt. As founder, I found the correct supplied waitlist URL, prominent future paid-family-plan disclosure and clearly labelled sample material throughout.",
+      "distinctiveness": "1440: the editorial headline, shelf of illustrated food pills, pinned weekly paper and child no-list cards all grow from family meal planning; they remain recognisable without relying on the logo.",
+      "proof": "At 1440, 768 and 390 I toggled all 12 foods and all three child rules. Selecting everything and the rules yielded seven dinners and five missing items; clearing the shelf displayed Nothing on the shelf, so no plan yet. Nothing spicy changed dinners and the list from seven items to six.",
+      "craft": "All supplied widths retain a clear hierarchy, contrasting paper panels and readable body copy. At 390 the two-column food pills are tight; in my operated state Tin of chickpeas broke awkwardly across lines. The main content and primary action remained visible without sideways navigation.",
+      "mobile": "390: the named-audience promise, full action explanation and beginning of the sample shelf fit in the first screen. Touching Nothing mixed in works, but the updated plan begins below the entire shelf/rules/reset panel, requiring a scroll to see the payoff. The phone Menu opened, navigated and closed; the 320 screenshot stays readable.",
+      "honesty": "At 390, A sample fridge is beside the first inputs and the waitlist explanation says one email when the app is ready, with future family pricing unset. The seven-dinner counts belong to the labelled sample, child cards say Example no-list, and the recipe FAQ explicitly avoids promising particular dishes.",
+      "interaction": "Across 1440, 768 and 390, every shelf/rule toggle, empty state, Put the sample back reset and all four FAQ disclosures worked. At 768 and 390 Menu navigation closed it and Escape dismissed it; Space also toggled Nothing mixed in. The rendered shopping rows look tickable but are static list items.",
+      "copy": "Parents get concrete statements such as Picky eaters get a veto, not a lecture and rice, egg and peas in three piles. Opening all four FAQs answered counting, an empty fridge, recipe origins and Android with specific language rather than a generic signup pitch.",
+      "first_screen": "1440: the first viewport pairs the named parent audience, fridge-first promise, accurate waitlist action and actual Monday-to-Thursday sample output. At 390 it contains only the start of the shelf, so the outcome is still asserted before any dinner or missing-list evidence appears."
+    },
+    "problems": [
+      "At 390, changing a food or child rule does not bring the resulting dinner/list into the same view; the feedback starts beyond the shelf, rules and reset control.",
+      "The shopping list uses checkbox-shaped marks and promises one-thumb ticking in the prose, but the demo lists offer no way to check off an item.",
+      "The shelf labels become cramped at phone width, and the first mobile viewport does not yet show an actual dinner or missing-only list to substantiate the promise."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B answers the wary parent\u2019s central question by letting me change the plate for a picky child and see the actual dinner response. Its sample labels and explanation of the waitlist also give me more confidence publishing it as the founder. A more compact mobile feedback loop and functioning shopping ticks would strengthen that choice.",
+  "score_preference_note": ""
+}

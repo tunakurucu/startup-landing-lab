@@ -1,0 +1,50 @@
+{
+  "packet": "X03",
+  "persona": "engineer",
+  "A": {
+    "scores": {"clarity":8,"fit":7,"distinctiveness":8,"proof":7,"craft":7,"mobile":6,"honesty":7,"interaction":7,"copy":7,"first_screen":6},
+    "evidence": {
+      "clarity":"1440 and 390: the headline and supporting paragraph explain dinners from existing ingredients and a list of missing groceries; 'Join the iPhone waitlist' is explicit. Parents and picky children are only identified further down.",
+      "fit":"Opened the delivered index.html from disk with external requests blocked at 1440, 768 and 390. All four waitlist links requested the brief's exact URL. Free use and the later, unpriced family plan are stated, but the picky-eater section is prose rather than something the sample can demonstrate.",
+      "distinctiveness":"At 1440 the dark framed fridge, tilted ingredient labels and taped green shopping note give the sample a product-specific identity; at 390 the fridge survives as a usable stacked artifact.",
+      "proof":"At every required width I toggled all 21 ingredients both ways and clicked Shuffle: selected states, meals and missing groceries changed. Empty selection produces 'Tap a few things above to start'; selecting everything produces 'Nothing. The whole week is already in the house.' The example disclosure sits after the entire artifact.",
+      "craft":"Main/header/footer landmarks, h1-h2-h3 ordering, fieldset legends, aria-pressed buttons and live result regions are sound. The roughly 26KB HTML/CSS/JS uses local files, system fonts and organized CSS tokens; no dependencies, diff or build logs apply to this standalone delivery. Probes report two serious contrast nodes at 390 and 1440. Desktop 200% equivalent reflow at 720 CSS pixels retained content without overflow.",
+      "mobile":"390: touch-operated all chips and Shuffle successfully, but ingredient targets measured approximately 33-38px and Shuffle 28px, below 44px. Meals and their feedback are below the long ingredient panel. Both supplied 390/320 probes and my required-width checks show zero horizontal overflow.",
+      "honesty":"Every primary/repeated action reached the supplied waitlist destination rather than claiming enrollment locally. 'These are example dinners' is present, but at 390 it comes after all five meals and shopping output; the first-screen CTA says free/iPhone without the later family-plan caveat.",
+      "interaction":"Tab traversed all 21 ingredient buttons, Shuffle and the primary/repeated links with visible 3px focus and no trap; Space toggled ingredients. Touch and mouse paths worked at the required widths with no page errors. Empty, all-selected and reload restoration worked; empty/300-character/zero/negative/pasted text cannot enter these boolean controls. There is no reset button or menu/dialog; clicking a shopping square did nothing because it is a pseudo-element, not a checkbox.",
+      "copy":"The empty-state grocery message, 'The list writes itself once there are dinners to plan,' explains the current state. The FAQ explains assumed staples, but 'Tap what you have' requires a long 21-item pass and the Android-planned and thirty-minute claims introduce detail not established by the brief.",
+      "first_screen":"1440: the fridge shows ingredient choices, Monday/Tuesday meals and missing groceries beside the promise and CTA. 390: promise and CTA remain clear, but only the ingredient selectors appear within 844px; no dinner output yet backs the promise. Reduced-motion emulation retained the artifact and produced zero active animations after a toggle."
+    },
+    "problems": [
+      "Fix the contrast failures reported by axe at 1440/390; the tomato primary button and day-label palette need accessible text contrast.",
+      "At 390, enlarge the approximately 33-38px ingredient targets and 28px Shuffle target, and bring meal feedback nearer the selected ingredient instead of below the full shelf.",
+      "Move the example disclosure to the artifact heading and add a visible sample reset; restoring its six initial selections currently requires reload or manual toggling."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {"clarity":9,"fit":9,"distinctiveness":9,"proof":8,"craft":8,"mobile":7,"honesty":9,"interaction":8,"copy":8,"first_screen":6},
+    "evidence": {
+      "clarity":"1440 and 390: the opening paragraph names a free iPhone app for parents of picky kids, explains planning seven dinners from the fridge/cupboard and only buying the gap. The CTA says 'Join the iPhone waitlist' and its adjacent text explains the email outcome.",
+      "fit":"The delivered file loads offline at all three required widths; every visible primary/repeated waitlist action requested https://pantrywise.example/waitlist. All 12 shelf choices and three child vetoes work, demonstrating both existing groceries and picky eating; free use and later shared-list pricing uncertainty are disclosed alongside the first CTA.",
+      "distinctiveness":"At 1440 the shelf uses illustrated ingredient checkboxes beside a pinned seven-day paper plan; the lower example child no-lists and split dinner show the same fridge-note vocabulary. At 390 it keeps that vocabulary in a single-column layout.",
+      "proof":"1440/768/390: each of the 15 checkbox controls was toggled on and off. Default summary is '7 dinners from 9 things on the shelf. 7 things to buy'; selecting all shelf items gives seven dinners and five things to buy. Nothing mixed in adds serving-apart instructions; all vetoes together keep adapted dinners. The shelf is labelled 'A sample fridge' at its top.",
+      "craft":"No errors, failed requests or horizontal overflow in supplied probes; axe has no violations at 390/1440. Labels wrap native checkboxes, icons are hidden from assistive technology, and main/header/nav/footer plus a visible-on-focus skip link provide structure. About 65KB of local delivery uses CSS tokens, system font stacks, escaped render text and a separately named planner module; no existing-codebase diffs/build logs apply. 200% equivalent desktop reflow retained content with zero overflow.",
+      "mobile":"390 touch: all ingredient and veto labels operated correctly, with measured targets 44px or larger. Menu opened, its section link navigated and closed it, and Escape closed it and returned focus to Menu. The stacked shelf still puts the actual dinner feedback below the first viewport; the supplied 320 shot also keeps readable full-width content without overflow.",
+      "honesty":"The first-screen CTA explains that one email address joins a waitlist and that the app is not ready; the adjacent family-plan note says its price is unset. The shelf is labelled sample before interaction and the plan says the dinner names are examples, with no reviews or customer claims. Every activated waitlist link used the brief's URL.",
+      "interaction":"Mouse/touch/keyboard checkboxes and reset work: empty shelf gives 'Nothing on the shelf'; eggs alone gives three dinners and an explicit short-week explanation; Put the sample back restores nine ingredients and clears all vetoes. Empty, 300-character, zero, negative and multiline pasted text cannot alter boolean controls. Tab focus is visible throughout, Space toggles, Enter opens the menu/FAQ, Escape restores menu focus, and all four FAQ summaries expand/collapse. No page errors. Shopping square marks are decorative, not tickable controls.",
+      "copy":"The short-week message explicitly says 'Only 3 dinners fit' in the one-ingredient test, and the empty state does not invent a week. 'Put the sample back' accurately describes reset. Labels such as USES/BUY/KIDS are consistent, though they render at 11px; the opening copy also awkwardly calls seven dinners 'seven weeknight dinners'.",
+      "first_screen":"1440: named audience, concrete seven-dinner promise, waitlist disclosure and the first sample meals coexist within 900px. 390: the CTA and labelled sample shelf begin within 844px, but no planned meal is yet visible. Under reduced motion all required content remained visible; the result-row flash is shortened to 180ms rather than entirely removed."
+    },
+    "problems": [
+      "At 390, bring the meal summary/output closer to the ingredient controls; changing the upper shelf currently updates a plan below the long stacked shelf and veto panel.",
+      "Increase the 11px uppercase USES/BUY/KIDS/example micro-labels flagged by the smallest-text probe, especially in the dense phone meal rows.",
+      "The shopping list's square marks look like checkboxes but do not accept taps or keyboard focus; either implement tick-off behavior or make their static role clearer."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B has native labelled controls, a working sample reset, meaningful picky-eater states, larger mobile targets and cleaner accessibility probe results. Both load offline and send waitlist actions to the correct destination, but B needs less remedial accessibility and state-management work; a compact phone feedback layout and larger micro-labels would strengthen it further.",
+  "score_preference_note": ""
+}

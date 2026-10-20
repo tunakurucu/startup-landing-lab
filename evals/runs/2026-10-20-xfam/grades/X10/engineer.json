@@ -1,0 +1,77 @@
+{
+  "packet": "X10",
+  "persona": "engineer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 8,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 8,
+      "honesty": 5,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "At 1440 the headline and lede explain licensed kitchens, empty hours, equipment and makers; at 390 the same message remains, though \u201cOvenhour rents them out\u201d is less explicit about booking.",
+      "fit": "At 1440 and 390 both audience CTAs are present; the kitchens action reaches the supplied signup URL, and the maker path acknowledges there are no listings yet.",
+      "distinctiveness": "The 1440 empty-hours board and the maker/kitchen side-by-side listing frame the idea around real kitchen shifts, not a generic SaaS template.",
+      "proof": "At 1440 the board says \u201cTypical patterns\u2026not listings,\u201d and the sample kitchen is marked \u201cSample / Not a real kitchen.\u201d",
+      "craft": "At 1440 Charter typography and amber-on-slate hours chart feel considered; probe reports one serious contrast node at 1440 and 390.",
+      "mobile": "At 390 the hero, both CTAs and beginning of the schedule fit without horizontal overflow; nav links stay visible instead of collapsing into a menu.",
+      "honesty": "The example listing is clearly labeled, but after a valid form submission the confirmation implies a future email despite only composing a message.",
+      "interaction": "At 390 submitting empty maker fields produces a specific inline error; valid fields and selected hour preferences populate a prefilled email, with no script errors.",
+      "copy": "\u201cClean-down,\u201d \u201cwalk-in,\u201d and county-permit language is specific to kitchen work; some text is dense at 390 and the booking promise reads more complete than its email-only implementation.",
+      "first_screen": "At 1440 and 390 the headline identifies licensed kitchens with idle hours and both audience actions are visible; the schedule provides a concrete example below the first screen."
+    },
+    "problems": [
+      "A has one serious contrast node at 1440 and 390 per the probe.",
+      "The maker form reports a successful future-email confirmation despite mailto-only delivery.",
+      "The static page is one large inline HTML/CSS/JS file, limiting separation of concerns."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "After submitting the maker form, the confirmation says \u201cWe\u2019ll email [address] when a kitchen lists hours near [place]\u201d; the page only launches a prefilled mailto message and stores no signup.",
+        "steps": "At any width, scroll to Makers, enter a valid email and city/county, submit \u201cEmail me when a kitchen lists,\u201d then inspect the confirmation and mailto destination; no signup request or stored waitlist entry occurs."
+      }
+    ]
+  },
+  "B": {
+    "scores": {
+      "clarity": 8,
+      "fit": 9,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 9,
+      "mobile": 8,
+      "honesty": 9,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "At 390 the headline is memorable but the explanatory paragraph is needed to state the rental and booking details; the two CTAs say what each audience should do.",
+      "fit": "At 1440 and 390 B gives kitchens an active signup path and makers a \u201cTell us the shift you need\u201d path while stating no maker can book yet.",
+      "distinctiveness": "The operating-hours sheet, maker/kitchen switch and inventory create a recognizable shift ledger rather than a stock hero-and-cards layout.",
+      "proof": "At 390 the \u201cEXAMPLE LISTING\u201d label sits above the 40-seat kitchen; the copy says no kitchen is listed and the price is illustrative.",
+      "craft": "At 1440 the bold type, narrow palette and sheet are cohesive; probe records no axe violations and no console, page or failed-request errors.",
+      "mobile": "At 390 the headline and both primary paths fit without horizontal overflow; its menu opens and nav links remain available, though the main sheet continues below.",
+      "honesty": "Before the maker form, copy says it opens as an email and nothing is stored; the example is labeled, and the page says the fee is not set.",
+      "interaction": "At 390 the kitchen/maker switch changes the panel, selecting a time block updates the summary, and empty form submission triggers native required-field feedback.",
+      "copy": "\u201cClean-down,\u201d \u201cpermit,\u201d \u201cwalk-in,\u201d and \u201cone block, not a month\u201d are concrete; \u201cbooking site\u201d slightly overstates current availability but nearby copy corrects it.",
+      "first_screen": "At 1440 and 390 the headline names kitchens and a specific closing-time tension; the signup and maker-note actions are visible with a sample sheet immediately below."
+    },
+    "problems": [
+      "B probe shows no page or console errors, no overflow at 320/390 and no axe violations at 390.",
+      "B\u2019s script updates pressed states and panel summaries; labels explain the sample-only, mailto form and illustrative price."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B probe shows no page or console errors, no overflow at 320/390 and no axe violations at 390. B\u2019s script updates pressed states and panel summaries; labels explain the sample-only, mailto form and illustrative price."
+}

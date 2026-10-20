@@ -1,0 +1,50 @@
+{
+  "packet": "X04",
+  "persona": "buyer",
+  "A": {
+    "scores": {"clarity": 9, "fit": 9, "distinctiveness": 8, "proof": 9, "craft": 7, "mobile": 6, "honesty": 9, "interaction": 7, "copy": 8, "first_screen": 7},
+    "evidence": {
+      "clarity": "1440 and 390: the hero calls it a shift logbook for restaurant managers and names shortages, call-ins and repairs. 'Start a free trial' is accompanied by signup-page instructions; clicking the visible trial repeats requested the brief's exact /signup URL.",
+      "fit": "Read fully as the manager on 390 and paying owner on 1440: close-entry, opener and weekly-owner examples give both audiences substantive paths. As founder, I see the retained Shiftnote mark, blue and coral status accents, removed template endorsements and correct signup destination.",
+      "distinctiveness": "1440: the close note, 86/repair/staff/cash/guest labels, name-and-time handoff statuses and weekly log make this feel like a restaurant logbook rather than the old generic feature/testimonial site.",
+      "proof": "1440: both 'Mark handled' buttons changed open entries into 'Handled · Sam' with a time; Undo restored them. At all three widths, selecting each of the five categories and adding text put that category and text in tonight's sample note. The owner's weekly table shows unresolved items rather than merely promising visibility.",
+      "craft": "The supplied 1440, 768 and 390 views have orderly borders and readable hierarchy, and the mobile weekly table becomes stacked entries. However, submitting 400 unbroken characters made the new entry extend horizontally; measured document width became 3681 at a 390 viewport.",
+      "mobile": "390: Menu opened to Close and navigation, the How it works link closed it, and touch Mark handled/Undo worked. The first screen only reaches the opening sample entry; the useful action states require scrolling. A 400-character unbroken entry produced content requiring sideways scrolling; the 320 supplied top view also has no sample in view.",
+      "honesty": "The sample note explicitly says people and restaurant are made up and nothing pressed is saved or sent; the entry form says 'Sample only; nothing is sent.' Signup destination and self-setup are stated beside the hero CTA before I act, and the footer identifies every restaurant/name as sample material.",
+      "interaction": "At 1440, 768 and 390, all five category buttons and Add worked, both status buttons toggled and Undo worked, and reload restored the original sample. Empty submission displayed 'Write something first.' Phone touch and Enter on a status control worked, but long unbroken text overflowed instead of wrapping.",
+      "copy": "The cash-safe, call-out cover and walk-in service examples answer concrete manager questions, and 'What stays out' bounds the product against POS/payroll. The opening explanation and later three-reader introduction repeat much of the same handoff story, making the phone pass lengthy.",
+      "first_screen": "1440: 'Nothing from tonight’s close gets lost by tomorrow’s open' is backed by an actionable close note and the signup CTA. At 390 the same promise and action are visible, but only the beginning of the sample reaches the viewport; ownership and completion proof are below it."
+    },
+    "problems": [
+      "390: adding 400 unbroken characters creates a 3681px-wide document, so the submitted sample entry cannot be read without sideways scrolling.",
+      "The manager's phone first screen shows only the beginning of the sample, while the opening ownership states and entry demo sit substantially farther down a long page.",
+      "For the paying owner, the weekly example explains operational value but the page leaves trial duration and eventual pricing unanswered."
+    ],
+    "hard_fail_flags": [{"code": "HF3", "evidence": "At 390×844 a submitted unbroken 400-character sample entry runs far beyond the right edge; document scrollWidth is 3681 while innerWidth is 390. Reading the generated text requires sideways scrolling.", "steps": "Open A/index.html from disk at 390×844. Scroll to New entry, replace the text input with 400 consecutive lowercase x characters, then press Add to tonight’s note. Inspect the resulting entry under TONIGHT’S NOTE SO FAR and scroll horizontally to reach its end."}]
+  },
+  "B": {
+    "scores": {"clarity": 9, "fit": 8, "distinctiveness": 8, "proof": 7, "craft": 9, "mobile": 8, "honesty": 8, "interaction": 8, "copy": 9, "first_screen": 8},
+    "evidence": {
+      "clarity": "At 1440 and 390 the headline 'What close needs to tell open' is immediately explained as a shared logbook for restaurant managers. 'Start a free trial' and 'Takes you to app.shiftnote.example to sign up' make the next step concrete, and the trial links requested /signup.",
+      "fit": "Full manager-on-phone and owner-on-laptop readings find close, opening and Sunday-owner use cases, a real example, and correct trial actions. The Shiftnote mark and blue/coral identity remain and fake endorsements are gone. The owner gets a written weekly-use path but no actual weekly output to inspect.",
+      "distinctiveness": "1440: the lined-paper handover with time gutter, coral category marks and specific service notes carries the page's identity. The subsequent category examples reuse that same logbook language instead of generic software cards.",
+      "proof": "At 1440 the full 'Example handover' is prominent beside the hero, including shortages, covering staff and repair workarounds. At 390 I tapped 'Read an example handover' and reached #example. It is honest static evidence, but I cannot try writing, completing or reviewing a weekly log.",
+      "craft": "The supplied 1440, 768, 390 and 320 views keep headline, trial action and sample within their columns. The 390 layout gives the notebook its own readable column; the live example jump and section links preserved that orderly layout.",
+      "mobile": "390: a persistent header trial action replaces the desktop navigation, with no menu control present. The large hero action and example jump work by touch, and the sample remains readable below them. The first viewport includes the example label and first shortage entry; 320 retains the action but pushes the artifact lower.",
+      "honesty": "The artifact says 'Example handover' at its top on desktop and phone, all trial actions use the supplied destination, and the bottom explicitly says there are no logos or case studies yet. That conspicuous final section frames missing proof as the closing pitch instead of simply letting the labelled example earn confidence.",
+      "interaction": "At all three widths I followed the visible trial repeats to the brief's signup URL. At 768 and 390 the example link reached #example; desktop How it works and What goes in reached #how and #log, and the brand returned to #top. The trial link accepts keyboard focus. There are no input, demo-state or mobile-menu controls to exercise.",
+      "copy": "The notebook includes useful details such as Priya covering 11 to 4, a still-open dishwasher shift and the wedge under table 14. 'Why not the group chat?' answers my practical switching doubt with one log per restaurant and who can read/write, while the owner paragraph explicitly locates weekly reading on a laptop.",
+      "first_screen": "At 1440 the specific close-to-open promise, signup action and fully labelled handover appear together. At 390 the same promise and signup action remain visible with the notebook heading and first entry, though the rest of the evidence requires scrolling."
+    },
+    "problems": [
+      "The paying owner is told they can read the whole week but never sees a weekly view, so the page proves the manager's use more strongly than the purchase case.",
+      "The handover is static: a manager cannot try adding an entry or see what happens after the opener acts on a repair.",
+      "The closing conversion section leads with 'No logos' and 'No case studies yet'; the honest lack of customer proof receives more emphasis than the practical reason to start a trial, whose duration and price also remain unspecified."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "I would ship B because a manager gets a concise, believable handover and a clear signup path in a phone layout that stays dependable, and its group-chat explanation answers the immediate switching doubt. A gives the owner and opener stronger working evidence, but I would need its submitted-text overflow fixed and the mobile opening shortened before putting it live under my name.",
+  "score_preference_note": ""
+}

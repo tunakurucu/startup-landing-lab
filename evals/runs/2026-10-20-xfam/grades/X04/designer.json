@@ -1,0 +1,50 @@
+{
+  "packet": "X04",
+  "persona": "designer",
+  "A": {
+    "scores": {"clarity":9,"fit":9,"distinctiveness":8,"proof":9,"craft":7,"mobile":6,"honesty":8,"interaction":7,"copy":8,"first_screen":8},
+    "evidence": {
+      "clarity":"At 1440 and 390 the supporting line explicitly calls Shiftnote a shift logbook for restaurant managers; the trial button sits beside an explanation that it opens signup.",
+      "fit":"The 1440 page retains the logo and blue/orange identity while replacing the old template with close, open and owner-week artifacts. At 390 the owner table becomes separate readable entries.",
+      "distinctiveness":"The 1440 serif headline, timestamped close note, dashed note headers and small category stamps form a restaurant logbook language rather than the previous gradient-and-testimonials layout.",
+      "proof":"At all three operated widths, both Mark handled controls changed to Undo with a named handled status. The lower New entry artifact accepted entries in all five selectable categories, while the owner week showed unresolved items.",
+      "craft":"The supplied 1440 and 768 views have clear ruled divisions and restrained colour, but the small metadata and many bordered artifacts make the lower page dense. At 390 a submitted 300-character unbroken entry escaped its note border and widened the document to 2781px.",
+      "mobile":"At 390 the action spans the content width and the close note begins within the first viewport; the supplied 320 view keeps headline and action readable. The expanded phone menu works, but entry category targets are small and a long submitted word creates sideways overflow.",
+      "honesty":"The close-note footer identifies the restaurant and people as made up, and the entry composer says Sample only; nothing is sent before Add. All trial links inspected use the supplied signup destination, although the first close-note example label sits below the initial mobile viewport.",
+      "interaction":"At 1440, 768 and 390 the five category buttons changed pressed state and Add appended local notes; empty submission displayed Write something first. At 390 Undo restored an open item, Menu opened, Escape closed it and How it works navigated correctly. Long unbroken input was not contained.",
+      "copy":"At 1440 the headline names the close-to-open problem and the examples discuss short rib portions, the safe and a repair appointment. The close/open/week explanation is specific, though the introductory paragraph and disclosure make the phone opening comparatively wordy.",
+      "first_screen":"At 1440 a specific close-to-open promise, signup action and actionable repair note share the viewport. At 390 the same promise and action remain visible with the first concrete 86 entry, although its example disclaimer requires scrolling."
+    },
+    "problems":[
+      "390: submitting a 300-character unbroken entry lets the new note text and metadata extend far beyond the note; the page becomes horizontally scrollable.",
+      "The lower walkthrough is visually dense, with multiple small timestamp systems and bordered artifacts; the phone reader faces a very long sequence before the final action.",
+      "The close-note sample disclosure is at the bottom of the artifact, below the first mobile viewport; label the example at its heading."
+    ],
+    "hard_fail_flags":[{"code":"HF3","evidence":"At 390×844 an added unbroken 300-character entry extends sideways out of the note. document.documentElement.scrollWidth becomes 2781px for a 390px viewport; the submitted text is readable only by horizontal scrolling.","steps":"Open A/index.html at 390×844. Scroll to New entry. Replace the text input with 300 consecutive lowercase x characters. Click Add to tonight’s note. Scroll down to Tonight’s note so far and observe the line escaping the card and horizontal page scrolling."}]
+  },
+  "B": {
+    "scores": {"clarity":9,"fit":9,"distinctiveness":8,"proof":7,"craft":8,"mobile":8,"honesty":8,"interaction":7,"copy":9,"first_screen":8},
+    "evidence": {
+      "clarity":"At 1440 and 390, What close needs to tell open is immediately explained as a shared logbook for restaurant managers; Start a free trial is followed by the signup destination.",
+      "fit":"At 1440 the retained logo and blue/orange palette frame a restaurant handover rather than the old software template. The three-step section separately addresses closing manager, opening manager and the owner reading on a laptop.",
+      "distinctiveness":"The 1440 handover's blue ruled paper, orange margin and orange category marks give the site a recognisable logbook motif, repeated purposefully in What goes in the log.",
+      "proof":"The labelled Example handover is visible alongside the desktop promise and starts within the 390 first screen. Its four detailed entries show the information carried between shifts, but the artifact is static and the owner-week view is described rather than demonstrated.",
+      "craft":"The supplied 1440, 768 and 390 screenshots show a coherent sans/serif hierarchy, spacious sections and a consistent paper motif without clipped running copy. Operating Read an example handover at 390 scrolls the example heading under the fixed header.",
+      "mobile":"At 390 the header keeps a direct trial action and the three-step sequence becomes a time-and-description layout. There is no phone menu; the desktop navigation is omitted. At 320 the promise and action remain readable, although the example starts below the first screen and its timestamp gutter narrows the text column.",
+      "honesty":"Example handover appears at the top of the sample in the 390 initial view; the main action explains that it goes to signup, and all three trial links reached the supplied URL at every tested width. The late No logos to show you / No case studies yet section is unusually dominated by absence of proof.",
+      "interaction":"At 1440 and 768 How it works and What goes in reached their sections; at 768 and 390 Read an example handover reached #example after tapping. All three trial actions requested the supplied signup URL at all three widths. The example anchor leaves its top label behind the fixed header, and there are no editable demo controls.",
+      "copy":"Across the 1440 page the examples use restaurant details such as Thursday’s order, covering 11 to 4, the service line and a wedge under table 14. Why not the group chat concisely explains the product boundary in plain language.",
+      "first_screen":"At 1440 the named audience, close-to-open promise, signup action and four-entry handover make a believable first screen. At 390 the same action and audience remain visible with the first ran-out entry, though the owner benefit and further examples require scrolling."
+    },
+    "problems":[
+      "The attractive paper artifact remains static, and the owner's weekly reading benefit gets prose rather than its own visible product example.",
+      "390: tapping Read an example handover places the example's label and part of its heading beneath the fixed header; add an appropriate anchor offset.",
+      "The large final blue panel leads with No logos to show you / No case studies yet, giving missing proof more visual emphasis than the useful trial outcome."
+    ],
+    "hard_fail_flags":[]
+  },
+  "preference":"B",
+  "confidence":"high",
+  "reason":"B has the more coherent visual language: the ruled handover, restrained orange marks and compact promise make an immediate restaurant-specific composition that stays readable on a phone. A demonstrates more product behaviour, but its dense walkthrough and reproducible overflow in an entered-note state need repair before shipping; a contained composer and tighter mobile rhythm would make it a closer choice.",
+  "score_preference_note":""
+}

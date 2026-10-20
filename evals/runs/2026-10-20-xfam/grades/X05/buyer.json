@@ -1,0 +1,78 @@
+{
+  "packet": "X05",
+  "persona": "buyer",
+  "A": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 7,
+      "proof": 8,
+      "craft": 8,
+      "mobile": 5,
+      "honesty": 8,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 6
+    },
+    "evidence": {
+      "clarity": "1440 and 390: the headline promises hot water in cheap hours, and the supporting paragraph explicitly identifies an electrician-added controller for an existing electric heater; Join the install list reaches the role/postcode/email form.",
+      "fit": "Read fully as homeowner, electrician, utility manager and founder: dedicated electrician and utility sections explain retained thermostat/high-limit, preliminary listing, recorded tariff-band hours and the unnamed pilot. At all three widths the form saves locally and says nothing is sent; the homeowner can model their own hours.",
+      "distinctiveness": "1440: the custom 24-hour strip aligns tariff, household use, conventional heating, Tankshift heating and tank reserve. At 390 its practical timetable language still feels specific to this product, although the surrounding text sections are restrained and familiar.",
+      "proof": "1440, 768 and 390: changing Evening peak to Morning and evening peaks changes peak heating from 1/0 to 3/1 hours; selecting tank sizes also changes the comparison. The adjacent text calls this a simplified example rather than a bill forecast.",
+      "craft": "Supplied 1440, 768, 390 and 320 views show clear heading/body hierarchy and orderly audience sections. The operated 390 form has readable large inputs and a visible local-only explanation; the demo strip is cramped, with narrow hour buttons.",
+      "mobile": "390: navigation wraps into two permanent rows, and the first viewport reaches only the Try a day heading. The strip viewport is 358px wide over 700px of content; later hour controls require sideways scrolling and each hour button measures only 21 by 40px.",
+      "honesty": "390: before form submission the page says entries remain in this browser and are not sent; submission repeats Nothing was sent and offers Change my entry. Safety listing in progress and no customer stories are stated plainly, but the hero action itself does not disclose the provisional local record.",
+      "interaction": "At 1440, 768 and 390 I changed every tariff, usage preset and tank size, toggled all 24 hours, followed join links, submitted empty and valid forms, and used Change my entry. Clearing all uses produces zero heating and Tap an hour guidance. The electrician-specific join link leaves the homeowner role selected.",
+      "copy": "Full homeowner, installer, utility and founder readings found concrete explanations such as No mixing valve, no new tank and tariff-band logging. At 390 the saved utility entry reads as with a utility programme, an awkward confirmation; much of the footer/status material repeats earlier cautions.",
+      "first_screen": "1440: promise, two explicit actions and the start of the live timetable share the viewport. At 390 the long hero and wrapped navigation leave only the Try a day heading below the actions; no working schedule backs the promise within that first viewport."
+    },
+    "problems": [
+      "390: later timetable hour controls require sideways scrolling in a 358px viewport over a 700px strip, and hour targets are only 21px wide.",
+      "The 390 first screen reaches the demo heading without showing its operation, weakening the evidence for the heating promise.",
+      "Join as an electrician scrolls to the generic form without selecting electrician; the saved utility confirmation also has awkward role wording."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF3",
+        "evidence": "At 390 the main demo has off-screen hour controls inside a horizontally scrolling strip; the strip is 700px wide inside a 358px viewport.",
+        "steps": "Open A/index.html at 390x844. Scroll to Try a day. Observe that only the start of Hot water used is visible; reaching afternoon/evening hour buttons requires scrolling the strip sideways, as the page itself instructs."
+      }
+    ]
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 8,
+      "honesty": 8,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "1440 and 390: A water heater that waits for cheap power is immediately explained as a controller an electrician adds; Join the install list leads directly to email, postcode and audience selection.",
+      "fit": "Full readings as homeowner, electrician, utility manager and founder found explicit heater eligibility, a preliminary install sketch, the retained thermostat, safety listing still pending, illustrative utility logs and an unnamed pilot. The 390 list form discloses device-only storage before submission and lets all three audiences identify themselves.",
+      "distinctiveness": "1440: a technical example-day figure, heating/tank traces, numbered installer checks and an inline-circuit drawing build the page around the installation and shifted-load product. The utility example log is visibly labelled rather than used as a generic proof strip.",
+      "proof": "At 1440, 768 and 390 I exercised all three tariff and all three household choices. Night rate with Evening showers reports 4.4 kWh at peak, one peak top-up and one draw running short; the model exposes limitations rather than only a perfect result. Example-only labelling appears above the controls.",
+      "craft": "Supplied 1440, 768, 390 and 320 screenshots retain clear columns and section separation. The operated 390 tariff and household controls wrap their labels cleanly and the chart becomes vertically arranged rows; the tank-level details and chart labels remain quite small.",
+      "mobile": "390: the compact header has a working Menu and the first viewport includes the promise, list action, example label and tariff controls. Tapping menu links reaches the audience sections and closes navigation. The chart is recomposed into stacked labelled tracks rather than requiring a horizontal sweep.",
+      "honesty": "390: Example only precedes the model controls, the table caption says figures are not meter readings or a bill forecast, and the utility log is illustrative. Submitting the form says saved on this device and nothing was sent. The first-screen CTA still leaves that limitation until the form, and the Pricing section adds firm commercial expectations absent from the brief.",
+      "interaction": "At all three required widths I operated each tariff and household state, opened/closed the hot-water-use list, followed visible primary-action repeats and submitted empty/valid forms with all audience choices. Tables and traces update and empty fields block submission. At 390 Menu opens/closes by tap, but pressing Escape leaves aria-expanded true.",
+      "copy": "Homeowner reading clearly explains that a hot shower outranks a cheap one; electrician reading names excluded heater types and preliminary conductor details; utility reading distinguishes switching logs from model estimates. The long technical explanation of the model and pricing makes the founder page more expansive than necessary.",
+      "first_screen": "1440: the specific heating promise, electrician-added-controller explanation, list action and an actual comparison chart are visible together. At 390 the promise, action and clearly labelled example controls are visible, although the chart that validates the outcome falls below the viewport."
+    },
+    "problems": [
+      "The first-screen Join the install list action only reveals device-only storage at the form; leading with that limitation would set the right expectation earlier.",
+      "390: opening Menu and pressing Escape leaves it expanded.",
+      "The 390 initial viewport shows example controls but no chart outcome; lower chart labels and the tank trace require more concentrated reading on a phone."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "I would ship B because it gives each buying participant a concrete path and makes the schedule easier to explore on a phone. Its model even admits a household draw running short, helping me trust the limitations as a homeowner and founder; I would reconsider if A recomposed its phone timetable and brought useful evidence into the first screen.",
+  "score_preference_note": ""
+}

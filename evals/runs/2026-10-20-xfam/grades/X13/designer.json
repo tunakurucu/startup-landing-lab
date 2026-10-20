@@ -1,0 +1,71 @@
+{
+  "packet": "X13",
+  "persona": "designer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 8,
+      "fit": 9,
+      "distinctiveness": 9,
+      "proof": 7,
+      "craft": 8,
+      "mobile": 8,
+      "honesty": 9,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 7
+    },
+    "evidence": {
+      "clarity": "At 390 the headline says the examiner\u2019s \u201cwhy\u201d is already in the file; the lede names review, evidence, decision and reason, with sandbox and sample actions.",
+      "fit": "A gives BSA officers and the board dedicated sections, avoids compliance guarantees, and links sandbox requests to the brief\u2019s supplied address.",
+      "distinctiveness": "The calm filing-folder mark, editorial serif and stepwise case file feel tailored to examiner-ready documentation rather than generic compliance SaaS.",
+      "proof": "At 1440 the sample case starts below the hero; each of its five steps can be selected and the final step summarizes what the examiner sees.",
+      "craft": "At 1440 the muted green and paper palette and large headline are polished; the probe reports one serious contrast issue at 1440 and 390.",
+      "mobile": "At 390 the hero and both CTAs are readable with no overflow; the case sample starts at the bottom and requires a scroll to operate.",
+      "honesty": "At 390 the sample is identified as a made-up alert at a made-up bank; \u201cwe don\u2019t claim\u201d addresses no regulator approval and no SOC 2.",
+      "interaction": "At 390 I selected all five step buttons, went back from step five and forward again; the step count and case sections update without errors.",
+      "copy": "\u201cWho reviewed it, what they checked, what they decided, and the reason\u201d mirrors the BSA record; the board-facing section is more explanatory than promotional.",
+      "first_screen": "At 1440 and 390 the examiner-readiness promise and sandbox action are visible, but the case artifact is below the hero rather than backing the claim immediately."
+    },
+    "problems": [
+      "A\u2019s interactive case starts below the first hero viewport.",
+      "A has one serious contrast node in the probe at 1440 and 390.",
+      "The hero spends substantial vertical space before the artifact."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 9,
+      "proof": 9,
+      "craft": 9,
+      "mobile": 9,
+      "honesty": 9,
+      "interaction": 9,
+      "copy": 9,
+      "first_screen": 9
+    },
+    "evidence": {
+      "clarity": "At 390 the headline says who the record serves and why; the paragraph specifies one record for reviewer, evidence, decision and reason.",
+      "fit": "Both the officer\u2019s examiner path and board explanation are present; the sandbox is set up by hand after email as the brief requires.",
+      "distinctiveness": "The document-like stepper, tabular case details and restrained green marks make the page read like an audit file, not a template.",
+      "proof": "At 390 a labeled fictional case is visible in the first viewport; I advanced through all five stages to the examiner-ready record.",
+      "craft": "At 1440 the split hero and live record are aligned and legible; probe shows no axe violations or runtime errors and text minimum is 12.48px.",
+      "mobile": "At 390 the step tabs and next/back controls fit without overflow; the phone menu opens and closes with Escape.",
+      "honesty": "The sample says \u201cFictional customer, staff and amounts. Illustrative only,\u201d and the sandbox copy states one email, manual setup and sample alerts.",
+      "interaction": "At 390 I selected steps 1\u20135, used Back to return to step four, and verified the status/case panel changed with no errors.",
+      "copy": "\u201cAlert reviews an examiner can follow without you in the room\u201d is audience-specific; the status, owner, next action and flagged-deposit detail are concrete.",
+      "first_screen": "At 1440 and 390 the named examiner outcome, interactive case file and sandbox request appear together; the sample is labeled fictional at the point of use."
+    },
+    "problems": [
+      "B\u2019s evidence file sits beside the promise immediately, giving the first screen a clear hierarchy.",
+      "The tabbed case panel keeps the dense detail legible and coordinated with the stepper."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B\u2019s evidence file sits beside the promise immediately, giving the first screen a clear hierarchy. The tabbed case panel keeps the dense detail legible and coordinated with the stepper."
+}

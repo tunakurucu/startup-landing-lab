@@ -1,0 +1,52 @@
+{
+  "packet": "X01",
+  "persona": "designer",
+  "A": {
+    "scores": {"clarity": 9, "fit": 9, "distinctiveness": 8, "proof": 8, "craft": 8, "mobile": 7, "honesty": 7, "interaction": 8, "copy": 9, "first_screen": 6},
+    "evidence": {
+      "clarity": "1440 and 390: the CI/laptop headline and bold opening sentence identify a free CLI for backend engineers; the visible npm command and 'Copy install command' give an exact next step.",
+      "fit": "1440, 768 and 390: operating the replay and ordinary npm-test modes demonstrates the brief's central tension rather than substituting a signup. The source/docs destinations match the brief, and the pricing section explicitly says the hosted version is planned, not built.",
+      "distinctiveness": "1440: the event-by-event CI/laptop comparison is the page's organising artifact, with clock, network, random and environment information carried into the explanatory sections. The sober type and restrained blue match the engineering subject, though the surrounding section structure is conventional.",
+      "proof": "At all three operated widths, selecting ordinary npm test and playing to completion produces PASS/not reproduced with six differing events; selecting rerun produces FAIL/reproduced with seven matches. The midnight coupon example explains why this matters. At 390 the sample disclosure is after the long event list.",
+      "craft": "1440: strong headline, aligned install panel and legible event columns establish clear hierarchy. 768 and 390: the comparison becomes labelled CI-run/laptop rows without crushing the text. The long phone artifact and generous install-card status space slow the rhythm; at 320 the command overruns its card.",
+      "mobile": "390: the menu opened and its How it works link navigated correctly; replay status is moved above the controls and each event has local CI/laptop labels. The artifact remains readable, but its controls are below the initial viewport and the full seven-event comparison makes a very long scroll. The 320 screenshot clips the install command.",
+      "honesty": "390: the install action names a clipboard operation, and the page explicitly labels the terminal example and says the team version is not built. 'Sample recording written for this page' is present, but only below the complete event list, several screens after the reader first encounters the demo.",
+      "interaction": "1440, 768 and 390: both modes, all eight slider positions, replay completion and Stop responded; keyboard Enter stopped playback and Home/ArrowRight moved the range to event one. Both copy buttons gave a useful manual-copy fallback when the clipboard operation failed. No page errors occurred. Phone replay feedback stays above the controls, although the detailed rows are further down.",
+      "copy": "390 and 1440: 'The test is not random. Its inputs are.' leads into concrete clock, request and environment explanations; the coupon-expiry result describes the cause rather than merely saying success. 'What a replay cannot do yet' and the local copy-failure message are specific and actionable.",
+      "first_screen": "1440: the first viewport contains the specific CI-to-laptop promise, install action and the beginning of the comparison. 390: the promise and copy action are visible, but only the demo heading reaches the bottom of the initial viewport; the actual example cannot substantiate the promise without scrolling."
+    },
+    "problems": [
+      "The 390 first viewport does not show the working example; the install panel and introductory copy push proof below the fold.",
+      "The sample-recording disclosure sits below a long seven-event artifact, making the example's provenance late on phones.",
+      "The phone comparison remains unusually long, and the 320 install command overruns its card."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {"clarity": 9, "fit": 7, "distinctiveness": 8, "proof": 5, "craft": 7, "mobile": 4, "honesty": 3, "interaction": 7, "copy": 8, "first_screen": 6},
+    "evidence": {
+      "clarity": "1440 and 390: the headline names the CI-only failure and its local reproduction; the supporting paragraph explains recording, exact replay and breakpoints, with the correct npm install command directly below.",
+      "fit": "At all three widths, the central terminal playback and source/docs actions suit an engineer who wants evidence before committing; free MIT licensing and the unbuilt hosted version are explicit. However, the page introduces measured overhead and other concrete assurances absent from the brief, weakening its intended credibility.",
+      "distinctiveness": "1440: a restrained serif editorial layout, tiny red recording dot and large dark terminal give the page a recognisable point of view. The subsequent narrow descriptive columns and technical tables continue that language rather than becoming generic feature cards.",
+      "proof": "1440 and 768: scrubbing to 8.8 seconds reveals the failing refund assertion, identical-to-CI summary and comparison output. The caption calls this a 'real replay session' rather than an illustrative example. At 390, key terminal output extends beyond the panel and requires horizontal scrolling, reducing the evidence's immediate usefulness.",
+      "craft": "1440: the serif scale, restrained red accents and consistent two-column sections feel deliberate. At 768 the terminal remains legible. At 390, the terminal's unwrapped lines and install commands exceed their visible areas; the tall initially sparse terminal consumes considerable space before controls and the explanatory caption appear.",
+      "mobile": "390: the headline and install button reflow cleanly and navigation remains directly exposed, so no mobile menu is needed. But the demo retains desktop-width terminal lines: at its final frame, the comparison result and CI-match summary run off to the right. Replay/speed buttons are small, and the important sample explanation follows the tall terminal. The 320 screenshot also shows a truncated install command.",
+      "honesty": "390 and 1440: the copy action and source/docs destinations are accurately named and the planned hosted version is disclosed. However, the terminal is described as a real session without a sample label; opening 'How much does recording slow down CI?' asserts measured 2–4% overhead on 500–5,000-test suites, figures the brief never supplied.",
+      "interaction": "1440, 768 and 390: play/pause/replay, scrub positions 0/2000/5000/8800 and the 1x/2x/4x speed cycle responded. All six FAQ disclosures opened and closed; Enter opened the first FAQ and replayed the finished terminal, while Home/ArrowRight moved the range. Both copy actions displayed Copied, and no page errors occurred. The narrow terminal still requires sideways exploration and the playback controls are undersized on phones.",
+      "copy": "1440 and 390: 'where you can put a breakpoint in it', the CI-artifact instructions and the FAQ questions use concrete engineer vocabulary. Labels for replay and source reading are direct. The unsupported benchmark and maintainer assurances are presented with greater certainty than their supplied evidence supports.",
+      "first_screen": "1440 and 390: the headline promises the specific local reproduction outcome and the install action is visible. A terminal begins in view, but its initial state consists largely of the replay command and blank space; the failure and matching result, controls and provenance caption are below the initial viewport."
+    },
+    "problems": [
+      "The FAQ invents measured recording overhead, while the demo presents synthetic numerical output as a real session rather than labelling an example.",
+      "At 390 the main terminal's important output requires horizontal scrolling, and several install/example command lines also exceed their visible width.",
+      "The tall, initially sparse terminal delays both convincing output and the controls/caption, especially on phones."
+    ],
+    "hard_fail_flags": [
+      {"code": "HF2", "evidence": "The overhead FAQ states 'roughly 2–4% on the test run itself, in our measurements on Jest suites between 500 and 5,000 tests.' Those measured performance figures are not in the brief and are not labelled sample data.", "steps": "Open B/index.html from disk at 390x844 or 1440x900. Follow FAQ in the header, then expand 'How much does recording slow down CI?' Read the claimed overhead and measured suite sizes."},
+      {"code": "HF3", "evidence": "At 390x844 the main replay output is wider than its visible terminal: the screen has 574px scroll width inside a 358px client width. The 'identical to CI run 4821' summary and '2,114 observed values · 0 differ' output are cut off at the right edge and require sideways scrolling.", "steps": "Open B/index.html at 390x844. Scroll to the terminal controls and drag 'Scrub the replay' fully right to 8.8 seconds. Read the CI-match summary and comparison line above the controls; their right-hand text is outside the visible panel and only becomes available by horizontally scrolling that panel."}
+    ]
+  },
+  "preference": "A",
+  "confidence": "high",
+  "reason": "I would ship A because its two-mode comparison explains the product's unusual benefit and is deliberately restructured into readable phone rows. B has an appealing editorial identity, but its mobile terminal loses the evidence the visitor needs and its unsupported measurement claims undermine trust. A stronger, honestly labelled phone artifact and removal of the invented measurements would materially improve B's case."
+}

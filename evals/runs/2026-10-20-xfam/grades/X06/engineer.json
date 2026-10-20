@@ -1,0 +1,78 @@
+{
+  "packet": "X06",
+  "persona": "engineer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 8,
+      "fit": 7,
+      "distinctiveness": 7,
+      "proof": 8,
+      "craft": 8,
+      "mobile": 8,
+      "honesty": 7,
+      "interaction": 7,
+      "copy": 8,
+      "first_screen": 7
+    },
+    "evidence": {
+      "clarity": "1440/768/390 live loads show the council-alert purpose and working form; the 390 probe reports no page or console errors and no horizontal overflow at 320 or 390.",
+      "fit": "The single file stays self-contained for the required file:// launch, and its submit handler explicitly reports that no mailing-list backend is connected. The brief’s English-only summary limit appears in the page.",
+      "distinctiveness": "The four-item sample digest, original-agenda links and neighborhood matching are specific to this service; choosing Eastside matches item 6.B, and Westgate gives a no-match state.",
+      "proof": "The probe reports clean local loads and zero overflow at 320, 390, 768 and 1440; live selection updates the sample digest at each required width, and the linked sample item loads from disk.",
+      "craft": "A has labelled selects and email inputs, one H1 followed by section H2s, and visible 3px keyboard focus. Its complete CSS and JavaScript are embedded in the 31.8KB HTML, and there is no skip link.",
+      "mobile": "At 390, the Menu button opens the nav; the first 320/390 probe reports no horizontal overflow and a 13px minimum text size. The main agenda is a vertical single-column list on mobile.",
+      "honesty": "The digest is explicitly called a sample and “Not a record of any real council”; after valid submit, the status says no address was stored. That no-backend disclosure appears only after the visitor commits.",
+      "interaction": "Empty signup focuses the missing neighborhood; zero and negative email strings show a validation error, pasted email works, and resetting the neighborhood clears all matched items. Escape leaves the open phone menu expanded, and a 1,200-character syntactically valid email is accepted.",
+      "copy": "The empty-area error (“Choose a neighbourhood first”) and no-match message are specific, and the valid-submit response accurately says nothing left the page. It repeats the same form in the hero and footer.",
+      "first_screen": "At 1440 the first screen contains the signup and the sample digest. At 390 it contains the promise and signup, while the agenda artifact is below the viewport."
+    },
+    "problems": [
+      "At 390, opening Menu with Enter and pressing Escape leaves aria-expanded=true and the navigation open.",
+      "The primary signup only explains after submission that the address was not stored; the form has no real enrollment or an upfront local-only notice.",
+      "The custom email check accepts a 1,200-character address when it contains an @ and dot; no length cap is enforced."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 8,
+      "distinctiveness": 8,
+      "proof": 6,
+      "craft": 7,
+      "mobile": 5,
+      "honesty": 2,
+      "interaction": 6,
+      "copy": 8,
+      "first_screen": 6
+    },
+    "evidence": {
+      "clarity": "The 1440/768/390 pages load locally with an explicit neighborhood/email alert purpose; the 390 view has a direct skip-to-content link, while the labels are associated with both form fields.",
+      "fit": "The separate Spanish-alert checkbox and clerk/funder section cover the audience paths, and valid signup prepares a mailto request to the supplied alerts address. The agenda provenance is unsupported by the brief.",
+      "distinctiveness": "The fixed alert-card example changes subject and highlight by selected neighborhood, while lower sections compare the city agenda with the plain-language output.",
+      "proof": "Selecting Mill District changes the alert card and its link resolves to the supplied local agenda page; resetting the select to its blank option leaves the old Mill District alert visible, and the claimed real agenda is unsupported.",
+      "craft": "HTML, CSS and JS are separated into files and storage errors are caught; all input controls have names/labels and visible focus. The probe records a serious color-contrast violation, and the smallest text is 12.8px.",
+      "mobile": "390 and 320 probes show no horizontal overflow, but the full nav wraps above the headline rather than collapsing to a menu, and the primary action and artifact are below the initial 390px viewport.",
+      "honesty": "B presents an October 28 agenda, named city and volunteer checkers as real facts absent from the brief; its page therefore has a reproducible HF2 flag despite the alert-card label.",
+      "interaction": "All seven neighborhoods update the card, Spanish preference toggles, and empty/invalid email is marked. A long email is accepted and blanking the neighborhood leaves stale preview text; keyboard focus is visible and there is no menu/dialog to dismiss.",
+      "copy": "The mail handoff message says the email app should open and a volunteer will add the address by hand; the result is shown only after clicking. Other copy explains English summaries versus Spanish alert email.",
+      "first_screen": "At 1440 the alert card and form share the first screen; at 390 the text is visible but stacked navigation keeps both the form action and card below the viewport."
+    },
+    "problems": [
+      "Changing the neighborhood select back to its blank option leaves the last alert subject/body visible, so the displayed example no longer matches the form state.",
+      "The supplied axe probe reports one serious color-contrast violation; the 390 layout also leaves the action below the first viewport.",
+      "The page has no maximum length on email, accepts a 1,200-character value, and claims unsupported real-city agenda provenance."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF2",
+        "evidence": "The page says “Here is one real item from the October 28 agenda” and attributes the review to named volunteers, while the brief supplies no city name, agenda item, meeting or volunteer facts.",
+        "steps": "Open B/index.html and follow “How it works” to the agenda/summary pair. Read the sentence introducing it and the “Checked by Dana R.” line, then compare those assertions with the X06 brief, which contains no such agenda details."
+      }
+    ]
+  },
+  "preference": "A",
+  "confidence": "medium",
+  "reason": "A has the better resilient interaction for the core alert example and clears its state when reset, and it does not present invented city records as real. B’s modular files and manual mailto workflow are maintainable, but the stale sample state, contrast violation and unsupported provenance are more serious ship risks; a corrected source for the agenda and an explicit reset state could change my choice."
+}

@@ -1,0 +1,78 @@
+{
+  "packet": "X09",
+  "persona": "buyer",
+  "grader_model": "gpt-6-luna-wm; effort setting not exposed",
+  "A": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 9,
+      "honesty": 9,
+      "interaction": 9,
+      "copy": 9,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "“Every truck gets a door and a time” is immediately explained as carriers booking a dock window instead of calling receiving or waiting in the yard.",
+      "fit": "The warehouse manager sees the sample/pilot caveat and a 30-minute demo link; the carrier sees a separate booking link.",
+      "distinctiveness": "The dock drawing and time-by-door board show the exact warehouse and dispatch workflow rather than stock fleet imagery.",
+      "proof": "At 390 I used the clock and selected Door 3; open slot 08:00 showed a carrier/reference/trailer form, and the done state supplied a gate reference and late-arrival rule.",
+      "craft": "The one-door mobile list stays legible and the headline/action are clear; the probe reports no overflow at 320/390/768/1440.",
+      "mobile": "390: as a dispatcher I can switch among doors and scroll down their open hours without sideways table movement; the warehouse demo CTA remains above the fold.",
+      "honesty": "The copy says the two pilot warehouses cannot be named and results are not measured, while the booking form states it is a local sample and sends nothing.",
+      "interaction": "At 1440/768/390, each of six door tabs changes the displayed slots; clock limits update the sample, empty carrier is rejected, and a valid booking can be reset.",
+      "copy": "“Your warehouse’s booking page” separates the carrier journey from the manager’s demo, and the empty-carrier error tells the user why it is required.",
+      "first_screen": "1440 shows the dock wall and beginning of the grid beside the promise; at 390 the drawing and clock are visible, with the booking row list one scroll below."
+    },
+    "problems": [
+      "The sample booking only changes local state and does not reserve a live appointment.",
+      "The menu does not close on Escape, so keyboard users must press Menu again or follow a link.",
+      "The mobile first screen shows the dock face rather than the open appointment grid."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 7,
+      "mobile": 3,
+      "honesty": 8,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 7
+    },
+    "evidence": {
+      "clarity": "The hero says Dockline publishes dock slots and that carriers book a time instead of calling or queuing; both audiences have a named link.",
+      "fit": "The warehouse manager sees the demo URL; a dispatcher gets a distinct booking URL and the sample-board limitation is visible.",
+      "distinctiveness": "The large industrial board and before/after dock timeline make the operational job easy to picture.",
+      "proof": "Choosing an open board cell opens a dispatcher form; a valid PO produces a local reference and gate instructions, with “sample data” visible nearby.",
+      "craft": "The page is visually coherent, but the probe reports 11px text and 44 elements under 12px; board labels are dense in the dark schedule.",
+      "mobile": "At 390 the board shows only early columns and later booking windows require sideways scroll; the repeated small slot details are hard to read on a phone.",
+      "honesty": "The board is labeled sample/made-up carriers and the pilots/results statement matches the brief.",
+      "interaction": "At 390 I selected all open-window controls, submitted no PO to see an inline error, tried zero/negative/long values, and used Book another; the board itself is horizontally scrollable.",
+      "copy": "The 15-minute early/20-minute late grace rule and PO/BOL language are useful to dispatchers; the warehouse conversion action has a specific 30-minute demo destination.",
+      "first_screen": "1440: the promise and board occupy the first screen. At 390 the first columns show, but most usable booking windows and their controls lie offscreen to the right."
+    },
+    "problems": [
+      "The mobile schedule requires sideways scrolling and reduces core appointment details to 11px, so it is not usable for a dispatcher reading on a phone.",
+      "The artifact dominates the page before a mobile user can reach the booking form, and the layout gives no menu control at phone size.",
+      "Zero and negative pallet counts are blocked by native constraints, but the booking reference accepts zero/negative text and long PO values without bounds."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF3",
+        "evidence": "At 390 the core booking board is a horizontally scrollable 22-column schedule; only early times fit in the visible strip, later booking buttons require sideways scrolling, and the probe finds 44 text elements below 12px (11px minimum) in the repeated slot details.",
+        "steps": "Open B/index.html at 390×844 and inspect the board. The initial view shows 06:00–08:00 while the schedule continues to 17:00; scroll `.board-scroll` horizontally to expose later times and booking buttons. The probe reports 44 elements under 12px."
+      }
+    ]
+  },
+  "preference": "A",
+  "confidence": "high",
+  "reason": "As the warehouse manager, I can see the sample limits and book a demo; as the dispatcher, the door tabs and vertical open-hour list are easier to use on a phone than B’s sideways board. B has a strong, concrete operational story, but I would reconsider if the board reflowed to a readable mobile view."
+}
