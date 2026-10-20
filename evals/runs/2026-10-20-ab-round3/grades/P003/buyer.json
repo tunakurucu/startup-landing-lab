@@ -1,0 +1,71 @@
+{
+ "packet": "P003",
+ "persona": "buyer",
+ "A": {
+  "scores": {
+   "clarity": 8,
+   "fit": 8,
+   "distinctiveness": 6,
+   "proof": 7,
+   "craft": 7,
+   "mobile": 6,
+   "honesty": 9,
+   "interaction": 8,
+   "copy": 7,
+   "first_screen": 6
+  },
+  "evidence": {
+   "clarity": "1440 and 390: h1 'Heat water when power is cheap. Have it hot when you need it.' plus lede 'a controller your electrician adds to the electric water heater you already have' tells a homeowner what, who installs it and what next ('Join the install list'). The h1 alone is a benefit line, but the lede fixes it immediately; nothing later contradicts it.",
+   "fit": "All three audiences get a path: 'For electricians' spec list (Fits/Wiring/Plumbing/Override) with 'Join as an electrician', 'For utility programmes' with the unnamed pilot, and an 'I am' radio (homeowner/electrician/utility) in the form. No savings number anywhere, stated outright in the demo intro ('which is why there is no savings figure on this page'). Region kept private, listing in progress stated. Missing: nothing on price for the homeowner, and 'Join as an electrician' lands on the form with 'A homeowner' still selected.",
+   "distinctiveness": "The hour strip with tap-to-toggle water-drop cells and the tank-level bars is product-specific. Everything around it is a familiar stack: hero with two buttons, 2x2 prose grids for How it works and Utilities, a definition list, a status list. Swap the name and the sections would fit most hardware pre-launch pages.",
+   "proof": "The strip begins at y=744 at 1440 (tariff, draws and standard-heater rows peek into the first screen); the readout table sits at y=1054, below the fold. I operated all three tariffs, four usage patterns and three tank sizes: e.g. Evening peak/Family gives Standard peak 1 vs Tankshift 0, Two peaks gives 3 vs 1 with the note that some heating still lands at peak. Counts are consistent with the bars. Units are abstract 'uses' and 'hours', so it shows the shape but gives an electrician or utility little to judge magnitude.",
+   "craft": "Clean, consistent type and spacing at 1440 and 768, no overlap in any state I reached (custom hours, empty day, done panel). Smallest text 11px (one label). Large empty right half of the hero at 1440 (lede capped at ~770px, nothing beside it).",
+   "mobile": "390: no menu button; the nav wraps to two rows and the header is 159px tall with links only 33px high. The strip is 700px wide inside a 358px scroller ('Swipe the strip sideways'), hour buttons are 21x40px, below the 44px target. Tapping hour 12 updated the Tankshift row in view, but the readout table is at y=1691, far below. No page overflow (probe 0px at 390 and 320).",
+   "honesty": "Demo labelled 'Example tariff' in the row label and in a footnote listing the simplifications ('not what you would pay'). The form says before submit 'there is no list server yet. What you enter is kept in this browser only and is not sent anywhere', and the done panel repeats 'Nothing was sent'. Pilot unnamed, listing in progress, no customer stories, all stated in place. 'Where we stand' gathers what the company lacks into one section, which is honest but a little self-deprecating.",
+   "interaction": "Operated at 1440/768/390: tariff select, usage select, tank radios, tapping hours (usage flips to 'Custom'), removing all draws (empty state 'Tap an hour on the strip to add a hot water use.' and 'No hot water used, so no heating.'). Form: empty submit shows inline errors under each field and focuses postcode; bad email error; valid entry shows a summary with role/postcode/email; 'Change my entry' restores the values. No console errors.",
+   "copy": "Plain, specific nouns (high-limit, disconnect, dual element, boost control). 'the tank is hot at seven in the morning and the bill is not' is a quip that leans toward an implied saving. 'You're on the list on this device' is an awkward heading for something that was not sent. Prose grids repeat the savings caveat three times (demo intro, How it works, Where we stand).",
+   "first_screen": "1440: specific promise and both actions in view; only the top rows of the strip peek in at the bottom edge, with no readout. 390: headline, lede and buttons fill the screen, no artifact at all ('Try a day' heading is just below the fold). The promise is believable from the lede, not from anything shown."
+  },
+  "problems": [
+   "Phone experience is cramped: two-row 159px header with 33px links, 21px-wide hour targets in a sideways-scrolling strip, readout ~1700px down",
+   "No word on price or cost for the homeowner, the first question after 'what is it'",
+   "Demo uses abstract 'uses' and hour counts, giving electricians and utility managers no sense of load or kWh; the structure around it is a generic section stack"
+  ],
+  "hard_fail_flags": []
+ },
+ "B": {
+  "scores": {
+   "clarity": 8,
+   "fit": 8,
+   "distinctiveness": 8,
+   "proof": 8,
+   "craft": 7,
+   "mobile": 8,
+   "honesty": 8,
+   "interaction": 7,
+   "copy": 8,
+   "first_screen": 7
+  },
+  "evidence": {
+   "clarity": "h1 'A water heater that waits for cheap power.' mis-names the product (it is a controller, not a heater), but the lede immediately says 'a controller an electrician adds to your electric water heater', and the action 'Join the install list' sits under it with 'Free, no commitment. Installs start in one region'. Stranger could repeat it after the lede.",
+   "fit": "Three audiences each get a section and a nav entry (Installers, Utilities), plus a role select in the form and 'If your programme needs a specific format, say so on the install list form'. Adds what a homeowner asks next: a 'Check before you join' fit list (not gas, tankless, heat-pump, flat tariff) and a Pricing section ('One price per region... No subscription is planned'). Region withheld, pilot unnamed, listing 'in progress, not yet issued'. Tension: the demo prints a large '100%' readout of peak heating moved; it is labelled 'in this example' and is not a bill figure, but it is the kind of headline number the founder said they would not print.",
+   "distinctiveness": "Technical-drawing voice built for electricians: 'Fig. 1 · Example only' panel, mono labels, a wiring sketch panel→disconnect→controller→tank (with a stacked phone version), a numbered install procedure, and an example controller log table for utilities. 'Three rules, and the one that overrides the other two' frames the logic itself. Recognisable without the logo.",
+   "proof": "1440: the example panel starts at y=423 and the chart plus '100% ... in this example' readout are in the first screen. Operated all 9 tariff/household combinations: kWh rows are internally consistent (e.g. Evening peak/Evening showers: thermostat 11.2 kWh at peak vs 3.9 kWh, 1 top-up, totals 13.1 vs 12.9). Night rate/Evening showers shows 'Draws that ran short 0 / 1', so the model shows its own limit. Presets only; the visitor cannot set their own hours.",
+   "craft": "Strong type scale and rules at all widths, readable chart labels at 12px. Visible defect: the header 'Join the install list' button at 1440 and 768 renders dark ink (rgb 21,24,28) on accent blue (rgb 22,70,200) because '.nav a' overrides '.btn-primary' colour; axe reports color-contrast serious at 1440. The most-clicked button in the header is the hardest to read.",
+   "mobile": "390: Menu button (44px) opens a full-width list with 48px rows; tapping 'Installers' closed the menu and scrolled to the section. Segmented tariff/household controls are 44-49px tall, the chart re-lays out in a compact stacked form directly under them, so tapping 'Evening showers' redraws the chart in the same viewport. The kWh table is pushed to y~1650. No overflow at 390 or 320.",
+   "honesty": "'Fig. 1 · Example only' tag at the top of the panel, 'in this example' in the readout sentence, table caption 'not from a meter, and are not a forecast of your bill'. Utility log captioned 'illustrative values'. Wiring sketch captioned 'not a wiring diagram'. Form says before submit 'not connected to a server yet: it keeps your details on this device only and sends nothing'; the confirmation repeats 'nothing was sent'. Docked a point for the large-type '100%' that a cold homeowner may read as a promise.",
+   "interaction": "Operated all tariff and household radios at 1440 and by tap at 390, the mobile menu (aria-expanded toggles, closes on link), primary CTA (lands on #join at top 16-105px). Form: empty submit shows 'Enter an email address like name@example.com.' and focuses email; missing postcode error; valid submit shows confirmation under the button; reload restores 'Saved on this device on 10/20/2026'. Errors show one at a time in a single line above the button rather than at each field. No custom hours, no reset. No console errors.",
+   "copy": "Specific and in the trade's language: 'takes the feed after the disconnect. One box, one conduit run', 'Force a peak block and confirm the element stays off', 'A hot shower outranks a cheap one.', 'The saving is on price, not on kilowatt-hours.' Buttons say what happens. Long section headings ('For rebate programmes: a shifted load you can see, without a call to the homeowner') are a little heavy.",
+   "first_screen": "1440: promise, action, and the labelled example with chart and readout all in one viewport. 390: headline, lede and CTA in view, with only the 'FIG. 1 · EXAMPLE ONLY / Try a day' header and tariff buttons at the bottom; the chart itself starts at y~935, just below."
+  },
+  "problems": [
+   "Header 'Join the install list' button at 1440/768 is dark text on blue (axe color-contrast serious), the main repeat CTA is hard to read",
+   "Big '100%' readout reads like a headline result even though it is labelled 'in this example'; at odds with the founder's no-number stance",
+   "Demo is presets only (no custom hours or reset), and form errors appear one at a time above the button rather than at the field"
+  ],
+  "hard_fail_flags": []
+ },
+ "preference": "B",
+ "confidence": "medium",
+ "reason": "Reading as homeowner, electrician and rebate manager, B answers more of the first real doubts on the page (will it fit my heater, what does it cost, what exactly does the installer do, what data does a programme get) and shows the labelled example in the first screen at 1440 with a phone layout that is genuinely recomposed. A is the more restrained and arguably more faithful to 'no number', with a more operable demo, but it is cramped on a phone and silent on price. I would switch to A if B's '100%' readout were judged a savings-style figure the founder could not stand behind."
+}
