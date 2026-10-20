@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>flagsweep: find feature flags that should have been deleted</title>
+<meta name="description" content="flagsweep is an open-source CLI that scans your code for feature flags, checks their history in LaunchDarkly, Unleash or config files, and lists the ones stuck on one value for weeks, with every file and line to change.">
+<style>
+:root {
+  --paper: #EDF0F3;
+  --panel: #FBFCFD;
+  --ink: #1A2330;
+  --muted: #566273;
+  --rule: #C8D0D9;
+  --off: #CBD3DC;
+  --mark: #FFE34D;
+  --mark-soft: rgba(255, 227, 77, .32);
+  --keep: #0F6B5A;
+  --sans: "Avenir Next", "Segoe UI Variable Text", "Segoe UI", Inter, "Helvetica Neue", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  --lh: 23px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 17px/1.55 var(--sans);
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+code, kbd, pre { font-family: var(--mono); }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+/* header */
+.top { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+.wordmark { font: 700 19px/1 var(--mono); letter-spacing: -.02em; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
+.wordmark svg { display: block; }
+.top nav { display: flex; gap: 26px; font-size: 15px; }
+.top nav a { text-decoration: none; }
+.top nav a:hover { text-decoration: underline; }
+
+/* hero */
+.intro { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 56px; align-items: end; padding: 28px 0 32px; }
+h1 {
+  font-size: clamp(36px, 4.6vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -.035em;
+  font-weight: 700;
+  margin: 0;
+  max-width: 15ch;
+}
+.lede { margin: 0 0 18px; max-width: 44ch; color: var(--ink); }
+.install { display: flex; align-items: stretch; max-width: 420px; border: 1.5px solid var(--ink); border-radius: 6px; background: var(--panel); }
+.install code { flex: 1; padding: 11px 14px; font-size: 15px; white-space: nowrap; overflow-x: auto; }
+.install code::before { content: "$ "; color: var(--muted); }
+.copy {
+  font: 600 14px/1 var(--sans); border: 0; border-left: 1.5px solid var(--ink); background: var(--ink); color: var(--panel);
+  padding: 0 16px; cursor: pointer; border-radius: 0 4px 4px 0; min-width: 78px;
+}
+.copy:hover { background: #2C3A4D; }
+.links { margin: 12px 0 0; font-size: 15px; color: var(--muted); }
+.links a { color: var(--ink); }
+
+/* the report */
+.report { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 0 28px; margin-bottom: 96px; }
+.term {
+  background: var(--panel);
+  border: 1.5px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: 6px 6px 0 var(--ink);
+  overflow: hidden;
+  min-width: 0;
+}
+.term-bar { display: flex; justify-content: space-between; padding: 8px 16px; border-bottom: 1.5px solid var(--ink); font-size: 13px; color: var(--muted); }
+.term pre {
+  margin: 0; padding: 18px 22px 20px; font-size: 14px; line-height: var(--lh); overflow-x: auto; position: relative;
+}
+.term pre .p { color: var(--muted); }
+.term pre .dim { color: var(--muted); }
+.term pre .flag { background: var(--mark); font-weight: 700; padding: 1px 3px; margin: 0 -3px; border-radius: 2px; }
+.term pre .on { font-weight: 700; }
+.term pre .offv { font-weight: 700; color: var(--muted); }
+.term pre .act { color: var(--keep); font-weight: 700; }
+.term pre .loc { text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
+.hist { display: inline-block; vertical-align: -2px; width: 22ch; height: 13px; border-radius: 1px; position: relative; }
+.hist::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 calc(100% / 45 - 1px), var(--panel) calc(100% / 45 - 1px) calc(100% / 45)); }
+.h-checkout { background: linear-gradient(90deg, transparent 0 9%, var(--ink) 9% 100%), repeating-linear-gradient(135deg, var(--ink) 0 2px, var(--off) 2px 5px); }
+.h-pdf { background: var(--off); }
+
+.notes { list-style: none; margin: 0; padding: 0; position: relative; font-size: 14.5px; line-height: 1.38; color: var(--ink); }
+.notes li { position: absolute; left: 0; right: 0; white-space: nowrap; top: calc(41px + 18px + var(--line) * var(--lh) - 2px); padding-left: 16px; }
+.notes li::before { content: ""; position: absolute; left: -28px; top: 9px; width: 36px; border-top: 1.5px solid var(--ink); }
+.notes li span { display: block; color: var(--muted); }
+.notes-title { display: none; }
+
+/* sections */
+section.band { padding: 88px 0; border-top: 1.5px solid var(--ink); }
+h2 { font-size: clamp(28px, 3.2vw, 38px); line-height: 1.1; letter-spacing: -.025em; margin: 0 0 14px; font-weight: 700; max-width: 22ch; }
+.sub { margin: 0 0 40px; max-width: 60ch; color: var(--muted); }
+
+/* history explorer */
+.cutoff { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; margin-bottom: 26px; }
+.cutoff label { font-weight: 600; }
+.cutoff output { font: 700 16px var(--mono); background: var(--mark); padding: 2px 6px; border-radius: 2px; }
+.cutoff input[type=range] { width: min(360px, 100%); accent-color: var(--ink); }
+.count { font-weight: 600; }
+.timeline { border: 1.5px solid var(--ink); border-radius: 8px; background: var(--panel); padding: 8px 0; }
+.trow { display: grid; grid-template-columns: 220px minmax(0, 1fr) 210px; gap: 20px; align-items: center; padding: 10px 22px; }
+.trow + .trow { border-top: 1px solid #E1E6EB; }
+.trow .name { font: 14px var(--mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.trow.listed .name span { background: var(--mark); font-weight: 700; padding: 1px 3px; margin: 0 -3px; border-radius: 2px; }
+.bar { position: relative; height: 18px; }
+.bar .seg { position: absolute; top: 0; bottom: 0; z-index: 1; }
+.seg.on { background: var(--ink); }
+.seg.off { background: var(--off); }
+.seg.part { background: repeating-linear-gradient(135deg, var(--ink) 0 2px, var(--off) 2px 5px); }
+.window { position: absolute; top: -11px; bottom: -11px; right: 0; z-index: 0; background: var(--mark-soft); border-left: 2px dashed var(--ink); pointer-events: none; }
+.bar::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.trow .status { font-size: 14.5px; color: var(--muted); }
+.trow.listed .status { color: var(--ink); font-weight: 600; }
+.axis { display: grid; grid-template-columns: 220px minmax(0, 1fr) 210px; gap: 20px; padding: 4px 22px 6px; font-size: 13px; color: var(--muted); }
+.axis div { display: flex; justify-content: space-between; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 16px; font-size: 14px; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 18px; height: 11px; margin-right: 7px; vertical-align: -1px; }
+.legend .l-on::before { background: var(--ink); }
+.legend .l-off::before { background: var(--off); }
+.legend .l-part::before { background: repeating-linear-gradient(135deg, var(--ink) 0 2px, var(--off) 2px 5px); }
+.legend .l-win::before { background: var(--mark-soft); border-left: 2px dashed var(--ink); }
+
+/* steps */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; counter-reset: s; }
+.steps li { counter-increment: s; border-top: 1.5px solid var(--ink); padding-top: 18px; }
+.steps li::before { content: counter(s); font: 700 15px var(--mono); display: inline-grid; place-items: center; width: 28px; height: 28px; border: 1.5px solid var(--ink); border-radius: 50%; margin-bottom: 14px; }
+.steps h3 { font-size: 20px; margin: 0 0 8px; letter-spacing: -.01em; }
+.steps p { margin: 0; color: var(--muted); }
+
+/* replaces */
+.swap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.15fr); gap: 40px; align-items: start; }
+.swap h3 { font-size: 20px; margin: 0 0 8px; letter-spacing: -.01em; }
+.swap p { margin: 0; color: var(--muted); }
+.swap .old h3 { text-decoration: line-through; text-decoration-thickness: 2px; color: var(--muted); }
+.swap .new { background: var(--panel); border: 1.5px solid var(--ink); border-radius: 8px; padding: 22px 24px; box-shadow: 6px 6px 0 var(--ink); }
+.swap .new p { color: var(--ink); }
+
+/* get it */
+.get { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; }
+.facts { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 14px 24px; }
+.facts dt { font-weight: 700; }
+.facts dd { margin: 0; color: var(--ink); overflow-wrap: anywhere; min-width: 0; }
+.get .install { margin-bottom: 14px; }
+.honest { margin: 22px 0 0; color: var(--muted); max-width: 46ch; }
+
+footer { border-top: 1.5px solid var(--ink); padding: 28px 0 40px; font-size: 14.5px; color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+footer nav { display: flex; gap: 22px; }
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (max-width: 1080px) {
+  .report { grid-template-columns: minmax(0, 1fr); }
+  .notes { margin-top: 30px; }
+  .notes-title { display: block; font-weight: 700; margin: 30px 0 10px; }
+  .notes { counter-reset: n; }
+  .notes li { position: static; white-space: normal; padding: 8px 0 8px 0; border-top: 1px solid var(--rule); }
+  .notes li::before { display: none; }
+  .notes { margin-top: 0; }
+  .trow, .axis { grid-template-columns: 170px minmax(0, 1fr) 170px; }
+}
+@media (max-width: 820px) {
+  .wrap { padding: 0 16px; }
+  .intro { grid-template-columns: 1fr; gap: 18px; padding-top: 12px; }
+  .report { margin-bottom: 64px; }
+  .term pre { font-size: 12px; --lh: 19px; padding: 14px 14px 16px; }
+  .term { box-shadow: 4px 4px 0 var(--ink); }
+  section.band { padding: 60px 0; }
+  .steps, .swap, .get { grid-template-columns: 1fr; gap: 30px; }
+  .trow { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; padding: 12px 16px; }
+  .trow .bar { grid-column: 1 / -1; grid-row: 2; }
+  .trow .status { text-align: right; font-size: 13.5px; }
+  .window { top: -4px; bottom: -4px; }
+  .axis { grid-template-columns: 1fr; padding: 4px 16px 6px; }
+  .axis > span { display: none; }
+  .top nav { gap: 18px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .window { transition: width .18s ease-out; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="wordmark" href="#" aria-label="flagsweep home">
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="5" width="20" height="12" rx="6" fill="none" stroke="#1A2330" stroke-width="1.6"/><circle cx="15" cy="11" r="3.6" fill="#1A2330"/><line x1="2" y1="20" x2="20" y2="2" stroke="#1A2330" stroke-width="1.6"/></svg>
+      flagsweep
+    </a>
+    <nav aria-label="Primary">
+      <a href="https://flagsweep.example/docs">Docs</a>
+      <a href="https://github.com/flagsweep/flagsweep">GitHub</a>
+    </nav>
+  </header>
+</div>
+
+<main>
+  <div class="wrap">
+    <div class="intro">
+      <h1>Find the feature flags you should have deleted weeks ago.</h1>
+      <div>
+        <p class="lede">flagsweep scans your code for feature flags, checks each one&rsquo;s history in LaunchDarkly, Unleash or your config files, and lists the flags stuck on one value for weeks, with every file and line to change.</p>
+        <div class="install">
+          <code id="cmd1">pipx install flagsweep</code>
+          <button class="copy" type="button" data-copy="pipx install flagsweep">Copy</button>
+        </div>
+        <p class="links">Open source, MIT licensed. <a href="https://flagsweep.example/docs">Read the docs</a> or <a href="https://github.com/flagsweep/flagsweep">see the code</a>.</p>
+      </div>
+    </div>
+
+    <div class="report">
+      <figure class="term" style="margin:0" aria-labelledby="term-cap">
+        <figcaption class="term-bar"><span id="term-cap">Example run against a storefront repo</span><span aria-hidden="true">~/storefront</span></figcaption>
+<pre><span class="p">$</span> flagsweep
+<span class="dim">Reading flags from LaunchDarkly (storefront / production)</span>
+<span class="dim">Scanned 1,284 files, 63 flags referenced in code</span>
+
+4 flags have served one value for 30+ days:
+
+<span class="flag">new-checkout-flow</span>   <span class="on">ON</span>   82 days
+  history  <span class="hist h-checkout" role="img" aria-label="90-day history: partial rollout for 8 days, then on for 82 days"></span>  <span class="dim">last 90 days</span>
+  true for 100% of users since 2026-07-30
+  <span class="act">keep the true branch, then delete the flag:</span>
+    <span class="loc">src/checkout/Cart.tsx:42</span>     if (flags.newCheckoutFlow) {
+    <span class="loc">src/checkout/Cart.tsx:118</span>    flags.newCheckoutFlow ? v2 : v1
+    <span class="loc">api/orders/create.py:31</span>      if is_on("new-checkout-flow"):
+    <span class="loc">tests/test_cart.py:12</span>        @flag("new-checkout-flow", False)
+
+<span class="flag">legacy-pdf-export</span>   <span class="offv">OFF</span> 130 days
+  history  <span class="hist h-pdf" role="img" aria-label="90-day history: off the whole time"></span>  <span class="dim">last 90 days</span>
+  false for 100% of users since 2026-06-12
+  <span class="act">delete the gated code, then delete the flag:</span>
+    <span class="loc">src/reports/export.ts:77</span>     if (flags.legacyPdfExport) {
+    <span class="loc">src/reports/export.ts:203</span>    } // end legacyPdfExport
+
+<span class="dim">...and 2 more: search-v2-ranking, holiday-banner-2025</span>
+<span class="dim">12 lines to change across 9 files</span></pre>
+      </figure>
+
+      <div>
+        <p class="notes-title">How to read it</p>
+        <ul class="notes">
+          <li style="--line:4">Only flags past your cutoff</li>
+          <li style="--line:6">The value it&rsquo;s stuck on, and how long</li>
+          <li style="--line:7">History from the flag service</li>
+          <li style="--line:9">What to do with the code</li>
+          <li style="--line:11">Every file and line that reads the flag</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <section class="band" aria-labelledby="h-decide">
+    <div class="wrap">
+      <h2 id="h-decide">A flag is listed when its history goes flat.</h2>
+      <p class="sub">flagsweep looks at what each flag has served over time. If it has served one value to everyone, with no change inside your cutoff, it&rsquo;s listed. Flags mid-rollout or recently changed are left alone. Move the cutoff to see which of these flags would show up.</p>
+
+      <div class="cutoff">
+        <label for="days">No change for at least</label>
+        <input id="days" type="range" min="7" max="120" step="1" value="30" aria-describedby="count">
+        <output for="days" id="days-out">30 days</output>
+        <span class="count" id="count" aria-live="polite">4 of 7 flags would be listed</span>
+      </div>
+
+      <div class="timeline" id="timeline">
+        <div class="axis" aria-hidden="true"><span>Flag</span><div><span>120 days ago</span><span>today</span></div><span>Result</span></div>
+      </div>
+      <div class="legend" aria-hidden="true">
+        <span class="l-on">On for everyone</span>
+        <span class="l-off">Off for everyone</span>
+        <span class="l-part">Partial rollout</span>
+        <span class="l-win">Your cutoff window</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="h-how">
+    <div class="wrap">
+      <h2 id="h-how">What happens when you run it</h2>
+      <p class="sub">One command, run from the root of a repo.</p>
+      <ol class="steps">
+        <li>
+          <h3>Scan the code</h3>
+          <p>flagsweep reads your source and finds every place a flag is evaluated, including tests.</p>
+        </li>
+        <li>
+          <h3>Check each flag&rsquo;s history</h3>
+          <p>It looks up each flag in LaunchDarkly, Unleash or your config files to see what it has served and when that last changed.</p>
+        </li>
+        <li>
+          <h3>List what can go</h3>
+          <p>Flags fully on or off past the cutoff are printed with the branch to keep and the files and lines to edit.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="h-replace">
+    <div class="wrap">
+      <h2 id="h-replace">What it replaces</h2>
+      <p class="sub">Old flags pile up because finding them is a chore nobody is assigned to.</p>
+      <div class="swap">
+        <div class="old">
+          <h3>Flag cleanup day</h3>
+          <p>On the calendar every quarter. Bumped every quarter for a release.</p>
+        </div>
+        <div class="old">
+          <h3>The flag spreadsheet</h3>
+          <p>Two hundred rows, an owner column that&rsquo;s mostly blank, last edited by someone who left.</p>
+        </div>
+        <div class="new">
+          <h3>A list built from the code and the flag service</h3>
+          <p>Nobody maintains it. Run flagsweep whenever you have half an hour and remove whatever it lists.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="h-get">
+    <div class="wrap get">
+      <div>
+        <h2 id="h-get">Try it on one repo</h2>
+        <div class="install">
+          <code>pipx install flagsweep</code>
+          <button class="copy" type="button" data-copy="pipx install flagsweep">Copy</button>
+        </div>
+        <p class="links">Setup for each flag service is in the <a href="https://flagsweep.example/docs">docs</a>.</p>
+        <p class="honest">flagsweep is new. There&rsquo;s no company behind it yet and no usage numbers to show. Read the code, run it on a repo you know well, and open an issue if the list looks wrong.</p>
+      </div>
+      <dl class="facts">
+        <dt>Works with</dt><dd>LaunchDarkly, Unleash and plain config files</dd>
+        <dt>Install</dt><dd>pipx</dd>
+        <dt>Price</dt><dd>Free. There is no paid plan.</dd>
+        <dt>License</dt><dd>MIT</dd>
+        <dt>Source</dt><dd><a href="https://github.com/flagsweep/flagsweep">github.com/flagsweep/flagsweep</a></dd>
+        <dt>Docs</dt><dd><a href="https://flagsweep.example/docs">flagsweep.example/docs</a></dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>flagsweep is open source under the MIT License.</span>
+    <nav aria-label="Footer">
+      <a href="https://flagsweep.example/docs">Docs</a>
+      <a href="https://github.com/flagsweep/flagsweep">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Copy buttons, with a fallback for file:// pages where the clipboard API is blocked.
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); };
+      var fallback = function () {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'absolute'; ta.style.left = '-9999px';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { btn.textContent = 'Select it'; }
+        document.body.removeChild(ta);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+  });
+
+  // History explorer. Segments are [startDaysAgo, endDaysAgo, state]; 0 = today.
+  var SPAN = 120;
+  var flags = [
+    { name: 'new-checkout-flow', value: 'on', since: 82, segs: [[120, 96, 'off'], [96, 82, 'part'], [82, 0, 'on']] },
+    { name: 'legacy-pdf-export', value: 'off', since: 130, segs: [[120, 0, 'off']] },
+    { name: 'search-v2-ranking', value: 'on', since: 47, segs: [[120, 70, 'off'], [70, 47, 'part'], [47, 0, 'on']] },
+    { name: 'holiday-banner-2025', value: 'off', since: 290, segs: [[120, 0, 'off']] },
+    { name: 'free-shipping-threshold', value: 'on', since: 21, segs: [[120, 35, 'off'], [35, 21, 'part'], [21, 0, 'on']] },
+    { name: 'dark-mode-beta', value: 'part', since: 40, segs: [[120, 40, 'off'], [40, 0, 'part']] },
+    { name: 'inventory-sync-v3', value: 'on', since: 6, segs: [[120, 58, 'off'], [58, 44, 'on'], [44, 19, 'off'], [19, 6, 'part'], [6, 0, 'on']] }
+  ];
+  var label = { on: 'on', off: 'off', part: 'partial rollout' };
+  var tl = document.getElementById('timeline');
+  var rows = flags.map(function (f) {
+    var row = document.createElement('div');
+    row.className = 'trow';
+    var name = document.createElement('div');
+    name.className = 'name';
+    name.innerHTML = '<span></span>';
+    name.firstChild.textContent = f.name;
+    name.title = f.name;
+    var bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.setAttribute('role', 'img');
+    bar.setAttribute('aria-label', f.name + ': ' + f.segs.map(function (s) {
+      return label[s[2]] + ' from ' + (s[0] >= SPAN ? 'before ' + SPAN : s[0]) + ' to ' + (s[1] === 0 ? 'today' : s[1] + ' days ago');
+    }).join(', '));
+    f.segs.forEach(function (s) {
+      var seg = document.createElement('div');
+      seg.className = 'seg ' + s[2];
+      seg.style.left = ((SPAN - s[0]) / SPAN * 100) + '%';
+      seg.style.width = ((s[0] - s[1]) / SPAN * 100) + '%';
+      bar.appendChild(seg);
+    });
+    var win = document.createElement('div');
+    win.className = 'window';
+    bar.appendChild(win);
+    var status = document.createElement('div');
+    status.className = 'status';
+    row.appendChild(name); row.appendChild(bar); row.appendChild(status);
+    tl.appendChild(row);
+    return { f: f, row: row, win: win, status: status };
+  });
+
+  var input = document.getElementById('days');
+  var out = document.getElementById('days-out');
+  var count = document.getElementById('count');
+  function update() {
+    var d = +input.value, n = 0;
+    out.textContent = d + ' days';
+    rows.forEach(function (r) {
+      var f = r.f;
+      r.win.style.width = (d / SPAN * 100) + '%';
+      var listed = f.value !== 'part' && f.since >= d;
+      if (listed) n++;
+      r.row.classList.toggle('listed', listed);
+      if (f.value === 'part') r.status.textContent = 'Still rolling out';
+      else if (listed) r.status.textContent = 'Listed: ' + f.value.toUpperCase() + ' ' + f.since + ' days';
+      else r.status.textContent = 'Changed ' + f.since + ' days ago';
+    });
+    count.textContent = n + ' of ' + flags.length + ' flags would be listed';
+  }
+  input.addEventListener('input', update);
+  update();
+})();
+</script>
+</body>
+</html>

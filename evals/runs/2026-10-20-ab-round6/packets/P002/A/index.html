@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open-source CLI for stale feature flags · Flagsweep</title>
+<meta name="description" content="Flagsweep is an open-source CLI that lists the feature flags stuck fully on or off for weeks in LaunchDarkly, Unleash or a config file, with the files and lines that still read them. MIT licensed. pipx install flagsweep.">
+<meta name="theme-color" content="#eef0f0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Flagsweep: find the feature flags you forgot to delete">
+<meta property="og:description" content="An open-source CLI that lists flags stuck fully on or off for weeks, with the files and lines that still read them.">
+<meta property="og:image" content="og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Flagsweep: find the feature flags you forgot to delete">
+<meta name="twitter:description" content="An open-source CLI that lists flags stuck fully on or off for weeks, with the files and lines that still read them.">
+<meta name="twitter:image" content="og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+@font-face{font-family:"TeX Gyre Heros Cn";src:url(fonts/heros-cn-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Inter";src:url(fonts/inter-regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Inter";src:url(fonts/inter-semibold.woff) format("woff");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Latin Modern Mono";src:url(fonts/lm-mono.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Latin Modern Mono";src:url(fonts/lm-mono-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}
+
+:root{
+  --paper:#eef0f0; --sheet:#fbfcfc; --ink:#131619; --ink-2:#343a40; --muted:#50575d; --rule:#b9c0c4; --rule-soft:#d9dee0;
+  --accent:#b3360e; --accent-ink:#fff; --window:rgba(19,22,25,.07);
+  --display:"TeX Gyre Heros Cn","Arial Narrow",sans-serif;
+  --text:"Inter",system-ui,sans-serif;
+  --mono:"Latin Modern Mono",ui-monospace,monospace;
+  --s-1:.25rem; --s-2:.5rem; --s-3:.75rem; --s-4:1rem; --s-5:1.5rem; --s-6:2rem; --s-7:3rem; --s-8:4.5rem; --s-9:7rem;
+  --max:1240px; --gutter:clamp(1rem,.6rem + 1.8vw,2rem);
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul,pre{margin:0}
+ol,ul{padding:0;list-style:none}
+img,svg,video,canvas{display:block;max-width:100%}
+input,button,textarea,select{font:inherit;color:inherit}
+:where(p,li,dd,td,output,[role=status]){overflow-wrap:break-word;min-width:0}
+html{scroll-padding-top:5rem;scroll-padding-bottom:1rem;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--text);font-size:1.0625rem;line-height:1.55;text-rendering:optimizeLegibility}
+code,pre,kbd{font-family:var(--mono)}
+:where(a,button,[tabindex],pre){scroll-margin-top:5rem;scroll-margin-bottom:1rem}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 6px var(--paper)}
+.skip{position:absolute;left:12px;top:-60px;padding:12px 16px;background:var(--ink);color:var(--paper);z-index:100;text-decoration:none}
+.skip:focus{top:12px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+
+/* header */
+.top{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;min-height:3.75rem;gap:var(--s-4)}
+.mark{display:flex;align-items:center;gap:.5rem;text-decoration:none;font-family:var(--display);font-size:1.5rem;letter-spacing:0;min-height:44px}
+.mark svg{width:30px;height:18px}
+#site-menu{display:flex;gap:var(--s-1)}
+#site-menu a{display:inline-flex;align-items:center;min-height:44px;padding:0 .75rem;text-decoration:none;font-size:.9375rem;font-weight:600}
+#site-menu a:not(.btn):hover{text-decoration:underline;text-underline-offset:4px}
+.menu-btn{display:none;min-height:44px;min-width:44px;padding:0 1rem;border:1px solid var(--ink);background:var(--sheet);font-weight:600;cursor:pointer}
+@media (max-width:759px){
+  .js .menu-btn{display:inline-flex;align-items:center}
+  .js #site-menu{position:absolute;right:var(--gutter);top:calc(100% + 6px);flex-direction:column;background:var(--sheet);border:1px solid var(--ink);padding:var(--s-2);min-width:14rem}
+  .js #site-menu[hidden]{display:none}
+  #site-menu .menu-install{display:inline-flex}
+  html:not(.js) #site-menu{flex-wrap:wrap}
+}
+@media (min-width:760px){ #site-menu .menu-install{display:none} }
+
+/* hero */
+.hero{padding:clamp(1.75rem,1rem + 3vw,3.5rem) 0 0}
+.hero-head{display:grid;gap:var(--s-5) var(--s-7);align-items:end}
+@media (min-width:980px){.hero-head{grid-template-columns:7fr 5fr}}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(2.5rem,1.45rem + 4.4vw,5.75rem);line-height:.98;letter-spacing:-.005em;text-wrap:balance;overflow-wrap:break-word}
+@media (max-width:600px){h1{line-height:1.02}}
+.lede{font-size:clamp(1.0625rem,1rem + .3vw,1.25rem);line-height:1.5;max-width:34em;color:var(--ink-2)}
+.lede strong{color:var(--ink);font-weight:600}
+.install{margin-top:var(--s-5);display:flex;flex-wrap:wrap;align-items:stretch;gap:0;border:1.5px solid var(--ink);background:var(--sheet);max-width:32rem}
+.install code{flex:1 1 13rem;display:flex;align-items:center;padding:.6rem .9rem;font-size:1.0625rem;white-space:nowrap;overflow-x:auto;min-height:48px}
+.install code::before{content:"$\00a0";color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:0 1.15rem;border:0;background:var(--ink);color:var(--paper);font-weight:600;font-size:1rem;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.install .btn{flex:none}
+@media (hover:hover) and (pointer:fine){.btn:hover{background:#000}}
+.install-note{margin-top:var(--s-3);font-size:.9375rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.25rem 1rem;align-items:center}
+.install-note a{font-weight:600;color:var(--ink);text-underline-offset:3px;min-height:24px;display:inline-flex;align-items:center}
+.btn .short{display:none}
+@media (max-width:520px){.btn .long{display:none}.btn .short{display:inline}.install code{flex-basis:0}}
+.copied{font-size:.9375rem;color:var(--ink);font-weight:600;min-height:1.5em}
+
+/* report (signature) */
+.report{margin-top:clamp(1.5rem,1rem + 2vw,2.75rem);background:var(--sheet);border:1.5px solid var(--ink);position:relative}
+.rep-label{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.25rem 1rem;padding:.55rem 1rem;border-bottom:1px solid var(--rule);font-size:.875rem;color:var(--muted)}
+.rep-label strong{color:var(--ink);font-weight:600}
+.rep-cmd{padding:.8rem 1rem .2rem;font-family:var(--mono);font-size:1rem;color:var(--ink);overflow-x:auto;white-space:nowrap}
+.rep-cmd .pr{color:var(--muted)}
+.rep-cmd .opt{white-space:nowrap;background:var(--paper);outline:1px solid var(--rule);padding:0 .2em}
+.rep-controls{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;padding:.6rem 1rem .7rem}
+.rep-controls .lbl{font-size:.9375rem;font-weight:600}
+.chips{display:flex;gap:0;border:1.5px solid var(--ink)}
+.chip{min-height:44px;min-width:4.25rem;padding:0 .8rem;border:0;border-left:1px solid var(--rule);background:transparent;font-family:var(--mono);font-size:1rem;cursor:pointer;transition:background-color .15s var(--ease),color .15s var(--ease)}
+.chip:first-child{border-left:0}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--sheet);font-weight:700}
+.chip:focus-visible{outline-offset:-5px;box-shadow:none;outline-color:var(--accent)}
+.chip[aria-pressed=true]:focus-visible{outline-color:var(--sheet)}
+@media (hover:hover) and (pointer:fine){.chip:not([aria-pressed=true]):hover{background:var(--paper)}}
+.sum{padding:.75rem 1rem;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);font-size:1.0625rem;background:var(--paper)}
+.sum b{font-family:var(--display);font-size:1.5rem;font-weight:700;color:var(--accent);margin-right:.15rem;font-variant-numeric:tabular-nums}
+.rows{--cut:30;padding:.25rem 0 .5rem}
+.row,.axis{display:grid;grid-template-columns:minmax(12rem,15rem) minmax(0,1fr) 5.5rem 9.5rem 8.5rem 6.75rem;gap:0 1rem;align-items:center;padding:.45rem 1rem}
+.row{border-top:1px solid var(--rule-soft);font-size:.9375rem}
+.row:first-of-type{border-top:0}
+.axis{padding-top:.6rem;padding-bottom:.3rem;font-size:.8125rem;color:var(--muted)}
+.axis .a-strip{position:relative;height:1.5rem;display:flex;justify-content:space-between;align-items:end;overflow:clip}
+.r-key{display:flex;flex-direction:column;min-width:0}
+.r-key code{font-size:1rem;font-weight:700;overflow-wrap:anywhere}
+.r-src{font-size:.8125rem;color:var(--muted)}
+.r-strip,.a-strip{position:relative;height:2.25rem;overflow:clip}
+.r-strip svg{width:100%;height:100%}
+.r-strip::before{content:"";position:absolute;inset:0;background:var(--window);border-left:2px solid var(--ink);transform:translateX(calc((1 - var(--cut) / 120) * 100%));transition:transform .22s var(--ease)}
+.a-today{position:relative;z-index:1;background:var(--sheet);padding-left:.35rem}
+.axis .a-strip{height:1.5rem}
+.h-all{fill:none;stroke:var(--muted);stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-linejoin:miter}
+.h-run{fill:none;stroke:var(--ink);stroke-width:2;vector-effect:non-scaling-stroke}
+.row.is-listed .h-run{stroke:var(--accent);stroke-width:4}
+.r-state{font-family:var(--mono);font-weight:700;font-size:1rem}
+.r-flat,.r-refs{color:var(--muted);font-size:.875rem;font-variant-numeric:tabular-nums}
+.r-days{display:block;color:var(--ink);font-weight:600;font-size:.9375rem}
+.r-verdict{justify-self:start;font-size:.8125rem;font-weight:600;padding:.2rem .5rem;border:1px solid var(--rule);color:var(--muted);white-space:nowrap}
+.row.is-listed .r-verdict{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.row.is-listed .r-key code{color:var(--ink)}
+.rep-foot{padding:.6rem 1rem;border-top:1px solid var(--rule);font-size:.875rem;color:var(--muted)}
+@media (max-width:1099px){
+  .row,.axis{grid-template-columns:minmax(9.5rem,11rem) minmax(0,1fr) 4.75rem 6.25rem 6.25rem;gap:0 .75rem}
+  .r-refs,.axis > span:nth-child(5){display:none}
+}
+@media (max-width:759px){
+  .rep-label,.rep-cmd,.rep-controls,.sum,.rep-foot{padding-left:.75rem;padding-right:.75rem}
+  .rep-cmd{font-size:.9375rem;white-space:normal}
+  .rep-label{font-size:.8125rem;padding-top:.4rem;padding-bottom:.4rem}
+  .hero{padding-top:1.25rem}
+  .report{margin-top:1.25rem}
+  .sum{padding-top:.55rem;padding-bottom:.55rem;font-size:1rem}
+  .rep-cmd{padding-top:.5rem}
+  .install{margin-top:1rem}
+  .rep-controls{padding-top:.4rem}
+  .chips{width:100%}
+  .chip{flex:1 1 0;min-width:0;padding:0 .25rem;font-size:.9375rem}
+  .axis{display:none}
+  .row{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"key verdict" "strip strip" "meta meta";gap:.2rem .75rem;padding:.55rem .75rem}
+  .r-key{grid-area:key;flex-direction:row;align-items:baseline;gap:.5rem;flex-wrap:wrap}
+  .r-verdict{grid-area:verdict;justify-self:end}
+  .r-strip{grid-area:strip;height:1.6rem}
+  .r-state,.r-flat,.r-refs{display:none}
+  .r-meta{grid-area:meta}
+}
+.r-meta{display:none}
+@media (max-width:759px){.r-meta{display:block;font-size:.875rem;color:var(--muted)}.r-meta b{font-family:var(--mono);color:var(--ink)}}
+
+/* sections */
+section.band{padding:clamp(3.5rem,2.5rem + 4vw,7rem) 0 0}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(1.875rem,1.4rem + 2vw,3.25rem);line-height:1.04;letter-spacing:0;max-width:20em;text-wrap:balance}
+.intro{margin-top:var(--s-4);max-width:38em;color:var(--ink-2)}
+.intro + .intro{margin-top:var(--s-3)}
+.example-tag{font-size:.875rem;color:var(--muted)}
+
+/* lines section */
+.lines{margin-top:var(--s-6);border:1.5px solid var(--ink);background:var(--sheet)}
+.tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule)}
+.tab{min-height:48px;padding:.4rem 1rem;border:0;border-right:1px solid var(--rule);background:transparent;color:var(--muted);font-family:var(--mono);font-size:1rem;cursor:pointer;text-align:left}
+.tab[aria-selected=true]{color:var(--ink);font-weight:700;box-shadow:inset 0 -4px 0 var(--ink)}
+@media (hover:hover) and (pointer:fine){.tab[aria-selected=false]:hover{color:var(--ink)}}
+.tab .t-state{font-family:var(--text);font-size:.8125rem;margin-left:.4rem;color:var(--muted);font-weight:600}
+.tab:focus-visible{outline-offset:-4px;box-shadow:none}
+.tabpanel{display:grid;gap:0}
+@media (min-width:900px){.tabpanel{grid-template-columns:5fr 7fr}}
+.tabpanel[hidden]{display:none}
+.refs{padding:1rem;border-bottom:1px solid var(--rule);font-size:.9375rem}
+@media (min-width:900px){.refs{border-bottom:0;border-right:1px solid var(--rule)}}
+.refs h3,.code h3{font-size:.875rem;font-weight:600;color:var(--muted);margin-bottom:.5rem}
+.refs .fl{font-family:var(--mono);font-weight:700;font-size:1rem}
+.refs .meta{color:var(--muted);font-size:.875rem;margin:.15rem 0 .6rem}
+.refs ol li{font-family:var(--mono);font-size:.9375rem;padding:.2rem 0;border-top:1px dashed var(--rule-soft);overflow-wrap:anywhere}
+.refs ol li.here{font-weight:700}
+.refs ol li.here::after{content:"  ← shown";font-family:var(--text);font-size:.8125rem;color:var(--muted);font-weight:400}
+.code{padding:1rem;min-width:0}
+.code pre{font-size:.9375rem;line-height:1.6;overflow-x:auto;padding:.25rem 0}
+.code pre:focus-visible{outline-offset:2px}
+.ln{display:block;white-space:pre;padding-right:1rem}
+.ln i{font-style:normal;color:var(--muted);display:inline-block;width:2.5em;user-select:none}
+.ln.dead{text-decoration:line-through;text-decoration-color:var(--accent);text-decoration-thickness:2px;background:rgba(179,54,14,.07)}
+.ln.dead i{text-decoration:none}
+.code .why{margin-top:.75rem;font-size:.9375rem;max-width:36em}
+.code .why b{color:var(--accent)}
+
+/* how */
+.steps{margin-top:var(--s-6);display:grid;gap:0;border-top:1.5px solid var(--ink)}
+@media (min-width:900px){.steps{grid-template-columns:repeat(3,1fr)}}
+.steps li{padding:1.25rem 0 1.5rem;border-bottom:1px solid var(--rule)}
+@media (min-width:900px){.steps li{padding:1.25rem 1.5rem 1.5rem 0;border-bottom:0}.steps li + li{padding-left:1.5rem;border-left:1px solid var(--rule)}}
+.steps .n{font-family:var(--mono);font-weight:700;font-size:1rem}
+.steps h3{font-family:var(--display);font-size:1.5rem;line-height:1.15;margin:.25rem 0 .5rem}
+.steps p{color:var(--ink-2);max-width:30em}
+.steps svg{margin-top:1rem;width:18rem;max-width:100%;height:auto}
+.caveat{margin-top:var(--s-5);display:grid;gap:.25rem 1.5rem;align-items:start;max-width:52rem;padding:1rem 0;border-top:1px solid var(--rule)}
+@media (min-width:760px){.caveat{grid-template-columns:auto 1fr}}
+.caveat strong{font-family:var(--display);font-size:1.25rem}
+
+/* replaces */
+.old{margin-top:var(--s-6);display:grid;gap:var(--s-5)}
+@media (min-width:900px){.old{grid-template-columns:5fr 7fr;align-items:start}}
+.old figure{min-width:0}
+.old figcaption{margin-top:.75rem;font-size:.9375rem;color:var(--ink-2);max-width:32em}
+.invite{background:var(--sheet);border:1.5px solid var(--ink);padding:1rem 1.1rem;max-width:26rem}
+.invite .i-title{font-family:var(--display);font-size:1.5rem;line-height:1.1}
+.invite .i-sub{font-size:.875rem;color:var(--muted);margin:.2rem 0 .75rem}
+.invite ul li{display:flex;justify-content:space-between;gap:1rem;font-family:var(--mono);font-size:.9375rem;padding:.35rem 0;border-top:1px dashed var(--rule)}
+.invite .moved{text-decoration:line-through;color:var(--muted)}
+.invite .tag{font-family:var(--text);font-size:.8125rem;color:var(--muted)}
+.sheet-wrap{overflow-x:auto;border:1.5px solid var(--ink);background:var(--sheet)}
+.sheet{border-collapse:collapse;width:100%;min-width:30rem;font-size:.875rem}
+.sheet th,.sheet td{border:1px solid var(--rule-soft);padding:.35rem .5rem;text-align:left;white-space:nowrap}
+.sheet thead th{background:var(--paper);font-weight:600;color:var(--muted);font-size:.8125rem}
+.sheet td:first-child,.sheet th:first-child{width:2.25rem;text-align:center;color:var(--muted);background:var(--paper)}
+.sheet td code{font-size:.9375rem}
+.sheet .q{color:var(--muted);font-style:italic}
+
+/* sources */
+.src{margin-top:var(--s-6);border:1.5px solid var(--ink);background:var(--sheet)}
+.src .tabpanel{display:block;padding:1rem}
+.src .tabpanel[hidden]{display:none}
+.src pre{font-size:1rem;line-height:1.65;overflow-x:auto;padding:.25rem 0}
+.src pre .c{color:var(--muted)}
+.src p{font-size:.9375rem;color:var(--ink-2);margin-top:.5rem;max-width:40em}
+
+
+/* run steps in the end block */
+.run{margin-top:var(--s-6);display:grid;gap:var(--s-6)}
+@media (min-width:980px){.run{grid-template-columns:5fr 7fr;align-items:start}}
+.run h3{font-family:var(--display);font-size:1.375rem;line-height:1.2;color:var(--paper)}
+.run .n{display:inline-block;margin-right:.6rem;font-family:var(--mono);font-size:1rem;border:1px solid #6b747a;padding:0 .4rem;vertical-align:.15em}
+.run > div{min-width:0}
+.run .install{margin-top:var(--s-3)}
+.end .src{margin-top:var(--s-3);border-color:var(--paper);background:#1f2428;color:var(--paper)}
+.end .tabs{border-bottom-color:#4a5258}
+.end .tab{color:#b9c1c6;border-right-color:#4a5258}
+.end .tab[aria-selected=true]{color:var(--paper);box-shadow:inset 0 -4px 0 var(--paper)}
+@media (hover:hover) and (pointer:fine){.end .tab[aria-selected=false]:hover{color:var(--paper)}}
+.end .src pre .c{color:#a9b1b6}
+.end .src p{color:#c4cbcf}
+.install-note.next{margin-top:var(--s-5)}
+
+/* end */
+.end{margin-top:clamp(3.5rem,2.5rem + 4vw,7rem);background:var(--ink);color:var(--paper);padding:clamp(2.5rem,2rem + 3vw,5rem) 0}
+.end h2{color:var(--paper)}
+.end .intro{color:#d3d8db}
+.end .install{border-color:var(--paper);background:#1f2428;margin-top:var(--s-5)}
+.end .install code{color:var(--paper)}
+.end .install code::before{color:#a9b1b6}
+.end .btn{background:var(--paper);color:var(--ink)}
+@media (hover:hover) and (pointer:fine){.end .btn:hover{background:#fff}}
+.end .install-note{color:#c4cbcf}
+.end .install-note a{color:var(--paper)}
+.end :focus-visible{outline-color:var(--paper);box-shadow:0 0 0 6px var(--ink)}
+.end .copied{color:var(--paper)}
+.facts{margin-top:var(--s-6);display:grid;gap:.75rem 2rem;max-width:56rem}
+@media (min-width:760px){.facts{grid-template-columns:repeat(3,1fr)}}
+.facts dt{font-family:var(--display);font-size:1.25rem}
+.facts dd{color:#d3d8db;font-size:.9375rem}
+footer{padding:1.5rem 0 2rem;background:var(--ink);color:#c4cbcf;border-top:1px solid #3a4146;font-size:.9375rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;align-items:center;justify-content:space-between}
+footer nav{display:flex;flex-wrap:wrap;gap:0 .5rem}
+footer a{color:var(--paper);display:inline-flex;align-items:center;min-height:44px;padding:0 .5rem}
+footer :focus-visible{outline-color:var(--paper);box-shadow:0 0 0 6px var(--ink)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0s !important;animation:none !important;scroll-behavior:auto !important}
+  .btn:active{transform:none}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#main" aria-label="Flagsweep, back to top">
+      <svg viewBox="0 0 30 18" aria-hidden="true"><path d="M1 15 H9 V9 H14 V3 H29" fill="none" stroke="currentColor" stroke-width="2.25"/><path d="M14 3 H29" stroke="#b3360e" stroke-width="4.5"/></svg>
+      flagsweep
+    </a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Main">
+      <a href="#how">How it decides</a>
+      <a href="#install">Install</a>
+      <a href="https://flagsweep.example/docs">Docs</a>
+      <a href="https://github.com/flagsweep/flagsweep">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="hero-head">
+        <h1 id="h1">Find the flags you forgot to delete</h1>
+        <div>
+          <p class="lede"><strong>Flagsweep is an open-source CLI for engineers who use feature flags.</strong> It lists every flag stuck fully on or off for weeks in LaunchDarkly, Unleash or a config file, with the files and lines that still read it.</p>
+          <div class="install" data-copy-group>
+            <code data-copy-src>pipx install flagsweep</code>
+            <button class="btn" type="button" data-copy aria-label="Copy install command"><span class="long">Copy install command</span><span class="short" aria-hidden="true">Copy</span></button>
+          </div>
+          <p class="install-note"><span>Free, MIT licensed, no paid plan.</span><a href="https://flagsweep.example/docs">Read the docs</a><span class="copied" role="status" aria-live="polite"></span></p>
+        </div>
+      </div>
+
+      <figure class="report" data-signature aria-labelledby="rep-cap">
+        <figcaption class="rep-label" id="rep-cap"><span><strong>Sample report</strong> on an example repo, written for this page.</span><span>Command and format are illustrative.</span></figcaption>
+        <div class="rep-cmd" aria-label="Command for this sample run"><span class="pr">$ </span>flagsweep scan ./storefront <span class="opt" id="opt">--stale-after 30d</span></div>
+        <div class="rep-controls">
+          <span class="lbl" id="cut-lbl">List flags unchanged for at least</span>
+          <div class="chips" role="group" aria-labelledby="cut-lbl">
+            <button class="chip" type="button" data-cut="14" aria-pressed="false">14 d</button>
+            <button class="chip" type="button" data-cut="30" aria-pressed="true">30 d</button>
+            <button class="chip" type="button" data-cut="60" aria-pressed="false">60 d</button>
+            <button class="chip" type="button" data-cut="90" aria-pressed="false">90 d</button>
+          </div>
+        </div>
+        <p class="sum" id="sum" role="status" aria-live="polite"><b>6</b> of 9 flags have served one value for 30+ days. 22 lines in the repo still read them.</p>
+        <ol class="rows" id="rows" aria-label="Flags in the sample repo, scanned Oct 14, 2026">
+          <li class="axis" aria-hidden="true"><span>flag · source</span><span class="a-strip"><span>120 d ago</span><span class="a-today">scanned Oct 14</span></span><span>state</span><span>same value</span><span>read in</span><span>result</span></li>
+          <!--rows:start-->
+          <li class="row is-listed" data-key="new-checkout-flow" data-flat="74" data-full="true" data-refs="6">
+            <span class="r-key"><code>new-checkout-flow</code><span class="r-src">LaunchDarkly</span></span>
+            <span class="r-strip" role="img" aria-label="new-checkout-flow: ON 100%, same value for 74 days, since 2026-08-01; read in 6 places in 4 files"><svg viewBox="0 0 120 20" preserveAspectRatio="none" aria-hidden="true"><path class="h-all" d="M0 17.0 H24 V15.6 H35 V10.0 H46 V3.0 H120"/><path class="h-run" d="M46 3.0 H120"/></svg></span>
+            <span class="r-state">ON 100%</span>
+            <span class="r-flat"><span class="r-days">74 days</span>since Aug 1</span>
+            <span class="r-refs">6 lines · 4 files</span>
+            <span class="r-verdict">listed</span>
+            <span class="r-meta"><b>ON 100%</b> · same since Aug 1 (74 d) · 6 lines · 4 files</span>
+          </li>
+          <li class="row is-listed" data-key="search-ranking-v2" data-flat="41" data-full="true" data-refs="3">
+            <span class="r-key"><code>search-ranking-v2</code><span class="r-src">LaunchDarkly</span></span>
+            <span class="r-strip" role="img" aria-label="search-ranking-v2: ON 100%, same value for 41 days, since 2026-09-03; read in 3 places in 2 files"><svg viewBox="0 0 120 20" preserveAspectRatio="none" aria-hidden="true"><path class="h-all" d="M0 17.0 H60 V13.5 H79 V3.0 H120"/><path class="h-run" d="M79 3.0 H120"/></svg></span>
+            <span class="r-state">ON 100%</span>
+            <span class="r-flat"><span class="r-days">41 days</span>since Sep 3</span>
+            <span class="r-refs">3 lines · 2 files</span>
+            <span class="r-verdict">listed</span>
+            <span class="r-meta"><b>ON 100%</b> · same since Sep 3 (41 d) · 3 lines · 2 files</span>
+          </li>
+          <li class="row is-listed" data-key="legacy-pdf-invoices" data-flat="103" data-full="true" data-refs="4">
+            <span class="r-key"><code>legacy-pdf-invoices</code><span class="r-src">flags.yaml</span></span>
+            <span class="r-strip" role="img" aria-label="legacy-pdf-invoices: OFF, same value for 103 days, since 2026-07-03; read in 4 places in 3 files"><svg viewBox="0 0 120 20" preserveAspectRatio="none" aria-hidden="true"><path class="h-all" d="M0 3.0 H17 V17.0 H120"/><path class="h-run" d="M17 17.0 H120"/></svg></span>
+            <span class="r-state">OFF</span>
+            <span class="r-flat"><span class="r-days">103 days</span>since Jul 3</span>
+            <span class="r-refs">4 lines · 3 files</span>
+            <span class="r-verdict">listed</span>
+            <span class="r-meta"><b>OFF</b> · same since Jul 3 (103 d) · 4 lines · 3 files</span>
+          </li>
+          <li class="row is-listed" data-key="summer-sale-banner" data-flat="62" data-full="true" data-refs="2">
+            <span class="r-key"><code>summer-sale-banner</code><span class="r-src">LaunchDarkly</span></span>
+            <span class="r-strip" role="img" aria-label="summer-sale-banner: OFF, same value for 62 days, since 2026-08-13; read in 2 places in 2 files"><svg viewBox="0 0 120 20" preserveAspectRatio="none" aria-hidden="true"><path class="h-all" d="M0 17.0 H25 V3.0 H58 V17.0 H120"/><path class="h-run" d="M58 17.0 H120"/></svg></span>
+            <span class="r-state">OFF</span>
+            <span class="r-flat"><span class="r-days">62 days</span>since Aug 13</span>
+            <span class="r-refs">2 lines · 2 files</span>
+            <span class="r-verdict">listed</span>
+            <span class="r-meta"><b>OFF</b> · same since Aug 13 (62 d) · 2 lines · 2 files</span>
+          </li>
+          <li class="row is-listed" data-key="dark-mode-beta" data-flat="33" data-full="true" data-refs="5">
+            <span class="r-key"><code>dark-mode-beta</code><span class="r-src">LaunchDarkly</span></span>
+            <span class="r-strip" role="img" aria-label="dark-mode-beta: ON 100%, same value for 33 days, since 2026-09-11; read in 5 places in 3 files"><svg viewBox="0 0 120 20" preserveAspectRatio="none" aria-hidden="true"><path class="h-all" d="M0 17.0 H50 V14.2 H72 V8.6 H87 V3.0 H120"/><path class="h-run" d="M87 3.0 H120"/></svg></span>
+            <span class="r-state">ON 100%</span>
+            <span class="r-flat"><span class="r-days">33 days</span>since Sep 11</span>
+            <span class="r-refs">5 lines · 3 files</span>
+            <span class="r-verdict">listed</span>
+            <span class="r-meta"><b>ON 100%</b> · same since Sep 11 (33 d) · 5 lines · 3 files</span>
+          </li>
+          <li class="row" data-key="payments-retry-backoff" data-flat="19" data-full="true" data-refs="2">
+            <span class="r-key"><code>payments-retry-backoff</code><span class="r-src">flags.yaml</span></span>
+            <span class="r-strip" role="img" aria-label="payments-retry-backoff: ON 100%, same value for 19 days, since 2026-09-25; read in 2 places in 1 files"><svg viewBox="0 0 120 20" preserveAspectRatio="none" aria-hidden="true"><path class="h-all" d="M0 17.0 H101 V3.0 H120"/><path class="h-run" d="M101 3.0 H120"/></svg></span>
+            <span class="r-state">ON 100%</span>
+            <span class="r-flat"><span class="r-days">19 days</span>since Sep 25</span>
+            <span class="r-refs">2 lines · 1 files</span>
+            <span class="r-verdict">under 30 d</span>
+            <span class="r-meta"><b>ON 100%</b> · same since Sep 25 (19 d) · 2 lines · 1 files</span>
+          </li>
+          <li class="row" data-key="eu-consent-v3" data-flat="16" data-full="true" data-refs="3">
+            <span class="r-key"><code>eu-consent-v3</code><span class="r-src">LaunchDarkly</span></span>
+            <span class="r-strip" role="img" aria-label="eu-consent-v3: ON 100%, same value for 16 days, since 2026-09-28; read in 3 places in 2 files"><svg viewBox="0 0 120 20" preserveAspectRatio="none" aria-hidden="true"><path class="h-all" d="M0 17.0 H104 V3.0 H120"/><path class="h-run" d="M104 3.0 H120"/></svg></span>
+            <span class="r-state">ON 100%</span>
+            <span class="r-flat"><span class="r-days">16 days</span>since Sep 28</span>
+            <span class="r-refs">3 lines · 2 files</span>
+            <span class="r-verdict">under 30 d</span>
+            <span class="r-meta"><b>ON 100%</b> · same since Sep 28 (16 d) · 3 lines · 2 files</span>
+          </li>
+          <li class="row" data-key="recs-carousel" data-flat="3" data-full="false" data-refs="4">
+            <span class="r-key"><code>recs-carousel</code><span class="r-src">LaunchDarkly</span></span>
+            <span class="r-strip" role="img" aria-label="recs-carousel: 50%, still rolling out, last changed 3 days ago; read in 4 places in 2 files"><svg viewBox="0 0 120 20" preserveAspectRatio="none" aria-hidden="true"><path class="h-all" d="M0 17.0 H80 V15.6 H99 V13.5 H117 V10.0 H120"/><path class="h-run" d="M117 10.0 H120"/></svg></span>
+            <span class="r-state">50%</span>
+            <span class="r-flat">changed 3 d ago</span>
+            <span class="r-refs">4 lines · 2 files</span>
+            <span class="r-verdict">rolling out</span>
+            <span class="r-meta"><b>50%</b> · changed 3 d ago · 4 lines · 2 files</span>
+          </li>
+          <li class="row is-listed" data-key="search-kill-switch" data-flat="212" data-full="true" data-refs="2">
+            <span class="r-key"><code>search-kill-switch</code><span class="r-src">LaunchDarkly</span></span>
+            <span class="r-strip" role="img" aria-label="search-kill-switch: OFF, same value for 212 days, since 2026-03-16; read in 2 places in 1 files"><svg viewBox="0 0 120 20" preserveAspectRatio="none" aria-hidden="true"><path class="h-all" d="M0 17.0 H120"/><path class="h-run" d="M0 17.0 H120"/></svg></span>
+            <span class="r-state">OFF</span>
+            <span class="r-flat"><span class="r-days">212 days</span>since Mar 16</span>
+            <span class="r-refs">2 lines · 1 files</span>
+            <span class="r-verdict">listed</span>
+            <span class="r-meta"><b>OFF</b> · same since Mar 16 (212 d) · 2 lines · 1 files</span>
+          </li>
+          <!--rows:end-->
+        </ol>
+        <p class="rep-foot">Each line is one flag's rollout over 120 days, from 0% to 100%. The shaded strip is your cutoff window: a flag is listed when its line runs flat through the whole window at fully on or fully off.</p>
+      </figure>
+    </div>
+  </section>
+
+  <section class="band" id="lines" aria-labelledby="lines-h">
+    <div class="wrap">
+      <h2 id="lines-h">Every listed flag comes with the lines that still read it</h2>
+      <p class="intro">The report names each file and line where the flag is checked. Its state tells you which side is dead: a flag stuck on never runs its fallback, a flag stuck off never runs the branch it guards.</p>
+      <div class="lines">
+        <div class="tabs" role="tablist" aria-label="Flag from the sample report">
+          <button class="tab" role="tab" id="t-on" aria-selected="true" aria-controls="p-on">new-checkout-flow<span class="t-state">ON 100%</span></button>
+          <button class="tab" role="tab" id="t-off" aria-selected="false" aria-controls="p-off" tabindex="-1">legacy-pdf-invoices<span class="t-state">OFF</span></button>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="p-on" aria-labelledby="t-on">
+          <div class="refs">
+            <h3>Report entry · sample</h3>
+            <p class="fl">new-checkout-flow</p>
+            <p class="meta">ON 100% since 2026-08-01 (74 days) · LaunchDarkly · 6 lines in 4 files</p>
+            <ol>
+              <li class="here">src/checkout/CheckoutPage.tsx:23</li>
+              <li>src/checkout/CheckoutPage.tsx:57</li>
+              <li>src/checkout/useCartTotals.ts:11</li>
+              <li>src/api/orders.py:88</li>
+              <li>src/api/orders.py:140</li>
+              <li>tests/checkout.spec.ts:9</li>
+            </ol>
+          </div>
+          <div class="code">
+            <h3>src/checkout/CheckoutPage.tsx · example code</h3>
+            <pre tabindex="0" aria-label="Example code with the lines to delete struck through"><span class="ln"><i>21</i>export function CheckoutPage({ cart }) {</span><span class="ln"><i>22</i>  const ld = useLDClient();</span><span class="ln dead"><i>23</i>  if (ld.variation("new-checkout-flow", false)) {</span><span class="ln"><i>24</i>    return &lt;Checkout cart={cart} /&gt;;</span><span class="ln dead"><i>25</i>  }</span><span class="ln dead"><i>26</i>  return &lt;LegacyCheckout cart={cart} /&gt;;</span><span class="ln"><i>27</i>}</span></pre>
+            <p class="why"><b>On for 74 days:</b> line 26 has not run since Aug 1. Delete the check and the old path, keep line 24.</p>
+          </div>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="p-off" aria-labelledby="t-off" hidden>
+          <div class="refs">
+            <h3>Report entry · sample</h3>
+            <p class="fl">legacy-pdf-invoices</p>
+            <p class="meta">OFF since 2026-07-03 (103 days) · config/flags.yaml · 4 lines in 3 files</p>
+            <ol>
+              <li>config/flags.yaml:14</li>
+              <li class="here">billing/invoices.py:31</li>
+              <li>billing/invoices.py:77</li>
+              <li>billing/tasks.py:12</li>
+            </ol>
+          </div>
+          <div class="code">
+            <h3>billing/invoices.py · example code</h3>
+            <pre tabindex="0" aria-label="Example code with the lines to delete struck through"><span class="ln"><i>29</i>def render_invoice(order):</span><span class="ln"><i>30</i>    flags = load_flags()</span><span class="ln dead"><i>31</i>    if flags["legacy-pdf-invoices"]:</span><span class="ln dead"><i>32</i>        return render_legacy_pdf(order)</span><span class="ln"><i>33</i>    return render_html_invoice(order)</span></pre>
+            <p class="why"><b>Off for 103 days:</b> line 32 has not run since Jul 3. Delete the check and the branch it guards; the key in config/flags.yaml goes too.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <h2 id="how-h">A flag is listed when it has served one value for longer than your cutoff</h2>
+      <ol class="steps">
+        <li>
+          <span class="n">1</span>
+          <h3>Find every flag key in the code</h3>
+          <p>Flagsweep scans the codebase for feature flags and records each place a key is read.</p>
+          <svg viewBox="0 0 240 64" role="img" aria-label="Drawing: three source lines, two of them reading a flag key"><g font-family="Latin Modern Mono, monospace" font-size="14" fill="#131619"><rect x="0.75" y="0.75" width="238.5" height="62.5" fill="#fbfcfc" stroke="#131619" stroke-width="1.5"/><text x="10" y="21">variation("new-…</text><text x="10" y="38" fill="#50575d">total = sum(cart)</text><text x="10" y="55">flags["legacy-…</text><path d="M200 15 h30 M200 49 h30" stroke="#131619" stroke-width="1.5"/><circle cx="196" cy="15" r="3"/><circle cx="196" cy="49" r="3"/></g></svg>
+        </li>
+        <li>
+          <span class="n">2</span>
+          <h3>Read each flag's history</h3>
+          <p>Each key is checked against the flag service's history: when it last changed, and what it serves now.</p>
+          <svg viewBox="0 0 240 64" role="img" aria-label="Drawing: a rollout line that climbs from 0 to 100 percent and then stays flat"><rect x="0.75" y="0.75" width="238.5" height="62.5" fill="#fbfcfc" stroke="#131619" stroke-width="1.5"/><path d="M10 52 H60 V44 H90 V28 H112 V12 H230" fill="none" stroke="#50575d" stroke-width="1.5"/><path d="M112 12 H230" stroke="#131619" stroke-width="2.5"/><text x="118" y="32" font-family="Latin Modern Mono, monospace" font-size="14" fill="#131619">last change</text></svg>
+        </li>
+        <li>
+          <span class="n">3</span>
+          <h3>List the flat ones, with their lines</h3>
+          <p>If a flag has served 100% on or fully off to everyone for longer than the cutoff, it goes on the list with every file and line that reads it.</p>
+          <svg viewBox="0 0 240 64" role="img" aria-label="Drawing: the cutoff window drawn over a flat line, which is marked listed"><rect x="0.75" y="0.75" width="238.5" height="62.5" fill="#fbfcfc" stroke="#131619" stroke-width="1.5"/><rect x="130" y="2" width="107" height="60" fill="rgba(19,22,25,.07)"/><path d="M130 2 V62" stroke="#131619" stroke-width="2"/><path d="M10 44 H70 V20 H236" fill="none" stroke="#50575d" stroke-width="1.5"/><path d="M70 20 H236" stroke="#b3360e" stroke-width="4"/><text x="138" y="50" font-family="Latin Modern Mono, monospace" font-size="14" fill="#131619">listed</text></svg>
+        </li>
+      </ol>
+      <div class="caveat">
+        <strong>Read the list before you delete.</strong>
+        <p>A kill switch kept off on purpose also sits still for weeks. In the sample above, <code>search-kill-switch</code> is listed at every cutoff because it has been off since March, and that may be exactly where you want it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="replaces" aria-labelledby="rep-h">
+    <div class="wrap">
+      <h2 id="rep-h">It replaces cleanup day and the flag spreadsheet nobody owns</h2>
+      <p class="intro">The list is rebuilt from your code and your flag history each time you run it, so there is nothing to keep up to date by hand.</p>
+      <div class="old">
+        <figure>
+          <div class="invite" role="img" aria-label="Drawing of a calendar invite for flag cleanup day, moved three quarters in a row">
+            <div aria-hidden="true">
+              <p class="i-title">Flag cleanup day</p>
+              <p class="i-sub">Whole team · 4 hours · recurring</p>
+              <ul>
+                <li><span class="moved">Mar 13</span><span class="tag">moved</span></li>
+                <li><span class="moved">Jun 12</span><span class="tag">moved</span></li>
+                <li><span class="moved">Sep 11</span><span class="tag">moved</span></li>
+                <li><span>Dec 11</span><span class="tag">maybe</span></li>
+              </ul>
+            </div>
+          </div>
+          <figcaption>The quarterly cleanup day, as it usually goes.</figcaption>
+        </figure>
+        <figure>
+          <div class="sheet-wrap" role="img" aria-label="Drawing of a flag spreadsheet with unknown owners and stale dates">
+            <table class="sheet" aria-hidden="true">
+              <thead><tr><th></th><th>A · flag</th><th>B · owner</th><th>C · safe to delete?</th><th>D · last checked</th></tr></thead>
+              <tbody>
+                <tr><td>2</td><td><code>new-checkout-flow</code></td><td class="q">left the team</td><td>probably</td><td>Feb</td></tr>
+                <tr><td>3</td><td><code>dark-mode-beta</code></td><td class="q">?</td><td class="q">ask design</td><td>Feb</td></tr>
+                <tr><td>4</td><td><code>legacy-pdf-invoices</code></td><td>billing</td><td class="q">?</td><td>—</td></tr>
+                <tr><td>5</td><td><code>summer-sale-banner</code></td><td class="q">?</td><td class="q">?</td><td>—</td></tr>
+                <tr><td>6</td><td class="q">(41 more rows)</td><td></td><td></td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <figcaption>The spreadsheet that was meant to track them. The report above answers column C from the flag's own history.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="end" id="install" aria-labelledby="end-h">
+    <div class="wrap">
+      <h2 id="end-h">Install it, point it at your flags, scan one repo</h2>
+      <div class="run">
+        <div>
+          <h3><span class="n">1</span>Install the CLI</h3>
+          <div class="install" data-copy-group>
+            <code data-copy-src>pipx install flagsweep</code>
+            <button class="btn" type="button" data-copy aria-label="Copy install command"><span class="long">Copy install command</span><span class="short" aria-hidden="true">Copy</span></button>
+          </div>
+          <p class="install-note"><span>Free, MIT licensed, no paid plan.</span><span class="copied" role="status" aria-live="polite"></span></p>
+        </div>
+        <div id="sources">
+          <h3><span class="n">2</span>Scan with your flag source: LaunchDarkly, Unleash or a plain config file</h3>
+          <div class="src">
+        <div class="tabs" role="tablist" aria-label="Flag source">
+          <button class="tab" role="tab" id="s-ld" aria-selected="true" aria-controls="sp-ld">LaunchDarkly</button>
+          <button class="tab" role="tab" id="s-un" aria-selected="false" aria-controls="sp-un" tabindex="-1">Unleash</button>
+          <button class="tab" role="tab" id="s-cf" aria-selected="false" aria-controls="sp-cf" tabindex="-1">Config file</button>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="sp-ld" aria-labelledby="s-ld">
+<pre tabindex="0" aria-label="Example LaunchDarkly command"><span class="c"># example: read history from LaunchDarkly</span>
+export LD_API_TOKEN=…
+flagsweep scan . --source launchdarkly --stale-after 30d</pre>
+          <p>Example: option names show the shape; the docs list the real ones.</p>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="sp-un" aria-labelledby="s-un" hidden>
+<pre tabindex="0" aria-label="Example Unleash command"><span class="c"># example: read history from Unleash</span>
+export UNLEASH_URL=…  UNLEASH_API_TOKEN=…
+flagsweep scan . --source unleash --stale-after 30d</pre>
+          <p>Example: option names show the shape; the docs list the real ones.</p>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="sp-cf" aria-labelledby="s-cf" hidden>
+<pre tabindex="0" aria-label="Example config file command"><span class="c"># example: flags kept in a plain config file</span>
+flagsweep scan . --source config --file config/flags.yaml --stale-after 30d</pre>
+          <p>Example: option names show the shape; the docs list the real ones.</p>
+        </div>
+          </div>
+        </div>
+      </div>
+      <p class="install-note next"><a href="https://flagsweep.example/docs">Read the docs</a><a href="https://github.com/flagsweep/flagsweep">Read the code on GitHub</a></p>
+      <dl class="facts">
+        <div><dt>MIT licensed</dt><dd>Read it, fork it, run it at work.</dd></div>
+        <div><dt>No paid plan</dt><dd>The CLI is the whole product.</dd></div>
+        <div><dt>No company yet</dt><dd>It is an open-source project; the code and issues are on GitHub.</dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="wrap">
+    <span>Flagsweep · MIT licensed open source</span>
+    <nav aria-label="Footer">
+      <a href="https://flagsweep.example/docs">Docs</a>
+      <a href="https://github.com/flagsweep/flagsweep">GitHub</a>
+      <a href="#main">Back to top</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  // menu
+  const b = document.querySelector('.menu-btn'), m = document.getElementById('site-menu');
+  const mq = matchMedia('(max-width: 759px)');
+  const set = open => { b.setAttribute('aria-expanded', String(open)); m.hidden = mq.matches ? !open : false; };
+  set(false);
+  mq.addEventListener('change', () => set(false));
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && b.getAttribute('aria-expanded') === 'true') { set(false); b.focus(); } });
+  document.addEventListener('click', e => { if (mq.matches && !m.contains(e.target) && e.target !== b) set(false); });
+  m.addEventListener('focusout', e => { if (mq.matches && !m.contains(e.relatedTarget) && e.relatedTarget !== b) set(false); });
+  m.addEventListener('click', e => { if (mq.matches && e.target.closest('a')) set(false); });
+
+  // keep keyboard focus clear of the sticky header (both tab directions)
+  const head = document.querySelector('.top');
+  document.addEventListener('focusin', e => {
+    const t = e.target; if (!(t instanceof Element) || head.contains(t)) return;
+    const r = t.getBoundingClientRect(), hb = head.getBoundingClientRect().bottom;
+    if (r.top < hb + 8) scrollBy({top: r.top - hb - 16, behavior: 'instant'});
+    else if (r.bottom > innerHeight - 8) scrollBy({top: r.bottom - innerHeight + 16, behavior: 'instant'});
+  });
+
+  // copy install command
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    const group = btn.closest('[data-copy-group]');
+    const src = group.querySelector('[data-copy-src]');
+    const status = group.nextElementSibling.querySelector('.copied');
+    btn.addEventListener('click', async () => {
+      const text = src.textContent.trim();
+      let ok = false;
+      try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {
+        try {
+          const r = document.createRange(); r.selectNodeContents(src);
+          const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+          ok = document.execCommand('copy');
+          if (ok) s.removeAllRanges();
+        } catch (e2) { ok = false; }
+      }
+      if (!ok) { const r = document.createRange(); r.selectNodeContents(src); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+      status.textContent = ok ? 'Copied: ' + text : 'Selected. Press Ctrl+C or ⌘C to copy.';
+      const long = btn.querySelector('.long'), short = btn.querySelector('.short');
+      long.textContent = ok ? 'Copied' : 'Copy install command'; short.textContent = ok ? 'Copied' : 'Copy';
+      clearTimeout(btn._t); btn._t = setTimeout(() => { long.textContent = 'Copy install command'; short.textContent = 'Copy'; }, 2500);
+    });
+  });
+
+  // sample report cutoff
+  const rows = document.getElementById('rows');
+  const items = [...rows.querySelectorAll('.row')];
+  const sum = document.getElementById('sum'), opt = document.getElementById('opt');
+  const chips = [...document.querySelectorAll('.chip')];
+  const apply = cut => {
+    rows.style.setProperty('--cut', cut);
+    let n = 0, lines = 0;
+    items.forEach(li => {
+      const flat = +li.dataset.flat, full = li.dataset.full === 'true';
+      const listed = full && flat >= cut;
+      li.classList.toggle('is-listed', listed);
+      li.querySelector('.r-verdict').textContent = listed ? 'listed' : full ? 'under ' + cut + ' d' : 'rolling out';
+      if (listed) { n++; lines += +li.dataset.refs; }
+    });
+    sum.innerHTML = '<b>' + n + '</b> of ' + items.length + ' flags have served one value for ' + cut + '+ days. ' + lines + ' lines in the repo still read them.';
+    opt.textContent = '--stale-after ' + cut + 'd';
+    chips.forEach(c => c.setAttribute('aria-pressed', String(+c.dataset.cut === cut)));
+  };
+  chips.forEach(c => c.addEventListener('click', () => apply(+c.dataset.cut)));
+  apply(30);
+
+  // tabs
+  document.querySelectorAll('[role=tablist]').forEach(list => {
+    const tabs = [...list.querySelectorAll('[role=tab]')];
+    const select = (t, focus) => {
+      tabs.forEach(x => {
+        const on = x === t;
+        x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1;
+        document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) t.focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', e => {
+        const k = e.key; let j = null;
+        if (k === 'ArrowRight') j = (i + 1) % tabs.length; else if (k === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length; else if (k === 'Home') j = 0; else if (k === 'End') j = tabs.length - 1;
+        if (j !== null) { e.preventDefault(); select(tabs[j], true); }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
