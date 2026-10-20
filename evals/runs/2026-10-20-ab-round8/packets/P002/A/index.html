@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shift swaps for hospital nursing units · Swaptide</title>
+<meta name="description" content="Swaptide is a shift-swap app for hospital nursing units. Nurses post and pick up shifts on their phones; each swap reaches the unit manager with skill mix and hours already checked, to approve or decline in one tap.">
+<meta name="theme-color" content="#F7F8F7">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Swaptide: every swap reaches you before the shift does">
+<meta property="og:description" content="A shift-swap app for hospital nursing units. Skill mix and hours are checked before the unit manager approves or declines in one tap.">
+<meta property="og:image" content="https://swaptide.example/og.png">
+<meta property="og:url" content="https://swaptide.example/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Swaptide: every swap reaches you before the shift does">
+<meta name="twitter:description" content="A shift-swap app for hospital nursing units, checked against your staffing rules before you approve.">
+<meta name="twitter:image" content="https://swaptide.example/og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+@font-face{font-family:"Heros Cn";src:url(fonts/heroscn-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Heros Cn";src:url(fonts/heroscn-regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Heros";src:url(fonts/heros-regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Heros";src:url(fonts/heros-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}
+
+:root{
+  --ground:#F7F8F7;
+  --panel:#FFFFFF;
+  --ink:#15202B;
+  --ink-2:#47525E;
+  --rule:#CDD3D7;
+  --rule-strong:#8E979F;
+  --night:#142742;
+  --night-2:#1E3658;
+  --night-ink:#EEF2F8;
+  --day:#FBE7B5;
+  --day-ink:#4A3300;
+  --act:#0B6B63;
+  --act-dark:#07514B;
+  --act-tint:#E3F1EF;
+  --pass:#1B6A39;
+  --pass-tint:#E4F2E8;
+  --flag:#9A4300;
+  --flag-tint:#FFF0DC;
+  --flag-line:#D9822B;
+  --decline:#A3271F;
+  --display:"Heros Cn","Arial Narrow",Arial,sans-serif;
+  --text:"Heros",Helvetica,Arial,sans-serif;
+  --s-1:4px;--s0:8px;--s1:12px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:72px;--s7:120px;
+  --wrap:1320px;
+  --gutter:16px;
+}
+@media (min-width:760px){:root{--gutter:40px}}
+
+*,*::before,*::after{box-sizing:border-box}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul{margin:0}
+ol,ul{padding:0;list-style:none}
+img,svg,video,canvas{display:block;max-width:100%}
+input,button,textarea,select{font:inherit;color:inherit}
+:where(p,li,dd,td,output,[role=status]){overflow-wrap:break-word;min-width:0}
+a,button,input,output{scroll-margin-top:84px}
+html{scroll-padding-top:84px;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{background:var(--ground);color:var(--ink);font-family:var(--text);font-size:1.0625rem;line-height:1.55;text-rendering:optimizeLegibility}
+a{color:var(--act-dark)}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px #fff}
+.skip{position:absolute;left:12px;top:-60px;padding:12px 16px;background:var(--ink);color:#fff;z-index:100;text-decoration:none}
+.skip:focus{top:12px}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gutter)}
+.num{font-variant-numeric:tabular-nums}
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:12px 22px;border-radius:6px;background:var(--act);color:#fff;font-family:var(--display);font-weight:700;font-size:1.25rem;letter-spacing:.01em;text-decoration:none;border:2px solid var(--act);transition:background-color .15s ease-out,transform .15s ease-out}
+.btn:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.btn:hover{background:var(--act-dark);border-color:var(--act-dark)}}
+.btn--light{background:#fff;color:var(--night);border-color:#fff}
+@media (hover:hover) and (pointer:fine){.btn--light:hover{background:var(--day);border-color:var(--day)}}
+
+/* ---------- header ---------- */
+.site-head{position:relative;top:0;z-index:50;background:rgba(247,248,247,.96);border-bottom:1px solid var(--rule)}
+.site-head .wrap{display:flex;align-items:center;gap:var(--s3);min-height:68px}
+.brand{display:inline-flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-family:var(--display);font-weight:700;font-size:1.5rem;letter-spacing:.005em;min-height:44px}
+.brand svg{width:28px;height:28px;flex-shrink:0}
+html:not(.js) .site-head .wrap{flex-wrap:wrap}
+.menu-btn{margin-left:auto;min-height:44px;min-width:44px;padding:8px 14px;border:1.5px solid var(--ink);border-radius:6px;background:transparent;font-family:var(--display);font-weight:700;font-size:1.0625rem;cursor:pointer}
+#site-menu{display:flex;gap:4px;align-items:center}
+#site-menu a:not(.btn){display:inline-flex;align-items:center;min-height:44px;padding:0 12px;color:var(--ink);text-decoration:none;font-size:1rem}
+@media (hover:hover) and (pointer:fine){#site-menu a:not(.btn):hover{text-decoration:underline;text-underline-offset:4px}}
+#site-menu .btn{min-height:44px;font-size:1.0625rem;padding:8px 18px;margin-left:8px}
+@media (max-width:899px){
+  .js #site-menu[hidden]{display:none}
+  #site-menu{position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;background:var(--ground);border-bottom:1px solid var(--rule);padding:8px var(--gutter) 16px}
+  html:not(.js) #site-menu{position:static;flex-direction:row;flex-wrap:wrap;padding:0 0 8px;border:0;width:100%}
+  html:not(.js) #site-menu a:not(.btn){border-bottom:0}
+  #site-menu a:not(.btn){font-size:1.125rem;border-bottom:1px solid var(--rule)}
+  #site-menu .btn{margin:12px 0 0}
+  html:not(.js) .menu-btn{display:none}
+}
+@media (min-width:900px){
+  .site-head{position:sticky}
+  .menu-btn{display:none}
+  #site-menu{margin-left:auto}
+  #site-menu[hidden]{display:flex}
+}
+
+/* ---------- hero ---------- */
+.hero{padding-block:var(--s4) var(--s6)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s3)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(2.25rem,.75rem + 5.3vw,5.5rem);line-height:1.02;letter-spacing:-.01em;text-wrap:balance;overflow-wrap:break-word}
+.lede{font-size:1.0625rem;line-height:1.5;max-width:46ch}
+.lede strong{font-weight:700}
+.cta-row{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s1);margin-top:var(--s1)}
+.hero-status,.hero-nurse{display:none}
+.cta-note{font-size:.9375rem;line-height:1.45;color:var(--ink-2);max-width:42ch}
+@media (min-width:1000px){
+  .hero{padding-block:var(--s5) var(--s6)}
+  .hero .wrap{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s4);row-gap:var(--s4)}
+  .hero h1{grid-column:1 / 10;max-width:none}
+  .hero-status{display:block;grid-column:10 / 13;align-self:end;justify-self:end;max-width:300px;padding:14px 16px;border:1.5px solid var(--ink);border-radius:8px;background:var(--panel);font-size:.9375rem;line-height:1.4}
+  .hero-status b{display:block;font-family:var(--display);font-size:1.0625rem}
+  .cta-note .st{display:none}
+  .hero-nurse{display:block;padding-top:var(--s2);border-top:1px solid var(--rule);font-size:1rem;line-height:1.5;max-width:42ch}
+  .hero-copy{grid-column:1 / 5;align-self:start;display:grid;gap:var(--s3)}
+  .board{grid-column:5 / 13}
+  .lede{font-size:1.1875rem}
+}
+@media (max-width:999px){.hero-copy{display:grid;gap:var(--s2)}}
+
+/* ---------- signature: the swap board ---------- */
+.board{background:var(--panel);border:1.5px solid var(--ink);border-radius:8px;overflow:hidden}
+.board-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;padding:10px 16px;border-bottom:1.5px solid var(--ink);background:var(--ground)}
+.board-title{font-family:var(--display);font-weight:700;font-size:1.0625rem;letter-spacing:.01em}
+.sample-tag{font-size:.875rem;color:var(--ink-2)}
+.board-body{display:grid;grid-template-columns:minmax(0,1fr)}
+.sheet{padding:16px}
+.slip{padding:16px;border-top:1.5px solid var(--rule)}
+@media (min-width:760px){
+  .board-body{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+  .slip{border-top:0;border-left:1.5px solid var(--rule)}
+}
+.posted{display:grid;gap:4px;margin-bottom:14px}
+.posted-line{font-size:.9375rem;line-height:1.4}
+.posted-line b{font-weight:700}
+.posted-note{font-family:var(--display);font-size:1.0625rem;line-height:1.3;color:var(--night);padding-left:10px;border-left:3px solid var(--day-ink)}
+
+table.roster{width:100%;border-collapse:collapse;table-layout:fixed;font-family:var(--display)}
+.roster caption{text-align:left;font-family:var(--text);font-size:.875rem;color:var(--ink-2);padding-bottom:6px}
+.roster th,.roster td{border:1px solid var(--rule-strong);text-align:center;height:50px;padding:0}
+.roster col.nm{width:33%}
+.roster thead th{font-weight:700;font-size:.9375rem;letter-spacing:.02em;background:var(--ground);height:40px}
+.roster thead th small{display:block;font-weight:400;font-size:.8125rem;letter-spacing:0;color:var(--ink-2);line-height:1}
+.roster th[scope=row]{text-align:left;padding:0;font-size:1rem;font-weight:700;white-space:nowrap;position:relative}
+.roster th[scope=row] .nm-static{display:block;padding:0 8px}
+.roster th[scope=row] input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.roster th[scope=row] label{display:flex;flex-direction:column;justify-content:center;min-height:50px;padding:0 8px 0 30px;cursor:pointer;position:relative}
+.roster th[scope=row] label::before{content:"";position:absolute;left:8px;top:50%;width:16px;height:16px;margin-top:-8px;border:2px solid var(--rule-strong);border-radius:50%;background:#fff}
+.roster th[scope=row] input:checked + label{background:var(--act);color:#fff}
+.roster th[scope=row] input:checked + label .q{color:#E3F1EF}
+.roster th[scope=row] input:checked + label::before{border-color:#fff;box-shadow:inset 0 0 0 4px var(--act);background:#fff}
+.roster th[scope=row] input:focus-visible + label{outline:3px solid var(--ink);outline-offset:-3px}
+.roster caption .tap{display:block;font-family:var(--display);font-size:1.0625rem;color:var(--ink);margin-bottom:2px}
+.roster th[scope=row] .q{display:block;font-weight:400;font-size:.8125rem;color:var(--ink-2);line-height:1.15}
+.roster col.wk,.roster .wk{width:17%}
+.roster td{font-size:1.25rem;font-weight:700;position:relative;line-height:1}
+.roster td:has(.cell-tag){padding-bottom:12px}
+.roster td.D{background:var(--day);color:var(--day-ink)}
+.roster td.N{background:var(--night);color:var(--night-ink)}
+.roster td.wk{font-size:.9375rem;font-weight:700;font-variant-numeric:tabular-nums;background:var(--panel);color:var(--ink)}
+.roster td.wk .to{color:var(--act-dark)}
+.roster td.wk.over .to{color:var(--flag)}
+.roster tr.taker td.e{background:var(--act-tint)}
+.roster td.posted-cell .cell-tag{color:var(--day)}
+.roster td.pending{background:#fff;color:var(--act-dark);outline:3px dashed var(--act);outline-offset:-6px}
+.roster td.pending.warn{color:var(--flag);outline-color:var(--flag-line);background:var(--flag-tint)}
+.roster td.gone{background:#fff;color:#7A848D;text-decoration:line-through;text-decoration-thickness:2px}
+.roster td.run{box-shadow:inset 0 -6px 0 var(--flag-line)}
+.roster td.new{outline:3px solid var(--act);outline-offset:-5px}
+.roster td.declined{outline:3px solid var(--decline);outline-offset:-5px;background:#fff;color:var(--decline)}
+.cell-tag{position:absolute;left:0;right:0;bottom:5px;font-family:var(--text);font-size:.75rem;font-weight:400;letter-spacing:.02em;line-height:1;text-decoration:none}
+.also{margin-top:10px;font-size:.875rem;line-height:1.4;color:var(--ink-2);padding:6px 8px;border-radius:4px}
+.also.hot{background:var(--flag-tint);color:var(--flag)}
+
+.verdict{display:block;font-family:var(--display);font-weight:700;font-size:1.25rem;line-height:1.2;padding:10px 12px;border-radius:6px;background:var(--act-tint);color:var(--act-dark);margin-bottom:12px;min-height:3.4em}
+.verdict.is-flag{background:var(--flag-tint);color:var(--flag)}
+.verdict.is-approved{background:var(--night);color:var(--night-ink)}
+.verdict.is-declined{background:#FBE9E7;color:var(--decline)}
+.checks{display:grid;gap:6px;margin-bottom:14px}
+.checks li{display:grid;grid-template-columns:52px minmax(0,1fr);gap:10px;align-items:start;font-size:.9375rem;line-height:1.35}
+.checks .mark{font-family:var(--display);font-weight:700;font-size:.8125rem;letter-spacing:.04em;text-transform:uppercase;text-align:center;border-radius:4px;padding:3px 0}
+.checks .ok .mark{background:var(--pass-tint);color:var(--pass)}
+.checks .fl .mark{background:var(--flag-tint);color:var(--flag);outline:1.5px solid var(--flag-line)}
+.checks b{font-weight:700}
+.mgr{border-top:1.5px dashed var(--rule-strong);padding-top:12px}
+.mgr p{font-size:.875rem;color:var(--ink-2);margin-bottom:8px}
+.mgr-btns{display:grid;grid-template-columns:1fr 1fr auto;gap:6px}
+.mgr button{min-height:48px;border-radius:6px;font-family:var(--display);font-weight:700;font-size:1.125rem;cursor:pointer;border:2px solid var(--ink);background:#fff;transition:background-color .15s ease-out,transform .15s ease-out}
+.mgr button:active{transform:scale(.97)}
+.mgr .approve{background:var(--night);color:#fff;border-color:var(--night)}
+.mgr .decline{color:var(--decline);border-color:var(--decline)}
+.mgr .reset{border-color:var(--rule-strong);color:var(--ink-2);font-size:1rem;padding:0 12px}
+@media (hover:hover) and (pointer:fine){
+  .roster th[scope=row] input:not(:checked) + label:hover{background:var(--act-tint)}
+  .mgr .approve:hover{background:var(--night-2)}
+  .mgr .decline:hover{background:#FBE9E7}
+  .mgr .reset:hover{border-color:var(--ink);color:var(--ink)}
+}
+@media (prefers-reduced-motion:no-preference){
+  .roster td.new{animation:land .26s cubic-bezier(.2,.7,.2,1)}
+}
+@keyframes land{from{transform:scale(.92)}to{transform:scale(1)}}
+
+/* ---------- sections ---------- */
+section{padding-block:48px}
+@media (min-width:1000px){section{padding-block:var(--s7)}}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(1.875rem,1.3rem + 2.2vw,3.25rem);line-height:1.08;letter-spacing:-.005em;text-wrap:balance;max-width:22ch}
+h3{font-family:var(--display);font-weight:700;font-size:1.375rem;line-height:1.2}
+.prose{max-width:58ch}
+.prose p + p{margin-top:var(--s2)}
+.section-lede{margin-top:var(--s3);max-width:56ch;font-size:1.125rem}
+
+/* before: whiteboard */
+.before{border-top:1px solid var(--rule)}
+.before-grid{display:grid;gap:var(--s4);margin-top:var(--s3)}
+@media (min-width:1000px){.before-grid{gap:var(--s5);margin-top:var(--s5)}}
+@media (min-width:1000px){.before-grid{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);align-items:center}}
+.wb{width:100%;height:auto}
+.wb-notes{display:grid;gap:var(--s3);counter-reset:n}
+.wb-notes li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:var(--s2)}
+.wb-notes .pin{width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;font-family:var(--display);font-weight:700;display:grid;place-items:center;font-size:1.0625rem}
+.wb-notes h3{margin-bottom:4px}
+.wb-notes p{color:var(--ink-2)}
+
+/* the shift */
+.shift{background:var(--panel);border-block:1px solid var(--rule)}
+.shift-head{display:grid;gap:var(--s3)}
+@media (min-width:1000px){.shift-head{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:end}}
+.strip{margin-top:var(--s4);position:relative}
+.strip-sample{font-size:.875rem;color:var(--ink-2);margin-bottom:var(--s1)}
+.bands{display:grid;grid-template-columns:repeat(24,1fr);height:44px;border:1.5px solid var(--ink);border-radius:6px;overflow:hidden;font-family:var(--display);font-weight:700}
+.bands .bn{grid-column:1 / span 12;background:var(--night);color:var(--night-ink);display:flex;align-items:center;padding-left:12px}
+.bands .bd{grid-column:14 / span 11;background:var(--day);color:var(--day-ink);display:flex;align-items:center;padding-left:12px}
+.bands .rep{grid-column:13 / span 1;background:var(--rule-strong)}
+.ticks{display:grid;grid-template-columns:repeat(24,1fr);font-size:.8125rem;color:var(--ink-2);margin-top:4px;font-variant-numeric:tabular-nums}
+.ticks span{grid-row:1}
+.events{display:grid;gap:var(--s3);margin-top:var(--s4)}
+.ev{display:grid;grid-template-columns:76px minmax(0,1fr);gap:var(--s2);align-items:start}
+.ev time{font-family:var(--display);font-weight:700;font-size:1.5rem;line-height:1;font-variant-numeric:tabular-nums}
+.ev time small{display:block;font-family:var(--text);font-weight:400;font-size:.8125rem;color:var(--ink-2);margin-top:4px}
+.ev h3{font-size:1.1875rem;margin-bottom:2px}
+.ev p{font-size:.9375rem;color:var(--ink-2);line-height:1.45}
+.ev .where{display:inline-flex;align-items:center;gap:6px;font-size:.8125rem;color:var(--ink);margin-top:6px}
+.ev .where b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;font-family:var(--display);font-size:.8125rem}
+@media (min-width:1000px){
+  .events{grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--s3)}
+  .ev{grid-template-columns:minmax(0,1fr);border-left:1.5px solid var(--ink);padding-left:14px}
+}
+.plan-wrap{display:grid;gap:var(--s4);margin-top:var(--s6)}
+@media (max-width:699px){.plan-wrap figure,.ev .where{display:none}.plan-wrap{margin-top:var(--s4)}.events{gap:var(--s2)}}
+@media (min-width:1000px){.plan-wrap{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:center}}
+.plan{width:100%;height:auto}
+.plan-cap{color:var(--ink-2);max-width:44ch}
+.plan-cap h3{color:var(--ink);margin-bottom:8px}
+
+/* manager rules */
+.rules-grid{display:grid;gap:var(--s4);margin-top:var(--s4)}
+@media (min-width:1000px){.rules-grid{gap:var(--s5);margin-top:var(--s5)}}
+@media (min-width:1000px){.rules-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);align-items:start}}
+.rulesheet{background:var(--panel);border:1.5px solid var(--ink);border-radius:8px}
+.rulesheet header{padding:12px 16px;border-bottom:1.5px solid var(--ink);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+.rulesheet header b{font-family:var(--display);font-size:1.125rem}
+.rulesheet header span{font-size:.875rem;color:var(--ink-2)}
+.rule{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px;border-bottom:1px solid var(--rule)}
+.rule:last-of-type{border-bottom:0}
+.rule .name{font-weight:700;line-height:1.3}
+.rule .hint{display:block;font-weight:400;font-size:.875rem;color:var(--ink-2)}
+.stepper{display:inline-grid;grid-template-columns:44px 64px 44px;align-items:center;border:1.5px solid var(--ink);border-radius:6px;overflow:hidden}
+.stepper button{height:44px;border:0;background:var(--ground);font-family:var(--display);font-weight:700;font-size:1.375rem;cursor:pointer}
+@media (hover:hover) and (pointer:fine){.stepper button:hover{background:var(--act-tint)}}
+.stepper output{text-align:center;font-family:var(--display);font-weight:700;font-size:1.25rem;font-variant-numeric:tabular-nums}
+.fixed-rule{font-family:var(--display);font-weight:700;font-size:1rem;color:var(--ink-2);padding:0 4px}
+.queue-status{font-family:var(--display);font-weight:700;font-size:1.25rem;margin-bottom:var(--s1);min-height:1.5em}
+.queue{display:grid;gap:8px}
+.q-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center;background:var(--panel);border:1px solid var(--rule-strong);border-radius:6px;padding:12px 14px}
+.q-item .when{font-family:var(--display);font-weight:700;font-size:1.0625rem}
+.q-item .who{font-size:.9375rem}
+.q-item .why{grid-column:1 / -1;font-size:.875rem;color:var(--ink-2)}
+.q-item .state{font-family:var(--display);font-weight:700;font-size:.875rem;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:var(--pass-tint);color:var(--pass);white-space:nowrap}
+.q-item.flagged{border-color:var(--flag-line);background:#FFFBF5}
+.q-item.flagged .state{background:var(--flag-tint);color:var(--flag)}
+.q-item.flagged .why{color:var(--flag)}
+.q-sample{font-size:.875rem;color:var(--ink-2);margin-bottom:var(--s1)}
+.limits{margin-top:var(--s3);display:grid;gap:var(--s2)}
+.limits p{max-width:52ch}
+.limits strong{font-weight:700}
+
+/* questions */
+.qa{display:grid;gap:0;margin-top:var(--s4);border-top:1.5px solid var(--ink)}
+@media (min-width:1000px){.qa{grid-template-columns:1fr 1fr;column-gap:var(--s5)}}
+.qa div{padding:var(--s2) 0;border-bottom:1px solid var(--rule)}
+@media (min-width:1000px){.qa div{padding:var(--s3) 0}}
+.qa dt{font-family:var(--display);font-weight:700;font-size:clamp(1.1875rem,1rem + .5vw,1.3125rem);line-height:1.2;margin-bottom:6px}
+.qa dd{color:var(--ink-2);max-width:56ch}
+
+/* final */
+.final{background:var(--night);color:var(--night-ink)}
+.final .wrap{display:grid;gap:var(--s4)}
+@media (min-width:1000px){.final .wrap{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:end}}
+.final h2{color:#fff;max-width:18ch}
+.final p{color:#D3DBE7;max-width:48ch}
+.final .cta-row{margin-top:var(--s3)}
+.final .cta-note{color:#C7D1DF}
+.handoff{font-family:var(--display);font-weight:700;font-size:1rem;letter-spacing:.04em;color:var(--day);margin-bottom:var(--s2)}
+
+/* footer */
+.site-foot{background:var(--ground);border-top:1px solid var(--rule);padding-block:var(--s4)}
+.site-foot .wrap{display:grid;gap:var(--s2)}
+@media (min-width:900px){.site-foot .wrap{grid-template-columns:1fr auto;align-items:start}}
+.site-foot p{font-size:.9375rem;color:var(--ink-2);max-width:56ch}
+.foot-links{display:flex;flex-wrap:wrap;gap:0 8px}
+.foot-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;color:var(--ink);font-size:.9375rem}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-property:background-color,border-color,color,opacity!important}
+  .btn:active,.mgr button:active{transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#main" aria-label="Swaptide, back to top">
+      <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="5" fill="#FBE7B5" stroke="#15202B" stroke-width="2"/><path d="M1 15h26v7a5 5 0 0 1-5 5H6a5 5 0 0 1-5-5z" fill="#142742"/><path d="M7 9h12l-3-3M21 20H9l3 3" fill="none" stroke="#15202B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 20H9l3 3" fill="none" stroke="#FBE7B5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1" y="1" width="26" height="26" rx="5" fill="none" stroke="#15202B" stroke-width="2"/></svg>
+      Swaptide
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Main">
+      <a href="#how">A swap, start to finish</a>
+      <a href="#managers">For nurse managers</a>
+      <a href="#questions">Questions</a>
+      <a class="btn" href="https://swaptide.example/pilot">Book a pilot call</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap">
+      <h1 id="h1">Every swap reaches you before the shift does</h1>
+      <p class="hero-status"><b>Status: in pilot</b>Three months in, on one medical-surgical unit.</p>
+      <div class="hero-copy">
+        <p class="lede"><strong>Swaptide is a shift-swap app for hospital nursing units.</strong> Your nurses post and pick up shifts on their phones; each swap reaches you with skill mix and hours already checked, and you approve or decline it in one tap.</p>
+        <div class="cta-row">
+          <a class="btn" href="https://swaptide.example/pilot">Book a pilot call</a>
+          <p class="cta-note"><span class="st">Three months into a pilot on one medical-surgical unit. </span>The call covers your unit’s swap rules and whether a pilot fits.</p>
+        </div>
+        <p class="hero-nurse"><strong>For nurses on the unit:</strong> post a shift or pick one up on your break, from your phone, without a trip to the whiteboard.</p>
+      </div>
+
+      <div class="board" data-signature role="group" aria-labelledby="board-title">
+        <div class="board-head">
+          <span class="board-title" id="board-title">Try one swap: Priya’s Saturday night</span>
+          <span class="sample-tag">Sample unit, names and week, written for this page</span>
+        </div>
+        <div class="board-body">
+          <div class="sheet">
+            <div class="posted">
+              <p class="posted-line"><b>Priya R.</b> posted <b>Sat 14 Nov, night</b> from her night break, Wed 03:10.</p>
+              <p class="posted-note">“Kid’s recital Saturday at 18:30. Anyone want my night?”</p>
+            </div>
+            <table class="roster" id="roster" aria-describedby="also">
+              <caption><b class="tap">Tap a name to have them pick it up.</b> 4 North, Wed 11 – Sat 14 Nov. D 07:00–19:30 · N 19:00–07:30 · C charge-qualified</caption>
+              <colgroup><col class="nm"><col><col><col><col><col class="wk"></colgroup>
+              <thead>
+                <tr><th scope="col"><span class="visually-hidden">Nurse</span></th><th scope="col">Wed<small>11</small></th><th scope="col">Thu<small>12</small></th><th scope="col">Fri<small>13</small></th><th scope="col">Sat<small>14</small></th><th scope="col" class="wk">Week<small>hours</small></th></tr>
+              </thead>
+              <tbody id="roster-body">
+                <tr data-n="priya"><th scope="row"><span class="nm-static">Priya R.<span class="q">RN · C · posted</span></span></th><td class="N">N</td><td></td><td></td><td class="N posted-cell">N<span class="cell-tag">posted</span></td><td class="wk">36</td></tr>
+                <tr data-n="jo" class="taker"><th scope="row"><input type="radio" name="taker" id="t-jo" value="jo" checked><label for="t-jo">Jo L.<span class="q">RN · C</span></label></th><td class="D">D</td><td class="e"></td><td class="e"></td><td class="pending">N?</td><td class="wk">24→<span class="to">36</span></td></tr>
+                <tr data-n="dana"><th scope="row"><input type="radio" name="taker" id="t-dana" value="dana"><label for="t-dana">Dana K.<span class="q">RN · C</span></label></th><td class="N">N</td><td class="N">N</td><td class="N">N</td><td></td><td class="wk">36</td></tr>
+                <tr data-n="marcus"><th scope="row"><input type="radio" name="taker" id="t-marcus" value="marcus"><label for="t-marcus">Marcus T.<span class="q">RN</span></label></th><td></td><td class="D">D</td><td></td><td></td><td class="wk">36</td></tr>
+              </tbody>
+            </table>
+            <p class="also" id="also">Also on Sat night: Ken M., RN and Ana S., RN. Neither is charge-qualified.</p>
+                      </div>
+
+          <div class="slip">
+            <output class="verdict" id="verdict" role="status" aria-live="polite">Jo L. picks it up. 3 of 3 checks clear. Waiting for the manager.</output>
+            <ul class="checks" id="checks" aria-label="Rule check for this swap">
+              <li class="ok"><span class="mark">Clear</span><span><b>Skill mix.</b> Jo is charge-qualified, so Sat night keeps a charge nurse.</span></li>
+              <li class="ok"><span class="mark">Clear</span><span><b>In a row.</b> Sat would be Jo’s 1st shift in a row. Unit limit: 3.</span></li>
+              <li class="ok"><span class="mark">Clear</span><span><b>Week hours.</b> 36 of 48 (Sun–Sat).</span></li>
+            </ul>
+            <div class="mgr">
+              <p>The manager’s tap. A flag informs the call; it doesn’t make it.</p>
+              <div class="mgr-btns">
+                <button type="button" class="approve" data-act="approve">Approve</button>
+                <button type="button" class="decline" data-act="decline">Decline</button>
+                <button type="button" class="reset" data-act="reset">Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="before" aria-labelledby="before-h">
+    <div class="wrap">
+      <h2 id="before-h">On the whiteboard, a swap reaches you after someone has worked it</h2>
+      <div class="before-grid">
+        <figure>
+          <svg class="wb" viewBox="0 0 880 520" role="img" aria-labelledby="wb-t">
+            <title id="wb-t">Drawing of a break-room whiteboard covered in handwritten swap requests, crossed-out names and sticky notes, with three numbered problem spots.</title>
+            <!-- wall -->
+            <rect x="0" y="0" width="880" height="520" fill="#EEF0EE"/>
+            <!-- frame -->
+            <rect x="40" y="26" width="800" height="440" rx="6" fill="#B8C0C6"/>
+            <rect x="52" y="38" width="776" height="416" rx="2" fill="#FFFFFF"/>
+            <!-- faint ghosting of old marker -->
+            <g opacity=".09" stroke="#2950A8" stroke-width="8" fill="none" stroke-linecap="round"><path d="M120 360c60-10 140 6 220-4"/><path d="M520 110c40 8 90-4 150 2"/><path d="M600 400c30-6 70 4 120-2"/></g>
+            <!-- printed schedule taped -->
+            <g transform="rotate(-2 170 140)">
+              <rect x="80" y="62" width="240" height="190" fill="#FAFAF7" stroke="#8E979F"/>
+              <rect x="118" y="54" width="44" height="16" fill="#E9E2C8" opacity=".9"/>
+              <rect x="238" y="54" width="44" height="16" fill="#E9E2C8" opacity=".9"/>
+              <text x="92" y="88" font-family="Heros Cn, Arial Narrow, sans-serif" font-weight="700" font-size="14" fill="#15202B">4N SCHEDULE · NOV</text>
+              <g stroke="#CDD3D7"><path d="M92 100h216M92 122h216M92 144h216M92 166h216M92 188h216M92 210h216M92 232h216"/><path d="M150 100v132M182 100v132M214 100v132M246 100v132M278 100v132"/></g>
+              <g font-family="Heros Cn, Arial Narrow, sans-serif" font-size="12" fill="#47525E"><text x="94" y="116">Priya</text><text x="94" y="138">Jo</text><text x="94" y="160">Dana</text><text x="94" y="182">Marcus</text><text x="94" y="204">Ken</text><text x="94" y="226">Ana</text></g>
+              <g fill="#142742"><rect x="151" y="101" width="30" height="20"/><rect x="279" y="101" width="29" height="20"/><rect x="151" y="145" width="30" height="20"/><rect x="183" y="145" width="30" height="20"/><rect x="215" y="145" width="30" height="20"/></g>
+              <g fill="#FBE7B5"><rect x="151" y="123" width="30" height="20"/><rect x="183" y="167" width="30" height="20"/><rect x="215" y="189" width="30" height="20"/><rect x="247" y="211" width="30" height="20"/></g>
+              <!-- marker scribble over printed sheet -->
+              <path d="M276 98c10 8 22 22 34 28M310 98c-10 10-22 20-34 28" stroke="#C62E2E" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </g>
+            <!-- heading in marker -->
+            <text x="372" y="92" font-family="Heros Cn, Arial Narrow, sans-serif" font-weight="700" font-size="34" fill="#2950A8" transform="rotate(-1.5 372 92)">SWAPS!!</text>
+            <path d="M372 100c40 4 90 2 128-2" stroke="#2950A8" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <!-- swap lines -->
+            <g font-family="Heros Cn, Arial Narrow, sans-serif" font-size="22" fill="#222">
+              <text x="372" y="146" transform="rotate(-1 372 146)">Sat 14 N  Priya → ???</text>
+              <text x="372" y="188" transform="rotate(.8 372 188)" fill="#23824A">Fri 13 D  Ken ↔ Sam  ok?</text>
+              <text x="372" y="230" transform="rotate(-.6 372 230)">Thu 19 D  Rachel → Tom</text>
+              <text x="372" y="272" transform="rotate(1 372 272)" fill="#2950A8">Sun 15 N  Ana → Lena</text>
+            </g>
+            <!-- cross outs -->
+                        <text x="664" y="144" font-family="Heros Cn, Arial Narrow, sans-serif" font-size="16" fill="#B0241F" transform="rotate(-4 664 144)">Dana??</text>
+            <path d="M668 210c-20 2-34 8-40 16" stroke="#B0241F" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <text x="672" y="212" font-family="Heros Cn, Arial Narrow, sans-serif" font-size="15" fill="#B0241F" transform="rotate(-3 672 212)">who's charge thurs??</text>
+            <!-- sticky notes -->
+            <g transform="rotate(4 690 330)">
+              <rect x="640" y="290" width="128" height="112" fill="#F6E27A"/>
+              <rect x="640" y="290" width="128" height="14" fill="#EED65F"/>
+              <g font-family="Heros Cn, Arial Narrow, sans-serif" font-size="16" fill="#222"><text x="650" y="326">can someone</text><text x="650" y="346">take my sat?</text><text x="650" y="366">text me!!  -P</text><text x="650" y="390" font-size="13" fill="#47525E">(posted Wed)</text></g>
+            </g>
+            <g transform="rotate(-5 520 360)">
+              <rect x="470" y="318" width="118" height="96" fill="#F7B9C3"/>
+              <g font-family="Heros Cn, Arial Narrow, sans-serif" font-size="16" fill="#222"><text x="480" y="348">ask Margaret</text><text x="480" y="368">before you</text><text x="480" y="388">switch!</text></g>
+            </g>
+            <!-- magnets -->
+            <circle cx="704" cy="294" r="9" fill="#C62E2E"/><circle cx="532" cy="320" r="9" fill="#2950A8"/><circle cx="340" cy="70" r="8" fill="#23824A"/>
+            <!-- arrow -->
+            <path d="M372 312c40 30 70 34 92 30" stroke="#C62E2E" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M456 334l10 8-12 4" stroke="#C62E2E" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="300" y="304" font-family="Heros Cn, Arial Narrow, sans-serif" font-size="16" fill="#B0241F" transform="rotate(-2 300 304)">nights see this?</text>
+            <!-- tray -->
+            <rect x="36" y="464" width="808" height="14" rx="3" fill="#A6AFB6"/>
+            <rect x="120" y="452" width="70" height="14" rx="6" fill="#2950A8"/><rect x="180" y="452" width="14" height="14" rx="3" fill="#15202B"/>
+            <rect x="214" y="452" width="66" height="14" rx="6" fill="#C62E2E"/><rect x="270" y="452" width="14" height="14" rx="3" fill="#15202B"/>
+            <rect x="660" y="444" width="96" height="22" rx="4" fill="#33404D"/><rect x="664" y="440" width="88" height="8" rx="2" fill="#5C6873"/>
+            <!-- numbered pins -->
+            <g font-family="Heros Cn, Arial Narrow, sans-serif" font-weight="700" font-size="17" text-anchor="middle">
+              <circle cx="776" cy="132" r="16" fill="#15202B"/><text x="776" y="138" fill="#fff">1</text>
+              <circle cx="770" cy="246" r="16" fill="#15202B"/><text x="770" y="252" fill="#fff">2</text>
+              <circle cx="604" cy="430" r="16" fill="#15202B"/><text x="604" y="436" fill="#fff">3</text>
+            </g>
+          </svg>
+        </figure>
+        <ol class="wb-notes">
+          <li><span class="pin" aria-hidden="true">1</span><div><h3>It only reaches whoever walks past</h3><p>Or whoever is on the group text. Priya’s Saturday sits there for days; nights see it at 03:00, if they look up.</p></div></li>
+          <li><span class="pin" aria-hidden="true">2</span><div><h3>Nobody checks the rules until it’s too late</h3><p>Who’s charge on Thursday? Is that Dana’s fourth night in a row? Someone works it out in the hallway, or doesn’t.</p></div></li>
+          <li><span class="pin" aria-hidden="true">3</span><div><h3>The manager hears at huddle, after the fact</h3><p>By the time it reaches the person who signs off, the swap has already happened.</p></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="shift" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="shift-head">
+        <h2 id="how-h">Posted on a night break, settled before the next handoff</h2>
+        <p class="prose">The sample swap from the top of the page, across one night and one day on 4 North. Nurses post and pick up on their phones, on their breaks; the rule check runs before the manager sees it.</p>
+      </div>
+
+      <div class="strip" aria-hidden="true">
+        <p class="strip-sample">Tue 10 – Wed 11 Nov, sample. Grey: 07:00 report, both shifts on.</p>
+        <div class="bands"><span class="bn">Night 19:00–07:30</span><span class="rep"></span><span class="bd">Day 07:00–19:30</span></div>
+        <div class="ticks"><span style="grid-column:1">19:00</span><span style="grid-column:7">01:00</span><span style="grid-column:13">07:00</span><span style="grid-column:19">13:00</span><span style="grid-column:24;text-align:right">19:00</span></div>
+      </div>
+
+      <ol class="events">
+        <li class="ev"><time datetime="2026-11-11T03:10">03:10<small>Wed, night break</small></time><div><h3>Priya posts Saturday night</h3><p>On her phone in the break room, between the 02:00 and 04:00 rounds.</p><span class="where"><b>1</b> Break room</span></div></li>
+        <li class="ev"><time datetime="2026-11-11T07:00">07:00<small>Wed, handoff</small></time><div><h3>Report, then home</h3><p>The whole unit can see the swap, not just whoever walks past the board.</p><span class="where"><b>2</b> Nurses’ station</span></div></li>
+        <li class="ev"><time datetime="2026-11-11T12:25">12:25<small>Wed, lunch</small></time><div><h3>Jo picks it up</h3><p>Skill mix, shifts in a row and week hours are checked.</p><span class="where"><b>1</b> Break room</span></div></li>
+        <li class="ev"><time datetime="2026-11-11T14:12">14:12<small>Wed</small></time><div><h3>The manager taps Approve</h3><p>Three checks already done. Decline is one tap too.</p><span class="where"><b>3</b> Manager’s office</span></div></li>
+        <li class="ev"><time datetime="2026-11-11T19:00">19:00<small>Wed, handoff</small></time><div><h3>The schedule shows Jo</h3><p>Saturday night has its charge nurse, and Priya has her evening.</p><span class="where"><b>2</b> Nurses’ station</span></div></li>
+      </ol>
+
+      <div class="plan-wrap">
+        <figure>
+          <svg class="plan" viewBox="0 0 760 384" role="img" aria-labelledby="plan-t">
+            <title id="plan-t">Plan view of a sample 4 North medical-surgical unit: patient rooms around a corridor loop, with the break room (1), nurses’ station (2) and manager’s office (3) marked.</title>
+            <rect x="0" y="0" width="760" height="384" fill="#FFFFFF"/>
+            <!-- outer wall -->
+            <rect x="20" y="20" width="720" height="320" fill="none" stroke="#15202B" stroke-width="3"/>
+            <!-- corridor loop inner core -->
+            <rect x="110" y="110" width="540" height="140" fill="#F7F8F7" stroke="#15202B" stroke-width="2"/>
+            <!-- top rooms -->
+            <g stroke="#15202B" stroke-width="1.5" fill="none">
+              <path d="M20 80H740"/>
+              <path d="M110 20v60M170 20v60M230 20v60M290 20v60M350 20v60M410 20v60M470 20v60M530 20v60M590 20v60M650 20v60"/>
+              <path d="M20 280H740"/>
+              <path d="M110 280v60M170 280v60M230 280v60M290 280v60M350 280v60M410 280v60M470 280v60M530 280v60M590 280v60M650 280v60"/>
+              <path d="M80 80v200M680 80v200"/>
+              <path d="M20 180h60M680 180h60"/>
+            </g>
+            <!-- door swings -->
+            <g stroke="#8E979F" stroke-width="1" fill="none">
+              <path d="M128 80a14 14 0 0 1 14-14M188 80a14 14 0 0 1 14-14M248 80a14 14 0 0 1 14-14M308 80a14 14 0 0 1 14-14M368 80a14 14 0 0 1 14-14M428 80a14 14 0 0 1 14-14M488 80a14 14 0 0 1 14-14M548 80a14 14 0 0 1 14-14M608 80a14 14 0 0 1 14-14"/>
+              <path d="M128 280a14 14 0 0 0 14 14M188 280a14 14 0 0 0 14 14M248 280a14 14 0 0 0 14 14M308 280a14 14 0 0 0 14 14M368 280a14 14 0 0 0 14 14M428 280a14 14 0 0 0 14 14M488 280a14 14 0 0 0 14 14M548 280a14 14 0 0 0 14 14M608 280a14 14 0 0 0 14 14"/>
+            </g>
+            <!-- beds (small rects) -->
+            <g fill="#CDD3D7">
+              <rect x="126" y="30" width="16" height="26"/><rect x="186" y="30" width="16" height="26"/><rect x="246" y="30" width="16" height="26"/><rect x="306" y="30" width="16" height="26"/><rect x="366" y="30" width="16" height="26"/><rect x="426" y="30" width="16" height="26"/><rect x="486" y="30" width="16" height="26"/><rect x="546" y="30" width="16" height="26"/><rect x="606" y="30" width="16" height="26"/>
+              <rect x="126" y="304" width="16" height="26"/><rect x="186" y="304" width="16" height="26"/><rect x="246" y="304" width="16" height="26"/><rect x="306" y="304" width="16" height="26"/><rect x="366" y="304" width="16" height="26"/><rect x="426" y="304" width="16" height="26"/><rect x="486" y="304" width="16" height="26"/><rect x="546" y="304" width="16" height="26"/><rect x="606" y="304" width="16" height="26"/>
+            </g>
+            <g font-family="Heros Cn, Arial Narrow, sans-serif" font-size="12" fill="#47525E" text-anchor="middle">
+              <text x="160" y="72">401</text><text x="220" y="72">402</text><text x="280" y="72">403</text><text x="340" y="72">404</text><text x="400" y="72">405</text><text x="460" y="72">406</text><text x="520" y="72">407</text><text x="580" y="72">408</text><text x="640" y="72">409</text>
+              <text x="160" y="296" dy="34">418</text><text x="220" y="296" dy="34">417</text><text x="280" y="296" dy="34">416</text><text x="340" y="296" dy="34">415</text><text x="400" y="296" dy="34">414</text><text x="460" y="296" dy="34">413</text><text x="520" y="296" dy="34">412</text><text x="580" y="296" dy="34">411</text><text x="640" y="296" dy="34">410</text>
+            </g>
+            <!-- core rooms -->
+            <g stroke="#15202B" stroke-width="1.5" fill="none"><path d="M250 110v140M420 110v140M540 110v140"/></g>
+            <!-- nurses station counter -->
+            <path d="M270 130h130v90H270" fill="none" stroke="#15202B" stroke-width="5" stroke-linecap="round"/>
+            <rect x="282" y="140" width="34" height="20" fill="#142742"/><rect x="330" y="140" width="34" height="20" fill="#142742"/>
+            <!-- break room table -->
+            <rect x="140" y="150" width="70" height="40" rx="4" fill="#FBE7B5" stroke="#15202B" stroke-width="1.5"/>
+            <circle cx="132" cy="170" r="7" fill="none" stroke="#15202B"/><circle cx="218" cy="170" r="7" fill="none" stroke="#15202B"/><circle cx="175" cy="142" r="7" fill="none" stroke="#15202B"/>
+            <!-- whiteboard on break room wall -->
+            <rect x="116" y="113" width="80" height="6" fill="#8E979F"/>
+            <!-- manager office desk -->
+            <rect x="560" y="140" width="64" height="30" fill="none" stroke="#15202B" stroke-width="1.5"/><circle cx="592" cy="186" r="8" fill="none" stroke="#15202B"/>
+            <!-- med room shelves -->
+            <g stroke="#8E979F" stroke-width="1.5"><path d="M432 126h96M432 146h96M432 166h96"/></g>
+            <g font-family="Heros Cn, Arial Narrow, sans-serif" font-weight="700" font-size="14" fill="#15202B" text-anchor="middle">
+              <text x="180" y="236">Break room</text><text x="335" y="240">Nurses’ station</text><text x="480" y="236">Med room</text><text x="595" y="236">Manager</text>
+            </g>
+            <!-- markers -->
+            <g font-family="Heros Cn, Arial Narrow, sans-serif" font-weight="700" font-size="15" text-anchor="middle">
+              <circle cx="232" cy="132" r="14" fill="#0B6B63"/><text x="232" y="137" fill="#fff">1</text>
+              <circle cx="400" cy="200" r="14" fill="#0B6B63"/><text x="400" y="205" fill="#fff">2</text>
+              <circle cx="636" cy="132" r="14" fill="#0B6B63"/><text x="636" y="137" fill="#fff">3</text>
+            </g>
+            <text x="740" y="372" font-family="Heros Cn, Arial Narrow, sans-serif" font-size="12" fill="#47525E" text-anchor="end">4 North, sample plan, not to scale</text>
+          </svg>
+        </figure>
+        <div class="plan-cap">
+          <h3>Three places on the unit, none of them a desk</h3>
+          <p>A swap happens in the gaps of a 12-hour shift: the break room at 03:10, the nurses’ station at handoff, a manager between meetings. Swaptide is built for those minutes, on the phone already in a scrub pocket.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="managers" aria-labelledby="mgr-h">
+    <div class="wrap">
+      <h2 id="mgr-h">You set the limits. Every swap arrives checked against them.</h2>
+      <p class="section-lede">For nurse managers and directors of nursing. Enter the skill-mix and hours limits from your unit policy and union agreement; Swaptide checks each swap against them before it reaches you. Change a limit and watch the sample queue.</p>
+      <div class="rules-grid">
+        <div>
+          <div class="rulesheet" role="group" aria-labelledby="rs-t">
+            <header><b id="rs-t">4 North limits</b><span>Sample, set by the manager</span></header>
+            <div class="rule"><span class="name">Charge-qualified RN on every shift<span class="hint">Skill mix</span></span><span class="fixed-rule">At least 1</span></div>
+            <div class="rule"><span class="name">12-hour shifts in a row<span class="hint">Most a nurse can work back to back</span></span>
+              <span class="stepper"><button type="button" data-rule="row" data-d="-1" aria-label="Fewer shifts in a row">−</button><output id="row-val" aria-live="polite">3</output><button type="button" data-rule="row" data-d="1" aria-label="More shifts in a row">+</button></span></div>
+            <div class="rule"><span class="name">Hours in a week<span class="hint">Sun–Sat, counting each shift as 12</span></span>
+              <span class="stepper"><button type="button" data-rule="week" data-d="-12" aria-label="Fewer hours a week">−</button><output id="week-val" aria-live="polite">48</output><button type="button" data-rule="week" data-d="12" aria-label="More hours a week">+</button></span></div>
+          </div>
+          <div class="limits">
+            <p><strong>Your call, every time.</strong> A swap that breaks a limit still reaches you, with the reason on top. Swaptide never approves or declines on its own.</p>
+          </div>
+        </div>
+        <div>
+          <p class="queue-status" id="queue-status" role="status" aria-live="polite">3 swaps waiting: 2 clear, 1 flagged</p>
+          <p class="q-sample">Your queue, sample week of 8 Nov</p>
+          <ul class="queue" id="queue">
+            <li class="q-item" data-q="1"><span class="when">Sat 14 Nov · Night</span><span class="state">Clear</span><span class="who">Priya R. → Jo L.</span><span class="why">Charge-qualified · 1st shift in a row · 36 h this week</span></li>
+            <li class="q-item" data-q="2"><span class="when">Fri 13 Nov · Day</span><span class="state">Clear</span><span class="who">Ken M. → Sam W.</span><span class="why">Charge-qualified · 3rd shift in a row · 48 h this week</span></li>
+            <li class="q-item flagged" data-q="3"><span class="when">Thu 19 Nov · Day</span><span class="state">Flag</span><span class="who">Rachel V. → Tom E.</span><span class="why">Thu day would have no charge-qualified RN</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="questions" id="questions" aria-labelledby="q-h">
+    <div class="wrap">
+      <h2 id="q-h">What your director, your union rep and your IT team will ask</h2>
+      <dl class="qa">
+        <div><dt>Does it handle payroll?</dt><dd>No. Swaptide covers posting, picking up and approving swaps. Pay stays where it is today.</dd></div>
+        <div><dt>Does it override our union agreement?</dt><dd>No. You enter the limits your agreement and unit policy set, and Swaptide shows when a swap breaks one. It doesn’t replace the agreement, change what it says, or decide for you.</dd></div>
+        <div><dt>What has the pilot shown so far?</dt><dd>One medical-surgical unit has used Swaptide for three months. We don’t have measured results to share yet, so this page doesn’t quote any.</dd></div>
+        <div><dt>Where is our data held, and who can see it?</dt><dd>Bring your privacy and IT questions to the pilot call; we’ll answer them there for your hospital.</dd></div>
+        <div><dt>What does a pilot involve, and what does it cost?</dt><dd>That’s what the call is for: which unit, which limits, for how long, and the price for a department budget.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="final" aria-labelledby="final-h">
+    <div class="wrap">
+      <div>
+        <p class="handoff">19:00 · HANDOFF</p>
+        <h2 id="final-h">Bring one unit’s swap rules to a pilot call</h2>
+      </div>
+      <div>
+        <div class="cta-row">
+          <a class="btn btn--light" href="https://swaptide.example/pilot">Book a pilot call</a>
+          <p class="cta-note">Tell us how swaps work on your unit today, and we’ll run one of them through Swaptide with you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#main">Swaptide</a>
+      <p>Shift swaps for hospital nursing units. Names, units, schedules and limits on this page are samples written for illustration. © 2026 Swaptide</p>
+    </div>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="#how">A swap, start to finish</a>
+      <a href="#managers">For nurse managers</a>
+      <a href="#questions">Questions</a>
+      <a href="https://swaptide.example/pilot">Book a pilot call</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+/* ---------- menu ---------- */
+(function(){
+  const b=document.querySelector('.menu-btn'), m=document.getElementById('site-menu');
+  const mq=window.matchMedia('(min-width:900px)');
+  const set=open=>{b.setAttribute('aria-expanded',String(open)); m.hidden=!open && !mq.matches;};
+  set(false);
+  mq.addEventListener('change',()=>set(false));
+  b.addEventListener('click',()=>set(b.getAttribute('aria-expanded')!=='true'));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&b.getAttribute('aria-expanded')==='true'){set(false);b.focus();}});
+  document.addEventListener('click',e=>{if(!m.contains(e.target)&&!b.contains(e.target))set(false);});
+  m.addEventListener('focusout',e=>{if(e.relatedTarget&&!m.contains(e.relatedTarget)&&e.relatedTarget!==b)set(false);});
+  m.addEventListener('click',e=>{if(e.target.closest('a')&&!mq.matches)set(false);});
+})();
+
+/* ---------- signature: the swap ---------- */
+(function(){
+  const days=['wed','thu','fri','sat'];
+  const base={
+    priya:{cells:['N','','','N'],week:36},
+    jo:{cells:['D','','',''],week:24},
+    dana:{cells:['N','N','N',''],week:36},
+    marcus:{cells:['','D','',''],week:36}
+  };
+  const LIMIT_ROW=3, LIMIT_WEEK=48;
+  const takers={
+    jo:{name:'Jo L.',first:'Jo',charge:true,row:1,week:36,
+      checks:[['ok','Skill mix.','Jo is charge-qualified, so Sat night keeps a charge nurse.'],
+              ['ok','In a row.','Sat would be Jo’s 1st shift in a row. Unit limit: 3.'],
+              ['ok','Week hours.','36 of 48 (Sun–Sat).']]},
+    dana:{name:'Dana K.',first:'Dana',charge:true,row:4,week:48,
+      checks:[['ok','Skill mix.','Dana is charge-qualified, so Sat night keeps a charge nurse.'],
+              ['fl','In a row.','Sat would be Dana’s 4th night in a row. Unit limit: 3.'],
+              ['ok','Week hours.','48 of 48 (Sun–Sat).']]},
+    marcus:{name:'Marcus T.',first:'Marcus',charge:false,row:1,week:48,
+      checks:[['fl','Skill mix.','Marcus isn’t charge-qualified, and nobody else on Sat night is.'],
+              ['ok','In a row.','Sat would be Marcus’s 1st shift in a row. Unit limit: 3.'],
+              ['ok','Week hours.','48 of 48 (Sun–Sat).']]}
+  };
+  const state={taker:'jo',decision:null};
+  const body=document.getElementById('roster-body');
+  const verdict=document.getElementById('verdict');
+  const checks=document.getElementById('checks');
+  const also=document.getElementById('also');
+
+  function flags(t){return takers[t].checks.filter(c=>c[0]==='fl').length;}
+
+  function render(note){
+    const t=takers[state.taker], f=flags(state.taker), d=state.decision;
+    body.querySelectorAll('tr').forEach(tr=>{
+      const n=tr.dataset.n, rowBase=base[n];
+      tr.classList.toggle('taker',n===state.taker);
+      const tds=tr.querySelectorAll('td');
+      days.forEach((day,i)=>{
+        const td=tds[i]; let code=rowBase.cells[i], cls=code||'', tag='';
+        if(n==='priya'&&day==='sat'){
+          if(d==='approved'){cls='gone';tag='off';}
+          else if(d==='declined'){cls='N';tag='kept';}
+          else {cls='N posted-cell';tag='posted';}
+        }
+        if(n===state.taker&&day==='sat'){
+          if(d==='approved'){code='N';cls='N new';tag='';}
+          else if(d==='declined'){code='—';cls='declined';tag='';}
+          else {code='N?';cls='pending'+(f?' warn':'');tag='';}
+        }
+        if(n==='dana'&&state.taker==='dana'&&d!=='declined'&&code){cls+=' run';}
+        td.className=cls.trim()||'e';
+        td.innerHTML=(code||'')+(tag?'<span class="cell-tag">'+tag+'</span>':'');
+      });
+      const wk=tds[4];
+      wk.className='wk';
+      if(n===state.taker&&d!=='declined'){
+        wk.innerHTML=d==='approved'?String(t.week):rowBase.week+'→<span class="to">'+t.week+'</span>';
+      } else if(n==='priya'&&d==='approved'){
+        wk.textContent='24';
+      } else wk.textContent=String(rowBase.week);
+    });
+    also.classList.toggle('hot',state.taker==='marcus'&&d!=='declined');
+    checks.innerHTML=t.checks.map(c=>'<li class="'+c[0]+'"><span class="mark">'+(c[0]==='ok'?'Clear':'Flag')+'</span><span><b>'+c[1]+'</b> '+c[2]+'</span></li>').join('');
+    verdict.className='verdict'+(d==='approved'?' is-approved':d==='declined'?' is-declined':f?' is-flag':'');
+    let msg;
+    if(d==='approved') msg='Approved by the manager, Wed 14:12'+(f?', flag noted':'')+'. Sat night: '+t.name+' (on the schedule now).';
+    else if(d==='declined') msg='Declined by the manager. Priya R. keeps Sat night; '+t.first+'’s week is unchanged.';
+    else if(f) msg=t.name+' picks it up. '+f+' flag. It still goes to the manager, flag on top.';
+    else msg=t.name+' picks it up. 3 of 3 checks clear. Waiting for the manager.';
+    verdict.textContent=note?note+' '+msg:msg;
+  }
+
+  document.querySelectorAll('input[name=taker]').forEach(r=>r.addEventListener('change',()=>{
+    state.taker=r.value; state.decision=null; render();
+  }));
+  document.querySelectorAll('.mgr button').forEach(btn=>btn.addEventListener('click',()=>{
+    const a=btn.dataset.act;
+    if(a==='reset'){state.taker='jo';state.decision=null;document.getElementById('t-jo').checked=true;render();return;}
+    const want=a==='approve'?'approved':'declined';
+    if(state.decision===want){render('Already '+want+'. Pick someone else or Reset to try again.');return;}
+    if(state.decision){render('Changed by the manager.');}
+    state.decision=want; render();
+  }));
+  render();
+})();
+
+/* ---------- manager limits ---------- */
+(function(){
+  const lim={row:3,week:48};
+  const bounds={row:[2,4],week:[36,60]};
+  const items=[
+    {el:1,charge:true,row:1,week:36,label:'Charge-qualified'},
+    {el:2,charge:true,row:3,week:48,label:'Charge-qualified',shift:'day'},
+    {el:3,charge:false,row:1,week:36,label:''}
+  ];
+  const ord=n=>n+(n===1?'st':n===2?'nd':n===3?'rd':'th');
+  const status=document.getElementById('queue-status');
+  function render(note){
+    let flagged=0;
+    items.forEach(it=>{
+      const li=document.querySelector('.q-item[data-q="'+it.el+'"]');
+      const why=[];
+      let bad=false;
+      if(!it.charge){bad=true;why.push('Thu day would have no charge-qualified RN');}
+      else why.push('Charge-qualified');
+      if(it.row>lim.row){bad=true;why.push(ord(it.row)+' shift in a row, over your limit of '+lim.row);}
+      else if(it.charge) why.push(ord(it.row)+' shift in a row');
+      if(it.week>lim.week){bad=true;why.push(it.week+' h this week, over your limit of '+lim.week);}
+      else if(it.charge) why.push(it.week+' h this week');
+      li.classList.toggle('flagged',bad);
+      li.querySelector('.state').textContent=bad?'Flag':'Clear';
+      li.querySelector('.why').textContent=why.join(' · ');
+      if(bad)flagged++;
+    });
+    document.getElementById('row-val').textContent=lim.row;
+    document.getElementById('week-val').textContent=lim.week;
+    const msg='3 swaps waiting: '+(3-flagged)+' clear, '+flagged+' flagged';
+    status.textContent=note?note+' '+msg:msg;
+  }
+  document.querySelectorAll('.stepper button').forEach(b=>b.addEventListener('click',()=>{
+    const k=b.dataset.rule, d=Number(b.dataset.d), v=lim[k]+d, [lo,hi]=bounds[k];
+    if(v<lo||v>hi){render((k==='row'?'Sample range is '+lo+' to '+hi+' in a row.':'Sample range is '+lo+' to '+hi+' hours.'));return;}
+    lim[k]=v; render();
+  }));
+  render();
+})();
+</script>
+</body>
+</html>

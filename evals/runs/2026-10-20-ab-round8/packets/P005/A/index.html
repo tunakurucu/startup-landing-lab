@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swaptide — shift swaps for hospital nurses</title>
+<meta name="description" content="Swaptide lets hospital nurses post and pick up shift swaps from their phones. Skill mix and hours limits are checked first, then the unit manager approves or declines in one tap.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312203a'/%3E%3Cpath d='M7 13h15l-4-4M25 19H10l4 4' stroke='%23f2b45a' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --paper:#f5f2ec;
+  --paper-2:#ebe6dc;
+  --card:#ffffff;
+  --ink:#12203a;
+  --ink-2:#3d4a63;
+  --ink-3:#6b7488;
+  --line:#d9d3c7;
+  --night:#12203a;
+  --night-2:#1b2c4d;
+  --night-ink:#e9edf5;
+  --night-ink-2:#a9b4c9;
+  --tide:#0d6e66;
+  --tide-soft:#d6ebe7;
+  --amber:#f2b45a;
+  --amber-deep:#9a5b06;
+  --ok:#11795a;
+  --radius:14px;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{max-width:100%}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.mono{font-family:var(--mono);font-feature-settings:"tnum"}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;background:var(--card);padding:8px 12px;border-radius:8px;z-index:10}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:6px}
+
+/* header */
+.top{position:sticky;top:0;z-index:5;background:rgba(245,242,236,.92);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:-.01em;text-decoration:none}
+.brand svg{width:28px;height:28px;flex:none}
+.nav{display:flex;align-items:center;gap:26px;font-size:15px}
+.nav a{text-decoration:none;color:var(--ink-2)}
+.nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;font-weight:650;font-size:16px;text-decoration:none;border:2px solid transparent;transition:transform .12s ease, background .12s ease}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:#0a1528}
+.btn-amber{background:var(--amber);color:#1a1205}
+.btn-amber:hover{background:#f6c271}
+.btn-ghost{border-color:var(--ink);color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:#fff}
+.btn-sm{min-height:40px;padding:0 16px;font-size:15px}
+.nav .btn{color:#fff}
+.nav .btn:hover{color:#fff}
+@media (max-width:760px){.nav a:not(.btn){display:none}}
+
+/* hero */
+.hero{padding:64px 0 72px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.eyebrow{display:inline-flex;max-width:100%;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:var(--ink-2);background:var(--card);border:1px solid var(--line);padding:6px 12px;border-radius:999px}
+.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--amber);display:inline-block;box-shadow:0 0 0 4px rgba(242,180,90,.25)}
+h1{font-size:clamp(38px,5.6vw,64px);line-height:1.02;letter-spacing:-.03em;margin:22px 0 20px;font-weight:780}
+h1 em{font-style:normal;color:var(--tide)}
+.lede{font-size:clamp(18px,1.8vw,20px);color:var(--ink-2);max-width:34em;margin:0 0 30px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.fine{font-size:14px;color:var(--ink-3);margin-top:16px}
+
+/* phone */
+.phone-stage{position:relative;display:flex;justify-content:center}
+.phone{width:min(330px,100%);background:var(--night);border-radius:40px;padding:12px;box-shadow:0 30px 60px -25px rgba(18,32,58,.55),0 0 0 1px rgba(18,32,58,.15)}
+.screen{background:#f8f7f4;border-radius:30px;overflow:hidden;padding:14px 16px 18px;min-height:540px;display:flex;flex-direction:column}
+.status{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--ink-2);padding:2px 6px 12px}
+.status b{color:var(--ink)}
+.app-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.app-h strong{font-size:17px}
+.app-h span{font-size:12px;color:var(--ink-3)}
+.shift{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.shift .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:650}
+.shift .when{font-family:var(--mono);font-size:17px;white-space:nowrap;font-weight:700;letter-spacing:-.02em;margin:4px 0 2px}
+.shift .where{font-size:13px;color:var(--ink-2)}
+.bar{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,#c7d0e2 0%,#2a3f66 30%,#12203a 60%,#c7d0e2 100%);margin:12px 0 4px}
+.bar .now{position:absolute;top:-4px;left:66%;width:3px;height:18px;background:var(--amber);border-radius:2px}
+.bar-l{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.swapline{display:flex;align-items:center;gap:10px;margin:12px 0}
+.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;flex:none}
+.av1{background:#7a4fb3}.av2{background:var(--tide)}.av3{background:#a2512f}
+.swapline .arrow{color:var(--ink-3);font-size:18px}
+.swapline small{display:block;color:var(--ink-3);font-size:11.5px;line-height:1.2}
+.swapline b{font-size:14px;line-height:1.2}
+.checks{list-style:none;margin:0;padding:0;border-top:1px dashed var(--line)}
+.checks li{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13px;line-height:1.35}
+.checks li:last-child{border-bottom:0}
+.tick{width:20px;height:20px;border-radius:50%;background:#dff1ea;color:var(--ok);display:grid;place-items:center;flex:none;font-size:12px;font-weight:800}
+.checks em{font-style:normal;color:var(--ink-3);display:block;font-size:12px}
+.pill{margin-top:auto;display:flex;align-items:center;gap:8px;background:var(--tide-soft);color:#0a514b;border-radius:12px;padding:11px 12px;font-size:13px;font-weight:600}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--tide);flex:none}
+@media (max-width:900px){
+  .hero{padding:40px 0 56px}
+  .hero .wrap{grid-template-columns:1fr;gap:44px}
+}
+
+/* sections */
+section{scroll-margin-top:72px}
+.sec{padding:88px 0}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--tide);font-weight:600;margin:0 0 12px}
+h2{font-size:clamp(30px,3.6vw,44px);line-height:1.08;letter-spacing:-.025em;margin:0 0 16px;font-weight:760}
+.sec-lede{font-size:18px;color:var(--ink-2);max-width:40em;margin:0 0 44px}
+@media (max-width:700px){.sec{padding:64px 0}}
+
+/* replaces */
+.replaces{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.old{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.old h3{margin:14px 0 8px;font-size:19px;letter-spacing:-.01em}
+.old p{margin:0;color:var(--ink-2);font-size:16px}
+.old .art{height:92px;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.wb{background:#fbfbf9;border:2px solid #cfd3da;font-family:"Marker Felt","Comic Sans MS","Segoe Print",cursive;color:#2b4fa0;font-size:14px;flex-direction:column;align-items:flex-start;padding:10px 14px;justify-content:center;line-height:1.3}
+.wb .x{color:#b33a3a}
+.txt{background:#eef0f4;flex-direction:column;align-items:stretch;gap:6px;padding:10px 12px;font-size:12.5px}
+.txt span{background:#fff;border-radius:12px;padding:5px 10px;align-self:flex-start;max-width:85%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.txt span.me{align-self:flex-end;background:#3b82f6;color:#fff}
+.late{background:var(--night);color:var(--night-ink);font-family:var(--mono);flex-direction:column;gap:2px}
+.late b{font-size:28px;color:var(--amber);letter-spacing:-.02em}
+.late small{font-size:12px;color:var(--night-ink-2)}
+@media (max-width:860px){.grid3{grid-template-columns:1fr}}
+
+/* timeline across a shift */
+.night{background:var(--night);color:var(--night-ink)}
+.night .kicker{color:var(--amber)}
+.night .sec-lede{color:var(--night-ink-2)}
+.shiftline{position:relative;margin-top:8px}
+.track{position:relative;height:56px;border-radius:12px;background:linear-gradient(90deg,#2b3e63 0%,#1b2c4d 18%,#0e1830 45%,#0e1830 70%,#1b2c4d 88%,#3a4e74 100%);border:1px solid #2c3d5e;overflow:hidden}
+.track .hr{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.08)}
+.track .mk{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 5px rgba(242,180,90,.22)}
+.track .mk.tide{background:#5fd1c2;box-shadow:0 0 0 5px rgba(95,209,194,.2)}
+.track .label{position:absolute;bottom:6px;font-family:var(--mono);font-size:11px;color:var(--night-ink-2)}
+.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--night-ink-2);margin-top:8px}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:40px;list-style:none;padding:0}
+.steps li{border-top:2px solid #2c3d5e;padding-top:16px}
+.steps .t{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--amber);letter-spacing:-.02em}
+.steps .t.tide{color:#5fd1c2}
+.steps h3{font-size:17px;margin:6px 0 6px;color:#fff}
+.steps p{margin:0;color:var(--night-ink-2);font-size:15px}
+@media (max-width:960px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){
+  .steps{grid-template-columns:1fr;gap:0}
+  .steps li{border-top:0;border-left:2px solid #2c3d5e;padding:0 0 26px 20px;position:relative}
+  .steps li::before{content:"";position:absolute;left:-7px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--amber)}
+  .steps li.tide::before{background:#5fd1c2}
+  .track .label{display:none}
+}
+
+/* rules */
+.rules .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.rule-list{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.rule-list li{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;display:grid;grid-template-columns:40px 1fr;gap:14px}
+.rule-list .ic{width:40px;height:40px;border-radius:10px;background:var(--tide-soft);color:var(--tide);display:grid;place-items:center}
+.rule-list h3{margin:0 0 4px;font-size:18px}
+.rule-list p{margin:0;color:var(--ink-2);font-size:16px}
+.mgr{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 24px 50px -30px rgba(18,32,58,.4)}
+.mgr-h{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink-3);margin-bottom:14px}
+.mgr-h b{color:var(--ink);font-size:15px}
+.mgr .req{border:1px solid var(--line);border-radius:14px;padding:16px}
+.mgr .req .when{font-family:var(--mono);font-weight:700;font-size:18px}
+.mgr .req .who{font-size:14px;color:var(--ink-2);margin:4px 0 12px}
+.flag{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;padding:8px 0}
+.flag .tick.warn{background:#fdecc8;color:var(--amber-deep)}
+.decide{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.decide span{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:12px;font-weight:700;font-size:16px}
+.decide .yes{background:var(--tide);color:#fff}
+.decide .no{background:var(--paper-2);color:var(--ink)}
+.mgr-note{font-size:13px;color:var(--ink-3);margin:12px 2px 0}
+.req + .req{margin-top:12px}
+.req.second{opacity:.9}
+@media (max-width:900px){.rules .wrap{grid-template-columns:1fr;gap:40px}}
+
+/* boundaries */
+.bounds{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.bgrid > div{padding:26px;border-right:1px solid var(--line)}
+.bgrid > div:last-child{border-right:0}
+.bgrid h3{font-size:19px;margin:0 0 8px;letter-spacing:-.01em}
+.bgrid p{margin:0;color:var(--ink-2);font-size:16px}
+.bgrid .no-tag{font-family:var(--mono);font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
+@media (max-width:860px){.bgrid{grid-template-columns:1fr}.bgrid > div{border-right:0;border-bottom:1px solid var(--line)}.bgrid > div:last-child{border-bottom:0}}
+
+/* pilot */
+.pilot .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start}
+.honest{background:var(--paper-2);border-left:4px solid var(--amber);padding:18px 20px;border-radius:0 12px 12px 0;color:var(--ink-2);font-size:16px;margin:0 0 28px}
+.honest strong{color:var(--ink)}
+.call{background:var(--night);color:var(--night-ink);border-radius:22px;padding:30px}
+.call h3{font-size:24px;margin:0 0 6px;color:#fff;letter-spacing:-.015em}
+.call > p{color:var(--night-ink-2);margin:0 0 20px}
+.call ol{margin:0 0 26px;padding:0;list-style:none;counter-reset:c}
+.call li{counter-increment:c;display:grid;grid-template-columns:34px 1fr;gap:10px;padding:10px 0;border-top:1px solid #2c3d5e;font-size:16px}
+.call li::before{content:counter(c,decimal-leading-zero);font-family:var(--mono);color:var(--amber);font-size:14px;padding-top:2px}
+.call .btn{width:100%}
+.call .fine{color:var(--night-ink-2);text-align:center;margin-top:12px}
+.who-buys{display:grid;gap:14px}
+.who-buys div{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--line)}
+.who-buys div:last-child{border-bottom:1px solid var(--line)}
+.who-buys b{font-size:15px}
+.who-buys span{color:var(--ink-2);font-size:16px}
+@media (max-width:900px){.pilot .wrap{grid-template-columns:1fr;gap:40px}}
+@media (max-width:480px){.who-buys div{grid-template-columns:1fr;gap:4px}}
+
+/* faq */
+.faq{max-width:780px}
+.faq details{border-top:1px solid var(--line);padding:4px 0}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:18px 36px 18px 0;font-weight:650;font-size:18px;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:4px;top:14px;font-size:24px;font-weight:400;color:var(--ink-3)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{margin:0 0 20px;color:var(--ink-2);max-width:40em}
+
+/* closing */
+.closing{background:var(--night);color:#fff;text-align:center;padding:84px 0}
+.closing h2{color:#fff;max-width:18em;margin:0 auto 14px}
+.closing p{color:var(--night-ink-2);max-width:34em;margin:0 auto 30px;font-size:18px}
+footer{background:#0b1426;color:var(--night-ink-2);font-size:14px;padding:28px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center}
+footer a{color:var(--night-ink)}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Swaptide home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#12203a"/><path d="M7 13h15l-4-4M25 19H10l4 4" stroke="#f2b45a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Swaptide
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#how">How a swap moves</a>
+      <a href="#rules">For managers</a>
+      <a href="#pilot">Pilot</a>
+      <a class="btn btn-primary btn-sm" href="https://swaptide.example/pilot">Book a pilot call</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow"><i></i>Shift swaps for nursing units</span>
+      <h1>Sort the swap <em>before your break is over.</em></h1>
+      <p class="lede">Swaptide lets nurses post and pick up shift swaps from their phones. Skill mix and hours limits are checked first, so the unit manager gets a request that already makes sense, and approves or declines it in one tap.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://swaptide.example/pilot">Book a pilot call</a>
+        <a class="btn btn-ghost" href="#how">See how a swap moves</a>
+      </div>
+      <p class="fine">For nurse managers and directors of nursing. A 30-minute call about your unit.</p>
+    </div>
+
+    <div class="phone-stage">
+      <div class="phone" role="img" aria-label="Swaptide on a phone: a night shift swap from Priya to Dana, with skill mix, hours and rest checks passed and the request sent to the unit manager.">
+        <div class="screen">
+          <div class="status"><b>03:14</b><span>Break · 22 min left</span></div>
+          <div class="app-h"><strong>Swap request</strong><span>4 West · Med-Surg</span></div>
+          <div class="shift">
+            <div class="lbl">Shift up for swap</div>
+            <div class="when">Sat 16 Nov · 19:00–07:30</div>
+            <div class="where">Night · RN · 12.5 h</div>
+            <div class="bar"><span class="now"></span></div>
+            <div class="bar-l"><span>19:00</span><span>01:00</span><span>07:30</span></div>
+          </div>
+          <div class="swapline">
+            <span class="avatar av1" aria-hidden="true">PR</span>
+            <div><small>Posted by</small><b>Priya R.</b></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <span class="avatar av2" aria-hidden="true">DK</span>
+            <div><small>Picked up by</small><b>Dana K.</b></div>
+          </div>
+          <ul class="checks">
+            <li><span class="tick">✓</span><div>Skill mix holds<em>2 charge-capable RNs still on that night</em></div></li>
+            <li><span class="tick">✓</span><div>Within Dana's hours limit<em>36 → 48.5 h this week · unit limit 60 h</em></div></li>
+            <li><span class="tick">✓</span><div>Rest between shifts<em>13 h before Dana's next shift</em></div></li>
+          </ul>
+          <div class="pill"><i></i>Sent to Marisol (unit manager) to decide</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec replaces" aria-labelledby="replaces-h">
+  <div class="wrap">
+    <p class="kicker">What it replaces</p>
+    <h2 id="replaces-h">The whiteboard, the group text, and the swap you hear about at 06:45.</h2>
+    <p class="sec-lede">Most units already swap shifts. The trouble is where it happens: scattered across a board, a dozen threads, and hallway conversations the manager never sees.</p>
+    <div class="grid3">
+      <article class="old">
+        <div class="art wb" aria-hidden="true"><span>NEED: Sat nights → <span class="x">taken?</span></span><span>Thu day swap w/ anyone</span></div>
+        <h3>The whiteboard by the break room</h3>
+        <p>Only works if you walk past it. Half the entries are stale, and nobody knows which ones went through.</p>
+      </article>
+      <article class="old">
+        <div class="art txt" aria-hidden="true"><span>anyone take my sat night??</span><span class="me">maybe, what time</span><span>👀 still need it</span></div>
+        <h3>Group texts</h3>
+        <p>Requests get buried under everything else, and staffing rules are checked by memory, if at all.</p>
+      </article>
+      <article class="old">
+        <div class="art late" aria-hidden="true"><b>06:45</b><small>"oh, we swapped"</small></div>
+        <h3>Swaps that reach the manager late</h3>
+        <p>The manager finds out at handover, after the swap has already happened, and has to fix the skill mix on the spot.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec night" id="how" aria-labelledby="how-h">
+  <div class="wrap">
+    <p class="kicker">How a swap moves</p>
+    <h2 id="how-h">One swap, start to finish, inside a single night shift.</h2>
+    <p class="sec-lede">Posting and picking up a swap takes a couple of minutes on a phone. The manager sees it once the rules have been checked, not before.</p>
+
+    <div class="shiftline" aria-hidden="true">
+      <div class="track">
+        <span class="hr" style="left:16%"></span><span class="hr" style="left:32%"></span><span class="hr" style="left:48%"></span><span class="hr" style="left:64%"></span><span class="hr" style="left:80%"></span>
+        <span class="mk" style="left:65.8%"></span>
+        <span class="mk" style="left:68%"></span>
+        <span class="mk tide" style="left:94.7%"></span>
+        <span class="label" style="left:58%">break</span>
+      </div>
+      <div class="ticks"><span>19:00</span><span>23:00</span><span>03:00</span><span>07:30</span></div>
+    </div>
+
+    <ol class="steps">
+      <li><div class="t">03:14</div><h3>Post it on your break</h3><p>Priya picks the shift she can't work. It goes out to nurses on the unit who could take it.</p></li>
+      <li><div class="t">03:31</div><h3>Someone picks it up</h3><p>Dana sees it on her break and offers to take it. No thread to scroll back through.</p></li>
+      <li><div class="t">03:31</div><h3>Rules checked</h3><p>Skill mix and hours limits are checked against the rules your unit has set, right away.</p></li>
+      <li class="tide"><div class="t tide">06:50</div><h3>Manager decides</h3><p>Marisol sees the request with its checks and taps approve or decline. Her call.</p></li>
+      <li class="tide"><div class="t tide">06:50</div><h3>Everyone knows</h3><p>Priya and Dana both hear the answer. Nobody finds out at handover.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec rules" id="rules" aria-labelledby="rules-h">
+  <div class="wrap">
+    <div>
+      <p class="kicker">For nurse managers</p>
+      <h2 id="rules-h">You see the swap before it happens, with the checks already done.</h2>
+      <p class="sec-lede" style="margin-bottom:28px">Swaptide checks each swap against the staffing rules you set for your unit before it reaches you. If something doesn't fit, you see which rule and why. Then you decide.</p>
+      <ul class="rule-list">
+        <li><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 20c.6-3.4 2.8-5.5 5.5-5.5s4.9 2.1 5.5 5.5M14 15.2c.9-.5 1.9-.7 3-.7 2.4 0 4.2 1.8 4.6 5.5"/></svg></span><div><h3>Skill mix</h3><p>Whether the shift still has the certifications and experience you need on it once the swap goes through.</p></div></li>
+        <li><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></span><div><h3>Hours limits</h3><p>Weekly hours and rest between shifts for the nurse picking it up, against the limits you've configured.</p></div></li>
+        <li><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2.5" width="14" height="19" rx="3"/><path d="M9.5 12.5l2 2 3.5-4"/></svg></span><div><h3>One tap to decide</h3><p>Approve or decline from your phone or desk. Both nurses are told either way.</p></div></li>
+      </ul>
+    </div>
+
+    <div class="mgr" role="img" aria-label="Manager's view: two pending swap requests. One passes every check; the other is flagged because it would leave the shift without a second charge-capable nurse. Each has approve and decline buttons.">
+      <div class="mgr-h"><b>Waiting for you · 2</b><span>4 West · Med-Surg</span></div>
+      <div class="req">
+        <div class="when">Sat 16 Nov · 19:00–07:30</div>
+        <div class="who">Priya R. → Dana K.</div>
+        <div class="flag"><span class="tick">✓</span>Skill mix, hours and rest all within your rules</div>
+        <div class="decide"><span class="yes">Approve</span><span class="no">Decline</span></div>
+      </div>
+      <div class="req second">
+        <div class="when">Tue 19 Nov · 07:00–19:30</div>
+        <div class="who">Sam O. → Lee T.</div>
+        <div class="flag"><span class="tick warn">!</span>Leaves 1 charge-capable RN on days (your rule: 2)</div>
+        <div class="decide"><span class="yes">Approve</span><span class="no">Decline</span></div>
+      </div>
+      <p class="mgr-note">A flag explains the problem. It doesn't make the decision for you.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec bounds" aria-labelledby="bounds-h">
+  <div class="wrap">
+    <p class="kicker">What Swaptide doesn't do</p>
+    <h2 id="bounds-h">It handles swaps. The rest stays where it is.</h2>
+    <p class="sec-lede">Clear lines, so nobody on the unit has to wonder.</p>
+    <div class="bgrid">
+      <div><p class="no-tag">Decisions</p><h3>It doesn't approve swaps.</h3><p>Every swap goes to the unit manager, who approves or declines it. The checks are there to inform that decision, not replace it.</p></div>
+      <div><p class="no-tag">Agreements &amp; policy</p><h3>It doesn't change your rules.</h3><p>Union agreements and hospital policy still apply as they do today. Swaptide checks swaps against limits your unit sets; it doesn't override them.</p></div>
+      <div><p class="no-tag">Pay</p><h3>It doesn't handle payroll.</h3><p>Pay, differentials and timekeeping stay in the systems you already use.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec pilot" id="pilot" aria-labelledby="pilot-h">
+  <div class="wrap">
+    <div>
+      <p class="kicker">Pilot</p>
+      <h2 id="pilot-h">Try it on one unit first.</h2>
+      <p class="honest"><strong>Where we are:</strong> one medical-surgical unit has been running its swaps through Swaptide for three months. We don't have measured results we can share yet, so we won't quote any numbers. On a call we'll walk you through how that unit uses it.</p>
+      <div class="who-buys">
+        <div><b>Who buys it</b><span>Nurse managers and directors of nursing, from a department budget.</span></div>
+        <div><b>Who uses it</b><span>Nurses on the unit, on their phones, usually on a break. And the manager, to decide.</span></div>
+        <div><b>Where to start</b><span>One unit, with its own skill-mix and hours rules set up before anyone posts a swap.</span></div>
+      </div>
+    </div>
+    <div class="call">
+      <h3>Book a pilot call</h3>
+      <p>30 minutes with the team, about your unit.</p>
+      <ol>
+        <li>How swaps work on your unit today: board, texts, or both.</li>
+        <li>The skill-mix and hours rules you'd want checked.</li>
+        <li>What a pilot on one unit would look like, and who needs to sign off.</li>
+      </ol>
+      <a class="btn btn-amber" href="https://swaptide.example/pilot">Book a pilot call</a>
+      <p class="fine">swaptide.example/pilot</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="faq-h" style="padding-top:0">
+  <div class="wrap">
+    <p class="kicker">Questions</p>
+    <h2 id="faq-h">Common questions</h2>
+    <div class="faq">
+      <details><summary>Who has the final say on a swap?</summary><p>The unit manager, every time. Swaptide checks the swap against your unit's rules and shows the result, but nothing is approved until the manager taps approve.</p></details>
+      <details><summary>What happens when a swap breaks a rule?</summary><p>It's flagged before the manager sees it, with the rule it breaks: for example, a shift that would drop below your skill mix. The manager still decides what to do with it.</p></details>
+      <details><summary>Does it change anything in our union agreement or hospital policy?</summary><p>No. Those apply exactly as they do now. Swaptide checks against the limits your unit configures; it doesn't set or override them.</p></details>
+      <details><summary>Does it handle pay?</summary><p>No. Swaptide doesn't handle payroll. Pay stays in the systems you already use.</p></details>
+      <details><summary>What results has the pilot shown?</summary><p>One medical-surgical unit has used it for three months. We don't have measured results we can share yet, and we'd rather say that than give you a number we can't stand behind.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="closing" aria-labelledby="close-h">
+  <div class="wrap">
+    <h2 id="close-h">Get swaps off the whiteboard and in front of you before they happen.</h2>
+    <p>Book a 30-minute call to talk through a pilot on your unit.</p>
+    <a class="btn btn-amber" href="https://swaptide.example/pilot">Book a pilot call</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Swaptide · Shift swaps for hospital nursing units</span>
+    <a href="https://swaptide.example/pilot">Book a pilot call</a>
+  </div>
+</footer>
+</body>
+</html>

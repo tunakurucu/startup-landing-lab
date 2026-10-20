@@ -1,0 +1,29 @@
+{
+  "run": "swaptide/with-r1",
+  "workdir": "W002",
+  "brief": "swaptide",
+  "arm": "with",
+  "model": "claude-opus-5-5",
+  "client_version": "2.1.304",
+  "start": "2026-10-20T20:59:53Z",
+  "end": "2026-10-20T21:24:37Z",
+  "wall_clock_s": 1484,
+  "tokens": {
+    "input": 236,
+    "output": 3525,
+    "cache_read": 25342591,
+    "cache_create": 592936
+  },
+  "tool_calls": 72,
+  "cap_hit": false,
+  "skill_installed": true,
+  "skill_visible_to_agent": true,
+  "skill_md_read": true,
+  "skill_file_access_in_no_skill_arm": null,
+  "infrastructure_retry": null,
+  "start_note": "",
+  "transcript": "transcript.jsonl (tool calls, assistant text and truncated tool results; harness-injected context removed)",
+  "transcript_source": "a491ac0baf9c0aaed.output",
+  "harness_skills_invoked": [],
+  "note": "Both arms ran in the same client with its built-in skills visible (for example frontend-design); the arms differ only in whether this skill was installed in the working folder."
+}

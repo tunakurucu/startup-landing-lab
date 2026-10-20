@@ -1,0 +1,92 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round8/packets/P005/A/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 23,
+   "h1": {
+    "text": "Sort the swap before your break is over.",
+    "left": 20,
+    "right": 343,
+    "top": 161,
+    "bottom": 277,
+    "within_viewport_x": false
+   },
+   "smallest_text_px": 10.5,
+   "text_elements_under_12px": 6,
+   "body_text_length": 5195
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Sort the swap before your break is over.",
+    "left": 20,
+    "right": 370,
+    "top": 161,
+    "bottom": 277,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 10.5,
+   "text_elements_under_12px": 6,
+   "body_text_length": 5195,
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 8
+    }
+   ]
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Sort the swap before your break is over.",
+    "left": 20,
+    "right": 748,
+    "top": 161,
+    "bottom": 249,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 10.5,
+   "text_elements_under_12px": 7,
+   "body_text_length": 5237
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Sort the swap before your break is over.",
+    "left": 180,
+    "right": 743,
+    "top": 204,
+    "bottom": 400,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 10.5,
+   "text_elements_under_12px": 7,
+   "body_text_length": 5237,
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 8
+    }
+   ]
+  }
+ }
+}
