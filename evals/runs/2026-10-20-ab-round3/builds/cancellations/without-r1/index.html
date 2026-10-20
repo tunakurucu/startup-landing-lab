@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chairtime — fills cancelled appointments at physical therapy clinics</title>
+<meta name="description" content="Chairtime texts the patients on your waitlist, one at a time, until a cancelled slot is taken. Built for small physical therapy clinics.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap top__row">
+    <a class="brand" href="#top" aria-label="Chairtime home">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="2.4"/>
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="16" y1="4.5" x2="16" y2="7"/>
+          <line x1="27.5" y1="16" x2="25" y2="16"/>
+          <line x1="16" y1="27.5" x2="16" y2="25"/>
+          <line x1="4.5" y1="16" x2="7" y2="16"/>
+        </g>
+        <!-- hands at 2:30 -->
+        <g stroke="currentColor" stroke-width="2.8" stroke-linecap="round">
+          <line x1="16" y1="16" x2="21.6" y2="14.5"/>
+          <line x1="16" y1="16" x2="16" y2="24"/>
+        </g>
+        <circle cx="16" cy="16" r="1.8" fill="currentColor"/>
+      </svg>
+      <span class="brand__name">Chairtime</span>
+    </a>
+    <nav class="top__nav" aria-label="Page">
+      <a href="#how">How it works</a>
+      <a href="#patients">Got a text?</a>
+      <a class="btn btn--small js-book" href="#call">Book a setup call</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ───────────── Hero ───────────── -->
+<section class="hero" id="top">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <h1>A cancelled 2:30 doesn't have to stay empty.</h1>
+      <p class="hero__lede">Chairtime texts the patients on your waitlist, one at a time, until somebody takes the slot. Patients reply with one word. Your front desk books them the way it always has.</p>
+      <div class="hero__actions">
+        <a class="btn js-book" href="#call">Book a 15-minute setup call</a>
+        <a class="link-quiet" href="#patients">Got a text from us? Start here</a>
+      </div>
+      <p class="hero__fine">For small physical therapy clinics. No app for patients, nothing new for your scheduler.</p>
+    </div>
+
+    <!-- The demo board. The HTML below shows the FINAL state so the page reads correctly
+         without JavaScript. demo.js rewinds it to the start and plays it through. -->
+    <section class="board" id="board" aria-label="Example of a cancelled 2:30 slot being offered and filled">
+      <header class="board__bar">
+        <span class="board__clinic">Riverbend Physical Therapy</span>
+        <span class="board__clock"><span class="board__day">Tue</span> <time id="clock">11:12 am</time></span>
+      </header>
+
+      <div class="board__grid">
+        <div class="pane pane--day">
+          <h2 class="pane__title">Today</h2>
+          <ol class="slots">
+            <li class="slot" data-state="booked">
+              <span class="slot__time">1:30</span>
+              <span class="slot__who">Marcus T.</span>
+              <span class="slot__status">Booked</span>
+            </li>
+            <li class="slot slot--focus" id="slot230" data-state="filled">
+              <span class="slot__time">2:30</span>
+              <span class="slot__who" id="slot230who">Luis O.</span>
+              <span class="slot__status" id="slot230status">Filled 11:12</span>
+            </li>
+            <li class="slot" data-state="booked">
+              <span class="slot__time">3:30</span>
+              <span class="slot__who">Jo L.</span>
+              <span class="slot__status">Booked</span>
+            </li>
+          </ol>
+
+          <h2 class="pane__title">Waitlist</h2>
+          <ol class="wait">
+            <li class="wait__row" data-who="dana" data-state="passed">
+              <span class="wait__name">Dana R.</span>
+              <span class="wait__pill" data-label>Passed</span>
+            </li>
+            <li class="wait__row" data-who="luis" data-state="took">
+              <span class="wait__name">Luis O.</span>
+              <span class="wait__pill" data-label>Took it</span>
+            </li>
+            <li class="wait__row" data-who="hannah" data-state="untouched">
+              <span class="wait__name">Hannah K.</span>
+              <span class="wait__pill" data-label>Not texted</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="pane pane--thread">
+          <h2 class="pane__title">Texts</h2>
+          <ol class="thread" id="thread">
+            <li class="thread__empty" data-empty>No texts yet. The waitlist only hears from Chairtime when a slot opens.</li>
+            <li class="msg msg--out" data-step="2">
+              <span class="msg__who">To Dana R.</span>
+              <p>Riverbend Physical Therapy via Chairtime: a 2:30 pm slot opened today (Tue). Want it? Reply YES to take it or NO to pass.</p>
+              <span class="msg__time">11:04</span>
+            </li>
+            <li class="msg msg--in" data-step="3">
+              <span class="msg__who">Dana R.</span>
+              <p>No thanks, can't do today</p>
+              <span class="msg__time">11:09</span>
+            </li>
+            <li class="msg msg--out" data-step="4">
+              <span class="msg__who">To Luis O.</span>
+              <p>Riverbend Physical Therapy via Chairtime: a 2:30 pm slot opened today (Tue). Want it? Reply YES to take it or NO to pass.</p>
+              <span class="msg__time">11:09</span>
+            </li>
+            <li class="msg msg--in" data-step="5">
+              <span class="msg__who">Luis O.</span>
+              <p>YES</p>
+              <span class="msg__time">11:12</span>
+            </li>
+            <li class="msg msg--out" data-step="6">
+              <span class="msg__who">To Luis O.</span>
+              <p>You're booked: today (Tue) 2:30 pm at Riverbend Physical Therapy, 410 Pine St. Reply CANCEL if plans change.</p>
+              <span class="msg__time">11:12</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <footer class="board__foot">
+        <p class="board__caption" id="caption" aria-live="polite">Confirmed. The 2:30 is filled, and Hannah was never bothered.</p>
+        <div class="board__ctl">
+          <button class="ctl ctl--play" id="play" type="button" aria-label="Play" hidden>
+            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path class="ico-play" d="M4 2.5v11l9-5.5z"/><path class="ico-pause" d="M4 2.5h3v11H4zM9 2.5h3v11H9z"/></svg>
+          </button>
+          <ol class="steps" id="steps" aria-label="Steps">
+            <li><button type="button" data-go="0" aria-label="Step 1 of 7"></button></li>
+            <li><button type="button" data-go="1" aria-label="Step 2 of 7"></button></li>
+            <li><button type="button" data-go="2" aria-label="Step 3 of 7"></button></li>
+            <li><button type="button" data-go="3" aria-label="Step 4 of 7"></button></li>
+            <li><button type="button" data-go="4" aria-label="Step 5 of 7"></button></li>
+            <li><button type="button" data-go="5" aria-label="Step 6 of 7"></button></li>
+            <li><button type="button" data-go="6" aria-label="Step 7 of 7"></button></li>
+          </ol>
+          <button class="ctl ctl--text" id="replay" type="button" hidden>Replay</button>
+        </div>
+        <p class="board__note">An example, not a live clinic. The clinic and patients are made up.</p>
+      </footer>
+    </section>
+  </div>
+</section>
+
+<!-- ───────────── How it works ───────────── -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="how__head">
+      <h2>How a slot gets filled</h2>
+      <p>Four steps. Two of them are yours, and they take seconds.</p>
+    </div>
+    <ol class="stepper">
+      <li class="stepper__item">
+        <span class="stepper__n" aria-hidden="true">1</span>
+        <div>
+          <h3>Your front desk builds a waitlist</h3>
+          <p>Patients who'd take an earlier time give their name, mobile number and the days that work. They agree to texts when they join, and can leave any time by replying STOP.</p>
+        </div>
+      </li>
+      <li class="stepper__item">
+        <span class="stepper__n" aria-hidden="true">2</span>
+        <div>
+          <h3>A patient cancels</h3>
+          <p>Someone at the desk marks the slot open in Chairtime. That's the whole job on your side: a time, a tap.</p>
+        </div>
+      </li>
+      <li class="stepper__item">
+        <span class="stepper__n" aria-hidden="true">3</span>
+        <div>
+          <h3>Chairtime texts the waitlist, one patient at a time</h3>
+          <p>Each patient gets a few minutes to reply. The first YES takes the slot. Anyone who was texted and didn't get it is told it's gone, and keeps their place in line. Nobody further down the list hears a thing.</p>
+        </div>
+      </li>
+      <li class="stepper__item">
+        <span class="stepper__n" aria-hidden="true">4</span>
+        <div>
+          <h3>You book them as usual</h3>
+          <p>Chairtime tells the desk who took it. You put them in your schedule the way you always do. Nothing to integrate, nothing to migrate.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ───────────── Rules ───────────── -->
+<section class="rules">
+  <div class="wrap rules__grid">
+    <div class="rules__copy">
+      <h2>You decide who gets texted, and when</h2>
+      <p>Every clinic runs its waitlist a little differently. These are set once, on the setup call, and changed whenever you like.</p>
+    </div>
+    <dl class="rules__list">
+      <div class="rules__row">
+        <dt>Order</dt>
+        <dd>First come, first texted, or put patients who are already due this week at the front of the line.</dd>
+      </div>
+      <div class="rules__row">
+        <dt>Reply window</dt>
+        <dd>How long each patient has before Chairtime moves to the next one. Most clinics pick something between five and fifteen minutes.</dd>
+      </div>
+      <div class="rules__row">
+        <dt>Minimum notice</dt>
+        <dd>Don't offer a slot that starts in less than, say, 45 minutes. Nobody can get there in time, and the text just annoys them.</dd>
+      </div>
+      <div class="rules__row">
+        <dt>Quiet hours</dt>
+        <dd>No texts before 8 am or after 7 pm. A slot that opens overnight waits until morning.</dd>
+      </div>
+      <div class="rules__row">
+        <dt>Per-patient limit</dt>
+        <dd>Cap how often one person can be offered a slot, so a long waitlist never turns into a nuisance for the people at the top of it.</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ───────────── For patients ───────────── -->
+<section class="patients" id="patients">
+  <div class="wrap patients__grid">
+    <div class="patients__copy">
+      <h2>Got a text from Chairtime?</h2>
+      <p class="patients__lede">It's real, and it came from your clinic. You asked to be told when an earlier appointment opened up, and one just did.</p>
+
+      <h3>What to do</h3>
+      <ul class="plain">
+        <li><strong>Reply YES</strong> to take the slot. You'll get a confirmation with the date, time and address.</li>
+        <li><strong>Reply NO</strong> to pass. You keep your place on the waitlist.</li>
+        <li><strong>Reply STOP</strong> to leave the waitlist. You won't be texted again.</li>
+      </ul>
+
+      <h3>How to know it's us</h3>
+      <p>Every text from Chairtime names your clinic, gives one date and one time, and asks for a one-word reply. That's all it ever does.</p>
+      <p>A Chairtime text will never ask for a card number, insurance details or a password, and it will never ask you to tap a link to "confirm" anything. It won't mention why you're being seen. If a text does any of those things, it isn't from us.</p>
+      <p>Still not sure? Call your clinic on the number you already have. They can see which slots have been offered to you.</p>
+    </div>
+
+    <figure class="sample">
+      <div class="sample__phone">
+        <p class="sample__from">Riverbend Physical Therapy via Chairtime</p>
+        <div class="sample__bubble">Riverbend Physical Therapy via Chairtime: a 2:30 pm slot opened today (Tue). Want it? Reply YES to take it or NO to pass.</div>
+        <div class="sample__bubble sample__bubble--reply">YES</div>
+        <div class="sample__bubble">You're booked: today (Tue) 2:30 pm at Riverbend Physical Therapy, 410 Pine St. Reply CANCEL if plans change.</div>
+      </div>
+      <figcaption>What the two texts look like. Your clinic's name and address appear in place of the example.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ───────────── Privacy ───────────── -->
+<section class="privacy">
+  <div class="wrap privacy__inner">
+    <h2>Where we stand on HIPAA</h2>
+    <div class="privacy__cols">
+      <p>Chairtime handles patient names and phone numbers, so this isn't a footnote. We're partway through a formal HIPAA risk assessment, and until it's finished we won't describe ourselves as HIPAA compliant on this page or anywhere else.</p>
+      <p>What we can say now: a text carries a clinic name, a date, a time and an address. It never carries a diagnosis, a treatment or a clinical note. Chairtime keeps only what's needed to send that text and nothing more. Ask about the assessment on the setup call and we'll tell you exactly where it stands.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── FAQ ───────────── -->
+<section class="faq">
+  <div class="wrap faq__grid">
+    <h2>Questions clinics ask</h2>
+    <dl class="faq__list">
+      <div class="faq__row">
+        <dt>Do patients need an app?</dt>
+        <dd>No. A phone that can receive texts. They reply YES or NO like they would to anyone.</dd>
+      </div>
+      <div class="faq__row">
+        <dt>Does it connect to my scheduling software?</dt>
+        <dd>Not today. Chairtime runs beside it: marking a slot open is a tap, and booking the patient who said yes is your normal routine.</dd>
+      </div>
+      <div class="faq__row">
+        <dt>What if nobody says yes?</dt>
+        <dd>The slot stays open and the desk knows it, within the window you set. You're exactly where you'd have been without Chairtime, minus the phone calls.</dd>
+      </div>
+      <div class="faq__row">
+        <dt>Who do the texts come from?</dt>
+        <dd>Chairtime sends them on your clinic's behalf, with your clinic's name in every message, so patients recognise who's asking.</dd>
+      </div>
+      <div class="faq__row">
+        <dt>What does it cost?</dt>
+        <dd>We go through pricing on the setup call, once we've seen how many cancellations you're actually dealing with each week.</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ───────────── Setup call ───────────── -->
+<section class="call" id="call">
+  <div class="wrap call__grid">
+    <div class="call__copy">
+      <h2>Fifteen minutes to set up. One phone call.</h2>
+      <p>Here's what we do on it.</p>
+      <ol class="call__list">
+        <li>Look at how cancellations hit your week right now.</li>
+        <li>Set your rules together: order, reply window, notice, quiet hours.</li>
+        <li>Send a test offer to your own phone, so you've seen exactly what patients see.</li>
+      </ol>
+      <p class="call__fine">Nothing to prepare. If you have a rough idea of how many cancellations you get a week, bring that.</p>
+    </div>
+    <div class="call__action">
+      <a class="btn btn--big js-book" href="#call">Book a 15-minute setup call</a>
+      <p>Pick a time that suits your front desk. We'll call you.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__row">
+    <div class="foot__brand">
+      <span class="brand__name">Chairtime</span>
+      <p>Fills cancelled appointments at small physical therapy clinics.</p>
+    </div>
+    <nav class="foot__nav" aria-label="Footer">
+      <a href="#how">How it works</a>
+      <a href="#patients">Got a text?</a>
+      <a class="js-book" href="#call">Book a setup call</a>
+    </nav>
+    <p class="foot__stop">Got a text and want out? Reply STOP to any message from Chairtime.</p>
+  </div>
+</footer>
+
+<!-- Shown when the booking link hasn't been set yet (see BOOKING_URL in demo.js). -->
+<dialog class="modal" id="bookModal" aria-labelledby="bookModalTitle">
+  <form method="dialog" class="modal__inner">
+    <h2 id="bookModalTitle">Booking opens shortly</h2>
+    <p>We're still choosing a scheduling tool, so this button isn't connected yet. When it is, it'll take you straight to a 15-minute slot: pick a time, we call you.</p>
+    <p>In the meantime, this page covers <a href="#call">what the call looks like</a> and <a href="#how">how Chairtime works</a>.</p>
+    <div class="modal__actions">
+      <button class="btn" type="submit" value="close">Okay</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="demo.js"></script>
+</body>
+</html>

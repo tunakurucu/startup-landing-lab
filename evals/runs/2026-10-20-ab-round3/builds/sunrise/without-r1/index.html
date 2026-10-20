@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Morrow — a lamp that wakes you with light</title>
+<meta name="description" content="Morrow is a bedside lamp that wakes you with thirty minutes of rising light. No app, no screen, one dial. Reserve a place for the first batch.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%231C2235'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23E9A14A'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --night: #1C2235;
+    --dusk: #33294A;
+    --ember: #9E3B1C;
+    --amber: #E9A14A;
+    --dawn: #F7D9A3;
+    --paper: #FAF3E6;
+    --paper-2: #F1E6D2;
+    --ink: #2B2420;
+    --ink-2: #5E534B;
+    --milk: #F3EBDD;
+    --milk-2: #B8B3C2;
+    --focus: #E9A14A;
+    --serif: "Charter", "Bitstream Charter", "TeX Gyre Pagella", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+    --measure: 36rem;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    line-height: 1.55;
+    color: var(--milk);
+    background: var(--night);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+  .morning :focus-visible { outline-color: var(--ember); }
+
+  .wrap { width: min(100% - 2rem, 70rem); margin-inline: auto; }
+
+  h1, h2, h3 { font-weight: 400; margin: 0; line-height: 1.1; letter-spacing: -0.01em; }
+  h1 { font-size: clamp(2.4rem, 5.6vw, 4.4rem); }
+  h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); }
+  h3 { font-size: 1.3rem; line-height: 1.3; }
+  p { margin: 0 0 1em; max-width: var(--measure); }
+  p:last-child { margin-bottom: 0; }
+
+  /* ---------- header ---------- */
+  .top {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+    padding: 1.4rem 0 0;
+  }
+  .wordmark { font-size: 1.5rem; text-decoration: none; letter-spacing: 0.01em; }
+  .wordmark b { font-weight: 400; }
+  .top nav { display: flex; gap: 1.5rem; font-size: 1rem; }
+  .top nav a { text-decoration: none; opacity: .85; border-bottom: 1px solid transparent; }
+  .top nav a:hover { border-bottom-color: currentColor; opacity: 1; }
+  @media (max-width: 40rem) { .top nav { gap: 1rem; font-size: .95rem; } }
+
+  /* ---------- hero / demo ---------- */
+  .hero {
+    padding: clamp(2.5rem, 7vw, 6rem) 0 clamp(3rem, 7vw, 6rem);
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-areas: "title scene" "copy scene";
+    column-gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+    align-content: center;
+  }
+  .hero h1 { grid-area: title; align-self: end; }
+  .hero .hero-copy { grid-area: copy; align-self: start; }
+  .hero .scene-card { grid-area: scene; }
+  @media (max-width: 56rem) {
+    .hero { grid-template-columns: 1fr; grid-template-areas: "title" "scene" "copy"; row-gap: 1.5rem; }
+    .hero h1 { margin-bottom: .5rem; }
+  }
+
+  .hero-copy p.lede { font-size: 1.3rem; margin-top: 1.4rem; color: #D9D3C4; }
+  .hero-copy p.lede:first-child { margin-top: 1.4rem; }
+  .hero-copy .actions { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; }
+  .hero-copy .small { font-size: .95rem; color: var(--milk-2); margin-top: 1rem; }
+
+  .btn {
+    display: inline-block; font: inherit; cursor: pointer;
+    padding: .8rem 1.4rem; border-radius: 999px; text-decoration: none;
+    border: 1px solid transparent; line-height: 1.2;
+  }
+  .btn-light { background: var(--dawn); color: var(--ink); }
+  .btn-light:hover { background: #FBE6BD; }
+  .btn-ghost { background: transparent; color: var(--milk); border-color: rgba(243,235,221,.4); }
+  .btn-ghost:hover { border-color: rgba(243,235,221,.9); }
+
+  /* the scene */
+  .scene-card { position: relative; }
+  .scene {
+    display: block; width: 100%; height: auto;
+    border-radius: 1.25rem;
+    background: var(--night);
+  }
+  .scene-caption {
+    font-size: .9rem; color: var(--milk-2); margin-top: .75rem;
+  }
+
+  .controls {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem 2rem;
+    align-items: center;
+    margin-top: 1.5rem;
+  }
+  @media (max-width: 30rem) { .controls { gap: 1rem 1.25rem; } .dial { width: 7.5rem; height: 7.5rem; } .readout .hint { display: none; } }
+
+  .dial {
+    position: relative; width: 9.5rem; height: 9.5rem; border-radius: 50%;
+    touch-action: none; user-select: none; -webkit-user-select: none;
+    cursor: grab;
+  }
+  .dial:active { cursor: grabbing; }
+  .dial svg { width: 100%; height: 100%; display: block; }
+  .dial .track { stroke: rgba(243,235,221,.18); }
+  .dial .fill { stroke: var(--amber); }
+  .dial:focus-visible { outline-offset: 6px; }
+
+  .readout { line-height: 1.3; }
+  .readout .time { font-size: clamp(2.2rem, 4vw, 3rem); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .readout .status { color: #D9D3C4; margin-top: .2rem; }
+  .readout .hint { color: var(--milk-2); font-size: .95rem; margin-top: .6rem; }
+  .readout .playrow { margin-top: .9rem; }
+  .btn-sm { padding: .55rem 1rem; font-size: .95rem; }
+
+  /* ---------- dial explanation (still night) ---------- */
+  .night-2 {
+    padding: clamp(3rem, 7vw, 6rem) 0 clamp(3.5rem, 8vw, 7rem);
+    background: linear-gradient(var(--night), var(--dusk));
+  }
+  .night-2 h2 { margin-bottom: 1.4rem; }
+  .plain-list { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 1.5rem; max-width: 42rem; }
+  .plain-list li { display: grid; grid-template-columns: 4.5rem 1fr; gap: 1rem; align-items: start; }
+  .plain-list .glyph { width: 3.25rem; height: 3.25rem; }
+  .plain-list h3 { margin-bottom: .25rem; }
+  .plain-list p { color: #D9D3C4; }
+  @media (max-width: 30rem) { .plain-list li { grid-template-columns: 1fr; } }
+
+  /* ---------- the thirty minutes: the ramp ---------- */
+  .ramp {
+    position: relative;
+    background: linear-gradient(to bottom, var(--dusk) 0%, #5C2E36 30%, var(--ember) 50%, #D77F3A 65%, var(--amber) 78%, var(--dawn) 90%, var(--paper) 100%);
+    padding: clamp(3rem, 7vw, 6rem) 0 clamp(2.5rem, 6vw, 5rem);
+    color: var(--milk);
+  }
+  .ramp .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem 4rem; }
+  @media (max-width: 56rem) { .ramp .wrap { grid-template-columns: 1fr; } }
+  .ramp h2 { margin-bottom: 1rem; }
+  .ramp .intro { color: #F3EBDD; }
+  /* the list is the colour sequence itself: one band per stage */
+  .minutes { list-style: none; margin: 0; padding: 0; border-radius: 1rem; overflow: hidden; box-shadow: 0 1px 0 rgba(255,255,255,.08) inset; }
+  .minutes li {
+    display: grid; grid-template-columns: 4.5rem 1fr; gap: 1rem; align-items: baseline;
+    padding: 1.2rem 1.4rem;
+  }
+  .minutes .m { font-variant-numeric: tabular-nums; font-size: 1.3rem; white-space: nowrap; }
+  .minutes .m small { font-size: .85rem; }
+  .minutes p { margin: 0; max-width: none; }
+  .minutes .s0 { background: #1C2235; color: var(--milk); }
+  .minutes .s5 { background: #6A1E0E; color: var(--milk); }
+  .minutes .s15 { background: #DF7A38; color: var(--ink); }
+  .minutes .s25 { background: #F4CF8A; color: var(--ink); }
+  .minutes .s30 { background: #FBEFD9; color: var(--ink); }
+  @media (max-width: 30rem) { .minutes li { grid-template-columns: 3.5rem 1fr; padding: 1.1rem 1rem; } }
+
+  /* ---------- morning: everything on paper ---------- */
+  .morning { background: var(--paper); color: var(--ink); }
+  .morning section { padding: clamp(3rem, 7vw, 6rem) 0; }
+  .morning section + section { border-top: 1px solid rgba(43,36,32,.14); }
+  .morning h2 { margin-bottom: 1.4rem; }
+  .morning .muted { color: var(--ink-2); }
+
+  .two { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 2rem 4rem; align-items: start; }
+  @media (max-width: 56rem) { .two { grid-template-columns: 1fr; } }
+
+  .honest dl { margin: 0; display: grid; gap: 1.6rem; max-width: 40rem; }
+  .honest dt { font-size: 1.3rem; line-height: 1.3; }
+  .honest dd { margin: .35rem 0 0; color: var(--ink-2); max-width: var(--measure); }
+
+  /* plan */
+  .plan { list-style: none; margin: 0; padding: 0; max-width: 42rem; }
+  .plan li {
+    display: grid; grid-template-columns: 1.5rem 1fr; gap: 1rem; align-items: start;
+    padding: 1.1rem 0; border-top: 1px solid rgba(43,36,32,.14);
+  }
+  .plan li:last-child { border-bottom: 1px solid rgba(43,36,32,.14); }
+  .plan .dot { width: .9rem; height: .9rem; border-radius: 50%; margin-top: .45rem; border: 2px solid var(--ember); }
+  .plan .done .dot { background: var(--ember); }
+  .plan .now .dot { background: var(--amber); border-color: var(--amber); box-shadow: 0 0 0 5px rgba(233,161,74,.3); }
+  .plan h3 { margin-bottom: .2rem; }
+  .plan p { color: var(--ink-2); }
+  .plan .when { color: var(--ink); }
+
+  /* reserve */
+  .reserve { background: var(--paper-2); }
+  .reserve-card { max-width: 40rem; }
+  .price { font-size: clamp(2.6rem, 5vw, 3.6rem); line-height: 1; letter-spacing: -0.02em; margin: 0 0 .5rem; }
+  .price small { font-size: 1.1rem; letter-spacing: 0; margin-left: .4rem; }
+  form { margin-top: 1.75rem; }
+  .field { display: grid; gap: .4rem; max-width: 30rem; }
+  label { font-size: 1rem; }
+  input[type="email"] {
+    font: inherit; padding: .8rem 1rem; border-radius: .6rem;
+    border: 1.5px solid rgba(43,36,32,.35); background: #fff; color: var(--ink);
+    width: 100%;
+  }
+  input[type="email"]:focus-visible { outline-color: var(--ember); border-color: var(--ember); }
+  .form-actions { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; align-items: center; }
+  .btn-ink { background: var(--ink); color: var(--paper); }
+  .btn-ink:hover { background: #3f3630; }
+  .note { font-size: .95rem; color: var(--ink-2); margin: 0; }
+  .form-msg { margin-top: 1rem; font-size: 1rem; min-height: 1.5em; }
+  .form-msg.ok { color: #2F5A2E; }
+  .form-msg.err { color: #8A2A14; }
+  .confirm { display: none; padding: 1.25rem 1.4rem; border: 1.5px solid var(--ember); border-radius: .8rem; max-width: 30rem; }
+  .confirm.show { display: block; }
+  .confirm h3 { margin-bottom: .4rem; }
+  .confirm p { color: var(--ink-2); font-size: 1rem; }
+  .confirm button { background: none; border: 0; padding: 0; font: inherit; font-size: 1rem; color: var(--ink); text-decoration: underline; cursor: pointer; margin-top: .5rem; }
+
+  /* faq */
+  .faq details { border-top: 1px solid rgba(43,36,32,.14); max-width: 44rem; }
+  .faq details:last-of-type { border-bottom: 1px solid rgba(43,36,32,.14); }
+  .faq summary {
+    cursor: pointer; padding: 1.1rem 2.5rem 1.1rem 0; font-size: 1.2rem; list-style: none; position: relative;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: ""; position: absolute; right: .5rem; top: 50%;
+    width: .6rem; height: .6rem; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink);
+    transform: translateY(-70%) rotate(45deg); transition: transform .2s;
+  }
+  .faq details[open] summary::after { transform: translateY(-30%) rotate(225deg); }
+  .faq details p { padding-bottom: 1.2rem; color: var(--ink-2); }
+
+  footer {
+    padding: 2.5rem 0 3rem; font-size: .95rem; color: var(--ink-2);
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;
+    border-top: 1px solid rgba(43,36,32,.14);
+  }
+  footer a { text-decoration: none; border-bottom: 1px solid rgba(43,36,32,.3); }
+
+  .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="wordmark" href="#"><b>Morrow</b></a>
+  <nav aria-label="Page">
+    <a href="#how">How it works</a>
+    <a href="#plan">The plan</a>
+    <a href="#reserve">Reserve</a>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap hero" aria-labelledby="hero-h">
+    <h1 id="hero-h">A lamp that wakes you the way a window does.</h1>
+    <div class="hero-copy">
+      <p class="lede">Thirty minutes before you want to be up, Morrow starts to glow. By the time it reaches full brightness, you're already awake, and nothing had to ring.</p>
+      <p class="lede">No app. No screen. One dial.</p>
+      <div class="actions">
+        <a class="btn btn-light" href="#reserve">Reserve a place</a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+      <p class="small">A refundable $20 deposit holds one from the first batch. Deposits aren't open yet; you can hold a place with your email today.</p>
+    </div>
+
+    <div class="scene-card">
+      <svg class="scene" id="scene" viewBox="0 0 640 400" role="img" aria-labelledby="scene-title scene-desc">
+        <title id="scene-title">A bedside lamp in a dark room</title>
+        <desc id="scene-desc">An illustration of a bedside lamp. As the dial below is turned, the lamp's light rises from a faint ember to warm daylight and the room brightens with it.</desc>
+        <defs>
+          <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+            <stop id="g0" offset="0" stop-color="#E9A14A" stop-opacity="0.95"/>
+            <stop id="g1" offset="0.4" stop-color="#E9A14A" stop-opacity="0.45"/>
+            <stop id="g2" offset="1" stop-color="#E9A14A" stop-opacity="0"/>
+          </radialGradient>
+          <clipPath id="frame"><rect width="640" height="400" rx="20"/></clipPath>
+        </defs>
+        <g clip-path="url(#frame)">
+          <rect id="wall" width="640" height="400" fill="#1C2235"/>
+          <!-- floor / table line -->
+          <rect id="floor" x="0" y="300" width="640" height="100" fill="#151A2A"/>
+          <!-- nightstand -->
+          <rect id="stand" x="300" y="300" width="230" height="14" fill="#2A2E40"/>
+          <rect id="stand2" x="312" y="314" width="206" height="86" fill="#232838"/>
+          <!-- window hint: bed edge on the left, just a shape -->
+          <rect id="bed" x="-20" y="238" width="290" height="162" rx="10" fill="#222A42"/>
+          <rect id="pillow" x="40" y="214" width="150" height="36" rx="14" fill="#2C3450"/>
+          <!-- glow -->
+          <circle id="glowc" cx="415" cy="236" r="330" fill="url(#glow)" opacity="0"/>
+          <!-- lamp: stem, base, shallow dome -->
+          <ellipse id="base" cx="415" cy="297" rx="34" ry="7" fill="#3A3E52"/>
+          <rect id="stem" x="411" y="250" width="8" height="48" fill="#3A3E52"/>
+          <path id="dome" d="M345 250 A70 48 0 0 1 485 250 Z" fill="#3A3E52"/>
+          <!-- the dial on the lamp -->
+          <circle id="lampdial" cx="415" cy="275" r="9" fill="#2A2E40" stroke="#4B5068" stroke-width="2"/>
+          <!-- light cast on wall and floor -->
+          <ellipse id="pool" cx="415" cy="301" rx="120" ry="10" fill="#E9A14A" opacity="0"/>
+        </g>
+      </svg>
+      <p class="scene-caption">Drawn, not photographed. The lamp's final shape is still being decided; the light is what we're sure of.</p>
+
+      <div class="controls">
+        <div class="dial" id="dial" role="slider" tabindex="0"
+             aria-label="Minutes into the sunrise" aria-valuemin="0" aria-valuemax="30" aria-valuenow="0" aria-valuetext="0 minutes, lamp off">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="86" fill="rgba(243,235,221,.04)"/>
+            <path class="track" id="track" d="" fill="none" stroke-width="6" stroke-linecap="round"/>
+            <path class="fill" id="fillarc" d="" fill="none" stroke-width="6" stroke-linecap="round"/>
+            <g id="ticks" stroke="rgba(243,235,221,.35)" stroke-width="2"></g>
+            <g class="knob" id="knob">
+              <circle cx="100" cy="100" r="56" fill="#2A3048" stroke="rgba(243,235,221,.25)" stroke-width="1.5"/>
+              <circle cx="100" cy="100" r="50" fill="#333A58"/>
+              <line x1="100" y1="58" x2="100" y2="74" stroke="#F3EBDD" stroke-width="4" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+        <div class="readout">
+          <div class="time" id="time">6:30</div>
+          <div class="status" id="status" aria-live="polite">Thirty minutes to go. The room is dark.</div>
+          <div class="hint">Turn the dial to move through the half hour before a 7:00 wake-up.</div>
+          <div class="playrow">
+            <button class="btn btn-ghost btn-sm" id="play" type="button">Play the sunrise</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="night-2" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <h2 id="how-h">One dial, and that's the whole interface.</h2>
+      <p>Phones in the bedroom are the thing we're trying to get away from, so Morrow doesn't come with one. There's nothing to pair, update, or log in to. It works the day you unbox it and keeps working if we go out of business.</p>
+      <ul class="plain-list">
+        <li>
+          <svg class="glyph" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="20" fill="none" stroke="#F3EBDD" stroke-width="2"/><line x1="26" y1="10" x2="26" y2="18" stroke="#E9A14A" stroke-width="3" stroke-linecap="round"/><path d="M26 6 a20 20 0 0 1 17.3 10" fill="none" stroke="rgba(243,235,221,.4)" stroke-width="2" stroke-dasharray="2 4"/></svg>
+          <div>
+            <h3>Turn it to choose when you want to be awake.</h3>
+            <p>A ring of marks around the dial shows the hour. Set it once; it remembers.</p>
+          </div>
+        </li>
+        <li>
+          <svg class="glyph" viewBox="0 0 52 52" aria-hidden="true"><path d="M8 32 a18 14 0 0 1 36 0 Z" fill="none" stroke="#F3EBDD" stroke-width="2"/><rect x="24" y="32" width="4" height="10" fill="#F3EBDD"/><path d="M14 20 Q26 6 38 20" fill="none" stroke="#E9A14A" stroke-width="2" stroke-dasharray="3 4"/></svg>
+          <div>
+            <h3>Thirty minutes before, the light begins.</h3>
+            <p>It starts as a dim ember you could sleep through, and climbs steadily to a warm, full daylight. We tend to surface somewhere in the middle.</p>
+          </div>
+        </li>
+        <li>
+          <svg class="glyph" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="20" fill="none" stroke="#F3EBDD" stroke-width="2"/><circle cx="26" cy="26" r="7" fill="#E9A14A"/></svg>
+          <div>
+            <h3>Press it, and it's an ordinary bedside lamp.</h3>
+            <p>Reading light at night, off when you're done. Press and hold in the morning if you want it to stop rising.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="ramp" aria-labelledby="ramp-h">
+    <div class="wrap">
+      <div>
+        <h2 id="ramp-h">What the thirty minutes look like.</h2>
+        <p class="intro">Real sunrises don't go from black to white; they go through colour. Morrow follows the same path, from a deep ember to something close to morning through a window. These bands are the colours it passes through.</p>
+      </div>
+      <ol class="minutes">
+        <li class="s0"><span class="m">0 <small>min</small></span><p>Off. The room is as dark as you left it.</p></li>
+        <li class="s5"><span class="m">5 <small>min</small></span><p>A faint, deep red glow. Barely enough to see the lamp by. Light sleepers may begin to stir.</p></li>
+        <li class="s15"><span class="m">15 <small>min</small></span><p>Orange, then amber. The wall behind the lamp is lit. You can see the room.</p></li>
+        <li class="s25"><span class="m">25 <small>min</small></span><p>Warm, bright, and still rising. This is the point where most of us give up on sleep.</p></li>
+        <li class="s30"><span class="m">30 <small>min</small></span><p>Full brightness, a warm white. It stays there until you press the dial.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="morning">
+    <section class="honest" aria-labelledby="honest-h">
+      <div class="wrap two">
+        <div>
+          <h2 id="honest-h">What we can say, and what we can't.</h2>
+          <p class="muted">This is a pre-order page for a lamp that doesn't exist in quantity yet. We'd rather tell you that plainly than paper over it.</p>
+        </div>
+        <dl>
+          <div>
+            <dt>We have a working prototype.</dt>
+            <dd>It sits on a nightstand in Charlotte and has woken one of us every morning since spring. It is not pretty yet. The images on this page are drawings because the renders we have will be out of date by the time you read this.</dd>
+          </div>
+          <div>
+            <dt>We won't tell you it will fix your sleep.</dt>
+            <dd>We haven't run a study and we're not going to quote someone else's as if it were ours. What we can say is what the lamp does: it gets brighter for thirty minutes before the time you set. Whether that suits you is something only you can know.</dd>
+          </div>
+          <div>
+            <dt>Nobody has reviewed it, and no one has written about it.</dt>
+            <dd>There are no quotes on this page because there are none to put here. When the first batch ships, the people who reserved one will be the first to say anything about it.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section id="plan" aria-labelledby="plan-h">
+      <div class="wrap two">
+        <div>
+          <h2 id="plan-h">Where it stands.</h2>
+          <p class="muted">Hardware runs late. We are aiming for the first batch next autumn, and we are not going to print a month we might miss. Everyone who holds a place gets a note whenever the plan moves, in either direction.</p>
+        </div>
+        <ol class="plan">
+          <li class="done"><span class="dot" aria-hidden="true"></span><div><h3>Working prototype</h3><p>Done. The light sequence, the dial, and the on-and-off behaviour all work on a bench unit.</p></div></li>
+          <li class="now"><span class="dot" aria-hidden="true"></span><div><h3>Holding places</h3><p><span class="when">Now.</span> Leave your email below and you're in line, in order. No money changes hands.</p></div></li>
+          <li><span class="dot" aria-hidden="true"></span><div><h3>Deposits open</h3><p><span class="when">Soon.</span> People in line get the first chance to put down the refundable $20 and lock a unit from the first batch.</p></div></li>
+          <li><span class="dot" aria-hidden="true"></span><div><h3>Final design shown</h3><p>Before we ask anyone to confirm, you'll see the real lamp, photographed, and be able to walk away with your deposit back.</p></div></li>
+          <li><span class="dot" aria-hidden="true"></span><div><h3>First batch ships</h3><p><span class="when">Planned for autumn 2027.</span> A plan, not a promise. If it slips, you'll hear it from us first.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="reserve" id="reserve" aria-labelledby="reserve-h">
+      <div class="wrap">
+        <div class="reserve-card">
+          <h2 id="reserve-h">Reserve a place.</h2>
+          <p class="price">$20<small>refundable deposit, when deposits open</small></p>
+          <p class="muted">Deposits aren't open yet, so there's nothing to pay today. Leave your email and we'll hold your place in line. When deposits open, you'll get the first chance to put down $20, and you can ask for it back at any time, for any reason, until the lamp is on its way to you.</p>
+
+          <form id="hold" novalidate>
+            <div class="field">
+              <label for="email">Your email</label>
+              <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-ink" type="submit">Hold my place</button>
+              <p class="note">No charge. No newsletter. Only notes about Morrow.</p>
+            </div>
+            <p class="form-msg" id="form-msg" aria-live="polite"></p>
+          </form>
+
+          <div class="confirm" id="confirm" role="status" tabindex="-1">
+            <h3>Your place is held.</h3>
+            <p>We've noted <span id="confirm-email"></span>. You'll get one email when the $20 deposit opens, and another whenever the plan changes. That's it.</p>
+            <button type="button" id="undo">That's the wrong address</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq" aria-labelledby="faq-h">
+      <div class="wrap">
+        <h2 id="faq-h">Questions we've been asked.</h2>
+        <details>
+          <summary>Is the $20 really refundable?</summary>
+          <p>Yes, in full, whenever you ask, until the lamp ships. You don't need to give a reason. Once deposits open we'll also refund automatically if the first batch slips by more than a season, unless you tell us you'd rather wait.</p>
+        </details>
+        <details>
+          <summary>What will the finished lamp look like?</summary>
+          <p>Close to the drawing above in spirit, probably different in detail. A short stem, a shallow shade that throws light at the wall rather than your face, and one dial. You'll see photographs of the real thing before you confirm.</p>
+        </details>
+        <details>
+          <summary>Why no app?</summary>
+          <p>Because the whole point is to leave the phone outside the bedroom. Everything the lamp needs to know, you can tell it with the dial. There's no Wi-Fi in it, so there's nothing to update and nothing to go offline.</p>
+        </details>
+        <details>
+          <summary>Does the light wake you on its own, or is there a sound?</summary>
+          <p>Light only, in the prototype. We're testing a very quiet chime at the thirty-minute mark for heavy sleepers. If it makes the batch, it will be optional and off by default.</p>
+        </details>
+        <details>
+          <summary>When exactly will it ship?</summary>
+          <p>We're planning the first batch for autumn 2027. We'll give a month once the parts are ordered and the factory has committed, and not before. If you hold a place, you'll hear each time the plan changes.</p>
+        </details>
+        <details>
+          <summary>What will the lamp cost?</summary>
+          <p>We haven't fixed the price, because the final parts aren't chosen. You'll see the full price before you're asked to pay anything beyond the deposit, and the deposit comes off it.</p>
+        </details>
+      </div>
+    </section>
+
+    <footer class="wrap">
+      <span>Morrow, Charlotte, North Carolina.</span>
+      <span>Questions: <a href="mailto:hello@morrow.example">hello@morrow.example</a></span>
+    </footer>
+  </div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- colour ramp for the sunrise ---------- */
+  // [minute, lamp colour, glow opacity (0-1), wall tint strength (0-1)]
+  var KEY = [
+    [0,  '#E9A14A', 0.00, 0.00],
+    [3,  '#6A1E0E', 0.12, 0.04],
+    [8,  '#B03A16', 0.30, 0.12],
+    [14, '#D96F2C', 0.50, 0.25],
+    [20, '#E9A14A', 0.70, 0.45],
+    [26, '#F4CF8A', 0.88, 0.68],
+    [30, '#FBEFD9', 1.00, 0.85]
+  ];
+
+  function hex(h) { return [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)]; }
+  function mix(a, b, t) { return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
+  function rgb(c) { return 'rgb(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ')'; }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function sample(min) {
+    var i = 0;
+    while (i < KEY.length - 2 && min > KEY[i+1][0]) i++;
+    var a = KEY[i], b = KEY[i+1];
+    var t = (min - a[0]) / (b[0] - a[0]); t = Math.max(0, Math.min(1, t));
+    return { color: mix(hex(a[1]), hex(b[1]), t), glow: lerp(a[2], b[2], t), wall: lerp(a[3], b[3], t) };
+  }
+
+  /* ---------- scene elements ---------- */
+  var $ = function (id) { return document.getElementById(id); };
+  var el = {
+    wall: $('wall'), floor: $('floor'), stand: $('stand'), stand2: $('stand2'), bed: $('bed'), pillow: $('pillow'),
+    glowc: $('glowc'), g0: $('g0'), g1: $('g1'), g2: $('g2'), dome: $('dome'), pool: $('pool'),
+    base: $('base'), stem: $('stem'), lampdial: $('lampdial'),
+    time: $('time'), status: $('status'), dial: $('dial'), knob: $('knob'), fill: $('fillarc'), track: $('track'), ticks: $('ticks'),
+    play: $('play')
+  };
+
+  var NIGHT = { wall: hex('#1C2235'), floor: hex('#151A2A'), stand: hex('#2A2E40'), stand2: hex('#232838'), bed: hex('#222A42'), pillow: hex('#2C3450'), metal: hex('#3A3E52') };
+
+  function statusFor(min) {
+    if (min <= 0) return 'Thirty minutes to go. The room is dark.';
+    if (min < 6) return 'A faint ember. You could sleep through this.';
+    if (min < 13) return 'Deep orange. The wall is starting to show.';
+    if (min < 20) return 'Amber. You can see the room now.';
+    if (min < 27) return 'Warm and bright. Hard to sleep through.';
+    if (min < 30) return 'Almost full. Nearly morning.';
+    return 'Full light, a warm white. Nothing rang.';
+  }
+
+  var WHITE = [255,255,255], BLACK = [0,0,0];
+  function render(min) {
+    var s = sample(min);
+    var wallT = s.wall;
+    var warm = mix(s.color, WHITE, 0.22);          // what the wall looks like under the lamp
+    var warmDark = mix(s.color, BLACK, 0.45);      // what the floor and furniture look like
+    el.wall.setAttribute('fill', rgb(mix(NIGHT.wall, warm, wallT * 0.62)));
+    el.floor.setAttribute('fill', rgb(mix(NIGHT.floor, warmDark, wallT * 0.55)));
+    el.stand.setAttribute('fill', rgb(mix(NIGHT.stand, mix(s.color, BLACK, 0.3), wallT * 0.8)));
+    el.stand2.setAttribute('fill', rgb(mix(NIGHT.stand2, warmDark, wallT * 0.7)));
+    el.bed.setAttribute('fill', rgb(mix(NIGHT.bed, mix(s.color, BLACK, 0.3), wallT * 0.55)));
+    el.pillow.setAttribute('fill', rgb(mix(NIGHT.pillow, warm, wallT * 0.5)));
+    el.base.setAttribute('fill', rgb(mix(NIGHT.metal, warmDark, wallT * 0.6)));
+    el.stem.setAttribute('fill', rgb(mix(NIGHT.metal, warmDark, wallT * 0.6)));
+    el.lampdial.setAttribute('fill', rgb(mix(NIGHT.stand, warmDark, wallT * 0.6)));
+
+    var c = rgb(s.color);
+    el.g0.setAttribute('stop-color', c); el.g1.setAttribute('stop-color', c); el.g2.setAttribute('stop-color', c);
+    el.glowc.setAttribute('opacity', s.glow.toFixed(3));
+    el.glowc.setAttribute('r', String(Math.round(180 + 220 * s.glow)));
+    el.pool.setAttribute('fill', c);
+    el.pool.setAttribute('opacity', (s.glow * 0.5).toFixed(3));
+    // the shade itself takes the light colour once it's on
+    el.dome.setAttribute('fill', min <= 0 ? rgb(NIGHT.metal) : rgb(mix(mix(NIGHT.metal, s.color, 0.35), s.color, s.glow)));
+
+    // clock: 6:30 -> 7:00
+    var total = 6 * 60 + 30 + Math.round(min);
+    var h = Math.floor(total / 60), m = total % 60;
+    el.time.textContent = h + ':' + (m < 10 ? '0' + m : m);
+    el.status.textContent = statusFor(min);
+
+    // dial
+    var ang = -135 + 270 * (min / 30);
+    el.knob.setAttribute('transform', 'rotate(' + ang.toFixed(2) + ' 100 100)');
+    el.fill.setAttribute('d', arc(-135, ang));
+    el.dial.setAttribute('aria-valuenow', String(Math.round(min)));
+    el.dial.setAttribute('aria-valuetext', Math.round(min) + (Math.round(min) === 1 ? ' minute, ' : ' minutes, ') + statusFor(min).toLowerCase());
+  }
+
+  /* ---------- dial geometry ---------- */
+  var R = 76;
+  function pt(deg) { var r = (deg - 90) * Math.PI / 180; return [100 + R * Math.cos(r), 100 + R * Math.sin(r)]; }
+  function arc(a0, a1) {
+    if (a1 - a0 < 0.01) return '';
+    var p0 = pt(a0), p1 = pt(a1), large = (a1 - a0) > 180 ? 1 : 0;
+    return 'M' + p0[0].toFixed(2) + ' ' + p0[1].toFixed(2) + ' A' + R + ' ' + R + ' 0 ' + large + ' 1 ' + p1[0].toFixed(2) + ' ' + p1[1].toFixed(2);
+  }
+  el.track.setAttribute('d', arc(-135, 135));
+  (function ticks() {
+    var html = '';
+    for (var i = 0; i <= 6; i++) {
+      var a = -135 + 270 * (i / 6), r = (a - 90) * Math.PI / 180;
+      var x1 = 100 + 90 * Math.cos(r), y1 = 100 + 90 * Math.sin(r), x2 = 100 + 96 * Math.cos(r), y2 = 100 + 96 * Math.sin(r);
+      html += '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '"/>';
+    }
+    el.ticks.innerHTML = html;
+  })();
+
+  /* ---------- state ---------- */
+  var value = 0, playing = null;
+  function set(v, fromUser) {
+    value = Math.max(0, Math.min(30, v));
+    render(value);
+    if (fromUser) stopPlay();
+  }
+
+  function angleFromEvent(e) {
+    var rect = el.dial.getBoundingClientRect();
+    var cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+    var a = Math.atan2(e.clientX - cx, -(e.clientY - cy)) * 180 / Math.PI; // 0 at top, clockwise positive
+    return a;
+  }
+  var dragging = false;
+  el.dial.addEventListener('pointerdown', function (e) {
+    dragging = true; el.dial.setPointerCapture(e.pointerId); el.dial.focus({ preventScroll: true });
+    applyAngle(angleFromEvent(e)); e.preventDefault();
+  });
+  el.dial.addEventListener('pointermove', function (e) { if (dragging) applyAngle(angleFromEvent(e)); });
+  el.dial.addEventListener('pointerup', function () { dragging = false; });
+  el.dial.addEventListener('pointercancel', function () { dragging = false; });
+  function applyAngle(a) {
+    // clamp into the 270° sweep; the dead zone at the bottom snaps to the nearer end
+    if (a < -135) a = (a < -165) ? 135 : -135;
+    if (a > 135) a = (a > 165) ? -135 : 135;
+    set((a + 135) / 270 * 30, true);
+  }
+  el.dial.addEventListener('keydown', function (e) {
+    var step = null;
+    switch (e.key) {
+      case 'ArrowRight': case 'ArrowUp': step = 1; break;
+      case 'ArrowLeft': case 'ArrowDown': step = -1; break;
+      case 'PageUp': step = 5; break;
+      case 'PageDown': step = -5; break;
+      case 'Home': set(0, true); e.preventDefault(); return;
+      case 'End': set(30, true); e.preventDefault(); return;
+      default: return;
+    }
+    set(Math.round(value) + step, true); e.preventDefault();
+  });
+  el.dial.addEventListener('wheel', function (e) {
+    set(value + (e.deltaY < 0 ? 1 : -1), true); e.preventDefault();
+  }, { passive: false });
+
+  /* ---------- play ---------- */
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DURATION = reduce ? 6000 : 18000; // thirty minutes compressed
+  function stopPlay() {
+    if (playing) { cancelAnimationFrame(playing); playing = null; el.play.textContent = 'Play the sunrise'; }
+  }
+  el.play.addEventListener('click', function () {
+    if (playing) { stopPlay(); return; }
+    var from = value >= 30 ? 0 : value;
+    var t0 = performance.now() - (from / 30) * DURATION;
+    el.play.textContent = 'Pause';
+    function tick(now) {
+      var p = Math.min(1, (now - t0) / DURATION);
+      set(p * 30, false);
+      if (p < 1) playing = requestAnimationFrame(tick);
+      else { playing = null; el.play.textContent = 'Play it again'; }
+    }
+    playing = requestAnimationFrame(tick);
+  });
+
+  render(0);
+
+  // One orchestrated moment: the sunrise plays once as the page opens, so the
+  // first thing a visitor sees is the lamp doing its job. Touching the dial stops it.
+  if (reduce) {
+    set(12, false);
+  } else {
+    setTimeout(function () { if (!playing && value === 0) el.play.click(); }, 600);
+  }
+
+  /* ---------- hold-a-place form ---------- */
+  // Checkout and the mailing list aren't connected yet. The form validates, stores
+  // the address locally so a returning visitor sees their held place, and shows the
+  // confirmation. Wire HOLD_ENDPOINT to a real collector when one exists.
+  var HOLD_ENDPOINT = '';
+  var form = $('hold'), email = $('email'), msg = $('form-msg'), confirm = $('confirm'), confirmEmail = $('confirm-email');
+  var KEYNAME = 'morrow.held';
+
+  function showHeld(addr) {
+    confirmEmail.textContent = addr;
+    form.hidden = true;
+    confirm.classList.add('show');
+  }
+  try {
+    var saved = localStorage.getItem(KEYNAME);
+    if (saved) showHeld(saved);
+  } catch (e) {}
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var addr = email.value.trim();
+    var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(addr);
+    if (!ok) {
+      msg.textContent = 'That doesn’t look like an email address. Check for a missing @ or domain.';
+      msg.className = 'form-msg err'; email.focus(); return;
+    }
+    msg.textContent = ''; msg.className = 'form-msg';
+    if (HOLD_ENDPOINT) {
+      fetch(HOLD_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: addr }) }).catch(function () {});
+    }
+    try { localStorage.setItem(KEYNAME, addr); } catch (err) {}
+    showHeld(addr);
+    confirm.focus();
+  });
+
+  $('undo').addEventListener('click', function () {
+    try { localStorage.removeItem(KEYNAME); } catch (err) {}
+    confirm.classList.remove('show');
+    form.hidden = false;
+    email.value = ''; email.focus();
+  });
+})();
+</script>
+</body>
+</html>
