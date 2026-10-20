@@ -28,7 +28,7 @@ Every rule here is rewritten in this project's own words and credited to where t
 | [ui-skills](https://github.com/ibelick/ui-skills) (fixing-metadata) | Julien Thibeaut | MIT | The share-card and metadata contract |
 | [wondelai skills](https://github.com/wondelai/skills) (obviously-awesome) | Wondel.ai | MIT | Positioning inputs before the promise, after April Dunford |
 
-Beyond skills, the copy, structure and audit rules draw on Paul Graham and Y Combinator's partners, April Dunford, Julian Shapiro, Harry Dry, Copyhackers, Jason Cohen, Patrick McKenzie, Peep Laja, Nielsen Norman Group, WCAG 2.2, web.dev and peer-reviewed research on first impressions and credibility. Each reference file lists its sources.
+Beyond skills, the copy, structure and audit rules draw on Paul Graham and Y Combinator's partners, April Dunford, Julian Shapiro, Harry Dry, Copyhackers, Jason Cohen, Patrick McKenzie, Peep Laja, Nielsen Norman Group, WCAG 2.2, web.dev and peer-reviewed research on first impressions and credibility, and the craft rules draw on design-engineering writing from Linear, Vercel, Stripe, GitHub, Figma and Granola and practitioners such as Rauno Freiberg, Sara Soueidan and Ryan Mulligan. Each reference file lists its sources.
 
 What this project adds: a dated casebook of real startup homepages with measured type, layout and motion; seven archetype recipes; a decision record that maps each visitor doubt to a product artifact; two hero variants scored before any code; and a script that refuses to call the page done until all 100 checks are answered.
 
