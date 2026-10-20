@@ -5,6 +5,7 @@ Copy this file next to the page as `DESIGN-RECORD.md` and replace every prompt w
 ## Product interpretation
 - Audience, category, business model, brand constraints:
 - Promise (who / what changes / how):
+- Five-second line, quoted as shown in the first screen (who + what):
 - Current alternative, including doing nothing:
 - The one advantage only this product has:
 - Category frame (existing, subcategory or new) and what it costs to teach:
@@ -111,6 +112,21 @@ The other 68 checks run automatically in `check-page.mjs`. Answer each of these 
 | PR-03 | Every decorative element left on the page has a named job; ones without a job were removed and are listed. | | |
 | PR-04 | The status line is DONE only if nothing above is unverified or unavailable; otherwise it names what is. | | |
 <!-- checklist:end -->
+
+## Artifact stress test
+Operate the signature artifact the way a curious, impatient or careless visitor would, at 1440 and 390. One row per probe; `n/a` needs the reason (an artifact with no input has no empty-input probe). A `fail` is fixed before the status can be DONE.
+
+| Probe | What you did | What the page did | Verdict |
+| --- | --- | --- | --- |
+| Empty | | | |
+| Out of range | | | |
+| Nonsense | | | |
+| Repeat | | | |
+| Reset | | | |
+| Keyboard only | | | |
+| Phone | | | |
+| Reduced motion | | | |
+| Visitor's own input | | | |
 
 ## Gate after render
 Run on the screenshots. If rendering failed, run it on the source and start the first row with `source only`.

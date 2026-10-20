@@ -1016,6 +1016,18 @@ try {
         note: [`median of ${vals.length} run${vals.length > 1 ? 's' : ''}; a lab estimate, not field data`, stopped, isFile && 'served from a temporary local server so the network throttle applies'].filter(Boolean).join('; ')});
     } finally { if (server) server.close(); }
   });
+  // Facts for the record: the text a visitor can read in the first screen at each width, before any scrolling,
+  // 1.5 s after load. verify-record.mjs checks the record's five-second line against it.
+  out.facts = {first_screen_text: {}};
+  for (const viewport of [{width: 1440, height: 900}, {width: 390, height: 844}]) {
+    const {ctx, page} = await open(viewport);
+    try {
+      await page.waitForTimeout(800);
+      out.facts.first_screen_text[String(viewport.width)] = await run(page, () => textEls()
+        .filter(el => { const b = box(el); return b.top < innerHeight && b.bottom > 0 && Number(cs(el).opacity) > 0.1; })
+        .map(el => el.innerText.replace(/\s+/g, ' ').trim()).filter(Boolean).filter((t, i, a) => a.indexOf(t) === i).join(' | ').slice(0, 4000));
+    } finally { await ctx.close(); }
+  }
 } catch (error) { out.failures.push('runtime'); out.error = String(error).split('\n')[0]; }
 finally { await browser.close(); }
 

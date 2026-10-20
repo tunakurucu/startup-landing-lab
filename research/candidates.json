@@ -15985,5 +15985,23 @@
     "round": "Pear portfolio (listed stages: Pre-seed, Series A)",
     "one_line": "AI checkout-free tech for stadiums, colleges, hospitals, and more",
     "selection_signal": null
+  },
+  {
+    "id": "meuze",
+    "name": "Meuze",
+    "website": "https://www.meuze.ai/",
+    "category": "Restaurant operations",
+    "archetype": "workflow-theater",
+    "archetype_status": "observed",
+    "reason": "Reference tier: maintainer pick.",
+    "verified_on": "2026-10-20",
+    "yc_status": "not-verified",
+    "batch": null,
+    "verification_url": "https://www.meuze.ai/",
+    "audit_id": "meuze",
+    "geography_evidence": null,
+    "tags": [],
+    "tier": "reference",
+    "selection_signal": null
   }
 ]

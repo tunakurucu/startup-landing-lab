@@ -18,7 +18,7 @@ if (!existsSync(recordPath)) { console.log(`FAIL\n- ${recordPath} does not exist
 const text = readFileSync(recordPath, 'utf8');
 
 const REQUIRED = ['Product interpretation', 'Interview log', 'References', 'Hypothesis', 'Two hero variants before code',
-  'Gate before implementation', 'Render evidence', 'Checker result', 'Checklist', 'Gate after render', 'Structural revision', 'Remaining weaknesses', 'Status'];
+  'Gate before implementation', 'Render evidence', 'Checker result', 'Checklist', 'Artifact stress test', 'Gate after render', 'Structural revision', 'Remaining weaknesses', 'Status'];
 const sections = {};
 let current = null;
 for (const line of text.split('\n')) {
@@ -45,7 +45,7 @@ for (const name of ['References', 'Two hero variants before code', 'Gate before 
 const value = (section, key) => (sections[section] || []).map(l => l.match(new RegExp(`^\\s*-\\s+${key}:\\s*(.+)$`, 'i'))).find(Boolean)?.[1]?.trim();
 // Positioning fields (v0.4): each must be present as a "- Label: answer" line. Empty answers are caught above.
 const FIELDS = {
-  'Product interpretation': ['Current alternative', 'The one advantage only this product has', 'Category frame', 'Best-fit customer', "Users' own words", 'Biggest reason not to click'],
+  'Product interpretation': ['Five-second line', 'Current alternative', 'The one advantage only this product has', 'Category frame', 'Best-fit customer', "Users' own words", 'Biggest reason not to click'],
   'Two hero variants before code': ['Category default and anti-default'],
 };
 const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -98,6 +98,29 @@ else if (!/^unavailable:/i.test(checker)) {
   if (!existsSync(f)) problems.push(`checker JSON ${checker} does not exist`);
   else { try { const j = JSON.parse(readFileSync(f, 'utf8')); checkerClean = j.status !== 'unavailable' && Array.isArray(j.failures) && j.failures.length === 0 && !(j.not_run || []).length; if (j.status === 'unavailable') checkerUnavailable = j.error || 'browser unavailable'; else if (Array.isArray(j.failures)) checkerBlockFailures = j.failures; } catch { problems.push(`checker JSON ${checker} is not valid JSON`); } }
 }
+// Five-second line (PS-01, PS-02): the quoted line must be in the first screen at both widths, as check-page.mjs read it.
+const fsLine = fieldLine('Product interpretation', 'Five-second line')?.replace(/^[^:]*:/, '').trim();
+const fsQuote = fsLine?.match(/"([^"]{8,})"|“([^”]{8,})”/);
+const norm = s => (s || '').toLowerCase().replace(/[’']/g, "'").replace(/[^a-z0-9']+/g, ' ').trim();
+if (fsLine && !fsQuote) problems.push('"Five-second line" must quote the line exactly, in double quotes, as it appears in the first screen');
+let checkerFacts = null;
+if (checker && !/^unavailable:/i.test(checker)) { try { checkerFacts = JSON.parse(readFileSync(resolve(dir, checker.replace(/`/g, '')), 'utf8')).facts || null; } catch { /* reported above */ } }
+if (fsQuote && checkerFacts?.first_screen_text) {
+  const want = norm(fsQuote[1] || fsQuote[2]);
+  for (const [w, seenText] of Object.entries(checkerFacts.first_screen_text)) if (!norm(seenText).includes(want)) problems.push(`the five-second line is not in the first screen at ${w}px (check.json facts.first_screen_text): put it there, or quote the line that is`);
+}
+// Artifact stress test: every probe answered; a fail blocks DONE.
+const PROBES = ['Empty', 'Out of range', 'Nonsense', 'Repeat', 'Reset', 'Keyboard only', 'Phone', 'Reduced motion', "Visitor's own input"];
+const probeRows = Object.fromEntries((sections['Artifact stress test'] || []).filter(l => /^\|/.test(l) && !/^\|\s*-{3}/.test(l)).map(l => l.split('|').slice(1, -1).map(c => c.trim())).filter(c => c[0] && !/^probe$/i.test(c[0])).map(c => [c[0].toLowerCase(), c]));
+const stressFails = [];
+for (const p of PROBES) {
+  const c = probeRows[p.toLowerCase()];
+  if (!c) { problems.push(`Artifact stress test is missing the "${p}" row`); continue; }
+  const verdict = (c[3] || '').toLowerCase();
+  if (!/^(pass|fail|n\/a)\b/.test(verdict) || !c[1] || !c[2]) problems.push(`Artifact stress test "${p}" needs what you did, what the page did, and pass, fail or n/a`);
+  else if (/^n\/a\b/.test(verdict) && verdict.replace(/^n\/a\W*/, '').length < 8 && c[2].length < 8) problems.push(`Artifact stress test "${p}" is n/a without a reason`);
+  if (/^fail\b/.test(verdict)) stressFails.push(p);
+}
 // Structural revision: before and after evidence must exist (screenshots, or source excerpts when rendering failed).
 for (const key of ['Before', 'After']) {
   const v = value('Structural revision', key);
@@ -112,6 +135,7 @@ if (status === 'DONE' && renderUnavailable) problems.push('Status is DONE but re
 if (status === 'DONE' && checkerUnavailable) problems.push(`Status is DONE but the checker did not run ("${checkerUnavailable}"): use DONE_WITH_CONCERNS`);
 else if (status === 'DONE' && !checkerClean) problems.push('Status is DONE but the checker JSON is missing, has block failures, or has checks that did not run: fix them or use DONE_WITH_CONCERNS');
 if (status === 'DONE' && blockFails.length) problems.push(`Status is DONE but block-severity checklist items failed (${blockFails.join(', ')}): fix them or use DONE_WITH_CONCERNS`);
+if (status === 'DONE' && stressFails.length) problems.push(`Status is DONE but the artifact stress test failed (${stressFails.join(', ')}): fix the artifact or use DONE_WITH_CONCERNS`);
 if (status === 'DONE' && unverified.length) problems.push(`Status is DONE but checklist items are unverified (${unverified.join(', ')}): use DONE_WITH_CONCERNS and name them`);
 // Hero scores: each of the five dimensions is a number from 0 to 10, read by column name.
 const DIMS = ['Fit', 'Identity', 'Originality', 'Composition', 'Proof'];

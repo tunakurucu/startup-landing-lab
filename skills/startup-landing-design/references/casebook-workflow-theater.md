@@ -162,6 +162,24 @@ Measured 2026-10-20: desktop h1 48px, weight 360, tracking -0.02em; body 18px; 1
 
 On phones: The header shows only the logo and a hamburger. The headline wraps to five lines (h1 40px), the subhead follows, and only 'download Paper' remains in the first screen. The editor window shows mainly its terminal pane. Feature card pairs stack. In the 390 full-page capture the demo windows under 'finally a continuous loop' and 'connected to real content' rendered as empty panels. The measurement counts 10 sections at 1440 and 4 at 390; page height 9,585px against 9,312px.
 
+## Meuze · workflow-theater
+
+https://www.meuze.ai/ · desktop-mobile-audit · **reference tier**
+
+A dark halftone restaurant hero pinned through a long scroll track hands off to scroll-driven scenes that stage forecasting, stock, labor and ordering with illustrative mock data.
+
+Observed: Full-bleed dark, dot-screened (halftone) image of an empty quick-service dining room with menu boards fills the first screen. A two-line headline sits left of centre, a two-sentence description and a blue 'Book a Demo' button sit bottom-left, and a hairline rule captioned 'Live data, every shift' sits bottom-right. The nav carries four uppercase links and a blue 'See it Live' button. Clicked the 'Inventory' step in How it works: it turned blue, the page jumped ~1,460px down its track, and the store cutaway redrew with the dining room faded to dotted outline. On scroll, hero text dims to transparent and returns on scroll-up; Operations cards and onboarding steps light up in turn; the forecast scene swaps from a light weekday (740 guests) to a crowded night (2,220). Under reduced motion, no animations ran, nothing was hidden, the hero track collapsed, Operations cards and onboarding steps showed fully lit, and the forecast showed its night state.
+
+Copy: H1: "The Company Brain For Your QSR Business."; primary action "Book a Demo" (nav: "See it Live"). The first screen offers no proof beyond the description; further down the page claims '2,000+ QSR locations running on Meuze' and shows five small grey integration marks (one legible as a Sysco wordmark) labelled 'Plus any system you run'.
+
+Transfer: Show each capability as a tiny, specific operational artifact (a forecast curve with a 'match day' spike, a 'Pull 12kg, today 14:00' card) instead of a feature icon and a paragraph. Keep one image treatment (halftone and dot-matrix) across photo, illustration, data and logo, so very different content reads as one system. Pair a scroll-staged scenario with explicit buttons, as the mobile forecast does, so the comparison stays reachable without scrubbing. Design the reduced-motion version as a complete static page: collapse scroll tracks and show every scene in its finished state rather than just stopping motion.
+
+Avoid/limit: At desktop the hero sits in a ~4,050px scroll track (about four and a half viewport heights) before the first explanation arrives, and a static or non-JS capture shows thousands of pixels of empty dark band. Content is dimmed until scrolled into view, and on desktop the forecast comparison is bound to scroll rather than a control. Proof rests on one unattributed count and five small marks, and the first screen offers none.
+
+Measured 2026-10-20: desktop h1 47px, weight 300, tracking -0.025em; body 15.5px; 6 sections; phone h1 29.6px.
+
+On phones: Nav collapses to logo plus hamburger; 'See it Live' leaves the first screen. Hero recomposes: image band on top, headline (29.6px) beneath, description cut to its first sentence, 'Live data, every shift' caption gone. How it works becomes illustration, then active description, then a 2×2 tab grid. Operations cards stack full-width, all rendered fully. Forecast gains two visible buttons, 'Tue · Rain' and 'Sat · Match night', above five metric tiles in two columns. Page height drops from 19,710px to 10,389px.
+
 ## Linear · workflow-theater
 
 https://linear.app/ · partial-desktop

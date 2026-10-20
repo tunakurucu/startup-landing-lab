@@ -11,14 +11,18 @@ const template = readFileSync('skills/startup-landing-design/assets/decision-rec
 
 const DEFAULT_SCORES = {Fit: 7, Identity: 6, Originality: 5, Composition: 6, Proof: 7};
 const LOW_SCORES = {Fit: 5, Identity: 5, Originality: 4, Composition: 5, Proof: 4};
-function filled(dir, {status = 'DONE', checkerFailures = [], checker = null, verdict = 'pass', score = null, scores = {}, verdicts = {}} = {}) {
+const LINE = 'A payroll app for restaurants with tipped staff';
+const FACTS = {first_screen_text: {1440: `Tipline | ${LINE} | Start a payroll run`, 390: `Tipline | ${LINE}`}};
+function filled(dir, {status = 'DONE', checkerFailures = [], checker = null, verdict = 'pass', score = null, scores = {}, verdicts = {}, stress = {}, facts = FACTS, line = LINE} = {}) {
   const s = {...DEFAULT_SCORES, ...scores}; if (score !== null) s.Fit = score;
   for (const n of ['1440', '768', '390']) copyFileSync(`docs/screenshots/demo-relayline-${n === '768' ? '390' : n}.png`, join(dir, `shot-${n}.png`));
   copyFileSync('docs/screenshots/demo-relayline-1440.png', join(dir, 'before.png'));
   copyFileSync('docs/screenshots/demo-relayline-1440.png', join(dir, 'after.png'));
-  writeFileSync(join(dir, 'check.json'), JSON.stringify(checker || {status: 'ran', failures: checkerFailures, warnings: []}));
+  writeFileSync(join(dir, 'check.json'), JSON.stringify(checker || {status: 'ran', failures: checkerFailures, warnings: [], facts}));
   let t = template.replace(/^(\s*-\s+[^:\n]{3,80}:)\s*$/gm, '$1 decided');
   t = t.replace(/\| (Product explanation|Brand composition|Counterexample) \| \| \| \|/g, '| $1 | a | b | c |');
+  t = t.replace(/^(\s*-\s+Five-second line[^:\n]*:) decided$/m, `$1 "${line}"`);
+  t = t.replace(/^\| (Empty|Out of range|Nonsense|Repeat|Reset|Keyboard only|Phone|Reduced motion|Visitor's own input) \| \| \| \|$/gm, (_, p) => `| ${p} | tried it at 1440 and 390 | responded with a clear message | ${stress[p] || 'pass'} |`);
   t = t.replace(/^(\s*-\s+Users' own words[^:\n]*:) decided$/m, '$1 "my close takes three days" (r/bookkeeping), "the payout never matches" (G2 review), "fees hide in the deposit" (support forum)');
   t = t.replace(/\| (A|B) \| \| \| \| \| \| \| \| \|/g, `| $1 | a | b | ${s.Fit} | ${s.Identity} | ${s.Originality} | ${s.Composition} | ${s.Proof} | real data |`);
   t = t.replace(/\| \| \| \|/g, '| none found | — | — |');
@@ -174,4 +178,20 @@ test('a failed PS-02 caps Fit at 5', () => {
   const b = mkdtempSync(join(tmpdir(), 'rec-'));
   filled(b, {status: 'DONE_WITH_CONCERNS: PS-02', verdicts: {'PS-02': 'fail'}, scores: {Fit: 5}});
   assert.equal(run(b).status, 0, run(b).stdout);
+});
+
+test('the five-second line must be in the first screen at every width the checker read', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'rec-'));
+  filled(dir, {facts: {first_screen_text: {1440: `Tipline | ${LINE}`, 390: 'Tipline | Pay your team'}}});
+  const r = run(dir);
+  assert.equal(r.status, 1);
+  assert.match(r.stdout, /five-second line is not in the first screen at 390px/);
+});
+test('a failed stress probe rules out DONE but allows DONE_WITH_CONCERNS', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'rec-'));
+  filled(dir, {stress: {'Out of range': 'fail'}});
+  assert.match(run(dir).stdout, /artifact stress test failed \(Out of range\)/);
+  const dir2 = mkdtempSync(join(tmpdir(), 'rec-'));
+  filled(dir2, {stress: {'Out of range': 'fail'}, status: 'DONE_WITH_CONCERNS: months field accepts 5000'});
+  assert.equal(run(dir2).status, 0, run(dir2).stdout);
 });

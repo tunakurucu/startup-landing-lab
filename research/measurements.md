@@ -31,21 +31,21 @@ Known limits found while auditing against these numbers: `sticky_nav` misses a n
 <!-- summary:end -->
 
 <!-- reference:start -->
-## Reference tier: 42 sites chosen for their design
+## Reference tier: 43 sites chosen for their design
 
 Product companies chosen for the design of their sites (each audited record names its selection signal, or says it was a maintainer pick), measured the same way on 2026-10-20 and kept out of the table above.
 
 | Measure | 25th | Median | 75th | Cohort median |
 | --- | --- | --- | --- | --- |
-| Desktop h1 size (px) | 48 | **60** | 72 | 64 |
-| Desktop h1 weight | 400 | **400** | 600 | 500 |
-| Desktop h1 tracking (em) | −0.04 | **−0.02** | −0.003 | −0.025 |
+| Desktop h1 size (px) | 48 | **56** | 65 | 64 |
+| Desktop h1 weight | 400 | **400** | 575 | 500 |
+| Desktop h1 tracking (em) | −0.04 | **−0.02** | −0.01 | −0.025 |
 | Desktop body size (px) | 15.0 | **16.0** | 18.0 | 17.0 |
 | Body characters per line | 45 | **49** | 58 | 56 |
-| Phone h1 size (px) | 32 | **40** | 46 | 38 |
+| Phone h1 size (px) | 32 | **38** | 42 | 38 |
 | Top-level sections | 4 | **7** | 9 | 7 |
 
-- 11 of 42 heroes sit on a dark ground; a `prefers-reduced-motion` rule was found on 29.
+- 11 of 43 heroes sit on a dark ground; a `prefers-reduced-motion` rule was found on 30.
 <!-- reference:end -->
 
 ## How to read this
