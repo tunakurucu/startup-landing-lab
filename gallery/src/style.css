@@ -110,7 +110,10 @@
 .eval-round{padding:60px 0;border-bottom:1px solid var(--rule)}
 .eval-round>.detail-split{padding:0;border:0}
 .eval-round h2{margin-bottom:16px}
+.table-scroll{overflow-x:auto;max-width:100%}
+.table-scroll:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .result-table{margin:6px 0 24px}
+@media (max-width:420px){.result-table th,.result-table td{padding-right:8px}}
 .result-table tbody th{color:var(--ink);font-weight:500}
 .result-table th:last-child,.result-table td:last-child{padding-right:0}
 /* Column labels carry soft hyphens; they only break where the table would otherwise overflow (320 px phones). */

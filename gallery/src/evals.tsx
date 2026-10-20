@@ -72,7 +72,7 @@ function BriefName({brief}:{brief:string}){return <>{BRIEFS[brief].brand}<span c
 function Score({value,won}:{value:number;won:boolean}){return won?<strong className="won">{value}</strong>:<>{value}</>}
 
 function ResultTable({round}:{round:Round}){
-  return <table className="measure-table result-table">
+  return <div className="table-scroll" role="region" aria-label={`Round ${round.n} results`} tabIndex={0}><table className="measure-table result-table">
     <caption>Round {round.n}: blind preference and totals out of {OUT_OF}</caption>
     <thead><tr><th scope="col">Brief</th><th scope="col">{'Prefer\u00ADred'}</th><th scope="col">With skill /{OUT_OF}</th><th scope="col">Without /{OUT_OF}</th><th scope="col">{'Confi\u00ADdence'}</th></tr></thead>
     <tbody>{round.pairs.map(p=><tr key={p.brief}>
@@ -82,7 +82,7 @@ function ResultTable({round}:{round:Round}){
       <td><Score value={p.withoutTotal} won={p.preferred==='without'}/></td>
       <td>{cap(p.confidence)}</td>
     </tr>)}</tbody>
-  </table>
+  </table></div>
 }
 
 function Comparisons({round}:{round:Round}){
