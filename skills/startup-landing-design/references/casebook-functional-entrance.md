@@ -143,3 +143,35 @@ Avoid/limit: Body copy at 12.6px is small for a ten-section page. The phone hero
 Measured 2026-10-19: desktop h1 56px, weight 400, tracking -0.035em; body 12.6px; 10 sections; phone h1 40px.
 
 On phones: Nav collapses to logo and menu icon; the announcement bar stays. The hero drops the demo box and the 'Connect' dropdown, keeping one 'Start for free' with '1,000 free credits. No card required.' Headline breaks to two lines at 40px. Logos sit in a boxed three-up strip; the terminal and product cards stack singly. The 390 capture is blank below about 4,800px.
+
+## InLoop Robotics · functional-entrance
+
+https://inloop-robotics.com/ · desktop-mobile-audit
+
+The first screen withholds the product behind a 14-day countdown drawn inside a loop-shaped stroke, then switches to a light, conventional capabilities-and-ROI page.
+
+Observed: Black full-height screen. A large pill-shaped outline (echoing the two linked O's of the INLOOP wordmark) encloses four big numerals labelled days, hours, minutes, seconds; a thick white stroke travels around the pill. Below it the single word 'Loading..'. No headline, no subhead, no hero button. The nav is a floating dark rounded bar with the wordmark, Home, Team and an orange 'Contact' pill. Operated the capabilities accordion: it auto-advances (an orange progress bar runs under the active item); clicking 'Prepare Content' collapsed 'Kitting', expanded the new description and reset the bar. The video pane beside it stayed blank grey in the headless browser. On load the countdown ticked and the stroke moved around the pill; FAQ items were blank in the full-page capture but present live after scrolling. With reduced motion the progress bar still animated and the countdown still ticked.
+
+Transfer: Make the brand mark do structural work: the loop shape frames the hero so the identity is read before a word is. An auto-advancing accordion with a visible progress bar tells visitors the list is a tour, not a menu. A two-card 'old way vs our way' comparison carries the business case without a pricing page. If the hero is a teaser, put the first real headline within one scroll so the page still explains the product.
+
+Avoid/limit: The first screen says nothing about robots or warehouses; a countdown has an expiry after which the hero is stale; videos are the only product evidence and they did not render headlessly; reduced motion is not honoured; the semi-transparent nav collides with content.
+
+Measured 2026-10-19: desktop h1 Nonepx, weight None, tracking Noneem; body 14px; 6 sections; phone h1 Nonepx.
+
+On phones: The pill splits into a vertical capsule with days/hours above minutes/seconds; nav collapses to wordmark plus hamburger. The accordion stacks above the video pane; the comparison cards stack; the scattered video cards become a two-up grid of cropped tiles. Page height is 5167px, close to desktop's 5164px.
+
+## AquaShield · functional-entrance
+
+https://aquashieldai.com · desktop-mobile-audit
+
+Three short sections, each a sentence and an embedded animated wireframe of a building with one red pipe, funnel to a single Calendly demo button.
+
+Observed: A sticky 97px bar: ring logo and wordmark left, one blue pill 'Get in touch' right. Two-column hero: left, a small blue tracked eyebrow 'WATER LEAK DETECTION FOR REAL ESTATE' with a short rule, a three-line headline 'Make hidden water networks visible' with the last word blue, a one-line grey subhead, a blue pill 'Book a demo' and a 'Backed by Y Combinator and OpenAI' line. Right, an embedded animation: a glass-wireframe five-storey building with a blue riser, dark pipes and one orange pipe on a faint floor grid. Operated the nav's 'Get in touch' link (an in-page anchor to #contact): the page scrolled from 0 to 2267px to the demo section; nothing else changed. The 'Schedule a Demo' button carries an inline handler that opens a Calendly popup; it was not operated. On load the hero building animation inside its iframe kept changing between captures 1.5s apart. On scroll each block (proof logos, copy, animation panels, contact card) ran a CSS transition as it entered view; measurement counted 19. With reducedMotion set no page-level animations ran but the hero iframe still changed over one second.
+
+Transfer: If the product makes something invisible visible, build the page around one recurring visual of that reveal and let every section reuse it at a different zoom. Isolate heavy animations in their own embedded documents so the marketing page stays plain HTML with a single font. Three sections and one Calendly button is enough when the only next step is a sales call; do not add pricing or feature grids you cannot support yet. Use orange for exactly one thing, the problem, and keep the brand accent for everything else.
+
+Avoid/limit: No real product screenshot, customer or number appears; the proof strip offers institutions, not clients. The animations run inside iframes that ignore reduced motion and were the only visual interest, so a blocked or slow frame leaves an empty hero. The page's single CTA depends on a third-party popup, and the mobile nav loses its contact link.
+
+Measured 2026-10-19: desktop h1 76px, weight 700, tracking -0.05em; body 15.7px; 3 sections; phone h1 42.1px.
+
+On phones: The nav keeps only the logo and wordmark; 'Get in touch' disappears. The hero recomposes centred: the building animation moves above the text, then the eyebrow (wrapping to two lines), a four-line 42px headline, subhead, the 'Book a demo' pill and backers. The proof band stacks its sentence over three logos. The two feature rows become single columns with the heading and paragraph above the animation. Page height 2890px versus 3167px on desktop.

@@ -1,6 +1,6 @@
 # Design archetypes
 
-These are decision families, not mutually exclusive templates. 52 dated records inform these families: 32 sites from 2026 YC, a16z speedrun and Pear cohorts audited at desktop and phone width on October 19, 2026, and 20 earlier desktop records. Workflow theater (14), immersive editorial (11), expressive world (10), typographic technical (7) and functional entrance (7) are well sampled; editorial platform (2) and canvas first (1) are still hypotheses to test on the brief.
+These are decision families, not mutually exclusive templates. 112 dated records inform these families: 92 sites from 2026 YC, a16z speedrun, Pear, Sequoia Arc, Neo and EF cohorts and a 42-site reference tier audited at desktop and phone width on October 19–20, 2026, and 20 earlier desktop records. Workflow theater (31), Immersive editorial (20), Expressive world (16), Editorial platform (15), Typographic technical (13), Functional entrance (11), Canvas first (6). Canvas first is the thinnest family; treat its recipe as the least settled.
 
 | Family / reference | Fit and personality | Composition and narrative | Interaction and mobile risk |
 | --- | --- | --- | --- |

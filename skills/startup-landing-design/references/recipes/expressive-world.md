@@ -6,7 +6,7 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 
 **Observed** across 328 measured startup homepages (2026-10-19): desktop h1 median 64px (middle half 54–76px, 90th percentile 96px), weight 500, tracking −0.025em; h1 about 3.7× the body size; body 17px at about 56 characters per line; phone h1 about 0.59× desktop (median 38px); two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.
 
-**Observed in this family** (13 audited sites, 4 of them reference tier, measured 2026-10-19/20: Arbital, Browserbase, Cactus, Clay, HeyClicky, Imperfect, Palette, Phantom, Pingo, Prized, Railway, Sparkles, Voltair): desktop h1 median 77px at weight 500 and −0.025em; body 18.0px at about 51 characters per line; 7 sections; phone h1 40px; 4 of 13 on a dark ground.
+**Observed in this family** (15 audited sites, 4 of them reference tier, measured 2026-10-19/20: Arbital, Browserbase, Cactus, Clay, Doomersion, Gutgutgoose, HeyClicky, Imperfect, Palette, Phantom, Pingo, Prized, Railway, Sparkles, Voltair): desktop h1 median 60px at weight 500 and −0.03em; body 18.0px at about 51 characters per line; 7 sections; phone h1 40px; 5 of 15 on a dark ground.
 
 | Decision | Recipe |
 | --- | --- |

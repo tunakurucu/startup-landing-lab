@@ -6,7 +6,7 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 
 **Observed** across 328 measured startup homepages (2026-10-19): desktop h1 median 64px (middle half 54–76px, 90th percentile 96px), weight 500, tracking −0.025em; h1 about 3.7× the body size; body 17px at about 56 characters per line; phone h1 about 0.59× desktop (median 38px); two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.
 
-**Observed in this family** (17 audited sites, 6 of them reference tier, measured 2026-10-19/20: Applied Electrodynamics, Atomarine, Button Computer, Clair Health, Daylight, Dia, Elyra, General Legal, Gravis Robotics, Juno, Known, Krea, Mercury, Nori, Opal Electronics, Sierra, Superhuman): desktop h1 median 64px at weight 500 and −0.02em; body 16.0px at about 55 characters per line; 8 sections; phone h1 32px; 12 of 17 on a dark ground.
+**Observed in this family** (20 audited sites, 6 of them reference tier, measured 2026-10-19/20: Applied Electrodynamics, Atomarine, Button Computer, Clair Health, Daylight, Dia, Elyra, General Legal, Gravis Robotics, Juno, Known, Krea, Mercury, Nori, Opal Electronics, Origin, Sierra, Stilta, Superhuman, Voxel Energy): desktop h1 median 64px at weight 500 and −0.012em; body 16.0px at about 54 characters per line; 8 sections; phone h1 36px; 15 of 20 on a dark ground.
 
 | Decision | Recipe |
 | --- | --- |

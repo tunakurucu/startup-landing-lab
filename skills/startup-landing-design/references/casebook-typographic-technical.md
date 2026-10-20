@@ -177,3 +177,35 @@ Avoid/limit: With no imagery, every section looks the same in weight, so the lon
 Measured 2026-10-19: desktop h1 93.6px, weight 500, tracking -0.045em; body 17.8px; 8 sections; phone h1 39px.
 
 On phones: Nav collapses to the wordmark and a circular menu button. The headline rewraps to four lines at 39px with the green clause kept. All card rows and the 12-class coverage grid stack to one column, taking the page from 7,160px to 11,382px. The cookie panel occupies most of the first screen below the buttons.
+
+## Sponge · typographic-technical
+
+https://paysponge.com/ · desktop-mobile-audit
+
+A one-column, light, text-led page that explains agent payments through small inline product demos (a card and chat transcripts) instead of screenshots or motion.
+
+Observed: Left-aligned two-line headline on a near-white ground with a pale blue wash at the top; the phrase 'agent economy' is set in bright blue. One short subhead sits below, with no hero button. The first 'Give your agent an account' block starts within the first screen: a dark card mock showing a balance and 'ERIC'S AGENT', beside a chat-bubble demo. Nav has a 'BACKED BY Y' badge, six text links, social icons and a black 'Contact' pill. Operated the 'What is x402?' FAQ item: the plus became an x, aria-expanded flipped to true and a two-paragraph answer expanded in place; URL unchanged. On load one animation ran in the hero card area; the card balance read $49.00 in the capture and $50.00 on the live visit. After scrolling, three more animations ran on card blocks. With reduced motion the page still showed moving SVG circle transitions and the top screenshot changed over 1.2s.
+
+Transfer: Show the product as a miniature of itself (a card, a chat exchange, an input) rather than a screenshot, so the demo reads at any width. Pair every claim with a button that names the artefact it opens (Launch Wallet, Launch Gateway) instead of a generic sign-up. A single accent colour used once in the headline and nowhere else keeps a text-heavy page from feeling flat without adding imagery. Put the FAQ on the homepage when the category needs vocabulary explained (x402, MPP) and let it carry the depth the hero omits.
+
+Avoid/limit: No hero CTA and no social proof beyond logos; the reduced-motion rule leaves some elements moving; low-contrast grey captions; the page relies on the reader already knowing what agents and x402 are.
+
+Measured 2026-10-19: desktop h1 72px, weight 500, tracking -0.02em; body 18px; 1 sections; phone h1 48px.
+
+On phones: Nav collapses to logo plus hamburger. Headline wraps to four lines at 48px. Each demo block stacks: copy, button, then the card or chat demo below it. The integrations row becomes three stacked groups; the three use-case cards and FAQ stack full-width. Page height grows from 2592 to 3897px with one measured section.
+
+## InsForge (InstaCloud) · typographic-technical
+
+https://insforge.dev/ · desktop-mobile-audit
+
+A fixed HUMAN/AGENT toggle swaps the whole marketing page for a monospace markdown overview with a 'Copy page' button, making the agent a first-class reader.
+
+Observed: Black ground with a faint grey grid; a slim nav (Products, Blogs, Docs, Integrations, Templates, Pricing, Careers, Roadmap, language, Discord, GitHub count, Login, green Sign Up). Centred stack: orange 'Backed by Y Combinator' chip, a two-line headline with the first line mint green and the second white, a grey subhead, a small pixel-art robot sprite, then a wide white 'Start Building Today' button beside an outlined 'Read Docs'. A 'Works perfectly with' logo strip and a floating HUMAN/AGENT pill close the first screen. Operated the fixed HUMAN/AGENT tab pill: AGENT became aria-selected and the whole page was replaced by a monospace markdown document ('InsForge Machine-Readable Overview', front-matter listing index.md, agents.md, llms.txt) with a 'Copy page' button top right; the pill stayed fixed at the viewport bottom. On load the logo strip scrolled right-to-left and the robot sprite sat at different positions between captures. With reducedMotion set the marquee reported no running animation, yet the first screen still changed over one second, and scrolling to the bottom started line-draw animations in the 'Safe for Agents' diagram and digit-roll transitions in the stat tiles.
+
+Transfer: If your buyer is partly a machine, publish the page in the machine's format too and make the switch a one-tap toggle rather than a hidden /llms.txt. Carry emphasis with one accent colour at regular weight rather than heavy type; it keeps a dense developer page quiet. Put the whole product surface in one scannable grid of small cards so breadth reads at a glance before any single feature is argued. A fixed floating control must have a reserved lane; otherwise it will collide with content, especially on narrow screens.
+
+Avoid/limit: Twelve equal-weight service cards and a 12-item nav dilute any single argument; nothing on the page shows the product actually being operated. The fixed pill overlaps content, the hero headline is regular weight at 48px and competes with the toggle for attention, and scroll-triggered line draws and counters keep running under reduced motion.
+
+Measured 2026-10-19: desktop h1 48px, weight 400, tracking 0em; body 16px; 8 sections; phone h1 32px.
+
+On phones: Nav collapses to logo, globe icon and hamburger. Headline wraps to three lines at 32px; the two CTAs stack to full width. The logo strip persists, overlapped by the fixed HUMAN/AGENT pill. The 'Ship Faster' diagram recomposes as a centre tile with icon tiles in left and right columns; the 12-card service grid becomes a single column list; testimonials and stat tiles stack one per row. Page height grows from 6358px to 11193px.

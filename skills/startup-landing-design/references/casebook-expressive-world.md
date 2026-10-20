@@ -221,3 +221,35 @@ Avoid/limit: Scene-per-section pacing makes a long page (8,845px) with little de
 Measured 2026-10-19: desktop h1 77.4px, weight 300, tracking -0.035em; body 17px; 8 sections; phone h1 34px.
 
 On phones: h1 drops to 34px over four lines; the YC strip shortens to 'Backed by Combinator'; 'Sandboxes' leaves the nav. The ASCII cloud moves below the install chip, which wraps the curl command with a backslash continuation. Sections stack single-column; the comparison table stays tabular. Measured content width 249px; page 9473px with 9 sections.
+
+## Gutgutgoose · expressive-world
+
+https://gutgutgoose.com/ · desktop-mobile-audit
+
+A DTC product page built on a sky-and-moss photographic world, with a symptom explorer and a comparison table doing the persuasion instead of science copy.
+
+Observed: A dark-green announcement bar ('Take the quiz') sits above a floating nav: a frosted logo pill at left, a frosted five-link pill in the centre, a solid green 'Get Started' pill at right. The hero is a full-bleed blue-sky photograph with a centred white two-line headline, three lines of body, one green pill CTA, and below it a rendered product jar standing on a mossy mound. A 'Backed by Y Combinator' tag and a row of white institution logos (Calico, Johns Hopkins, Oxford, Alphabet, Griffith) sit on the lower edge of the photo. Operated the 'Abdomen' tab in the symptom explorer: the four symptom rows swapped (Bloated, Stomach pain, Food reactions, Feeling sick), the italic quote and explanation changed, and the figure's dark highlight band moved from the head to the torso. Live, 0–1 animations ran at the top but 93–355 were running mid-scroll, matching the measurement's 0 on load / 93 after scroll. The sky band showed a phrase list with one line highlighted. With reducedMotion set, 2–4 animations still ran during scroll; the measurement records no reduced-motion rule.
+
+Transfer: Let the visitor pick their own symptom and watch the page re-explain itself around it; a self-selected path reads as personal in a way a generic benefits list does not. Put the price and guarantee in the second screen so a consumer product page answers 'how much' before the science. Frame against the generic alternative in a plain two-column check/cross table when the category is crowded with look-alikes. Use one deep brand colour for both trust sections (comparison, booking, footer) so the dark panels read as authority rather than mood.
+
+Avoid/limit: Headings are not real headings and controls are not real controls, so screen readers and keyboards get little structure. Hundreds of animations run mid-scroll with no reduced-motion rule. The page is long for a two-SKU store, and mid-word wrapping on mobile shows the copy was not checked at 390.
+
+Measured 2026-10-19: desktop h1 Nonepx, weight None, tracking Noneem; body 20px; 0 sections; phone h1 Nonepx.
+
+On phones: Floating nav keeps the logo pill and a hamburger pill. Hero headline shrinks to fit two lines; the jar sits below the CTA and the logo row scrolls. Product cards stack; the symptom explorer stacks list above figure; the comparison table keeps three columns in a narrow dark panel; science and input cards go to one column; advisor cards stack. Body drops to 18px / 1.5. Page grows from 11315px to 12124px.
+
+## Doomersion · expressive-world
+
+https://doomersion.com/ · desktop-mobile-audit
+
+A giant mascot wordmark and three looping phone screens stand in for any argument; the page has no buttons, only two app-store links.
+
+Observed: No nav. A black ground carries a pink-faced mascot with a blue tuft beside a very large white 'Doomersion' wordmark, a small globe glyph dotting the i. Below, two phone screens flank a centred pink three-line headline 'Learn Languages By Doomscrolling.' and a grey subhead: left a search/explore screen with Spanish cooking videos, right a 'For You' feed with an Arabic transcript panel and a tapped-word definition. A third phone (a Japanese video) begins at the bottom edge. At 1440 the DOM held no buttons, tabs or inputs, only store and footer links, so the one control operated was the 'see how it works' anchor, which is visible only at 390: it scrolled the page one screen (to y=844) to the yellow 'Learn from Subtitles' tile. Measurement reported 0 running animations at 1440 and 11 at 390; live at 390 the eleven language pills alternated between English and native-script labels ('Japanese'/'日本語'). With reducedMotion set only the English labels rendered and the first screen stayed still. Videos did not play in headless Chromium; posters showed.
+
+Transfer: If the product is a feed, show the feed moving in a phone frame and let the screens carry the explanation instead of feature prose. Design the phone layout as its own composition when the product is mobile-only; the first screen should already be the install decision. Pick three or four pastel accents and reuse them identically in the app screens and the page so product and marketing read as one object. A page with no secondary navigation forces one outcome; accept that only when install is the sole conversion.
+
+Avoid/limit: Desktop is served by the same five phone videos with no interaction, no social proof and no way to try anything; large grey bold body copy in a system font and a 29ch measure make the desktop layout feel unfinished next to the mobile one. Autoplaying video posters depend on codec support, and the only CTA is an outbound store link.
+
+Measured 2026-10-19: desktop h1 55.4px, weight 700, tracking -0.03em; body 25.8px; 9 sections; phone h1 32px.
+
+On phones: A different composition rather than a stacked desktop: a small mascot-plus-wordmark header, a cloud of eleven tilted pastel language pills, a white two-line headline, two full-width store buttons and a 'see how it works' chevron fill the first screen. Below, content becomes bento tiles: a yellow 'Learn from Subtitles' tile with a phone video, a cyan '11' tile beside a pink explore-phone tile, a green 'Language Learning Center' tile with two phones, then repeated store buttons and footer. Page height 2710px, measured section count 0.

@@ -6,7 +6,7 @@ Floors shared with the [default gate](../default-detector.md): display tracking 
 
 **Observed** across 328 measured startup homepages (2026-10-19): desktop h1 median 64px (middle half 54–76px, 90th percentile 96px), weight 500, tracking −0.025em; h1 about 3.7× the body size; body 17px at about 56 characters per line; phone h1 about 0.59× desktop (median 38px); two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.
 
-**Observed in this family** (21 audited sites, 9 of them reference tier, measured 2026-10-19/20: AgentPhone, Andera, Attio, Cal.com, Clerk, Copperlane, Cursor, Drafted, End Close, Framer, Granola, Hotbox, Interfere, LightSprint, Linear, Marble, Paper, Plain, Ramp, Toothy AI, screenpipe): desktop h1 median 60px at weight 500 and −0.02em; body 16.0px at about 58 characters per line; 8 sections; phone h1 36px; 4 of 21 on a dark ground.
+**Observed in this family** (29 audited sites, 9 of them reference tier, measured 2026-10-19/20: AgentPhone, Anchr, Andera, Attio, Bloomy, Cal.com, CentralComs, Clerk, Congruent, Copperlane, Cursor, Drafted, End Close, Fixture, Framer, Granola, Hotbox, Interfere, Kuli, LightSprint, Linear, Marble, Paper, Plain, Plena Health, Ramp, Remix, Toothy AI, screenpipe): desktop h1 median 60px at weight 600 and −0.022em; body 17.0px at about 59 characters per line; 8 sections; phone h1 36px; 7 of 29 on a dark ground.
 
 | Decision | Recipe |
 | --- | --- |

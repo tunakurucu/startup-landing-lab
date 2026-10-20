@@ -279,3 +279,51 @@ Avoid/limit: The page explains almost nothing: no screenshot, no how-it-works, n
 Measured 2026-10-19: desktop h1 16px, weight 500, tracking 0em; body 16px; 1 sections; phone h1 16px.
 
 On phones: Nav links collapse into a hamburger and the Apply to Join pill moves beside it. Stanzas rewrap to the same centered column. The footer QR code is replaced by an app icon labeled 'Tap to Install', and link columns go two-up then stack. Page grows to 1601px.
+
+## Voxel Energy · immersive-editorial
+
+https://voxelenergy.com/ · desktop-mobile-audit
+
+A full-bleed solar-farm video hero with a bottom-anchored headline, followed by magazine-style sections (claims, a US wait-time map, process, team, newsroom) on alternating grounds.
+
+Observed: Edge-to-edge aerial footage of a desert solar array fills the first screen, darkened by an overlay. Content hugs the bottom edge: an orange-outlined 'Backed by Y Combinator' pill, a two-line white headline at bottom-left, and at bottom-right a one-line claim ('builds data centers in months, not years') with a small translucent 'Talk to our team' button. The nav is only the wordmark; no links. Operated the Newsroom 'Next' arrow: the row slid one card left, the first article moved out and later cards came into view; URL unchanged. On load about 40 span-level animations ran; the mobile capture shows the headline only partly rendered. Nothing was still running after scroll. The hero video element was paused in the headless browser. With reduced motion the same span animations still ran on load; the top screen was static 1.2s later.
+
+Transfer: Anchor hero text to the bottom edge so the full-bleed footage reads first and the claim second, without a centred overlay. Use one data graphic (a map of the problem) to argue urgency instead of a feature list. Change ground colour at each section boundary so a long editorial page still has rhythm without motion. Put founder bios on the homepage when the buyer is betting on execution of physical infrastructure.
+
+Avoid/limit: No nav links and a single quiet CTA; reduced motion is ignored for the load animations; headline contrast depends on the frame of video behind it; the desktop headline is an h2 while mobile has an h1, so the document outline differs by viewport.
+
+Measured 2026-10-19: desktop h1 Nonepx, weight None, tracking Noneem; body 16px; 6 sections; phone h1 51.2px.
+
+On phones: Headline wraps to four lines and the CTA drops below the fold. Sections reorder: 'How we work' appears before the map on mobile, after it on desktop. Claim cards, process steps, founder cards and news cards all stack to one column; the map keeps its toggle and legend. Page height grows from 6271 to 7070px.
+
+## Stilta · immersive-editorial
+
+https://stilta.com · desktop-mobile-audit
+
+A full-screen microscope-footage hero with a centred two-line claim, then a long, quiet enterprise narrative that alternates product panels, proof and a chat-styled FAQ across light and dark grounds.
+
+Observed: The whole first screen is blurred microscope footage (a green rod-shaped organism among dark particles) with a white two-line headline centred mid-screen, a one-line proof subhead ('Used on high-stakes patent matters by Fortune 500s and AmLaw 100s'), and a white 'Book a demo' pill beside a translucent 'Log in'. A 'Trusted by 100+ IP teams' logo marquee runs along the bottom edge. A cookie banner covers the lower right. Nav: wordmark, three left links, three right links and a white CTA pill. Operated the '02 Portfolio' tab: aria-selected moved to it, the caption changed from 'Deep analysis for a high-stakes matter' to 'At-scale analysis across portfolios' and the laptop screen content changed to a prompt reading 'type @ to tag a portfolio'. On load the logo marquee scrolled and a progress-fill animation inside a 'patent-landscape' element ran; nothing ran after scroll. The nav switched from white-on-video to black-on-cream over light sections. With reduced motion no animations ran at all and the top screen was static.
+
+Transfer: Use footage of the subject matter (a microscope slide for patents) rather than the software to set tone, then show the product only in a framed panel further down. Let a two-option tab switch both the caption and the screen so one panel demonstrates two product modes without doubling the page. Phrase the FAQ as a chat transcript when the product itself is conversational, so the format demonstrates the interaction model. Swap nav colour by section ground instead of pinning a fixed bar, so the first screen stays uninterrupted.
+
+Avoid/limit: Very long page (almost 10,000px) with the product first shown around 2,500px down; low-contrast grey copy throughout; tiny slider dots; the cookie banner competes with the hero CTA on every first visit; hero footage is decorative and says nothing about patents until the headline is read.
+
+Measured 2026-10-19: desktop h1 60px, weight 500, tracking 0em; body 16px; 8 sections; phone h1 44px.
+
+On phones: Nav keeps the 'Book a demo' pill beside a hamburger. Headline 44px over the same footage; buttons stay in a row. The three mode cards, the pyramid callouts, the practice-area list and photo, and testimonials all stack to one column; the FAQ bubbles become full-width stacked pills. Page height grows from 9881 to 10992px with eight measured sections; the cookie banner occupies the bottom fifth of the first screen.
+
+## Origin · immersive-editorial
+
+https://origin.bio/ · desktop-mobile-audit
+
+A typed-out serif question over a live embedded platform opens a scroll-pinned, 6-plus-7-step data-driven essay that argues from trial statistics to tumour samples.
+
+Observed: Deep navy ground with a soft radial glow. A small ring logo and wordmark top-left; a centred frosted pill holds DATA ENGINE, RESEARCH and an outlined GET ACCESS button. One line of serif headline types itself out with a blinking caret ('What if we made as many cancer drugs next year as we have in the last decade?', last word italic). Beneath, a mac-style window frames a live embed of 'Origin Spatial': layers panel, a circular lung tissue section coloured by predicted cell type, and a right panel of tabs with tissue-composition percentages. A 'Click to interact' hint sits at the window's bottom edge. Operated the 'Genes' tab inside the embedded platform. A first click on the window removed the cover layer ('Click to interact'); clicking the tab then marked Genes active, blurred the app and raised a centred 'Request access' form (first name, last name, work email, company). Nothing was submitted. On load the headline typed out over several seconds with a blinking caret; three videos were present but paused. On scroll each pinned sequence held its figure while text and figure state changed and a counter advanced; 'SKIP AHEAD' is an anchor past each sequence. With reducedMotion set the caret still blinked and the first screen still changed over one second; nothing else was reported running.
+
+Transfer: Open with a single typed question and a live product window; the question sets the thesis and the window proves the product exists before any argument begins. Build the page as a numbered, scroll-pinned essay where each step changes one figure; the counter and a skip link let readers control pace without losing the argument. Use a regular-weight serif for every claim and reserve colour for data, so the charts and tissue images carry the emotion the type withholds. Gate the embedded product's controls behind an access form, but let visitors see the real interface first.
+
+Avoid/limit: The argument lives in scroll-pinned sequences that render as blank pages in static capture, in feeds and under broken JavaScript. Body and caption type are small and grey on both grounds. The product embed invites interaction and then blocks it with a form, which can read as bait. Broken research-card images and a broken footer logo were visible at inspection, and the typed headline delays the thesis by several seconds.
+
+Measured 2026-10-19: desktop h1 43.2px, weight 400, tracking -0.012em; body 10.2px; 10 sections; phone h1 24.8px.
+
+On phones: The nav becomes one frosted pill with the ring logo, two links and GET ACCESS. The typed question wraps to two lines at 24.8px. The platform embed recomposes vertically: hamburger toolbar, a small square slide viewport with 'Tap to interact', a 'Data & logs' disclosure and the tissue-composition list below. Advisors and investors become two columns. Each pinned step stacks the figure above its heading and paragraph with the counter and SKIP AHEAD beneath; 20-cluster grids become 3×4; the drug table becomes stacked rows. Page height 20477px versus 22751px.

@@ -369,3 +369,131 @@ Avoid/limit: Pale lavender text costs legibility, and 12px mobile body text is s
 Measured 2026-10-19: desktop h1 64px, weight 550, tracking -0.01em; body 16px; 9 sections; phone h1 44px.
 
 On phones: The announcement bar wraps to two link lines; nav reduces to Book a demo plus a hamburger. h1 drops to 44px and still fits on two lines. Logos wrap to three rows. Tabs, the three numbered cards and the about section stack single-column; the dashboard mock is scaled down rather than recomposed. Measured body text drops to 12px; page 9587px.
+
+## CentralComs · workflow-theater
+
+https://centralcoms.com · desktop-mobile-audit
+
+A trades-photo hero with a plain benefit headline, then two tabbed demo sections that play call and text transcripts as examples, each with its own free-trial button.
+
+Observed: A dark-blue announcement bar ('raises Seed round at a $30M valuation, led by Y Combinator') sits above a white-on-dark nav with Solutions, Pricing, Integrations, Resources, Login and a blue 'Start a free trial'. The first screen is a full-bleed photograph of two roofers, darkened, with a centred two-line white headline, a two-line subhead and one blue 'Start a free trial' button. Nothing else competes in the first screen. Operated the 'Reply to every text and email' tab: aria-selected moved to it, the phone-call mock was replaced by a text-message transcript ('Can you fix a clogged sink...') and the heading changed to 'Reply while they're ready to book'. On load and after scrolling zero animations were running; the nav became a translucent white bar with dark text once scrolled. With reduced motion nothing moved and the top screen was static.
+
+Transfer: Demonstrate a conversational product with short, labelled example transcripts (Customer / Assistant) instead of describing features. Use tabs on desktop to keep seven scenarios compact, but on mobile unroll them in full rather than hiding them behind a swipe. Repeat one identical primary button after every section so the next step never depends on scrolling back to the nav. Choose photographs of the customer's trade, not the software, when the buyer is a small-business owner.
+
+Avoid/limit: Mobile page length doubles because tab content is unrolled; the hero depends on a stock-style photo for personality; no social proof beyond the funding bar and partner logos; the dark-on-dark nav over the photo and the near-identical repeated CTA blocks make the page feel templated.
+
+Measured 2026-10-19: desktop h1 76px, weight 600, tracking -0.026em; body 20px; 8 sections; phone h1 48px.
+
+On phones: Tabs disappear: every tab's example panel and copy are laid out in sequence as stacked blocks, each with its own free-trial button, so the page grows from 6978 to 12621px. The headline wraps to three lines at 48px; nav collapses to wordmark plus hamburger; the video card, icons row, logo cloud and FAQ stack one column; the closing photo band keeps its text left-aligned.
+
+## Plena Health · workflow-theater
+
+https://www.plena.health/ · desktop-mobile-audit
+
+A rotating problem-statement headline hands off to a carousel of before/after workflow cases, each paired with a mock product screen and a hard number.
+
+Observed: A thin lavender announcement bar (a customer result) sits above a white sticky nav with a pill 'Book a demo' button. The hero is a large rounded card with a pale lavender gradient, left-aligned: a 'Backed by Y Combinator' badge, a three-line headline whose last line is in violet and changes between captures ('patients stuck on hold', 'prior auths that stall for days', 'fax queues that never empty'), one paragraph of body, and a single violet pill CTA. No product image in the first screen. Operated the carousel's right arrow: the indicator pill moved one step, the case swapped from a scheduling/waitlist case to 'Recover down coded claims' with a new problem box, new steps and a 'Revenue Cycle' mock window. The headline's violet last line also cycled on its own between page loads. Measurement counted 8–9 running animations; live, logo positions in the strip differed between captures and the workflow rows were blank in the 390 capture until scrolled into view. With reducedMotion set, the page still reported 1–6 running animations during scroll; which ones kept moving was not verified.
+
+Transfer: Rotate the pain point in the headline rather than the product claim, so one hero speaks to several buyer segments without lengthening the copy. Pair every workflow story with a problem box, numbered steps, a single outcome number and a mock screen; the repeated structure lets a reader compare cases fast. Position against the market's vocabulary explicitly (a 'what vendors say / what you need / what we do' table) when buyers are fatigued by generic AI claims. Reuse one rounded gradient card as the container for every high-emphasis section so the page reads as a system without a second colour.
+
+Avoid/limit: Two 'Book a demo' cards, a nav CTA and a hero CTA repeat the same ask; there is no product to try. The mock screens are illustrations, not captures, so the product remains unseen. Continuous marquee and rotating headline keep moving under reduced motion. Scroll-reveal hides workflow steps from anyone who does not scroll.
+
+Measured 2026-10-19: desktop h1 86.4px, weight 800, tracking -0.04em; body 20px; 9 sections; phone h1 35.1px.
+
+On phones: Nav collapses to logo plus hamburger. Hero card keeps the same layout at h1 35.1px; the headline's last line still rotates. Logo marquee becomes a two-logo-wide scrolling strip. Carousel card stacks text above the mock screen, which becomes a tall dark panel. The vendor-claims table keeps three narrow columns with wrapped text. Stat-plus-quote cards stack to one column; EMR logos become a 2×4 grid. Page grows from 7119px to 10442px.
+
+## Remix · workflow-theater
+
+https://remix.re · desktop-mobile-audit
+
+The hero is a before/after phone pair driven by a 'simple to complex' slider, so the product's output is the first thing shown, not the product.
+
+Observed: remix.re redirects to remix.is. Centred two-line headline, second line olive green, above a split stage: left, a fanned stack of portrait phone frames labelled 'The original'; centre, the logo, 'Remix any trend, reference, product or idea' and an arrow; right, one larger phone labelled 'Your remix'. Below: a row of trend names, left/right arrows and a gradient range slider from 'Simple' to 'Complex'. Nav holds four anchors, 'Book Demo' and a black 'Start Creating' button. Videos showed 'This video couldn't load' in the capture and the live session. Operated the hero's right arrow: the active trend label moved from 'Podcast Chemistry' to 'UGC in Motion', the slider handle slid right, and both phone frames swapped to a different original/remix pair. Clicking a trend label alone changed nothing. Live, 3 animations ran at the top on load, 1 during scroll; the seven hero/feature videos never played (load errors). With reducedMotion set, 0 animations ran at every sample point.
+
+Transfer: If the product's output is the proof, make the hero an input-to-output comparison and let a single slider tour the range of what it can do. Use one accent colour and a two-line heading pattern (plain line, accent line) across every section so a long page still reads as one voice. Make scale legible with arithmetic (5 × 4 × 3 = 60) rather than adjectives when the pitch is volume of variations. Expose a visible 'pause effects' control and a labelled slider so a motion-heavy page stays controllable without hunting for OS settings.
+
+Avoid/limit: The whole first screen depends on streamed video; when it fails, the hero is two dark rectangles with error buttons. Nine sections of product mocks and thumbnails make the page long and image-heavy on mobile. The 'Millions of views' claims rest on two accounts with a caveat footnote.
+
+Measured 2026-10-19: desktop h1 60px, weight 600, tracking -0.06em; body 17px; 9 sections; phone h1 34.3px.
+
+On phones: Nav keeps a 'Create' button plus hamburger. Headline h1 34.3px; the centre explainer text moves above the phones, which sit side by side at reduced size; trend labels clip at the right edge. Feature cards go to a 2×2 grid, asset tiles stack vertically, the two results cards stack, and the MCP tree stacks. Page grows from 6323px to 9807px.
+
+## Fixture · workflow-theater
+
+https://fixture.ai · desktop-mobile-audit
+
+Almost the entire page is one scroll-pinned 'day in the life' narrative: a clock, a You/Fixture ledger and a swapping product panel on a gradient stage.
+
+Observed: Black ground. Left column: a two-line white headline ('Talk to customers. Fixture does the rest.'), grey body paragraph, a blue 'Request access' button and an outlined 'Watch the day' play button; below, 'WORKS WITH YOUR FAVORITE AGENTS.' with a scrolling row of AI-tool icons. Right two-thirds: a rounded panel with a purple-to-orange gradient holding a pipeline-board product screenshot and an overlapping phone mock. A cookie banner with Decline/Allow sits along the bottom edge. Operated 'Watch the day': the URL gained '#story' and the page scrolled to the 8:00 AM chapter, where the stage showed a phone mock and the ledger read 'You 1 / Fixture 3'. During scroll the stage stayed pinned while chapter text, the clock, the index highlight and the ledger changed (10:00 AM: 'You 3 / Fixture 7'). Measurement reported 409 animations and 5 canvases; live, 12–20 ran while scrolling. Agent icon order differed between captures. With reducedMotion set, 0 animations ran at every sample and the stage video had no source.
+
+Transfer: If the product's value is 'things done while you weren't looking', narrate a day with a running tally of your actions versus the product's rather than listing features. Keep the page monochrome and confine all colour to one stage panel so the product mocks are the only saturated thing on screen. Give a long pinned narrative visible instruments (a clock, a ruler, a chapter index with arrows) so the reader knows where they are and can skip. Offer a 'watch' CTA beside the conversion CTA so a visitor who is not ready to sign up still has a next step.
+
+Avoid/limit: One scroll-pinned story is the whole argument; nothing is skimmable, and the full-page snapshot shows how much depends on JavaScript. Hundreds of animations and five canvases load on a page with no fallback imagery. Mobile loses the clock, ruler and index that made the story navigable. The cookie banner competes with every CTA.
+
+Measured 2026-10-19: desktop h1 36px, weight 700, tracking 0em; body 18px; 3 sections; phone h1 26px.
+
+On phones: Nav shrinks to logo only (no menu, CTAs, or login visible). Hero stacks: headline 26px, body, two full-width buttons, icon row, then the gradient stage panel. The pinned story is unpinned: each chapter becomes a heading, You/Fixture copy and its own gradient image panel in sequence; the clock, ruler and chapter index are gone. Cookie banner covers the lower screen. Page height 7181px, shorter than desktop.
+
+## Anchr · workflow-theater
+
+https://anchr.tech · desktop-mobile-audit
+
+A typewriter headline cycles target industries, then a 14,000px enterprise brochure stacks a mock console, a pinned four-layer system diagram, outcomes, industries, roles, press and a form.
+
+Observed: White-to-blush ground. Left: a light line 'The AI Supply Chain Employee for…' above a larger dark-red line with a blinking caret whose text differed across captures ('Ind', 'Healthcare & pharma', 'Food distribution'). Below, a round logo badge beside a tagline pill, then an outlined 'Schedule a demo' button. Right: a large chevron drawn in thin red outline, facets filled with food-market photos, framed by dotted diagonal guides. Nav: seven uppercase links, a theme toggle, a dark-red 'Get a demo' button. In the measurement capture the nav logo image was broken (alt text showed) and the right side was empty. Operated the 'Company brain + ontology' accordion tab in the product section: it expanded with 'Give every agent one shared understanding of your business', the previous tab collapsed, and the isometric plate relabelled from 'Data + integration fabric' to 'Company brain + ontology'. On scroll the plates stacked one by one while the section stayed pinned; headline text and logo-strip positions differed between captures; live counts of running animations ranged from 12 to 107 while scrolling. With reducedMotion set, 11 animations ran briefly on load then 0 at every later sample.
+
+Transfer: If you sell to several verticals, type the industry into the headline rather than listing them, so each visitor sees their own sector named within seconds. Explain a layered platform with one pinned diagram whose layers accumulate as the reader scrolls, with a matching accordion so the reader can also jump. Label projected outcome figures as illustrative on the page itself rather than letting large numbers imply measured results. Keep one brand colour and one typeface across a very long page; the restraint is what holds fourteen sections together.
+
+Avoid/limit: The page is very long and front-loads credibility logos before showing what the product does. Pinned sections leave large blank runs in non-JS captures and on mobile. The console mock broke layout in the live session after scrolling. Thin light type on a pale textured ground reduces legibility. Outcomes are explicitly illustrative, which undercuts the 'Outcomes' heading.
+
+Measured 2026-10-19: desktop h1 Nonepx, weight None, tracking Noneem; body 16px; 9 sections; phone h1 Nonepx.
+
+On phones: Nav collapses to logo and a round hamburger. The chevron graphic moves above the headline; display drops to 23.4px while the typed industry line continues. Tagline pill and demo button stack full-width. Logo strip shows two logos at a time. The product section keeps accordion tabs but the pinned plate diagram yields a long near-empty gradient run (over 2000px) before the 'Systems' heading in the full-page capture. Page height 13394px, near desktop's 13909px.
+
+## Bloomy · workflow-theater
+
+https://bloomylearning.com · desktop-mobile-audit
+
+A split hero whose right panel is a tabbed, self-cycling product mock (diagnostic, gating, tutor), followed by a research-and-proof ladder aimed at school buyers.
+
+Observed: Pale blue-to-mint ground with a faint dot grid. Left: a two-line headline with the second line in a blue-to-teal gradient, a four-line body paragraph, three feature labels separated by rules, a full-width gradient 'Request a school demo' button, and two small linked lines for parents and sign-in. Right: a white card with a gradient header bar and a product mock that differs between captures ('BloomyBot scaffolds student learning' chat; 'integrates with your 3rd-party data' diagram), with three pill tabs below it. Nav: logo, two links, gradient CTA, 'Sign in'. Operated the hero's 'Mastery gating' tab: the panel header changed to 'Students advance only after proving mastery', the mock became a skill list with a locked next skill, a 97% mastery ring, '301 Bloomy Bucks' and a '4 day streak'; the tab pill filled with the gradient. The hero panel's content differed between captures without a click. Live, 42 animations ran at the top, 8–19 during scroll. With reducedMotion set, 4 ran at the top and 7–19 during scroll. The full-page capture had a 1700px blank run after the stage cards.
+
+Transfer: Make the hero mock tabbed and let it cycle on its own, so a visitor sees three product moments without scrolling or clicking. For a buyer who answers to a board, name the research (authors and theories) and put the operating numbers (90% threshold, 25 minutes) in oversized numerals before any testimonial. Show the product's state model (complete / active / locked) as three side-by-side cards; a reader grasps gating faster from state than from prose. Carry a single gradient through the CTA, headline accent and stat numerals so the page has one signature without a second brand colour.
+
+Avoid/limit: Ten sections of mock UI make a long page whose proof is self-illustrated rather than captured. Mobile drops the hero mock, so the product is unseen until far down a 15,600px page. Scroll-reveal leaves large blanks for non-scrolling readers, and reduced motion still leaves animations running. Stat numerals are framed as product rules, not outcomes.
+
+Measured 2026-10-19: desktop h1 55.2px, weight 700, tracking -0.025em; body 16.8px; 10 sections; phone h1 36px.
+
+On phones: Nav collapses to logo and hamburger; CTA leaves the bar. The hero's mock panel and tabs are removed entirely; the three feature labels become a checklist with green ticks, and the gradient CTA goes full-width. h1 36px / 1.1. The gradient strip stacks its three claims vertically; stat cards, testimonials, stage cards and accessibility cards all go to one column. Page nearly doubles from 8225px to 15611px.
+
+## Congruent · workflow-theater
+
+https://congruent.io · desktop-mobile-audit
+
+A 100px all-caps claim and an exploded hardware render hand off to a scroll-pinned city scene whose caption steps through Record, Augment, Get synthetic data.
+
+Observed: A fixed 65px header: wordmark at left, small tracked monospace links HOME, TECHNOLOGY, ABOUT US centred and CONTACT US at right. On a near-black ground with a blue radial glow, a three-line all-caps headline fills the left two-thirds: 'THE ONLY RADAR FOR' in white, 'END-TO-END AUTONOMY' in cyan. A three-line monospace paragraph, a cyan rectangular 'BOOK A DEMO' button and a 'Backed by Y Combinator' line sit beneath. An exploded render of the radar module (lid, antenna board, housing on pins) floats at the right, overlapping the headline's last word. Operated 'BOOK A DEMO': the button was replaced in place by an inline form (name, email, use-case textarea, a Formspree notice, Cancel and Submit), which pushed the hero text up under the fixed header; nothing was submitted. On load one muted looping video autoplayed in the pinned section and a cursor blinked in the typed-prompt span. On scroll the video stayed pinned while captions and overlays changed and the prompt typed out. With reducedMotion set the video still autoplayed and the cursor still blinked; the first screen itself did not change over one second.
+
+Transfer: Pin one scene and change only the caption and overlay as the reader scrolls; the constant frame makes a three-step pipeline legible without a diagram. Reserve the accent colour for one word per heading so the claim hierarchy survives an all-dark page. Pair a geometric display face with a monospace body when the product is hardware plus data; the contrast separates the claim from the specification. Expanding a demo form in place keeps the reader in context, but reserve the vertical room for it so the hero does not jump.
+
+Avoid/limit: Everything hinges on the pinned video; headless capture, slow connections or reduced-motion users get a long page of blank space and a video that keeps playing. Three nav links go nowhere, the hero render collides with the headline at 1440 and with the body text at 390, 12px body on mobile is hard to read, and 'the only radar' is asserted five times without evidence beyond renders.
+
+Measured 2026-10-19: desktop h1 100px, weight 800, tracking -0.02em; body 16px; 6 sections; phone h1 32px.
+
+On phones: Nav shrinks to the centred wordmark alone; the three nav links and CONTACT US disappear with no menu control. The headline becomes four centred lines at 32px; the exploded render moves behind the body paragraph instead of beside it, and the YC line wraps. The pinned street video becomes a small full-width strip with the wordmark bar overlapping it in the capture; the claim rows and team cards stack to one column. Page height 13302px with large empty stretches between pinned steps.
+
+## Kuli · workflow-theater
+
+https://kuli.one · desktop-mobile-audit
+
+A self-running chat demo under the headline scans 1,284 creators into a shortlist while every later section is another fabricated product panel with hard numbers.
+
+Observed: A white sticky 65px nav: wordmark, six text links, an 'FR' globe pill, 'Log in' and a dark purple pill 'Book a Demo'. On a pale lavender dot-grid with a soft glow, a centred 'Backed by Y Combinator' chip sits over a one-line headline 'Run [rotating phrase] 10× faster.' whose middle phrase is a lilac italic serif ('social media' at 1440, 'creator marketing' at 390 in measurement). Two lines of grey body, a purple pill 'Book a Demo' and a text link 'See how it works'. A greyscale logo marquee and the top of a two-pane product demo close the first screen. Operated the 'FR' toggle (aria 'Passer en français'): the page navigated to /fr/, the nav, headline ('Pilotez votre stratégie d'influence 10× plus vite.'), body and CTAs switched to French, the demo's chat brief stayed in English, and the toggle read 'EN'. On load 46 transitions were running: the hero demo typed a brief, stepped through 'Pulled 1,284 candidates… Watched 6,400 posts… Scored brand fit' and filled the shortlist; 'live' dots pulsed; one of 26 creator videos played. With reducedMotion set the first screen was still over one second but 11–13 animations (ping/pulse dots, chip transitions) kept running and all videos stayed paused.
+
+Transfer: Let the hero demo run itself from a real-looking brief to a ranked result so the visitor sees the whole job finish before reading a feature. Switch one phrase of the headline into an italic serif to carry the brand voice; keep everything else in a single quiet sans. Give every section a fabricated product panel with specific numbers rather than an illustration; specificity reads as proof even without customers. Localise the whole page behind a one-tap toggle, but make sure demo content switches too or the seam shows.
+
+Avoid/limit: Dozens of concurrent transitions and 26 video elements make the page heavy, and reduced motion only partly quiets it. The demo and panels present invented stats (1,284 scanned, €1.2M EMV) with no customer attribution; the comparison table prices competitors without sources. The hero demo disappears on mobile, removing the page's main argument for phone visitors.
+
+Measured 2026-10-19: desktop h1 68px, weight 700, tracking -0.035em; body 18px; 6 sections; phone h1 36px.
+
+On phones: Nav keeps the wordmark, a 'Book a Demo' pill and a hamburger; the FR toggle and Log in move out of view. The headline stacks to three centred lines with the rotating phrase on its own line; CTAs sit side by side. The logo marquee shows two logos at a time. The two-pane hero demo is not present in the 390 capture; the page goes from logos to 'How Kuli works', and each feature row stacks copy above a full-width product panel. Page height 10150px versus 7400px at 1440.
