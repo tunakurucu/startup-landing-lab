@@ -1,4 +1,4 @@
-// Run the automatic checks from assets/checks.json (68 of the skill's 100) against a rendered page.
+// Run the automatic checks from assets/checks.json (79 of the skill's 111) against a rendered page.
 // Usage: node scripts/check-page.mjs <url-or-html-file>
 // Prints JSON: every check with id, severity, pass and detail, plus failures (block), warnings (warn) and not_run.
 // Exits 1 when any block-severity check fails, and 3 when no browser could run: it then still prints JSON with
@@ -170,7 +170,25 @@ function helpers() {
     const hero = A.filter(el => !chrome(el));
     return hero.find(filled) || hero.find(boxed) || A.find(filled) || hero.find(el => el.tagName === 'BUTTON' || el.matches('input,[role=button]')) || hero[0] || null;
   };
-  var textRects = el => { const r = []; for (const n of el.childNodes) if (n.nodeType === 3 && n.textContent.trim()) { const g = document.createRange(); g.selectNodeContents(n); r.push(...[...g.getClientRects()].filter(q => q.width > 0 && q.height > 0)); } return r; };
+  // The signature artifact: the element marked data-signature; else a guess, the region outside site chrome holding the most
+  // controls (ties go to the smaller one). Returns {el, marked}.
+  var CTL_SEL = 'button,input:not([type=hidden]),select,textarea,summary,[role=button],[role=tab],[role=switch],[role=slider],[role=radio],[role=checkbox],[role=option]';
+  var signature = () => {
+    const m = document.querySelector('[data-signature]');
+    if (m && m.getAttribute('data-signature').startsWith('none')) return {none: m.getAttribute('data-signature').replace(/^none:?\s*/, '') || 'no reason given'};
+    if (m) return {el: m, marked: true};
+    const ctls = el => [...el.querySelectorAll(CTL_SEL)].filter(c => seen(c) && !c.disabled && c.type !== 'submit' && c.type !== 'email').length;
+    const pageArea = document.documentElement.scrollHeight * innerWidth;
+    let best = null, bestN = 1;
+    for (const el of document.querySelectorAll('main section, main figure, main article, main div, main form, section, figure')) {
+      if (!seen(el) || chrome(el)) continue;
+      const b = box(el); if (b.width * b.height > pageArea * 0.5) continue;
+      const n = ctls(el);
+      if (n > bestN || (n === bestN && best && b.width * b.height < box(best).width * box(best).height)) { best = el; bestN = n; }
+    }
+    return best ? {el: best, marked: false} : null;
+  };
+  var textRects = el => { const r = [];for (const n of el.childNodes) if (n.nodeType === 3 && n.textContent.trim()) { const g = document.createRange(); g.selectNodeContents(n); r.push(...[...g.getClientRects()].filter(q => q.width > 0 && q.height > 0)); } return r; };
 }
 /* eslint-enable no-unused-vars */
 const HELPERS = helpers.toString().replace(/^[^{]*\{/, '').replace(/\}\s*$/, '');
@@ -441,7 +459,7 @@ try {
           h1Count: document.querySelectorAll('h1').length, levels,
           ratioH1: h1 ? px(h1) / px(p0) : 0, ratioH2: h2 ? px(h2) / px(p0) : null,
           h1Tracking: h1 ? Math.round(trackingEm(h1) * 1000) / 1000 : 0,
-          bodyPx: px(p0), tiny: T.filter(el => px(el) < 11 && !el.closest('[aria-hidden=true]')).slice(0, 6).map(el => `${ownText(el).slice(0, 24)} (${px(el).toFixed(1)}px)`),
+          bodyPx: px(p0), tiny: T.filter(el => px(el) < 11.95 &&!el.closest('[aria-hidden=true]')).slice(0, 6).map(el => `${ownText(el).slice(0, 24)} (${px(el).toFixed(1)}px)`),
           thinSmall: T.filter(el => px(el) < 28 && Number(cs(el).fontWeight) < 400).slice(0, 4).map(el => `${ownText(el).slice(0, 30)} (${px(el)}px/${cs(el).fontWeight})`),
           leading: P.filter(p => { const lh = cs(p).lineHeight; return (lh === 'normal' ? 1.2 : parseFloat(lh) / px(p)) < 1.35; }).slice(0, 3).map(p => p.textContent.trim().slice(0, 30)),
           hiddenShare: T.length ? hidden.length / T.length : 0, hiddenSample: hidden.slice(0, 3).map(el => ownText(el).slice(0, 30)),
@@ -583,9 +601,155 @@ try {
     } finally { await ctx.close(); }
   });
 
+  // ======================= 390 × 844: the signature artifact, keyboard and stress =======================
+  // Fresh pages, so nothing the main pass clicked carries over. Each probe that could navigate reloads the page after.
+  await section('the 390px interaction pass', ['HR-07', 'MB-07', 'MB-08', 'MB-09', 'MB-10', 'AX-12', 'AX-13', 'LY-08'], async () => {
+    let {ctx, page} = await open({width: 390, height: 844});
+    const fresh = async () => { await ctx.close(); ({ctx, page} = await open({width: 390, height: 844})); };
+    try {
+      // AX-13: the first Tab stop is on screen and big enough to see.
+      await page.evaluate(() => { scrollTo({top: 0, behavior: 'instant'}); document.activeElement?.blur?.(); });
+      await page.keyboard.press('Tab'); await page.waitForTimeout(250);
+      const tab1 = await run(page, () => {
+        const el = document.activeElement; if (!el || el === document.body) return {none: true};
+        const b = box(el); const onScreen = b.bottom > 0 && b.top < innerHeight && b.right > 0 && b.left < innerWidth;
+        return {el: describe(el), w: Math.round(b.width), h: Math.round(b.height), onScreen, opacity: visibleOpacity(el), skip: /skip/i.test(label(el))};
+      });
+      check('AX-13', !!tab1.none || (tab1.onScreen && tab1.w >= 16 && tab1.h >= 16 && tab1.opacity > 0.5), tab1.none ? 'nothing on the page takes focus' : {first_tab_stop: tab1.el, size: `${tab1.w}×${tab1.h}px`, on_screen: tab1.onScreen, opacity: +tab1.opacity.toFixed(2)});
+
+      // MB-10: phone page length.
+      const height = await page.evaluate(() => document.documentElement.scrollHeight);
+      check('MB-10', height <= 6752, {page_height_px: height, screens: +(height / 844).toFixed(1)});
+
+      // HR-07 at 390, and the signature's controls.
+      const sig = await run(page, () => {
+        scrollTo({top: 0, behavior: 'instant'});
+        const s = signature(); if (!s) return null;
+        if (s.none) return {none: s.none};
+        const b = box(s.el);
+        const visible = Math.max(0, Math.min(b.bottom, innerHeight) - Math.max(b.top, 0));
+        const C = [...s.el.querySelectorAll(CTL_SEL + ',a[href]')].filter(c => seen(c) && !c.disabled && visibleOpacity(c) > 0.1 && cs(c).pointerEvents !== 'none');
+        const inSentence = el => cs(el).display === 'inline' && !!el.parentElement?.closest('p,li,dd,td,figcaption');
+        const small = C.filter(c => !inSentence(c) && !(['checkbox', 'radio'].includes(c.type) && c.labels?.length)).map(c => ({c, b: box(c)})).filter(x => x.b.width + 0.5 < 44 || x.b.height + 0.5 < 44)
+          .map(x => `${(label(x.c) || x.c.tagName.toLowerCase()).slice(0, 24)} ${Math.round(x.b.width)}×${Math.round(x.b.height)}px`);
+        // Visually hidden checkboxes and radios are used through their visible label (chips, swatches).
+        const viaLabel = [...s.el.querySelectorAll('input[type=checkbox],input[type=radio]')].filter(c => (!seen(c) || visibleOpacity(c) <= 0.1) && !c.disabled && c.labels?.[0] && seen(c.labels[0])).map(c => seen(c) ? c : c.labels[0]);
+        const probe = [...C, ...viaLabel].filter(c => c.tagName !== 'A' && !['date', 'time', 'datetime-local', 'month', 'week', 'color', 'file', 'hidden'].includes(c.type) && !(c.type === 'submit' && c.form && c.form.getAttribute('action'))).slice(0, 12);
+        probe.forEach((c, i) => c.setAttribute('data-sll-ctl', String(i)));
+        return {marked: s.marked, el: describe(s.el), top: Math.round(b.top), height: Math.round(b.height), visible: Math.round(visible), small, n: probe.length,
+          kinds: probe.map(c => c.tagName === 'LABEL' ? 'label' : c.tagName === 'SELECT' ? 'select' : c.tagName === 'TEXTAREA' ? 'text' : c.tagName === 'INPUT' ? (['checkbox', 'radio'].includes(c.type) ? 'toggle' : c.type === 'range' ? 'range' : ['text', 'search', 'number', 'email', 'url', 'tel', ''].includes(c.type) ? 'text' : 'click') : (c.getAttribute('role') === 'slider' ? 'range' : 'click')),
+          labels: probe.map(c => (label(c) || c.getAttribute('name') || c.tagName.toLowerCase()).slice(0, 30))};
+      });
+      const need = s => Math.min(280, s.height - 1);
+      if (sig?.none) {
+        for (const id of ['HR-07', 'MB-07', 'MB-09', 'AX-12']) check(id, true, `declared none: ${sig.none} (an index or document page; verify-record does not accept this for a landing page)`);
+      } else if (!sig) {
+        for (const id of ['HR-07', 'MB-07', 'MB-09', 'AX-12']) check(id, false, 'no signature artifact found: mark the product artifact with data-signature');
+      } else {
+        part.sig390 = sig;
+        check('HR-07', sig.visible >= need(sig), {at: '390×844', signature: sig.el, marked: sig.marked || 'no: guessed from the controls; mark it with data-signature', top_px: sig.top, visible_px: sig.visible, needed_px: need(sig)});
+        check('MB-09', sig.small.length === 0, {under_44x44: sig.small.slice(0, 8)});
+        // MB-07 and AX-12: use each control from the keyboard, centred in the viewport, and watch what changes.
+        const off = [], dead = [], dropped = [], probed = [];
+        for (let i = 0; i < sig.n; i++) {
+          const loc = page.locator(`[data-sll-ctl="${i}"]`);
+          if (!(await loc.count()) || !(await loc.isVisible().catch(() => false)) || await loc.isDisabled().catch(() => true)) continue;
+          const before = page.url();
+          await run(page, k => {
+            const c = document.querySelector(`[data-sll-ctl="${k}"]`); c.scrollIntoView({block: 'center', behavior: 'instant'});
+            window.__muts = [];
+            window.__mo?.disconnect();
+            window.__mo = new MutationObserver(ms => { for (const m of ms) { window.__muts.push(m.target.nodeType === 1 ? m.target : m.target.parentElement); for (const n of m.addedNodes || []) window.__muts.push(n.nodeType === 1 ? n : n.parentElement); } });
+            window.__mo.observe(document.body, {subtree: true, childList: true, attributes: true, characterData: true});
+          }, i);
+          const kind = sig.kinds[i];
+          try {
+            if (kind === 'label') await loc.click({timeout: 1500});
+            else await loc.focus({timeout: 1500});
+            if (kind === 'label') { /* clicked */ }
+            else if (kind === 'select') { const n = await loc.evaluate(s => s.options.length); const cur = await loc.evaluate(s => s.selectedIndex); if (n > 1) await loc.selectOption({index: (cur + 1) % n}); }
+            else if (kind === 'text') { await loc.fill(''); await page.keyboard.type('Test 42', {delay: 5}); await page.keyboard.press('Enter'); }
+            else if (kind === 'range') await page.keyboard.press('ArrowRight');
+            else if (kind === 'toggle') await page.keyboard.press('Space');
+            else await page.keyboard.press('Enter');
+          } catch { continue; }
+          await page.waitForTimeout(500);
+          if (page.url().split('#')[0] !== before.split('#')[0]) { await fresh(); probed.push(`${sig.labels[i]}: navigated`); break; }
+          const res = await run(page, k => {
+            window.__mo?.disconnect();
+            const c = document.querySelector(`[data-sll-ctl="${k}"]`);
+            const changed = [...new Set(window.__muts)].filter(el => el && el.isConnected && c && !c.contains(el) && el !== document.body && el !== document.documentElement);
+            const inView = changed.filter(el => { if (!seen(el)) return false; const b = box(el); return b.bottom > 0 && b.top < innerHeight && b.width * b.height > 0; });
+            const a = document.activeElement;
+            return {changed: changed.length, inView: inView.length, focusLost: !a || a === document.body, sample: describe(changed.find(el => seen(el)) || changed[0])};
+          }, i);
+          probed.push(`${sig.labels[i]}: ${res.changed} changed, ${res.inView} in view`);
+          if (res.changed === 0 && !/reset|clear|undo|start over/i.test(sig.labels[i])) dead.push(sig.labels[i]);
+          else if (res.changed > 0 && res.inView === 0) off.push(`${sig.labels[i]} (changed ${res.sample}, off-screen)`);
+          if (res.focusLost) dropped.push(sig.labels[i]);
+        }
+        check('MB-07', off.length === 0 && dead.length === 0, {controls_used: probed.length, feedback_off_screen: off.slice(0, 6), dead_controls: dead.slice(0, 6), method: 'each control centred at 390×844, used from the keyboard; a change counts when an element other than the control changes inside the viewport'});
+        check('AX-12', dropped.length === 0, {focus_dropped_to_body_after: dropped.slice(0, 6)});
+      }
+
+      // MB-08: Escape closes the header menu and returns focus to its button.
+      await fresh();
+      const menu = page.locator('header button[aria-expanded]:visible, [role=banner] button[aria-expanded]:visible, nav button[aria-expanded]:visible, header summary:visible');
+      if (!(await menu.count())) check('MB-08', true, 'n/a: no menu button at 390px');
+      else {
+        const btn = menu.first();
+        const state = () => btn.evaluate(b => b.tagName === 'SUMMARY' ? b.parentElement.open : b.getAttribute('aria-expanded') === 'true');
+        await btn.click({timeout: 3000}).catch(() => {}); await page.waitForTimeout(350);
+        const opened = await state();
+        if (!opened) check('MB-08', false, 'the menu button did not open anything (aria-expanded stayed false)');
+        else {
+          await page.keyboard.press('Escape'); await page.waitForTimeout(350);
+          const closed = !(await state());
+          const back = await btn.evaluate(b => document.activeElement === b);
+          check('MB-08', closed && back, {closed_on_escape: closed, focus_returned_to_button: back});
+        }
+      }
+
+      // LY-08: a long unbroken string in every text field, submitted with Enter and with the field's own button.
+      await fresh();
+      const nFields = await run(page, () => {
+        const F = [...document.querySelectorAll('input:not([type]),input[type=text],input[type=search],input[type=email],input[type=url],textarea')].filter(f => seen(f) && !f.disabled && !f.readOnly);
+        F.forEach((f, i) => f.setAttribute('data-sll-field', String(i))); return F.length;
+      });
+      const wide = [];
+      for (let i = 0; i < Math.min(nFields, 6); i++) {
+        const f = page.locator(`[data-sll-field="${i}"]`);
+        if (!(await f.count())) { await fresh(); continue; }
+        const isEmail = await f.evaluate(x => x.type === 'email');
+        const long = isEmail ? 'a'.repeat(60) + '@' + 'b'.repeat(130) + '.example' : 'W'.repeat(200);
+        const before = page.url();
+        try {
+          await f.fill(long, {timeout: 2000});
+          await f.press('Enter');
+          await page.waitForTimeout(300);
+          if (page.url().split('#')[0] === before.split('#')[0]) {
+            const btn = await run(page, k => {
+              const x = document.querySelector(`[data-sll-field="${k}"]`); if (!x) return false;
+              let scope = x.form || x.parentElement; for (let up = 0; up < 3 && scope && !scope.querySelector('button'); up++) scope = scope.parentElement;
+              const b = scope && [...scope.querySelectorAll('button')].find(b => seen(b) && !b.disabled && b.type !== 'reset');
+              if (!b || (x.form && x.form.getAttribute('action') && b.type !== 'button')) return false;
+              b.setAttribute('data-sll-go', ''); return true;
+            }, i);
+            if (btn) { await page.locator('[data-sll-go]').first().click({timeout: 2000}).catch(() => {}); await page.waitForTimeout(400); }
+          }
+        } catch { /* field could not be used */ }
+        if (page.url().split('#')[0] !== before.split('#')[0]) { await fresh(); continue; }
+        const sw = await page.evaluate(() => document.documentElement.scrollWidth);
+        if (sw > 391) wide.push(`field ${i + 1} (${isEmail ? 'email' : 'text'}): page ${sw}px wide`);
+        await page.evaluate(() => document.querySelectorAll('[data-sll-go]').forEach(b => b.removeAttribute('data-sll-go')));
+      }
+      check('LY-08', wide.length === 0, nFields ? {fields_tried: Math.min(nFields, 6), sideways_scroll: wide} : 'n/a: no text field');
+    } finally { await ctx.close(); }
+  });
+
   // ======================= 1440 × 900 =======================
   let d = null;
-  await section('the 1440px pass', ['HR-01', 'HR-02', 'HR-04', 'PS-06', 'CP-01', 'CP-02', 'CP-07', 'CP-08', 'CP-11', 'ST-01', 'ST-03', 'ST-05', 'ST-06', 'TY-07', 'TY-10', 'LY-01', 'LY-05', 'LY-06', 'LY-07', 'CO-02', 'CO-03', 'TT-01', 'TT-02', 'TT-03', 'TT-04', 'MO-04', 'MO-06', 'PF-03', 'PF-06', 'PF-07', 'AX-03'], async () => {
+  await section('the 1440px pass', ['HR-01', 'HR-02', 'HR-04', 'PS-06', 'CP-01', 'CP-02', 'CP-07', 'CP-08', 'CP-11', 'ST-01', 'ST-03', 'ST-05', 'ST-06', 'TY-07', 'TY-10', 'LY-01', 'LY-05', 'LY-06', 'LY-07', 'CO-02', 'CO-03', 'TT-01', 'TT-02', 'TT-03', 'TT-04', 'MO-04', 'MO-06', 'PF-03', 'PF-06', 'PF-07', 'AX-03', 'HR-07', 'TY-11', 'CP-12', 'CP-13', 'CO-01'], async () => {
     const {ctx: c, page: p} = await open({width: 1440, height: 900});
     try {
       d = await run(p, () => {
@@ -641,6 +805,75 @@ try {
       check('TT-02', d.iconRows === 0, `${d.iconRows} row(s) of icon-topped cards`);
       check('TT-03', !(d.h2Count >= 3 && d.kicked / d.h2Count >= 0.75), `${d.kicked} of ${d.h2Count} h2s have a tracked-caps label above`);
       check('TT-04', d.sideStripe === 0 && d.filler === 0, {side_stripes: d.sideStripe, pattern_fill_backgrounds: d.filler});
+
+      // HR-07 at 1440, TY-11 (faces render as named), CP-12 (builder notes), CP-13 (weekdays).
+      const v6 = await run(p, async year => {
+        scrollTo({top: 0, behavior: 'instant'});
+        const s = signature(); let sigAt = null;
+        if (s?.none) sigAt = {none: s.none};
+        else if (s) { const b = box(s.el); sigAt = {el: describe(s.el), marked: s.marked, top: Math.round(b.top), height: Math.round(b.height), visible: Math.round(Math.max(0, Math.min(b.bottom, innerHeight) - Math.max(b.top, 0)))}; }
+        // Which family in a stack actually renders: the first one whose glyph widths differ from both generic baselines.
+        const cx = document.createElement('canvas').getContext('2d');
+        const W = f => { cx.font = `48px ${f}`; return cx.measureText('Hamburgefonstiv 0123 QWxyz').width; };
+        const base = {mono: W('monospace'), serif: W('serif'), sans: W('sans-serif')};
+        const GENERIC = /^(serif|sans-serif|monospace|cursive|fantasy|system-ui|ui-serif|ui-sans-serif|ui-monospace|ui-rounded|math|emoji|fangsong)$/i;
+        const SYSTEM = /^(-apple-system|BlinkMacSystemFont|system-ui|ui-sans-serif|ui-serif|ui-monospace|Segoe UI|SF Pro.*|SF Mono|Menlo|Consolas)$/i;
+        const DEFAULTS = /^(Times New Roman|Times|Liberation Serif|DejaVu Serif|Nimbus Roman|Arial|Helvetica|Liberation Sans|DejaVu Sans|Nimbus Sans|Courier New|Courier|Liberation Mono|DejaVu Sans Mono)$/i;
+        // A face declared with @font-face counts when any of its files loads (faces load lazily, so ask for them first);
+        // an undeclared name counts when the system has it, judged by glyph widths against two generic baselines.
+        const norm = f => f.replace(/["']/g, '').trim().toLowerCase();
+        const declared = new Map();
+        for (const f of document.fonts) { const k = norm(f.family); if (!declared.has(k)) declared.set(k, []); declared.get(k).push(f); }
+        for (const faces of declared.values()) await Promise.allSettled(faces.filter(f => f.status === 'unloaded').map(f => f.load()));
+        const has = fam => { const faces = declared.get(norm(fam)); if (faces) return faces.some(f => f.status === 'loaded'); const q = `"${fam}"`; return W(`${q}, monospace`) !== base.mono || W(`${q}, serif`) !== base.serif; };
+        const resolve = stack => {
+          const fams = stack.split(',').map(x => x.replace(/["']/g, '').trim()).filter(Boolean);
+          const first = fams[0];
+          if (!first || GENERIC.test(first) || SYSTEM.test(first) || DEFAULTS.test(first)) return null;
+          if (has(first)) return null;
+          const used = fams.find(f => !GENERIC.test(f) && has(f)) || fams.find(f => GENERIC.test(f)) || 'browser default';
+          return {named: first, renders: used, default_face: GENERIC.test(used) || DEFAULTS.test(used) || used === 'browser default'};
+        };
+        const stacks = [...new Set(textEls().map(el => cs(el).fontFamily))];
+        const fallbacks = stacks.map(resolve).filter(x => x && x.default_face);
+        // Visible text, without form values and placeholders.
+        const text = document.body.innerText;
+        const LEAK = /\b((?:per|from|in|according to|not in) the brief|the brief (?:says|said|did not|does not|doesn't|didn't|supplies|supplied|gives|gave|asks)|(?:confirm|check) with the (?:client|founder)|ours to confirm|founder to confirm|to be confirmed by|placeholder (?:text|copy|image|logo)|lorem ipsum|TODO|FIXME|XXX|insert [a-z ]+ here|replace (?:this|with (?:the|your)))\b|\[(?:Company|Product|Name|Your [A-Za-z]+|Customer|Logo|Founder)\]/g;
+        const leaks = [...new Set((text.match(LEAK) || []).map(x => x.trim()))].slice(0, 6);
+        // Dates written with a weekday.
+        const MON = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+        const DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+        const years = (text.match(/\b20[2-3]\d\b/g) || []).reduce((m, y) => (m[y] = (m[y] || 0) + 1, m), {});
+        const common = Object.entries(years).sort((a, b) => b[1] - a[1])[0]?.[0];
+        const tryYears = [...new Set([year, common && Number(common)].filter(Boolean))];
+        const D = '(Mon|Tue|Tues|Wed|Thu|Thur|Thurs|Fri|Sat|Sun)[a-z]*\\.?,?';
+        const M = '(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\\.?';
+        const pats = [new RegExp(`\\b${D}\\s+(\\d{1,2})(?:st|nd|rd|th)?\\s+${M}(?:,?\\s+(20\\d\\d))?`, 'g'), new RegExp(`\\b${D}\\s+${M}\\s+(\\d{1,2})(?:st|nd|rd|th)?\\b(?:,?\\s+(20\\d\\d))?`, 'g')];
+        const wrong = [];
+        let datesSeen = 0;
+        for (const [k, re] of pats.entries()) for (const m of text.matchAll(re)) {
+          const dayName = m[1].slice(0, 3).toLowerCase(); const day = Number(k === 0 ? m[2] : m[3]); const mon = MON.indexOf((k === 0 ? m[3] : m[2]).slice(0, 3).toLowerCase()); const y = m[4] ? [Number(m[4])] : tryYears;
+          if (mon < 0 || day < 1 || day > 31) continue;
+          datesSeen++;
+          if (!y.some(yy => { const dt = new Date(Date.UTC(yy, mon, day)); return dt.getUTCMonth() === mon && DAYS[dt.getUTCDay()] === dayName; })) wrong.push(`${m[0].trim()} (${y.join(' or ')})`);
+        }
+        return {sigAt, fallbacks: fallbacks.slice(0, 4), stacks: stacks.length, leaks, wrong: [...new Set(wrong)].slice(0, 6), datesSeen, years: tryYears};
+      }, Number(out.checked_on.slice(0, 4)));
+      if (v6.sigAt?.none) check('HR-07', true, `declared none: ${v6.sigAt.none}`);
+      else if (!v6.sigAt) check('HR-07', false, 'no signature artifact found at 1440: mark the product artifact with data-signature');
+      else check('HR-07', v6.sigAt.visible >= Math.min(280, v6.sigAt.height - 1), {at: '1440×900', signature: v6.sigAt.el, marked: v6.sigAt.marked || 'no: guessed; mark it with data-signature', top_px: v6.sigAt.top, visible_px: v6.sigAt.visible, needed_px: Math.min(280, v6.sigAt.height - 1)});
+      check('TY-11', v6.fallbacks.length === 0, v6.fallbacks.length ? {falls_back: v6.fallbacks.map(f => `"${f.named}" is missing; renders as ${f.renders}`), fix: 'ship the face (self-hosted woff2 or a font service) or name an installed face first'} : `${v6.stacks} font stack(s) render as named`);
+      check('CP-12', v6.leaks.length === 0, v6.leaks.length ? {builder_notes_on_page: v6.leaks} : 'no builder or client notes found in the visible text');
+      check('CP-13', v6.wrong.length === 0, {dates_with_weekdays: v6.datesSeen, wrong_weekday: v6.wrong, years_assumed_when_none_given: v6.years});
+
+      // CO-01 at 1440 too: header buttons and wide layouts get their own colours at desktop widths.
+      const axeMod1440 = await load('@axe-core/playwright', {optional: true});
+      const Axe1440 = axeMod1440 ? (axeMod1440.AxeBuilder || axeMod1440.default?.AxeBuilder || axeMod1440.default?.default || axeMod1440.default) : null;
+      if (Axe1440) {
+        const res = await new Axe1440({page: p}).withRules(['color-contrast']).analyze();
+        const fails = res.violations.flatMap(v => v.nodes.map(n => n.target.join(' ')));
+        check('CO-01', fails.length === 0, {at: '1440×900', axe_violations: fails.slice(0, 8)});
+      }
 
       // Copy (CP) and urgency (HP-05) from the rendered text.
       const copy = await run(p, () => {

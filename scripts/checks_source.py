@@ -1,4 +1,4 @@
-"""Canonical source for the skill's 100 checks (v0.4). Run `python3 scripts/checks_source.py` to regenerate
+"""Canonical source for the skill's checks (v0.6). Run `python3 scripts/checks_source.py` to regenerate
 skills/startup-landing-design/assets/checks.json, skills/startup-landing-design/references/checklist.md and the
 checklist table inside skills/startup-landing-design/assets/decision-record.md. Never hand-edit those outputs.
 
@@ -44,6 +44,7 @@ CREDITS = {
     'BAY': 'Baymard Institute',
     'GOOG': 'Google Search guidance on intrusive interstitials',
     'FTC': 'US Federal Trade Commission rule on fake reviews and testimonials (2024)',
+    'APG': 'W3C WAI-ARIA Authoring Practices Guide',
     'MATH': 'Mathur et al. 2019, dark patterns at scale',
 }
 
@@ -76,6 +77,8 @@ CHECKS = [
   ('CP-09', 'One line next to the primary action answers the biggest reason not to click: cost, card, time, setup or data.', 'shot', 'warn', 'HD CH JS 37S'),
   ('CP-10', 'Section headings carry the argument on their own: reading only the headings explains the product.', 'shot', 'warn', 'NNG'),
   ('CP-11', 'Body copy scores Flesch–Kincaid grade 9 or below, or the record gives the audience reason.', 'auto', 'warn', 'UB NNG'),
+  ('CP-12', 'No notes to the builder or the client reach the page: nothing like "the brief", "confirm with the client", "placeholder", "TODO", "lorem ipsum" or a bracketed "[Company]".', 'auto', 'block', 'SLL'),
+  ('CP-13', 'Every date shown with a weekday is a real date: the weekday matches the day, month and year.', 'auto', 'block', 'SLL'),
   # Hero
   ('HR-01', 'The headline and primary action are visible without scrolling at 1440×900 and 390×844.', 'auto', 'block', 'GST VWG NNG'),
   ('HR-02', 'The primary action\'s label starts with a verb and names the outcome in 2–5 words; "Get started", "Learn more", "Start now" or "Try it now" alone fail. "Book a demo" and "Join the waitlist" pass.', 'auto', 'warn', 'IMP GST VWG NNG'),
@@ -83,6 +86,7 @@ CHECKS = [
   ('HR-04', 'A headline above about 6.5rem is the signature of the page and keeps each line to three words or fewer.', 'auto', 'warn', 'IMP SLL'),
   ('HR-05', 'The first screen is not a false floor: at 1440×900 and 390×844 some content below the hero, or a hero element cut by the fold, shows in the bottom 15% of the viewport.', 'auto', 'warn', 'NNG'),
   ('HR-06', 'The hero is sized with svh/dvh or by its content, not a fixed 100vh that clips under mobile browser bars.', 'code', 'warn', 'EK'),
+  ('HR-07', 'The signature artifact (marked `data-signature`) shows at least 280px of itself, or all of itself, in the first screen at 390×844 and at 1440×900.', 'auto', 'block', 'SLL NNG'),
   # Structure and conversion
   ('ST-01', 'Cost is easy to find: a header or footer link to pricing or plans, or visible prices; otherwise the record says how cost is disclosed and why.', 'auto', 'warn', 'NNG SO HS'),
   ('ST-02', 'Within 5 seconds at 390×844, no dialog or fixed overlay covers more than 30% of the viewport, except a legally required consent prompt named in the record.', 'auto', 'warn', 'GOOG NNG'),
@@ -96,11 +100,12 @@ CHECKS = [
   ('TY-03', 'The h1 and the first h2 are each at least 1.25× the body size.', 'auto', 'block', 'IMP GST'),
   ('TY-04', 'Headline letter-spacing is no tighter than −0.04em.', 'auto', 'block', 'IMP'),
   ('TY-05', 'Body text is at least 16px on phones.', 'auto', 'warn', 'GST IMP'),
-  ('TY-06', 'No readable text below 11px.', 'auto', 'block', 'IMP GST'),
+  ('TY-06', 'No readable text below 12px, superscripts and labels included.', 'auto', 'block', 'IMP GST'),
   ('TY-07', 'Body paragraphs stay under about 80 rendered characters per line.', 'auto', 'warn', 'IMP AFD WCAG'),
   ('TY-08', 'Body line-height is at least 1.35.', 'auto', 'warn', 'IMP'),
   ('TY-09', 'Weights under 400 appear only at 28px and up; smaller text is 400 or heavier.', 'auto', 'warn', 'JK'),
   ('TY-10', 'A display face that is everywhere (Inter, Space Grotesk, Fraunces, Roboto, Poppins, Montserrat) has a stated reason, and every face has a role (display, text, data).', 'auto', 'warn', 'IMP GST AFD'),
+  ('TY-11', 'Every face renders as named: a named display, text or data face never falls back to a browser default (Times, Arial, DejaVu, Liberation) because it is missing.', 'auto', 'block', 'SLL WEB'),
   # Layout
   ('LY-01', 'No horizontal scroll at 390px, at 1× and at 3× pixel density.', 'auto', 'block', 'GST VWG'),
   ('LY-02', 'No horizontal scroll at 320px.', 'auto', 'block', 'EK WCAG'),
@@ -109,6 +114,7 @@ CHECKS = [
   ('LY-05', 'No boxed card sits inside another boxed card.', 'auto', 'warn', 'IMP'),
   ('LY-06', 'In-page anchor targets and focused controls are not hidden under a sticky header.', 'auto', 'warn', 'VWG JK WCAG'),
   ('LY-07', 'A footer exists and holds real destinations.', 'auto', 'warn', 'SLL'),
+  ('LY-08', 'A 200-character unbroken string typed into any text field and submitted causes no sideways scroll at 390px.', 'auto', 'block', 'SLL'),
   # Colour
   ('CO-01', 'Text meets WCAG AA contrast (4.5:1, or 3:1 for 24px+ or 18.66px+ bold); text over images or gradients is sampled at its worst point.', 'auto', 'block', 'IMP VWG GST WCAG'),
   ('CO-02', 'No gradient-filled text and no coloured glow used as decoration.', 'auto', 'warn', 'IMP AFD'),
@@ -137,6 +143,10 @@ CHECKS = [
   ('MB-04', 'Inputs use at least 16px text, so phones do not zoom on focus.', 'auto', 'warn', 'EK VWG'),
   ('MB-05', 'If the nav collapses on phones, a working menu control replaces it.', 'auto', 'block', 'GST'),
   ('MB-06', 'Dense artifacts are recomposed for phones, not shrunk or removed.', 'shot', 'block', 'SLL'),
+  ('MB-07', 'On phones, every control in the signature artifact answers in view: after a tap, something other than the control itself changes on screen, and no control is dead.', 'auto', 'block', 'SLL NNG'),
+  ('MB-08', 'Escape closes an open menu and returns focus to the button that opened it.', 'auto', 'block', 'APG WCAG'),
+  ('MB-09', 'On phones, controls inside the signature artifact are at least 44×44px.', 'auto', 'block', 'APL GST'),
+  ('MB-10', 'The phone page is at most eight screens tall (6,752px at 390×844); a longer page cuts repeats before adding sections.', 'auto', 'warn', 'SLL'),
   # Accessibility and robustness
   ('AX-01', 'Every link and button has an accessible name.', 'auto', 'block', 'VWG'),
   ('AX-02', 'Every image has alt text, empty only when decorative.', 'auto', 'block', 'VWG'),
@@ -149,6 +159,8 @@ CHECKS = [
   ('AX-09', 'No broken images.', 'auto', 'block', 'IMP'),
   ('AX-10', 'Results of local actions are announced (aria-live or role=status).', 'code', 'warn', 'VWG'),
   ('AX-11', 'With WCAG 1.4.12 text spacing applied (line-height 1.5, paragraph spacing 2em, letter-spacing 0.12em, word-spacing 0.16em), no text is clipped or overlaps.', 'auto', 'block', 'WCAG'),
+  ('AX-12', 'Using a signature-artifact control from the keyboard never drops focus to the page body (a control that disables itself hands focus on).', 'auto', 'block', 'WCAG VWG'),
+  ('AX-13', 'The first Tab stop (usually the skip link) is visible on screen when focused.', 'auto', 'block', 'WCAG'),
   # Performance and metadata
   ('PF-01', 'Images declare width and height or an aspect-ratio, and images below the first screen load lazily.', 'auto', 'warn', 'VWG'),
   ('PF-02', 'The largest element in the first screen (LCP) is not lazy-loaded or injected after load, and an LCP image has fetchpriority="high" or a preload.', 'auto', 'block', 'WEB'),
@@ -171,8 +183,8 @@ CHECKS = [
 ]
 
 if __name__ == '__main__':
-    assert len(CHECKS) == 100, len(CHECKS)
-    ids = [c[0] for c in CHECKS]; assert len(set(ids)) == 100
+    N = len(CHECKS)
+    ids = [c[0] for c in CHECKS]; assert len(set(ids)) == N
     for i, t, v, s, c in CHECKS:
         assert i[:2] in SECTIONS and v in ('auto', 'shot', 'code', 'record') and s in ('block', 'warn'), i
         for k in c.split(): assert k in CREDITS, f'{i}: unknown credit key {k}'
@@ -180,8 +192,8 @@ if __name__ == '__main__':
     data = [{'id': i, 'check': t, 'verify': v, 'severity': s, 'credit': c.split()} for i, t, v, s, c in CHECKS]
     (root / 'assets/checks.json').write_text(json.dumps(data, indent=1, ensure_ascii=False) + '\n')
     v = Counter(c[2] for c in CHECKS)
-    manual = 100 - v['auto']
-    out = ['# The 100 checks', '',
+    manual = N - v['auto']
+    out = [f'# The {N} checks', '',
            f"Generated from `assets/checks.json`. **{v['auto']} auto** checks are decided by `scripts/check-page.mjs`; "
            f"**{v['shot']} screenshot**, **{v['code']} code** and **{v['record']} record** checks are answered in the "
            '`## Checklist` section of `DESIGN-RECORD.md`, one line each: `ID | pass, fail or n/a | evidence`. '
@@ -203,4 +215,4 @@ if __name__ == '__main__':
     t = re.sub(r'The other \d+ checks run automatically', f"The other {v['auto']} checks run automatically", t)
     t = re.sub(r'Answer each of these \d+ ', f'Answer each of these {manual} ', t)
     rec.write_text(t)
-    print('100 checks:', dict(v))
+    print(N, 'checks:', dict(v))

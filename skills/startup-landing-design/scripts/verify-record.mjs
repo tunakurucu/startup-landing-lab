@@ -46,6 +46,7 @@ const value = (section, key) => (sections[section] || []).map(l => l.match(new R
 // Positioning fields (v0.4): each must be present as a "- Label: answer" line. Empty answers are caught above.
 const FIELDS = {
   'Product interpretation': ['Five-second line', 'Current alternative', 'The one advantage only this product has', 'Category frame', 'Best-fit customer', "Users' own words", 'Biggest reason not to click'],
+  'Hypothesis': ['Signature on a phone', 'Sample audit', 'To confirm with the client'],
   'Two hero variants before code': ['Category default and anti-default'],
   'Statement': ['Subject inventory', 'Dealt hand', 'Chosen move', 'Idea sentence', 'The same sentence with the nearest competitor', 'Statement level', 'First viewport at 1440', 'First viewport at 390', 'Name test'],
 };
@@ -106,6 +107,11 @@ const norm = s => (s || '').toLowerCase().replace(/[’']/g, "'").replace(/[^a-z
 if (fsLine && !fsQuote) problems.push('"Five-second line" must quote the line exactly, in double quotes, as it appears in the first screen');
 let checkerFacts = null;
 if (checker && !/^unavailable:/i.test(checker)) { try { checkerFacts = JSON.parse(readFileSync(resolve(dir, checker.replace(/`/g, '')), 'utf8')).facts || null; } catch { /* reported above */ } }
+// A landing page always has a signature artifact; data-signature="none" is for index and document pages only.
+try { const j = checker && !/^unavailable:/i.test(checker) ? JSON.parse(readFileSync(resolve(dir, checker.replace(/`/g, '')), 'utf8')) : null;
+  const hr7 = j?.checks?.find(c => c.id === 'HR-07');
+  if (hr7 && typeof hr7.detail === 'string' && hr7.detail.startsWith('declared none')) problems.push('the page declares data-signature="none": a landing page needs its signature artifact marked and in the first screen (HR-07)');
+} catch { /* reported above */ }
 if (fsQuote && checkerFacts?.first_screen_text) {
   const want = norm(fsQuote[1] || fsQuote[2]);
   for (const [w, seenText] of Object.entries(checkerFacts.first_screen_text)) if (!norm(seenText).includes(want)) problems.push(`the five-second line is not in the first screen at ${w}px (check.json facts.first_screen_text): put it there, or quote the line that is`);

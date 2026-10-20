@@ -207,6 +207,24 @@
   ]
  },
  {
+  "id": "CP-12",
+  "check": "No notes to the builder or the client reach the page: nothing like \"the brief\", \"confirm with the client\", \"placeholder\", \"TODO\", \"lorem ipsum\" or a bracketed \"[Company]\".",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "CP-13",
+  "check": "Every date shown with a weekday is a real date: the weekday matches the day, month and year.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
   "id": "HR-01",
   "check": "The headline and primary action are visible without scrolling at 1440×900 and 390×844.",
   "verify": "auto",
@@ -266,6 +284,16 @@
   "severity": "warn",
   "credit": [
    "EK"
+  ]
+ },
+ {
+  "id": "HR-07",
+  "check": "The signature artifact (marked `data-signature`) shows at least 280px of itself, or all of itself, in the first screen at 390×844 and at 1440×900.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "SLL",
+   "NNG"
   ]
  },
  {
@@ -382,7 +410,7 @@
  },
  {
   "id": "TY-06",
-  "check": "No readable text below 11px.",
+  "check": "No readable text below 12px, superscripts and labels included.",
   "verify": "auto",
   "severity": "block",
   "credit": [
@@ -428,6 +456,16 @@
    "IMP",
    "GST",
    "AFD"
+  ]
+ },
+ {
+  "id": "TY-11",
+  "check": "Every face renders as named: a named display, text or data face never falls back to a browser default (Times, Arial, DejaVu, Liberation) because it is missing.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "SLL",
+   "WEB"
   ]
  },
  {
@@ -493,6 +531,15 @@
   "check": "A footer exists and holds real destinations.",
   "verify": "auto",
   "severity": "warn",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "LY-08",
+  "check": "A 200-character unbroken string typed into any text field and submitted causes no sideways scroll at 390px.",
+  "verify": "auto",
+  "severity": "block",
   "credit": [
    "SLL"
   ]
@@ -737,6 +784,45 @@
   ]
  },
  {
+  "id": "MB-07",
+  "check": "On phones, every control in the signature artifact answers in view: after a tap, something other than the control itself changes on screen, and no control is dead.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "SLL",
+   "NNG"
+  ]
+ },
+ {
+  "id": "MB-08",
+  "check": "Escape closes an open menu and returns focus to the button that opened it.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "APG",
+   "WCAG"
+  ]
+ },
+ {
+  "id": "MB-09",
+  "check": "On phones, controls inside the signature artifact are at least 44×44px.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "APL",
+   "GST"
+  ]
+ },
+ {
+  "id": "MB-10",
+  "check": "The phone page is at most eight screens tall (6,752px at 390×844); a longer page cuts repeats before adding sections.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
   "id": "AX-01",
   "check": "Every link and button has an accessible name.",
   "verify": "auto",
@@ -831,6 +917,25 @@
  {
   "id": "AX-11",
   "check": "With WCAG 1.4.12 text spacing applied (line-height 1.5, paragraph spacing 2em, letter-spacing 0.12em, word-spacing 0.16em), no text is clipped or overlaps.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "WCAG"
+  ]
+ },
+ {
+  "id": "AX-12",
+  "check": "Using a signature-artifact control from the keyboard never drops focus to the page body (a control that disables itself hands focus on).",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "WCAG",
+   "VWG"
+  ]
+ },
+ {
+  "id": "AX-13",
+  "check": "The first Tab stop (usually the skip link) is visible on screen when focused.",
   "verify": "auto",
   "severity": "block",
   "credit": [

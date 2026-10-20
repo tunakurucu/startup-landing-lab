@@ -15,16 +15,16 @@ test('the research includes recent cohorts without relabelling older companies',
 
 const checks=read('skills/startup-landing-design/assets/checks.json');
 const text=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
-test('the v0.4 catalogue has 100 checks in the agreed sections and verify split',()=>{
-  assert.equal(checks.length,100);assert.equal(new Set(checks.map(c=>c.id)).size,100);
+test('the v0.6 catalogue has 111 checks in the agreed sections and verify split',()=>{
+  assert.equal(checks.length,111);assert.equal(new Set(checks.map(c=>c.id)).size,111);
   const by=k=>checks.reduce((m,c)=>(m[c[k]]=(m[c[k]]||0)+1,m),{});
-  assert.deepEqual(by('verify'),{shot:14,record:15,auto:68,code:3});
+  assert.deepEqual(by('verify'),{shot:14,record:15,auto:79,code:3});
   const sections={};for(const c of checks){const s=c.id.slice(0,2);sections[s]=(sections[s]||0)+1;}
-  assert.deepEqual(sections,{PS:9,CP:11,HR:6,ST:6,TY:10,LY:7,CO:4,TT:6,MO:8,MB:6,AX:11,PF:7,HP:5,PR:4});
+  assert.deepEqual(sections,{PS:9,CP:13,HR:7,ST:6,TY:11,LY:8,CO:4,TT:6,MO:8,MB:10,AX:13,PF:7,HP:5,PR:4});
   for(const c of checks){assert.match(c.id,/^[A-Z]{2}-\d{2}$/);assert.ok(['block','warn'].includes(c.severity),c.id);assert.ok(c.credit.length>0,c.id);}
   // spot checks against the spec
   const get=id=>checks.find(c=>c.id===id);
-  assert.equal(get('MO-05').severity,'block');assert.equal(get('MB-02').severity,'warn');assert.equal(get('AX-11').verify,'auto');
+  assert.equal(get('MO-05').severity,'block');assert.equal(get('MB-07').verify,'auto');assert.equal(get('HR-07').severity,'block');assert.equal(get('MB-02').severity,'warn');assert.equal(get('AX-11').verify,'auto');
   assert.equal(get('CP-04').verify,'record');assert.equal(get('ST-04').verify,'record');assert.deepEqual(get('PF-07').credit,['UI','CHN','VWG']);
   assert.equal(checks.find(c=>c.id==='TT-07'),undefined);assert.equal(checks.find(c=>c.id==='PS-10'),undefined);
 });
@@ -33,7 +33,7 @@ test('every credit key is defined in the generated checklist',()=>{
   const defined=new Set([...md.match(/^Credits: .*$/m)[0].matchAll(/\*\*([A-Z0-9]+)\*\*/g)].map(m=>m[1]));
   for(const c of checks)for(const k of c.credit)assert.ok(defined.has(k),`${c.id}: credit ${k} is not defined`);
   for(const k of ['NNG','WCAG','WEB','APL','JS','HD','AD','CH','PG','YC','37S','SWC','UB','WPAI','CHN','AUT','UI','EM','CXL','SO','HS','HUB','BAY','GOOG','FTC','MATH'])assert.ok(defined.has(k),k);
-  assert.match(md,/\*\*68 auto\*\*/);
+  assert.match(md,/\*\*79 auto\*\*/);
 });
 test('check-page.mjs decides every automatic check, and only those',()=>{
   const src=text('skills/startup-landing-design/scripts/check-page.mjs');
@@ -47,5 +47,5 @@ test('the decision-record template lists exactly the checks that need eyes',()=>
   const table=rec.slice(rec.indexOf('<!-- checklist:start -->'),rec.indexOf('<!-- checklist:end -->'));
   const ids=[...table.matchAll(/^\| ([A-Z]{2}-\d{2}) \|/gm)].map(m=>m[1]);
   assert.deepEqual(ids,checks.filter(c=>c.verify!=='auto').map(c=>c.id));
-  assert.match(rec,/The other 68 checks run automatically/);
+  assert.match(rec,/The other 79 checks run automatically/);
 });

@@ -28,6 +28,9 @@ Test every headline and section heading:
 
 A line passes with two of three (CP-05); the h1 must also be false or odd on the alternative's page (CP-04). The tests are Harry Dry's [HD]; applying them line by line comes from Corey Haines's copywriting skill [CHN]. Last, would you say it aloud to a friend? [PG]
 
+
+**Machine-writing patterns** (cut on sight; Humanizer, github.com/blader/humanizer): "not just X, it's Y" lines; a dramatic one-line closer at the end of a section; a rebuttal to an objection nobody raised ("No, you don't need a data team"); a list of three where two are filler; unnamed experts ("teams tell us", "sales engineers say") that are not sourced; and, after any rewrite, a fact that was not in the original claims.
+
 ## Worked example (fictional)
 
 *Ledgerlace* is invented. It splits each payment-processor payout into sales, fees, refunds and holds, and matches it to the bank deposit. Best fit: bookkeepers who close the month for online stores. Alternative: two CSV exports matched by hand. No customers yet; a working matcher on sample data; a founder who reconciled payouts for six years.

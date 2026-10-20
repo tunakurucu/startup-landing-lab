@@ -46,6 +46,9 @@ Copy this file next to the page as `DESIGN-RECORD.md` and replace every prompt w
 - Composition and grid:
 - Ground, colour and material, and why this ground:
 - Signature artifact and its local behaviour:
+- Signature on a phone (where the result shows after a tap):
+- Sample audit (counts, weekdays, states and stated rules agree):
+- To confirm with the client (claims and terms kept off the page):
 - Section sequence, with one section deliberately omitted:
 - Primary interaction and motion purpose:
 
@@ -85,7 +88,7 @@ Each screenshot cell is a relative `.png` path, or `unavailable: "<decisive erro
 - Optional tools (Impeccable detect, web-design-guidelines): result, or "not run: <reason>":
 
 ## Checklist
-The other 68 checks run automatically in `check-page.mjs`. Answer each of these from the screenshots, the code or this record: `pass`, `fail`, `n/a`, or `unverified` when the evidence could not be produced (for example, no render). A block-severity `fail` or any `unverified` rules out DONE. See `references/checklist.md` for severity and credit.
+The other 79 checks run automatically in `check-page.mjs`. Answer each of these from the screenshots, the code or this record: `pass`, `fail`, `n/a`, or `unverified` when the evidence could not be produced (for example, no render). A block-severity `fail` or any `unverified` rules out DONE. See `references/checklist.md` for severity and credit.
 
 <!-- checklist:start -->
 | ID | Check | Verdict (pass / fail / n/a / unverified) | Evidence |

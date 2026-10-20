@@ -1,10 +1,10 @@
-# The 100 checks
+# The 111 checks
 
-Generated from `assets/checks.json`. **68 auto** checks are decided by `scripts/check-page.mjs`; **14 screenshot**, **3 code** and **15 record** checks are answered in the `## Checklist` section of `DESIGN-RECORD.md`, one line each: `ID | pass, fail or n/a | evidence`. `scripts/verify-record.mjs` refuses to finish while any of them is unanswered.
+Generated from `assets/checks.json`. **79 auto** checks are decided by `scripts/check-page.mjs`; **14 screenshot**, **3 code** and **15 record** checks are answered in the `## Checklist` section of `DESIGN-RECORD.md`, one line each: `ID | pass, fail or n/a | evidence`. `scripts/verify-record.mjs` refuses to finish while any of them is unanswered.
 
 **block** = fix before calling the page done, or end with DONE_WITH_CONCERNS. **warn** = fix, or record the product reason it stays.
 
-Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry Tan); **EK** Emil Kowalski's skills; **VWG** Vercel Web Interface Guidelines; **MP** Matt Pocock's skills; **AFD** Anthropic frontend-design; **ASC** Anthropic skill-creator; **JK** Jakub Krehel's interface skills; **MT** Meng To's design skills; **SLL** Startup Landing Lab research; **NNG** Nielsen Norman Group research (nngroup.com); **WCAG** W3C Web Content Accessibility Guidelines 2.2; **WEB** web.dev (Core Web Vitals, LCP, fonts); **APL** Apple Human Interface Guidelines; **JS** Julian Shapiro, growth handbook (julian.com); **HD** Harry Dry, Marketing Examples; **AD** April Dunford, positioning; **CH** Copyhackers / Joanna Wiebe; **PG** Paul Graham essays; **YC** Y Combinator advice; **37S** 37signals; **SWC** Stanford Web Credibility Research; **UB** Unbounce conversion benchmark report (2024); **WPAI** Wikipedia, "Signs of AI writing"; **CHN** Corey Haines, marketingskills (MIT); **AUT** auteur skill (MIT); **UI** ibelick ui-skills, fixing-metadata (MIT); **EM** Evil Martians, study of 100 developer-tool landing pages; **CXL** CXL Institute social-proof research; **SO** Stack Overflow Developer Survey 2025; **HS** HockeyStack B2B SaaS benchmark; **HUB** HubSpot landing-page form research; **BAY** Baymard Institute; **GOOG** Google Search guidance on intrusive interstitials; **FTC** US Federal Trade Commission rule on fake reviews and testimonials (2024); **MATH** Mathur et al. 2019, dark patterns at scale. Every rule is written in this project's own words; see `docs/attribution.md` in the repository for links and licences.
+Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry Tan); **EK** Emil Kowalski's skills; **VWG** Vercel Web Interface Guidelines; **MP** Matt Pocock's skills; **AFD** Anthropic frontend-design; **ASC** Anthropic skill-creator; **JK** Jakub Krehel's interface skills; **MT** Meng To's design skills; **SLL** Startup Landing Lab research; **NNG** Nielsen Norman Group research (nngroup.com); **WCAG** W3C Web Content Accessibility Guidelines 2.2; **WEB** web.dev (Core Web Vitals, LCP, fonts); **APL** Apple Human Interface Guidelines; **JS** Julian Shapiro, growth handbook (julian.com); **HD** Harry Dry, Marketing Examples; **AD** April Dunford, positioning; **CH** Copyhackers / Joanna Wiebe; **PG** Paul Graham essays; **YC** Y Combinator advice; **37S** 37signals; **SWC** Stanford Web Credibility Research; **UB** Unbounce conversion benchmark report (2024); **WPAI** Wikipedia, "Signs of AI writing"; **CHN** Corey Haines, marketingskills (MIT); **AUT** auteur skill (MIT); **UI** ibelick ui-skills, fixing-metadata (MIT); **EM** Evil Martians, study of 100 developer-tool landing pages; **CXL** CXL Institute social-proof research; **SO** Stack Overflow Developer Survey 2025; **HS** HockeyStack B2B SaaS benchmark; **HUB** HubSpot landing-page form research; **BAY** Baymard Institute; **GOOG** Google Search guidance on intrusive interstitials; **FTC** US Federal Trade Commission rule on fake reviews and testimonials (2024); **APG** W3C WAI-ARIA Authoring Practices Guide; **MATH** Mathur et al. 2019, dark patterns at scale. Every rule is written in this project's own words; see `docs/attribution.md` in the repository for links and licences.
 
 ## Product and story
 
@@ -35,6 +35,8 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | CP-09 | One line next to the primary action answers the biggest reason not to click: cost, card, time, setup or data. | shot | warn | HD CH JS 37S |
 | CP-10 | Section headings carry the argument on their own: reading only the headings explains the product. | shot | warn | NNG |
 | CP-11 | Body copy scores Flesch–Kincaid grade 9 or below, or the record gives the audience reason. | auto | warn | UB NNG |
+| CP-12 | No notes to the builder or the client reach the page: nothing like "the brief", "confirm with the client", "placeholder", "TODO", "lorem ipsum" or a bracketed "[Company]". | auto | block | SLL |
+| CP-13 | Every date shown with a weekday is a real date: the weekday matches the day, month and year. | auto | block | SLL |
 
 ## Hero
 
@@ -46,6 +48,7 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | HR-04 | A headline above about 6.5rem is the signature of the page and keeps each line to three words or fewer. | auto | warn | IMP SLL |
 | HR-05 | The first screen is not a false floor: at 1440×900 and 390×844 some content below the hero, or a hero element cut by the fold, shows in the bottom 15% of the viewport. | auto | warn | NNG |
 | HR-06 | The hero is sized with svh/dvh or by its content, not a fixed 100vh that clips under mobile browser bars. | code | warn | EK |
+| HR-07 | The signature artifact (marked `data-signature`) shows at least 280px of itself, or all of itself, in the first screen at 390×844 and at 1440×900. | auto | block | SLL NNG |
 
 ## Structure and conversion
 
@@ -67,11 +70,12 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | TY-03 | The h1 and the first h2 are each at least 1.25× the body size. | auto | block | IMP GST |
 | TY-04 | Headline letter-spacing is no tighter than −0.04em. | auto | block | IMP |
 | TY-05 | Body text is at least 16px on phones. | auto | warn | GST IMP |
-| TY-06 | No readable text below 11px. | auto | block | IMP GST |
+| TY-06 | No readable text below 12px, superscripts and labels included. | auto | block | IMP GST |
 | TY-07 | Body paragraphs stay under about 80 rendered characters per line. | auto | warn | IMP AFD WCAG |
 | TY-08 | Body line-height is at least 1.35. | auto | warn | IMP |
 | TY-09 | Weights under 400 appear only at 28px and up; smaller text is 400 or heavier. | auto | warn | JK |
 | TY-10 | A display face that is everywhere (Inter, Space Grotesk, Fraunces, Roboto, Poppins, Montserrat) has a stated reason, and every face has a role (display, text, data). | auto | warn | IMP GST AFD |
+| TY-11 | Every face renders as named: a named display, text or data face never falls back to a browser default (Times, Arial, DejaVu, Liberation) because it is missing. | auto | block | SLL WEB |
 
 ## Layout
 
@@ -84,6 +88,7 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | LY-05 | No boxed card sits inside another boxed card. | auto | warn | IMP |
 | LY-06 | In-page anchor targets and focused controls are not hidden under a sticky header. | auto | warn | VWG JK WCAG |
 | LY-07 | A footer exists and holds real destinations. | auto | warn | SLL |
+| LY-08 | A 200-character unbroken string typed into any text field and submitted causes no sideways scroll at 390px. | auto | block | SLL |
 
 ## Colour
 
@@ -128,6 +133,10 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | MB-04 | Inputs use at least 16px text, so phones do not zoom on focus. | auto | warn | EK VWG |
 | MB-05 | If the nav collapses on phones, a working menu control replaces it. | auto | block | GST |
 | MB-06 | Dense artifacts are recomposed for phones, not shrunk or removed. | shot | block | SLL |
+| MB-07 | On phones, every control in the signature artifact answers in view: after a tap, something other than the control itself changes on screen, and no control is dead. | auto | block | SLL NNG |
+| MB-08 | Escape closes an open menu and returns focus to the button that opened it. | auto | block | APG WCAG |
+| MB-09 | On phones, controls inside the signature artifact are at least 44×44px. | auto | block | APL GST |
+| MB-10 | The phone page is at most eight screens tall (6,752px at 390×844); a longer page cuts repeats before adding sections. | auto | warn | SLL |
 
 ## Accessibility and robustness
 
@@ -144,6 +153,8 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | AX-09 | No broken images. | auto | block | IMP |
 | AX-10 | Results of local actions are announced (aria-live or role=status). | code | warn | VWG |
 | AX-11 | With WCAG 1.4.12 text spacing applied (line-height 1.5, paragraph spacing 2em, letter-spacing 0.12em, word-spacing 0.16em), no text is clipped or overlaps. | auto | block | WCAG |
+| AX-12 | Using a signature-artifact control from the keyboard never drops focus to the page body (a control that disables itself hands focus on). | auto | block | WCAG VWG |
+| AX-13 | The first Tab stop (usually the skip link) is visible on screen when focused. | auto | block | WCAG |
 
 ## Performance and metadata
 
