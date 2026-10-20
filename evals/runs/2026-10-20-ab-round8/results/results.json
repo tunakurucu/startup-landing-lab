@@ -1,0 +1,412 @@
+{
+ "band": 6,
+ "tests": {
+  "brief_level": {
+   "wins": 4,
+   "ties": 0,
+   "losses": 0,
+   "n_untied": 4,
+   "p_two_sided": 0.125,
+   "p_ties_as_losses": 0.125
+  },
+  "pair_level": {
+   "wins": 4,
+   "ties": 0,
+   "losses": 0,
+   "n_untied": 4,
+   "p_two_sided": 0.125,
+   "note": "pairs within a brief are not independent; secondary only"
+  }
+ },
+ "sensitivity": {
+  "band_0": {
+   "wins": 4,
+   "ties": 0,
+   "losses": 0,
+   "n_untied": 4,
+   "p_two_sided": 0.125,
+   "p_ties_as_losses": 0.125
+  },
+  "band_12": {
+   "wins": 4,
+   "ties": 0,
+   "losses": 0,
+   "n_untied": 4,
+   "p_two_sided": 0.125,
+   "p_ties_as_losses": 0.125
+  }
+ },
+ "brief_verdicts": {
+  "contractcheck": "win",
+  "staplepress": "win",
+  "swaptide": "win",
+  "tallyhall": "win"
+ },
+ "pairs": [
+  {
+   "packet": "P001",
+   "pair": "staplepress-r1",
+   "brief": "staplepress",
+   "x": "staplepress/with-r1",
+   "y": "staplepress/without-r1",
+   "x_side": "A",
+   "S_x": 249,
+   "S_y": 224,
+   "delta": 25,
+   "votes_x": 2,
+   "hf_x": [],
+   "hf_y": [],
+   "verdict": "win",
+   "why": "majority preference and summed score agree",
+   "personas": {
+    "designer": {
+     "x_total": 83,
+     "y_total": 72,
+     "x_total8": 67,
+     "y_total8": 57,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": -1,
+      "fit": 0,
+      "distinctiveness": 3,
+      "proof": 1,
+      "craft": 2,
+      "mobile": 2,
+      "honesty": 1,
+      "interaction": 2,
+      "copy": 0,
+      "first_screen": 1
+     }
+    },
+    "buyer": {
+     "x_total": 83,
+     "y_total": 79,
+     "x_total8": 67,
+     "y_total8": 63,
+     "prefers_x": false,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 0,
+      "fit": -1,
+      "distinctiveness": 2,
+      "proof": -1,
+      "craft": 1,
+      "mobile": 1,
+      "honesty": 1,
+      "interaction": 1,
+      "copy": 0,
+      "first_screen": 0
+     }
+    },
+    "engineer": {
+     "x_total": 83,
+     "y_total": 73,
+     "x_total8": 67,
+     "y_total8": 58,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 0,
+      "fit": 0,
+      "distinctiveness": 2,
+      "proof": 0,
+      "craft": 2,
+      "mobile": 2,
+      "honesty": 1,
+      "interaction": 2,
+      "copy": 0,
+      "first_screen": 1
+     }
+    }
+   }
+  },
+  {
+   "packet": "P002",
+   "pair": "swaptide-r1",
+   "brief": "swaptide",
+   "x": "swaptide/with-r1",
+   "y": "swaptide/without-r1",
+   "x_side": "A",
+   "S_x": 252,
+   "S_y": 177,
+   "delta": 75,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [],
+   "verdict": "win",
+   "why": "majority preference and summed score agree",
+   "personas": {
+    "designer": {
+     "x_total": 85,
+     "y_total": 60,
+     "x_total8": 68,
+     "y_total8": 47,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 1,
+      "distinctiveness": 3,
+      "proof": 4,
+      "craft": 2,
+      "mobile": 2,
+      "honesty": 3,
+      "interaction": 5,
+      "copy": 2,
+      "first_screen": 2
+     }
+    },
+    "buyer": {
+     "x_total": 85,
+     "y_total": 58,
+     "x_total8": 69,
+     "y_total8": 45,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 1,
+      "distinctiveness": 4,
+      "proof": 4,
+      "craft": 2,
+      "mobile": 3,
+      "honesty": 3,
+      "interaction": 6,
+      "copy": 1,
+      "first_screen": 2
+     }
+    },
+    "engineer": {
+     "x_total": 82,
+     "y_total": 59,
+     "x_total8": 66,
+     "y_total8": 45,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 0,
+      "fit": 1,
+      "distinctiveness": 3,
+      "proof": 4,
+      "craft": 2,
+      "mobile": 2,
+      "honesty": 4,
+      "interaction": 5,
+      "copy": 1,
+      "first_screen": 1
+     }
+    }
+   }
+  },
+  {
+   "packet": "P003",
+   "pair": "contractcheck-r1",
+   "brief": "contractcheck",
+   "x": "contractcheck/with-r1",
+   "y": "contractcheck/without-r1",
+   "x_side": "B",
+   "S_x": 257,
+   "S_y": 219,
+   "delta": 38,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [],
+   "verdict": "win",
+   "why": "majority preference and summed score agree",
+   "personas": {
+    "designer": {
+     "x_total": 86,
+     "y_total": 74,
+     "x_total8": 69,
+     "y_total8": 58,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": -1,
+      "fit": 1,
+      "distinctiveness": 3,
+      "proof": 1,
+      "craft": 1,
+      "mobile": 2,
+      "honesty": 2,
+      "interaction": 2,
+      "copy": 1,
+      "first_screen": 0
+     }
+    },
+    "buyer": {
+     "x_total": 84,
+     "y_total": 74,
+     "x_total8": 68,
+     "y_total8": 58,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": -1,
+      "fit": 2,
+      "distinctiveness": 2,
+      "proof": 1,
+      "craft": 0,
+      "mobile": 2,
+      "honesty": 2,
+      "interaction": 2,
+      "copy": 0,
+      "first_screen": 0
+     }
+    },
+    "engineer": {
+     "x_total": 87,
+     "y_total": 71,
+     "x_total8": 69,
+     "y_total8": 56,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 0,
+      "fit": 2,
+      "distinctiveness": 3,
+      "proof": 1,
+      "craft": 1,
+      "mobile": 1,
+      "honesty": 2,
+      "interaction": 3,
+      "copy": 1,
+      "first_screen": 2
+     }
+    }
+   }
+  },
+  {
+   "packet": "P004",
+   "pair": "tallyhall-r1",
+   "brief": "tallyhall",
+   "x": "tallyhall/with-r1",
+   "y": "tallyhall/without-r1",
+   "x_side": "B",
+   "S_x": 258,
+   "S_y": 206,
+   "delta": 52,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [],
+   "verdict": "win",
+   "why": "majority preference and summed score agree",
+   "personas": {
+    "designer": {
+     "x_total": 86,
+     "y_total": 66,
+     "x_total8": 69,
+     "y_total8": 52,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 2,
+      "distinctiveness": 2,
+      "proof": 2,
+      "craft": 2,
+      "mobile": 3,
+      "honesty": 2,
+      "interaction": 3,
+      "copy": 1,
+      "first_screen": 2
+     }
+    },
+    "buyer": {
+     "x_total": 86,
+     "y_total": 72,
+     "x_total8": 69,
+     "y_total8": 57,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 0,
+      "distinctiveness": 1,
+      "proof": 2,
+      "craft": 1,
+      "mobile": 3,
+      "honesty": 2,
+      "interaction": 2,
+      "copy": 0,
+      "first_screen": 2
+     }
+    },
+    "engineer": {
+     "x_total": 86,
+     "y_total": 68,
+     "x_total8": 70,
+     "y_total8": 54,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 2,
+      "distinctiveness": 1,
+      "proof": 2,
+      "craft": 2,
+      "mobile": 3,
+      "honesty": 2,
+      "interaction": 3,
+      "copy": 0,
+      "first_screen": 2
+     }
+    }
+   }
+  }
+ ],
+ "retest": [
+  {
+   "pair": "swaptide-r1",
+   "first": "win",
+   "second": "win",
+   "agree": true,
+   "delta_first": 75,
+   "delta_second": 68
+  }
+ ],
+ "same_arm": [],
+ "persona": {
+  "designer": {
+   "prefers_with": 4,
+   "prefers_without": 0,
+   "mean_total_with": 85,
+   "mean_total_without": 68,
+   "mean_total8_with": 68.25,
+   "mean_total8_without": 53.5
+  },
+  "buyer": {
+   "prefers_with": 3,
+   "prefers_without": 1,
+   "mean_total_with": 84.5,
+   "mean_total_without": 70.75,
+   "mean_total8_with": 68.25,
+   "mean_total8_without": 55.75
+  },
+  "engineer": {
+   "prefers_with": 4,
+   "prefers_without": 0,
+   "mean_total_with": 84.5,
+   "mean_total_without": 67.75,
+   "mean_total8_with": 68,
+   "mean_total8_without": 53.25
+  }
+ },
+ "mean_criterion_diff_with_minus_without": {
+  "clarity": 0.17,
+  "fit": 0.92,
+  "distinctiveness": 2.42,
+  "proof": 1.75,
+  "craft": 1.5,
+  "mobile": 2.17,
+  "honesty": 2.08,
+  "interaction": 3,
+  "copy": 0.58,
+  "first_screen": 1.25
+ },
+ "hard_fail_runs_by_arm": {
+  "with": {},
+  "without": {}
+ }
+}
