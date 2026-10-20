@@ -115,12 +115,15 @@ Tested blind. Fresh agents built the same product brief twice, once with the ski
 | --- | --- | --- | --- |
 | 1 (v0.3.0) | 3 | 2 of 3 | 182 / 180 |
 | 2 (after fixing what lost round 1) | 3 + 1 new holdout brief | 4 of 4 | 254 / 235 |
+| 3 (v0.4, pre-registered, 12 new briefs, 3 graders each, hard fails adjudicated) | 12 | won 7, tied 4, lost 1 (p = 0.07, not significant) | 2,781 / 2,436 summed over three graders |
 
 The gains are in distinctiveness (+9 across four briefs), fit to the brief, product proof and honesty (+4 each). The skill's pages were slightly less clear at first glance (−2) and their interactions slightly weaker (−2). Round 1's loss, a developer-tool page with no install command, is kept in the record along with the rule change that caused it.
 
 ![The holdout brief: a piano-practice app, built without and with the skill](evals/runs/2026-10-19-ab-round2/practice-compare.jpg)
 
-Limits: seven pairs are not a benchmark, builders and graders were AI agents from the same model family, every verdict was medium confidence, and three of round 2's four briefs were the ones the fixes were made against. The pages, grades and A/B keys are all in [`evals/`](evals/run.md), so you can judge them yourself.
+Round 3 was larger and stricter: pre-registered, twelve briefs nobody had seen, three graders per pair from a different model than the builders, and every flagged hard fail re-checked blind. The skill page won 7, tied 4 and lost 1; the sign test gives p = 0.07, short of the pre-registered 0.05, so an effect is not shown at this size. Each grader persona preferred the skill page in 11 of 12 pairs. Both arms shipped hard fails, mostly a main button that went to an invented email address; v0.5 forbids that and tests phone layouts at 3× pixel density. [Full round 3 report](evals/run.md).
+
+Limits for rounds 1–2: seven pairs are not a benchmark, builders and graders were AI agents from the same model family, every verdict was medium confidence, and three of round 2's four briefs were the ones the fixes were made against. The pages, grades and A/B keys are all in [`evals/`](evals/run.md), so you can judge them yourself.
 
 ## Run and validate
 

@@ -1,0 +1,1099 @@
+{
+ "band": 6,
+ "tests": {
+  "brief_level": {
+   "wins": 7,
+   "ties": 4,
+   "losses": 1,
+   "n_untied": 8,
+   "p_two_sided": 0.0703125,
+   "p_ties_as_losses": 0.7744140625
+  },
+  "pair_level": {
+   "wins": 7,
+   "ties": 4,
+   "losses": 1,
+   "n_untied": 8,
+   "p_two_sided": 0.0703125,
+   "note": "pairs within a brief are not independent; secondary only"
+  }
+ },
+ "sensitivity": {
+  "band_0": {
+   "wins": 7,
+   "ties": 4,
+   "losses": 1,
+   "n_untied": 8,
+   "p_two_sided": 0.0703125,
+   "p_ties_as_losses": 0.7744140625
+  },
+  "band_12": {
+   "wins": 7,
+   "ties": 4,
+   "losses": 1,
+   "n_untied": 8,
+   "p_two_sided": 0.0703125,
+   "p_ties_as_losses": 0.7744140625
+  }
+ },
+ "brief_verdicts": {
+  "agenda": "win",
+  "alerts": "win",
+  "brewday": "win",
+  "cancellations": "tie",
+  "envvars": "win",
+  "handover": "win",
+  "heater": "win",
+  "kitchens": "tie",
+  "nightly": "loss",
+  "questionnaire": "win",
+  "stitch": "tie",
+  "sunrise": "tie"
+ },
+ "pairs": [
+  {
+   "packet": "P001",
+   "pair": "kitchens-r1",
+   "brief": "kitchens",
+   "x": "kitchens/with-r1",
+   "y": "kitchens/without-r1",
+   "x_side": "B",
+   "S_x": 231,
+   "S_y": 182,
+   "delta": 49,
+   "votes_x": 3,
+   "hf_x": [
+    "HF1"
+   ],
+   "hf_y": [
+    "HF1"
+   ],
+   "verdict": "tie",
+   "why": "both hard-failed",
+   "personas": {
+    "designer": {
+     "x_total": 79,
+     "y_total": 62,
+     "x_total8": 64,
+     "y_total8": 49,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 1,
+      "distinctiveness": 1,
+      "proof": 2,
+      "craft": 2,
+      "mobile": 1,
+      "honesty": 4,
+      "interaction": 3,
+      "copy": 0,
+      "first_screen": 2
+     }
+    },
+    "buyer": {
+     "x_total": 76,
+     "y_total": 60,
+     "x_total8": 61,
+     "y_total8": 47,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 2,
+      "distinctiveness": 0,
+      "proof": 3,
+      "craft": 0,
+      "mobile": 1,
+      "honesty": 4,
+      "interaction": 3,
+      "copy": 0,
+      "first_screen": 2
+     }
+    },
+    "engineer": {
+     "x_total": 76,
+     "y_total": 60,
+     "x_total8": 61,
+     "y_total8": 47,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 1,
+      "distinctiveness": 1,
+      "proof": 3,
+      "craft": 2,
+      "mobile": 1,
+      "honesty": 3,
+      "interaction": 2,
+      "copy": 0,
+      "first_screen": 2
+     }
+    }
+   }
+  },
+  {
+   "packet": "P002",
+   "pair": "sunrise-r1",
+   "brief": "sunrise",
+   "x": "sunrise/with-r1",
+   "y": "sunrise/without-r1",
+   "x_side": "A",
+   "S_x": 236,
+   "S_y": 194,
+   "delta": 42,
+   "votes_x": 3,
+   "hf_x": [
+    "HF1"
+   ],
+   "hf_y": [
+    "HF1"
+   ],
+   "verdict": "tie",
+   "why": "both hard-failed",
+   "personas": {
+    "designer": {
+     "x_total": 79,
+     "y_total": 62,
+     "x_total8": 63,
+     "y_total8": 49,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 2,
+      "fit": 3,
+      "distinctiveness": -1,
+      "proof": 0,
+      "craft": 0,
+      "mobile": 2,
+      "honesty": 6,
+      "interaction": 2,
+      "copy": 1,
+      "first_screen": 2
+     }
+    },
+    "buyer": {
+     "x_total": 79,
+     "y_total": 68,
+     "x_total8": 64,
+     "y_total8": 54,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 2,
+      "fit": 2,
+      "distinctiveness": -1,
+      "proof": 0,
+      "craft": 0,
+      "mobile": 1,
+      "honesty": 5,
+      "interaction": 1,
+      "copy": 0,
+      "first_screen": 1
+     }
+    },
+    "engineer": {
+     "x_total": 78,
+     "y_total": 64,
+     "x_total8": 62,
+     "y_total8": 50,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 3,
+      "distinctiveness": -1,
+      "proof": 0,
+      "craft": 1,
+      "mobile": 1,
+      "honesty": 5,
+      "interaction": 2,
+      "copy": 1,
+      "first_screen": 1
+     }
+    }
+   }
+  },
+  {
+   "packet": "P003",
+   "pair": "heater-r1",
+   "brief": "heater",
+   "x": "heater/with-r1",
+   "y": "heater/without-r1",
+   "x_side": "B",
+   "S_x": 232,
+   "S_y": 217,
+   "delta": 15,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [],
+   "verdict": "win",
+   "why": "majority preference and summed score agree",
+   "personas": {
+    "designer": {
+     "x_total": 78,
+     "y_total": 73,
+     "x_total8": 62,
+     "y_total8": 59,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 0,
+      "fit": 1,
+      "distinctiveness": 2,
+      "proof": 1,
+      "craft": 0,
+      "mobile": 2,
+      "honesty": -2,
+      "interaction": -1,
+      "copy": 0,
+      "first_screen": 2
+     }
+    },
+    "buyer": {
+     "x_total": 77,
+     "y_total": 72,
+     "x_total8": 62,
+     "y_total8": 59,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 0,
+      "fit": 0,
+      "distinctiveness": 2,
+      "proof": 1,
+      "craft": 0,
+      "mobile": 2,
+      "honesty": -1,
+      "interaction": -1,
+      "copy": 1,
+      "first_screen": 1
+     }
+    },
+    "engineer": {
+     "x_total": 77,
+     "y_total": 72,
+     "x_total8": 61,
+     "y_total8": 58,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 0,
+      "fit": 0,
+      "distinctiveness": 0,
+      "proof": 1,
+      "craft": 0,
+      "mobile": 3,
+      "honesty": 0,
+      "interaction": -1,
+      "copy": 0,
+      "first_screen": 2
+     }
+    }
+   }
+  },
+  {
+   "packet": "P004",
+   "pair": "stitch-r1",
+   "brief": "stitch",
+   "x": "stitch/with-r1",
+   "y": "stitch/without-r1",
+   "x_side": "B",
+   "S_x": 227,
+   "S_y": 196,
+   "delta": 31,
+   "votes_x": 3,
+   "hf_x": [
+    "HF3"
+   ],
+   "hf_y": [
+    "HF1"
+   ],
+   "verdict": "tie",
+   "why": "both hard-failed",
+   "personas": {
+    "designer": {
+     "x_total": 79,
+     "y_total": 63,
+     "x_total8": 63,
+     "y_total8": 51,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 2,
+      "fit": 2,
+      "distinctiveness": -1,
+      "proof": 1,
+      "craft": 1,
+      "mobile": 3,
+      "honesty": 4,
+      "interaction": 0,
+      "copy": 1,
+      "first_screen": 3
+     }
+    },
+    "buyer": {
+     "x_total": 78,
+     "y_total": 68,
+     "x_total8": 62,
+     "y_total8": 55,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 1,
+      "fit": 0,
+      "distinctiveness": 0,
+      "proof": 0,
+      "craft": 1,
+      "mobile": 2,
+      "honesty": 3,
+      "interaction": 0,
+      "copy": 0,
+      "first_screen": 3
+     }
+    },
+    "engineer": {
+     "x_total": 70,
+     "y_total": 65,
+     "x_total8": 55,
+     "y_total8": 52,
+     "prefers_x": true,
+     "confidence": "low",
+     "diff": {
+      "clarity": 1,
+      "fit": 1,
+      "distinctiveness": 1,
+      "proof": 0,
+      "craft": -1,
+      "mobile": 0,
+      "honesty": 3,
+      "interaction": -2,
+      "copy": 1,
+      "first_screen": 1
+     }
+    }
+   }
+  },
+  {
+   "packet": "P005",
+   "pair": "cancellations-r1",
+   "brief": "cancellations",
+   "x": "cancellations/with-r1",
+   "y": "cancellations/without-r1",
+   "x_side": "A",
+   "S_x": 224,
+   "S_y": 219,
+   "delta": 5,
+   "votes_x": 2,
+   "hf_x": [
+    "HF1"
+   ],
+   "hf_y": [
+    "HF2"
+   ],
+   "verdict": "tie",
+   "why": "both hard-failed",
+   "personas": {
+    "designer": {
+     "x_total": 75,
+     "y_total": 73,
+     "x_total8": 59,
+     "y_total8": 57,
+     "prefers_x": true,
+     "confidence": "low",
+     "diff": {
+      "clarity": 1,
+      "fit": 0,
+      "distinctiveness": 1,
+      "proof": 0,
+      "craft": 0,
+      "mobile": 1,
+      "honesty": 1,
+      "interaction": -2,
+      "copy": 1,
+      "first_screen": -1
+     }
+    },
+    "buyer": {
+     "x_total": 77,
+     "y_total": 74,
+     "x_total8": 60,
+     "y_total8": 59,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 1,
+      "fit": 0,
+      "distinctiveness": 1,
+      "proof": 0,
+      "craft": 0,
+      "mobile": 1,
+      "honesty": 0,
+      "interaction": -2,
+      "copy": 1,
+      "first_screen": 1
+     }
+    },
+    "engineer": {
+     "x_total": 72,
+     "y_total": 72,
+     "x_total8": 58,
+     "y_total8": 57,
+     "prefers_x": false,
+     "confidence": "low",
+     "diff": {
+      "clarity": 2,
+      "fit": -1,
+      "distinctiveness": 0,
+      "proof": 0,
+      "craft": 0,
+      "mobile": 1,
+      "honesty": 1,
+      "interaction": -2,
+      "copy": 0,
+      "first_screen": -1
+     }
+    }
+   }
+  },
+  {
+   "packet": "P006",
+   "pair": "alerts-r1",
+   "brief": "alerts",
+   "x": "alerts/with-r1",
+   "y": "alerts/without-r1",
+   "x_side": "B",
+   "S_x": 241,
+   "S_y": 208,
+   "delta": 33,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [],
+   "verdict": "win",
+   "why": "majority preference and summed score agree",
+   "personas": {
+    "designer": {
+     "x_total": 81,
+     "y_total": 71,
+     "x_total8": 66,
+     "y_total8": 57,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 1,
+      "distinctiveness": 2,
+      "proof": 2,
+      "craft": 2,
+      "mobile": 0,
+      "honesty": 1,
+      "interaction": 0,
+      "copy": 0,
+      "first_screen": 1
+     }
+    },
+    "buyer": {
+     "x_total": 82,
+     "y_total": 71,
+     "x_total8": 66,
+     "y_total8": 58,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 1,
+      "distinctiveness": 2,
+      "proof": 2,
+      "craft": 1,
+      "mobile": 0,
+      "honesty": 1,
+      "interaction": 0,
+      "copy": 0,
+      "first_screen": 3
+     }
+    },
+    "engineer": {
+     "x_total": 78,
+     "y_total": 66,
+     "x_total8": 62,
+     "y_total8": 54,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 0,
+      "fit": 1,
+      "distinctiveness": 1,
+      "proof": 2,
+      "craft": 1,
+      "mobile": 1,
+      "honesty": 1,
+      "interaction": 1,
+      "copy": 1,
+      "first_screen": 3
+     }
+    }
+   }
+  },
+  {
+   "packet": "P009",
+   "pair": "handover-r1",
+   "brief": "handover",
+   "x": "handover/with-r1",
+   "y": "handover/without-r1",
+   "x_side": "A",
+   "S_x": 239,
+   "S_y": 219,
+   "delta": 20,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [],
+   "verdict": "win",
+   "why": "majority preference and summed score agree",
+   "personas": {
+    "designer": {
+     "x_total": 84,
+     "y_total": 77,
+     "x_total8": 67,
+     "y_total8": 60,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 0,
+      "fit": 2,
+      "distinctiveness": 0,
+      "proof": 2,
+      "craft": -1,
+      "mobile": 0,
+      "honesty": 1,
+      "interaction": 3,
+      "copy": 0,
+      "first_screen": 0
+     }
+    },
+    "buyer": {
+     "x_total": 80,
+     "y_total": 74,
+     "x_total8": 64,
+     "y_total8": 58,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 1,
+      "fit": 1,
+      "distinctiveness": -1,
+      "proof": 3,
+      "craft": 0,
+      "mobile": 0,
+      "honesty": -1,
+      "interaction": 3,
+      "copy": 0,
+      "first_screen": 0
+     }
+    },
+    "engineer": {
+     "x_total": 75,
+     "y_total": 68,
+     "x_total8": 59,
+     "y_total8": 53,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 0,
+      "fit": 2,
+      "distinctiveness": 0,
+      "proof": 2,
+      "craft": 0,
+      "mobile": 0,
+      "honesty": 0,
+      "interaction": 2,
+      "copy": 0,
+      "first_screen": 1
+     }
+    }
+   }
+  },
+  {
+   "packet": "P010",
+   "pair": "nightly-r1",
+   "brief": "nightly",
+   "x": "nightly/with-r1",
+   "y": "nightly/without-r1",
+   "x_side": "A",
+   "S_x": 214,
+   "S_y": 215,
+   "delta": -1,
+   "votes_x": 1,
+   "hf_x": [
+    "HF1"
+   ],
+   "hf_y": [],
+   "verdict": "loss",
+   "why": "this page hard-failed",
+   "personas": {
+    "designer": {
+     "x_total": 72,
+     "y_total": 76,
+     "x_total8": 56,
+     "y_total8": 62,
+     "prefers_x": false,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 2,
+      "fit": -1,
+      "distinctiveness": -3,
+      "proof": -2,
+      "craft": 0,
+      "mobile": -1,
+      "honesty": 0,
+      "interaction": -1,
+      "copy": 0,
+      "first_screen": 2
+     }
+    },
+    "buyer": {
+     "x_total": 69,
+     "y_total": 70,
+     "x_total8": 54,
+     "y_total8": 56,
+     "prefers_x": false,
+     "confidence": "low",
+     "diff": {
+      "clarity": 2,
+      "fit": 0,
+      "distinctiveness": -3,
+      "proof": 0,
+      "craft": 0,
+      "mobile": 0,
+      "honesty": 0,
+      "interaction": -1,
+      "copy": -1,
+      "first_screen": 2
+     }
+    },
+    "engineer": {
+     "x_total": 73,
+     "y_total": 69,
+     "x_total8": 57,
+     "y_total8": 55,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 2,
+      "fit": 1,
+      "distinctiveness": -2,
+      "proof": 0,
+      "craft": 1,
+      "mobile": 0,
+      "honesty": 0,
+      "interaction": 0,
+      "copy": 0,
+      "first_screen": 2
+     }
+    }
+   }
+  },
+  {
+   "packet": "P011",
+   "pair": "envvars-r1",
+   "brief": "envvars",
+   "x": "envvars/with-r1",
+   "y": "envvars/without-r1",
+   "x_side": "A",
+   "S_x": 236,
+   "S_y": 209,
+   "delta": 27,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [],
+   "verdict": "win",
+   "why": "majority preference and summed score agree",
+   "personas": {
+    "designer": {
+     "x_total": 78,
+     "y_total": 69,
+     "x_total8": 62,
+     "y_total8": 54,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": -1,
+      "fit": 1,
+      "distinctiveness": 0,
+      "proof": 1,
+      "craft": 0,
+      "mobile": 1,
+      "honesty": 3,
+      "interaction": 3,
+      "copy": 0,
+      "first_screen": 1
+     }
+    },
+    "buyer": {
+     "x_total": 80,
+     "y_total": 73,
+     "x_total8": 64,
+     "y_total8": 57,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 1,
+      "fit": 0,
+      "distinctiveness": 0,
+      "proof": 1,
+      "craft": 0,
+      "mobile": 1,
+      "honesty": 2,
+      "interaction": 2,
+      "copy": -1,
+      "first_screen": 1
+     }
+    },
+    "engineer": {
+     "x_total": 78,
+     "y_total": 67,
+     "x_total8": 62,
+     "y_total8": 52,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 0,
+      "fit": 1,
+      "distinctiveness": 0,
+      "proof": 2,
+      "craft": 2,
+      "mobile": 1,
+      "honesty": 2,
+      "interaction": 2,
+      "copy": 0,
+      "first_screen": 1
+     }
+    }
+   }
+  },
+  {
+   "packet": "P012",
+   "pair": "agenda-r1",
+   "brief": "agenda",
+   "x": "agenda/with-r1",
+   "y": "agenda/without-r1",
+   "x_side": "A",
+   "S_x": 224,
+   "S_y": 185,
+   "delta": 39,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [
+    "HF1",
+    "HF2"
+   ],
+   "verdict": "win",
+   "why": "other page hard-failed",
+   "personas": {
+    "designer": {
+     "x_total": 75,
+     "y_total": 64,
+     "x_total8": 60,
+     "y_total8": 50,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 1,
+      "distinctiveness": 1,
+      "proof": 1,
+      "craft": 1,
+      "mobile": 1,
+      "honesty": 3,
+      "interaction": 1,
+      "copy": 0,
+      "first_screen": 1
+     }
+    },
+    "buyer": {
+     "x_total": 75,
+     "y_total": 57,
+     "x_total8": 59,
+     "y_total8": 46,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 0,
+      "fit": 1,
+      "distinctiveness": 2,
+      "proof": 3,
+      "craft": 0,
+      "mobile": 1,
+      "honesty": 5,
+      "interaction": 1,
+      "copy": 2,
+      "first_screen": 3
+     }
+    },
+    "engineer": {
+     "x_total": 74,
+     "y_total": 64,
+     "x_total8": 59,
+     "y_total8": 50,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 0,
+      "fit": 1,
+      "distinctiveness": 0,
+      "proof": 2,
+      "craft": 0,
+      "mobile": 1,
+      "honesty": 5,
+      "interaction": 0,
+      "copy": 1,
+      "first_screen": 0
+     }
+    }
+   }
+  },
+  {
+   "packet": "P013",
+   "pair": "questionnaire-r1",
+   "brief": "questionnaire",
+   "x": "questionnaire/with-r1",
+   "y": "questionnaire/without-r1",
+   "x_side": "B",
+   "S_x": 246,
+   "S_y": 197,
+   "delta": 49,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [
+    "HF2"
+   ],
+   "verdict": "win",
+   "why": "other page hard-failed",
+   "personas": {
+    "designer": {
+     "x_total": 83,
+     "y_total": 66,
+     "x_total8": 67,
+     "y_total8": 52,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 2,
+      "fit": 2,
+      "distinctiveness": 2,
+      "proof": 2,
+      "craft": 1,
+      "mobile": 2,
+      "honesty": 2,
+      "interaction": 2,
+      "copy": 0,
+      "first_screen": 2
+     }
+    },
+    "buyer": {
+     "x_total": 80,
+     "y_total": 67,
+     "x_total8": 64,
+     "y_total8": 53,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 2,
+      "fit": 2,
+      "distinctiveness": 0,
+      "proof": 1,
+      "craft": 1,
+      "mobile": 1,
+      "honesty": 2,
+      "interaction": 2,
+      "copy": 0,
+      "first_screen": 2
+     }
+    },
+    "engineer": {
+     "x_total": 83,
+     "y_total": 64,
+     "x_total8": 66,
+     "y_total8": 50,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 3,
+      "distinctiveness": 0,
+      "proof": 2,
+      "craft": 2,
+      "mobile": 1,
+      "honesty": 4,
+      "interaction": 3,
+      "copy": 1,
+      "first_screen": 2
+     }
+    }
+   }
+  },
+  {
+   "packet": "P016",
+   "pair": "brewday-r1",
+   "brief": "brewday",
+   "x": "brewday/with-r1",
+   "y": "brewday/without-r1",
+   "x_side": "B",
+   "S_x": 231,
+   "S_y": 195,
+   "delta": 36,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [
+    "HF1"
+   ],
+   "verdict": "win",
+   "why": "other page hard-failed",
+   "personas": {
+    "designer": {
+     "x_total": 77,
+     "y_total": 66,
+     "x_total8": 61,
+     "y_total8": 51,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": -1,
+      "fit": 3,
+      "distinctiveness": 2,
+      "proof": 3,
+      "craft": -1,
+      "mobile": 1,
+      "honesty": -1,
+      "interaction": 4,
+      "copy": 0,
+      "first_screen": 1
+     }
+    },
+    "buyer": {
+     "x_total": 78,
+     "y_total": 65,
+     "x_total8": 62,
+     "y_total8": 50,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 1,
+      "fit": 1,
+      "distinctiveness": 2,
+      "proof": 3,
+      "craft": 1,
+      "mobile": 1,
+      "honesty": -1,
+      "interaction": 4,
+      "copy": 0,
+      "first_screen": 1
+     }
+    },
+    "engineer": {
+     "x_total": 76,
+     "y_total": 64,
+     "x_total8": 60,
+     "y_total8": 49,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 0,
+      "fit": 2,
+      "distinctiveness": 2,
+      "proof": 3,
+      "craft": 1,
+      "mobile": 0,
+      "honesty": 0,
+      "interaction": 3,
+      "copy": 0,
+      "first_screen": 1
+     }
+    }
+   }
+  }
+ ],
+ "retest": [
+  {
+   "pair": "handover-r1",
+   "first": "win",
+   "second": "win",
+   "agree": true,
+   "delta_first": 20,
+   "delta_second": 16
+  },
+  {
+   "pair": "questionnaire-r1",
+   "first": "win",
+   "second": "win",
+   "agree": true,
+   "delta_first": 49,
+   "delta_second": 44
+  },
+  {
+   "pair": "sunrise-r1",
+   "first": "tie",
+   "second": "tie",
+   "agree": true,
+   "delta_first": 42,
+   "delta_second": 31
+  },
+  {
+   "pair": "agenda-r1",
+   "first": "win",
+   "second": "win",
+   "agree": true,
+   "delta_first": 39,
+   "delta_second": 24
+  }
+ ],
+ "same_arm": [],
+ "persona": {
+  "designer": {
+   "prefers_with": 11,
+   "prefers_without": 1,
+   "mean_total_with": 78.33,
+   "mean_total_without": 68.5,
+   "mean_total8_with": 62.5,
+   "mean_total8_without": 54.25
+  },
+  "buyer": {
+   "prefers_with": 11,
+   "prefers_without": 1,
+   "mean_total_with": 77.58,
+   "mean_total_without": 68.25,
+   "mean_total8_with": 61.83,
+   "mean_total8_without": 54.33
+  },
+  "engineer": {
+   "prefers_with": 11,
+   "prefers_without": 1,
+   "mean_total_with": 75.83,
+   "mean_total_without": 66.25,
+   "mean_total8_with": 60.17,
+   "mean_total8_without": 52.25
+  }
+ },
+ "mean_criterion_diff_with_minus_without": {
+  "clarity": 0.86,
+  "fit": 1.14,
+  "distinctiveness": 0.33,
+  "proof": 1.31,
+  "craft": 0.5,
+  "mobile": 0.94,
+  "honesty": 1.81,
+  "interaction": 1,
+  "copy": 0.28,
+  "first_screen": 1.42
+ },
+ "hard_fail_runs_by_arm": {
+  "with": {
+   "HF1": 4,
+   "HF3": 1
+  },
+  "without": {
+   "HF1": 5,
+   "HF2": 3
+  }
+ }
+}
