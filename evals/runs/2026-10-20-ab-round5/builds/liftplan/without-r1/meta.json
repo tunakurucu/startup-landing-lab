@@ -1,0 +1,31 @@
+{
+  "run": "liftplan/without-r1",
+  "workdir": "W005",
+  "brief": "liftplan",
+  "arm": "without",
+  "model": "claude-fable-5-1",
+  "client_version": "2.1.304",
+  "start": "2026-10-20T18:38:20Z",
+  "end": "2026-10-20T18:47:52Z",
+  "wall_clock_s": 572,
+  "tokens": {
+    "input": 124,
+    "output": 41696,
+    "cache_read": 6714948,
+    "cache_create": 143261
+  },
+  "tool_calls": 42,
+  "cap_hit": false,
+  "skill_installed": false,
+  "skill_visible_to_agent": false,
+  "skill_md_read": false,
+  "skill_file_access_in_no_skill_arm": false,
+  "infrastructure_retry": null,
+  "start_note": "",
+  "transcript": "transcript.jsonl (tool calls, assistant text and truncated tool results; harness-injected context removed)",
+  "transcript_source": "acbde3fb05413e5dc.output",
+  "harness_skills_invoked": [
+    "frontend-design"
+  ],
+  "note": "Both arms ran in the same client with its built-in skills visible (for example frontend-design); the arms differ only in whether this skill was installed in the working folder."
+}

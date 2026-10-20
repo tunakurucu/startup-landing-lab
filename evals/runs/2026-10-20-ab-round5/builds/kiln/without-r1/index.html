@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnlog — kiln booking and firing log for pottery studios</title>
+<meta name="description" content="Kilnlog tells studio members when the kiln is loading, firing or cooling, lets them claim shelf space in the next firing, and messages them when their pieces come out.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2326201B'/%3E%3Ccircle cx='16' cy='17' r='6' fill='%23D8501B'/%3E%3Crect x='8' y='6' width='16' height='4' rx='2' fill='%23FAF8F3'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --ground: #E6E2D9;
+    --ground-deep: #DAD4C8;
+    --paper: #FAF8F3;
+    --ink: #26201B;
+    --ink-soft: #5E5750;
+    --ink-faint: #746C65;
+    --line: #C9C2B5;
+    --line-soft: #E0DACF;
+    --bisque: #D9A26F;
+    --bisque-deep: #B8773F;
+    --ember: #D8501B;
+    --ember-deep: #A53A10;
+    --celadon: #6F988A;
+    --celadon-deep: #4C7466;
+    --display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, "TeX Gyre Pagella", "Bitstream Charter", Charter, Georgia, serif;
+    --text: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --radius: 14px;
+    --max: 1160px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--text);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--ember); outline-offset: 3px; border-radius: 4px; }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  h1 { font-size: clamp(2.5rem, 5.6vw, 4.4rem); line-height: 1.04; }
+  h2 { font-size: clamp(1.9rem, 3.4vw, 2.7rem); line-height: 1.12; max-width: 22ch; }
+  h3 { font-size: 1.45rem; line-height: 1.2; }
+  p { margin: 0; }
+  .measure { max-width: 58ch; }
+  .lede { font-size: 1.15rem; color: var(--ink-soft); }
+
+  .wrap { width: min(100% - 40px, var(--max)); margin-inline: auto; }
+  @media (max-width: 600px) { .wrap { width: min(100% - 32px, var(--max)); } }
+
+  /* ---- buttons: oversized on purpose. Members tap with slip on their thumbs. */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .6em;
+    min-height: 56px; padding: 0 28px;
+    border-radius: 999px;
+    font: 600 1.05rem/1 var(--text);
+    text-decoration: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: background-color .15s ease, transform .15s ease;
+  }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: #3a3129; }
+  .btn-primary:active { transform: translateY(1px); }
+  .btn-quiet { background: transparent; color: var(--ink); border-color: var(--ink); }
+  .btn-quiet:hover { background: rgba(38,32,27,.06); }
+  .btn-small { min-height: 44px; padding: 0 20px; font-size: .95rem; }
+
+  /* ---- header */
+  .top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 0 10px;
+  }
+  .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--display); font-size: 1.5rem; }
+  .brand svg { width: 30px; height: 30px; }
+  .nav { display: flex; align-items: center; gap: 28px; }
+  .nav a:not(.btn) { text-decoration: none; color: var(--ink-soft); font-size: .98rem; padding: 6px 0; }
+  .nav a:not(.btn):hover { color: var(--ink); }
+  @media (max-width: 760px) { .nav a:not(.btn) { display: none; } }
+
+  /* ---- hero */
+  .hero {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+    padding: clamp(36px, 7vw, 88px) 0 clamp(48px, 7vw, 96px);
+  }
+  .hero-copy { display: grid; gap: 26px; }
+  .hero-copy .lede { max-width: 42ch; }
+  .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+  .cta-note { color: var(--ink-soft); font-size: .95rem; max-width: 40ch; }
+  .cta-note strong { color: var(--ink); font-weight: 600; }
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+  }
+
+  /* ---- the board: a kiln room on a phone */
+  .board {
+    background: var(--paper);
+    border-radius: 22px;
+    padding: 22px 22px 18px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.7) inset,
+      0 2px 2px rgba(38,32,27,.04),
+      0 24px 48px -24px rgba(38,32,27,.35);
+    display: grid; gap: 16px;
+    position: relative;
+  }
+  .board-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 12px; flex-wrap: wrap; }
+  .board-head .when { white-space: nowrap; }
+  .board-head .studio { font-family: var(--display); font-size: 1.25rem; }
+  .board-head .when { color: var(--ink-faint); font-size: .9rem; }
+  .kiln {
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+    padding: 16px 18px 16px;
+    display: grid; gap: 12px;
+  }
+  .kiln-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .kiln-name { font-weight: 600; font-size: 1.05rem; }
+  .kiln-sub { color: var(--ink-soft); font-size: .95rem; }
+  .status {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px 6px 9px; border-radius: 999px;
+    font-weight: 600; font-size: .92rem; color: var(--paper);
+  }
+  .status::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: currentColor; opacity: .9; }
+  .status.firing { background: var(--ember); }
+  .status.loading { background: var(--bisque-deep); }
+  .status.cooling { background: var(--celadon-deep); }
+  .status.out { background: var(--ink); }
+
+  .curve { width: 100%; height: auto; display: block; }
+  .curve .axis { stroke: var(--line); stroke-width: 1; }
+  .curve .trace { fill: none; stroke: var(--ember); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .curve .trace-ahead { fill: none; stroke: var(--line); stroke-width: 3; stroke-dasharray: 2 7; stroke-linecap: round; }
+  .curve .label { font: 500 12px var(--text); fill: var(--ink-faint); }
+  .curve .label.strong { fill: var(--ink); font-weight: 600; }
+  .curve .now { fill: var(--ember); }
+  .curve .now-ring { fill: none; stroke: var(--ember); stroke-width: 2; opacity: .45; }
+  @media (prefers-reduced-motion: no-preference) {
+    .curve .trace { stroke-dasharray: 700; stroke-dashoffset: 700; animation: draw 1.6s cubic-bezier(.4,0,.2,1) .25s forwards; }
+    .curve .now, .curve .now-ring, .curve .now-label { opacity: 0; animation: appear .4s ease 1.7s forwards; }
+    .curve .now-ring { animation: appear .4s ease 1.7s forwards, pulse 2.4s ease-in-out 2.1s infinite; }
+  }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes appear { to { opacity: 1; } }
+  @keyframes pulse { 0%, 100% { r: 9; opacity: .45; } 50% { r: 14; opacity: .1; } }
+
+  @media (max-width: 600px) {
+    .board { padding: 16px 14px 14px; }
+    .kiln { padding: 14px; }
+    .curve .label { font-size: 21px; }
+    .curve .hide-small { display: none; }
+  }
+  .shelves { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .shelf {
+    height: 30px; border-radius: 7px;
+    background: var(--bisque);
+    position: relative;
+  }
+  .shelf.free { background: transparent; border: 2px dashed var(--bisque-deep); }
+  .shelf.mine { background: var(--ink); }
+  .shelf-key { display: flex; gap: 16px; color: var(--ink-soft); font-size: .88rem; flex-wrap: wrap; }
+  .shelf-key span { display: inline-flex; align-items: center; gap: 6px; }
+  .shelf-key i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; background: var(--bisque); }
+  .shelf-key i.free { background: transparent; border: 2px dashed var(--bisque-deep); }
+  .shelf-key i.mine { background: var(--ink); }
+  .claim { width: 100%; min-height: 56px; border-radius: 12px; background: var(--ink); color: var(--paper); font: 600 1.05rem var(--text); border: 0; }
+
+  .toast {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--ink); color: var(--paper);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    font-size: .98rem; line-height: 1.4;
+  }
+  .toast .dot { flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--celadon); margin-top: 7px; }
+  .toast b { font-weight: 600; }
+  .toast small { display: block; color: rgba(250,248,243,.6); font-size: .85rem; margin-top: 3px; }
+  .board-foot { color: var(--ink-faint); font-size: .82rem; text-align: right; }
+
+  /* ---- sections */
+  section { padding: clamp(56px, 8vw, 110px) 0; }
+  .section-head { display: grid; gap: 18px; margin-bottom: clamp(32px, 5vw, 56px); }
+  .section-head .lede { max-width: 52ch; }
+  .rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
+
+  /* cycle: four states, connected */
+  .cycle { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+  .cycle::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 2px; background: var(--line);
+  }
+  .state { padding: 28px 28px 0 0; position: relative; }
+  .state::before {
+    content: ""; position: absolute; left: 0; top: 0; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--c); box-shadow: 0 0 0 4px var(--ground);
+  }
+  .state h3 { color: var(--c-deep); margin-bottom: 10px; }
+  .state p { color: var(--ink-soft); font-size: 1rem; max-width: 30ch; }
+  .state p + p { margin-top: 10px; }
+  .state.loading { --c: var(--bisque); --c-deep: var(--bisque-deep); }
+  .state.firing { --c: var(--ember); --c-deep: var(--ember-deep); }
+  .state.cooling { --c: var(--celadon); --c-deep: var(--celadon-deep); }
+  .state.out { --c: var(--ink); --c-deep: var(--ink); }
+  @media (max-width: 860px) {
+    .cycle { grid-template-columns: 1fr; gap: 0; }
+    .cycle::before { left: 7px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; }
+    .state { padding: 0 0 36px 36px; }
+    .state:last-child { padding-bottom: 0; }
+  }
+
+  /* members */
+  .members { background: var(--paper); }
+  .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+  @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+  .points { display: grid; gap: 30px; }
+  .point h3 { margin-bottom: 8px; }
+  .point p { color: var(--ink-soft); max-width: 48ch; }
+
+  .phone {
+    background: var(--ground);
+    border-radius: 28px;
+    padding: 18px;
+    max-width: 380px;
+    margin-inline: auto;
+    display: grid; gap: 12px;
+  }
+  .phone .screen-head { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; }
+  .phone .screen-head .t { font-family: var(--display); font-size: 1.25rem; }
+  .phone .screen-head .u { width: 34px; height: 34px; border-radius: 50%; background: var(--bisque); }
+  .tile {
+    background: var(--paper); border-radius: 16px; padding: 18px 18px;
+    display: grid; gap: 6px;
+  }
+  .tile .k { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .tile .k b { font-size: 1.1rem; font-weight: 600; }
+  .tile .d { color: var(--ink-soft); font-size: .95rem; }
+  .tile .big { font-family: var(--display); font-size: 2rem; line-height: 1; margin-top: 4px; }
+  .tile .big small { font-family: var(--text); font-size: .95rem; color: var(--ink-soft); margin-left: 8px; }
+  .tile.action { background: var(--ink); color: var(--paper); text-align: center; padding: 20px; font-weight: 600; font-size: 1.1rem; }
+  .thumb-note { text-align: center; color: var(--ink-faint); font-size: .88rem; }
+
+  /* owners: the log */
+  .log { width: 100%; border-collapse: collapse; font-size: .98rem; background: var(--paper); border-radius: var(--radius); overflow: hidden; }
+  .log th, .log td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  .log th { font-weight: 600; color: var(--ink-soft); font-size: .9rem; background: var(--ground-deep); }
+  .log tr:last-child td { border-bottom: 0; }
+  .log td.note { color: var(--ink-soft); min-width: 280px; }
+  .log td:nth-child(-n+5) { white-space: nowrap; }
+  .log .tag { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .85rem; font-weight: 600; color: var(--paper); }
+  .tag.bisque { background: var(--bisque-deep); } .tag.glaze { background: var(--ember-deep); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .log-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--line); margin-top: 8px; }
+  @media (max-width: 760px) { .log { min-width: 640px; } }
+  .owner-points { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: clamp(32px, 5vw, 56px); }
+  .owner-points h3 { font-size: 1.25rem; margin-bottom: 8px; }
+  .owner-points p { color: var(--ink-soft); font-size: 1rem; }
+  @media (max-width: 860px) { .owner-points { grid-template-columns: 1fr; gap: 24px; } }
+
+  /* what comes off the door */
+  .door { background: var(--ground-deep); }
+  .door-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  @media (max-width: 760px) { .door-grid { grid-template-columns: 1fr; } }
+  .door-item { display: grid; gap: 10px; }
+  .door-item h3 { font-size: 1.35rem; }
+  .door-item p { color: var(--ink-soft); max-width: 44ch; }
+  .door-item .was { font-family: var(--display); font-size: 1.3rem; color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--ember); text-decoration-thickness: 2px; }
+
+  /* honest */
+  .honest { text-align: left; }
+  .honest p.big { font-family: var(--display); font-size: clamp(1.5rem, 2.8vw, 2.1rem); line-height: 1.3; max-width: 30ch; }
+  .honest p.small { color: var(--ink-soft); max-width: 56ch; margin-top: 18px; }
+
+  /* final */
+  .final { background: var(--ink); color: var(--paper); }
+  .final h2 { max-width: 20ch; }
+  .final .btn-primary { background: var(--paper); color: var(--ink); }
+  .final .btn-primary:hover { background: #fff; }
+  .final .cta-note, .final .cta-note strong { color: rgba(250,248,243,.72); }
+  .final .cta-note strong { color: var(--paper); }
+  .final-grid { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 32px; align-items: end; }
+  @media (max-width: 760px) { .final-grid { grid-template-columns: 1fr; align-items: start; } }
+
+  footer { padding: 36px 0 44px; color: var(--ink-soft); font-size: .92rem; }
+  .foot { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .foot a { text-decoration: none; }
+  .foot a:hover { text-decoration: underline; }
+  .foot-links { display: flex; gap: 22px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="brand" href="#" aria-label="Kilnlog home">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#26201B"/><circle cx="16" cy="17" r="6" fill="#D8501B"/><rect x="8" y="6" width="16" height="4" rx="2" fill="#FAF8F3"/></svg>
+    Kilnlog
+  </a>
+  <nav class="nav" aria-label="Page">
+    <a href="#cycle">How a firing works</a>
+    <a href="#members">For members</a>
+    <a href="#owners">For owners</a>
+    <a class="btn btn-primary btn-small" href="https://kilnlog.example/start">Start a free trial</a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div class="hero-copy">
+      <h1>Everyone knows what the kiln is doing.</h1>
+      <p class="lede">Kilnlog tells your members when the kiln is loading, firing or cooling, lets them claim shelf space in the next firing, and sends one message when their pieces come out. The sheet comes off the door. The group chat goes quiet.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://kilnlog.example/start">Start a free 30-day trial</a>
+        <p class="cta-note"><strong>For studio owners.</strong> Members don't sign up here; your studio invites them.</p>
+      </div>
+    </div>
+
+    <div class="board" aria-label="Example of what members see: the kiln room on a phone">
+      <div class="board-head">
+        <span class="studio">Riverbend Clay Co-op</span>
+        <span class="when">Tuesday, 2:40 pm</span>
+      </div>
+
+      <div class="kiln">
+        <div class="kiln-row">
+          <div>
+            <div class="kiln-name">Big kiln</div>
+            <div class="kiln-sub">Cone 6 glaze, loaded by Priya on Monday night</div>
+          </div>
+          <span class="status firing">Firing</span>
+        </div>
+        <svg class="curve" viewBox="0 0 560 170" role="img" aria-label="Firing curve: temperature rising to cone 6, now at 1,140 degrees, then cooling until Thursday afternoon">
+          <line class="axis" x1="16" y1="140" x2="544" y2="140"/>
+          <path class="trace-ahead" d="M268 24 C 300 34, 372 110, 544 140"/>
+          <path class="trace" d="M16 140 C 90 136, 150 108, 190 70 S 240 26, 268 24"/>
+          <circle class="now-ring" cx="232" cy="42" r="9"/>
+          <circle class="now" cx="232" cy="42" r="5"/>
+          <text class="label now-label strong" x="246" y="46">1,140° now</text>
+          <text class="label" x="16" y="160">Loaded Mon 9 pm</text>
+          <text class="label hide-small" x="236" y="16" text-anchor="middle">Cone 6 at 1,220°</text>
+          <text class="label strong" x="544" y="160" text-anchor="end">Out Thu, around 4 pm</text>
+          <text class="label hide-small" x="400" y="98">cooling</text>
+        </svg>
+        <div class="kiln-sub">14 pieces in, 3 of them yours</div>
+      </div>
+
+      <div class="kiln">
+        <div class="kiln-row">
+          <div>
+            <div class="kiln-name">Small kiln</div>
+            <div class="kiln-sub">Bisque, loads Saturday morning</div>
+          </div>
+          <span class="status loading">Loading</span>
+        </div>
+        <div class="shelves" aria-label="Six shelves: four claimed, one yours, two free">
+          <div class="shelf"></div><div class="shelf"></div><div class="shelf mine"></div><div class="shelf"></div><div class="shelf free"></div><div class="shelf free"></div>
+        </div>
+        <div class="shelf-key"><span><i></i>claimed</span><span><i class="mine"></i>yours</span><span><i class="free"></i>2 free</span></div>
+        <button class="claim" type="button" tabindex="-1" aria-hidden="true">Claim a shelf</button>
+      </div>
+
+      <div class="toast" role="status">
+        <span class="dot"></span>
+        <div><b>Big kiln is out.</b> Your three bowls are on the shelf by the window.<small>Thursday, 4:12 pm</small></div>
+      </div>
+      <div class="board-foot">Example studio. Names and times made up.</div>
+    </div>
+  </div>
+
+  <hr class="rule wrap">
+
+  <section id="cycle">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>A firing, the way your members see it</h2>
+        <p class="lede">Every kiln is always in one of four states. Kilnlog shows the current one first, in a colour you can read from across the wedging table.</p>
+      </div>
+      <div class="cycle">
+        <div class="state loading">
+          <h3>Loading</h3>
+          <p>The next firing is open. Members claim a shelf, or part of one, from their phone. First come, first served, same as the sheet, except everyone can see how much space is left.</p>
+        </div>
+        <div class="state firing">
+          <h3>Firing</h3>
+          <p>Whoever closes the kiln taps once. Members see the cone, the program and the earliest time it could be out. Nobody needs to ask.</p>
+        </div>
+        <div class="state cooling">
+          <h3>Cooling</h3>
+          <p>The slow part. The board says it's still too hot to open, so nobody cracks the lid because they got tired of waiting.</p>
+        </div>
+        <div class="state out">
+          <h3>Out</h3>
+          <p>Whoever unloads taps once more. Everyone with a piece in that firing gets one message, with a note on where their work was put.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="members" class="members">
+    <div class="wrap split">
+      <div>
+        <div class="section-head">
+          <h2>Made for hands covered in slip</h2>
+          <p class="lede">Members use Kilnlog every week, usually mid-throw, with a phone propped against a bucket. So the app asks very little of them.</p>
+        </div>
+        <div class="points">
+          <div class="point">
+            <h3>One big tap</h3>
+            <p>Claim a shelf, mark the kiln loaded, mark it out. Each is a single button the size of a thumb, and each can be undone.</p>
+          </div>
+          <div class="point">
+            <h3>The status first, everything else later</h3>
+            <p>Open the app and the kiln state fills the screen. No feed, no dashboard, no settings to wade through before you find out whether to come in today.</p>
+          </div>
+          <div class="point">
+            <h3>One message, not a stream</h3>
+            <p>Members hear from Kilnlog when their pieces are out and when a firing they claimed space in is about to close. That's it. Nothing to mute.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="phone" aria-label="Example member screen">
+          <div class="screen-head"><span class="t">Riverbend</span><span class="u" aria-hidden="true"></span></div>
+          <div class="tile">
+            <div class="k"><b>Big kiln</b><span class="status firing">Firing</span></div>
+            <div class="big">1,140°<small>cone 6 glaze</small></div>
+            <div class="d">Out Thursday, around 4 pm. You have 3 pieces in.</div>
+          </div>
+          <div class="tile">
+            <div class="k"><b>Small kiln</b><span class="status loading">Loading</span></div>
+            <div class="big">2 shelves<small>still free</small></div>
+            <div class="d">Bisque. Loads Saturday morning.</div>
+          </div>
+          <div class="tile action">Claim a shelf in the small kiln</div>
+          <p class="thumb-note">Buttons stay at the bottom, under your thumb.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="owners">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The schedule stays yours</h2>
+        <p class="lede">You run the kilns. Kilnlog just writes down what happened, every time, so the firing log is complete whether or not anyone remembered the notebook.</p>
+      </div>
+
+      <div class="log-wrap">
+        <table class="log">
+          <caption class="sr-only">Example firing log. Names and results made up.</caption>
+          <thead>
+            <tr><th>Firing</th><th>Kiln</th><th>Type</th><th>Loaded by</th><th>Out</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Mon 13 Oct</td><td>Big kiln</td><td><span class="tag glaze">Cone 6 glaze</span></td><td>Priya</td><td>Thu 16 Oct, 4:12 pm</td><td class="note">Slow cool. Top shelf ran a touch hot; cone 7 bent.</td></tr>
+            <tr><td>Sat 11 Oct</td><td>Small kiln</td><td><span class="tag bisque">Bisque 04</span></td><td>Deon</td><td>Mon 13 Oct, 8:30 am</td><td class="note">Full. One cracked platter, Jo's. Jo told.</td></tr>
+            <tr><td>Wed 8 Oct</td><td>Big kiln</td><td><span class="tag glaze">Cone 6 glaze</span></td><td>Priya</td><td>Sat 11 Oct, 9:05 am</td><td class="note">New element in zone 2. Even across shelves.</td></tr>
+            <tr><td>Sat 4 Oct</td><td>Small kiln</td><td><span class="tag bisque">Bisque 04</span></td><td>Mara</td><td>Mon 6 Oct, 7:50 am</td><td class="note">Half full. Combined with Tuesday's claims.</td></tr>
+            <tr><td>Tue 30 Sep</td><td>Big kiln</td><td><span class="tag glaze">Cone 6 glaze</span></td><td>Deon</td><td>Fri 3 Oct, 2:20 pm</td><td class="note">Shelf 3 glaze run; kiln wash redone.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="owner-points">
+        <div>
+          <h3>Publish the schedule, weeks ahead</h3>
+          <p>Set which kiln fires when, at what cone, and how many shelves are open. Members only see firings you've published, and only claim what you've allowed.</p>
+        </div>
+        <div>
+          <h3>No double-booked shelves</h3>
+          <p>A shelf can be claimed once. When the firing is full, the button says so. You can hold shelves back for classes or your own work.</p>
+        </div>
+        <div>
+          <h3>A log you can hand to the next person</h3>
+          <p>Every firing records who loaded, who unloaded, the program, the cone and any notes. Download it as a spreadsheet whenever you want it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="door">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What comes off the door</h2>
+      </div>
+      <div class="door-grid">
+        <div class="door-item">
+          <span class="was">The sign-up sheet</span>
+          <h3>Claims live on the phone, not on tape</h3>
+          <p>Nobody has to drive in to see whether there's space, and nobody's name gets smudged off the sheet by a wet sponge.</p>
+        </div>
+        <div class="door-item">
+          <span class="was">"Is it out yet?"</span>
+          <h3>The group chat gets its evenings back</h3>
+          <p>The question gets answered before anyone asks it. Your chat goes back to being about glaze tests and whose turn it is to buy sponges.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="honest">
+    <div class="wrap">
+      <p class="big">Three community studios have run their kilns on Kilnlog since spring.</p>
+      <p class="small">We're not going to put a number on how many firings or pieces that is. It's early, and we'd rather you try it with your own kiln for a month and judge it on that.</p>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap final-grid">
+      <div>
+        <h2>Try it on your next firing.</h2>
+        <p class="cta-note" style="margin-top:16px">Free for 30 days with your own kiln and your own members. <strong>Studio owners pay after the trial. Members never do.</strong></p>
+      </div>
+      <a class="btn btn-primary" href="https://kilnlog.example/start">Start a free 30-day trial</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="foot">
+    <span>Kilnlog. Made by people who throw pots.</span>
+    <div class="foot-links">
+      <a href="https://kilnlog.example/start">Start a trial</a>
+      <a href="mailto:hello@kilnlog.example">hello@kilnlog.example</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

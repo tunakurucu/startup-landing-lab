@@ -1,0 +1,31 @@
+{
+  "run": "driftcheck/without-r1",
+  "workdir": "W004",
+  "brief": "driftcheck",
+  "arm": "without",
+  "model": "claude-fable-5-1",
+  "client_version": "2.1.304",
+  "start": "2026-10-20T18:32:29Z",
+  "end": "2026-10-20T18:38:10Z",
+  "wall_clock_s": 341,
+  "tokens": {
+    "input": 64,
+    "output": 22226,
+    "cache_read": 2649726,
+    "cache_create": 85210
+  },
+  "tool_calls": 20,
+  "cap_hit": false,
+  "skill_installed": false,
+  "skill_visible_to_agent": false,
+  "skill_md_read": false,
+  "skill_file_access_in_no_skill_arm": false,
+  "infrastructure_retry": null,
+  "start_note": "",
+  "transcript": "transcript.jsonl (tool calls, assistant text and truncated tool results; harness-injected context removed)",
+  "transcript_source": "a1cbd8519161c6c37.output",
+  "harness_skills_invoked": [
+    "frontend-design"
+  ],
+  "note": "Both arms ran in the same client with its built-in skills visible (for example frontend-design); the arms differ only in whether this skill was installed in the working folder."
+}

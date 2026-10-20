@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liftplan — checked crane lift plans, signed on site</title>
+<meta name="description" content="Liftplan turns a crane lift into a checked lift plan that the site's appointed person reviews and signs on a tablet. Request a pilot on one site.">
+<style>
+  :root {
+    --concrete: #CFCDC6;
+    --concrete-deep: #B9B7B0;
+    --paper: #F8F7F3;
+    --paper-line: #D7D4CB;
+    --ink: #000000;
+    --ink-soft: #3A3A38;
+    --ink-faint: #6E6C67;
+    --hivis: #FFD400;
+    --hivis-deep: #E6BE00;
+    --stop: #C9001E;
+    --go: #19733A;
+    --amber: #B35C00;
+    --display: "Helvetica Neue Condensed", "HelveticaNeue-CondensedBold", "Arial Narrow", "Roboto Condensed", "TeX Gyre Heros Cn", "DejaVu Sans Condensed", "Liberation Sans Narrow", Arial, sans-serif;
+    --text: "Helvetica Neue", Helvetica, Arial, "TeX Gyre Heros", "Liberation Sans", sans-serif;
+    --measure: 36rem;
+    --gutter: clamp(16px, 4vw, 48px);
+    --max: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--concrete);
+    color: var(--ink);
+    font-family: var(--text);
+    font-size: 17px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .hero :focus-visible { outline-color: var(--ink); }
+
+  h1, h2, h3 { margin: 0; font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; }
+  p { margin: 0 0 1em; max-width: var(--measure); }
+  ul { margin: 0; padding: 0; list-style: none; }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+
+  /* ---------- header ---------- */
+  .top {
+    background: var(--paper);
+    border-bottom: 2px solid var(--ink);
+  }
+  .top .wrap {
+    display: flex; align-items: center; gap: 24px;
+    min-height: 64px;
+  }
+  .mark {
+    font-family: var(--display); font-stretch: condensed;
+    font-weight: 700; font-size: 28px; letter-spacing: -0.02em;
+    text-decoration: none; line-height: 1;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .mark i {
+    display: inline-block; width: 18px; height: 18px;
+    background: var(--hivis); border: 2px solid var(--ink);
+  }
+  .top nav { margin-left: auto; display: flex; gap: 22px; }
+  .top nav a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--ink-soft); }
+  .top nav a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+  .btn {
+    display: inline-block; text-decoration: none;
+    font-family: var(--text); font-weight: 700; font-size: 16px;
+    padding: 12px 18px; border: 2px solid var(--ink);
+    background: var(--ink); color: var(--paper);
+    line-height: 1.2; cursor: pointer;
+  }
+  .btn:hover { background: var(--ink-soft); border-color: var(--ink-soft); }
+  .btn.small { padding: 8px 14px; font-size: 14px; }
+  .btn.lg { font-size: 18px; padding: 16px 24px; }
+  @media (max-width: 760px) {
+    .top nav { display: none; }
+    .top .wrap .btn { margin-left: auto; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    background: var(--hivis);
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+  }
+  .hero .wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(28px, 5vw, 72px);
+    padding-top: clamp(40px, 7vw, 88px);
+    padding-bottom: clamp(40px, 7vw, 88px);
+    align-items: start;
+  }
+  .hero h1 {
+    font-family: var(--display); font-stretch: condensed;
+    text-transform: uppercase;
+    font-size: clamp(44px, 6.2vw, 86px);
+    line-height: 0.92; letter-spacing: -0.015em;
+    margin-bottom: 28px;
+  }
+  .hero p.lede { font-size: 19px; line-height: 1.45; max-width: 30rem; color: var(--ink); }
+  .hero .actions { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; margin-top: 30px; }
+  .hero .actions .note { font-size: 15px; color: var(--ink-soft); max-width: 18rem; margin: 0; }
+
+  /* the check sheet */
+  .sheet {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.22);
+    padding: 0;
+    font-size: 15px;
+  }
+  .sheet-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 12px 18px; border-bottom: 2px solid var(--ink);
+    gap: 12px;
+  }
+  .sheet-head strong { font-size: 17px; }
+  .sheet-head span { color: var(--ink-faint); font-size: 13px; }
+  .sheet-body { padding: 16px 18px 18px; }
+  .fields {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px 16px;
+  }
+  .field label {
+    display: block; font-size: 13px; color: var(--ink-soft); margin-bottom: 4px;
+  }
+  .field input, .field select {
+    width: 100%; font: inherit; font-size: 16px; font-variant-numeric: tabular-nums;
+    padding: 7px 9px; border: 1.5px solid var(--ink); background: #fff; color: var(--ink);
+    border-radius: 0; min-height: 38px;
+  }
+  .field select { appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' fill='none' stroke='black' stroke-width='2'/></svg>");
+    background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+  .field .unit { display: flex; align-items: center; gap: 8px; }
+  .field .unit input { flex: 1; }
+  .field .unit b { font-weight: 500; color: var(--ink-soft); min-width: 1.2em; }
+  .field.span2 { grid-column: span 2; }
+  .field.span3 { grid-column: span 4; }
+  .radius-row { display: flex; align-items: center; gap: 12px; }
+  .radius-row input[type="range"] { flex: 1; accent-color: var(--ink); min-height: 0; padding: 0; border: 0; background: none; }
+  .radius-row output { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 18px; min-width: 3.6em; text-align: right; }
+
+  .elev { margin: 14px 0 6px; border-top: 1px solid var(--paper-line); border-bottom: 1px solid var(--paper-line); background:
+    repeating-linear-gradient(0deg, transparent 0 19px, rgba(0,0,0,0.045) 19px 20px),
+    repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.045) 19px 20px); }
+  .elev svg { display: block; width: 100%; height: auto; }
+  .boom-grp { transition: transform 220ms ease-out; }
+  @media (prefers-reduced-motion: reduce) { .boom-grp { transition: none; } }
+
+  .results { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border: 1.5px solid var(--ink); margin-top: 12px; }
+  .results div { padding: 8px 10px; border-right: 1px solid var(--paper-line); }
+  .results div:last-child { border-right: 0; }
+  .results small { display: block; font-size: 12px; color: var(--ink-soft); line-height: 1.3; }
+  .results b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; line-height: 1.2; margin-top: 2px; }
+  .results b em { font-style: normal; font-size: 13px; font-weight: 500; color: var(--ink-faint); }
+
+  .verdicts { margin-top: 12px; display: grid; gap: 8px; }
+  .verdict {
+    display: grid; grid-template-columns: 14px 1fr; gap: 10px; align-items: start;
+    padding: 9px 12px; border: 1.5px solid var(--ink); background: #fff; line-height: 1.35;
+  }
+  .verdict i { display: block; width: 14px; height: 14px; margin-top: 3px; background: var(--go); }
+  .verdict.warn i { background: var(--amber); }
+  .verdict.stop i { background: var(--stop); }
+  .verdict.stop { background: repeating-linear-gradient(135deg, #fff 0 14px, #FFE9EC 14px 16px); }
+  .verdict strong { display: block; }
+  .verdict span { color: var(--ink-soft); font-size: 14px; }
+  .sheet-foot {
+    border-top: 2px solid var(--ink); padding: 10px 18px; font-size: 13px; color: var(--ink-soft);
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+  .sheet-foot b { color: var(--ink); font-weight: 700; }
+
+  @media (max-width: 960px) {
+    .hero .wrap { grid-template-columns: 1fr; }
+    .fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .field.span3 { grid-column: span 2; }
+    .results { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .results div:nth-child(2) { border-right: 0; }
+    .results div:nth-child(-n+2) { border-bottom: 1px solid var(--paper-line); }
+  }
+  @media (max-width: 480px) {
+    .fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .field.span2, .field.span3 { grid-column: span 2; }
+    .field.crane { grid-column: span 2; }
+    .sheet { box-shadow: 4px 4px 0 rgba(0,0,0,0.22); }
+  }
+
+  /* ---------- sections ---------- */
+  section.band { padding: clamp(56px, 8vw, 110px) 0; border-bottom: 2px solid var(--ink); }
+  section.band:last-of-type { border-bottom: 0; }
+  .band h2 {
+    font-family: var(--display); font-stretch: condensed;
+    font-size: clamp(34px, 4.4vw, 56px); line-height: 0.98; letter-spacing: -0.012em;
+    max-width: 16em; margin-bottom: 20px;
+  }
+  .band .intro { font-size: 19px; line-height: 1.45; max-width: 34rem; }
+  .two { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
+  @media (max-width: 860px) { .two { grid-template-columns: 1fr; } }
+
+  /* replaces */
+  .files { background: var(--paper); border: 2px solid var(--ink); padding: 0; margin-top: 8px; }
+  .files li { padding: 10px 16px; border-bottom: 1px solid var(--paper-line); display: flex; gap: 14px; align-items: baseline; font-size: 15px; }
+  .files li:last-child { border-bottom: 0; }
+  .files li .n { font-variant-numeric: tabular-nums; }
+  .files li .d { margin-left: auto; color: var(--ink-faint); font-size: 13px; white-space: nowrap; }
+  .files li.pdf .n::before, .files li.xls .n::before {
+    content: ""; display: inline-block; width: 10px; height: 13px; margin-right: 10px; vertical-align: -1px;
+    border: 1.5px solid var(--ink); background: #fff;
+  }
+  .files li.xls .n::before { background: repeating-linear-gradient(0deg, #fff 0 3px, var(--ink) 3px 4px); }
+  .files li.pdf .n::before { background: repeating-linear-gradient(0deg, #fff 0 2px, var(--concrete-deep) 2px 3px); }
+  .caption { font-size: 14px; color: var(--ink-soft); margin-top: 10px; }
+  .replaces p strong { font-weight: 700; }
+  .plain li { position: relative; padding-left: 22px; margin-bottom: 10px; max-width: var(--measure); }
+  .plain li::before { content: ""; position: absolute; left: 0; top: 10px; width: 10px; height: 3px; background: var(--ink); }
+
+  /* steps */
+  .steps { list-style: none; padding: 0; margin: 0; counter-reset: step; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 2px solid var(--ink); margin-top: 36px; }
+  .steps li { counter-increment: step; padding: 22px 24px 28px 0; border-right: 1px solid var(--concrete-deep); margin-right: 24px; }
+  .steps li:last-child { border-right: 0; margin-right: 0; }
+  .steps li::before {
+    content: counter(step);
+    display: block; font-family: var(--display); font-stretch: condensed; font-weight: 700;
+    font-size: 44px; line-height: 1; margin-bottom: 14px;
+  }
+  .steps h3 { font-size: 20px; margin-bottom: 8px; }
+  .steps p { font-size: 15.5px; color: var(--ink-soft); margin: 0; }
+  .steps .who { display: inline-block; margin-top: 12px; font-size: 13px; padding: 3px 8px; border: 1.5px solid var(--ink); background: var(--paper); }
+  @media (max-width: 960px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } .steps li:nth-child(2) { border-right: 0; } }
+  @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } .steps li { border-right: 0; margin-right: 0; border-bottom: 1px solid var(--concrete-deep); padding-right: 0; } .steps li:last-child { border-bottom: 0; } }
+
+  /* the plan document */
+  .plan { background: var(--paper); border: 2px solid var(--ink); margin-top: 36px; box-shadow: 6px 6px 0 rgba(0,0,0,0.18); }
+  .plan-head { display: grid; grid-template-columns: 1fr auto; gap: 16px; padding: 16px 24px; border-bottom: 2px solid var(--ink); align-items: baseline; }
+  .plan-head strong { font-size: 18px; }
+  .plan-head span { color: var(--ink-faint); font-size: 14px; }
+  .plan-row { display: grid; grid-template-columns: 56px minmax(0, 3fr) minmax(0, 7fr); border-bottom: 1px solid var(--paper-line); }
+  .plan-row:last-child { border-bottom: 0; }
+  .plan-row > * { padding: 18px 24px; }
+  .plan-row .num { font-family: var(--display); font-stretch: condensed; font-weight: 700; font-size: 26px; line-height: 1; border-right: 1px solid var(--paper-line); padding-right: 0; }
+  .plan-row h3 { font-size: 18px; line-height: 1.25; }
+  .plan-row h3 small { display: block; font-weight: 400; font-size: 14px; color: var(--ink-faint); margin-top: 4px; }
+  .plan-row ul li { position: relative; padding-left: 20px; margin-bottom: 6px; font-size: 15.5px; }
+  .plan-row ul li::before { content: ""; position: absolute; left: 0; top: 9px; width: 9px; height: 9px; border: 1.5px solid var(--ink); }
+  .plan-row ul li.flag::before { background: var(--hivis); }
+  .plan-foot { padding: 12px 24px; border-top: 2px solid var(--ink); font-size: 14px; color: var(--ink-soft); }
+  @media (max-width: 760px) {
+    .plan-row { grid-template-columns: 44px 1fr; }
+    .plan-row ul { grid-column: 2; padding-top: 0; }
+    .plan-row .num { font-size: 22px; }
+    .plan-row > * { padding: 14px 16px; }
+  }
+
+  /* sign-off */
+  .signoff { background: var(--paper); }
+  .signoff h2 { max-width: 14em; }
+  .sig {
+    border: 2px solid var(--ink); background: #fff; margin-top: 8px;
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.18);
+  }
+  .sig-row { display: grid; grid-template-columns: 150px 1fr; border-bottom: 1px solid var(--paper-line); font-size: 15px; }
+  .sig-row:last-child { border-bottom: 0; }
+  .sig-row > * { padding: 12px 16px; }
+  .sig-row .k { color: var(--ink-faint); border-right: 1px solid var(--paper-line); }
+  .sig-row .v { font-variant-numeric: tabular-nums; }
+  .sig-row .v.strike s { color: var(--ink-faint); }
+  .sig-row .v .pen { color: var(--ink); font-weight: 700; }
+  .sig-row .v svg { display: block; height: 54px; width: auto; max-width: 100%; }
+  .sig-row .stamp { display: inline-block; border: 2px solid var(--stop); color: var(--stop); font-weight: 700; padding: 2px 8px; transform: rotate(-3deg); font-size: 14px; letter-spacing: 0.02em; }
+  .does { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 80px); margin-top: clamp(40px, 6vw, 72px); max-width: 60rem; }
+  .does h3 { font-size: 18px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
+  .does li { position: relative; padding-left: 22px; margin-bottom: 9px; font-size: 15.5px; }
+  .does li::before { content: ""; position: absolute; left: 0; top: 9px; width: 10px; height: 3px; background: var(--ink); }
+  .does .not li::before { width: 10px; height: 10px; top: 6px; background: none; border: 1.5px solid var(--stop); }
+  @media (max-width: 640px) { .does { grid-template-columns: 1fr; } .sig-row { grid-template-columns: 110px 1fr; } }
+
+  /* pilots */
+  .pilots .two { align-items: start; }
+  .pilot-sites { display: grid; gap: 14px; margin-top: 8px; }
+  .site { border: 2px solid var(--ink); background: var(--paper); padding: 16px 20px; display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; font-size: 15px; }
+  .site .k { color: var(--ink-faint); }
+  .site .redact { display: inline-block; height: 1em; width: 9em; vertical-align: -2px; background: repeating-linear-gradient(135deg, var(--ink) 0 6px, var(--ink-soft) 6px 8px); }
+  .site .redact.short { width: 5.5em; }
+
+  /* request */
+  .request { background: var(--hivis); }
+  .request h2 { max-width: 12em; }
+  .request .two { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); }
+  @media (max-width: 860px) { .request .two { grid-template-columns: 1fr; } }
+  .request .terms { background: var(--paper); border: 2px solid var(--ink); padding: 20px 24px; box-shadow: 6px 6px 0 rgba(0,0,0,0.22); }
+  .request .terms h3 { font-size: 17px; margin-bottom: 12px; }
+  .request .terms li { padding: 9px 0; border-bottom: 1px solid var(--paper-line); font-size: 15.5px; display: grid; grid-template-columns: 1fr auto; gap: 12px; }
+  .request .terms li:last-child { border-bottom: 0; }
+  .request .terms li b { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .request .terms h3 + ul + h3 { margin-top: 22px; }
+  .request .cta { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; }
+  .request .cta .url { font-size: 15px; color: var(--ink-soft); word-break: break-all; }
+
+  footer { background: var(--paper); border-top: 2px solid var(--ink); padding: 28px 0 40px; font-size: 14px; color: var(--ink-soft); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 40px; align-items: baseline; }
+  footer p { margin: 0; max-width: none; }
+  footer .mark { font-size: 22px; }
+  footer a { color: var(--ink-soft); }
+
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#"><i aria-hidden="true"></i>Liftplan</a>
+    <nav aria-label="Page sections">
+      <a href="#how">How a lift goes through</a>
+      <a href="#checks">What it checks</a>
+      <a href="#signoff">Who decides</a>
+      <a href="#pilots">Pilots</a>
+    </nav>
+    <a class="btn small" href="https://liftplan.example/pilot">Request a pilot</a>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap">
+    <div>
+      <h1 id="h1">Lift plans checked against the chart. Signed on site.</h1>
+      <p class="lede">Put in the load, the crane, the radius and the ground. Liftplan checks the lift against the crane's load chart and outrigger loads, writes up the plan, and hands it to your appointed person to amend and sign on a tablet.</p>
+      <div class="actions">
+        <a class="btn lg" href="https://liftplan.example/pilot">Request a pilot on one site</a>
+        <p class="note">Running on live sites with two contractors now. Try it with your own cranes, charts and appointed persons.</p>
+      </div>
+    </div>
+
+    <form class="sheet" id="check" aria-labelledby="sheet-title" onsubmit="return false;">
+      <div class="sheet-head">
+        <strong id="sheet-title">Lift check</strong>
+        <span>Sample chart. Not for use on site.</span>
+      </div>
+      <div class="sheet-body">
+        <div class="fields">
+          <div class="field">
+            <label for="load">Load weight</label>
+            <div class="unit"><input id="load" type="number" inputmode="decimal" min="0" max="200" step="0.1" value="9.8"><b>t</b></div>
+          </div>
+          <div class="field">
+            <label for="rig">Rigging</label>
+            <div class="unit"><input id="rig" type="number" inputmode="decimal" min="0" max="20" step="0.1" value="0.6"><b>t</b></div>
+          </div>
+          <div class="field span2 crane">
+            <label for="crane">Crane</label>
+            <select id="crane">
+              <option value="at50" selected>50 t all-terrain, 36 m boom</option>
+              <option value="at100">100 t all-terrain, 50 m boom</option>
+              <option value="city25">25 t city crane, 26 m boom</option>
+            </select>
+          </div>
+          <div class="field span3">
+            <label for="radius">Working radius</label>
+            <div class="radius-row">
+              <input id="radius" type="range" min="3" max="32" step="0.5" value="14" aria-describedby="radius-out">
+              <output id="radius-out" for="radius">14.0 m</output>
+            </div>
+          </div>
+          <div class="field span2">
+            <label for="ground">Ground under the outriggers</label>
+            <select id="ground">
+              <option value="250">Compacted hardcore, well drained</option>
+              <option value="150" selected>Stiff clay</option>
+              <option value="100">Firm clay</option>
+              <option value="50">Soft clay or loose fill</option>
+              <option value="0">Made ground, not investigated</option>
+            </select>
+          </div>
+          <div class="field span2">
+            <label for="mat">Outrigger mats</label>
+            <select id="mat">
+              <option value="1">1.0 × 1.0 m steel</option>
+              <option value="2.25" selected>1.5 × 1.5 m timber</option>
+              <option value="2.88">2.4 × 1.2 m steel</option>
+              <option value="4">2.0 × 2.0 m steel</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="elev" aria-hidden="true">
+          <svg id="elev" viewBox="0 0 560 360" xmlns="http://www.w3.org/2000/svg">
+            <!-- ground -->
+            <line x1="0" y1="330" x2="560" y2="330" stroke="#000" stroke-width="2"/>
+            <!-- outrigger mats -->
+            <rect id="matL" x="50" y="322" width="36" height="8" fill="#000"/>
+            <rect id="matR" x="170" y="322" width="36" height="8" fill="#000"/>
+            <!-- outrigger beams -->
+            <line x1="68" y1="300" x2="68" y2="322" stroke="#000" stroke-width="4"/>
+            <line x1="188" y1="300" x2="188" y2="322" stroke="#000" stroke-width="4"/>
+            <line x1="68" y1="302" x2="188" y2="302" stroke="#000" stroke-width="5"/>
+            <!-- carrier -->
+            <rect x="60" y="284" width="140" height="22" fill="#F8F7F3" stroke="#000" stroke-width="2"/>
+            <circle cx="88" cy="316" r="9" fill="#F8F7F3" stroke="#000" stroke-width="2"/>
+            <circle cx="118" cy="316" r="9" fill="#F8F7F3" stroke="#000" stroke-width="2"/>
+            <circle cx="166" cy="316" r="9" fill="#F8F7F3" stroke="#000" stroke-width="2"/>
+            <!-- superstructure + counterweight -->
+            <rect x="72" y="262" width="80" height="24" fill="#F8F7F3" stroke="#000" stroke-width="2"/>
+            <rect x="58" y="258" width="22" height="30" fill="#000"/>
+            <!-- boom pivot -->
+            <g id="boom" class="boom-grp" transform="translate(120 274)">
+              <g id="boomRot">
+                <!-- drawn along +x, rotated by JS -->
+                <polygon id="boomPoly" points="0,-7 198,-4 198,4 0,7" fill="#FFD400" stroke="#000" stroke-width="2"/>
+                <line id="boomInner" x1="70" y1="0" x2="198" y2="0" stroke="#000" stroke-width="1" stroke-dasharray="4 4"/>
+              </g>
+            </g>
+            <circle cx="120" cy="274" r="4" fill="#000"/>
+            <!-- hoist rope and hook block -->
+            <line id="rope" x1="318" y1="100" x2="318" y2="260" stroke="#000" stroke-width="1.5"/>
+            <rect id="hookBlock" x="312" y="252" width="12" height="16" fill="#000"/>
+            <!-- slings -->
+            <polyline id="slings" points="318,268 300,292 336,292" fill="none" stroke="#000" stroke-width="1.5"/>
+            <!-- load -->
+            <rect id="loadBox" x="288" y="292" width="60" height="26" fill="#F8F7F3" stroke="#000" stroke-width="2"/>
+            <text id="loadLbl" x="318" y="310" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, TeX Gyre Heros, sans-serif" font-size="12" font-weight="700" fill="#000">10.8 t</text>
+            <!-- radius dimension -->
+            <line x1="120" y1="334" x2="120" y2="352" stroke="#000" stroke-width="1"/>
+            <line id="dimTick" x1="318" y1="334" x2="318" y2="352" stroke="#000" stroke-width="1"/>
+            <line id="dimLine" x1="120" y1="346" x2="318" y2="346" stroke="#000" stroke-width="1"/>
+            <text id="dimLbl" x="219" y="342" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, TeX Gyre Heros, sans-serif" font-size="12" fill="#000">R 14.0 m</text>
+            <!-- capacity note at tip -->
+            <text id="capLbl" x="330" y="90" font-family="Helvetica Neue, Helvetica, Arial, TeX Gyre Heros, sans-serif" font-size="12" fill="#3A3A38">chart 9.9 t</text>
+          </svg>
+        </div>
+
+        <div class="results" role="group" aria-label="Figures">
+          <div><small>Gross load incl. hook block</small><b id="r-gross">11.2 <em>t</em></b></div>
+          <div><small>Chart capacity at this radius</small><b id="r-cap">9.9 <em>t</em></b></div>
+          <div><small>Utilisation of chart</small><b id="r-util">113 <em>%</em></b></div>
+          <div><small>Est. mat pressure, worst outrigger</small><b id="r-press">143 <em>kN/m²</em></b></div>
+        </div>
+
+        <div class="verdicts" aria-live="polite" id="verdicts"></div>
+      </div>
+      <div class="sheet-foot">
+        <span><b>Liftplan flags. The appointed person decides.</b></span>
+        <span>Capacity is read from the chart and interpolated between radii.</span>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="band replaces" id="replaces">
+  <div class="wrap two">
+    <div>
+      <h2>What it replaces</h2>
+      <p class="intro">A spreadsheet template copied from job to job, and load charts read off PDFs by hand.</p>
+      <p>Both work until they don't. The template carries last site's crane and last site's ground. The chart has three pages for the same boom and the hook block never gets deducted. The signed copy is a photo on someone's phone.</p>
+      <p>Liftplan holds your fleet's charts and your own plan template. Every lift starts from the chart, not from the last lift.</p>
+    </div>
+    <div>
+      <ul class="files" aria-label="Files Liftplan replaces">
+        <li class="xls"><span class="n">LiftPlan_Template_v3 (Block C).xlsx</span><span class="d">Mar 2024</span></li>
+        <li class="xls"><span class="n">LiftPlan_Template_v3 (Block C) FINAL.xlsx</span><span class="d">Jun 2025</span></li>
+        <li class="xls"><span class="n">LiftPlan_Template_v3 (Block C) FINAL (2).xlsx</span><span class="d">Jun 2025</span></li>
+        <li class="xls"><span class="n">Copy of LiftPlan Phase 2 Dave edits.xlsx</span><span class="d">Aug 2025</span></li>
+        <li class="pdf"><span class="n">load-charts-50t-AT-all-configs.pdf</span><span class="d">118 pages</span></li>
+        <li class="pdf"><span class="n">IMG_4471.jpg (signed lift plan, pg 1 of 3)</span><span class="d">Sun 06:12</span></li>
+      </ul>
+      <p class="caption">What a site's lift planning folder tends to look like by the second year.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="how">
+  <div class="wrap">
+    <h2>How a lift goes through</h2>
+    <p class="intro">Four handovers. The plan is one record the whole way, not a file that gets re-sent.</p>
+    <ol class="steps">
+      <li>
+        <h3>The lift is entered</h3>
+        <p>Load, rigging, crane and configuration, radius, ground. From the office or standing at the pick point.</p>
+        <span class="who">Site manager or appointed person</span>
+      </li>
+      <li>
+        <h3>Liftplan checks it</h3>
+        <p>Against the crane's chart, outrigger loads and the allowable bearing pressure, sling angles and accessory ratings. Anything outside limits is flagged in the plan.</p>
+        <span class="who">Liftplan</span>
+      </li>
+      <li>
+        <h3>The appointed person signs</h3>
+        <p>Reviews every figure, changes the method if they want to, writes their own conditions, and signs on the tablet. Or refuses the lift, and the record says so.</p>
+        <span class="who">Appointed person</span>
+      </li>
+      <li>
+        <h3>The lift team has the signed plan</h3>
+        <p>Crane supervisor and slinger see the current version on the day. A change on the day goes back to the appointed person, not onto a Post-it.</p>
+        <span class="who">Crane supervisor</span>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="band" id="checks">
+  <div class="wrap">
+    <h2>What it checks</h2>
+    <p class="intro">The plan follows the sections your appointed person already works through. These are the checks Liftplan runs in each one. Flagged items are shown in the plan with the limit they are measured against.</p>
+
+    <div class="plan">
+      <div class="plan-head">
+        <strong>Lift plan sections</strong>
+        <span>Your template, your section order</span>
+      </div>
+
+      <div class="plan-row">
+        <div class="num">1</div>
+        <h3>Load<small>Weight, dimensions, centre of gravity</small></h3>
+        <ul>
+          <li>Gross load adds rigging, spreader beam and hook block to the stated weight</li>
+          <li>Stated weight is matched to the source: drawing, delivery note or weighed</li>
+          <li class="flag">Flags a load weight with no source given</li>
+        </ul>
+      </div>
+
+      <div class="plan-row">
+        <div class="num">2</div>
+        <h3>Crane and configuration<small>Boom length, counterweight, outrigger extension, slew range</small></h3>
+        <ul>
+          <li>Reads the chart for the exact configuration, not the best page in the PDF</li>
+          <li class="flag">Flags a configuration the crane supplier's chart does not cover</li>
+        </ul>
+      </div>
+
+      <div class="plan-row">
+        <div class="num">3</div>
+        <h3>Radius and capacity<small>Pick radius, set-down radius, the worst of the two</small></h3>
+        <ul>
+          <li>Capacity at each radius, interpolated between chart rows</li>
+          <li>Utilisation against your own critical-lift threshold, 75% by default</li>
+          <li class="flag">Flags a lift above 100% of chart as not possible in this configuration</li>
+        </ul>
+      </div>
+
+      <div class="plan-row">
+        <div class="num">4</div>
+        <h3>Ground and outriggers<small>Bearing pressure, mats, services and voids</small></h3>
+        <ul>
+          <li>Outrigger loads from the crane's tables, or a stated worst case if the tables are not loaded</li>
+          <li>Mat pressure against the allowable bearing pressure you give for that spot</li>
+          <li class="flag">Flags ground with no bearing figure, and asks for an investigation or a temporary works check</li>
+        </ul>
+      </div>
+
+      <div class="plan-row">
+        <div class="num">5</div>
+        <h3>Lifting accessories<small>Slings, shackles, spreader beams, lifting points</small></h3>
+        <ul>
+          <li>Working load limit of each accessory against its share of the load at the sling angle used</li>
+          <li class="flag">Flags accessories without a current inspection on your register</li>
+        </ul>
+      </div>
+
+      <div class="plan-row">
+        <div class="num">6</div>
+        <h3>Method and exclusion zone<small>Sequence, wind limit, communication, who stands where</small></h3>
+        <ul>
+          <li>Wind limit from the crane's chart and the load's surface area, written into the plan</li>
+          <li>Exclusion zone and tag lines written as conditions the crane supervisor confirms on the day</li>
+          <li class="flag">Flags a method the appointed person has not written in their own words</li>
+        </ul>
+      </div>
+
+      <div class="plan-foot">Every check shows its source, its limit and its figure. Nothing is hidden in a formula cell.</div>
+    </div>
+  </div>
+</section>
+
+<section class="band signoff" id="signoff">
+  <div class="wrap two">
+    <div>
+      <h2>Liftplan doesn't decide whether a lift goes ahead. Your appointed person does.</h2>
+      <p class="intro">A flag is not a verdict. The appointed person can accept a flagged lift with their own conditions, change the crane, or stop it. The plan records what they decided and why.</p>
+    </div>
+    <div>
+      <div class="sig" aria-label="Example of a signed lift plan record">
+        <div class="sig-row"><div class="k">Lift</div><div class="v">LP-0218, precast stair flight, Block C, level 4</div></div>
+        <div class="sig-row"><div class="k">Flags</div><div class="v">Utilisation 86% of chart, above the 75% critical threshold<br>Mat pressure 161 kN/m² on 1.5 m timber mats, allowable 150</div></div>
+        <div class="sig-row"><div class="k">Decision</div><div class="v">Proceed as a critical lift. <s>1.5 × 1.5 m timber mats</s> <span class="pen">2.0 × 2.0 m steel mats, pressure rechecked at 91 kN/m².</span> Trial lift at 200 mm, hold, then proceed. Wind limit 9 m/s.</div></div>
+        <div class="sig-row"><div class="k">Signed</div><div class="v">
+          <svg viewBox="0 0 260 60" aria-hidden="true"><path d="M8 42 C 20 10, 30 12, 34 34 C 38 50, 44 44, 50 22 C 56 6, 62 20, 66 36 C 72 52, 80 30, 92 26 C 108 20, 118 34, 130 30 C 146 24, 150 38, 164 32 C 176 28, 186 18, 200 24 C 214 30, 228 38, 250 28" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round"/></svg>
+          Appointed person, 06:42, on the tablet, before the crane was rigged</div></div>
+        <div class="sig-row"><div class="k">Then</div><div class="v"><span class="stamp">Change on the day</span>&nbsp; Set-down radius moved to 16 m. Sent back to the appointed person, re-signed 09:15.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+      <div class="does">
+        <div>
+          <h3>Liftplan does</h3>
+          <ul>
+            <li>Read the chart and the outrigger tables so nobody has to by torchlight</li>
+            <li>Put every figure next to its limit</li>
+            <li>Keep one current version of the plan</li>
+            <li>Record who signed, when, and what they changed</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Liftplan does not</h3>
+          <ul class="not">
+            <li>Approve a lift</li>
+            <li>Replace the appointed person's planning or the crane supervisor's control of the lift</li>
+            <li>Sign anything on anyone's behalf</li>
+            <li>Stand in for a temporary works check or a ground investigation</li>
+          </ul>
+        </div>
+      </div>
+  </div>
+</section>
+
+<section class="band pilots" id="pilots">
+  <div class="wrap two">
+    <div>
+      <h2>In pilots with two contractors</h2>
+      <p class="intro">Both are general contractors running Liftplan on live sites, with their own cranes, their own charts and their own appointed persons. We have agreed not to name them until the pilots finish.</p>
+      <p>We are not going to put numbers here that we can't stand behind yet. When the pilots close we will publish what the appointed persons changed, what they refused, and what we got wrong.</p>
+      <p>If you would rather hear it from a site manager than from us, ask on the pilot form and we will put you in touch once the contractors agree.</p>
+    </div>
+    <div>
+      <div class="pilot-sites">
+        <div class="site">
+          <span class="k">Contractors</span><span>2, both general contractors</span>
+          <span class="k">Named</span><span><span class="redact" aria-hidden="true"></span> <span class="visually-hidden">Withheld</span>at their request, until the pilots close</span>
+          <span class="k">Running</span><span>Lift plans on live sites, checked in Liftplan, signed by their appointed persons</span>
+          <span class="k">Kept alongside</span><span>Their existing paper process, for the whole pilot</span>
+          <span class="k">Published</span><span>Nothing yet</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band request" id="pilot">
+  <div class="wrap two">
+    <div>
+      <h2>Run a pilot on one site</h2>
+      <p class="intro">One site, your cranes, your plan template, your appointed persons. Long enough to cover real critical lifts, short enough to walk away from.</p>
+      <div class="cta">
+        <a class="btn lg" href="https://liftplan.example/pilot">Request a pilot on one site</a>
+        <span class="url">liftplan.example/pilot</span>
+      </div>
+    </div>
+    <div class="terms">
+      <h3>What a pilot includes</h3>
+      <ul>
+        <li><span>Your crane fleet's load charts and outrigger tables loaded</span><b>Week 1</b></li>
+        <li><span>Your current template moved across, section for section</span><b>Week 1</b></li>
+        <li><span>Appointed persons and crane supervisors set up on tablets</span><b>Half a day</b></li>
+        <li><span>Lifts planned and signed in Liftplan, your paper process kept alongside</span><b>Weeks 2 to 8</b></li>
+        <li><span>Review with your appointed persons: what they changed, what they refused</span><b>Week 8</b></li>
+      </ul>
+      <h3>What we ask you for</h3>
+      <ul>
+        <li><span>A site with critical lifts coming up in the next two months</span></li>
+        <li><span>The crane list and whoever holds the charts</span></li>
+        <li><span>An appointed person willing to tell us what is wrong with it</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="mark" href="#"><i aria-hidden="true"></i>Liftplan</a>
+    <p><a href="mailto:pilots@liftplan.example">pilots@liftplan.example</a></p>
+    <p>The lift check on this page uses an illustrative load chart. It is not a lift plan and must not be used for a lifting operation.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Illustrative charts: radius (m) -> capacity (t). Not a real supplier's data.
+  var CRANES = {
+    at50:   { name: "50 t all-terrain", boom: 36, mass: 36, hook: 0.35, maxR: 32,
+              chart: [[3,50],[4,42],[5,34],[6,28],[7,24],[8,20.5],[9,17.8],[10,15.5],[12,12.2],[14,9.9],[16,8.2],[18,6.9],[20,5.8],[22,5.0],[24,4.3],[26,3.7],[28,3.2],[30,2.7],[32,2.3]] },
+    at100:  { name: "100 t all-terrain", boom: 50, mass: 60, hook: 0.6, maxR: 44,
+              chart: [[3,100],[4,82],[5,66],[6,55],[8,40],[10,31],[12,25],[14,20.5],[16,17],[18,14.5],[20,12.4],[24,9.4],[28,7.3],[32,5.8],[36,4.6],[40,3.6],[44,2.8]] },
+    city25: { name: "25 t city crane", boom: 26, mass: 24, hook: 0.25, maxR: 22,
+              chart: [[3,21],[4,16],[5,12.5],[6,10],[7,8.3],[8,7.0],[10,5.2],[12,4.0],[14,3.1],[16,2.5],[18,2.0],[20,1.6],[22,1.3]] }
+  };
+  var GROUND = { "250": "compacted hardcore", "150": "stiff clay", "100": "firm clay", "50": "soft clay or loose fill", "0": "made ground" };
+  var CRITICAL = 0.75;
+  var PIVOT_X = 120, PIVOT_Y = 274, GROUND_Y = 330;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var load = $("load"), rig = $("rig"), crane = $("crane"), radius = $("radius"), radiusOut = $("radius-out"),
+      ground = $("ground"), mat = $("mat"), verdicts = $("verdicts");
+
+  function capacityAt(c, r) {
+    var ch = c.chart;
+    if (r < ch[0][0] || r > ch[ch.length - 1][0]) return null;
+    for (var i = 0; i < ch.length - 1; i++) {
+      var a = ch[i], b = ch[i + 1];
+      if (r >= a[0] && r <= b[0]) {
+        var t = (r - a[0]) / (b[0] - a[0]);
+        return a[1] + (b[1] - a[1]) * t;
+      }
+    }
+    return null;
+  }
+  function fmt(n, d) { return Number(n).toFixed(d === undefined ? 1 : d); }
+  function num(el, fallback) { var v = parseFloat(el.value); return isNaN(v) || v < 0 ? fallback : v; }
+
+  function verdict(kind, title, detail) {
+    return '<div class="verdict ' + kind + '"><i aria-hidden="true"></i><div><strong>' + title + '</strong><span>' + detail + '</span></div></div>';
+  }
+
+  function draw(c, r, gross, cap) {
+    var L = c.boom, rr = Math.min(r, L - 0.5);
+    var PX_PER_M = Math.min(9, 258 / L);       // fit the boom in the drawing at its steepest
+    var ang = Math.acos(rr / L);               // radians from horizontal
+    var deg = ang * 180 / Math.PI;
+    var tipX = PIVOT_X + rr * PX_PER_M;
+    var tipY = PIVOT_Y - L * Math.sin(ang) * PX_PER_M;
+    var Lpx = L * PX_PER_M;
+    $("boomPoly").setAttribute("points", "0,-7 " + Lpx + ",-4 " + Lpx + ",4 0,7");
+    $("boomInner").setAttribute("x1", fmt(Lpx * 0.35, 1)); $("boomInner").setAttribute("x2", fmt(Lpx, 1));
+    $("boomRot").setAttribute("transform", "rotate(" + fmt(-deg, 2) + ")");
+    var loadTop = GROUND_Y - 38, loadH = 26, loadW = 60;
+    var ropeEnd = loadTop - 40;
+    $("rope").setAttribute("x1", tipX); $("rope").setAttribute("x2", tipX);
+    $("rope").setAttribute("y1", tipY); $("rope").setAttribute("y2", ropeEnd);
+    $("hookBlock").setAttribute("x", tipX - 6); $("hookBlock").setAttribute("y", ropeEnd - 8);
+    $("slings").setAttribute("points", tipX + "," + (ropeEnd + 8) + " " + (tipX - 18) + "," + loadTop + " " + (tipX + 18) + "," + loadTop);
+    $("loadBox").setAttribute("x", tipX - loadW / 2); $("loadBox").setAttribute("y", loadTop);
+    $("loadLbl").setAttribute("x", tipX); $("loadLbl").setAttribute("y", loadTop + 18);
+    $("loadLbl").textContent = fmt(gross) + " t";
+    $("dimTick").setAttribute("x1", tipX); $("dimTick").setAttribute("x2", tipX);
+    $("dimLine").setAttribute("x2", tipX);
+    $("dimLbl").setAttribute("x", (PIVOT_X + tipX) / 2);
+    $("dimLbl").textContent = "R " + fmt(r) + " m";
+    var cl = $("capLbl");
+    cl.setAttribute("x", Math.min(tipX + 10, 470)); cl.setAttribute("y", Math.max(tipY - 6, 14));
+    cl.textContent = cap === null ? "outside chart" : "chart " + fmt(cap) + " t";
+  }
+
+  function update() {
+    var c = CRANES[crane.value];
+    var r = parseFloat(radius.value);
+    radiusOut.textContent = fmt(r) + " m";
+    var gross = num(load, 0) + num(rig, 0) + c.hook;
+    var cap = capacityAt(c, r);
+    var util = cap ? gross / cap : null;
+    var allow = parseFloat(ground.value);
+    var matArea = parseFloat(mat.value);
+    // worst-case single outrigger, stated as 70% of crane plus load
+    var outriggerKN = 0.7 * (c.mass + gross) * 9.81;
+    var press = outriggerKN / matArea;
+
+    $("r-gross").innerHTML = fmt(gross) + " <em>t</em>";
+    $("r-cap").innerHTML = cap === null ? "— <em>t</em>" : fmt(cap) + " <em>t</em>";
+    $("r-util").innerHTML = util === null ? "— <em>%</em>" : Math.round(util * 100) + " <em>%</em>";
+    $("r-press").innerHTML = Math.round(press) + " <em>kN/m²</em>";
+
+    var html = "";
+    if (cap === null) {
+      html += verdict("stop", "Radius outside this chart", "The " + c.name + " chart covers " + c.chart[0][0] + " to " + c.maxR + " m in this configuration. Change the crane, the configuration or the position.");
+    } else if (util > 1) {
+      html += verdict("stop", "Exceeds chart at " + fmt(r) + " m", "Gross load " + fmt(gross) + " t against " + fmt(cap) + " t on the chart. Not possible in this configuration. Shorter radius, bigger crane or more counterweight.");
+    } else if (util > CRITICAL) {
+      html += verdict("warn", "Critical lift, " + Math.round(util * 100) + "% of chart", "Above the " + Math.round(CRITICAL * 100) + "% threshold. Needs a full lift plan reviewed and signed by the appointed person before it goes ahead.");
+    } else {
+      html += verdict("ok", "Within " + Math.round(CRITICAL * 100) + "% of chart, " + Math.round(util * 100) + "%", "Still planned and signed. Below the critical threshold, so it can run under your standard lift plan.");
+    }
+    if (allow === 0) {
+      html += verdict("stop", "Ground not established", "Made ground with no bearing figure. Needs a ground investigation or a temporary works engineer's figure before the plan can be signed.");
+    } else if (press > allow) {
+      html += verdict("warn", "Mat pressure over allowable, " + Math.round(press) + " against " + allow + " kN/m²", "Worst outrigger on " + GROUND[ground.value] + ". Larger mats, a spread of mats, or ground improvement. The appointed person chooses.");
+    } else {
+      html += verdict("ok", "Mat pressure within allowable, " + Math.round(press) + " against " + allow + " kN/m²", "Worst outrigger on " + GROUND[ground.value] + ", " + matArea + " m² of mat. Still checked on the day for voids and services.");
+    }
+    verdicts.innerHTML = html;
+    draw(c, r, gross, cap);
+  }
+
+  function craneChanged() {
+    var c = CRANES[crane.value];
+    radius.min = c.chart[0][0];
+    radius.max = c.maxR;
+    if (parseFloat(radius.value) > c.maxR) radius.value = c.maxR;
+    if (parseFloat(radius.value) < c.chart[0][0]) radius.value = c.chart[0][0];
+    update();
+  }
+
+  [load, rig, ground, mat].forEach(function (el) { el.addEventListener("input", update); el.addEventListener("change", update); });
+  radius.addEventListener("input", update);
+  crane.addEventListener("change", craneChanged);
+  craneChanged();
+})();
+</script>
+</body>
+</html>

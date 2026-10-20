@@ -1,0 +1,80 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round5/packets/P002/B/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Lift plans that read the load chart for you",
+    "left": 16,
+    "right": 304,
+    "top": 96,
+    "bottom": 265,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 4505
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Lift plans that read the load chart for you",
+    "left": 16,
+    "right": 374,
+    "top": 96,
+    "bottom": 224,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 4505,
+   "axe": []
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Lift plans that read the load chart for you",
+    "left": 31,
+    "right": 737,
+    "top": 112,
+    "bottom": 228,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 4552
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Lift plans that read the load chart for you",
+    "left": 170,
+    "right": 1270,
+    "top": 112,
+    "bottom": 282,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 13,
+   "text_elements_under_12px": 0,
+   "body_text_length": 4552,
+   "axe": []
+  }
+ }
+}

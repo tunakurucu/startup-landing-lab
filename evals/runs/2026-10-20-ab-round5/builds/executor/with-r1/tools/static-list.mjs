@@ -1,0 +1,14 @@
+import {chromium} from '/home/claude/r3/deps/node_modules/playwright/index.mjs';
+import {readFileSync, writeFileSync} from 'node:fs';
+const b = await chromium.launch();
+const p = await b.newPage();
+await p.goto('file:///home/claude/r5/work/W002/index.html');
+const list = await p.$eval('[data-lines]', el => el.innerHTML);
+const sum = await p.$eval('[data-sum]', el => el.innerHTML);
+await b.close();
+let html = readFileSync('index.html', 'utf8');
+const pretty = list.replace(/<li class="line"/g, '\n          <li class="line') + '\n        ';
+html = html.replace(/(<ol class="lines" data-lines aria-label="Your checklist, in order">)[\s\S]*?(<\/ol>)/, `$1${pretty}$2`);
+html = html.replace(/(<p class="sum" role="status" aria-live="polite" data-sum>)[\s\S]*?(<\/p>)/, `$1${sum}$2`);
+writeFileSync('index.html', html);
+console.log(sum);

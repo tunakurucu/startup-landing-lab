@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Driftcheck</title>
+<meta name="description" content="Driftcheck compares the database schema your migrations produce with the one running in production, and fails the CI job before a deploy that would break. Postgres and MySQL. Free, MIT licensed.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2B'/%3E%3Cpath d='M8 11h16M8 16h10M8 21h16' stroke='%23EAEDE8' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='16' r='3' fill='%23F0775C'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --paper: #EAEDE8;
+    --paper-2: #E0E4DE;
+    --ink: #15231E;
+    --ink-2: #4A5A54;
+    --rule: #C4CBC3;
+    --term: #0F2A2B;
+    --term-2: #16393A;
+    --term-fg: #D7E2DD;
+    --term-dim: #9DB5B0;
+    --removed: #B83A22;
+    --added: #227A48;
+    --changed: #8A5A0A;
+    --removed-dk: #F0775C;
+    --added-dk: #6FD39A;
+    --changed-dk: #EDB847;
+    --serif: Charter, "Bitstream Charter", "Iowan Old Style", "Source Serif Pro", Georgia, serif;
+    --mono: "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+    --measure: 62ch;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.55;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+  code, pre, kbd { font-family: var(--mono); }
+  p { margin: 0 0 1em; max-width: var(--measure); }
+  h1, h2, h3 { font-weight: 400; margin: 0; letter-spacing: -0.01em; }
+  h2 { font-size: 1.75rem; line-height: 1.2; margin-bottom: 0.75rem; max-width: 24ch; }
+  h3 { font-size: 1.15rem; line-height: 1.3; }
+
+  .wrap { width: min(1080px, 100% - 2rem); margin: 0 auto; }
+
+  /* Header */
+  header { padding: 1.25rem 0; }
+  header .wrap { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .wordmark { text-decoration: none; font-size: 1.2rem; display: inline-flex; align-items: center; gap: .55rem; }
+  .wordmark svg { width: 22px; height: 22px; position: relative; top: 2px; }
+  nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.5rem; }
+  nav a { text-decoration: none; }
+  nav a:hover { text-decoration: underline; }
+
+  /* Hero */
+  .hero { padding: 2.5rem 0 2rem; }
+  .hero h1 {
+    font-size: clamp(2.1rem, 1.2rem + 3.2vw, 3.6rem);
+    line-height: 1.08;
+    max-width: 18ch;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+  .hero .lede { font-size: 1.2rem; max-width: 52ch; color: var(--ink); margin-bottom: 1.5rem; }
+
+  .install {
+    display: inline-flex; align-items: stretch;
+    border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden;
+    max-width: 100%;
+  }
+  .install code {
+    padding: .7rem 1rem; font-size: 1.05rem; line-height: 1.3; white-space: nowrap;
+    overflow-x: auto;
+  }
+  .install code .p { color: var(--ink-2); }
+  .install button {
+    appearance: none; border: 0; border-left: 1.5px solid var(--ink);
+    background: var(--ink); color: var(--paper);
+    font: inherit; font-family: var(--serif); font-size: 1rem;
+    padding: 0 1rem; cursor: pointer; min-width: 6.5em;
+  }
+  .install button:hover { background: var(--term); }
+  .install button:focus-visible { outline-offset: -4px; outline-color: var(--paper); }
+  .hero-links { margin: 1.25rem 0 0; display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 1.05rem; }
+  .hero-links .muted { color: var(--ink-2); }
+
+  /* Terminal */
+  .term {
+    background: var(--term); color: var(--term-fg);
+    border-radius: 10px;
+    margin: 2rem 0 0;
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(21,35,30,.35), 0 24px 48px -32px rgba(15,42,43,.55);
+  }
+  .term-bar {
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    padding: .6rem 1.1rem; background: var(--term-2); color: var(--term-dim);
+    font-size: .95rem;
+  }
+  .term-bar span:last-child { white-space: nowrap; }
+  .term pre {
+    margin: 0; padding: 1.1rem 1.25rem 1.3rem;
+    font-size: .9rem; line-height: 1.6; overflow-x: auto;
+    tab-size: 4;
+  }
+  .term .ln { display: block; opacity: 0; animation: appear 1ms linear forwards; animation-delay: calc(var(--d) * 1ms); }
+  .term .cmd { color: #fff; }
+  .term .dim { color: var(--term-dim); }
+  .term .rm { color: var(--removed-dk); }
+  .term .ad { color: var(--added-dk); }
+  .term .ch { color: var(--changed-dk); }
+  .term .fail { color: var(--removed-dk); font-weight: 700; }
+  .term .ok { color: var(--added-dk); }
+  .term .b { font-weight: 700; color: #fff; }
+  .term .ln:empty { height: 1.6em; }
+  @keyframes appear { to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    .term .ln { animation: none; opacity: 1; }
+  }
+  .term-note { font-size: .95rem; color: var(--ink-2); margin: .75rem 0 0; max-width: 70ch; }
+
+  /* Sections */
+  section { padding: 3.5rem 0; border-top: 1px solid var(--rule); }
+  .two { display: grid; grid-template-columns: minmax(0, 18rem) minmax(0, 1fr); gap: 2.5rem 4rem; align-items: start; }
+  .two > :first-child p { max-width: 36ch; }
+
+  /* Diff */
+  .diff { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: .5rem; }
+  .diff figure { margin: 0; min-width: 0; }
+  .diff figcaption { font-size: .95rem; margin-bottom: .4rem; display: flex; justify-content: space-between; gap: .5rem; flex-wrap: wrap; }
+  .diff figcaption .src { color: var(--ink-2); font-family: var(--mono); font-size: .8rem; }
+  .diff pre {
+    margin: 0; background: #fff; border: 1px solid var(--rule); border-radius: 8px;
+    padding: .9rem 1rem; font-size: .84rem; line-height: 1.6; overflow-x: auto;
+  }
+  .diff .l { display: block; padding: 0 .4rem; margin: 0 -.4rem; border-radius: 3px; }
+  .diff .l.ch { background: #F8ECD2; }
+  .diff .l.ad { background: #DCEFE3; }
+  .diff .l.rm { background: #F6DCD5; }
+  .diff .l.rm, .diff .l.ad, .diff .l.ch { position: relative; }
+  .diff .l::before { content: " "; display: inline-block; width: 1.1em; color: var(--ink-2); }
+  .diff .l.ad::before { content: "+"; color: var(--added); }
+  .diff .l.rm::before { content: "-"; color: var(--removed); }
+  .diff .l.ch::before { content: "~"; color: var(--changed); }
+  .legend { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: .95rem; color: var(--ink-2); }
+  .legend code { font-size: .95em; padding: .05em .4em; border-radius: 3px; color: var(--ink); background: #fff; border: 1px solid var(--rule); margin-right: .3em; }
+
+  /* CI */
+  pre.code {
+    margin: 0; background: #fff; border: 1px solid var(--rule); border-radius: 8px;
+    padding: 1rem 1.1rem; font-size: .86rem; line-height: 1.6; overflow-x: auto;
+  }
+  pre.code .k { color: #1F5B8E; }
+  pre.code .s { color: #6B5B1F; }
+  pre.code .c { color: var(--ink-2); font-style: italic; }
+  .exit { margin: 1.25rem 0 0; display: grid; grid-template-columns: auto 1fr; gap: .35rem 1.25rem; font-size: 1rem; max-width: 60ch; }
+  .exit dt { font-family: var(--mono); font-size: .9rem; padding-top: .15em; }
+  .exit dd { margin: 0; }
+  .exit .zero { color: var(--added); }
+  .exit .one { color: var(--removed); }
+  .exit .err { color: var(--changed); }
+
+  /* Coverage table */
+  table { border-collapse: collapse; width: 100%; font-size: 1rem; }
+  th, td { text-align: left; vertical-align: top; padding: .6rem .75rem .6rem 0; border-bottom: 1px solid var(--rule); }
+  th { font-weight: 400; color: var(--ink-2); font-size: .95rem; }
+  td:first-child { white-space: nowrap; width: 11rem; }
+  td code { font-size: .85em; }
+
+  /* Plain facts */
+  .facts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1.5rem 4rem; max-width: 56rem; }
+  .facts li { max-width: 34ch; }
+  .facts strong { font-weight: 700; display: block; margin-bottom: .2rem; }
+
+  /* Closing */
+  .closing { padding: 3.5rem 0 4rem; border-top: 1px solid var(--rule); }
+  .closing h2 { max-width: 30ch; }
+
+  footer { border-top: 1px solid var(--rule); padding: 1.5rem 0 2.5rem; font-size: .95rem; color: var(--ink-2); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  footer ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+
+  @media (max-width: 760px) {
+    body { font-size: 17px; }
+    .hero { padding-top: 2.25rem; }
+    .two { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+    .diff { grid-template-columns: minmax(0, 1fr); }
+    .term pre { font-size: .8rem; padding: .9rem 1rem 1.1rem; }
+    .install { display: flex; }
+    .install code { flex: 1; }
+    td:first-child { width: auto; white-space: normal; }
+    section { padding: 2.5rem 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="wordmark" href="#">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="#0F2A2B"/><path d="M8 11h16M8 16h10M8 21h16" stroke="#EAEDE8" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="16" r="3" fill="#F0775C"/></svg>
+      Driftcheck
+    </a>
+    <nav aria-label="Site">
+      <ul>
+        <li><a href="https://driftcheck.example/docs">Docs</a></li>
+        <li><a href="https://github.com/driftcheck/driftcheck">GitHub</a></li>
+        <li><a href="#ci">Set up in CI</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" style="border-top:0">
+    <div class="wrap">
+      <h1>Catch schema drift in CI, not in a failed deploy.</h1>
+      <p class="lede">Driftcheck builds the schema your migrations would produce, reads the schema actually running in production, and fails the job if the two disagree. Postgres and MySQL. One command.</p>
+
+      <div class="install">
+        <code id="install-cmd"><span class="p">$ </span>npx driftcheck</code>
+        <button type="button" id="copy" data-copy="npx driftcheck" aria-label="Copy install command">Copy</button>
+      </div>
+      <p class="hero-links">
+        <a href="https://driftcheck.example/docs">Read the docs</a>
+        <a href="https://github.com/driftcheck/driftcheck">Read the source</a>
+        <span class="muted">Free, MIT licensed</span>
+      </p>
+
+      <figure class="term" aria-label="Example Driftcheck output in a CI job">
+        <div class="term-bar"><span>ci / schema-check</span><span>pull request #412</span></div>
+<pre><span class="ln" style="--d:0"><span class="cmd">$ npx driftcheck --migrations ./db/migrations --target "$DATABASE_URL"</span></span><span class="ln" style="--d:350"></span><span class="ln" style="--d:350">driftcheck 0.9.2</span><span class="ln" style="--d:420"><span class="dim">  migrations</span>  ./db/migrations <span class="dim">(47 files, head 0047_invoice_amount_bigint)</span></span><span class="ln" style="--d:490"><span class="dim">  target</span>      postgres://ci@replica.internal:5432/app <span class="dim">(postgres 15.4, read-only)</span></span><span class="ln" style="--d:560"></span><span class="ln" style="--d:900">Applying migrations to a scratch database <span class="dim">... done in 1.8s</span></span><span class="ln" style="--d:1300">Reading target schema <span class="dim">... done in 0.4s</span></span><span class="ln" style="--d:1450">Comparing 31 tables, 212 columns, 58 indexes, 19 constraints</span><span class="ln" style="--d:1700"></span><span class="ln" style="--d:1700"><span class="b">Drift found in 3 objects</span></span><span class="ln" style="--d:1800"></span><span class="ln" style="--d:1800">  invoices</span><span class="ln" style="--d:1900">  <span class="ch">~ column  amount_cents</span>   migrations: bigint         target: integer</span><span class="ln" style="--d:1950">  <span class="ad">+ column  customer_email</span> <span class="dim">on target only</span>   varchar(255) NULL</span><span class="ln" style="--d:2050"></span><span class="ln" style="--d:2050">  orders</span><span class="ln" style="--d:2150">  <span class="rm">- index   orders_created_at_idx</span> <span class="dim">in migrations only</span></span><span class="ln" style="--d:2350"></span><span class="ln" style="--d:2350"><span class="fail">Next migration would fail:</span> 0048_backfill_invoice_totals casts amount_cents to bigint, but the target column is integer.</span><span class="ln" style="--d:2450">Report written to driftcheck-report.json</span><span class="ln" style="--d:2550"></span><span class="ln" style="--d:2600"><span class="fail">exit 1</span></span></pre>
+      </figure>
+      <p class="term-note">This is what the job prints when someone has hand-patched a column in production. The deploy stops here, on a pull request, instead of at six in the evening.</p>
+    </div>
+  </section>
+
+  <section id="drift">
+    <div class="wrap two">
+      <div>
+        <h2>What drift is</h2>
+        <p>Your migrations describe a schema. Production runs one. They start out the same and quietly diverge: a hotfix applied by hand, an index dropped during an incident, a migration edited after it already ran.</p>
+        <p>Driftcheck applies your migrations to a scratch database and diffs the result against the target, object by object.</p>
+      </div>
+      <div>
+        <div class="diff">
+          <figure>
+            <figcaption><span>Expected, from migrations</span><span class="src">./db/migrations</span></figcaption>
+<pre><span class="l">CREATE TABLE invoices (</span><span class="l">  id            bigint PRIMARY KEY,</span><span class="l">  customer_id   bigint NOT NULL,</span><span class="l ch">  amount_cents  bigint NOT NULL,</span><span class="l">  status        text NOT NULL,</span><span class="l">  created_at    timestamptz NOT NULL</span><span class="l">);</span></pre>
+          </figure>
+          <figure>
+            <figcaption><span>Running, on the target</span><span class="src">replica.internal/app</span></figcaption>
+<pre><span class="l">CREATE TABLE invoices (</span><span class="l">  id            bigint PRIMARY KEY,</span><span class="l">  customer_id   bigint NOT NULL,</span><span class="l ch">  amount_cents  integer NOT NULL,</span><span class="l">  status        text NOT NULL,</span><span class="l ad">  customer_email varchar(255),</span><span class="l">  created_at    timestamptz NOT NULL</span><span class="l">);</span></pre>
+          </figure>
+        </div>
+        <ul class="legend">
+          <li><code>~</code>differs between the two</li>
+          <li><code>+</code>exists only on the target</li>
+          <li><code>-</code>exists only in migrations</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="ci">
+    <div class="wrap two">
+      <div>
+        <h2>Where it runs</h2>
+        <p>Add one step to the pipeline that already runs on every pull request. Point it at a read-only replica or a recent snapshot; Driftcheck only reads the target schema and never writes to it.</p>
+        <p>The exit code is the whole integration. Anything that can run a shell command can gate a deploy on it.</p>
+      </div>
+      <div>
+<pre class="code" aria-label="GitHub Actions example"><span class="c"># .github/workflows/schema-check.yml</span>
+<span class="k">name</span>: schema-check
+<span class="k">on</span>: [pull_request]
+
+<span class="k">jobs</span>:
+  <span class="k">driftcheck</span>:
+    <span class="k">runs-on</span>: ubuntu-latest
+    <span class="k">steps</span>:
+      - <span class="k">uses</span>: actions/checkout@v4
+      - <span class="k">run</span>: npx driftcheck --migrations ./db/migrations --target <span class="s">"$DATABASE_URL"</span>
+        <span class="k">env</span>:
+          <span class="k">DATABASE_URL</span>: ${{ secrets.REPLICA_READONLY_URL }}</pre>
+        <dl class="exit">
+          <dt class="zero">exit 0</dt><dd>No drift. The schemas match and the deploy can proceed.</dd>
+          <dt class="one">exit 1</dt><dd>Drift found. The job fails and the report lists every differing object.</dd>
+          <dt class="err">exit 2</dt><dd>Driftcheck itself could not run: bad connection string, unreadable migrations, unsupported database.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="compares">
+    <div class="wrap two">
+      <div>
+        <h2>What it compares</h2>
+        <p>Every object the migrations create is checked against the target by name, then by definition. Ordering of columns and whitespace in defaults are ignored; types, nullability, and constraints are not.</p>
+      </div>
+      <div>
+        <table>
+          <thead><tr><th scope="col">Object</th><th scope="col">What is compared</th></tr></thead>
+          <tbody>
+            <tr><td>Tables</td><td>Presence, schema, and ownership of every table the migrations create.</td></tr>
+            <tr><td>Columns</td><td>Type, length and precision, nullability, default expression, identity and generated columns.</td></tr>
+            <tr><td>Indexes</td><td>Columns, order, uniqueness, method, partial predicates, and included columns.</td></tr>
+            <tr><td>Constraints</td><td>Primary keys, foreign keys with their on-delete and on-update actions, unique and check constraints.</td></tr>
+            <tr><td>Enums and types</td><td>Postgres enum values in order; MySQL <code>ENUM</code> and <code>SET</code> column definitions.</td></tr>
+            <tr><td>Sequences and views</td><td>Sequences the migrations own, and view definitions after normalisation.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <h2>What this is, plainly</h2>
+      <ul class="facts">
+        <li><strong>Free and MIT licensed.</strong> Use it, fork it, vendor it. There is no paid plan and no company behind it.</li>
+        <li><strong>A single command.</strong> <code>npx driftcheck</code> downloads nothing beyond the package and needs no agent, account, or dashboard.</li>
+        <li><strong>Read-only against the target.</strong> It introspects the schema. It does not run your migrations in production and does not fix drift for you.</li>
+        <li><strong>Postgres and MySQL.</strong> Other databases are not supported yet. If you need one, open an issue and say which.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="wrap">
+      <h2>Run it once against production. If it finds nothing, you have lost two minutes.</h2>
+      <div class="install">
+        <code><span class="p">$ </span>npx driftcheck</code>
+        <button type="button" class="copy" data-copy="npx driftcheck" aria-label="Copy install command">Copy</button>
+      </div>
+      <p class="hero-links">
+        <a href="https://driftcheck.example/docs">Read the docs</a>
+        <a href="https://github.com/driftcheck/driftcheck">Read the source</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Driftcheck is open source under the MIT license.</span>
+    <ul>
+      <li><a href="https://driftcheck.example/docs">Docs</a></li>
+      <li><a href="https://github.com/driftcheck/driftcheck">GitHub</a></li>
+      <li><a href="https://github.com/driftcheck/driftcheck/issues">Report a problem</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var buttons = document.querySelectorAll('button[data-copy]');
+    Array.prototype.forEach.call(buttons, function (btn) {
+      btn.addEventListener('click', function () {
+        var text = btn.getAttribute('data-copy');
+        var done = function () {
+          btn.textContent = 'Copied';
+          setTimeout(function () { btn.textContent = 'Copy'; }, 1800);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+        } else {
+          fallback(text, done);
+        }
+      });
+    });
+    function fallback(text, done) {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed'; ta.style.top = '-1000px';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  })();
+</script>
+</body>
+</html>
