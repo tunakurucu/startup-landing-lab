@@ -1,0 +1,80 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round6/packets/P004/B/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Too lumpy today?",
+    "left": 18,
+    "right": 302,
+    "top": 85,
+    "bottom": 173,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3106
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Too lumpy today?",
+    "left": 19,
+    "right": 371,
+    "top": 85,
+    "bottom": 130,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3106,
+   "axe": []
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Too lumpy today?",
+    "left": 29,
+    "right": 739,
+    "top": 96,
+    "bottom": 160,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3248
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Too lumpy today?",
+    "left": 94,
+    "right": 763,
+    "top": 244,
+    "bottom": 352,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3330,
+   "axe": []
+  }
+ }
+}
