@@ -226,3 +226,9 @@ The person then raised the target to 91 and asked to keep rebuilding the same si
 
 All 16 primary packets from rounds 3 and 4 were re-graded blind by GPT graders with the same rubric and personas (48 grader runs; 33 of them recorded as `gpt-6-luna`). GPT graders preferred the skill page in 40 of 48 runs (Claude graders: 45 of 48), agreed with the Claude grader's choice in 41 of 48, and by the score-and-vote rule gave 13 wins, 2 ties and 1 loss (Claude: 14 wins, 2 ties). GPT scores both pages higher and the gap slightly smaller (+8.8 against +10.7). The one reversed verdict is the handover redesign. GPT hard-fail flags were not adjudicated. Details and the comparison script: `runs/2026-10-20-xfam/`.
 
+## v0.8: rebuild round 7 (2026-10-20, skill at `8861cb2`)
+
+Pre-registered as a rebuild round (`runs/2026-10-20-ab-round7/PREREG.md`): the four round 6 skill pages were rebuilt from scratch with v0.8 (written from round 6's grader notes) and each paired with the same round 6 no-skill page, graded blind by fresh graders. Target: a mean of at least 91.
+
+**Result: 83.75, target not met, and no change from round 6 (84.25) beyond noise.** The skill page still won all 12 grader runs (no-skill 72.6). Because the no-skill pages were identical in both rounds, they measured grader noise directly: one grader's total moves about ±3 points on an unchanged page (mean absolute difference 2.5, SD 3.1). Across rounds 5 to 7 the skill page has sat at 83–84 while the checks and guidance grew; craft and distinctiveness have stayed near 7.7. More rules of the same kind are not moving the number. Details: `runs/2026-10-20-ab-round7/results/summary.md`.
+
