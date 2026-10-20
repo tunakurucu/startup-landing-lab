@@ -30,6 +30,7 @@ function filled(dir, {status = 'DONE', checkerFailures = [], checker = null, ver
   t = t.replace(/^\| (Empty|Out of range|Nonsense|Repeat|Reset|Keyboard only|Phone|Reduced motion|Visitor's own input) \| \| \| \|$/gm, (_, p) => `| ${p} | tried it at 1440 and 390 | responded with a clear message | ${stress[p] || 'pass'} |`);
   t = t.replace(/^(\s*-\s+Users' own words[^:\n]*:) decided$/m, '$1 "my close takes three days" (r/bookkeeping), "the payout never matches" (G2 review), "fees hide in the deposit" (support forum)');
   t = t.replace(/\| (A|B) \| \| \| \| \| \| \| \| \|/g, `| $1 | a | b | ${s.Fit} | ${s.Identity} | ${s.Originality} | ${s.Composition} | ${s.Proof} | real data |`);
+  t = t.replace(/^\| (Clarity|Fit|Distinctiveness|Proof|Craft|Mobile|Honesty|Interaction|Copy|First screen) \| \| \| \|$/gm, '| $1 | 6 | tighten the hero grid and the artifact labels | 6 |');
   t = t.replace(/\| \| \| \|/g, '| none found | — | — |');
   t = t.replace(/\| (1440|768|390)×(\d+) \| \| \|/g, '| $1×$2 | shot-$1.png | hero and footer |').replace('| 768×1024 | shot-768.png |', '| 390×844 (768 stand-in) | shot-768.png |');
   t = t.replace('- JSON: decided', '- JSON: check.json').replace('- Before: decided', '- Before: before.png').replace('- After: decided', '- After: after.png');
@@ -210,4 +211,14 @@ test('the statement needs a dealt hand with a seed and a level', () => {
   assert.equal(r.status, 1);
   assert.match(r.stdout, /dealt hand with its seed/);
   assert.match(r.stdout, /quiet, bold or loud/);
+});
+test('the self-review needs every criterion scored, with a concrete fix under 8', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'rec-'));
+  filled(dir);
+  const p = join(dir, 'DESIGN-RECORD.md');
+  writeFileSync(p, readFileSync(p, 'utf8').replace(/^\| Craft \| 6 \| [^|]+ \| 6 \|$/m, '| Craft | 6 | more | 6 |').replace(/^\| Copy \| 6 \| [^|]+ \| 6 \|$/m, '| Copy | | | |'));
+  const r = run(dir);
+  assert.equal(r.status, 1);
+  assert.match(r.stdout, /Self-review "Craft" is 6: say concretely what a 9 needs/);
+  assert.match(r.stdout, /Self-review "Copy" needs a first score and an after score/);
 });

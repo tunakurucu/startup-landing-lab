@@ -18,7 +18,7 @@ if (!existsSync(recordPath)) { console.log(`FAIL\n- ${recordPath} does not exist
 const text = readFileSync(recordPath, 'utf8');
 
 const REQUIRED = ['Product interpretation', 'Interview log', 'References', 'Statement', 'Hypothesis', 'Two hero variants before code',
-  'Gate before implementation', 'Render evidence', 'Checker result', 'Checklist', 'Artifact stress test', 'Gate after render', 'Structural revision', 'Remaining weaknesses', 'Status'];
+  'Gate before implementation', 'Render evidence', 'Checker result', 'Checklist', 'Artifact stress test', 'Gate after render', 'Self-review', 'Structural revision', 'Remaining weaknesses', 'Status'];
 const sections = {};
 let current = null;
 for (const line of text.split('\n')) {
@@ -141,6 +141,21 @@ for (const p of PROBES) {
   if (!/^(pass|fail|n\/a)\b/.test(verdict) || !c[1] || !c[2]) problems.push(`Artifact stress test "${p}" needs what you did, what the page did, and pass, fail or n/a`);
   else if (/^n\/a\b/.test(verdict) && verdict.replace(/^n\/a\W*/, '').length < 8 && c[2].length < 8) problems.push(`Artifact stress test "${p}" is n/a without a reason`);
   if (/^fail\b/.test(verdict)) stressFails.push(p);
+}
+// Self-review: ten criteria scored before and after the revision; anything under 8 says what a 9 needs; caps from evidence.
+{
+  const CRIT = ['Clarity', 'Fit', 'Distinctiveness', 'Proof', 'Craft', 'Mobile', 'Honesty', 'Interaction', 'Copy', 'First screen'];
+  const rows = Object.fromEntries((sections['Self-review'] || []).filter(l => /^\|/.test(l) && !/^\|\s*-{3}/.test(l)).map(l => l.split('|').slice(1, -1).map(c => c.trim())).filter(c => c[0] && !/^criterion$/i.test(c[0])).map(c => [c[0].toLowerCase(), c]));
+  const num = x => { const m = (x || '').match(/^(10|[1-9])(\/10)?$/); return m ? Number(m[1]) : null; };
+  for (const name of CRIT) {
+    const c = rows[name.toLowerCase()];
+    if (!c) { problems.push(`Self-review is missing the "${name}" row`); continue; }
+    const first = num(c[1]), after = num(c[3]);
+    if (first === null || after === null) { problems.push(`Self-review "${name}" needs a first score and an after score, each 1–10`); continue; }
+    if (first < 8 && (c[2] || '').length < 12) problems.push(`Self-review "${name}" is ${first}: say concretely what a 9 needs`);
+    if (checkerBlockFailures.length && after > 6) problems.push(`Self-review "${name}" is ${after} after the revision, but check.json has block failures, so no score may exceed 6`);
+  }
+  for (const who of ['Designer', 'Buyer', 'Engineer']) if (!fieldLine('Self-review', who)) problems.push(`Self-review needs the line "- ${who}'s one-sentence read: …"`);
 }
 // Structural revision: before and after evidence must exist (screenshots, or source excerpts when rendering failed).
 for (const key of ['Before', 'After']) {

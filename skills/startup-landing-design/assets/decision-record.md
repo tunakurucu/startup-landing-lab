@@ -148,6 +148,26 @@ Run on the screenshots. If rendering failed, run it on the source and start the 
 | --- | --- | --- |
 | | | |
 
+## Self-review
+Score from the screenshots and the operated page, as the strictest of a senior designer, the brief's buyer and founder, and the engineer who maintains it. 1–10; 10 only when nothing is left to improve. "After" is the score once the structural revision is rendered.
+
+| Criterion | First score | What a 9 needs (for anything under 8) | After |
+| --- | --- | --- | --- |
+| Clarity | | | |
+| Fit | | | |
+| Distinctiveness | | | |
+| Proof | | | |
+| Craft | | | |
+| Mobile | | | |
+| Honesty | | | |
+| Interaction | | | |
+| Copy | | | |
+| First screen | | | |
+
+- Designer's one-sentence read:
+- Buyer's and founder's one-sentence read:
+- Engineer's one-sentence read:
+
 ## Structural revision
 - Weakest explanation or most template-like decision:
 - Change made (structure, not styling):
