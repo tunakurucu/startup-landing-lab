@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schema drift check for CI on Postgres and MySQL · Driftcheck</title>
+<meta name="description" content="Driftcheck is a free, open-source CLI that compares the schema your migrations will produce with the one running in production, and fails the CI job before a deploy that would break.">
+<meta name="theme-color" content="#f1f3ef">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Driftcheck">
+<meta property="og:title" content="Driftcheck: fail the CI job, not the 6 pm deploy">
+<meta property="og:description" content="An open-source CLI that compares the schema your migrations will produce with production, and fails CI before a deploy that would break. Postgres and MySQL. MIT licensed.">
+<meta property="og:image" content="og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Driftcheck: fail the CI job, not the 6 pm deploy">
+<meta name="twitter:description" content="Open-source CLI that catches database schema drift between your migrations and production before deploy.">
+<meta name="twitter:image" content="og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{
+  --ground:#f1f3ef;
+  --paper:#ffffff;
+  --well:#f6f7f4;
+  --band:#e8ede8;
+  --ink:#111814;
+  --ink-2:#47534c;
+  --rule:#c3ccc5;
+  --rule-strong:#111814;
+  --red:#b42318;
+  --red-tint:#fbe7e4;
+  --green:#17663a;
+  --green-tint:#e0f0e5;
+  --sans:system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SFMono-Regular","Cascadia Mono",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;
+  --space-2xs:.25rem;--space-xs:.5rem;--space-s:.75rem;--space-m:1rem;--space-l:1.5rem;--space-xl:2.5rem;--space-2xl:clamp(3.5rem,2.6rem + 3.6vw,6.5rem);
+  --wrap:80rem;
+  --gutter:clamp(1rem,.6rem + 1.8vw,2rem);
+  --step-h1:clamp(2.375rem,1.62rem + 3.1vw,4.375rem);
+  --step-h2:clamp(1.625rem,1.3rem + 1.4vw,2.5rem);
+  --step-0:clamp(1rem,.96rem + .18vw,1.125rem);
+  --radius:4px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul,pre{margin:0}
+ol,ul{padding:0;list-style:none}
+img,svg,video,canvas{display:block;max-width:100%}
+input,button,textarea,select{font:inherit;color:inherit}
+:where(p,li,dd,td,output,[role=status]){overflow-wrap:anywhere;min-width:0}
+html{scroll-padding-top:5rem;-webkit-text-size-adjust:100%}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:var(--step-0);line-height:1.55;text-rendering:optimizeLegibility}
+a{color:inherit;text-underline-offset:.18em;text-decoration-thickness:1px}
+code,kbd,pre,.mono{font-family:var(--mono)}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px #fff}
+.skip{position:absolute;left:12px;top:-60px;padding:12px 16px;background:var(--ink);color:#fff;z-index:100;text-decoration:none}
+.skip:focus{top:12px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+
+/* Header */
+.site-head{border-bottom:1px solid var(--rule)}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--space-m);min-height:3.75rem}
+.brand{display:inline-flex;align-items:center;gap:.55rem;text-decoration:none;font-family:var(--mono);font-weight:700;font-size:1.0625rem;letter-spacing:-.01em;min-height:44px}
+.brand svg{width:22px;height:22px;flex:none}
+.site-nav ul{display:flex;gap:var(--space-2xs)}
+.site-nav a{display:inline-flex;align-items:center;min-height:44px;min-width:44px;padding:0 .75rem;text-decoration:none;font-size:.9375rem;font-weight:600;border-radius:var(--radius)}
+@media (hover:hover) and (pointer:fine){.site-nav a:hover{background:var(--band)}}
+
+/* Hero */
+.hero{padding:clamp(1.25rem,.6rem + 2.6vw,3.25rem) 0 var(--space-2xl)}
+.hero .wrap{display:grid;gap:clamp(1.5rem,1rem + 1.6vw,2.5rem)}
+.hero-copy{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(2rem,1rem + 3vw,4rem);align-items:start}
+.hero-side .lede{margin-top:0}
+h1{font-size:var(--step-h1);line-height:1.02;font-weight:800;letter-spacing:-.03em;text-wrap:balance;overflow-wrap:break-word;max-width:14ch}
+.lede{margin-top:var(--space-l);font-size:clamp(1.0625rem,1rem + .3vw,1.25rem);line-height:1.5;max-width:34em;color:var(--ink);text-wrap:pretty}
+.lede strong{font-weight:700}
+.install{margin-top:var(--space-l);display:flex;align-items:stretch;max-width:30rem;border:1.5px solid var(--ink);border-radius:var(--radius);background:var(--paper)}
+.install code{flex:1;display:flex;align-items:center;padding:0 .9rem;font-size:1.0625rem;font-weight:600;white-space:nowrap;min-height:52px;overflow-x:auto}
+.install code::before{content:"$";color:var(--ink-2);margin-right:.6rem;font-weight:400}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:0 1.1rem;border:0;border-radius:2px;background:var(--ink);color:#fff;font-weight:700;font-size:1rem;text-decoration:none;cursor:pointer;white-space:nowrap;transition:transform .15s cubic-bezier(.2,.7,.2,1),background-color .15s ease-out}
+.install .btn{margin:2px;}
+.btn:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.btn:hover{background:#000}}
+.install-note{margin-top:var(--space-s);font-size:.9375rem;color:var(--ink-2);max-width:30rem}
+.install-note a{color:var(--ink);font-weight:600}
+.copy-status{display:block;font-size:.9375rem;color:var(--green);font-weight:600;margin-top:var(--space-2xs)}
+.copy-status.err{color:var(--red)}
+
+/* The drift bench (signature artifact) */
+.bench{background:var(--paper);border:1.5px solid var(--rule-strong);border-radius:var(--radius);box-shadow:6px 6px 0 var(--band)}
+.bench-head{padding:var(--space-m) var(--space-l) var(--space-s);border-bottom:1px solid var(--rule)}
+.bench-sample{font-family:var(--mono);font-size:.8125rem;color:var(--ink-2);letter-spacing:0}
+.bench-title{font-size:1.25rem;font-weight:800;letter-spacing:-.01em;line-height:1.25;margin-top:.15rem}
+.bench-body{padding:var(--space-m) var(--space-l) var(--space-l);display:grid;gap:var(--space-m)}
+.chips-label{font-size:.9375rem;font-weight:600;margin-bottom:var(--space-xs)}
+.chips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-xs)}
+.chip{min-height:48px;padding:.4rem .6rem;border:1.5px solid var(--rule);border-radius:var(--radius);background:var(--paper);font-size:.9375rem;font-weight:600;line-height:1.2;text-align:left;cursor:pointer;transition:border-color .15s ease-out,background-color .15s ease-out}
+.chip[aria-pressed=true]{border-color:var(--ink);background:var(--ink);color:#fff}
+@media (hover:hover) and (pointer:fine){.chip[aria-pressed=false]:hover{border-color:var(--ink)}}
+
+.result{border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden}
+.ci{display:flex;align-items:center;justify-content:space-between;gap:var(--space-s);padding:.7rem var(--space-m);font-weight:700;font-size:1rem;transition:background-color .2s ease-out}
+.ci .mark{font-family:var(--mono);font-size:1.15rem;line-height:1;margin-right:.45rem}
+.ci-exit{font-family:var(--mono);font-size:.875rem;font-weight:700;padding:.2rem .5rem;border-radius:2px;white-space:nowrap}
+.result[data-state=fail] .ci{background:var(--red-tint);color:var(--red)}
+.result[data-state=fail] .ci-exit{background:var(--red);color:#fff}
+.result[data-state=pass] .ci{background:var(--green-tint);color:var(--green)}
+.result[data-state=pass] .ci-exit{background:var(--green);color:#fff}
+.out{margin:0;padding:var(--space-s) var(--space-m);background:var(--well);border-top:1px solid var(--rule);font-family:var(--mono);font-size:.875rem;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;min-width:0}
+.out .c{color:var(--ink-2)}
+.out .bad{color:var(--red);font-weight:700}
+.out .ok{color:var(--green);font-weight:700}
+.why{padding:var(--space-s) var(--space-m);border-top:1px solid var(--rule);font-size:.9375rem}
+.why b{font-weight:700}
+
+.own label{display:block;font-size:.9375rem;font-weight:600;margin-bottom:var(--space-xs)}
+.own-row{display:flex;gap:var(--space-xs);flex-wrap:wrap}
+.own input{flex:1 1 16rem;min-width:0;min-height:48px;padding:0 .75rem;border:1.5px solid var(--ink-2);border-radius:var(--radius);background:var(--paper);font-family:var(--mono);font-size:1rem}
+.own input::placeholder{color:#6b766f;font-style:italic}
+.own .btn{flex:0 0 auto}
+.btn-quiet{background:var(--paper);color:var(--ink);border:1.5px solid var(--ink)}
+@media (hover:hover) and (pointer:fine){.btn-quiet:hover{background:var(--band)}}
+.own-msg{margin-top:var(--space-xs);font-size:.9375rem;min-height:1.5em;color:var(--ink-2)}
+.own-msg.err{color:var(--red);font-weight:600}
+.own-help{font-size:.875rem;color:var(--ink-2);margin-top:var(--space-2xs)}
+
+.diff{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.875rem}
+.diff caption{text-align:left;font-family:var(--sans);font-size:.9375rem;font-weight:700;padding-bottom:var(--space-xs)}
+.diff th,.diff td{padding:.4rem .6rem;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.diff thead th{font-family:var(--sans);font-size:.8125rem;font-weight:700;color:var(--ink-2);border-bottom:1.5px solid var(--ink)}
+.diff tbody tr:nth-child(even){background:var(--well)}
+.diff tbody th{font-weight:600}
+.diff tr.sep td,.diff tr.sep th{border-top:1px solid var(--rule)}
+.diff tr.drift{background:var(--red-tint)!important}
+.diff tr.drift td,.diff tr.drift th{color:var(--red);font-weight:700}
+.diff .none{color:var(--ink-2)}
+.diff .kind{color:var(--ink-2);font-weight:400}
+.diff td{white-space:nowrap}
+.diff tbody th{overflow-wrap:anywhere}
+
+@media (min-width:1101px){
+  .bench-head{display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-l);flex-direction:row-reverse}
+  .bench-sample{max-width:34em;text-align:right}
+  .bench-body{grid-template-columns:minmax(0,.75fr) minmax(0,1.15fr) minmax(0,1.1fr);grid-template-areas:"pick result table" "own result table";align-items:start;column-gap:var(--space-l)}
+  .pick{grid-area:pick}.result{grid-area:result}.own{grid-area:own}.diff{grid-area:table}
+  .chips{grid-template-columns:minmax(0,1fr)}
+  .chip{min-height:44px}
+  .own-row input{flex-basis:100%}
+}
+
+/* Sections */
+.sec{padding:var(--space-2xl) 0;border-top:1px solid var(--rule)}
+h2{font-size:var(--step-h2);line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wrap:balance;max-width:22ch}
+.sec-lede{margin-top:var(--space-m);max-width:36em;color:var(--ink-2)}
+.sec-lede a{color:var(--ink);font-weight:600}
+
+/* How it works: two lanes into one comparison */
+.flow{margin-top:var(--space-xl);display:grid;grid-template-columns:minmax(0,1fr) 3rem minmax(0,1fr) 3rem minmax(0,1.1fr);grid-template-rows:auto auto;gap:var(--space-m) 0;align-items:stretch}
+.node{background:var(--paper);border:1.5px solid var(--ink);border-radius:var(--radius);padding:var(--space-m)}
+.node h3{font-family:var(--mono);font-size:1rem;font-weight:700}
+.node p{margin-top:var(--space-xs);font-size:1rem;color:var(--ink-2)}
+.arrow{position:relative}
+.arrow::before{content:"";position:absolute;left:.4rem;right:.6rem;top:50%;border-top:1.5px solid var(--ink)}
+.arrow::after{content:"";position:absolute;right:.4rem;top:50%;width:.6rem;height:.6rem;border-top:1.5px solid var(--ink);border-right:1.5px solid var(--ink);transform:translateY(-50%) rotate(45deg)}
+.n-mig{grid-column:1;grid-row:1}.a1{grid-column:2;grid-row:1}.s-mig{grid-column:3;grid-row:1}
+.n-prod{grid-column:1;grid-row:2}.a2{grid-column:2;grid-row:2}.s-prod{grid-column:3;grid-row:2}
+.join{grid-column:4;grid-row:1 / span 2;position:relative}
+.join::before{content:"";position:absolute;left:.4rem;top:25%;bottom:25%;border-right:1.5px solid var(--ink);width:.9rem;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
+.join::after{content:"";position:absolute;left:1.3rem;right:.6rem;top:50%;border-top:1.5px solid var(--ink)}
+.compare{grid-column:5;grid-row:1 / span 2;display:flex;flex-direction:column}
+.compare .node{flex:1;display:flex;flex-direction:column;gap:var(--space-s)}
+.exits{display:grid;gap:var(--space-xs);margin-top:auto}
+.exit{display:flex;gap:.6rem;align-items:baseline;padding:.55rem .7rem;border-radius:2px;font-size:1rem}
+.exit code{font-weight:700;white-space:nowrap}
+.exit.pass{background:var(--green-tint);color:var(--green)}
+.exit.fail{background:var(--red-tint);color:var(--red)}
+.exit span{color:var(--ink)}
+
+/* CI setup */
+.ci-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2rem,1rem + 3vw,4rem);align-items:start}
+.tabs{display:flex;gap:var(--space-2xs);border-bottom:1.5px solid var(--ink);flex-wrap:wrap}
+.tab{min-height:44px;padding:0 1rem;border:0;border-radius:var(--radius) var(--radius) 0 0;background:transparent;font-weight:600;font-size:.9375rem;cursor:pointer}
+.tab[aria-selected=true]{background:var(--ink);color:#fff}
+@media (hover:hover) and (pointer:fine){.tab[aria-selected=false]:hover{background:var(--band)}}
+.code{background:var(--paper);border:1.5px solid var(--ink);border-top:0;border-radius:0 0 var(--radius) var(--radius)}
+.code-note{padding:var(--space-s) var(--space-m);border-bottom:1px solid var(--rule);font-size:.875rem;color:var(--ink-2)}
+.code pre{padding:var(--space-m);overflow-x:auto;font-size:.875rem;line-height:1.65;tab-size:2}
+.code pre:focus-visible{outline-offset:-3px}
+.code .c{color:#5b665f}
+.code .hl{background:var(--green-tint);display:inline-block;min-width:100%}
+.facts{margin-top:var(--space-xl);display:grid;gap:var(--space-m)}
+.facts p{max-width:34em}
+
+/* What it replaces: written as a diff */
+.ledger{margin-top:var(--space-xl);border:1.5px solid var(--ink);border-radius:var(--radius);background:var(--paper);font-family:var(--mono)}
+.ledger .ledger-head{display:block;padding:.6rem var(--space-m);border-bottom:1px solid var(--rule);font-size:.875rem;color:var(--ink-2)}
+.ledger li{display:grid;grid-template-columns:2rem minmax(0,1fr);padding:.6rem var(--space-m);font-size:1rem;line-height:1.5}
+.ledger li+li{border-top:1px solid var(--ground)}
+.ledger .del{background:var(--red-tint)}
+.ledger .add{background:var(--green-tint)}
+.ledger .del .sign{color:var(--red);font-weight:700}
+.ledger .add .sign{color:var(--green);font-weight:700}
+.ledger .gap{background:var(--well);color:var(--ink-2);font-size:.875rem}
+
+/* Close */
+.close-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(2rem,1rem + 3vw,4rem);align-items:start}
+.spec{border-top:1.5px solid var(--ink)}
+.spec div{display:grid;grid-template-columns:8rem minmax(0,1fr);gap:var(--space-m);padding:.7rem 0;border-bottom:1px solid var(--rule)}
+.spec dt{font-weight:700;font-size:.9375rem}
+.spec dd{font-size:1rem}
+.spec dd a{font-weight:600}
+.close .install{margin-top:var(--space-l)}
+.docs-link{display:inline-flex;align-items:center;min-height:44px;margin-top:var(--space-s);font-weight:700}
+
+/* Footer */
+.site-foot{border-top:1px solid var(--rule);padding:var(--space-xl) 0}
+.site-foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--space-l);align-items:center}
+.site-foot p{color:var(--ink-2);font-size:.9375rem;max-width:34em}
+.site-foot ul{display:flex;gap:var(--space-s)}
+.site-foot a{display:inline-flex;align-items:center;min-height:44px;padding:0 .5rem;font-weight:600}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Middle widths */
+@media (max-width:1100px){
+  .hero-copy{grid-template-columns:minmax(0,1fr);gap:var(--space-m)}
+  h1{max-width:16ch}
+  .lede{max-width:40em}
+  .ci-grid,.close-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:860px){
+  .flow{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto;gap:var(--space-s)}
+  .n-mig{grid-column:1;grid-row:1}.n-prod{grid-column:2;grid-row:1}
+  .a1{grid-column:1;grid-row:2}.a2{grid-column:2;grid-row:2}
+  .s-mig{grid-column:1;grid-row:3}.s-prod{grid-column:2;grid-row:3}
+  .join{grid-column:1 / span 2;grid-row:4;height:2.5rem}
+  .compare{grid-column:1 / span 2;grid-row:5}
+  .arrow{height:2rem}
+  .arrow::before{left:50%;right:auto;top:.2rem;bottom:.5rem;border-top:0;border-left:1.5px solid var(--ink)}
+  .arrow::after{right:auto;left:50%;top:auto;bottom:.45rem;transform:translateX(-50%) rotate(135deg)}
+  .join::before{left:25%;right:25%;top:0;bottom:auto;height:1.1rem;width:auto;border:1.5px solid var(--ink);border-top:0}
+  .join::after{left:50%;right:auto;top:1.1rem;bottom:.2rem;border-top:0;border-left:1.5px solid var(--ink)}
+}
+@media (max-width:640px){.chips{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){
+  .bench-head,.bench-body{padding-left:var(--space-m);padding-right:var(--space-m)}
+  .bench{box-shadow:4px 4px 0 var(--band)}
+  .install code{font-size:1rem;padding:0 .7rem}
+  .install .btn{padding:0 .85rem}
+  .diff th,.diff td{padding:.35rem .4rem}
+  .diff{font-size:.8125rem}
+  .diff thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .diff tbody tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:.5rem}
+  .diff tbody th{grid-column:1 / -1;padding-bottom:0}
+  .diff tbody td{padding-top:.1rem}
+  .diff tbody td::before{content:attr(data-label);display:block;font-family:var(--sans);font-size:.75rem;font-weight:600;color:var(--ink-2)}
+  .diff tr.drift td::before{color:var(--red)}
+  .hero{padding-top:1rem}
+  .lede{margin-top:var(--space-m)}
+  .install{margin-top:var(--space-l)}
+  .bench-head{padding-top:.6rem;padding-bottom:.6rem}
+  .bench-title{font-size:1.125rem}
+  .bench-body{padding-top:.75rem;gap:.75rem}
+  .node p{font-size:.9375rem}
+  .spec div{grid-template-columns:6.5rem minmax(0,1fr);gap:var(--space-s)}
+  .ledger li{grid-template-columns:1.5rem minmax(0,1fr);font-size:.9375rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0s!important;animation:none!important;scroll-behavior:auto!important}
+  .btn:active{transform:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .result.flash .ci{animation:flash .32s cubic-bezier(.2,.7,.2,1)}
+  @keyframes flash{from{opacity:.55}to{opacity:1}}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Driftcheck, back to top">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="13" height="5" fill="#111814"/><rect x="2" y="15" width="13" height="5" fill="#111814"/><rect x="15" y="15" width="7" height="5" fill="#b42318"/></svg>
+      driftcheck
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="https://driftcheck.example/docs">Docs</a></li>
+        <li><a href="https://github.com/driftcheck/driftcheck">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="hero-copy">
+        <h1 id="h1">Fail the CI job, not the 6&nbsp;pm deploy.</h1>
+        <div class="hero-side">
+        <p class="lede"><strong>Driftcheck is an open-source CLI for backend and platform engineers.</strong> It compares the schema your migrations will produce with the one production is running, and fails CI before a deploy that would break.</p>
+        <div class="install">
+          <code id="cmd">npx driftcheck</code>
+          <button class="btn" type="button" data-copy="cmd">Copy command</button>
+        </div>
+        <p class="install-note">Free and MIT licensed, for Postgres and MySQL. Every line that reads your database is <a href="https://github.com/driftcheck/driftcheck">on GitHub</a>.</p>
+        <span class="copy-status" role="status" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <div class="bench" data-signature id="bench" aria-labelledby="bench-title">
+        <div class="bench-head">
+          <p class="bench-sample">Sample database and example output, written for this page. It runs in your browser and connects to nothing.</p>
+          <p class="bench-title" id="bench-title">Change production by hand, then run the check</p>
+        </div>
+        <div class="bench-body">
+          <div class="pick">
+            <p class="chips-label" id="chips-label">What someone ran in production:</p>
+            <div class="chips" role="group" aria-labelledby="chips-label">
+              <button class="chip" type="button" aria-pressed="false" data-preset="sync">Nothing</button>
+              <button class="chip" type="button" aria-pressed="true" data-preset="index">Added an index</button>
+              <button class="chip" type="button" aria-pressed="false" data-preset="type">Changed a type</button>
+              <button class="chip" type="button" aria-pressed="false" data-preset="drop">Dropped a column</button>
+            </div>
+          </div>
+
+          <div class="result" id="result" data-state="fail" role="status" aria-live="polite" aria-atomic="true">
+            <div class="ci"><span><span class="mark" aria-hidden="true">✕</span><span id="ci-text">driftcheck failed · deploy blocked</span></span><span class="ci-exit" id="ci-exit">exit 1</span></div>
+<pre class="out" id="out"><span class="c">-- run by hand in production:</span>
+CREATE INDEX orders_created_at_idx ON orders (created_at);
+
+$ npx driftcheck
+<span class="bad">✕ orders: index orders_created_at_idx is in production, not in migrations/</span>
+1 difference · exit code 1</pre>
+            <p class="why" id="why"><b>Why it would break:</b> a later migration that creates orders_created_at_idx fails, because the name is already taken.</p>
+          </div>
+
+          <form class="own" id="own" novalidate>
+            <label for="own-sql">Or type your own statement against the sample <code>orders</code> table</label>
+            <div class="own-row">
+              <input id="own-sql" name="sql" type="text" maxlength="200" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="e.g. ALTER TABLE orders ADD COLUMN note text" aria-describedby="own-help own-msg">
+              <button class="btn" type="submit">Run check</button>
+              <button class="btn btn-quiet" type="button" id="reset">Reset</button>
+            </div>
+            <p class="own-help" id="own-help">Understands ADD, DROP, ALTER TYPE and RENAME COLUMN, and CREATE or DROP INDEX.</p>
+            <p class="own-msg" id="own-msg" role="status" aria-live="polite"></p>
+          </form>
+
+          <table class="diff" id="diff">
+            <caption>orders, as each side sees it</caption>
+            <thead><tr><th scope="col">Object</th><th scope="col">migrations/</th><th scope="col">production</th></tr></thead>
+            <tbody id="diff-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <h2 id="how-h">It reads two schemas and fails the job when they differ</h2>
+      <p class="sec-lede">One side is the schema your migration files will produce. The other is the schema production is running right now. Driftcheck compares them and sets the exit code, so your CI decides whether the deploy starts.</p>
+      <div class="flow" role="img" aria-label="Diagram: the migrations folder gives the schema it will produce; the production database gives the schema it is running; driftcheck compares the two; exit 0 lets the deploy run, a non-zero exit fails the job before deploy.">
+        <div class="node n-mig" aria-hidden="true"><h3>migrations/</h3><p>The files in your repo, including the ones this branch adds.</p></div>
+        <div class="arrow a1" aria-hidden="true"></div>
+        <div class="node s-mig" aria-hidden="true"><h3>will produce</h3><p>The schema those files add up to.</p></div>
+        <div class="node n-prod" aria-hidden="true"><h3>production</h3><p>The database your deploy will run against.</p></div>
+        <div class="arrow a2" aria-hidden="true"></div>
+        <div class="node s-prod" aria-hidden="true"><h3>is running</h3><p>The schema it has today, hand-run fixes included.</p></div>
+        <div class="join" aria-hidden="true"></div>
+        <div class="compare" aria-hidden="true">
+          <div class="node">
+            <h3>npx driftcheck</h3>
+            <p>Compares the two and reports each difference.</p>
+            <div class="exits">
+              <p class="exit pass"><code>exit 0</code><span>They match. The deploy step runs.</span></p>
+              <p class="exit fail"><code>exit ≠ 0</code><span>They differ. The job fails before deploy.</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="ci" aria-labelledby="ci-h">
+    <div class="wrap ci-grid">
+      <div>
+        <h2 id="ci-h">Add one step in front of your deploy step</h2>
+        <div class="facts">
+          <p>Run <code>npx driftcheck</code> in the same job, before the deploy. Any CI that stops on a failing command will stop there, and the deploy never starts.</p>
+          <p>It needs to reach your production database to read its schema. The <a href="https://driftcheck.example/docs">docs</a> cover how to connect it for Postgres and MySQL.</p>
+        </div>
+      </div>
+      <div>
+        <div class="tabs" role="tablist" aria-label="CI examples">
+          <button class="tab" role="tab" type="button" id="t-gh" aria-selected="true" aria-controls="p-gh">GitHub Actions</button>
+          <button class="tab" role="tab" type="button" id="t-gl" aria-selected="false" aria-controls="p-gl" tabindex="-1">GitLab CI</button>
+          <button class="tab" role="tab" type="button" id="t-sh" aria-selected="false" aria-controls="p-sh" tabindex="-1">Any shell</button>
+        </div>
+        <div class="code">
+          <p class="code-note">Example config. The order of the steps is the point; connection settings are in the docs.</p>
+          <div role="tabpanel" id="p-gh" aria-labelledby="t-gh">
+<pre tabindex="0" aria-label="GitHub Actions example"><code><span class="c"># .github/workflows/deploy.yml</span>
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+<span class="hl">      - name: Check schema drift
+        run: npx driftcheck</span>
+      - name: Deploy
+        run: ./scripts/deploy.sh</code></pre>
+          </div>
+          <div role="tabpanel" id="p-gl" aria-labelledby="t-gl" hidden>
+<pre tabindex="0" aria-label="GitLab CI example"><code><span class="c"># .gitlab-ci.yml</span>
+stages: [check, deploy]
+
+<span class="hl">driftcheck:
+  stage: check
+  image: node:20
+  script:
+    - npx driftcheck</span>
+
+deploy:
+  stage: deploy
+  script:
+    - ./scripts/deploy.sh</code></pre>
+          </div>
+          <div role="tabpanel" id="p-sh" aria-labelledby="t-sh" hidden>
+<pre tabindex="0" aria-label="Shell example"><code><span class="c"># any CI runner with Node and a shell</span>
+<span class="c"># the deploy only runs if driftcheck exits 0</span>
+<span class="hl">npx driftcheck</span> &amp;&amp; ./scripts/deploy.sh</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="replaces" aria-labelledby="rep-h">
+    <div class="wrap">
+      <h2 id="rep-h">It replaces the check script someone wrote once</h2>
+      <p class="sec-lede">Most teams find drift one of two ways today: a deploy fails, or a hand-written script catches what its author thought to check. Here is the change, in the format you already read every day.</p>
+      <ol class="ledger" aria-label="Before and after, written as a diff">
+        <li class="ledger-head" aria-hidden="true">your-release-process.md</li>
+        <li class="del"><span class="sign" aria-hidden="true">−</span><span><span class="sr">Before: </span>find out when the 6 pm deploy fails on a migration</span></li>
+        <li class="del"><span class="sign" aria-hidden="true">−</span><span><span class="sr">Before: </span>keep a check_schema.sh that one person wrote and nobody updates</span></li>
+        <li class="add"><span class="sign" aria-hidden="true">+</span><span><span class="sr">After: </span>find out when the CI job fails, before the deploy starts</span></li>
+        <li class="add"><span class="sign" aria-hidden="true">+</span><span><span class="sr">After: </span>run npx driftcheck, an MIT-licensed CLI whose code you can read</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec close" id="install" aria-labelledby="close-h">
+    <div class="wrap close-grid">
+      <div>
+        <h2 id="close-h">Run it before your next deploy</h2>
+        <div class="install">
+          <code id="cmd2">npx driftcheck</code>
+          <button class="btn" type="button" data-copy="cmd2">Copy command</button>
+        </div>
+        <span class="copy-status" role="status" aria-live="polite"></span>
+        <a class="docs-link" href="https://driftcheck.example/docs">Read the setup docs →</a>
+      </div>
+      <dl class="spec">
+        <div><dt>Install</dt><dd><code>npx driftcheck</code></dd></div>
+        <div><dt>Databases</dt><dd>Postgres and MySQL</dd></div>
+        <div><dt>Licence</dt><dd>MIT</dd></div>
+        <div><dt>Price</dt><dd>Free. There is no paid plan.</dd></div>
+        <div><dt>Source</dt><dd><a href="https://github.com/driftcheck/driftcheck">github.com/driftcheck/driftcheck</a></dd></div>
+        <div><dt>Docs</dt><dd><a href="https://driftcheck.example/docs">driftcheck.example/docs</a></dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p><span class="mono">driftcheck</span> is an open-source CLI that catches database schema drift before deploy. MIT licensed.</p>
+    <ul>
+      <li><a href="https://driftcheck.example/docs">Docs</a></li>
+      <li><a href="https://github.com/driftcheck/driftcheck">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  /* ---------- Copy command ---------- */
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var src = document.getElementById(btn.getAttribute('data-copy'));
+      var text = src.textContent.trim();
+      var status = btn.closest('.install').parentElement.querySelector('.copy-status');
+      function ok(){ status.classList.remove('err'); status.textContent = 'Copied: ' + text + '. Paste it in your terminal or CI config.'; }
+      function fail(){
+        var r = document.createRange(); r.selectNodeContents(src);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        status.classList.add('err'); status.textContent = 'Your browser blocked copying. The command is selected: press Ctrl+C or ⌘C.';
+      }
+      function legacy(){
+        try {
+          var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.select(); var done = document.execCommand('copy'); document.body.removeChild(ta); btn.focus();
+          done ? ok() : fail();
+        } catch (e) { fail(); }
+      }
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, legacy); else legacy();
+    });
+  });
+
+  /* ---------- CI tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role=tab]'));
+  function select(t, focus){
+    tabs.forEach(function(x){
+      var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) t.focus();
+  }
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){ select(t, false); });
+    t.addEventListener('keydown', function(e){
+      var k = e.key, n = null;
+      if (k === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
+      else if (k === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
+      else if (k === 'Home') n = tabs[0]; else if (k === 'End') n = tabs[tabs.length - 1];
+      if (n) { e.preventDefault(); select(n, true); }
+    });
+  });
+
+  /* ---------- Drift bench: a sample orders table ---------- */
+  // What the sample migrations/ folder produces for orders.
+  var EXPECTED = {
+    cols: [['id','bigint'],['customer_id','bigint'],['total_cents','integer'],['currency','char(3)'],['status','text'],['created_at','timestamptz']],
+    idx: [['orders_pkey','(id)'],['orders_customer_id_idx','(customer_id)']]
+  };
+  var PRESETS = {
+    sync: '',
+    index: 'CREATE INDEX orders_created_at_idx ON orders (created_at);',
+    type: 'ALTER TABLE orders ALTER COLUMN currency TYPE varchar(8);',
+    drop: 'ALTER TABLE orders DROP COLUMN status;'
+  };
+  var MAXID = 63;
+  var TYPE_ALIAS = {'int':'integer','int4':'integer','int8':'bigint','int2':'smallint','bool':'boolean','float8':'double precision','float4':'real',
+    'timestamp with time zone':'timestamptz','timestamp without time zone':'timestamp','character varying':'varchar','character':'char','decimal':'numeric'};
+
+  function clone(s){ return {cols: s.cols.map(function(c){return c.slice();}), idx: s.idx.map(function(c){return c.slice();})}; }
+  function findCol(s, n){ for (var i = 0; i < s.cols.length; i++) if (s.cols[i][0] === n) return i; return -1; }
+  function findIdx(s, n){ for (var i = 0; i < s.idx.length; i++) if (s.idx[i][0] === n) return i; return -1; }
+  function unq(id){ return id.replace(/^["`](.*)["`]$/, '$1'); }
+  function normType(t){
+    t = t.toLowerCase().replace(/\s+/g, ' ').replace(/\s*\(\s*/g, '(').replace(/\s*,\s*/g, ',').replace(/\s*\)/g, ')').trim();
+    var m = t.match(/^([a-z ]+?)(\(\d+(,\d+)?\))?(\[\])?$/);
+    if (!m) return null;
+    var base = TYPE_ALIAS[m[1]] || m[1];
+    return base + (m[2] || '') + (m[4] || '');
+  }
+  function err(msg){ return {error: msg}; }
+  var ID = '("[^"]+"|`[^`]+`|[A-Za-z_][A-Za-z0-9_$]*)';
+  var TABLE = '(?:(?:public|"public")\\.)?' + ID;
+  function checkId(raw){
+    var n = unq(raw);
+    if (n.length > MAXID) return err('Refused: "' + n.slice(0, 20) + '…" is ' + n.length + ' characters. Postgres names stop at 63, so the sample stops there too.');
+    if (!n.length) return err('Refused: a name cannot be empty.');
+    return n.toLowerCase();
+  }
+  function checkTable(raw){
+    var t = checkId(raw); if (t.error) return t;
+    if (t !== 'orders') return err('This sample production database only has an orders table, so "' + t + '" does not exist here.');
+    return t;
+  }
+  // Apply one statement to a copy of the expected schema. Returns {prod} or {error}.
+  function apply(sql){
+    var s = sql.trim().replace(/;\s*$/, '').trim();
+    if (!s) return {prod: clone(EXPECTED)};
+    if (s.indexOf(';') !== -1) return err('One statement at a time, please: remove everything after the first semicolon.');
+    var p = clone(EXPECTED), m, t, n, k;
+    var reType = '([A-Za-z][A-Za-z0-9_ ]*?(?:\\(\\s*\\d+\\s*(?:,\\s*\\d+\\s*)?\\))?(?:\\[\\])?)';
+    // ALTER TABLE ... ADD [COLUMN] [IF NOT EXISTS] name type [constraints]
+    if ((m = s.match(new RegExp('^ALTER\\s+TABLE\\s+(?:ONLY\\s+)?' + TABLE + '\\s+ADD\\s+(?:COLUMN\\s+)?(IF\\s+NOT\\s+EXISTS\\s+)?' + ID + '\\s+' + reType + '(?:\\s+(?:NOT\\s+NULL|NULL|DEFAULT|PRIMARY|UNIQUE|REFERENCES|CHECK|CONSTRAINT|COLLATE|GENERATED)\\b.*)?$', 'i'))) && !/^(index|key|constraint|unique|primary)$/i.test(m[3])) {
+      if ((t = checkTable(m[1])).error) return t;
+      if ((n = checkId(m[3])).error) return n;
+      k = normType(m[4]); if (!k) return err('Refused: "' + m[4] + '" is not a column type the sample knows.');
+      if (findCol(p, n) !== -1) return m[2] ? {prod: p, note: 'Column ' + n + ' already exists, so IF NOT EXISTS skipped it.'} : err('ERROR: column "' + n + '" of relation "orders" already exists');
+      p.cols.push([n, k]); return {prod: p};
+    }
+    // MySQL: ALTER TABLE ... ADD INDEX|KEY name (cols)
+    if ((m = s.match(new RegExp('^ALTER\\s+TABLE\\s+' + TABLE + '\\s+ADD\\s+(?:UNIQUE\\s+)?(?:INDEX|KEY)\\s+' + ID + '\\s*\\(([^)]*)\\)$', 'i')))) {
+      if ((t = checkTable(m[1])).error) return t;
+      return addIndex(p, m[2], m[3]);
+    }
+    // ALTER TABLE ... DROP [COLUMN] [IF EXISTS] name [CASCADE|RESTRICT]
+    if ((m = s.match(new RegExp('^ALTER\\s+TABLE\\s+(?:ONLY\\s+)?' + TABLE + '\\s+DROP\\s+(?:COLUMN\\s+)?(IF\\s+EXISTS\\s+)?' + ID + '(?:\\s+(?:CASCADE|RESTRICT))?$', 'i'))) && !/^(index|key|constraint)$/i.test(m[3])) {
+      if ((t = checkTable(m[1])).error) return t;
+      if ((n = checkId(m[3])).error) return n;
+      k = findCol(p, n);
+      if (k === -1) return m[2] ? {prod: p, note: 'There is no column ' + n + ', so IF EXISTS skipped it.'} : err('ERROR: column "' + n + '" of relation "orders" does not exist');
+      p.cols.splice(k, 1);
+      p.idx = p.idx.filter(function(ix){ return ix[1].replace(/[()\s]/g, '').split(',').indexOf(n) === -1; });
+      return {prod: p};
+    }
+    // ALTER TABLE ... ALTER [COLUMN] name [SET DATA] TYPE type [USING ...]  |  MODIFY [COLUMN] name type
+    if ((m = s.match(new RegExp('^ALTER\\s+TABLE\\s+(?:ONLY\\s+)?' + TABLE + '\\s+(?:ALTER\\s+(?:COLUMN\\s+)?' + ID + '\\s+(?:SET\\s+DATA\\s+)?TYPE|MODIFY\\s+(?:COLUMN\\s+)?' + ID + ')\\s+' + reType + '(?:\\s+(?:USING|NOT\\s+NULL|NULL|DEFAULT|COLLATE)\\b.*)?$', 'i')))) {
+      if ((t = checkTable(m[1])).error) return t;
+      if ((n = checkId(m[2] || m[3])).error) return n;
+      k = findCol(p, n); if (k === -1) return err('ERROR: column "' + n + '" of relation "orders" does not exist');
+      var ty = normType(m[4]); if (!ty) return err('Refused: "' + m[4] + '" is not a column type the sample knows.');
+      p.cols[k][1] = ty; return {prod: p};
+    }
+    // ALTER TABLE ... RENAME [COLUMN] a TO b
+    if ((m = s.match(new RegExp('^ALTER\\s+TABLE\\s+' + TABLE + '\\s+RENAME\\s+(?:COLUMN\\s+)?' + ID + '\\s+TO\\s+' + ID + '$', 'i')))) {
+      if ((t = checkTable(m[1])).error) return t;
+      if ((n = checkId(m[2])).error) return n;
+      var to = checkId(m[3]); if (to.error) return to;
+      k = findCol(p, n); if (k === -1) return err('ERROR: column "' + n + '" does not exist');
+      if (findCol(p, to) !== -1) return err('ERROR: column "' + to + '" of relation "orders" already exists');
+      p.cols[k][0] = to;
+      p.idx.forEach(function(ix){ ix[1] = '(' + ix[1].replace(/[()\s]/g, '').split(',').map(function(c){ return c === n ? to : c; }).join(', ') + ')'; });
+      return {prod: p};
+    }
+    // CREATE [UNIQUE] INDEX [CONCURRENTLY] [IF NOT EXISTS] name ON table [USING method] (cols)
+    if ((m = s.match(new RegExp('^CREATE\\s+(?:UNIQUE\\s+)?INDEX\\s+(?:CONCURRENTLY\\s+)?(IF\\s+NOT\\s+EXISTS\\s+)?' + ID + '\\s+ON\\s+(?:ONLY\\s+)?' + TABLE + '(?:\\s+USING\\s+[A-Za-z]+)?\\s*\\(([^)]*)\\)$', 'i')))) {
+      if ((t = checkTable(m[3])).error) return t;
+      var r = addIndex(p, m[2], m[4]);
+      if (r.error && m[1] && /already exists/.test(r.error)) return {prod: p, note: 'That index already exists, so IF NOT EXISTS skipped it.'};
+      return r;
+    }
+    // DROP INDEX [CONCURRENTLY] [IF EXISTS] name   |  MySQL: DROP INDEX name ON table
+    if ((m = s.match(new RegExp('^DROP\\s+INDEX\\s+(?:CONCURRENTLY\\s+)?(IF\\s+EXISTS\\s+)?' + TABLE + '(?:\\s+ON\\s+' + TABLE + ')?(?:\\s+(?:CASCADE|RESTRICT))?$', 'i')))) {
+      if (m[3] && (t = checkTable(m[3])).error) return t;
+      if ((n = checkId(m[2])).error) return n;
+      k = findIdx(p, n);
+      if (k === -1) return m[1] ? {prod: p, note: 'There is no index ' + n + ', so IF EXISTS skipped it.'} : err('ERROR: index "' + n + '" does not exist');
+      p.idx.splice(k, 1); return {prod: p};
+    }
+    if (/^\s*(select|insert|update|delete)\b/i.test(s)) return err('That statement changes rows, not the schema, so it cannot cause drift. Try an ALTER TABLE or CREATE INDEX.');
+    if (/^\s*(drop|truncate)\s+table\b/i.test(s)) return err('Refused: the sample keeps its only table. Try dropping a column or an index instead.');
+    return err('The sample did not understand that. It reads ALTER TABLE orders ADD, DROP, ALTER … TYPE or RENAME COLUMN, and CREATE or DROP INDEX.');
+  }
+  function addIndex(p, rawName, rawCols){
+    var n = checkId(rawName); if (n.error) return n;
+    var cols = rawCols.split(',').map(function(c){ return unq(c.trim().replace(/\s+(asc|desc)$/i, '')).toLowerCase(); }).filter(Boolean);
+    if (!cols.length) return err('Refused: an index needs at least one column.');
+    for (var i = 0; i < cols.length; i++) if (findCol(p, cols[i]) === -1) return err('ERROR: column "' + cols[i] + '" does not exist');
+    if (findIdx(p, n) !== -1) return err('ERROR: relation "' + n + '" already exists');
+    p.idx.push([n, '(' + cols.join(', ') + ')']); return {prod: p};
+  }
+  function diff(prod){
+    var out = [], e = EXPECTED;
+    e.cols.forEach(function(c){
+      var k = findCol(prod, c[0]);
+      if (k === -1) out.push({obj: 'column ' + c[0], line: 'column orders.' + c[0] + ' is in migrations/, missing in production', why: 'code that reads orders.' + c[0] + ' errors as soon as this deploy ships.'});
+      else if (prod.cols[k][1] !== c[1]) out.push({obj: 'column ' + c[0], line: 'column orders.' + c[0] + ' is ' + prod.cols[k][1] + ' in production, ' + c[1] + ' in migrations/', why: 'your code and tests were written for ' + c[1] + ', but production stores ' + prod.cols[k][1] + '.'});
+    });
+    prod.cols.forEach(function(c){ if (findCol(e, c[0]) === -1) out.push({obj: 'column ' + c[0], line: 'column orders.' + c[0] + ' is in production, not in migrations/', why: 'a later migration that adds ' + c[0] + ' fails, because the column already exists.'}); });
+    e.idx.forEach(function(ix){
+      var k = findIdx(prod, ix[0]);
+      if (k === -1) out.push({obj: 'index ' + ix[0], line: 'index ' + ix[0] + ' is in migrations/, missing in production', why: 'production runs without ' + ix[0] + ', and a migration that changes or drops it fails.'});
+      else if (prod.idx[k][1] !== ix[1]) out.push({obj: 'index ' + ix[0], line: 'index ' + ix[0] + ' covers ' + prod.idx[k][1] + ' in production, ' + ix[1] + ' in migrations/', why: 'queries planned around ' + ix[1] + ' run without it.'});
+    });
+    prod.idx.forEach(function(ix){ if (findIdx(e, ix[0]) === -1) out.push({obj: 'index ' + ix[0], line: 'index ' + ix[0] + ' is in production, not in migrations/', why: 'a later migration that creates ' + ix[0] + ' fails, because the name is already taken.'}); });
+    return out;
+  }
+
+  var bench = document.getElementById('bench');
+  var result = document.getElementById('result'), out = document.getElementById('out'), why = document.getElementById('why');
+  var ciText = document.getElementById('ci-text'), ciExit = document.getElementById('ci-exit'), mark = result.querySelector('.mark');
+  var tbody = document.getElementById('diff-body');
+  var chips = Array.prototype.slice.call(bench.querySelectorAll('.chip'));
+  var form = document.getElementById('own'), input = document.getElementById('own-sql'), msg = document.getElementById('own-msg');
+  var runs = 0;
+
+  function el(tag, cls, text){ var x = document.createElement(tag); if (cls) x.className = cls; if (text != null) x.textContent = text; return x; }
+  function render(sql, prod, note){
+    runs++;
+    var d = diff(prod), fail = d.length > 0;
+    result.setAttribute('data-state', fail ? 'fail' : 'pass');
+    mark.textContent = fail ? '✕' : '✓';
+    ciText.textContent = fail ? 'driftcheck failed · deploy blocked' : 'driftcheck passed · deploy runs';
+    ciExit.textContent = fail ? 'exit 1' : 'exit 0';
+    out.textContent = '';
+    out.appendChild(el('span', 'c', sql.trim() ? '-- run by hand in production:' : '-- nothing run by hand in production'));
+    out.appendChild(document.createTextNode('\n' + (sql.trim() ? sql.trim().replace(/;?\s*$/, ';') + '\n' : '') + '\n$ npx driftcheck' + (runs > 1 ? '   ' : '')));
+    if (runs > 1) out.appendChild(el('span', 'c', '# run ' + runs + ' on this page'));
+    out.appendChild(document.createTextNode('\n'));
+    if (fail) {
+      d.forEach(function(x){ out.appendChild(el('span', 'bad', '✕ orders: ' + x.line)); out.appendChild(document.createTextNode('\n')); });
+      out.appendChild(document.createTextNode(d.length + (d.length === 1 ? ' difference' : ' differences') + ' · exit code 1'));
+    } else {
+      out.appendChild(el('span', 'ok', '✓ orders: production matches migrations/'));
+      out.appendChild(document.createTextNode('\n0 differences · exit code 0'));
+    }
+    why.textContent = '';
+    if (fail) { why.appendChild(el('b', null, 'Why it would break: ')); why.appendChild(document.createTextNode(d[0].why.charAt(0).toUpperCase() + d[0].why.slice(1) + (d.length > 1 ? ' That is the first of ' + d.length + '.' : ''))); }
+    else { why.appendChild(el('b', null, 'Why it passes: ')); why.appendChild(document.createTextNode(note ? note + ' Production still matches what the migrations build.' : 'production has exactly the columns, types and indexes the migrations build.')); }
+    // Table: every object either side has.
+    var drifted = {}; d.forEach(function(x){ drifted[x.obj] = true; });
+    tbody.textContent = '';
+    var names = EXPECTED.cols.map(function(c){ return c[0]; });
+    prod.cols.forEach(function(c){ if (names.indexOf(c[0]) === -1) names.push(c[0]); });
+    names.forEach(function(n){
+      var a = findCol(EXPECTED, n), b = findCol(prod, n);
+      row('column ' + n, n, a === -1 ? null : EXPECTED.cols[a][1], b === -1 ? null : prod.cols[b][1], false);
+    });
+    var inames = EXPECTED.idx.map(function(c){ return c[0]; });
+    prod.idx.forEach(function(c){ if (inames.indexOf(c[0]) === -1) inames.push(c[0]); });
+    inames.forEach(function(n, i){
+      var a = findIdx(EXPECTED, n), b = findIdx(prod, n);
+      row('index ' + n, n, a === -1 ? null : EXPECTED.idx[a][1], b === -1 ? null : prod.idx[b][1], i === 0, 'index');
+    });
+    function row(key, name, va, vb, sep, kind){
+      var tr = el('tr'); if (drifted[key]) tr.className = 'drift'; if (sep) tr.className += ' sep';
+      var th = el('th'); th.scope = 'row';
+      if (drifted[key]) th.appendChild(el('span', 'sr', 'Drift: '));
+      if (kind) th.appendChild(el('span', 'kind', 'index '));
+      th.appendChild(document.createTextNode(name)); tr.appendChild(th);
+      [va, vb].forEach(function(v, j){ var td = el('td', v == null ? 'none' : null, v == null ? '—' : v); td.setAttribute('data-label', j ? 'production' : 'migrations/'); if (v == null) td.setAttribute('aria-label', 'not present'); tr.appendChild(td); });
+      tbody.appendChild(tr);
+    }
+    result.classList.remove('flash'); void result.offsetWidth; result.classList.add('flash');
+  }
+  function setChip(name){ chips.forEach(function(c){ c.setAttribute('aria-pressed', c.getAttribute('data-preset') === name ? 'true' : 'false'); }); }
+
+  chips.forEach(function(c){
+    c.addEventListener('click', function(){
+      var key = c.getAttribute('data-preset'), sql = PRESETS[key];
+      setChip(key); msg.textContent = ''; msg.classList.remove('err');
+      render(sql, apply(sql).prod);
+    });
+  });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var sql = input.value;
+    msg.classList.remove('err');
+    if (!sql.trim()) { msg.classList.add('err'); msg.textContent = 'Type a statement first, for example: ALTER TABLE orders ADD COLUMN note text'; input.focus(); return; }
+    var r = apply(sql);
+    if (r.error) { msg.classList.add('err'); msg.textContent = r.error.replace(/([^.!?])$/, '$1.') + ' The check above did not run again.'; return; }
+    setChip(null);
+    render(sql, r.prod, r.note);
+    msg.textContent = 'Ran your statement against the sample, then ran the check. Result is above.';
+  });
+  document.getElementById('reset').addEventListener('click', function(){
+    input.value = ''; msg.classList.remove('err'); msg.textContent = 'Reset to the sample: an index someone added by hand.';
+    setChip('index'); runs = 0; render(PRESETS.index, apply(PRESETS.index).prod);
+  });
+  // Initial table (the result text is already in the HTML for no-JS readers).
+  runs = 0; render(PRESETS.index, apply(PRESETS.index).prod); result.classList.remove('flash');
+})();
+</script>
+</body>
+</html>

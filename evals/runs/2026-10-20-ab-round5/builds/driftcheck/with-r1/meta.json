@@ -1,0 +1,29 @@
+{
+  "run": "driftcheck/with-r1",
+  "workdir": "W010",
+  "brief": "driftcheck",
+  "arm": "with",
+  "model": "claude-opus-5-5",
+  "client_version": "2.1.304",
+  "start": "2026-10-20T18:56:34Z",
+  "end": "2026-10-20T19:11:16Z",
+  "wall_clock_s": 882,
+  "tokens": {
+    "input": 146,
+    "output": 74041,
+    "cache_read": 13873770,
+    "cache_create": 460446
+  },
+  "tool_calls": 46,
+  "cap_hit": false,
+  "skill_installed": true,
+  "skill_visible_to_agent": true,
+  "skill_md_read": true,
+  "skill_file_access_in_no_skill_arm": null,
+  "infrastructure_retry": null,
+  "start_note": "",
+  "transcript": "transcript.jsonl (tool calls, assistant text and truncated tool results; harness-injected context removed)",
+  "transcript_source": "a2cb520db66b04494.output",
+  "harness_skills_invoked": [],
+  "note": "Both arms ran in the same client with its built-in skills visible (for example frontend-design); the arms differ only in whether this skill was installed in the working folder."
+}
