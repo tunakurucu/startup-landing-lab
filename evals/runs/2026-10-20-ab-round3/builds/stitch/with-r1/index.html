@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cross-stitch patterns from photos, editable stitch by stitch — Crossling</title>
+<meta name="description" content="Crossling turns a photo into a cross-stitch pattern charted in real thread colours, then lets you change any stitch. Try the sample editor in your browser; no account needed.">
+<meta property="og:site_name" content="Crossling">
+<meta property="og:title" content="Turn a photo into a cross-stitch pattern, then change any stitch">
+<meta property="og:description" content="A pattern editor for cross-stitchers: your photo, charted in real thread colours, editable square by square.">
+<meta property="og:image" content="https://crossling.example/og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f3f3f1">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{
+  --ground:#f3f3f1; --paper:#ffffff; --ink:#17191c; --ink-2:#4b4e53; --line:#cfd0cb; --line-2:#e3e3df;
+  --fabric:#ece4d1; --accent:#c0102b; --accent-ink:#ffffff; --focus:#17191c;
+  --display:"TeX Gyre Adventor","URW Gothic","Avant Garde","Century Gothic","Futura","Trebuchet MS",sans-serif;
+  --body:"TeX Gyre Heros","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:"DejaVu Sans Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2.5rem; --s5:4rem; --s6:6rem;
+  --sec:clamp(3.5rem, 2rem + 4.5vw, 6rem);
+  --gutter:clamp(1rem, .5rem + 2vw, 2.5rem);
+  --max:1360px;
+}
+*{box-sizing:border-box}
+html{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:100%;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;font-size:1.0625rem;line-height:1.55;background:var(--ground)}
+h1,h2,h3{font-family:var(--display);font-weight:700;margin:0;overflow-wrap:break-word}
+h1{font-size:clamp(2.25rem, 1.5rem + 2.6vw, 3.5rem);line-height:1.04;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:clamp(1.75rem, 1.25rem + 1.6vw, 2.5rem);line-height:1.12;letter-spacing:-.005em;text-wrap:balance;max-width:24ch}
+h3{font-size:1.25rem;line-height:1.25}
+p{margin:0}
+a{color:var(--ink)}
+p a{text-decoration:underline;text-underline-offset:.15em}
+.measure{max-width:58ch}
+.muted{color:var(--ink-2)}
+.small{font-size:.9375rem;line-height:1.5}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+button{font:inherit;color:inherit}
+
+/* header */
+.top{border-bottom:1px solid var(--line-2);background:var(--ground)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--s2);min-height:4.5rem}
+.brand{display:inline-flex;align-items:center;gap:.6rem;text-decoration:none;font-family:var(--display);font-weight:700;font-size:1.25rem;letter-spacing:-.01em;padding:.5rem 0;min-height:44px}
+.brand svg{width:28px;height:28px;flex:none}
+.nav{display:flex;align-items:center;gap:var(--s2)}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:.25rem}
+.nav a{text-decoration:none;padding:.65rem .75rem;display:inline-block;border-radius:2px;min-height:44px;line-height:1.3}
+.nav a:hover{text-decoration:underline;text-underline-offset:.2em}
+.menu-btn{display:none;min-width:44px;min-height:44px;background:none;border:1px solid var(--line);border-radius:2px;padding:0 .75rem;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:.75rem 1.25rem;border-radius:2px;border:1px solid transparent;text-decoration:none;font-weight:700;cursor:pointer;line-height:1.2;transition:background-color .15s ease-out}
+.btn-primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn-primary:hover{background:#a40d24}
+.btn-quiet{background:transparent;border-color:var(--ink);color:var(--ink)}
+.btn-quiet:hover{background:#e6e6e2}
+
+/* hero */
+.hero{padding-top:clamp(2rem, 1rem + 3vw, 4rem);padding-bottom:var(--sec)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(1.5rem, 1rem + 2.5vw, 3.5rem);align-items:start}
+.hero-copy{display:flex;flex-direction:column;gap:var(--s3);padding-top:.5rem}
+.hero-copy .lead{font-size:1.125rem;line-height:1.5}
+.cta{display:flex;flex-direction:column;gap:.6rem;align-items:flex-start}
+.cta .aside{font-size:.9375rem;line-height:1.45;color:var(--ink-2);max-width:40ch}
+.cta .aside-list{list-style:none;margin:0;padding:0;font-size:.9375rem;color:var(--ink-2);display:flex;flex-direction:column;gap:.1rem}
+
+/* editor (signature artifact) */
+.editor{border:1px solid var(--line);background:var(--paper);display:grid;grid-template-columns:minmax(0,1fr) 17rem;grid-template-areas:"head head" "canvas side" "status status";}
+.ed-side{grid-area:side;display:flex;flex-direction:column;min-width:0;border-left:1px solid var(--line-2)}
+.ed-head{grid-area:head;display:flex;align-items:center;justify-content:space-between;gap:var(--s2);padding:.75rem 1rem;border-bottom:1px solid var(--line-2);flex-wrap:wrap}
+.ed-title{display:flex;align-items:center;gap:.75rem;min-width:0}
+.ed-title canvas{width:44px;height:44px;flex:none;border:1px solid var(--line)}
+.ed-title strong{display:block;font-family:var(--display);font-size:1rem;line-height:1.2}
+.ed-title span{display:block;font-size:.875rem;color:var(--ink-2);line-height:1.35}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.seg{display:inline-flex;align-items:center;border:0;padding:0;margin:0;min-width:0}
+.seg label{position:relative;display:inline-flex}
+.seg label span{display:inline-flex;align-items:center;min-height:40px;padding:0 .8rem;border:1px solid var(--ink);border-left-width:0;font-size:.9375rem;font-weight:700;cursor:pointer;background:transparent}
+.seg label:first-of-type span{border-left-width:1px;border-radius:2px 0 0 2px}
+.seg label:last-of-type span{border-radius:0 2px 2px 0}
+.seg input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.seg input:checked + span{background:var(--ink);color:var(--paper)}
+.seg label:focus-within{outline:3px solid var(--accent);outline-offset:2px;z-index:1}
+.seg-label{font-size:.875rem;color:var(--ink-2);margin-right:.5rem;padding:0;float:left;line-height:40px}
+.seg-labelled{display:flex}
+.ed-controls{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.ed-canvas{grid-area:canvas;padding:1rem;display:flex;flex-direction:column;gap:.9rem;min-width:0}
+.grid-wrap{position:relative;width:100%}
+#grid{display:block;width:100%;aspect-ratio:1/1;touch-action:pan-y;cursor:crosshair;background:var(--fabric)}
+#grid:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.ed-tools{padding:1rem;display:flex;flex-direction:column;gap:.75rem;min-width:0;border-bottom:1px solid var(--line-2)}
+.toolrow{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.tools{border:0;padding:0;margin:0;display:flex;gap:.5rem;flex-wrap:wrap;min-width:0}
+.tool{position:relative;display:inline-flex}
+.tool input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.tool span{min-height:40px;padding:0 .8rem;border:1px solid var(--ink);background:transparent;border-radius:2px;cursor:pointer;font-size:.9375rem;font-weight:700;display:inline-flex;align-items:center;gap:.4rem}
+.tool input:checked + span{background:var(--ink);color:var(--paper)}
+.tool:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+.tool svg{width:16px;height:16px}
+.tool-btn{min-height:40px;padding:0 .8rem;border:1px solid var(--ink);background:transparent;border-radius:2px;cursor:pointer;font-size:.9375rem;font-weight:700;display:inline-flex;align-items:center}
+.tool-btn:disabled{opacity:.45;cursor:default}
+.spacer{flex:1}
+.palette{display:flex;flex-direction:column;gap:.4rem}
+.palette-head{display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;font-size:.875rem;color:var(--ink-2)}
+.swatches{display:flex;flex-wrap:wrap;gap:.5rem;margin:0;padding:0;border:0;min-width:0}
+.swatch{width:36px;height:36px;border-radius:2px;border:1px solid rgba(0,0,0,.28);cursor:pointer;background:#888;position:relative;display:block}
+.swatch input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.swatch.is-checked{outline:3px solid var(--ink);outline-offset:2px}
+.swatch:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+.more{font-size:.9375rem}
+.more summary{cursor:pointer;padding:.5rem 0;min-height:24px;font-weight:700}
+.more .swatches{padding-top:.25rem}
+.ed-list{padding:1rem;display:flex;flex-direction:column;gap:.75rem;min-width:0}
+.ed-h{font-family:var(--display);font-weight:700;font-size:1rem}
+.threads{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.35rem;font-size:.875rem}
+.threads li{display:grid;grid-template-columns:18px 3.6rem 1fr auto;gap:.5rem;align-items:center;line-height:1.3}
+.threads .dot{width:18px;height:18px;border:1px solid rgba(0,0,0,.25);border-radius:2px}
+.threads .name{color:var(--ink-2)}
+.totals{font-size:.875rem;color:var(--ink-2);border-top:1px solid var(--line-2);padding-top:.6rem;display:flex;flex-direction:column;gap:.2rem}
+.totals strong{color:var(--ink)}
+.ed-status{grid-area:status;border-top:1px solid var(--line-2);padding:.6rem 1rem;font-size:.875rem;color:var(--ink-2);min-height:2.4rem}
+.ed-note{font-size:.8125rem;color:var(--ink-2);line-height:1.4}
+
+/* sections */
+.section{padding-top:var(--sec);padding-bottom:var(--sec);border-top:1px solid var(--line-2)}
+.section-head{display:flex;flex-direction:column;gap:var(--s2);margin-bottom:var(--s4)}
+.sizes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3)}
+.size{display:flex;flex-direction:column;gap:.75rem;margin:0}
+.size canvas{width:100%;aspect-ratio:1/1;display:block;background:var(--fabric);border:1px solid var(--line)}
+.size figcaption{font-size:.9375rem;line-height:1.45}
+.size figcaption strong{font-family:var(--mono);font-weight:400;display:block;font-size:.9375rem}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3);counter-reset:step}
+.step{display:flex;flex-direction:column;gap:.75rem;counter-increment:step}
+.step h3::before{content:counter(step) ". ";font-family:var(--mono);font-weight:400;color:var(--ink-2)}
+.step .art{border:1px solid var(--line);background:var(--paper);padding:.75rem;display:flex;align-items:center;justify-content:center;min-height:14rem}
+.step .art canvas{display:block}
+.art-split{display:flex;gap:.75rem;align-items:center;justify-content:center;flex-wrap:wrap}
+.art-split figure{margin:0;display:flex;flex-direction:column;gap:.35rem;align-items:center}
+.art-split figcaption{font-size:.8125rem;color:var(--ink-2)}
+.matches{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;width:100%}
+.matches li{display:grid;grid-template-columns:34px 1.25rem 34px 1fr;gap:.5rem;align-items:center;font-size:.875rem;line-height:1.3}
+.matches .chip{width:34px;height:34px;border:1px solid rgba(0,0,0,.25);border-radius:2px}
+.matches .arrow{color:var(--ink-2);text-align:center}
+.matches .lbl{color:var(--ink-2)}
+.matches .lbl b{color:var(--ink);font-family:var(--mono);font-weight:400}
+.who{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s4)}
+.who > div{display:flex;flex-direction:column;gap:.75rem}
+.who h3{font-size:1.375rem}
+.note{border-top:2px solid var(--ink);padding-top:.6rem;font-size:.9375rem}
+.cost{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s4);align-items:start}
+.cost dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.5rem 1.25rem;font-size:1rem}
+.cost dt{font-weight:700}
+.cost dd{margin:0;color:var(--ink-2)}
+.final{display:flex;flex-direction:column;gap:var(--s3);align-items:flex-start}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:var(--s4) 0 var(--s4);font-size:.9375rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:var(--s3);justify-content:space-between;align-items:flex-start}
+footer ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.25rem 1rem}
+footer li a{display:inline-block;padding:.5rem 0;min-height:24px}
+footer .fine{color:var(--ink-2);max-width:44ch}
+
+@media (hover:hover) and (pointer:fine){
+  .swatch:not(.is-checked):hover{outline:2px solid var(--ink-2);outline-offset:1px}
+}
+
+/* responsive */
+@media (max-width:1100px){
+  .hero .wrap{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .editor{grid-template-columns:1fr;grid-template-areas:"head" "canvas" "note" "tools" "palette" "list" "status"}
+  .ed-canvas,.ed-side{display:contents}
+  .grid-wrap{grid-area:canvas;padding:1rem 1rem 0}
+  .ed-canvas > .ed-note{grid-area:note;padding:.6rem 1rem 0}
+  .ed-tools{grid-area:tools;border-bottom:0}
+  .palette{grid-area:palette;padding:0 1rem 1rem;border-bottom:1px solid var(--line-2)}
+  .ed-list{grid-area:list}
+}
+@media (max-width:860px){
+  .who,.cost{grid-template-columns:1fr}
+  .sizes{gap:var(--s2)}
+}
+@media (max-width:700px){
+  .steps{grid-template-columns:1fr;gap:var(--s4)}
+  .step .art{min-height:0;max-width:24rem}
+}
+@media (max-width:560px){
+  .sizes{grid-template-columns:1fr;gap:var(--s4)}
+  .size{max-width:20rem}
+}
+@media (max-width:900px){
+  .nav{display:none;position:absolute;left:0;right:0;top:4.5rem;background:var(--ground);border-bottom:1px solid var(--line);padding:var(--s2) var(--gutter) var(--s3);flex-direction:column;align-items:stretch;z-index:5}
+  .nav.open{display:flex}
+  .nav ul{flex-direction:column}
+  .nav a{display:block}
+  .menu-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem}
+  .top{position:relative}
+}
+@media (max-width:560px){
+  .ed-head{align-items:flex-start}
+  .ed-controls{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .btn{transition:none}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Crossling, home">
+      <svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect width="28" height="28" fill="#ece4d1"/><path d="M4 4l20 20M24 4L4 24" stroke="#c0102b" stroke-width="5" stroke-linecap="round"/><path d="M4 4l20 20" stroke="#17191c" stroke-width="1.2" stroke-linecap="round" opacity=".25"/></svg>
+      Crossling
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Site">
+      <ul>
+        <li><a href="#sizes">Sizes</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#who">Who it's for</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul>
+      <a class="btn btn-quiet" href="#editor">Try the sample editor</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="hero-copy">
+        <h1 id="h1">Turn a photo into a cross-stitch pattern, then change any stitch.</h1>
+        <p class="lead measure">Crossling is a pattern editor for cross-stitchers. Give it a photo and the number of threads you want, and it charts the picture in real thread colours you can edit square by square.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#editor" id="cta-hero">Try the sample editor</a>
+          <p class="aside">It runs here in your browser on a sample picture. No account, nothing uploaded.</p>
+        </div>
+      </div>
+
+      <div class="editor" id="editor" aria-labelledby="ed-name">
+        <div class="ed-head">
+          <div class="ed-title">
+            <canvas id="src-thumb" width="88" height="88" role="img" aria-label="The sample's source picture: a drawn pear on a blue cloth."></canvas>
+            <div>
+              <strong id="ed-name">Sample pattern, 22 × 22 stitches</strong>
+              <span>Sample only: the source is a drawing, not a photo. The beta editor takes your own photos.</span>
+            </div>
+          </div>
+          <div class="ed-controls">
+            <fieldset class="seg" id="view-seg"><legend class="vh">View</legend>
+              <label><input type="radio" name="view" value="stitch" checked><span>Stitches</span></label>
+              <label><input type="radio" name="view" value="chart"><span>Chart</span></label>
+            </fieldset>
+            <fieldset class="seg seg-labelled" id="count-seg"><legend class="seg-label">Threads from the picture</legend>
+              <label><input type="radio" name="count" value="4"><span>4</span></label>
+              <label><input type="radio" name="count" value="7" checked><span>7</span></label>
+              <label><input type="radio" name="count" value="10"><span>10</span></label>
+            </fieldset>
+          </div>
+        </div>
+
+        <div class="ed-canvas">
+          <div class="grid-wrap">
+            <canvas id="grid" tabindex="0" role="application" aria-roledescription="stitch grid" aria-label="Sample pattern, 22 by 22 stitches. Arrow keys move the cursor; Enter or Space uses the chosen tool on the square under it." aria-describedby="status"></canvas>
+          </div>
+          <p class="ed-note">Tap or click a square, or drag across several. Keyboard: arrows move, Enter stitches. Nothing is saved when you leave the page.</p>
+          <div class="palette">
+            <div class="palette-head"><span id="pal-label">Threads in this pattern</span><span id="pal-current" class="mono"></span></div>
+            <fieldset class="swatches" id="pal"><legend class="vh">Threads in this pattern</legend></fieldset>
+            <details class="more">
+              <summary>More threads from the catalogue</summary>
+              <fieldset class="swatches" id="pal-more"><legend class="vh">More threads</legend></fieldset>
+            </details>
+          </div>
+        </div>
+
+        <div class="ed-side">
+        <div class="ed-tools">
+          <div class="toolrow">
+            <fieldset class="tools" id="tool-set"><legend class="vh">Tool</legend>
+              <label class="tool"><input type="radio" name="tool" value="stitch" checked><span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>Stitch</span></label>
+              <label class="tool"><input type="radio" name="tool" value="swap"><span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 5h9M8 2l3 3-3 3M14 11H5M8 8l-3 3 3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Swap colour</span></label>
+              <label class="tool"><input type="radio" name="tool" value="unpick"><span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="2 3"/></svg>Unpick</span></label>
+            </fieldset>
+            <span class="spacer"></span>
+            <button type="button" class="tool-btn" id="undo" disabled>Undo</button>
+            <button type="button" class="tool-btn" id="reset">Start over</button>
+          </div>
+        </div>
+
+        <aside class="ed-list" aria-labelledby="list-h">
+          <p class="ed-h" id="list-h">Thread list</p>
+          <ul class="threads" id="threads"></ul>
+          <div class="totals" id="totals"></div>
+          <p class="ed-note">Codes follow a standard thread catalogue; shades on screen are approximate. Counts come from this sample.</p>
+        </aside>
+        </div>
+
+        <p class="ed-status" id="status" role="status" aria-live="polite">Ready. The Stitch tool is selected.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sizes" aria-labelledby="sizes-h">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="sizes-h">The same picture at 12, 22 and 40 stitches across</h2>
+        <p class="measure muted">You choose the stitch count before charting. Fewer stitches means a quicker, blockier piece; more means detail and a longer evening. The finished size is worked out from your fabric count.</p>
+      </div>
+      <div class="sizes" id="sizes-grid">
+        <figure class="size"><canvas data-size="12" role="img" aria-label="The pear charted at 12 by 12 stitches: a blocky shape in a few colours."></canvas><figcaption><strong>12 × 12 · 7 threads</strong>2.2 cm wide on 14-count aida, 1.7 cm on 18-count.</figcaption></figure>
+        <figure class="size"><canvas data-size="22" role="img" aria-label="The pear charted at 22 by 22 stitches, the size used in the sample editor."></canvas><figcaption><strong>22 × 22 · 7 threads</strong>4.0 cm wide on 14-count aida, 3.1 cm on 18-count. The sample above.</figcaption></figure>
+        <figure class="size"><canvas data-size="40" role="img" aria-label="The pear charted at 40 by 40 stitches: smooth shading and a clear stem."></canvas><figcaption><strong>40 × 40 · 7 threads</strong>7.3 cm wide on 14-count aida, 5.6 cm on 18-count.</figcaption></figure>
+      </div>
+      <p class="small muted" style="margin-top:var(--s3)">All three are charted from the same drawing by the same code that runs the sample editor. Sizes are stitch count divided by fabric count.</p>
+    </div>
+  </section>
+
+  <section class="section" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="how-h">From a photo to a chart in three steps</h2>
+        <p class="measure muted">Nothing here is hidden. Each step is a decision you can see and change.</p>
+      </div>
+      <ol class="steps">
+        <li class="step">
+          <h3>The photo is cut into stitches</h3>
+          <div class="art"><canvas id="art-cut" width="220" height="220" role="img" aria-label="The drawn pear with a 22 by 22 grid laid over it."></canvas></div>
+          <p class="small">You pick the stitch count. Each square of the grid takes the average colour of the picture under it, so fine lines get blurred. That is normal and it is why step three exists.</p>
+        </li>
+        <li class="step">
+          <h3>Each square is matched to a thread you can buy</h3>
+          <div class="art"><ul class="matches" id="matches" aria-label="Screen colours and the threads they were matched to"></ul></div>
+          <p class="small">The colours are grouped into the number of threads you asked for. Each group is then matched to the nearest shade in a thread catalogue, so the thread list is something you can take to a shop.</p>
+        </li>
+        <li class="step">
+          <h3>You fix what the averaging lost</h3>
+          <div class="art"><div class="art-split">
+            <figure><canvas id="art-before" width="154" height="154" role="img" aria-label="The automatic chart with 4 threads: the stem has merged into the background."></canvas><figcaption>Charted with 4 threads</figcaption></figure>
+            <figure><canvas id="art-after" width="154" height="154" role="img" aria-label="The same chart after hand-stitching the stem in a fifth thread, dark coffee brown."></canvas><figcaption>Stem put back by hand</figcaption></figure>
+          </div></div>
+          <p class="small">A stem, an eye, a whisker: averages lose small things. Pick a thread and put them back square by square. That is the editor at the top of this page, at full size in the beta.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="who" aria-labelledby="who-h">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="who-h">For the photo on your fridge, and for the patterns you sell</h2>
+      </div>
+      <div class="who">
+        <div>
+          <h3>Stitching for yourself</h3>
+          <p>Start from your own picture: a dog, a front door, a holiday. The chart is yours to simplify. Drop threads you don't own, swap a shade for one in your box, and unpick the squares you'd rather leave bare.</p>
+          <p class="note">The sample editor on this page uses a drawing. The beta editor charts your photos.</p>
+        </div>
+        <div>
+          <h3>Making patterns to sell</h3>
+          <p>Chart view is the symbol chart and thread list a buyer stitches from, and every square in it was placed on purpose. Thread counts update as you edit, so the list is right when you ship.</p>
+          <p class="note">Selling patterns made with Crossling isn't settled yet. The answer will be written here, next to this line, as soon as it is.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing" aria-labelledby="pricing-h">
+    <div class="wrap">
+      <div class="cost">
+        <div class="section-head" style="margin-bottom:0">
+          <h2 id="pricing-h">The beta is free to use while pricing is worked out</h2>
+          <p class="measure muted">There are no plans to pick between yet. When prices exist they will be listed on this page, and nothing will be charged before that.</p>
+        </div>
+        <dl>
+          <dt>Beta</dt><dd>Free to use. Open to hobbyists and pattern sellers.</dd>
+          <dt>Account</dt><dd>None needed for the sample on this page.</dd>
+          <dt>Your photos</dt><dd>Only the beta editor takes photos; this page never uploads anything.</dd>
+          <dt>Commercial use</dt><dd>Not decided. See the note under <a href="#who">patterns you sell</a>.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="start" aria-labelledby="start-h">
+    <div class="wrap final">
+      <h2 id="start-h">The sample is the real engine, at 22 stitches</h2>
+      <p class="measure muted">The full beta editor doesn't have its address yet; its link will sit here when it does. Until then, the sample at the top of the page runs the same charting code on a small picture.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#editor">Try the sample editor</a>
+        <p class="aside">No account, nothing uploaded.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#top" aria-label="Crossling, back to top">
+        <svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect width="28" height="28" fill="#ece4d1"/><path d="M4 4l20 20M24 4L4 24" stroke="#c0102b" stroke-width="5" stroke-linecap="round"/></svg>
+        Crossling
+      </a>
+      <p class="fine small">Cross-stitch patterns from photos. The pear is original artwork drawn for this page; no photos or characters belong to anyone else.</p>
+    </div>
+    <ul aria-label="Page sections">
+      <li><a href="#editor">Sample editor</a></li>
+      <li><a href="#sizes">Sizes</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#who">Who it's for</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <p class="fine small">© 2026 Crossling. In beta.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  /* ---------- thread catalogue (codes as in a common catalogue; RGB approximate) ---------- */
+  var CAT = [
+    ['B5200','Snow white',255,255,255],['310','Black',0,0,0],['3371','Black brown',30,17,8],['801','Dark coffee brown',101,57,25],
+    ['433','Medium brown',122,69,31],['435','Very light brown',184,119,72],['437','Light tan',228,187,142],['738','Very light tan',236,204,158],
+    ['3078','Very light golden yellow',253,249,205],['727','Very light topaz',255,241,175],['725','Topaz',255,200,64],['972','Deep canary',255,181,21],
+    ['970','Light pumpkin',247,139,19],['900','Dark burnt orange',209,88,7],['666','Bright red',227,29,66],['321','Red',199,43,59],
+    ['498','Dark red',167,19,43],['3328','Dark salmon',227,109,109],['760','Salmon',245,173,173],['3348','Light yellow green',204,217,141],
+    ['3347','Medium yellow green',113,147,92],['3346','Hunter green',64,106,58],['988','Medium forest green',115,139,91],['471','Very light avocado green',174,191,121],
+    ['472','Ultra light avocado',216,228,152],['3364','Pine green',131,151,95],['3752','Very light antique blue',199,209,219],['3325','Light baby blue',184,210,230],
+    ['932','Light antique blue',162,181,198],['931','Medium antique blue',106,133,158],['3756','Ultra very light baby blue',238,252,252],['822','Light beige grey',231,226,214],
+    ['644','Medium beige grey',221,216,203],['642','Dark beige grey',164,152,120],['3799','Very dark pewter grey',66,66,66],['318','Light steel grey',171,171,171],
+    ['415','Pearl grey',211,211,214],['762','Very light pearl grey',236,236,235],['734','Light olive green',199,192,119],['732','Olive green',148,140,54]
+  ];
+  var SYMBOLS = ['×','●','○','▲','△','■','□','◆','◇','+','★','☆','♥','♦','=','#','/','\\','∧','∨','≡','⊕','⊗','∞','§','¤','Ω','∆','◐','◑'];
+  var NONE = 255;
+
+  /* ---------- the source picture: a drawn pear, resolution independent ---------- */
+  function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
+  function smooth(e0, e1, x) { var t = clamp((x - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); }
+  function smin(a, b, k) { var h = clamp(0.5 + 0.5 * (b - a) / k, 0, 1); return b + (a - b) * h - k * h * (1 - h); }
+  function pearSdf(u, v) {
+    var a = Math.hypot(u - 0.50, v - 0.64) - 0.24;
+    var b = Math.hypot(u - 0.535, v - 0.40) - 0.155;
+    return smin(a, b, 0.09);
+  }
+  function stemMask(u, v) {
+    // segment from (0.545,0.27) to (0.585,0.09)
+    var x1 = 0.545, y1 = 0.27, x2 = 0.59, y2 = 0.09;
+    var dx = x2 - x1, dy = y2 - y1, t = clamp(((u - x1) * dx + (v - y1) * dy) / (dx * dx + dy * dy), 0, 1);
+    var d = Math.hypot(u - (x1 + t * dx), v - (y1 + t * dy));
+    return 1 - smooth(0.018, 0.03, d);
+  }
+  function leafMask(u, v) {
+    var cx = 0.67, cy = 0.16, ang = -0.55, c = Math.cos(ang), s = Math.sin(ang);
+    var x = (u - cx) * c + (v - cy) * s, y = -(u - cx) * s + (v - cy) * c;
+    var d = (x * x) / (0.105 * 0.105) + (y * y) / (0.038 * 0.038);
+    return 1 - smooth(0.85, 1.15, d);
+  }
+  function scene(u, v) {
+    var r = 214 - 26 * v, g = 221 - 20 * v, b = 230 - 12 * v;
+    // table edge: slightly warmer band at the bottom
+    var tbl = smooth(0.90, 0.96, v); r += 18 * tbl; g += 8 * tbl; b -= 14 * tbl;
+    // shadow
+    var sx = (u - 0.54) / 0.31, sy = (v - 0.87) / 0.075, sh = Math.max(0, 1 - (sx * sx + sy * sy));
+    sh = Math.pow(sh, 0.8); r -= 48 * sh; g -= 44 * sh; b -= 34 * sh;
+    var sd = pearSdf(u, v), inside = 1 - smooth(-0.006, 0.006, sd);
+    if (inside > 0) {
+      var L = Math.hypot(u - 0.41, v - 0.52);
+      var light = 1 - 0.95 * clamp(L / 0.42, 0, 1);
+      var pr = 212 + 30 * light, pg = 198 + 24 * light, pb = 76 + 40 * light;
+      var shade = smooth(0.15, 0.45, L);
+      pr = pr * (1 - 0.42 * shade); pg = pg * (1 - 0.30 * shade); pb = pb * (1 - 0.45 * shade);
+      var bl = (1 - smooth(0.06, 0.2, Math.hypot(u - 0.66, v - 0.5))) * 0.9;
+      pr = pr * (1 - bl) + 206 * bl; pg = pg * (1 - bl) + 84 * bl; pb = pb * (1 - bl) + 46 * bl;
+      var rim = 1 - smooth(0.0, 0.03, -sd); pr *= 1 - 0.25 * rim; pg *= 1 - 0.2 * rim; pb *= 1 - 0.2 * rim;
+      r = r * (1 - inside) + pr * inside; g = g * (1 - inside) + pg * inside; b = b * (1 - inside) + pb * inside;
+    }
+    var lf = leafMask(u, v);
+    if (lf > 0) {
+      var ly = -(u - 0.67) * Math.sin(-0.55) + (v - 0.16) * Math.cos(-0.55);
+      var vein = 1 - smooth(0.0, 0.012, Math.abs(ly));
+      var lr = 78 + 60 * vein, lg = 128 + 50 * vein, lb = 52 + 30 * vein;
+      var tip = smooth(0.0, 0.11, u - 0.6); lr += 30 * tip; lg += 20 * tip;
+      r = r * (1 - lf) + lr * lf; g = g * (1 - lf) + lg * lf; b = b * (1 - lf) + lb * lf;
+    }
+    var st = stemMask(u, v);
+    if (st > 0) { r = r * (1 - st) + 98 * st; g = g * (1 - st) + 62 * st; b = b * (1 - st) + 30 * st; }
+    return [clamp(r, 0, 255), clamp(g, 0, 255), clamp(b, 0, 255)];
+  }
+  function sampleCells(n) {
+    var out = new Array(n * n), S = 4;
+    for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) {
+      var r = 0, g = 0, b = 0;
+      for (var j = 0; j < S; j++) for (var i = 0; i < S; i++) {
+        var c = scene((x + (i + 0.5) / S) / n, (y + (j + 0.5) / S) / n); r += c[0]; g += c[1]; b += c[2];
+      }
+      out[y * n + x] = [r / (S * S), g / (S * S), b / (S * S)];
+    }
+    return out;
+  }
+  function stemCells(n) {
+    var out = [], S = 4;
+    for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) {
+      var m = 0;
+      for (var j = 0; j < S; j++) for (var i = 0; i < S; i++) m += stemMask((x + (i + 0.5) / S) / n, (y + (j + 0.5) / S) / n);
+      if (m / (S * S) > 0.22) out.push(y * n + x);
+    }
+    return out;
+  }
+
+  /* ---------- colour reduction: k-means, then snap each centre to the nearest catalogue thread ---------- */
+  function dist2(a, b) { var dr = a[0] - b[0], dg = a[1] - b[1], db = a[2] - b[2]; return 0.3 * dr * dr + 0.59 * dg * dg + 0.11 * db * db; }
+  function kmeans(points, k) {
+    var centres = [], i, j, n = points.length;
+    var mean = [0, 0, 0]; for (i = 0; i < n; i++) { mean[0] += points[i][0]; mean[1] += points[i][1]; mean[2] += points[i][2]; }
+    centres.push([mean[0] / n, mean[1] / n, mean[2] / n]);
+    while (centres.length < k) {
+      var best = -1, bestD = -1;
+      for (i = 0; i < n; i++) { var dmin = Infinity; for (j = 0; j < centres.length; j++) dmin = Math.min(dmin, dist2(points[i], centres[j])); if (dmin > bestD) { bestD = dmin; best = i; } }
+      centres.push(points[best].slice());
+    }
+    var assign = new Array(n);
+    for (var it = 0; it < 16; it++) {
+      var sums = centres.map(function () { return [0, 0, 0, 0]; });
+      for (i = 0; i < n; i++) { var bi = 0, bd = Infinity; for (j = 0; j < k; j++) { var d = dist2(points[i], centres[j]); if (d < bd) { bd = d; bi = j; } } assign[i] = bi; sums[bi][0] += points[i][0]; sums[bi][1] += points[i][1]; sums[bi][2] += points[i][2]; sums[bi][3]++; }
+      for (j = 0; j < k; j++) if (sums[j][3]) centres[j] = [sums[j][0] / sums[j][3], sums[j][1] / sums[j][3], sums[j][2] / sums[j][3]];
+    }
+    return centres;
+  }
+  function snap(centre, used) {
+    var order = CAT.map(function (t, i) { return [dist2(centre, [t[2], t[3], t[4]]), i]; }).sort(function (a, b) { return a[0] - b[0]; });
+    for (var i = 0; i < order.length; i++) if (used.indexOf(order[i][1]) < 0) return order[i][1];
+    return order[0][1];
+  }
+  function chart(cells, k) {
+    var centres = kmeans(cells, k), used = [], map = [];
+    centres.forEach(function (c) { var t = snap(c, used); used.push(t); map.push({centre: c, cat: t}); });
+    var grid = new Uint8Array(cells.length);
+    for (var i = 0; i < cells.length; i++) {
+      var bi = 0, bd = Infinity;
+      for (var j = 0; j < used.length; j++) { var t = CAT[used[j]]; var d = dist2(cells[i], [t[2], t[3], t[4]]); if (d < bd) { bd = d; bi = j; } }
+      grid[i] = bi;
+    }
+    return {threads: used, grid: grid, pairs: map};
+  }
+
+  /* ---------- drawing ---------- */
+  function rgb(t) { return 'rgb(' + t[2] + ',' + t[3] + ',' + t[4] + ')'; }
+  function darker(t, f) { return 'rgb(' + Math.round(t[2] * f) + ',' + Math.round(t[3] * f) + ',' + Math.round(t[4] * f) + ')'; }
+  function tint(t) { return 'rgb(' + Math.round(t[2] * 0.4 + 255 * 0.6) + ',' + Math.round(t[3] * 0.4 + 255 * 0.6) + ',' + Math.round(t[4] * 0.4 + 255 * 0.6) + ')'; }
+  function fit(canvas, cssW, cssH) {
+    var dpr = Math.min(window.devicePixelRatio || 1, 3);
+    canvas.width = Math.round(cssW * dpr); canvas.height = Math.round(cssH * dpr);
+    var ctx = canvas.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); return ctx;
+  }
+  function drawStitches(ctx, n, size, grid, threads, opts) {
+    opts = opts || {};
+    var w = n * size;
+    ctx.fillStyle = '#ece4d1'; ctx.fillRect(0, 0, w, w);
+    if (size >= 7) {
+      ctx.fillStyle = 'rgba(70,50,20,0.16)';
+      var hr = Math.max(0.8, size * 0.09);
+      for (var y = 0; y <= n; y++) for (var x = 0; x <= n; x++) { ctx.beginPath(); ctx.arc(x * size, y * size, hr, 0, Math.PI * 2); ctx.fill(); }
+    }
+    var inset = size * 0.2, lw = Math.max(1.2, size * 0.3);
+    ctx.lineCap = 'round'; ctx.lineWidth = lw;
+    for (var i = 0; i < grid.length; i++) {
+      var v = grid[i]; if (v === NONE) continue;
+      var t = CAT[threads[v]], cx = (i % n) * size, cy = Math.floor(i / n) * size;
+      ctx.strokeStyle = darker(t, 0.82);
+      ctx.beginPath(); ctx.moveTo(cx + inset, cy + size - inset); ctx.lineTo(cx + size - inset, cy + inset); ctx.stroke();
+      ctx.strokeStyle = rgb(t);
+      ctx.beginPath(); ctx.moveTo(cx + inset, cy + inset); ctx.lineTo(cx + size - inset, cy + size - inset); ctx.stroke();
+    }
+    if (opts.cursor >= 0 && opts.focused) {
+      var qx = (opts.cursor % n) * size, qy = Math.floor(opts.cursor / n) * size;
+      ctx.lineWidth = 3; ctx.strokeStyle = '#17191c'; ctx.strokeRect(qx + 1.5, qy + 1.5, size - 3, size - 3);
+      ctx.lineWidth = 1; ctx.strokeStyle = '#ffffff'; ctx.strokeRect(qx + 3.5, qy + 3.5, size - 7, size - 7);
+    }
+  }
+  function drawChart(ctx, n, size, grid, threads, opts) {
+    opts = opts || {};
+    var w = n * size;
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, w);
+    for (var i = 0; i < grid.length; i++) {
+      var v = grid[i]; if (v === NONE) continue;
+      var t = CAT[threads[v]], cx = (i % n) * size, cy = Math.floor(i / n) * size;
+      ctx.fillStyle = tint(t); ctx.fillRect(cx, cy, size, size);
+    }
+    ctx.font = Math.round(size * 0.62) + 'px "DejaVu Sans", Arial, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#17191c';
+    for (i = 0; i < grid.length; i++) { v = grid[i]; if (v === NONE) continue; ctx.fillText(SYMBOLS[v % SYMBOLS.length], (i % n) * size + size / 2, Math.floor(i / n) * size + size / 2 + size * 0.04); }
+    ctx.strokeStyle = 'rgba(0,0,0,0.28)'; ctx.lineWidth = 1;
+    for (var k = 0; k <= n; k++) { var p = k * size + 0.5; ctx.beginPath(); ctx.moveTo(p, 0); ctx.lineTo(p, w); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0, p); ctx.lineTo(w, p); ctx.stroke(); }
+    ctx.strokeStyle = '#17191c'; ctx.lineWidth = 2;
+    for (k = 0; k <= n; k += 10) { p = k * size; ctx.beginPath(); ctx.moveTo(p, 0); ctx.lineTo(p, w); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0, p); ctx.lineTo(w, p); ctx.stroke(); }
+    ctx.strokeRect(1, 1, w - 2, w - 2);
+    if (opts.cursor >= 0 && opts.focused) {
+      var qx = (opts.cursor % n) * size, qy = Math.floor(opts.cursor / n) * size;
+      ctx.lineWidth = 3; ctx.strokeStyle = '#c0102b'; ctx.strokeRect(qx + 1.5, qy + 1.5, size - 3, size - 3);
+    }
+  }
+  function drawSource(ctx, w, gridN) {
+    var img = ctx.createImageData(w, w), d = img.data;
+    for (var y = 0; y < w; y++) for (var x = 0; x < w; x++) { var c = scene((x + 0.5) / w, (y + 0.5) / w), o = (y * w + x) * 4; d[o] = c[0]; d[o + 1] = c[1]; d[o + 2] = c[2]; d[o + 3] = 255; }
+    ctx.putImageData(img, 0, 0);
+    if (gridN) {
+      ctx.strokeStyle = 'rgba(20,20,20,0.35)'; ctx.lineWidth = 1;
+      for (var k = 0; k <= gridN; k++) { var p = Math.round(k * w / gridN) + 0.5; ctx.beginPath(); ctx.moveTo(p, 0); ctx.lineTo(p, w); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0, p); ctx.lineTo(w, p); ctx.stroke(); }
+    }
+  }
+
+  /* ---------- the sample editor ---------- */
+  var N = 22, cells = sampleCells(N);
+  var ed = {
+    canvas: document.getElementById('grid'), view: 'stitch', tool: 'stitch', count: 7, threads: [], grid: null, base: null,
+    sel: 0, cursor: 0, focused: false, history: [], size: 16, stroke: null, pairs: []
+  };
+  var $ = function (id) { return document.getElementById(id); };
+  var status = $('status'), undoBtn = $('undo');
+  function say(msg) { status.textContent = msg; }
+  function cellName(i) { return 'row ' + (Math.floor(i / N) + 1) + ', column ' + ((i % N) + 1); }
+  function threadName(v) { var t = CAT[ed.threads[v]]; return t[0] + ' ' + t[1]; }
+
+  function rebuild(count, announce) {
+    var res = chart(cells, count);
+    ed.count = count; ed.threads = res.threads; ed.grid = res.grid; ed.base = new Uint8Array(res.grid); ed.pairs = res.pairs;
+    // Start on the darkest thread, so the first click on the fabric visibly changes something.
+    var lum = function (ci) { var t = CAT[ci]; return 0.2126 * t[2] + 0.7152 * t[3] + 0.0722 * t[4]; };
+    ed.sel = 0; ed.threads.forEach(function (ci, v) { if (lum(ci) < lum(ed.threads[ed.sel])) ed.sel = v; });
+    renderPalette(); renderList(); paint();
+    if (announce) say('Charted again with ' + count + ' threads. Your edits were cleared; Undo brings them back.');
+  }
+  function pushHistory() { ed.history.push(new Uint8Array(ed.grid)); if (ed.history.length > 60) ed.history.shift(); undoBtn.disabled = false; }
+
+  function layout() {
+    var wrap = ed.canvas.parentNode, cssW = wrap.clientWidth; if (!cssW) return;
+    ed.size = cssW / N;
+    fit(ed.canvas, cssW, cssW);
+    paint();
+  }
+  function paint() {
+    var ctx = ed.canvas.getContext('2d');
+    var o = {cursor: ed.cursor, focused: ed.focused};
+    if (ed.view === 'chart') drawChart(ctx, N, ed.size, ed.grid, ed.threads, o); else drawStitches(ctx, N, ed.size, ed.grid, ed.threads, o);
+  }
+  function markSel() {
+    var pal = $('pal');
+    pal.querySelectorAll('.swatch').forEach(function (l) { var on = Number(l.dataset.v) === ed.sel; l.classList.toggle('is-checked', on); l.querySelector('input').checked = on; });
+    var cur = CAT[ed.threads[ed.sel]];
+    $('pal-current').textContent = cur ? cur[0] + ' ' + cur[1] : '';
+  }
+  function renderPalette(focusNew) {
+    var pal = $('pal'), more = $('pal-more');
+    var leg1 = pal.querySelector('legend'), leg2 = more.querySelector('legend');
+    pal.innerHTML = ''; more.innerHTML = '';
+    pal.appendChild(leg1); more.appendChild(leg2);
+    function swatch(t, checked, onPick) {
+      var l = document.createElement('label'), i = document.createElement('input'), n = document.createElement('span');
+      l.className = 'swatch' + (checked ? ' is-checked' : ''); l.style.background = rgb(t);
+      i.type = 'radio'; i.name = 'thread'; i.checked = checked; n.className = 'vh'; n.textContent = t[0] + ' ' + t[1];
+      i.addEventListener('change', function () { if (i.checked) onPick(); });
+      l.appendChild(i); l.appendChild(n); return l;
+    }
+    ed.threads.forEach(function (ci, v) {
+      var t = CAT[ci], l = swatch(t, v === ed.sel, function () { ed.sel = v; markSel(); say('Thread ' + t[0] + ' ' + t[1] + ' chosen.'); });
+      l.dataset.v = v; pal.appendChild(l);
+    });
+    CAT.forEach(function (t, ci) {
+      if (ed.threads.indexOf(ci) >= 0) return;
+      more.appendChild(swatch(t, false, function () { ed.threads.push(ci); ed.sel = ed.threads.length - 1; renderPalette(true); renderList(); say('Thread ' + t[0] + ' ' + t[1] + ' added to the pattern and chosen.'); }));
+    });
+    markSel();
+    if (focusNew) { var f = pal.querySelector('.is-checked input'); if (f) f.focus({preventScroll: true}); }
+  }
+  function renderList() {
+    var counts = new Array(ed.threads.length).fill(0), total = 0;
+    for (var i = 0; i < ed.grid.length; i++) if (ed.grid[i] !== NONE) { counts[ed.grid[i]]++; total++; }
+    var rows = ed.threads.map(function (ci, v) { return {v: v, t: CAT[ci], n: counts[v]}; }).sort(function (a, b) { return b.n - a.n; });
+    var ul = $('threads'); ul.innerHTML = '';
+    rows.forEach(function (r) {
+      var li = document.createElement('li');
+      var dot = document.createElement('span'); dot.className = 'dot'; dot.style.background = rgb(r.t);
+      var code = document.createElement('span'); code.className = 'mono'; code.textContent = r.t[0];
+      var name = document.createElement('span'); name.className = 'name'; name.textContent = r.t[1] + (ed.view === 'chart' ? ' ' + SYMBOLS[r.v % SYMBOLS.length] : '');
+      var n = document.createElement('span'); n.className = 'mono'; n.textContent = r.n;
+      li.appendChild(dot); li.appendChild(code); li.appendChild(name); li.appendChild(n); ul.appendChild(li);
+    });
+    var used = rows.filter(function (r) { return r.n > 0; }).length;
+    $('totals').innerHTML = '<span><strong>' + total + '</strong> stitches, <strong>' + used + '</strong> threads used</span><span>22 × 22 stitches: 4.0 × 4.0 cm on 14-count aida, 3.1 cm on 18-count</span>';
+  }
+  function cellAt(ev) {
+    var r = ed.canvas.getBoundingClientRect();
+    var x = Math.floor((ev.clientX - r.left) / r.width * N), y = Math.floor((ev.clientY - r.top) / r.height * N);
+    if (x < 0 || y < 0 || x >= N || y >= N) return -1;
+    return y * N + x;
+  }
+  function apply(i, first) {
+    if (i < 0) return;
+    if (ed.tool === 'stitch') {
+      if (ed.grid[i] === ed.sel) { if (first) say(cellName(i) + ' is already ' + threadName(ed.sel) + '.'); return; }
+      if (first && !ed.stroke) pushHistory();
+      ed.grid[i] = ed.sel; ed.stroke = true; paint(); renderList();
+      if (first) say('Stitched ' + cellName(i) + ' in ' + threadName(ed.sel) + '.');
+    } else if (ed.tool === 'unpick') {
+      if (ed.grid[i] === NONE) { if (first) say(cellName(i) + ' is already bare fabric.'); return; }
+      if (first && !ed.stroke) pushHistory();
+      ed.grid[i] = NONE; ed.stroke = true; paint(); renderList();
+      if (first) say('Unpicked ' + cellName(i) + '.');
+    } else if (ed.tool === 'swap' && first) {
+      var from = ed.grid[i];
+      if (from === NONE) { say('That square is bare fabric; choose a stitched square to swap its colour.'); return; }
+      if (from === ed.sel) { say('That square is already ' + threadName(ed.sel) + '. Choose a different thread first.'); return; }
+      pushHistory(); var n = 0;
+      for (var k = 0; k < ed.grid.length; k++) if (ed.grid[k] === from) { ed.grid[k] = ed.sel; n++; }
+      paint(); renderList();
+      say('Swapped ' + n + ' stitches of ' + threadName(from) + ' for ' + threadName(ed.sel) + '.');
+    }
+  }
+  ed.canvas.addEventListener('pointerdown', function (ev) {
+    if (ev.button !== 0 && ev.pointerType === 'mouse') return;
+    ev.preventDefault(); ed.canvas.focus({preventScroll: true});
+    var i = cellAt(ev); ed.cursor = i >= 0 ? i : ed.cursor; ed.stroke = null; apply(i, true);
+    if (ed.tool !== 'swap') { try { ed.canvas.setPointerCapture(ev.pointerId); } catch (e) {} ed.dragging = true; }
+  });
+  ed.canvas.addEventListener('pointermove', function (ev) { if (!ed.dragging) return; var i = cellAt(ev); if (i >= 0) { ed.cursor = i; apply(i, false); } });
+  function endStroke() { ed.dragging = false; ed.stroke = null; }
+  ed.canvas.addEventListener('pointerup', endStroke); ed.canvas.addEventListener('pointercancel', endStroke);
+  ed.canvas.addEventListener('focus', function () { ed.focused = true; paint(); });
+  ed.canvas.addEventListener('blur', function () { ed.focused = false; paint(); });
+  ed.canvas.addEventListener('keydown', function (ev) {
+    var x = ed.cursor % N, y = Math.floor(ed.cursor / N), moved = true;
+    if (ev.key === 'ArrowLeft') x = Math.max(0, x - 1); else if (ev.key === 'ArrowRight') x = Math.min(N - 1, x + 1);
+    else if (ev.key === 'ArrowUp') y = Math.max(0, y - 1); else if (ev.key === 'ArrowDown') y = Math.min(N - 1, y + 1);
+    else moved = false;
+    if (moved) { ev.preventDefault(); ed.cursor = y * N + x; paint(); var v = ed.grid[ed.cursor]; say(cellName(ed.cursor) + ': ' + (v === NONE ? 'bare fabric' : threadName(v)) + '.'); return; }
+    if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); ed.stroke = null; apply(ed.cursor, true); ed.stroke = null; }
+  });
+  document.querySelectorAll('#tool-set input').forEach(function (b) {
+    b.addEventListener('change', function () {
+      if (!b.checked) return; ed.tool = b.value;
+      say({stitch: 'Stitch tool: click a square to stitch it in the chosen thread.', swap: 'Swap tool: click a square and every stitch of its colour becomes the chosen thread.', unpick: 'Unpick tool: click a square to take its stitch out.'}[ed.tool]);
+    });
+  });
+  undoBtn.addEventListener('click', function () {
+    if (!ed.history.length) return;
+    ed.grid = ed.history.pop(); undoBtn.disabled = ed.history.length === 0; paint(); renderList(); say('Undone.');
+  });
+  $('reset').addEventListener('click', function () { pushHistory(); ed.grid = new Uint8Array(ed.base); paint(); renderList(); say('Back to the chart as first made with ' + ed.count + ' threads.'); });
+  function seg(id, fn) {
+    document.querySelectorAll('#' + id + ' input').forEach(function (b) { b.addEventListener('change', function () { if (b.checked) fn(b.value); }); });
+  }
+  seg('view-seg', function (v) { ed.view = v; paint(); renderList(); say(v === 'chart' ? 'Chart view: each thread has a symbol; this is what a printed pattern looks like.' : 'Stitch view: the pattern as it will look sewn.'); });
+  seg('count-seg', function (c) { pushHistory(); rebuild(Number(c), true); });
+
+  /* ---------- static artifacts ---------- */
+  function drawStatic(canvas, n, k, w, fixStem) {
+    var ctx = fit(canvas, w, w), res = chart(sampleCells(n), k);
+    if (fixStem) { var brown = res.threads.indexOf(3) >= 0 ? res.threads.indexOf(3) : (res.threads.push(3) - 1); stemCells(n).forEach(function (i) { res.grid[i] = brown; }); }
+    drawStitches(ctx, n, w / n, res.grid, res.threads);
+  }
+  function sizes() {
+    document.querySelectorAll('#sizes-grid canvas').forEach(function (c) { var w = c.clientWidth; if (w) drawStatic(c, Number(c.dataset.size), 7, w); });
+  }
+  function artifacts() {
+    var thumb = $('src-thumb'); drawSource(fit(thumb, 88, 88), 88, 0);
+    var cut = $('art-cut'); drawSource(fit(cut, 220, 220), 220, N);
+    drawStatic($('art-before'), N, 4, 154, false);
+    drawStatic($('art-after'), N, 4, 154, true);
+    var ul = $('matches'); ul.innerHTML = '';
+    var gap = function (p) { var t = CAT[p.cat]; return dist2(p.centre, [t[2], t[3], t[4]]); };
+    var pairs = chart(cells, 7).pairs.slice().sort(function (a, b) { return gap(b) - gap(a); }).slice(0, 3);
+    pairs.forEach(function (p) {
+      var t = CAT[p.cat], li = document.createElement('li');
+      var a = document.createElement('span'); a.className = 'chip'; a.style.background = 'rgb(' + Math.round(p.centre[0]) + ',' + Math.round(p.centre[1]) + ',' + Math.round(p.centre[2]) + ')'; a.setAttribute('role', 'img'); a.setAttribute('aria-label', 'screen colour');
+      var ar = document.createElement('span'); ar.className = 'arrow'; ar.textContent = '→'; ar.setAttribute('aria-hidden', 'true');
+      var b = document.createElement('span'); b.className = 'chip'; b.style.background = rgb(t); b.setAttribute('role', 'img'); b.setAttribute('aria-label', 'thread ' + t[0]);
+      var l = document.createElement('span'); l.className = 'lbl'; l.innerHTML = 'matched to <b>' + t[0] + '</b> ' + t[1];
+      li.appendChild(a); li.appendChild(ar); li.appendChild(b); li.appendChild(l); ul.appendChild(li);
+    });
+  }
+
+  /* ---------- menu ---------- */
+  var menuBtn = document.querySelector('.menu-btn'), nav = $('nav');
+  menuBtn.addEventListener('click', function () { var open = nav.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false'); menuBtn.textContent = open ? 'Close' : 'Menu'; });
+  nav.addEventListener('click', function (ev) { if (ev.target.closest('a') && nav.classList.contains('open')) { nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.textContent = 'Menu'; } });
+  document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && nav.classList.contains('open')) { nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.textContent = 'Menu'; menuBtn.focus(); } });
+  // The calls to action land on the editor and hand it keyboard focus, so the first key press already edits.
+  document.querySelectorAll('a[href="#editor"]').forEach(function (a) { a.addEventListener('click', function () { setTimeout(function () { ed.canvas.focus({preventScroll: true}); }, 60); }); });
+
+  /* ---------- go ---------- */
+  rebuild(7, false);
+  layout(); artifacts(); sizes();
+  var ro = window.ResizeObserver ? new ResizeObserver(function () { layout(); sizes(); }) : null;
+  if (ro) { ro.observe(ed.canvas.parentNode); document.querySelectorAll('#sizes-grid canvas').forEach(function (c) { ro.observe(c); }); }
+  else window.addEventListener('resize', function () { layout(); sizes(); });
+})();
+</script>
+</body>
+</html>

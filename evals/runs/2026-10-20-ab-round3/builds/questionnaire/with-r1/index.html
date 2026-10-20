@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security questionnaire answers drafted from your policies · Paperwren</title>
+<meta name="description" content="Paperwren is an AI agent that drafts answers to the security questionnaires enterprise buyers send software vendors. It works only from your own policies: every answer is cited to a policy section or flagged for review, and your security lead approves each line.">
+<meta property="og:site_name" content="Paperwren">
+<meta property="og:title" content="Security questionnaires drafted from your own policies. Every answer cited or flagged.">
+<meta property="og:description" content="An AI agent that drafts questionnaire answers only from the policies you give it, cites a section for each one or flags the question, and waits for your security lead to approve.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://paperwren.example/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Security questionnaires drafted from your own policies. Every answer cited or flagged.">
+<meta name="twitter:description" content="An AI agent that drafts questionnaire answers only from the policies you give it, cites a section for each one or flags the question, and waits for your security lead to approve.">
+<meta name="twitter:image" content="https://paperwren.example/og.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{
+  --ink:#1a1a17;
+  --muted:#5b5b55;
+  --rule:#d8d8d0;
+  --rule-soft:#e9e9e3;
+  --paper:#ffffff;
+  --desk:#f4f4ef;
+  --cite:#1a47c8;
+  --cite-soft:#e8edfb;
+  --flag:#9a4b00;
+  --flag-soft:#fbeede;
+  --ok:#176b3a;
+  --ok-soft:#e3f2e8;
+  --sans:"Helvetica Neue","TeX Gyre Heros","Liberation Sans",Helvetica,Arial,sans-serif;
+  --serif:Charter,"Bitstream Charter","Iowan Old Style","Source Serif 4","TeX Gyre Pagella",Georgia,"Times New Roman",serif;
+  --mono:"SF Mono",Menlo,Consolas,"Liberation Mono","DejaVu Sans Mono",monospace;
+  --body:1.0625rem;
+  --small:0.9375rem;
+  --mono-size:0.8125rem;
+  --h1:clamp(2.25rem,1.75rem + 1.6vw,2.75rem);
+  --h2:clamp(1.625rem,1.3rem + 1.1vw,2.25rem);
+  --h3:1.25rem;
+  --space-s:0.75rem;
+  --space-m:1.5rem;
+  --space-l:3rem;
+  --section:clamp(3.5rem,2.5rem + 4vw,6.5rem);
+  --max:1280px;
+  --gutter:clamp(1rem,0.5rem + 2.5vw,2.5rem);
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:var(--body);line-height:1.55;overflow-wrap:break-word}
+img,svg{display:block}
+a{color:var(--cite)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cite);outline-offset:3px}
+h1,h2,h3{margin:0;font-weight:700;text-wrap:balance;overflow-wrap:break-word}
+h1{font-size:var(--h1);line-height:1.06;letter-spacing:-0.02em}
+h2{font-size:var(--h2);line-height:1.12;letter-spacing:-0.015em;max-width:22ch}
+h3{font-size:var(--h3);line-height:1.25}
+p{margin:0}
+p + p{margin-top:1em}
+sup{line-height:0;font-size:0.68em;vertical-align:0.5em}
+sup a{text-decoration:none;font-family:var(--mono);font-weight:400;color:var(--cite);padding:0 0.25em;border-bottom:1px solid var(--cite)}
+@media (hover:hover) and (pointer:fine){sup a:hover{background:var(--cite-soft)}}
+.mono{font-family:var(--mono);font-size:var(--mono-size);letter-spacing:0.02em;font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.measure{max-width:58ch}
+
+/* ---------- header ---------- */
+.top{border-bottom:1px solid var(--rule-soft)}
+.top .wrap{display:flex;align-items:center;gap:var(--space-m);min-height:64px;flex-wrap:wrap;padding-top:0.5rem;padding-bottom:0.5rem}
+.brand{display:inline-flex;align-items:center;gap:0.55rem;text-decoration:none;color:var(--ink);font-weight:700;font-size:1.125rem;letter-spacing:-0.01em;min-height:44px}
+.brand svg{width:22px;height:26px}
+.top nav{display:flex;gap:0.25rem;flex:1}
+.top nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 0.75rem;color:var(--ink);text-decoration:none;font-size:var(--small);border-radius:4px}
+@media (hover:hover) and (pointer:fine){
+  .top nav a:hover{background:var(--desk)}
+}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;min-height:48px;padding:0 1.25rem;border-radius:6px;font:inherit;font-weight:600;font-size:1rem;text-decoration:none;cursor:pointer;border:1px solid transparent;line-height:1.2}
+.btn-primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn-secondary{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-quiet{background:transparent;color:var(--ink);border-color:var(--rule);min-height:40px;font-weight:500;font-size:var(--small)}
+@media (hover:hover) and (pointer:fine){
+  .btn-primary:hover{background:#000}
+  .btn-secondary:hover,.btn-quiet:hover{background:var(--desk)}
+}
+.top .btn{min-height:44px}
+.btn:disabled{opacity:.55;cursor:default}
+@media (max-width:760px){
+  .top .wrap{row-gap:0;gap:0.75rem}
+  .top nav{order:3;flex-basis:100%;margin-left:-0.75rem}
+  .top .btn{margin-left:auto;padding:0 1rem;font-size:var(--small)}
+}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(2rem,1rem + 3vw,4rem);padding-bottom:var(--space-l)}
+.hero-grid{display:grid;gap:var(--space-l);grid-template-columns:minmax(0,1fr)}
+@media (min-width:1080px){
+  .hero-grid{grid-template-columns:minmax(0,11fr) minmax(0,13fr);gap:clamp(2rem,1rem + 3vw,4rem);align-items:start}
+}
+.hero-copy{display:flex;flex-direction:column;gap:var(--space-m)}
+.hero-copy .lede{font-size:1.125rem;line-height:1.5;max-width:52ch}
+.cta{display:flex;flex-direction:column;gap:0.6rem;align-items:flex-start}
+.cta .btn{min-height:52px;padding:0 1.5rem;font-size:1.0625rem}
+.cta .beside{font-size:var(--small);color:var(--muted);max-width:40ch}
+.cta .beside .mono{font-size:0.8125rem;color:var(--ink)}
+@media (max-width:480px){
+  .cta .btn{width:100%}
+}
+
+/* ---------- the answer card ---------- */
+.card{border:1px solid var(--rule);border-radius:8px;background:var(--paper);display:flex;flex-direction:column;overflow:visible}
+.card-head{display:flex;flex-wrap:wrap;gap:0.5rem 1.5rem;align-items:baseline;justify-content:space-between;padding:0.9rem 1.25rem;border-bottom:1px solid var(--rule-soft)}
+.card-head .title{font-weight:600;font-size:var(--small)}
+.card-head .title .muted{font-weight:400}
+.card-head .label{font-size:0.8125rem;color:var(--muted);max-width:48ch}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--rule-soft);padding:0 0.75rem}
+.tab{appearance:none;background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;padding:0.8rem 0.6rem;min-height:48px;font:inherit;font-size:var(--small);color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:0.6rem}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.tab .mono{font-size:0.8125rem}
+.chip{display:inline-flex;align-items:center;gap:0.35rem;padding:0.1rem 0.5rem;border-radius:999px;font-family:var(--mono);font-size:0.75rem;letter-spacing:0.03em;text-transform:uppercase;line-height:1.5;font-weight:400}
+.chip-cite{background:var(--cite-soft);color:var(--cite)}
+.chip-flag{background:var(--flag-soft);color:var(--flag)}
+.chip-ok{background:var(--ok-soft);color:var(--ok)}
+.chip-wait{background:var(--desk);color:var(--muted)}
+.panel{display:grid;grid-template-columns:minmax(0,1fr)}
+.panel[hidden]{display:none}
+.q{padding:1.1rem 1.25rem 1rem;display:grid;grid-template-columns:auto minmax(0,1fr);gap:0.25rem 1rem;align-items:baseline}
+.q .mono{color:var(--muted)}
+.q p{font-weight:600;font-size:1.0625rem;line-height:1.4}
+.q .asked{grid-column:2;font-size:0.8125rem;color:var(--muted);font-weight:400}
+.log{padding:0.9rem 1.25rem;background:var(--desk);border-top:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft)}
+.log ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.35rem;min-height:3rem}
+.log-title{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem}
+.log li{display:grid;grid-template-columns:1.5rem minmax(0,1fr);gap:0.5rem;font-size:var(--small);line-height:1.45}
+.log li .n{font-family:var(--mono);font-size:0.75rem;color:var(--muted);padding-top:0.2em}
+.log li .src{color:var(--cite)}
+.log li .miss{color:var(--flag)}
+.draft{padding:1.1rem 1.25rem;display:grid;gap:0.5rem}
+.draft-head{display:flex;justify-content:space-between;gap:1rem;align-items:center;flex-wrap:wrap}
+.draft-head .mono{color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-size:0.75rem}
+.answer{font-size:1.0625rem;line-height:1.5;max-width:62ch}
+.answer .ref{font-family:var(--mono);font-size:0.75rem;color:var(--cite);vertical-align:0.35em;line-height:0;padding:0 0.1em}
+.flagbox{background:var(--flag-soft);padding:0.9rem 1rem;display:grid;gap:0.35rem;max-width:62ch}
+.flagbox strong{color:var(--flag);display:flex;align-items:center;gap:0.4rem}
+.flagbox strong svg{width:14px;height:14px}
+.flagbox p{font-size:var(--small)}
+.flagbox q{font-family:var(--serif);font-style:italic}
+.sources{padding:0 1.25rem 1.1rem;display:grid;gap:0.75rem}
+.sources .mono.head{color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-size:0.75rem}
+.src-grid{display:grid;gap:0.75rem;grid-template-columns:minmax(0,1fr)}
+@media (min-width:640px){.src-grid{grid-template-columns:1fr 1fr}}
+.source{background:var(--desk);padding:0.8rem 0.9rem;display:grid;gap:0.3rem;font-size:0.9375rem;align-content:start}
+.source .doc{display:flex;gap:0.5rem;align-items:baseline;font-weight:600;font-size:var(--small)}
+.source .doc .ref{font-family:var(--mono);font-size:0.75rem;color:var(--cite);font-weight:400}
+.source .sec{font-family:var(--mono);font-size:0.75rem;color:var(--muted);letter-spacing:0.02em}
+.source blockquote{margin:0.15rem 0 0;font-family:var(--serif);font-size:1rem;line-height:1.45;color:var(--ink)}
+.source .meta{font-size:0.8125rem;color:var(--muted)}
+.review{border-top:1px solid var(--rule-soft);padding:0.9rem 1.25rem;display:flex;flex-wrap:wrap;gap:0.75rem 1rem;align-items:center;justify-content:space-between}
+.reviewer{display:flex;flex-direction:column;gap:0.15rem;font-size:var(--small)}
+.reviewer .who{font-weight:600}
+.reviewer .status{display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;color:var(--muted)}
+.actions{display:flex;gap:0.5rem;flex-wrap:wrap}
+.card-foot{border-top:1px solid var(--rule-soft);padding:0.75rem 1.25rem;display:flex;gap:1rem;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:0.8125rem;color:var(--muted)}
+@media (max-width:600px){
+  .tabs{flex-direction:column;padding:0}
+  .tab{width:100%;justify-content:flex-start;flex-wrap:wrap;text-align:left;margin-bottom:0;padding:0.7rem 1.25rem;border-bottom:1px solid var(--rule-soft)}
+  .tab[aria-selected="true"]{background:var(--desk);border-bottom-color:var(--rule-soft)}
+  .tab .chip{margin-left:auto}
+}
+@media (max-width:520px){
+  .q{grid-template-columns:minmax(0,1fr)}
+  .q .asked{grid-column:1}
+  .actions{width:100%}
+  .actions .btn{flex:1}
+}
+
+/* ---------- sections ---------- */
+section.band{padding:var(--section) 0;border-top:1px solid var(--rule-soft)}
+.band-head{display:grid;gap:var(--space-m);margin-bottom:var(--space-l)}
+.band-head .intro{max-width:56ch;color:var(--muted);font-size:1.0625rem}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--rule)}
+.steps li{display:grid;grid-template-columns:3.5rem minmax(0,1fr);gap:1rem;padding:1.25rem 0;border-bottom:1px solid var(--rule)}
+.steps .n{font-family:var(--mono);font-size:1.5rem;color:var(--muted);line-height:1;padding-top:0.15rem}
+.steps h3{margin-bottom:0.35rem}
+.steps p{grid-column:2}
+.steps p{max-width:56ch;color:var(--muted)}
+.steps p strong{color:var(--ink);font-weight:600}
+@media (min-width:900px){
+  .steps li{grid-template-columns:3.5rem minmax(0,22ch) minmax(0,1fr);gap:1rem 2.5rem;align-items:start}
+  .steps h3{margin-bottom:0}
+  .steps p{grid-column:3}
+}
+.handoff{list-style:none;margin:0 0 var(--space-l);padding:0;display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);grid-template-columns:minmax(0,1fr);counter-reset:h}
+.handoff li{background:var(--paper);padding:1.1rem 1.25rem 1.25rem;display:grid;gap:0.5rem;align-content:start;position:relative}
+.handoff li::before{counter-increment:h;content:counter(h);font-family:var(--mono);font-size:0.8125rem;color:var(--muted);position:absolute;top:1.1rem;right:1.25rem}
+.handoff .owner{display:inline-flex;align-items:center;gap:0.5rem;font-size:var(--small);font-weight:600;padding-bottom:0.5rem;border-bottom:1px solid var(--rule-soft);margin-right:2rem}
+.handoff .owner .k{font-family:var(--mono);font-size:0.6875rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.handoff .owner-agent{color:var(--cite)}
+.handoff h3{font-size:1.0625rem}
+.handoff p{font-size:var(--small);color:var(--muted);max-width:34ch}
+@media (min-width:700px){.handoff{grid-template-columns:1fr 1fr}}
+@media (min-width:1060px){.handoff{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.roles{display:grid;gap:var(--space-l);grid-template-columns:minmax(0,1fr)}
+@media (min-width:860px){.roles{grid-template-columns:1fr 1fr;gap:clamp(2rem,1rem + 3vw,4rem)}}
+.role{display:grid;gap:0.75rem;align-content:start}
+.role h3{padding-bottom:0.5rem;border-bottom:1px solid var(--rule)}
+.role p{max-width:50ch}
+.notfor{margin-top:var(--space-l);padding-top:var(--space-m);border-top:1px solid var(--rule);max-width:60ch;color:var(--muted)}
+.notfor strong{color:var(--ink)}
+.pilot-grid{display:grid;gap:var(--space-l);grid-template-columns:minmax(0,1fr)}
+@media (min-width:960px){.pilot-grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(2rem,1rem + 4vw,5rem);align-items:start}}
+.pilot-steps{list-style:none;margin:0;padding:0;display:grid;gap:0.75rem;counter-reset:p}
+.pilot-steps li{display:grid;grid-template-columns:2rem minmax(0,1fr);gap:0.5rem;max-width:56ch}
+.pilot-steps li::before{counter-increment:p;content:counter(p);font-family:var(--mono);font-size:0.8125rem;color:var(--muted);padding-top:0.25em}
+.pilot-aside{background:var(--desk);padding:1.5rem;display:grid;gap:1rem;align-content:start}
+.pilot-aside .fact{display:grid;gap:0.25rem;padding-bottom:1rem;border-bottom:1px solid var(--rule)}
+.pilot-aside .fact:last-of-type{border-bottom:0;padding-bottom:0}
+.pilot-aside .fact .k{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)}
+.pilot-aside .fact .v{font-weight:600;line-height:1.35}
+.pilot-aside .fact .v .chip{vertical-align:middle;margin-left:0.3rem}
+.pilot-aside .fact p{font-size:var(--small);color:var(--muted)}
+.pilot-cta{margin-top:var(--space-l)}
+.notes ol{margin:0;padding:0;list-style:none;display:grid;gap:1rem;max-width:64ch;border-top:1px solid var(--rule)}
+.notes li{display:grid;grid-template-columns:2rem minmax(0,1fr);gap:0.5rem;padding-top:1rem;font-size:var(--small);color:var(--muted);scroll-margin-top:1rem}
+.notes li:target{color:var(--ink)}
+.notes li .n{font-family:var(--mono);font-size:0.8125rem;color:var(--cite)}
+.notes li a.back{margin-left:0.5rem;text-decoration:underline;text-underline-offset:3px;display:inline-block;min-width:24px;text-align:center}
+footer{border-top:1px solid var(--rule);padding:2rem 0 3rem;font-size:var(--small);color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between}
+footer nav{display:flex;flex-wrap:wrap;gap:0.25rem 1.25rem}
+footer a{color:var(--ink);display:inline-flex;align-items:center;min-height:28px}
+footer .brand{font-size:1rem}
+
+/* ---------- motion: only when allowed ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .log li.enter{opacity:0;transform:translateY(4px)}
+  .log li.in{opacity:1;transform:none;transition:opacity .18s var(--ease),transform .22s var(--ease)}
+  .draft.enter,.sources.enter,.review.enter{opacity:0}
+  .draft.in,.sources.in,.review.in{opacity:1;transition:opacity .2s var(--ease)}
+}
+</style>
+</head>
+<body id="top">
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Paperwren, back to top">
+      <svg viewBox="0 0 22 26" aria-hidden="true" focusable="false"><path d="M2 1.5h12l6 6V24.5H2z" fill="none" stroke="#1a1a17" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 1.5v6h6" fill="none" stroke="#1a1a17" stroke-width="1.6" stroke-linejoin="round"/><path d="M6 12.5h10M6 16.5h10M6 20.5h6" stroke="#1a1a17" stroke-width="1.6" stroke-linecap="round"/><circle cx="17.5" cy="20" r="3.2" fill="#1a47c8"/></svg>
+      Paperwren
+    </a>
+    <nav aria-label="Page sections">
+      <a href="#how">How it works</a>
+      <a href="#roles">Who it's for</a>
+      <a href="#pilot">The pilot</a>
+    </nav>
+    <a class="btn btn-primary" href="mailto:pilots@paperwren.example?subject=Pilot%20request">Request a pilot by email</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1>Security questionnaires drafted from your own policies. Every answer cited or flagged.</h1>
+        <p class="lede">Paperwren is an AI agent that drafts answers to the security questionnaires enterprise buyers send you. It reads only the policies you give it: every answer names its source or gets flagged, and your security lead approves each line.<sup><a href="#n1" aria-label="Note 1">1</a></sup></p>
+        <div class="cta">
+          <a class="btn btn-primary" href="mailto:pilots@paperwren.example?subject=Pilot%20request">Request a pilot by email</a>
+          <p class="beside">Opens a blank email to <span class="mono">pilots@paperwren.example</span>. Nothing to upload, no call to book.</p>
+        </div>
+      </div>
+
+      <!-- Signature artifact: one questionnaire answer, drafted, cited or flagged, then reviewed. Sample data only. -->
+      <div class="card" id="sample" role="region" aria-labelledby="sample-title">
+        <div class="card-head">
+          <p class="title" id="sample-title">Sample questionnaire <span class="muted">· Northwind Logistics, vendor security assessment</span></p>
+          <p class="label">Illustrative: a made-up questionnaire and made-up policies. Nothing here is uploaded or sent.<sup><a href="#n2" aria-label="Note 2">2</a></sup></p>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Sample questions">
+          <button class="tab" role="tab" id="tab-a" aria-selected="true" aria-controls="panel-a" type="button"><span class="mono">Q 4.3</span> Encryption at rest <span class="chip chip-cite">Cited</span></button>
+          <button class="tab" role="tab" id="tab-b" aria-selected="false" aria-controls="panel-b" tabindex="-1" type="button"><span class="mono">Q 9.1</span> Penetration test <span class="chip chip-flag">Flagged</span></button>
+        </div>
+
+        <div class="panel" id="panel-a" role="tabpanel" aria-labelledby="tab-a" data-panel="a">
+          <div class="q">
+            <span class="mono">Q 4.3</span>
+            <p>Is customer data encrypted at rest? Describe the method and who holds the keys.</p>
+            <span class="asked">Asked by the buyer</span>
+          </div>
+          <div class="log">
+            <div class="log-title" id="log-title-a">Agent log</div>
+            <ol aria-labelledby="log-title-a">
+            <li data-step><span class="n">1</span><span>Read question 4.3.</span></li>
+            <li data-step><span class="n">2</span><span>Searched your policy library: 14 documents, 212 sections. Nothing else.</span></li>
+            <li data-step><span class="n">3</span><span>Matched 2 passages: <span class="src">Encryption Standard §4.1</span> and <span class="src">Key Management Procedure §2.3</span>.</span></li>
+            <li data-step><span class="n">4</span><span>Drafted the answer with a citation on each claim.</span></li>
+            <li data-step><span class="n">5</span><span>Sent to the security lead. Nothing leaves until she approves it.</span></li>
+            </ol>
+          </div>
+          <div class="draft" data-reveal>
+            <div class="draft-head"><span class="mono">Draft answer</span><span class="chip chip-cite">2 citations</span></div>
+            <p class="answer">Yes. All customer data is encrypted at rest with AES‑256.<span class="ref">[1]</span> Keys are held in the cloud provider's key management service and rotated at least every twelve months; no individual engineer has access to key material.<span class="ref">[2]</span></p>
+          </div>
+          <div class="sources" data-reveal>
+            <span class="mono head">Sources, from your library</span>
+            <div class="src-grid">
+              <div class="source">
+                <span class="doc"><span class="ref">[1]</span> Encryption Standard v3.2</span>
+                <span class="sec">§4.1 Data at rest</span>
+                <blockquote>“All production datastores, backups and object storage holding customer data shall be encrypted at rest using AES‑256.”</blockquote>
+                <span class="meta">Reviewed 12 Mar 2026 · Owner: Security</span>
+              </div>
+              <div class="source">
+                <span class="doc"><span class="ref">[2]</span> Key Management Procedure v1.4</span>
+                <span class="sec">§2.3 Custody and rotation</span>
+                <blockquote>“Keys are held in the cloud provider's key management service and rotated at least every twelve months. No individual engineer is granted access to key material.”</blockquote>
+                <span class="meta">Reviewed 2 Feb 2026 · Owner: Platform</span>
+              </div>
+            </div>
+          </div>
+          <div class="review" data-reveal>
+            <div class="reviewer">
+              <span class="who">Priya Natarajan <span class="muted">· Security lead (sample)</span></span>
+              <span class="status" role="status" aria-live="polite" data-status><span class="chip chip-wait">Awaiting approval</span></span>
+            </div>
+            <div class="actions">
+              <button class="btn btn-secondary" type="button" data-act="approve">Approve</button>
+              <button class="btn btn-quiet" type="button" data-act="return">Send back</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" id="panel-b" role="tabpanel" aria-labelledby="tab-b" data-panel="b" hidden>
+          <div class="q">
+            <span class="mono">Q 9.1</span>
+            <p>Has an independent third party performed a penetration test in the last twelve months? Attach the summary report.</p>
+            <span class="asked">Asked by the buyer</span>
+          </div>
+          <div class="log">
+            <div class="log-title" id="log-title-b">Agent log</div>
+            <ol aria-labelledby="log-title-b">
+            <li data-step><span class="n">1</span><span>Read question 9.1.</span></li>
+            <li data-step><span class="n">2</span><span>Searched your policy library: 14 documents, 212 sections. Nothing else.</span></li>
+            <li data-step><span class="n">3</span><span><span class="miss">No passage covers third‑party penetration testing.</span> Closest: Vulnerability Management Policy §5, which covers internal scanning only.</span></li>
+            <li data-step><span class="n">4</span><span>Nothing drafted. Flagged with the reason.</span></li>
+            <li data-step><span class="n">5</span><span>Assigned to the security lead for a human answer.</span></li>
+            </ol>
+          </div>
+          <div class="draft" data-reveal>
+            <div class="draft-head"><span class="mono">Draft answer</span><span class="chip chip-flag">Flagged · not drafted</span></div>
+            <div class="flagbox">
+              <strong><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2.5 1v12M2.5 1.8h8.5l-2 2.8 2 2.8H2.5z" fill="#9a4b00" stroke="#9a4b00" stroke-width="1.2" stroke-linejoin="round"/></svg>No source in your policies, so nothing was drafted.</strong>
+              <p>Closest passage, not used: Vulnerability Management Policy §5, <q>Internal vulnerability scans run weekly against all production hosts.</q> It covers internal scanning, not third‑party testing.</p>
+            </div>
+          </div>
+          <div class="review" data-reveal>
+            <div class="reviewer">
+              <span class="who">Priya Natarajan <span class="muted">· Security lead (sample)</span></span>
+              <span class="status" role="status" aria-live="polite" data-status><span class="chip chip-flag">Needs a person</span></span>
+            </div>
+            <div class="actions">
+              <button class="btn btn-secondary" type="button" data-act="human">Write the answer</button>
+              <button class="btn btn-quiet" type="button" data-act="na">Mark not applicable</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-foot">
+          <span>Finished state shown. Replay to watch the steps in order.</span>
+          <button class="btn btn-quiet" type="button" id="replay">Replay the draft</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="how">
+    <div class="wrap">
+      <div class="band-head">
+        <h2>It drafts only from your policy library, and says where each line came from</h2>
+        <p class="intro">Four steps, in this order, for every question. The order is the point: a draft exists only after a matching passage does.</p>
+      </div>
+      <ol class="steps">
+        <li>
+          <span class="n">1</span>
+          <h3>You load your policies</h3>
+          <p>Security policies, standards and procedures, as they are today. <strong>The library is the only thing the agent reads when it answers.</strong> No web search, no filling gaps from general knowledge.<sup><a href="#n1" aria-label="Note 1">1</a></sup></p>
+        </li>
+        <li>
+          <span class="n">2</span>
+          <h3>It finds the passages that answer each question</h3>
+          <p>Matches are made at the section level, not the document level, so a reviewer can read the exact lines an answer rests on.</p>
+        </li>
+        <li>
+          <span class="n">3</span>
+          <h3>It drafts, or it flags</h3>
+          <p>A draft carries a citation for each claim it makes. <strong>If no passage covers the question, nothing is drafted.</strong> The question is flagged with the closest miss, so a person can answer it or mark it not applicable.</p>
+        </li>
+        <li>
+          <span class="n">4</span>
+          <h3>Your security lead approves, edits or sends back</h3>
+          <p>Every answer waits for approval. Nothing reaches the buyer before that, and the approval sits next to the answer and its sources.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band" id="roles">
+    <div class="wrap">
+      <div class="band-head">
+        <h2>Sales engineers get the draft back. The security lead keeps the last word.</h2>
+        <p class="intro">Two people touch every questionnaire and want different things from it. The handoff between them is the product; here is who holds the work at each stage.</p>
+      </div>
+      <ol class="handoff" aria-label="Who holds the questionnaire at each stage">
+        <li>
+          <span class="owner"><span class="k">Owner</span> Sales engineer</span>
+          <h3>Questionnaire arrives</h3>
+          <p>Hands the buyer's questionnaire in as it came, and gets on with the deal.</p>
+        </li>
+        <li>
+          <span class="owner owner-agent"><span class="k">Owner</span> Paperwren</span>
+          <h3>Every question drafted or flagged</h3>
+          <p>Cited answers in one list, flagged questions in another, each flag with its reason.</p>
+        </li>
+        <li>
+          <span class="owner"><span class="k">Owner</span> Security lead</span>
+          <h3>Approve, edit or send back</h3>
+          <p>Reads the answer beside its source. Flagged questions reach her first, not last.</p>
+        </li>
+        <li>
+          <span class="owner"><span class="k">Owner</span> Sales engineer</span>
+          <h3>Approved set goes to the buyer</h3>
+          <p>Only lines the security lead approved. The approval record stays with each answer.</p>
+        </li>
+      </ol>
+      <div class="roles">
+        <div class="role">
+          <h3>If you're the sales engineer</h3>
+          <p>You send the questionnaire in. You get back a draft where every answer already says where it came from, plus a short list of flagged questions that need a person. Chasing answers in chat becomes reviewing a list.<sup><a href="#n5" aria-label="Note 5">5</a></sup></p>
+        </div>
+        <div class="role">
+          <h3>If you're the security lead</h3>
+          <p>Nothing is sent in your name without your approval. Each answer shows the policy section it rests on, so checking it means reading two short passages, not working the answer out again. Flagged questions reach you with the reason.</p>
+        </div>
+      </div>
+      <p class="notfor"><strong>Not for you yet</strong> if your policies live in people's heads. The agent can only cite what is written down, so a thin library produces a thin draft and a long flag list.</p>
+    </div>
+  </section>
+
+  <section class="band" id="pilot">
+    <div class="wrap">
+      <div class="band-head">
+        <h2>The pilot: your last questionnaire, drafted again</h2>
+        <p class="intro">We have no accuracy or time-saved numbers to show you. A pilot produces them on your own questionnaire, where they mean something.</p>
+      </div>
+      <div class="pilot-grid">
+        <div>
+          <ol class="pilot-steps">
+            <li>Pick a questionnaire you have already answered, and the policies behind it.</li>
+            <li>Paperwren drafts it from those policies alone.</li>
+            <li>Your security lead compares the two, line by line: how many answers were cited, how many flagged, how many she would have changed.</li>
+            <li>Those are your numbers. Keep them whatever you decide.</li>
+          </ol>
+          <div class="cta pilot-cta">
+            <a class="btn btn-primary" href="mailto:pilots@paperwren.example?subject=Pilot%20request">Request a pilot by email</a>
+            <p class="beside">Opens a blank email to <span class="mono">pilots@paperwren.example</span>. Nothing to upload, no call to book.</p>
+          </div>
+        </div>
+        <div class="pilot-aside">
+          <div class="fact">
+            <span class="k">Design partners</span>
+            <span class="v">Three companies, running pilots now<sup><a href="#n3" aria-label="Note 3">3</a></sup></span>
+            <p>They asked not to be named yet. Names go here when they agree.</p>
+          </div>
+          <div class="fact">
+            <span class="k">Accuracy</span>
+            <span class="v">Not measured yet <span class="chip chip-flag">Flagged</span></span>
+            <p>Your pilot measures it on your own questionnaire.<sup><a href="#n1" aria-label="Note 1">1</a></sup></p>
+          </div>
+          <div class="fact">
+            <span class="k">Time saved</span>
+            <span class="v">Not measured yet <span class="chip chip-flag">Flagged</span></span>
+            <p>Same answer. We will not print a number we have not measured.<sup><a href="#n5" aria-label="Note 5">5</a></sup></p>
+          </div>
+          <div class="fact">
+            <span class="k">Pricing</span>
+            <span class="v">No public pricing yet</span>
+            <p>Pilot terms are set per company and come by reply to your email.<sup><a href="#n4" aria-label="Note 4">4</a></sup></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band notes" id="notes">
+    <div class="wrap">
+      <div class="band-head">
+        <h2>Notes on this page</h2>
+        <p class="intro">Every claim above carries a note or a flag, the way an answer should.</p>
+      </div>
+      <ol>
+        <li id="n1"><span class="n">1</span><span>This describes how Paperwren is built to work: it drafts only from passages in your policy library and flags questions the library does not cover. It is a design, not a measured result. We have no accuracy figures yet; a pilot produces them on your own questionnaire.<a class="back" href="#top" aria-label="Back to the top">↩</a></span></li>
+        <li id="n2"><span class="n">2</span><span>The questionnaire, the policies, the reviewer and the counts in the sample are made up for this page. Pressing its buttons changes only what you see here; nothing is uploaded, stored or sent.<a class="back" href="#sample" aria-label="Back to the sample">↩</a></span></li>
+        <li id="n3"><span class="n">3</span><span>Three companies are running pilots with us. They have asked not to be named yet. We will add them here when they agree, and not before.<a class="back" href="#pilot" aria-label="Back to the pilot">↩</a></span></li>
+        <li id="n4"><span class="n">4</span><span>There is no public price list. Pilot terms, including cost, are set per company and sent in the reply to your pilot email.<a class="back" href="#pilot" aria-label="Back to the pilot">↩</a></span></li>
+        <li id="n5"><span class="n">5</span><span>We have not measured time saved. Sales engineers tell us the draft changes their work from chasing answers to reviewing them; the hours are yours to measure in a pilot.<a class="back" href="#roles" aria-label="Back to who it's for">↩</a></span></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top">Paperwren</a>
+    <nav aria-label="Footer">
+      <a href="mailto:pilots@paperwren.example?subject=Pilot%20request">pilots@paperwren.example</a>
+      <a href="#how">How it works</a>
+      <a href="#pilot">Pilot terms and pricing</a>
+      <a href="#notes">Notes</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var card = document.getElementById('sample');
+  if (!card) return;
+  var tabs = Array.prototype.slice.call(card.querySelectorAll('[role=tab]'));
+  var panels = Array.prototype.slice.call(card.querySelectorAll('[role=tabpanel]'));
+  var replayBtn = document.getElementById('replay');
+  var timers = [];
+
+  function current() { return panels.filter(function (p) { return !p.hidden; })[0]; }
+
+  function select(tab) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.setAttribute('tabindex', on ? '0' : '-1');
+    });
+    panels.forEach(function (p) { p.hidden = p.getAttribute('aria-labelledby') !== tab.id; });
+    stopReplay(current());
+  }
+
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(t); });
+    t.addEventListener('keydown', function (e) {
+      var j = e.key === 'ArrowRight' ? (i + 1) % tabs.length : e.key === 'ArrowLeft' ? (i - 1 + tabs.length) % tabs.length : -1;
+      if (j < 0) return;
+      e.preventDefault(); tabs[j].focus(); select(tabs[j]);
+    });
+  });
+
+  // Replay: hide the finished state, then bring each step back in order. Under reduced motion everything returns at once.
+  function stopReplay(panel) {
+    timers.forEach(clearTimeout); timers = [];
+    if (!panel) return;
+    panel.querySelectorAll('[data-step]').forEach(function (li) { li.hidden = false; li.classList.remove('enter', 'in'); });
+    panel.querySelectorAll('[data-reveal]').forEach(function (el) { el.hidden = false; el.classList.remove('enter', 'in'); });
+    replayBtn.disabled = false;
+    card.style.minHeight = '';
+  }
+
+  function replay() {
+    var panel = current(); if (!panel) return;
+    stopReplay(panel);
+    card.style.minHeight = card.offsetHeight + 'px'; // keep the page below still while the steps return
+    var steps = Array.prototype.slice.call(panel.querySelectorAll('[data-step]'));
+    var reveals = Array.prototype.slice.call(panel.querySelectorAll('[data-reveal]'));
+    // Under reduced motion the CSS transitions are off, so the steps simply appear in order.
+    steps.forEach(function (li) { li.hidden = true; li.classList.add('enter'); });
+    reveals.forEach(function (el) { el.hidden = true; el.classList.add('enter'); });
+    replayBtn.disabled = true;
+    var gap = 420;
+    steps.forEach(function (li, i) {
+      timers.push(setTimeout(function () {
+        li.hidden = false;
+        requestAnimationFrame(function () { li.classList.add('in'); });
+      }, 120 + i * gap));
+    });
+    var after = 120 + steps.length * gap;
+    reveals.forEach(function (el, i) {
+      timers.push(setTimeout(function () {
+        el.hidden = false;
+        requestAnimationFrame(function () { el.classList.add('in'); });
+      }, after + i * 160));
+    });
+    timers.push(setTimeout(function () { replayBtn.disabled = false; card.style.minHeight = ''; }, after + reveals.length * 160 + 240));
+  }
+  replayBtn.addEventListener('click', replay);
+
+  // Reviewer actions: each one changes the status line locally and announces it.
+  var outcomes = {
+    approve: '<span class="chip chip-ok">Approved</span> Priya Natarajan approved it. The answer and both sources are locked to this questionnaire.',
+    'return': '<span class="chip chip-wait">Sent back</span> Returned to drafting with her note. The agent redrafts from the same two passages; it cannot add anything the library does not say.',
+    human: '<span class="chip chip-ok">Answered by a person</span> Marked as written by Priya Natarajan, not drafted. The buyer sees her answer.',
+    na: '<span class="chip chip-ok">Not applicable</span> Marked by Priya Natarajan, with a one-line reason the buyer will see.'
+  };
+  card.querySelectorAll('[data-act]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var panel = btn.closest('[role=tabpanel]');
+      var status = panel.querySelector('[data-status]');
+      status.innerHTML = outcomes[btn.getAttribute('data-act')];
+      panel.querySelectorAll('[data-act]').forEach(function (b) { b.hidden = true; });
+      var undo = document.createElement('button');
+      undo.type = 'button'; undo.className = 'btn btn-quiet'; undo.textContent = 'Reset the sample';
+      undo.addEventListener('click', function () {
+        status.innerHTML = status.getAttribute('data-initial');
+        panel.querySelectorAll('[data-act]').forEach(function (b) { b.hidden = false; });
+        undo.remove();
+        panel.querySelector('[data-act]').focus();
+      });
+      btn.parentNode.appendChild(undo);
+      undo.focus();
+    });
+  });
+  card.querySelectorAll('[data-status]').forEach(function (s) { s.setAttribute('data-initial', s.innerHTML); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <title>Shiftnote</title>
+  <rect x="2" y="2" width="28" height="28" rx="7" fill="#3B3FD9"/>
+  <path d="M9 10h14M9 16h14M9 22h8" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M21 19l4 3-4 3z" fill="#FF7A59"/>
+</svg>
