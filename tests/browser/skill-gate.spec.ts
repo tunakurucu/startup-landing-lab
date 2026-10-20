@@ -8,7 +8,7 @@ const KEPT:Record<string,string[]>={
   '/demo/sidequest':['TT-03','MO-06'],
   '/demo/ledger':['CO-05','TT-03'],
 };
-const routes=['/','/references','/skill','/demos','/reference/resend','/demo/relayline','/demo/sidequest','/demo/ledger'];
+const routes=['/','/references','/skill','/demos','/evals','/reference/resend','/demo/relayline','/demo/sidequest','/demo/ledger'];
 for(const route of routes){
   test(`skill gate: ${route}`,async()=>{
     test.setTimeout(120000);

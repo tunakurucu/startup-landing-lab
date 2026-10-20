@@ -105,7 +105,7 @@ The gains are in distinctiveness (+9 across four briefs), fit to the brief, prod
 
 ![The holdout brief: a piano-practice app, built without and with the skill](evals/runs/2026-10-19-ab-round2/practice-compare.jpg)
 
-Limits: eight pairs are not a benchmark, builders and graders were AI agents from the same model family, every verdict was medium confidence, and three of round 2's four briefs were the ones the fixes were made against. The pages, grades and A/B keys are all in [`evals/`](evals/run.md), so you can judge them yourself.
+Limits: seven pairs are not a benchmark, builders and graders were AI agents from the same model family, every verdict was medium confidence, and three of round 2's four briefs were the ones the fixes were made against. The pages, grades and A/B keys are all in [`evals/`](evals/run.md), so you can judge them yourself.
 
 ## Run and validate
 

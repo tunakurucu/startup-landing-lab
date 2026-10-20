@@ -22,6 +22,8 @@
 
 /* Tap targets: header and nav controls are at least 44px tall; text-style buttons too (checked by check-page.mjs). */
 .lab-header a,.lab-header button,.relay-nav a,.relay-nav button,.sq-nav a,.sq-nav button,.fw-nav a,.fw-nav button,.text-link{min-height:44px;display:inline-flex;align-items:center}
+/* The rule above would otherwise show the phone menu button beside the full desktop navigation. */
+.lab-header .menu-button{display:none}@media(max-width:700px){.lab-header .menu-button{display:inline-flex}}
 @media(max-width:700px){.relay-hero p,.home-hero p,.hero-description{font-size:1rem}}
 /* ---- Motion contracts. Each is listed in docs/demo-decisions.md with trigger, purpose, fallback, duration and easing.
    Only the individual translate/scale properties animate, so base transforms (card tilts, rotations) are untouched. Opacity animates
@@ -66,3 +68,61 @@
 /* Long company names (e.g. "Applied Electrodynamics") must wrap inside narrow grid rows. */
 .row-description,.reference-row>*{min-width:0}
 .row-description h2,.detail-hero h1{overflow-wrap:anywhere;hyphens:auto}
+/* Evals page: results tables, the per-criterion board and the side-by-side comparisons. Nothing here animates. */
+.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.black-section .evals-link{display:flex;width:fit-content;margin-top:18px}
+.evals-page h1{max-width:1000px}
+.evals-page>.detail-meta{flex-wrap:wrap;gap:12px 40px;margin-top:40px}
+.evals-page .detail-split p.caption{font-size:.75rem;line-height:1.6}
+.detail-split .criteria-pills{padding:0;margin:4px 0 22px;list-style:none}
+.detail-split .criteria-pills li{margin:0;border:1px solid #919782;padding:3px 7px}
+.eval-round{padding:60px 0;border-bottom:1px solid var(--rule)}
+.eval-round>.detail-split{padding:0;border:0}
+.eval-round h2{margin-bottom:16px}
+.result-table{margin:6px 0 24px}
+.result-table tbody th{color:var(--ink);font-weight:500}
+.result-table th:last-child,.result-table td:last-child{padding-right:0}
+/* Column labels carry soft hyphens; they only break where the table would otherwise overflow (320 px phones). */
+.result-table thead th{hyphens:none}
+@media(max-width:370px){.result-table thead th{hyphens:manual}}
+.brief-key{display:block;font:.6875rem var(--font-mono);color:#5f6452;margin-top:2px}
+.won{font-weight:600;background:var(--lime);padding:2px 6px;margin-left:-6px}
+.compare-note{margin:50px 0 18px}
+.compare-list{display:grid;gap:44px}
+.criteria-board+.compare-list{margin-top:50px}
+.compare{margin:0}
+.compare img{display:block;width:100%;height:auto;border:1px solid var(--ink);background:#e2e2d8}
+.compare figcaption{display:flex;flex-wrap:wrap;align-items:center;gap:4px 24px;padding-top:10px;font-size:.88rem}
+.compare figcaption .mono{font-size:.6875rem}
+.compare figcaption .text-link{margin-left:auto;font-size:.8rem}
+.fix-list{list-style:none;margin:0;padding:0}
+.fix-list>li{display:grid;grid-template-columns:44px 1fr;gap:16px;margin:0 0 26px;padding-bottom:26px;border-bottom:1px solid var(--rule)}
+.fix-list>li:last-child{margin-bottom:0;padding-bottom:0;border-bottom:0}
+.fix-list .mono{font-size:.75rem;padding-top:7px}
+.detail-split .fix-list h3{text-transform:none;font-size:1.35rem;margin-bottom:10px}
+.detail-split .fix-list p{margin-bottom:.5em}
+.fix strong{font-weight:600}
+.criteria-board{margin:56px 0 0;background:var(--ink);color:var(--paper);padding:40px;display:grid;grid-template-columns:.75fr 1.25fr;gap:30px 8%}
+.criteria-board h3{font-size:clamp(1.6rem,2.4vw,2.2rem);margin-bottom:22px}
+.criteria-board figcaption p{color:#d9dcd0;font-size:.92rem}
+.criteria{list-style:none;margin:0;padding:0}
+.criteria li{display:grid;grid-template-columns:1fr auto;gap:8px 20px;padding:13px 0 15px;border-top:1px solid #4d5243}
+.crit-name{font-size:1rem;font-weight:500}
+.crit-delta{font:.8rem var(--font-mono)}
+.criteria dl{grid-column:1/-1;margin:0;display:grid;gap:4px}
+.criteria dl>div{display:grid;grid-template-columns:6rem 1fr;gap:12px;align-items:center}
+.criteria dt{font:.6875rem var(--font-mono);color:#c9ccbf}
+.criteria dd{margin:0;display:grid;grid-template-columns:1fr 2.4rem;gap:12px;align-items:center}
+.bar-track{display:block;height:12px;background:#383c30}
+.bar{display:block;height:100%}
+.bar.with{background:var(--lime)}
+.bar.without{background:#8b917f}
+.bar-value{font:.85rem var(--font-mono);text-align:right;font-variant-numeric:tabular-nums}
+.criteria-axis{display:grid;grid-template-columns:6rem 1fr 2.4rem;gap:12px;border-top:1px solid #4d5243;padding-top:8px;font:.6875rem var(--font-mono);color:#c9ccbf}
+.criteria-axis>span{grid-column:2;position:relative;display:block;height:1.6em}
+.criteria-axis>span>span{position:absolute;top:0}
+.criteria-axis>span>span:nth-child(1){left:0}
+.criteria-axis>span>span:nth-child(2){left:50%;translate:-50% 0}
+.criteria-axis>span>span:nth-child(3){right:0}
+@media(max-width:1050px){.criteria-board{grid-template-columns:1fr}}
+@media(max-width:700px){.eval-round{padding:35px 0}.result-table{font-size:.8rem}.result-table th,.result-table td{padding-right:8px}.result-table thead th{font-size:.6875rem}.won{padding:1px 4px;margin-left:-4px}.compare-note{margin-top:35px}.compare-list{gap:34px}.compare figcaption .text-link{margin-left:0}.fix-list>li{grid-template-columns:30px 1fr;gap:10px}.detail-split .fix-list h3{font-size:1.2rem}.criteria-board{padding:28px 20px;margin-top:40px}.criteria dl>div{grid-template-columns:4.6rem 1fr}.criteria-axis{grid-template-columns:4.6rem 1fr 2.4rem}}
