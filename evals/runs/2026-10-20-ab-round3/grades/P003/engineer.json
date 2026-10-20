@@ -1,0 +1,49 @@
+{
+  "packet": "P003",
+  "persona": "engineer",
+  "A": {
+    "scores": {"clarity": 8, "fit": 8, "distinctiveness": 7, "proof": 7, "craft": 7, "mobile": 5, "honesty": 8, "interaction": 8, "copy": 8, "first_screen": 6},
+    "evidence": {
+      "clarity": "1440: H1 'Heat water when power is cheap. Have it hot when you need it.' plus lede naming 'a controller your electrician adds to the electric water heater you already have'; two actions 'Join the install list' and 'Try a day's schedule' both anchor to sections that exist (#join, #try).",
+      "fit": "Every brief ask is visible: labelled 'Example tariff' strip, no savings figure (stated twice), separate 'For electricians' spec list and 'For utility programmes' section, 'Where we stand' list of pilot unnamed, listing in progress, no customer stories; join form says up front 'there is no list server yet... not sent anywhere'. Role radio covers homeowner, electrician and utility.",
+      "distinctiveness": "Custom 24-hour strip built from DOM buttons with tariff bands, drop toggles, heating blocks and a tank-level bar row; condensed display type and paper palette. Below the artifact the structure is conventional two-column prose grids.",
+      "proof": "Operated all 9 tariff x usage combinations plus tank sizes 2 and 4: readout table and note update consistently (e.g. twopeak/family: Standard peak 3, Tankshift peak 1, note explains a larger tank moves more). Artifact top is at y=590 at 1440 (strip rows start ~730, partly in first screen); at 390 the strip starts at y=987, below the first screen.",
+      "craft": "Separate index.html/styles.css/app.js (~43 KB total, no external fonts or requests); colour and font tokens in :root; commented DP scheduler; skip link; axe 0 violations at 1440 and 390. Defects: dead '.readout-note.warn' rule never applied; aria-live set on role=img containers whose only change is aria-label; header nav wraps to two rows at 390.",
+      "mobile": "390: no menu button, the five nav links wrap into two rows of 33px-tall targets taking ~160px of the first screen. The artifact is a 700px-min strip inside a 358px scroller (scrollWidth 700 vs clientWidth 358) with a 'Swipe the strip sideways' note; hour toggles are 21x40px, under 44px. No page overflow at 390 or 320 as delivered.",
+      "honesty": "'Example tariff' label sits in the strip row label and the example-note states the model's assumptions; form note before submit says nothing is sent. Two slips: lede and How it works say it 'learns when the house uses hot water', a capability the brief does not state; with localStorage throwing (init-script stub), the success panel still says 'Your entry stays in this browser' although writeSaved returned false.",
+      "interaction": "All controls are native buttons/selects/radios. Keyboard: Tab reaches skip link, nav, both hero buttons, all 24 hour toggles (Space toggles aria-pressed), selects, tank radios, form; 3px outline at every stop. Empty state: untoggling all draws shows 'No hot water used, so no heating.' and 'Tap an hour...'; choosing a preset resets custom. Form: empty submit shows both inline errors with aria-invalid + aria-describedby and focuses postcode; success focuses the confirmation; 'Change my entry' restores values; persists across reload. No console errors.",
+      "copy": "Specific nouns (shoulder, high-limit, disconnect, boost control); button labels say what happens ('Join as an electrician', 'Change my entry'); error text is written ('Enter a postcode or ZIP so we can tell you if you're in the first region.'). 'The strip above shows the shape of the change; your bill shows the size.' is precise.",
+      "first_screen": "1440: specific promise and both actions visible, top of the labelled strip (tariff bands, draw toggles) visible at the bottom edge. 390: H1, lede and both buttons fill the screen; nothing from the artifact is in view."
+    },
+    "problems": [
+      "390: no mobile menu; nav wraps into two rows of 33px targets, and the main artifact needs sideways swiping with 21x40px hour toggles",
+      "390: submitting a 365-character email (and 200-char postcode) passes validation and the echoed summary produces 2477px of horizontal page overflow (unbroken string, no overflow-wrap)",
+      "Storage-failure path claims 'Your entry stays in this browser' even when localStorage.setItem threw; copy claims the controller 'learns' usage, which the brief does not support"
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {"clarity": 8, "fit": 8, "distinctiveness": 7, "proof": 8, "craft": 7, "mobile": 8, "honesty": 8, "interaction": 7, "copy": 8, "first_screen": 8},
+    "evidence": {
+      "clarity": "1440: H1 'A water heater that waits for cheap power.' with lede 'a controller an electrician adds to your electric water heater... holds heating back until your tariff's cheap hours'; one primary 'Join the install list' with 'Free, no commitment. Installs start in one region' beside it.",
+      "fit": "Example panel tagged 'Fig. 1 · Example only'; readout caption says figures are 'not a forecast of your bill'; electricians get install steps and a wiring sketch with 'Safety listing: in progress, not yet issued'; utilities get an 'Example log · illustrative values' table; pilot unnamed; form text beside submit says it is not connected to a server.",
+      "distinctiveness": "Engineering-figure treatment: 'Fig. 1' mono tag, SVG timeline with thermostat vs Tankshift rows and tank level line with reserve, inline wiring sketch with a separate stacked version for narrow screens, rules list with the override marked. Section heads still follow a repeated 7fr/5fr grid.",
+      "proof": "Artifact panel top at y=423 at 1440, chart and '100% ... in this example' readout in the first screen. Operated all 9 tariff x household combos: readout rows, chart rects, status sentence update consistently (two/evening: 12.3 vs 2.3 kWh at peak, 1 top-up, 82% moved; totals 13.1 vs 13.0). night/evening shows 'Draws that ran short' 1 for Tankshift, honestly displayed.",
+      "craft": "Single 53 KB index.html with tokens in :root and a spacing scale, but CSS and JS are dense one-liners; SVG colours duplicated as hex in JS COL and inline SVG; 'host.style.opacity=0.6' then '' in the same tick is a no-op. axe at 1440: header CTA '#nav > .btn.btn-primary' is #15181c on #1646c8, contrast 2.32 ('.nav a' color overrides '.btn-primary'), visible at all widths above 760. No skip link. No external requests or web fonts.",
+      "mobile": "390: 'Menu' button (44px) opens a full-width list of 48px links including 'Join the install list'; link tap closes it and scrolls. Segmented tariff/household controls stretch full width at 44-49px tall; chart re-renders in a compact layout with labels above rows (viewBox 324x446), no sideways scroll. No overflow at 390 or 320, including after a 365-char email submit. Example heading starts at y=603 so the chart itself is below the first screen; summary toggle is 32px.",
+      "honesty": "Example label sits at the top of the panel at every width; '100%' readout is qualified 'in this example' and the caption disclaims bill forecasts; form discloses 'not connected to a server yet... sends nothing' beside the submit button before committing. When storage throws, the message drops 'saved on this device' and says only 'Noted... nothing was sent', which is accurate.",
+      "interaction": "Radio groups are native inputs (one tab stop each, ArrowRight moves Evening peak to Two peaks and redraws); focus shows an inset ring on the segmented label; role=status sentence announces each change. Only 9 preset scenarios, no custom draws. Mobile menu: Escape does not close it (aria-expanded stays 'true'). Form: errors appear in one role=alert paragraph without aria-invalid/aria-describedby on the field; focus moves to the bad field; success message is shown but focus stays on the button. Saved entry restores on reload; stored 'when' is written with innerHTML (tampered localStorage value '<b id=inj>' was injected into the DOM). No console errors.",
+      "copy": "Concrete and consistent: 'Three rules, and the one that overrides the other two', 'A hot shower outranks a cheap one', 'The saving is on price, not on kilowatt-hours'. Error copy written ('Enter an email address like name@example.com.'). Fit checklist before the form tells visitors whether they qualify.",
+      "first_screen": "1440: headline, lede, primary action with 'Free, no commitment' and the labelled interactive example with its readout all in one viewport. 390: promise and primary action visible, 'Fig. 1 · Example only' panel heading and tariff controls start at the bottom edge; the chart is one scroll down."
+    },
+    "problems": [
+      "Header 'Join the install list' button fails contrast (2.32:1, dark ink on blue) at every width above 760px because '.nav a' overrides the button text colour; axe flags it at 1440",
+      "Maintainability: CSS and script compressed into one-line rules, SVG colours hard-coded in JS and markup instead of tokens, a no-op opacity 'transition', innerHTML used with localStorage data",
+      "Keyboard/AT gaps: no skip link, Escape does not close the mobile menu, form errors not associated with their fields (no aria-invalid or aria-describedby)"
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "medium",
+  "reason": "B works better on the phone (real menu with 48px links, a chart that redraws for 324px with no sideways swiping, no overflow even with extreme input) and handles the storage-failure path honestly. Its main defect, the low-contrast header CTA, is a one-line CSS fix. A has cleaner code and a richer artifact, but mobile needs real work: no menu, a 700px swipe strip and 21px targets. If A had a recomposed mobile strip and a menu, I would ship A for its code quality and its stronger keyboard and error handling."
+}
