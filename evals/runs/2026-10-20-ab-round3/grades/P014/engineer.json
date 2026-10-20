@@ -1,0 +1,61 @@
+{
+  "packet": "P014",
+  "persona": "engineer",
+  "A": {
+    "scores": {"clarity": 7, "fit": 6, "distinctiveness": 7, "proof": 8, "craft": 6, "mobile": 6, "honesty": 4, "interaction": 7, "copy": 8, "first_screen": 7},
+    "evidence": {
+      "clarity": "H1 'A lamp that wakes you the way a window does.' is a metaphor; the lede ('Thirty minutes before you want to be up, Morrow starts to glow') and 'No app. No screen. One dial.' make it concrete. At 390 the hero order is title/scene/copy, so the lede and 'Reserve a place' start at y=780/1028, below the 844 fold.",
+      "fit": "Brief constraints are reflected in copy (drawings not renders, no date beyond 'Planned for autumn 2027. A plan, not a promise', no reviews, $20 'when deposits open'). But the deposit is reframed as an email hold that the code cannot actually perform (HOLD_ENDPOINT = '' in the script), and the page invents a Charlotte location, an automatic-refund-if-it-slips policy and a chime under test, none of which the brief supplies.",
+      "distinctiveness": "Night-to-paper page progression, a ramp section whose list items are the colour bands of the rise (.minutes .s0-.s30), and a custom SVG room scene driven by a dial. Hero is still a conventional two-column split.",
+      "proof": "1440: the scene and dial are in the first viewport and the sunrise auto-plays once (18 s) on load; 390: scene at y=258-482 and dial at y=572-724, both on the first screen. Caption 'Drawn, not photographed' sits directly under the scene. Clock readout 6:30-7:00 is consistent with the status text at every step I checked (Home='0 minutes, thirty minutes to go', End='7:00 Full light').",
+      "craft": "37 KB single file, no external requests, system serif stack, :root tokens for colours. But many raw hex values are scattered (#D9D3C4 repeated, band colours, #5C2E36 in gradients); body{overflow-x:hidden} masks overflow: at 390 submitting a 100+ char email renders #confirm-email to x=1038 and the text is clipped at the right edge with no way to scroll to it; no skip link; programmatic focus to #confirm shows no focus ring (outline none).",
+      "mobile": "probe: 0 px overflow at 390 and 320, smallest text 13.6 px. Header nav kept as three inline links that are 25 px tall at 390 ('How it works' 91x25, 'The plan' 59x25, 'Reserve' 52x25); Play button 73x38. Primary CTA not on the first screen at 390 (top y=1028). Long-email confirmation clipped as above.",
+      "honesty": "Drawings are labelled where they appear and the hero fine print says deposits are not open. But after 'Hold my place' the page says 'Your place is held. We've noted <email>. You'll get one email when the $20 deposit opens' while the address only goes to localStorage (fetch is skipped because HOLD_ENDPOINT is empty); nothing before the click says it is not sent. Also states 'It sits on a nightstand in Charlotte and has woken one of us every morning since spring' and FAQ policies ('refund automatically if the first batch slips by more than a season') not in the brief.",
+      "interaction": "Dial (role=slider, tabindex=0, aria-valuetext) works by keyboard: Arrow +/-1, PageUp +5, Home 0, End 30, clamps at 0 and 30; pointer drag to the bottom dead zone snaps to 0; wheel adjusts. Play -> 'Pause' -> 'Play the sunrise' resumes from the paused value; any key or drag stops playback; 'Play it again' after the end. Form: empty, spaces, 'abc', 'a@b', '0' all give an inline error and refocus the input; valid email trimmed; state persists across reload; 'That's the wrong address' resets and refocuses. Weak points: success shown for a send that never happens, fetch errors would be swallowed by .catch(function(){}), wheel listener (passive:false) hijacks page scroll when the cursor passes over the dial, and the autoplay rewrites the aria-live status unprompted on load.",
+      "copy": "Specific and plain: 'nothing had to ring', 'Press it, and it's an ordinary bedside lamp', 'No charge. No newsletter. Only notes about Morrow.' Error message is written ('Check for a missing @ or domain'). Some sentences add facts the client never gave (Charlotte, since spring, chime).",
+      "first_screen": "1440: headline, lede, 'Reserve a place' with deposit note, and the auto-playing scene/dial all in 900 px. 390: headline, scene and dial in view, but no action in the first 844 px and the promise sentence is just below the fold."
+    },
+    "problems": [
+      "False success on the conversion: 'Your place is held. We've noted <email>...' is shown although the address is only written to localStorage (HOLD_ENDPOINT = ''), with no disclosure before submitting.",
+      "Unsupplied facts presented as true: prototype 'on a nightstand in Charlotte ... every morning since spring', automatic refund policy, chime in testing, 'Morrow, Charlotte, North Carolina' footer.",
+      "Mobile robustness: CTA below the first screen at 390, 25 px tall nav targets and 38 px Play button, and body overflow-x:hidden clipping a long email in the confirmation box."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "The primary action 'Reserve a place' leads to the #reserve form; its submit 'Hold my place' reports 'Your place is held. We've noted <email>. You'll get one email when the $20 deposit opens, and another whenever the plan changes.' Nothing is sent anywhere: in the inline script HOLD_ENDPOINT = '' so the fetch is skipped and the address is only stored in the visitor's own localStorage. The copy before the click ('Leave your email and we'll hold your place in line') does not say it is not sent.",
+        "steps": "Open packets/P014/A/index.html from disk at 1440x900. Click 'Reserve a place'. Type test@example.com in 'Your email', click 'Hold my place'. The 'Your place is held' box appears. Inspect the script: var HOLD_ENDPOINT = ''; the submit handler only calls fetch when HOLD_ENDPOINT is truthy, then localStorage.setItem('morrow.held', addr). No network request is made (none in DevTools Network)."
+      }
+    ]
+  },
+  "B": {
+    "scores": {"clarity": 9, "fit": 8, "distinctiveness": 7, "proof": 8, "craft": 7, "mobile": 7, "honesty": 8, "interaction": 8, "copy": 8, "first_screen": 8},
+    "evidence": {
+      "clarity": "H1 'Wake to thirty minutes of sunrise. One dial, no app.' plus lede 'Morrow is a bedside lamp. Turn the dial to the time you want to be up...' and 'Reserve a Morrow' with '$20 deposit, refunded whenever you ask. Checkout isn't connected yet, so no card today.' all visible at 1440 and 390.",
+      "fit": "Deposit-not-payable handled before the click in the hero and at the final CTA ('this opens an email to us... take nothing today'); drawings labelled; 'planned for next autumn' with no date; explicit no-sleep-science aside. Weakness: the reservation path depends on reserve@morrow.example, an address the brief did not supply.",
+      "distinctiveness": "Room scene whose wall, furniture and lamp shade are recoloured through CSS custom properties as the dial turns, a moon in the window that stays night ('The light is all Morrow's'), and an annotated line drawing of the prototype with 'width: not final'. Section backgrounds step from night to morning. Layout otherwise familiar.",
+      "proof": "1440: scene, dial, Play and slider in the first viewport (dial y~640, slider y~870). Caption 'Drawing of the prototype; not a photo.' under the scene and 'Drawn, not measured' under the controls. At 390 the scene top is at y=611 (partly in view) and the dial at y=1043, so operating it needs a scroll.",
+      "craft": "Token system for surfaces, spacing (--s-1..--s5) and type (--fs-*); system font fallbacks, no web-font requests; 36.6 KB HTML. Defects: the .sunrise <figure> keeps the UA default 40 px side margins (computed margin-left/right 40px at 390, artifact only 278 px wide, visible in operator 390 shot); the skip link uses .visually-hidden with no :focus rule, so Tab 1 lands on a 1x1 px invisible element; a few inline style='margin-top:1.5rem'. og.png (242 KB) ships but og:image points at https://morrow.example/og.png.",
+      "mobile": "probe: 0 px overflow at 390 and 320, smallest text 13 px. Menu button 71x46 toggles aria-expanded, link tap closes it and navigates, Escape closes and returns focus to the button; tapping outside the open panel leaves it open and the panel covers the H1. Footer and menu links 39 px tall. Artifact narrowed by figure margins and dial below the fold.",
+      "honesty": "Every image labelled where it appears; CTA consequence stated before the click ('this opens an email to us. We hold your place in order of email, take nothing today'); no sleep claims, no dates. Minor additions not in the brief: 'Weighted' base, 'Email us and the deposit comes back'.",
+      "interaction": "Native <input type=range> (-30..0) is the keyboard control, labelled 'Minutes before the time you set'; Home -> '−30 min Off', End -> '0 min Full brightness', clamps past both ends; pointer drag on the aria-hidden dial updates the range, dead zone clamps to 0, focus moves to the range after drag. Play -> 'Pause the sunrise' (note 'Playing: thirty minutes in fifteen seconds') -> 'Resume the sunrise' ('Paused at −27 min.') -> resumes from -27 -> 'Play it again' at 0 -> replays from -30; keyboard input during play stops it. All 5 FAQ <details> open. Gaps: no aria-valuetext (slider read as '-18'), skip link focus invisible, no form so no edge-input handling beyond the range's native clamping.",
+      "copy": "Concrete and consistent: 'Ten o'clock on a Sunday or six on a Monday; it is one turn either way. That sentence is the manual.', 'nothing glowing at three in the morning', phase lines ('Amber. The room has edges again.'). Button labels say what happens ('Play the thirty minutes', 'Resume the sunrise').",
+      "first_screen": "1440: specific promise, action with deposit/checkout note, and the operable scene and dial in 900 px. 390: promise, lede, 'Reserve a Morrow' and its fine print visible; the scene starts at y=611 and is cut by the fold, dial not visible."
+    },
+    "problems": [
+      "The final 'Reserve a Morrow' button opens mailto:reserve@morrow.example, an address the brief never supplied, so the reservation path rests on an invented destination.",
+      "Skip link is permanently visually hidden (no :focus style), so the first Tab stop has no visible focus.",
+      "Default <figure> margins (40 px each side) shrink the sunrise artifact to 278 px at 390, and the dial sits below the first screen; the open mobile menu does not close on an outside tap."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "The primary action 'Reserve a Morrow' (header and hero) scrolls to #reserve, where its repeat, the 'Reserve a Morrow' button in the price panel, is href='mailto:reserve@morrow.example?subject=Reserve%20a%20Morrow...'. The brief supplies no email address or domain; the address and the morrow.example domain were chosen by the team. Adjudicator note: the rubric calls .example domains client-chosen placeholders, but this brief contains none, so I read this as an unsupplied destination; the page does disclose 'this opens an email to us' before the click.",
+        "steps": "Open packets/P014/B/index.html from disk at 1440x900. Click the hero 'Reserve a Morrow' (lands on #reserve). Inspect or click the 'Reserve a Morrow' button in the white price panel: its href is mailto:reserve@morrow.example. Compare with brief.md, which names no email address."
+      }
+    ]
+  },
+  "preference": "B",
+  "confidence": "medium",
+  "reason": "B is the sturdier page to maintain: a native range input carries keyboard and screen-reader access while the dial adds pointer control, the tokens are consistent, the mobile menu handles Escape and focus, and the conversion says what will happen before the click. A's dial is excellent, but its main form tells visitors their place is held when nothing leaves the browser, which is the worse defect to own. If the adjudicator rejects A's HF1 and upholds B's mailto flag, the hard-fail rule would decide against B even though I prefer it on the merits."
+}
