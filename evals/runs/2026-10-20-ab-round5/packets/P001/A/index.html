@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnlog: kiln booking and firing log for pottery studios</title>
+<meta name="description" content="Kilnlog shows studio members when the kiln is loading, firing or cooling, lets them claim shelf space in the next firing, and messages them when their pieces come out.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M10 28 L14 6 L18 6 L22 28 Z' fill='%232347A0'/%3E%3C/svg%3E">
+<style>
+:root{
+  --porcelain:#F1F2EC;
+  --porcelain-2:#E6E9E1;
+  --tenmoku:#2B1E16;
+  --tenmoku-2:#3A2A1F;
+  --iron:#6B5646;
+  --celadon:#B9CDBF;
+  --celadon-deep:#4E6E5B;
+  --cobalt:#2347A0;
+  --cobalt-dark:#17306F;
+  --glow:#F6B940;
+  --glow-pale:#FFE9B0;
+  --line:#CFD3C8;
+
+  --serif:Charter,"Bitstream Charter","Iowan Old Style","Sitka Text",Cambria,Georgia,serif;
+  --ui:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+
+  --step--1:0.875rem;
+  --step-0:1.0625rem;
+  --step-1:1.3125rem;
+  --step-2:1.75rem;
+  --step-3:2.375rem;
+  --step-4:clamp(3rem, 2rem + 6vw, 6.5rem);
+
+  --gutter:clamp(1rem, 4vw, 3rem);
+  --max:72rem;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--porcelain);
+  color:var(--tenmoku);
+  font-family:var(--serif);
+  font-size:var(--step-0);
+  line-height:1.6;
+  font-variant-numeric:oldstyle-nums;
+}
+img,svg{display:block;max-width:100%}
+a{color:var(--cobalt)}
+a:hover{color:var(--cobalt-dark)}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+h1,h2,h3{font-weight:700;line-height:1.1;margin:0;letter-spacing:-0.01em}
+h2{font-size:var(--step-3);max-width:20ch}
+h3{font-size:var(--step-1);line-height:1.25}
+p{margin:0 0 1em;max-width:62ch}
+.num{font-variant-numeric:lining-nums tabular-nums}
+.skip{position:absolute;left:-999px;top:0;background:var(--tenmoku);color:var(--porcelain);padding:.5rem 1rem;z-index:10}
+.skip:focus{left:1rem;top:1rem}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:3.25rem;padding:.75rem 1.5rem;
+  background:var(--cobalt);color:#fff;
+  font-family:var(--ui);font-weight:650;font-size:1.0625rem;
+  text-decoration:none;border-radius:999px;
+  border:2px solid var(--cobalt);
+  transition:background-color .15s;
+}
+.btn:hover{background:var(--cobalt-dark);border-color:var(--cobalt-dark);color:#fff}
+.btn-small{min-height:2.75rem;padding:.5rem 1.1rem;font-size:.9375rem}
+
+/* Header */
+.site-head{padding:1.25rem 0}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.mark{display:flex;align-items:center;gap:.55rem;font-weight:700;font-size:1.375rem;color:var(--tenmoku);text-decoration:none;letter-spacing:-0.01em}
+.mark svg{width:22px;height:30px}
+.head-nav{display:flex;align-items:center;gap:1.5rem;font-family:var(--ui);font-size:.9375rem}
+.head-nav a:not(.btn){color:var(--tenmoku);text-decoration:none}
+.head-nav a:not(.btn):hover{text-decoration:underline}
+@media (max-width:640px){.head-nav .hide-sm{display:none}}
+
+/* Hero */
+.hero{padding:clamp(2rem,6vw,4.5rem) 0 clamp(3rem,7vw,5.5rem)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(2rem,4vw,3rem)}
+.hero h1{
+  font-size:var(--step-4);
+  line-height:.95;
+  letter-spacing:-0.035em;
+  max-width:9ch;
+}
+.hero-copy{display:grid;gap:1.75rem;align-content:start}
+.lead{font-size:var(--step-1);line-height:1.5;max-width:34ch;margin:0}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem}
+.cta-note{font-family:var(--ui);font-size:var(--step--1);color:var(--iron);max-width:30ch;line-height:1.45;margin:0}
+@media (min-width:900px){
+  .hero-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:end}
+}
+
+/* Status board: the kiln, seen through the peephole */
+.board{
+  background:var(--tenmoku);
+  color:var(--porcelain);
+  border-radius:20px;
+  padding:clamp(1.1rem,3vw,1.75rem);
+  font-family:var(--ui);
+  box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 24px 40px -28px rgba(43,30,22,.6);
+}
+.board-top{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:.25rem}
+.board-name{font-size:.9375rem;color:#CDBFAF;margin:0}
+.board-example{font-size:.8125rem;color:#9C8A79;margin:0}
+.readout{min-height:5.6rem;margin:.6rem 0 .5rem}
+.readout-state{font-family:var(--serif);font-size:clamp(1.75rem,1.2rem + 2vw,2.5rem);line-height:1.1;font-weight:700;margin:0;letter-spacing:-0.01em}
+.readout-detail{font-size:1rem;line-height:1.45;color:#E2D7CA;margin:.4rem 0 0;max-width:46ch}
+.curve-wrap{position:relative;margin:0 -.25rem}
+.curve{width:100%;height:auto;overflow:visible}
+.curve text{font-family:var(--ui);fill:#9C8A79}
+.curve .temp-label{fill:#B8A796}
+.states{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.4rem;
+  margin-top:1rem;padding:0;list-style:none;
+}
+.states button{
+  width:100%;min-height:3rem;
+  font:inherit;font-size:.9375rem;font-weight:600;
+  color:#E2D7CA;background:var(--tenmoku-2);
+  border:1px solid #4C3A2D;border-radius:10px;cursor:pointer;
+  transition:background-color .15s,color .15s,border-color .15s;
+}
+.states button:hover{border-color:#7A6352}
+.states button[aria-pressed="true"]{background:var(--glow-pale);color:var(--tenmoku);border-color:var(--glow-pale)}
+.states button:focus-visible{outline-color:var(--glow)}
+.board-hint{font-size:.8125rem;color:#9C8A79;margin:.75rem 0 0}
+
+/* Section rhythm */
+.section{padding:clamp(3.5rem,8vw,6.5rem) 0}
+.section-head{display:grid;gap:1rem;margin-bottom:clamp(2rem,5vw,3.5rem)}
+.section-head p{font-size:var(--step-1);line-height:1.5;max-width:44ch;margin:0}
+
+/* Before: the sheet and the chat */
+.before{background:var(--porcelain-2)}
+.before-grid{display:grid;gap:clamp(2rem,5vw,4rem);grid-template-columns:minmax(0,1fr)}
+@media (min-width:860px){.before-grid{grid-template-columns:minmax(0,6fr) minmax(0,5fr);align-items:center}}
+.relics{position:relative;display:grid;gap:1.5rem;grid-template-columns:minmax(0,1fr)}
+@media (min-width:560px){.relics{grid-template-columns:minmax(0,7fr) minmax(0,5fr);align-items:start}}
+.sheet{
+  position:relative;
+  background:#FBFBF6;
+  padding:2.25rem 1.25rem 1.5rem;
+  transform:rotate(-1.6deg);
+  box-shadow:0 2px 3px rgba(43,30,22,.08),0 14px 24px -18px rgba(43,30,22,.45);
+  font-family:var(--serif);
+}
+.sheet::before,.sheet::after{
+  content:"";position:absolute;top:-12px;width:78px;height:26px;
+  background:rgba(222,214,180,.75);
+}
+.sheet::before{left:14px;transform:rotate(-8deg)}
+.sheet::after{right:14px;transform:rotate(6deg)}
+.sheet-title{font-weight:700;font-size:1.0625rem;margin:0 0 .75rem;text-align:center}
+.sheet ol{list-style:none;margin:0;padding:0;font-style:italic;font-size:.9375rem}
+.sheet li{border-bottom:1px solid #C9D3DD;padding:.3rem .25rem;display:flex;justify-content:space-between;gap:.75rem}
+.sheet li span:last-child{color:#7D6E62}
+.sheet .struck span:first-child{text-decoration:line-through;text-decoration-thickness:2px;color:#7D6E62}
+.sheet .squeezed{font-size:.8125rem;transform:rotate(-2deg);color:#3C4E86}
+.chat{display:grid;gap:.5rem;font-family:var(--ui);font-size:.9375rem;padding-top:.5rem}
+.bubble{background:#fff;border-radius:16px 16px 16px 4px;padding:.55rem .85rem;max-width:15rem;line-height:1.35;box-shadow:0 1px 2px rgba(43,30,22,.08)}
+.bubble b{display:block;font-size:.75rem;color:var(--iron);font-weight:600;margin-bottom:.1rem}
+.before-copy h2{margin-bottom:1.25rem}
+
+/* A member's week */
+.week-grid{display:grid;gap:clamp(2.5rem,6vw,4.5rem);grid-template-columns:minmax(0,1fr)}
+@media (min-width:900px){.week-grid{grid-template-columns:minmax(0,1fr) 23rem;align-items:start}}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:2.5rem;counter-reset:step}
+.steps li{display:grid;grid-template-columns:3rem minmax(0,1fr);gap:0 1.25rem;counter-increment:step}
+.steps li::before{
+  content:counter(step);
+  grid-row:span 2;
+  width:3rem;height:3rem;border-radius:50%;
+  display:grid;place-items:center;
+  border:2px solid var(--tenmoku);
+  font-weight:700;font-size:1.25rem;font-variant-numeric:lining-nums;
+}
+.steps h3{margin:.55rem 0 .5rem}
+.steps p{margin:0}
+.hands{margin-top:2.5rem;padding:1.25rem 1.5rem;background:var(--celadon);border-radius:14px;max-width:40rem}
+.hands p{margin:0}
+.hands strong{font-weight:700}
+
+/* Phone */
+.phone{
+  width:100%;max-width:23rem;margin:0 auto;
+  background:var(--tenmoku);border-radius:44px;padding:12px;
+  box-shadow:0 30px 50px -30px rgba(43,30,22,.55);
+}
+.screen{
+  background:#FAFAF7;border-radius:34px;overflow:hidden;
+  font-family:var(--ui);color:var(--tenmoku);
+  padding:1.25rem 1.1rem 1.4rem;
+}
+.app-bar{display:flex;justify-content:space-between;align-items:center;font-size:.8125rem;color:var(--iron);margin-bottom:1rem}
+.app-title{font-size:1.25rem;font-weight:700;margin:0;line-height:1.2}
+.app-sub{font-size:.875rem;color:var(--iron);margin:.2rem 0 1rem}
+.kiln{
+  border:3px solid #8E8A80;border-radius:14px 14px 8px 8px;
+  padding:.6rem .55rem .4rem;background:#EFEEE8;
+}
+.shelf{margin-bottom:.55rem}
+.shelf-name{font-size:.75rem;color:var(--iron);margin:0 0 .25rem .1rem}
+.spots{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.35rem;border-bottom:5px solid #A39D90;padding-bottom:.35rem}
+.spot{
+  min-height:3.4rem;border-radius:10px;
+  font:inherit;font-size:.8125rem;font-weight:600;line-height:1.15;
+  display:grid;place-items:center;text-align:center;padding:.2rem;
+}
+.spot.taken{background:#DCD8CE;color:#6E655C;border:1px solid transparent}
+button.spot{background:#fff;color:var(--cobalt);border:2px dashed #9FB0D6;cursor:pointer;transition:background-color .15s,border-color .15s,color .15s}
+button.spot:hover{border-color:var(--cobalt)}
+button.spot[aria-pressed="true"]{background:var(--cobalt);border:2px solid var(--cobalt);color:#fff}
+.claim-status{min-height:3rem;margin:.9rem 0 0;font-size:.875rem;line-height:1.4}
+.notice{
+  margin-top:1.25rem;
+  background:#fff;border-radius:18px;padding:.85rem 1rem;
+  font-family:var(--ui);font-size:.9375rem;line-height:1.4;
+  box-shadow:0 10px 24px -16px rgba(43,30,22,.5);
+  display:grid;grid-template-columns:2.25rem minmax(0,1fr);gap:.1rem .75rem;
+}
+.notice-icon{grid-row:span 3;width:2.25rem;height:2.25rem;border-radius:9px;background:var(--cobalt);display:grid;place-items:center}
+.notice-icon svg{width:14px;height:20px}
+.notice-meta{display:flex;justify-content:space-between;font-size:.75rem;color:var(--iron)}
+.notice strong{font-weight:650}
+.notice p{margin:0}
+.caption{font-family:var(--ui);font-size:.8125rem;color:var(--iron);text-align:center;margin:.85rem auto 0}
+
+/* Owners */
+.owners{background:var(--tenmoku);color:var(--porcelain)}
+.owners a{color:var(--glow-pale)}
+.owners .section-head p{color:#E2D7CA}
+.owner-grid{display:grid;gap:clamp(2.5rem,5vw,4rem);grid-template-columns:minmax(0,1fr)}
+@media (min-width:960px){.owner-grid{grid-template-columns:minmax(0,4fr) minmax(0,7fr)}}
+.controls{list-style:none;margin:0;padding:0;display:grid;gap:1.5rem}
+.controls li{padding-left:1.25rem;border-left:3px solid var(--celadon-deep)}
+.controls h3{margin-bottom:.35rem}
+.controls p{margin:0;color:#E2D7CA}
+.log{background:var(--porcelain);color:var(--tenmoku);border-radius:16px;padding:1.25rem;overflow:hidden}
+.log-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.25rem 1rem;margin-bottom:.75rem;font-family:var(--ui)}
+.log-head h3{font-family:var(--ui);font-size:1.0625rem}
+.log-head p{margin:0;font-size:.8125rem;color:var(--iron)}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:34rem;font-family:var(--ui);font-size:.875rem;font-variant-numeric:lining-nums tabular-nums}
+th{text-align:left;font-weight:600;color:var(--iron);padding:.5rem .6rem;border-bottom:2px solid var(--tenmoku)}
+td{padding:.65rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+.kind{display:inline-block;padding:.1rem .5rem;border-radius:999px;font-size:.8125rem;font-weight:600}
+.kind-glaze{background:var(--celadon);color:#22392B}
+.kind-bisque{background:#E7DCCB;color:#5A4331}
+td.r,th.r{text-align:right}
+
+/* Proof + start */
+.start-grid{display:grid;gap:clamp(2.5rem,6vw,4rem);grid-template-columns:minmax(0,1fr)}
+@media (min-width:900px){.start-grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}}
+.start h2{max-width:16ch;margin-bottom:1.25rem}
+.start .cta-row{margin-top:1.75rem}
+.qa{margin:0;display:grid;gap:1.5rem;align-content:start}
+.qa dt{font-weight:700;font-size:var(--step-1);line-height:1.3;margin-bottom:.35rem}
+.qa dd{margin:0}
+
+/* Footer */
+.site-foot{border-top:1px solid var(--line);padding:2rem 0 2.5rem;font-family:var(--ui);font-size:.875rem;color:var(--iron)}
+.site-foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
+.site-foot p{margin:0}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="Kilnlog home">
+      <svg viewBox="0 0 22 30" aria-hidden="true"><path d="M3 29 L8.5 2 L13.5 2 L19 29 Z" fill="#2347A0"/><path d="M8.5 2 L13.5 2 L12.6 6.5 L9.4 6.5 Z" fill="#F6B940"/></svg>
+      Kilnlog
+    </a>
+    <nav class="head-nav" aria-label="Main">
+      <a class="hide-sm" href="#week">How it works</a>
+      <a class="hide-sm" href="#owners">For studio owners</a>
+      <a class="btn btn-small" href="https://kilnlog.example/start">Start free trial</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 id="hero-title">Is it out yet?</h1>
+        <p class="lead">Kilnlog answers before anyone asks. Your members see whether the kiln is loading, firing or cooling, claim shelf space in the next firing, and get a message when their pieces come out.</p>
+        <div class="cta-row">
+          <a class="btn" href="https://kilnlog.example/start">Start a 30-day free trial</a>
+          <p class="cta-note">For studio owners. Members join through an invite from their studio.</p>
+        </div>
+      </div>
+
+      <figure class="board" aria-labelledby="board-name" style="margin:0">
+        <div class="board-top">
+          <p class="board-name" id="board-name">Big kiln, glaze firing to cone 6</p>
+          <p class="board-example">Example studio</p>
+        </div>
+        <div class="readout" aria-live="polite">
+          <p class="readout-state" id="readout-state">Not yet. Cooling.</p>
+          <p class="readout-detail" id="readout-detail">480°F inside. Out Thursday around 4pm, and everyone with work on a shelf gets a message.</p>
+        </div>
+        <div class="curve-wrap">
+          <svg class="curve" id="curve" viewBox="0 0 800 270" role="img" aria-labelledby="curve-desc">
+            <desc id="curve-desc">Kiln temperature over the week: flat while loading on Monday, rising to about 2,230°F on Tuesday night, then cooling through Wednesday until the kiln opens on Thursday afternoon.</desc>
+            <defs>
+              <linearGradient id="heat" gradientUnits="userSpaceOnUse" x1="0" y1="232" x2="0" y2="28">
+                <stop offset="0" stop-color="#8A6E5C"/>
+                <stop offset=".3" stop-color="#B8432A"/>
+                <stop offset=".6" stop-color="#E9792A"/>
+                <stop offset=".85" stop-color="#F6B940"/>
+                <stop offset="1" stop-color="#FFF1C4"/>
+              </linearGradient>
+              <clipPath id="past"><rect id="past-rect" x="0" y="0" width="0" height="270"/></clipPath>
+            </defs>
+            <g id="grid"></g>
+            <path id="future" fill="none" stroke="#5C4838" stroke-width="2" stroke-dasharray="4 6" stroke-linecap="round" stroke-linejoin="round"/>
+            <g clip-path="url(#past)">
+              <path id="glow" fill="none" stroke="url(#heat)" stroke-width="10" stroke-opacity=".18" stroke-linecap="round" stroke-linejoin="round"/>
+              <path id="line" fill="none" stroke="url(#heat)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <line id="now-line" y1="20" y2="236" stroke="#E2D7CA" stroke-width="1" stroke-dasharray="2 4"/>
+            <circle id="now-dot" r="7" fill="#FFF1C4" stroke="#2B1E16" stroke-width="3"/>
+          </svg>
+        </div>
+        <ul class="states" aria-label="Show the kiln at each stage">
+          <li><button type="button" data-state="loading" aria-pressed="false">Loading</button></li>
+          <li><button type="button" data-state="firing" aria-pressed="false">Firing</button></li>
+          <li><button type="button" data-state="cooling" aria-pressed="true">Cooling</button></li>
+          <li><button type="button" data-state="out" aria-pressed="false">Out</button></li>
+        </ul>
+        <p class="board-hint">Tap a stage to see what members see.</p>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section before" aria-labelledby="before-title">
+    <div class="wrap before-grid">
+      <div class="relics" aria-hidden="true">
+        <div class="sheet">
+          <p class="sheet-title">Glaze firing, Thurs!!</p>
+          <ol>
+            <li><span>Ana, 3 mugs</span><span>top</span></li>
+            <li class="struck"><span>Rui, platter</span><span>mid</span></li>
+            <li><span>Dee, 2 bowls + vase</span><span>mid?</span></li>
+            <li><span>Jun</span><span>bottom</span></li>
+            <li><span>Priya, tiles</span><span></span></li>
+            <li><span class="squeezed">Rui again, platter, sorry</span><span></span></li>
+            <li><span>&nbsp;</span><span></span></li>
+          </ol>
+        </div>
+        <div class="chat">
+          <div class="bubble"><b>Dee</b>is it out yet?</div>
+          <div class="bubble"><b>Jun</b>anyone at the studio? is the kiln open</div>
+          <div class="bubble"><b>Ana</b>was there room for my mugs??</div>
+          <div class="bubble"><b>Priya</b>is it out yet</div>
+        </div>
+      </div>
+      <div class="before-copy">
+        <h2 id="before-title">Take the sheet off the kiln room door.</h2>
+        <p>The paper sign-up sheet only works if you're standing in front of it. The group chat fills with the same question every firing, and whoever is at the studio ends up answering it.</p>
+        <p>Kilnlog puts both in one place your members already carry. The shelf list is always current, the kiln's status is one glance away, and nobody has to go and check.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="week" aria-labelledby="week-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="week-title">A member's week with Kilnlog</h2>
+        <p>Members don't sign up or pay. Their studio sends an invite, and from then on the kiln fits into their week like this.</p>
+      </div>
+      <div class="week-grid">
+        <div>
+          <ol class="steps">
+            <li>
+              <h3>Claim a spot in the next firing</h3>
+              <p>Open the next firing, see which shelves have room, and tap a spot. Everyone else sees it's taken straight away, so two people can't plan on the same space.</p>
+            </li>
+            <li>
+              <h3>Check the kiln without asking</h3>
+              <p>Loading, firing or cooling, with the temperature and when it's expected out. The answer is on their phone, not in someone's head.</p>
+            </li>
+            <li>
+              <h3>Get a message when their pieces are out</h3>
+              <p>When the kiln is unloaded, everyone with work in that firing hears about it, with which shelf and where to pick up.</p>
+            </li>
+          </ol>
+          <div class="hands">
+            <p><strong>Made for clay hands.</strong> Big buttons, one tap to claim, nothing to type. It works with a knuckle while you're still at the wheel.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="phone">
+            <div class="screen">
+              <div class="app-bar"><span>Next firing</span><span class="num">Claims close Tue 2pm</span></div>
+              <p class="app-title">Glaze, cone 6</p>
+              <p class="app-sub">Loads Tuesday, out Thursday around 4pm</p>
+              <div class="kiln" role="group" aria-label="Kiln shelves">
+                <div class="shelf">
+                  <p class="shelf-name" id="s-top">Top shelf</p>
+                  <div class="spots" role="group" aria-labelledby="s-top">
+                    <div class="spot taken">Ana</div>
+                    <div class="spot taken">Ana</div>
+                    <button type="button" class="spot" aria-pressed="false" data-shelf="top shelf">Open</button>
+                    <button type="button" class="spot" aria-pressed="false" data-shelf="top shelf">Open</button>
+                  </div>
+                </div>
+                <div class="shelf">
+                  <p class="shelf-name" id="s-mid">Middle shelf</p>
+                  <div class="spots" role="group" aria-labelledby="s-mid">
+                    <div class="spot taken">Dee</div>
+                    <div class="spot taken">Rui</div>
+                    <div class="spot taken">Rui</div>
+                    <button type="button" class="spot" aria-pressed="false" data-shelf="middle shelf">Open</button>
+                  </div>
+                </div>
+                <div class="shelf">
+                  <p class="shelf-name" id="s-bot">Bottom shelf</p>
+                  <div class="spots" role="group" aria-labelledby="s-bot">
+                    <div class="spot taken">Jun</div>
+                    <button type="button" class="spot" aria-pressed="false" data-shelf="bottom shelf">Open</button>
+                    <div class="spot taken">Priya</div>
+                    <div class="spot taken">Priya</div>
+                  </div>
+                </div>
+              </div>
+              <p class="claim-status" id="claim-status" aria-live="polite">Tap an open spot to claim it.</p>
+            </div>
+          </div>
+          <div class="notice" role="img" aria-label="Example message: Your pieces are out. Thursday's glaze firing, middle shelf. Pick up from the cart by the sink.">
+            <span class="notice-icon"><svg viewBox="0 0 22 30" aria-hidden="true"><path d="M3 29 L8.5 2 L13.5 2 L19 29 Z" fill="#fff"/></svg></span>
+            <span class="notice-meta"><span>Kilnlog</span><span class="num">Thu 4:12pm</span></span>
+            <strong>Your pieces are out</strong>
+            <p>Thursday's glaze firing, middle shelf. Pick up from the cart by the sink.</p>
+          </div>
+          <p class="caption">Try it: the shelves above are a working example.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section owners" id="owners" aria-labelledby="owners-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="owners-title">You run the kiln. Kilnlog keeps the record.</h2>
+        <p>Members can claim space and see the status. The schedule and the firings are yours to set, and every firing is written down.</p>
+      </div>
+      <div class="owner-grid">
+        <ul class="controls">
+          <li>
+            <h3>Put firings on the schedule</h3>
+            <p>Bisque or glaze, the cone, when it loads and when it should come out.</p>
+          </li>
+          <li>
+            <h3>Decide how shelf space is shared</h3>
+            <p>Set how much each member can claim and when claims close before loading.</p>
+          </li>
+          <li>
+            <h3>Update the status from the kiln room</h3>
+            <p>Change it from loading to firing to cooling on your phone, and members see it right away.</p>
+          </li>
+          <li>
+            <h3>Keep a log of every firing</h3>
+            <p>Who had work in it, the cone, when it came out, and any notes you want to remember next time.</p>
+          </li>
+        </ul>
+
+        <div class="log">
+          <div class="log-head">
+            <h3>Firing log</h3>
+            <p>Example studio, October</p>
+          </div>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Example firing log">
+            <table>
+              <thead>
+                <tr><th scope="col">Out</th><th scope="col">Firing</th><th scope="col">Cone</th><th scope="col" class="r">Members</th><th scope="col">Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Sat 17 Oct, 4:10pm</td><td><span class="kind kind-glaze">Glaze</span></td><td>6</td><td class="r">14</td><td>Held 15 min at peak. Shelf 3 full by Monday.</td></tr>
+                <tr><td>Tue 13 Oct, 11:30am</td><td><span class="kind kind-bisque">Bisque</span></td><td>04</td><td class="r">11</td><td>Two pieces cracked, both thick-bottomed.</td></tr>
+                <tr><td>Fri 9 Oct, 5:00pm</td><td><span class="kind kind-glaze">Glaze</span></td><td>6</td><td class="r">12</td><td>Replaced the cracked middle shelf.</td></tr>
+                <tr><td>Mon 5 Oct, 10:45am</td><td><span class="kind kind-bisque">Bisque</span></td><td>04</td><td class="r">9</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section start" id="start" aria-labelledby="start-title">
+    <div class="wrap start-grid">
+      <div>
+        <h2 id="start-title">Try it on your own kiln for 30 days.</h2>
+        <p>Three community studios have run their kilns on Kilnlog since spring. We built it with them, firing by firing. We don't have numbers to show you yet, so the honest test is your own studio's next few firings.</p>
+        <p>Start the trial, add your kiln and your next firing, then invite your members.</p>
+        <div class="cta-row">
+          <a class="btn" href="https://kilnlog.example/start">Start a 30-day free trial</a>
+        </div>
+      </div>
+      <dl class="qa">
+        <div>
+          <dt>I'm a member. How do I join?</dt>
+          <dd>Your studio invites you. Ask whoever runs the kiln to add you, and you'll get a link to join. There's nothing to sign up for here.</dd>
+        </div>
+        <div>
+          <dt>Who pays for Kilnlog?</dt>
+          <dd>The studio does. Members use it as part of their membership.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>Kilnlog, kiln booking and firing log for community pottery studios.</p>
+    <p><a href="https://kilnlog.example/start">Start a free trial</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Firing curve ---------- */
+  // Hours from Monday 9am, temperature in °F
+  var current;
+  var pts = [[0,70],[30,72],[33,250],[36,1000],[39,1500],[41.5,1950],[43,2232],[43.5,2232],[46,1700],[50,1150],[56,700],[62,430],[68,260],[74,160],[79,120]];
+  var H = 81, X0, X1, Y0, Y1 = 28, T0 = 50, T1 = 2350, FS;
+  var svg = document.getElementById('curve');
+  var svgNS = 'http://www.w3.org/2000/svg';
+  var grid = document.getElementById('grid');
+  function x(h){ return X0 + h / H * (X1 - X0); }
+  function y(t){ return Y0 - (t - T0) / (T1 - T0) * (Y0 - Y1); }
+  function el(name, attrs, text){
+    var n = document.createElementNS(svgNS, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (text) n.textContent = text;
+    grid.appendChild(n);
+    return n;
+  }
+  // Redraw the axes so labels stay readable at any width: keep text near 12px on screen.
+  function draw(){
+    var w = svg.getBoundingClientRect().width || 700;
+    var scale = 800 / w;
+    FS = Math.min(26, Math.max(13, 12.5 * scale));
+    var vbH = w < 520 ? 470 : 280;
+    X0 = FS * 3.6; X1 = 784; Y0 = vbH - FS * 2.4;
+    svg.setAttribute('viewBox', '0 0 800 ' + vbH);
+    document.getElementById('heat').setAttribute('y1', Y0);
+    document.getElementById('past-rect').setAttribute('height', vbH);
+    var nl = document.getElementById('now-line');
+    nl.setAttribute('y1', Y1 - 8); nl.setAttribute('y2', Y0 + 4);
+    document.getElementById('now-dot').setAttribute('r', Math.max(7, FS * .55));
+    ['line','glow','future'].forEach(function(id){ document.getElementById(id).setAttribute('stroke-width', ({line:3.5, glow:10, future:2})[id] * Math.max(1, scale * .55)); });
+    var d = pts.map(function(p,i){ return (i ? 'L' : 'M') + x(p[0]).toFixed(1) + ' ' + y(p[1]).toFixed(1); }).join(' ');
+    ['line','glow','future'].forEach(function(id){ document.getElementById(id).setAttribute('d', d); });
+    while (grid.firstChild) grid.removeChild(grid.firstChild);
+    [500,1000,1500,2000].forEach(function(t){
+      el('line',{x1:X0,x2:X1,y1:y(t),y2:y(t),stroke:'#3F2F24','stroke-width':1});
+      el('text',{x:X0-8,y:y(t)+FS*.35,'text-anchor':'end','class':'temp-label','font-size':FS}, t.toLocaleString('en-US') + '°');
+    });
+    el('line',{x1:X0,x2:X1,y1:Y0,y2:Y0,stroke:'#5C4838','stroke-width':1});
+    // Day boundaries: Tue 0:00 = h15, Wed = h39, Thu = h63
+    [['Mon',0],['Tue',15],['Wed',39],['Thu',63]].forEach(function(dd){
+      if (dd[1] > 0) el('line',{x1:x(dd[1]),x2:x(dd[1]),y1:Y0,y2:Y0+6,stroke:'#5C4838'});
+      el('text',{x:x(dd[1]) + 6,y:Y0+FS*1.6,'font-size':FS}, dd[0]);
+    });
+    el('text',{x:x(43.5)+FS*.9,y:y(2232)+FS*.35,'font-size':FS}, 'cone 6');
+    if (current !== undefined) place(current);
+  }
+
+  function tempAt(h){
+    for (var i = 1; i < pts.length; i++){
+      if (h <= pts[i][0]){
+        var a = pts[i-1], b = pts[i], f = (h - a[0]) / (b[0] - a[0]);
+        return a[1] + f * (b[1] - a[1]);
+      }
+    }
+    return pts[pts.length-1][1];
+  }
+  function fmt(t){ return (Math.round(t / 10) * 10).toLocaleString('en-US') + '°F'; }
+
+  var states = {
+    loading: { h: 22, title: 'Loading.', detail: function(){ return 'Shelves are filling for Thursday’s glaze firing. Three spots are still open, and claims close Tuesday at 2pm.'; } },
+    firing:  { h: 40.5, title: 'Firing. Kiln room closed.', detail: function(t){ return fmt(t) + ' and climbing toward cone 6. Expected out Thursday around 4pm.'; } },
+    cooling: { h: 61, title: 'Not yet. Cooling.', detail: function(t){ return fmt(t) + ' inside. Out Thursday around 4pm, and everyone with work on a shelf gets a message.'; } },
+    out:     { h: 79, title: 'Out.', detail: function(){ return 'Unloaded Thursday at 4:10pm. Fourteen members have a message telling them which shelf and where to pick up.'; } }
+  };
+
+  var rect = document.getElementById('past-rect');
+  var nowLine = document.getElementById('now-line');
+  var nowDot = document.getElementById('now-dot');
+  var stTitle = document.getElementById('readout-state');
+  var stDetail = document.getElementById('readout-detail');
+  current = 0; var raf = null;
+
+  function place(h){
+    current = h;
+    var px = x(h);
+    rect.setAttribute('width', px.toFixed(1));
+    nowLine.setAttribute('x1', px); nowLine.setAttribute('x2', px);
+    nowDot.setAttribute('cx', px); nowDot.setAttribute('cy', y(tempAt(h)));
+  }
+  function animateTo(h, ms){
+    if (raf) cancelAnimationFrame(raf);
+    if (reduce || !ms){ place(h); return; }
+    var from = current, start = null;
+    function step(ts){
+      if (!start) start = ts;
+      var k = Math.min(1, (ts - start) / ms);
+      var e = 1 - Math.pow(1 - k, 3);
+      place(from + (h - from) * e);
+      if (k < 1) raf = requestAnimationFrame(step);
+    }
+    raf = requestAnimationFrame(step);
+  }
+  function show(name, ms){
+    var s = states[name];
+    stTitle.textContent = s.title;
+    stDetail.textContent = s.detail(tempAt(s.h));
+    document.querySelectorAll('.states button').forEach(function(b){
+      b.setAttribute('aria-pressed', b.dataset.state === name ? 'true' : 'false');
+    });
+    animateTo(s.h, ms);
+  }
+  document.querySelectorAll('.states button').forEach(function(b){
+    b.addEventListener('click', function(){ show(b.dataset.state, 700); });
+  });
+  draw();
+  place(0);
+  var rt;
+  window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(draw, 120); });
+  // The one orchestrated moment: the week's firing draws itself up to "now".
+  show('cooling', 1800);
+
+  /* ---------- Shelf claim ---------- */
+  var spots = document.querySelectorAll('button.spot');
+  var status = document.getElementById('claim-status');
+  spots.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var mine = btn.getAttribute('aria-pressed') === 'true';
+      spots.forEach(function(o){ o.setAttribute('aria-pressed','false'); o.textContent = 'Open'; });
+      if (mine){
+        status.textContent = 'Spot released. Someone else can take it now.';
+        return;
+      }
+      btn.setAttribute('aria-pressed','true');
+      btn.textContent = 'You';
+      status.textContent = 'Claimed on the ' + btn.dataset.shelf + '. Glaze your pieces and put them on the loading cart by Tuesday 2pm.';
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiln booking and firing log for pottery studios · Kilnlog</title>
+<meta name="description" content="Kilnlog is a kiln booking app for community pottery studios. Members claim shelf space in the next firing, see when the kiln is loading, firing or cooling, and get a message when their pieces are out.">
+<meta name="theme-color" content="#A4492A">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kilnlog: nobody asks “is it out yet?”">
+<meta property="og:description" content="A kiln booking app for community pottery studios: claim shelf space, follow the firing, get a message when your pieces are out.">
+<meta property="og:image" content="og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kilnlog: nobody asks “is it out yet?”">
+<meta name="twitter:description" content="A kiln booking app for community pottery studios.">
+<meta name="twitter:image" content="og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{
+  --clay:#A4492A;        /* fired terracotta: hero ground and the primary action */
+  --clay-deep:#7E3219;
+  --slip:#FFF3E6;        /* text and buttons on the clay band */
+  --wash:#ECEBE7;        /* kiln-wash grey: ground below the hero */
+  --paper:#FBFAF6;
+  --ink:#231C18;
+  --ink-soft:#4A3F38;
+  --rule:#C9C3BA;
+  --kiln:#2E2724;        /* kiln body */
+  --brick:#E4D7C4;       /* soft firebrick interior */
+  --shelf:#8D857C;
+  --green:#9A8C7C;       /* greenware */
+  --bisque:#F4E1CF;      /* fired bisque */
+  --done:#2F6B57;        /* "out" state */
+  --heat:#E9803A;
+  --cool:#C2603A;
+  --display:"DejaVu Serif", Rockwell, "Roboto Slab", Georgia, ui-serif, serif;
+  --text:system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --data:ui-monospace, "SF Mono", "Cascadia Mono", "DejaVu Sans Mono", monospace;
+  --s-2xs:.25rem; --s-xs:.5rem; --s-s:.75rem; --s-m:1rem; --s-l:1.5rem; --s-xl:2.25rem; --s-2xl:clamp(3.25rem, 2.4rem + 3.8vw, 6rem);
+  --max:1240px;
+  --radius:6px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul,table{margin:0}
+ol,ul{padding:0;list-style:none}
+img,svg,video,canvas{display:block;max-width:100%}
+input,button,textarea,select{font:inherit;color:inherit}
+:where(p,li,dd,td,output,[role=status]){overflow-wrap:anywhere;min-width:0}
+html{scroll-padding-top:80px;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{background:var(--wash);color:var(--ink);font-family:var(--text);font-size:1.0625rem;line-height:1.55}
+.skip{position:absolute;left:12px;top:-60px;padding:12px 16px;background:var(--ink);color:var(--slip);z-index:100;border-radius:var(--radius)}
+.skip:focus{top:12px}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px var(--slip)}
+.band :focus-visible,.final :focus-visible{outline-color:var(--slip);box-shadow:0 0 0 6px var(--ink)}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 clamp(1rem, .5rem + 2.4vw, 2.5rem)}
+.display{font-family:var(--display);font-stretch:condensed;font-weight:700;letter-spacing:-.01em}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.7rem 1.25rem;border-radius:999px;font-weight:700;text-decoration:none;border:2px solid transparent;transition:background-color .15s ease-out, transform .15s ease-out}
+.btn-slip{background:var(--slip);color:var(--ink)}
+.btn-clay{background:var(--clay);color:#fff}
+@media (hover:hover) and (pointer:fine){.btn-slip:hover{background:#F5DCC4}.btn-clay:hover{background:var(--clay-deep)}}
+@media (prefers-reduced-motion:no-preference){.btn:active{transform:scale(.97)}}
+
+/* Header */
+.band{background:var(--clay);color:var(--slip)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:var(--s-m);padding-top:var(--s-m);padding-bottom:var(--s-m)}
+.brand{display:inline-flex;align-items:center;gap:.55rem;color:var(--slip);text-decoration:none;font-size:1.5rem;min-height:44px}
+.brand svg{width:30px;height:30px}
+.nav-links{display:flex;align-items:center;gap:var(--s-l)}
+.nav-links a:not(.btn){color:var(--slip);text-decoration:none;font-weight:600;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+@media (hover:hover) and (pointer:fine){.nav-links a:not(.btn):hover{border-bottom-color:var(--slip)}}
+.menu-btn{display:none;min-height:44px;min-width:64px;padding:0 1rem;border-radius:999px;border:2px solid var(--slip);background:transparent;color:var(--slip);font-weight:700;cursor:pointer}
+#site-menu{display:none}
+@media (max-width:900px){
+  .nav-links{display:none}
+  .menu-btn{display:inline-flex;align-items:center}
+  #site-menu:not([hidden]){display:block;position:absolute;left:0;right:0;top:76px;background:var(--clay-deep);z-index:20;padding:var(--s-s) var(--s-m) var(--s-l)}
+  #site-menu a:not(.btn){display:flex;align-items:center;min-height:48px;color:var(--slip);text-decoration:none;font-weight:600;border-bottom:1px solid rgba(255,243,230,.3)}
+  #site-menu .btn{margin-top:var(--s-m);width:100%}
+}
+.top{position:relative}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(1.5rem, 1rem + 2.5vw, 4rem);align-items:start;padding-top:clamp(.75rem, .2rem + 2.5vw, 3rem);padding-bottom:clamp(2rem, 1rem + 3vw, 4.5rem)}
+.hero h1{font-size:clamp(2.25rem, 1.7rem + 2.45vw, 4rem);line-height:1.04;text-wrap:balance;overflow-wrap:break-word;margin-top:clamp(0rem, -1rem + 3vw, 2.5rem)}
+.five{margin-top:var(--s-l);font-size:clamp(1.0625rem, 1rem + .3vw, 1.25rem);line-height:1.5;max-width:34em}
+.five strong{font-weight:700}
+.act{margin-top:var(--s-l);display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-s) var(--s-m)}
+.act .note{font-size:.95rem;max-width:22em;line-height:1.45}
+.inuse{margin-top:var(--s-l);padding-top:var(--s-s);border-top:1px solid rgba(255,243,230,.45);font-size:.95rem;display:flex;gap:.6rem;align-items:center}
+.inuse svg{flex:none;width:22px;height:22px}
+
+/* Signature: the sample kiln */
+.kiln-card{background:var(--kiln);color:#F3ECE4;border-radius:10px;padding:var(--s-m);display:grid;gap:var(--s-s)}
+.kc-head{display:flex;justify-content:space-between;align-items:center;gap:var(--s-s)}
+.kc-head > div{min-width:0}
+.reset{flex:none}
+.kc-label{font-family:var(--data);font-size:.8125rem;letter-spacing:.02em;color:#D8CEC4}
+.kc-title{font-family:var(--display);font-stretch:condensed;font-weight:700;font-size:1.3rem;color:#fff}
+.reset{min-height:44px;padding:0 .9rem;border-radius:999px;border:1.5px solid #8C8079;background:transparent;color:#F3ECE4;font-size:.9rem;font-weight:600;cursor:pointer}
+.reset:focus-visible,.stage:focus-visible,.spot:focus-visible{outline:3px solid #fff;box-shadow:0 0 0 6px var(--clay)}
+.stages{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:#1F1A18;border-radius:999px;padding:4px}
+.stage{min-height:44px;border:0;border-radius:999px;background:transparent;color:#E9E0D6;font-weight:600;font-size:.95rem;cursor:pointer;transition:background-color .18s ease-out,color .18s ease-out}
+.stage[aria-pressed="true"]{background:var(--slip);color:var(--ink)}
+.readout{display:grid;gap:.5rem}
+.status{font-size:.98rem;line-height:1.45;color:#fff}
+.status b{font-weight:700}
+.kiln{display:grid;grid-template-columns:14px 1fr 14px;border-radius:8px 8px 4px 4px;background:#4A403B;padding:8px 0 10px}
+.wall{display:grid;align-content:space-evenly;justify-items:center}
+.coil{display:block;width:6px;height:28%;border-radius:3px;background:#6F655F;transition:background-color .3s ease-out}
+.chamber{background:var(--brick);border-radius:3px;padding:8px 8px 4px;display:grid;gap:6px;transition:background-color .3s ease-out}
+.shelf{display:grid;gap:3px}
+.shelf-name{font-family:var(--data);font-size:.75rem;color:var(--ink-soft)}
+.spots{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.slab{height:7px;background:var(--shelf);border-radius:2px;position:relative}
+.slab::before,.slab::after{content:"";position:absolute;top:7px;width:8px;height:6px;background:var(--shelf)}
+.slab::before{left:10%}.slab::after{right:10%}
+.spot{position:relative;min-height:58px;min-width:44px;border-radius:5px;display:grid;place-items:center;align-content:center;gap:2px;padding:4px 2px;font-size:.8125rem;line-height:1.1;color:var(--ink)}
+button.spot{cursor:pointer;background:transparent;border:2px dashed #8A7C6D;transition:background-color .15s ease-out,border-color .15s ease-out}
+@media (hover:hover) and (pointer:fine){.kiln[data-stage="loading"] button.spot:not(.mine):hover{background:rgba(255,255,255,.45)}}
+.spot .plus{font-weight:700;font-size:.875rem}
+.pot{width:38px;height:28px}
+.pot use{fill:var(--ware,var(--green));stroke:var(--ink);stroke-width:1.5}
+.chop{display:inline-grid;place-items:center;min-width:30px;height:20px;padding:0 5px;border-radius:999px;background:#fff;color:var(--ink);font-family:var(--data);font-weight:700;font-size:.75rem;border:1.5px solid var(--ink)}
+.mine .chop{background:var(--clay);color:#fff;border-color:var(--clay)}
+button.spot.mine{border:2px solid var(--clay);background:rgba(255,255,255,.55)}
+.kiln[data-stage="firing"] .chamber{background:var(--heat)}
+.kiln[data-stage="firing"] .coil{background:#FFD596}
+.kiln[data-stage="cooling"] .chamber{background:#D88A63}
+.kiln[data-stage="cooling"] .coil{background:var(--cool)}
+.kiln[data-stage="firing"] button.spot,.kiln[data-stage="cooling"] button.spot{border-color:rgba(35,28,24,.55)}
+.kiln[data-stage="out"]{--ware:var(--bisque)}
+.message{display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:start;background:#fff;color:var(--ink);border-radius:10px;padding:.7rem .85rem;transition:background-color .25s ease-out}
+.message svg{width:28px;height:28px;flex:none}
+.message .m-head{font-family:var(--data);font-size:.75rem;color:var(--ink-soft)}
+.message p{font-size:.95rem;line-height:1.4}
+.message[data-sent="true"]{background:#E3F0EA}
+.message[data-sent="true"] .m-head{color:var(--done);font-weight:700}
+
+/* Sections below */
+section.block{padding:var(--s-2xl) 0}
+.block h2{font-size:clamp(1.75rem, 1.3rem + 2vw, 2.875rem);line-height:1.12;text-wrap:balance;max-width:20em}
+.lede{margin-top:var(--s-m);max-width:38em;color:var(--ink-soft)}
+.sample-tag{font-family:var(--data);font-size:.8125rem;color:var(--ink-soft)}
+
+/* Before: the door */
+.door{margin-top:var(--s-xl);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-l) var(--s-xl);align-items:start}
+.sheet{position:relative;background:var(--paper);border:1px solid var(--rule);padding:1.6rem 1.25rem 1.25rem;transform:rotate(-1.2deg);max-width:30rem}
+.sheet::before,.sheet::after{content:"";position:absolute;top:-10px;width:64px;height:22px;background:rgba(214,203,180,.75)}
+.sheet::before{left:18px;transform:rotate(-6deg)}.sheet::after{right:18px;transform:rotate(5deg)}
+.sheet h3{font-family:var(--display);font-stretch:condensed;font-size:1.15rem;letter-spacing:.02em}
+.sheet ol{margin-top:.6rem}
+.sheet li{font-family:var(--display);font-style:italic;font-size:1.05rem;border-bottom:1px solid #C9D3DD;padding:.35rem 0;display:flex;gap:.6rem}
+.sheet li .n{font-style:normal;font-family:var(--data);font-size:.8125rem;color:var(--ink-soft);width:1.5rem;flex:none;padding-top:.15rem}
+.sheet s{color:#6D625A}
+.sheet .scrawl{color:var(--clay-deep)}
+.chat{display:grid;gap:.6rem;margin-top:var(--s-l);max-width:26rem}
+.bubble{background:#fff;border-radius:14px 14px 14px 4px;padding:.55rem .8rem;justify-self:start;max-width:100%}
+.bubble .who{display:block;font-size:.8125rem;font-weight:700;color:var(--ink-soft)}
+.swap{border-top:2px solid var(--ink)}
+.swap-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-l);padding:var(--s-m) 0;border-bottom:1px solid var(--rule)}
+.swap-row h3{font-size:1.0625rem;font-weight:700}
+.swap-head{font-family:var(--data);font-size:.8125rem;color:var(--ink-soft);padding:.6rem 0;border-bottom:1px solid var(--rule)}
+.swap-row .old{color:var(--ink-soft)}
+.swap .lab{display:none}
+
+/* Firing log */
+.logwrap{margin-top:var(--s-xl);display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:var(--s-xl);align-items:start}
+.log{background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius);padding:var(--s-m) var(--s-l) var(--s-l)}
+.log table{width:100%;border-collapse:collapse;margin-top:var(--s-s)}
+.log th{font-family:var(--data);font-size:.8125rem;font-weight:400;color:var(--ink-soft);text-align:left;padding:.5rem .5rem .5rem 0;border-bottom:2px solid var(--ink)}
+.log td{padding:.8rem .5rem .8rem 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.log td:first-child{font-family:var(--display);font-stretch:condensed;font-weight:700;font-size:1.1rem}
+.log .num{font-variant-numeric:tabular-nums}
+.state{display:inline-block;font-family:var(--data);font-size:.8125rem;font-weight:700;padding:.15rem .5rem;border-radius:999px;border:1.5px solid currentColor;white-space:nowrap}
+.state.out{color:var(--done)}
+.state.loading{color:var(--clay-deep)}
+.state.next{color:var(--ink-soft)}
+.side h3{font-size:1.2rem;line-height:1.3}
+.side p{margin-top:var(--s-xs);color:var(--ink-soft)}
+.side > div + div{margin-top:var(--s-l);padding-top:var(--s-l);border-top:1px solid var(--rule)}
+
+/* Final */
+.final{background:var(--clay);color:var(--slip);padding:clamp(3rem, 2rem + 4vw, 5.5rem) 0}
+.final h2{font-size:clamp(2rem, 1.4rem + 2.6vw, 3.5rem);line-height:1.08;max-width:14em;text-wrap:balance}
+.final .act{margin-top:var(--s-l)}
+footer{background:var(--kiln);color:#E9E0D6;padding:var(--s-xl) 0}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s-l)}
+.foot a{color:#fff;font-weight:600}
+.foot ul{display:grid;gap:.4rem}
+.foot li a{display:inline-flex;align-items:center;min-height:32px}
+.foot p{max-width:30em;font-size:.95rem}
+
+@media (max-width:1000px){
+  .hero{grid-template-columns:1fr}
+  .hero h1{margin-top:0}
+  .logwrap{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .door{grid-template-columns:1fr}
+  .sheet{transform:rotate(-.8deg)}
+  .swap-head{display:none}
+  .swap-row{grid-template-columns:1fr;gap:.35rem}
+  .swap .lab{display:block;font-family:var(--data);font-size:.75rem;color:var(--ink-soft)}
+  .log{padding:var(--s-s) var(--s-m) var(--s-m)}
+  .log thead{display:none}
+  .log tr{display:grid;grid-template-columns:1fr auto;gap:.2rem .75rem;padding:.8rem 0;border-bottom:1px solid var(--rule)}
+  .log td{border:0;padding:0}
+  .log td:nth-child(3),.log td:nth-child(4){grid-column:1 / -1;color:var(--ink-soft);font-size:.95rem}
+  .log td:nth-child(3)::before{content:"Spots: ";font-family:var(--data);font-size:.8125rem}
+}
+@media (max-width:520px){
+  .top{padding-top:.6rem;padding-bottom:.6rem}
+  .hero{padding-top:.25rem;gap:1.25rem}
+  .five{margin-top:var(--s-s);font-size:1rem}
+  .act{margin-top:var(--s-m)}
+  .act .btn{width:100%}
+  .act .note{max-width:none;font-size:.9rem}
+  .inuse{display:none}
+  .kiln-card{padding:.65rem;gap:.5rem;margin-left:-.25rem;margin-right:-.25rem}
+  .kc-title{font-size:1.1rem}
+  .kc-label{font-size:.75rem;letter-spacing:0}
+  .status{font-size:.95rem}
+  .message{padding:.55rem .7rem}
+  .message p{font-size:.9rem}
+  .spot{min-height:52px}
+  .pot{width:30px;height:22px}
+  .stage{font-size:.875rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-property:background-color,color,border-color,opacity !important;transition-duration:.15s !important;animation:none !important}
+  .btn:active{transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="band">
+  <div class="wrap top">
+    <a class="brand display" href="#main" aria-label="Kilnlog, back to the top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><use href="#cones"/></svg>
+      Kilnlog
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#kiln">Try the sample kiln</a>
+      <a href="#door">The door sheet</a>
+      <a href="#log">Firing log</a>
+      <a class="btn btn-slip" href="https://kilnlog.example/start">Start your free 30-day trial</a>
+    </nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Main, phone" hidden>
+      <a href="#kiln">Try the sample kiln</a>
+      <a href="#door">The door sheet</a>
+      <a href="#log">Firing log</a>
+      <a class="btn btn-slip" href="https://kilnlog.example/start">Start your free 30-day trial</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="band">
+  <div class="wrap hero">
+    <div class="hero-copy">
+      <h1 class="display">Nobody asks<br> “is it out yet?”</h1>
+      <p class="five"><strong>Kilnlog is a kiln booking app for community pottery studios.</strong> Members claim shelf space in the next firing, see when the kiln is loading, firing or cooling, and get a message when their pieces are out.</p>
+      <div class="act">
+        <a class="btn btn-slip" href="https://kilnlog.example/start">Start your free 30-day trial</a>
+        <p class="note">Free for 30 days, for studio owners. Members don’t sign up here; their studio invites them.</p>
+      </div>
+      <p class="inuse"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="#cones"/></svg>In use at three community studios since spring.</p>
+    </div>
+
+    <div class="kiln-card" id="kiln" data-signature aria-labelledby="kc-title">
+      <div class="kc-head">
+        <div>
+          <p class="kc-label">Sample kiln, written for this page</p>
+          <p class="kc-title" id="kc-title">Thursday bisque</p>
+        </div>
+        <button class="reset" type="button" id="reset" aria-label="Reset sample">Reset</button>
+      </div>
+      <div class="stages" role="group" aria-label="Kiln stage">
+        <button class="stage" type="button" data-stage="loading" aria-pressed="true">Loading</button>
+        <button class="stage" type="button" data-stage="firing" aria-pressed="false">Firing</button>
+        <button class="stage" type="button" data-stage="cooling" aria-pressed="false">Cooling</button>
+        <button class="stage" type="button" data-stage="out" aria-pressed="false">Out</button>
+      </div>
+      <div class="readout">
+        <p class="status" id="status" role="status" aria-live="polite"><b>Loading.</b> 7 of 12 spots claimed. Tap an open spot to claim it.</p>
+        <div class="message" id="message" data-sent="false">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><use href="#cones-dark"/></svg>
+          <div>
+            <p class="m-head" id="m-head">Message, when it’s out</p>
+            <p id="m-body">Kilnlog will tell the 7 members with pieces in this firing.</p>
+          </div>
+        </div>
+      </div>
+      <div class="kiln" data-stage="loading" id="kilnbox">
+        <div class="wall" aria-hidden="true"><i class="coil"></i><i class="coil"></i><i class="coil"></i></div>
+        <div class="chamber" id="chamber"><div class="shelf"><span class="shelf-name">Shelf 1</span><div class="spots"><span class="spot" role="img" aria-label="Shelf 1, spot 1: claimed by MR"><svg class="pot" viewBox="0 0 40 30" aria-hidden="true"><use href="#bowl"></use></svg><span class="chop" aria-hidden="true">MR</span></span><button class="spot" type="button" data-i="1" aria-label="Shelf 1, spot 2: open. Press to claim it"><span class="plus" aria-hidden="true">+ Open</span></button><span class="spot" role="img" aria-label="Shelf 1, spot 3: claimed by JO"><svg class="pot" viewBox="0 0 40 30" aria-hidden="true"><use href="#mug"></use></svg><span class="chop" aria-hidden="true">JO</span></span><span class="spot" role="img" aria-label="Shelf 1, spot 4: claimed by AK"><svg class="pot" viewBox="0 0 40 30" aria-hidden="true"><use href="#vase"></use></svg><span class="chop" aria-hidden="true">AK</span></span></div><div class="slab" aria-hidden="true"></div></div><div class="shelf"><span class="shelf-name">Shelf 2</span><div class="spots"><span class="spot" role="img" aria-label="Shelf 2, spot 1: claimed by DL"><svg class="pot" viewBox="0 0 40 30" aria-hidden="true"><use href="#plate"></use></svg><span class="chop" aria-hidden="true">DL</span></span><button class="spot" type="button" data-i="5" aria-label="Shelf 2, spot 2: open. Press to claim it"><span class="plus" aria-hidden="true">+ Open</span></button><button class="spot" type="button" data-i="6" aria-label="Shelf 2, spot 3: open. Press to claim it"><span class="plus" aria-hidden="true">+ Open</span></button><span class="spot" role="img" aria-label="Shelf 2, spot 4: claimed by SB"><svg class="pot" viewBox="0 0 40 30" aria-hidden="true"><use href="#bowl"></use></svg><span class="chop" aria-hidden="true">SB</span></span></div><div class="slab" aria-hidden="true"></div></div><div class="shelf"><span class="shelf-name">Shelf 3</span><div class="spots"><span class="spot" role="img" aria-label="Shelf 3, spot 1: claimed by TW"><svg class="pot" viewBox="0 0 40 30" aria-hidden="true"><use href="#mug"></use></svg><span class="chop" aria-hidden="true">TW</span></span><span class="spot" role="img" aria-label="Shelf 3, spot 2: claimed by PH"><svg class="pot" viewBox="0 0 40 30" aria-hidden="true"><use href="#vase"></use></svg><span class="chop" aria-hidden="true">PH</span></span><button class="spot" type="button" data-i="10" aria-label="Shelf 3, spot 3: open. Press to claim it"><span class="plus" aria-hidden="true">+ Open</span></button><button class="spot" type="button" data-i="11" aria-label="Shelf 3, spot 4: open. Press to claim it"><span class="plus" aria-hidden="true">+ Open</span></button></div><div class="slab" aria-hidden="true"></div></div></div>
+        <div class="wall" aria-hidden="true"><i class="coil"></i><i class="coil"></i><i class="coil"></i></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="block" id="door" aria-labelledby="door-h">
+  <div class="wrap">
+    <h2 id="door-h" class="display">The sheet on the door can’t tell you the kiln has cooled</h2>
+    <p class="lede">Today a studio runs its kiln on paper taped to the kiln room door and a group chat. Kilnlog puts both on every member’s phone.</p>
+    <div class="door">
+      <div>
+        <p class="sample-tag">Sample sheet and chat, written for this page</p>
+        <div class="sheet" style="margin-top:1.4rem">
+          <h3>KILN SIGN-UP · THURS BISQUE</h3>
+          <ol>
+            <li><span class="n">1</span><span>Mara, 3 bowls, top shelf</span></li>
+            <li><span class="n">2</span><span>Jo, mugs <span class="scrawl">(room for 2 more?)</span></span></li>
+            <li><span class="n">3</span><span><s>Ana, vase</s> <span class="scrawl">moved to Sat</span></span></li>
+            <li><span class="n">4</span><span>Dev, 1 platter, ask Sam</span></li>
+            <li><span class="n">5</span><span class="scrawl">who took my spot??</span></li>
+          </ol>
+        </div>
+        <div class="chat" aria-label="Sample group chat">
+          <p class="bubble"><span class="who">Jo</span>is it out yet?</p>
+          <p class="bubble"><span class="who">Dev</span>anyone know if the bisque is done</p>
+          <p class="bubble"><span class="who">Mara</span>is it out yet??</p>
+        </div>
+      </div>
+      <div class="swap" role="list" aria-label="What changes">
+        <div class="swap-row swap-head" aria-hidden="true"><span>On the door and in the chat</span><span>In Kilnlog</span></div>
+        <div class="swap-row" role="listitem">
+          <p class="old"><span class="lab">Before</span>Squeeze your name into a gap on the sheet and hope nobody writes over it.</p>
+          <div><span class="lab">Kilnlog</span><h3>Claim a shelf spot in the next firing from your phone.</h3></div>
+        </div>
+        <div class="swap-row" role="listitem">
+          <p class="old"><span class="lab">Before</span>Walk to the kiln room, or ask, to find out if it’s still firing.</p>
+          <div><span class="lab">Kilnlog</span><h3>See whether the kiln is loading, firing or cooling.</h3></div>
+        </div>
+        <div class="swap-row" role="listitem">
+          <p class="old"><span class="lab">Before</span>Post “is it out yet?” and wait for someone who happens to be there.</p>
+          <div><span class="lab">Kilnlog</span><h3>Get a message when your pieces come out.</h3></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="log" aria-labelledby="log-h" style="padding-top:0">
+  <div class="wrap">
+    <h2 id="log-h" class="display">One firing log the whole studio reads</h2>
+    <p class="lede">Every firing, its stage and how full the shelves are, in one place. When the kiln moves on, every member sees it.</p>
+    <div class="logwrap">
+      <div class="log">
+        <p class="sample-tag">Sample week, written for this page</p>
+        <table>
+          <thead><tr><th scope="col">Firing</th><th scope="col">Stage</th><th scope="col">Shelf spots</th><th scope="col">Members</th></tr></thead>
+          <tbody>
+            <tr><td>Monday glaze</td><td><span class="state out">Out</span></td><td class="num">12 of 12 claimed</td><td>Messaged when it came out</td></tr>
+            <tr><td>Tuesday bisque</td><td><span class="state out">Out</span></td><td class="num">9 of 12 claimed</td><td>Messaged when it came out</td></tr>
+            <tr><td>Thursday bisque</td><td><span class="state loading">Loading</span></td><td class="num">7 of 12 claimed</td><td>Claiming spots now</td></tr>
+            <tr><td>Saturday glaze</td><td><span class="state next">Next</span></td><td class="num">Not open yet</td><td>Can see it’s coming</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="side">
+        <div>
+          <h3>For studio owners</h3>
+          <p>You pay for Kilnlog and invite your members. The schedule lives in one log instead of on the door, and the group chat goes back to talking about pots.</p>
+        </div>
+        <div>
+          <h3>For members</h3>
+          <p>They join through your studio’s invite, not this page, and check the kiln on their phone, often with clay still on their hands.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final" aria-labelledby="final-h">
+  <div class="wrap">
+    <h2 id="final-h" class="display">Take the sign-up sheet off the kiln room door</h2>
+    <div class="act">
+      <a class="btn btn-slip" href="https://kilnlog.example/start">Start your free 30-day trial</a>
+      <p class="note">Free for 30 days, for studio owners. Members don’t sign up here; their studio invites them.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <p class="display" style="font-size:1.4rem;color:#fff">Kilnlog</p>
+      <p>A kiln booking app and firing log for community pottery studios. Members: ask your studio for an invite.</p>
+    </div>
+    <ul aria-label="Footer">
+      <li><a href="https://kilnlog.example/start">Start your free 30-day trial</a></li>
+      <li><a href="#kiln">Try the sample kiln</a></li>
+      <li><a href="#log">Firing log</a></li>
+    </ul>
+  </div>
+</footer>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="cones" viewBox="0 0 32 32"><rect x="4" y="24" width="24" height="4" rx="1" fill="currentColor"/><path d="M6 24h5l-1.2-17z" fill="currentColor"/><path d="M13 24h5l-1.2-17z" fill="currentColor"/><path d="M20 24h5c.6-5 1.8-8 4-8.4l-.8-1.6c-3.6 1-6.6 4.6-8.2 10z" fill="currentColor"/></symbol>
+    <symbol id="cones-dark" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#A4492A"/><rect x="4" y="24" width="24" height="4" rx="1" fill="#FFF3E6"/><path d="M6 24h5l-1.2-17z" fill="#FFF3E6"/><path d="M13 24h5l-1.2-17z" fill="#FFF3E6"/><path d="M20 24h5c.6-5 1.8-8 4-8.4l-.8-1.6c-3.6 1-6.6 4.6-8.2 10z" fill="#FFF3E6"/></symbol>
+    <symbol id="bowl" viewBox="0 0 40 30"><path d="M3 9h34c-1.2 10-8 16-17 16S4.2 19 3 9z"/><path d="M14 25h12v3H14z"/></symbol>
+    <symbol id="mug" viewBox="0 0 40 30"><path d="M29 10h3a5 5 0 0 1 0 10h-3" fill="none"/><path d="M10 3h19v22a3 3 0 0 1-3 3H13a3 3 0 0 1-3-3z"/></symbol>
+    <symbol id="vase" viewBox="0 0 40 30"><path d="M16 2h8v3c0 2 7 5 7 12 0 7-5 11-11 11S9 24 9 17c0-7 7-10 7-12z"/></symbol>
+    <symbol id="plate" viewBox="0 0 40 30"><path d="M2 18h36l-4 7H6z"/><path d="M12 15h16v3H12z"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(function(){
+  // Menu (Escape closes and returns focus; click outside or tabbing out closes)
+  var b = document.querySelector('.menu-btn'), m = document.getElementById('site-menu');
+  var set = function(open){ b.setAttribute('aria-expanded', String(open)); m.hidden = !open; };
+  b.addEventListener('click', function(){ set(b.getAttribute('aria-expanded') !== 'true'); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && b.getAttribute('aria-expanded') === 'true') { set(false); b.focus(); } });
+  document.addEventListener('click', function(e){ if (!m.contains(e.target) && e.target !== b) set(false); });
+  m.addEventListener('focusout', function(e){ if (!m.contains(e.relatedTarget) && e.relatedTarget !== b) set(false); });
+  m.addEventListener('click', function(e){ if (e.target.closest('a')) set(false); });
+
+  // Sample kiln. Three shelves of four spots; seven claimed by sample members.
+  var START = [
+    ['MR','bowl'], null, ['JO','mug'], ['AK','vase'],
+    ['DL','plate'], null, null, ['SB','bowl'],
+    ['TW','mug'], ['PH','vase'], null, null
+  ];
+  var POTS = ['bowl','mug','vase','plate'];
+  var state = { stage:'loading', mine:null };
+  var chamber = document.getElementById('chamber'), kiln = document.getElementById('kilnbox');
+  var statusEl = document.getElementById('status'), mHead = document.getElementById('m-head'), mBody = document.getElementById('m-body'), msg = document.getElementById('message');
+  var stageBtns = [].slice.call(document.querySelectorAll('.stage'));
+  var NAMES = {loading:'Loading', firing:'Firing', cooling:'Cooling', out:'Out'};
+
+  function where(i){ return 'shelf ' + (Math.floor(i/4)+1) + ', spot ' + (i%4+1); }
+  function claimed(){ return START.filter(Boolean).length + (state.mine === null ? 0 : 1); }
+  function potSvg(kind){ return '<svg class="pot" viewBox="0 0 40 30" aria-hidden="true"><use href="#' + kind + '"/></svg>'; }
+
+  function build(){
+    var html = '';
+    for (var s = 0; s < 3; s++){
+      html += '<div class="shelf"><span class="shelf-name">Shelf ' + (s+1) + '</span><div class="spots">';
+      for (var k = 0; k < 4; k++){
+        var i = s*4 + k, c = START[i];
+        if (c){
+          html += '<span class="spot" role="img" aria-label="Shelf ' + (s+1) + ', spot ' + (k+1) + ': claimed by ' + c[0] + '">' + potSvg(c[1]) + '<span class="chop" aria-hidden="true">' + c[0] + '</span></span>';
+        } else {
+          html += '<button class="spot" type="button" data-i="' + i + '"></button>';
+        }
+      }
+      html += '</div><div class="slab" aria-hidden="true"></div></div>';
+    }
+    chamber.innerHTML = html;
+  }
+
+  function paintSpots(){
+    [].forEach.call(chamber.querySelectorAll('button.spot'), function(btn){
+      var i = +btn.getAttribute('data-i'), mine = state.mine === i;
+      btn.classList.toggle('mine', mine);
+      btn.innerHTML = mine ? potSvg(POTS[i % 4]) + '<span class="chop" aria-hidden="true">YOU</span>' : (state.stage === 'loading' ? '<span class="plus" aria-hidden="true">+ Open</span>' : '<span class="plus" aria-hidden="true">Empty</span>');
+      btn.setAttribute('aria-label', 'Shelf ' + (Math.floor(i/4)+1) + ', spot ' + (i%4+1) + (mine ? ': yours. Press to give it back' : ': open. Press to claim it'));
+    });
+  }
+
+  function others(){ return START.filter(Boolean).length; }
+
+  function paintMessage(){
+    var n = others();
+    if (state.stage === 'out'){
+      msg.setAttribute('data-sent','true');
+      mHead.textContent = 'Kilnlog · message sent';
+      mBody.textContent = state.mine === null
+        ? 'Thursday bisque is out. Sent to the ' + n + ' members with pieces in it. Claim a spot during loading to get this one yourself.'
+        : 'Thursday bisque is out. Your piece is on ' + where(state.mine) + '. Sent to you and the ' + n + ' other members.';
+    } else {
+      msg.setAttribute('data-sent','false');
+      mHead.textContent = 'Message, when it’s out';
+      mBody.textContent = state.mine === null
+        ? 'Kilnlog will tell the ' + n + ' members with pieces in this firing.'
+        : 'Kilnlog will tell you and the ' + n + ' other members with pieces in this firing.';
+    }
+  }
+
+  var STAGE_TEXT = {
+    loading: function(){ return '<b>Loading.</b> ' + claimed() + ' of 12 spots claimed. ' + (state.mine === null ? 'Tap an open spot to claim it.' : 'Yours is ' + where(state.mine) + '.'); },
+    firing:  function(){ return '<b>Firing.</b> The kiln is closed and heating. Nobody needs to go and check.'; },
+    cooling: function(){ return '<b>Cooling.</b> Still too hot to open. Members can see that from home.'; },
+    out:     function(){ return '<b>Out.</b> The kiln is unloaded and the bisque is ready for pickup.'; }
+  };
+
+  function setStatus(html){ statusEl.innerHTML = html; }
+
+  function setStage(st){
+    state.stage = st;
+    kiln.setAttribute('data-stage', st);
+    stageBtns.forEach(function(x){ x.setAttribute('aria-pressed', String(x.getAttribute('data-stage') === st)); });
+    setStatus(STAGE_TEXT[st]());
+    paintSpots(); paintMessage();
+  }
+
+  chamber.addEventListener('click', function(e){
+    var btn = e.target.closest('button.spot'); if (!btn) return;
+    var i = +btn.getAttribute('data-i');
+    if (state.stage !== 'loading'){
+      setStatus('<b>' + NAMES[state.stage] + '.</b> Shelf spots can only be claimed while the kiln is loading. Press Loading to try it.');
+      return;
+    }
+    var before = state.mine;
+    if (before === i){
+      state.mine = null; paintSpots(); paintMessage();
+      setStatus('<b>Loading.</b> You gave back ' + where(i) + '. ' + claimed() + ' of 12 spots claimed.');
+    } else {
+      state.mine = i; paintSpots(); paintMessage();
+      setStatus('<b>Loading.</b> ' + (before === null ? 'You claimed ' : 'You moved to ') + where(i) + '. ' + claimed() + ' of 12 spots claimed.' + (before === null ? '' : ' In this sample you hold one spot.'));
+    }
+    var again = chamber.querySelector('button.spot[data-i="' + i + '"]'); if (again && document.activeElement !== again) again.focus();
+  });
+
+  stageBtns.forEach(function(x){ x.addEventListener('click', function(){ setStage(x.getAttribute('data-stage')); }); });
+  document.getElementById('reset').addEventListener('click', function(){ state.mine = null; paintSpots(); setStage('loading'); });
+
+  if (!chamber.querySelector('.spot')) build(); paintSpots(); setStage('loading');
+})();
+</script>
+</body>
+</html>
