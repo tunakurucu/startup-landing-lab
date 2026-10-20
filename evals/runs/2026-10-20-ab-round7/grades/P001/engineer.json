@@ -1,0 +1,50 @@
+{
+  "packet": "P001",
+  "persona": "engineer",
+  "A": {
+    "scores": {"clarity": 6, "fit": 7, "distinctiveness": 7, "proof": 6, "craft": 6, "mobile": 6, "honesty": 7, "interaction": 6, "copy": 8, "first_screen": 5},
+    "evidence": {
+      "clarity": "H1 is the slogan 'Too lumpy today?'; what it is only arrives in the lede ('reads the tide, wind, swell and water temperature at your beach and shows the windows'). 'iPhone' is only in the small cta-note. Once you read the lede it is clear; the headline alone is not.",
+      "fit": "Every link goes to the supplied https://tidewise.example/beta (4 links, checked in the DOM). The 'not a lifeguard' line has its own section (#h-life) and is repeated in the footer. The dark-to-grey 'morning' band progression matches the 6 am tone. No reviews or counts are invented. A visible 'iPhone' mention and the example label sit low in the hero.",
+      "distinctiveness": "A custom draggable tide chart is generated from model functions (tide(), wind(), swell()), with the window derived from thresholds rather than hard-coded. There is also a lock-screen notification mock and before/after group-chat bubbles. The structure is still a familiar hero followed by alternating bands.",
+      "proof": "At 1440 the chart appears just below the CTA (svg top ~620). Its 'swim window' and 'lost to the wind' labels only fade in after 1.6 s. The readout and slider start at y≈1051 and 1230, below the 900 px fold. Numbers are internally consistent: the window computes to 06:20–08:00, matching the beach row '06:20 to 08:00' and the notification 'closes at 08:00, last night 09:10'.",
+      "craft": "axe at 1440 and 390: 1 serious color-contrast failure (.me chat bubble #dbe5e6 on #4d6b77 = 4.44:1), plus landmark-one-main and region. There is no <main>, no skip link and no nav. Tokens sit on :root, system font stacks are used, page weight is about 30 KB. There are two inline style attributes. The odd single-item ['winEdgeA'].forEach is left in. statusText is set via innerHTML (own strings only). With JS off, the tide path and status are empty. The notification card is opacity:0 until an IntersectionObserver fires, so the operator's full-page 390 capture shows an empty lock screen.",
+      "mobile": "390: no overflow (scrollWidth 390), smallest text 12 px. The chart (y 532–782) is in the first screen and responds to touch: tapping at 60% moved the cursor to 08:05. The status line that explains the tap sits at y 805–879 in an 844 viewport, so it is half off-screen. Targets under 44 px: the range input is 350x28, the 'Join the beta' header link 96x40 and the logo link 112x28. The 'lost to the wind' label is hidden at ≤520 px, so the early-close story is invisible on the phone chart.",
+      "honesty": "Caption 'A made-up November morning at an example beach… Not a forecast.' is present, but it sits below the slider (y 1276 at 1440, y 1160 at 390), well after the chart and numbers are seen. The beach rows are labelled 'Example beaches and times.' The lock-screen notification is labelled only by aria-label, with no visible 'example'. The CTA is an honest link to the supplied URL.",
+      "interaction": "Range keyboard: Home→04:30, End→10:30, ArrowLeft→10:25. State text cycles correctly through before/in/early/after (380→'In the window until 08:00 (1 h 40 min)', 500→'Window closed early at 08:00', 550→'No window for the rest of the morning'). Mouse drag on the chart syncs the range value and clamps past the edge to 04:30. There is no reset control. aria-live status announces on every 5-minute step. No console errors. Only 5 tab stops on the page.",
+      "copy": "Specific and in the swimmer's own world: 'Four tabs and a group chat, at half five', 'Which gloves?', 'Conditions, not permission', 'It won't nudge you to go in. It tells you what changed.' Microcopy is written, not defaulted ('Drag through the morning'). The H1 is a question rather than a statement.",
+      "first_screen": "1440: H1, lede, CTA and the top of an unlabelled tide curve are in view. The window labels fade in late and the 'made-up… not a forecast' caption is below the fold. 390: H1, lede and CTA plus a bare curve; the status text is cut at the fold. The promise is clear but the artifact in view is not yet legible as a swim window with an example label."
+    },
+    "problems": [
+      "Example disclosure for the hero chart is below the slider (y≈1276 at 1440, 1160 at 390), not beside the chart, and the lock-screen notification has no visible example label",
+      "Accessibility and robustness gaps: no <main> or skip link, a 4.44:1 contrast failure on the chat bubble, range and header targets under 44 px at 390, and the chart and status empty without JS",
+      "At 390 the 'lost to the wind' label is hidden and the status explaining a tap sits half below the fold. There is no reset control."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {"clarity": 9, "fit": 8, "distinctiveness": 8, "proof": 9, "craft": 8, "mobile": 8, "honesty": 9, "interaction": 8, "copy": 8, "first_screen": 8},
+    "evidence": {
+      "clarity": "H1 'Check the sea, not the group chat' plus a lede that says it is 'an iPhone app for people who swim in the sea all year' and turns tide/wind/swell/temperature into 'today's swim windows, and warns you when one closes early'. The CTA says 'Join the iPhone beta' with the note 'Opens the beta page.'",
+      "fit": "All 5 beta links point to the supplied https://tidewise.example/beta. 'Not a lifeguard' gets its own section, a nav item and a footer line, and the readout repeats 'Conditions, not a verdict. You decide whether to swim.' The early-close warning from the brief is shown three ways: hero hatch, strips, and a before/after bar. Dark pre-dawn palette.",
+      "distinctiveness": "Bespoke data artifacts drawn from one sample-day model in app.js: a tide curve with sunrise ticks and HW/LW, four aligned strips, an onshore/offshore beach plan and a cove cross-section. Few generic marketing parts.",
+      "proof": "At 1440 the operable artifact sits in the first viewport: chart y≈455, chips and slider y≈851, readout 'Inside the morning window, 1 h 30 min left' at y 515. Numbers agree across hero, readout, strips and shift chart: window 05:30–07:30, was 08:30, wind 15 mph SW onshore at 07:30.",
+      "craft": "axe: 0 violations at 1440 and 390. Has a skip link, <main>, nav with aria-label, fieldset/legend radios, <output> and role=status. Tokens and a clamp type scale are on :root. Fonts are self-hosted WOFF (~103 KB; WOFF2 would be lighter). The hero SVG is pre-rendered in HTML, so the page works with JS off. Two smells. First, app.js patches SVGElement.prototype.innerText 'for this page's design checker', so tooling code ships to production. Second, paintStrips has no guard for zero width: three '<rect> attribute width: negative value' console errors appeared during a full-page capture resize at 390 and 320 in mobile emulation. These were not reproducible on normal load or resize.",
+      "mobile": "390: no overflow, every interactive target ≥44 px (scan found none smaller), smallest text 12 px. The chart is redrawn at phone size with shortened labels and no SVG text overlaps. The menu works. After tapping the 07:00 chip (y 800–844) the chart marker above updates, but the verdict text sits at y 1071–1119, below the fold. The chart (y 564) starts in the first screen; the controls do not.",
+      "honesty": "'Sample day at a sample south-facing beach, written for this page. Not a forecast.' sits in the figcaption directly above the chart, in view at 390 (y 505–548). The cove art is captioned 'Illustration'. The CTA states 'Opens the beta page at tidewise.example' before the click. Nothing is invented.",
+      "interaction": "Radios: ArrowRight cycles 06:00→07:00→08:00→17:00→06:00, updating the readout, chart marker and range. Range Home→05:00 ('opens at 05:30, in 30 min'), End→21:00 ('No more windows in this sample day'). Boundaries are correct: 510→early note hidden, 960→'Inside the evening window, 3 h 30 min left'. Off-chip values uncheck all radios. Reset works by click and Enter. Menu: Escape closes and returns focus to the button, Tab past the last item closes it, an outside click closes it, and tapping a link closes it and scrolls to #reads. Clicking the chart itself does nothing, which is acceptable because the controls drive it.",
+      "copy": "Concrete and consistent: 'Three websites and a tide table, on one line', 'What only you can read: Flags and lifeguard advice… How much cold you can take today'. Button and note copy say what happens. A few explanatory paragraphs run long, e.g. the reads lead-p.",
+      "first_screen": "1440: H1, lede, CTA, the labelled sample chart, chips/slider and a live readout all fit in 900 px. 390: H1, lede, CTA, the 'Sample day… Not a forecast' label and the top of the chart with window bands are visible. The chips start at the fold."
+    },
+    "problems": [
+      "At 390 the readout verdict after tapping a time chip lands about 230 px below the fold (y 1071 in an 844 viewport); only the chart marker gives visible feedback",
+      "app.js monkey-patches SVGElement.prototype.innerText for a 'design checker', so tooling code ships to production",
+      "No zero-width guard in paintStrips/paintHero: negative rect width console errors during a resize at 390/320 in mobile emulation. Fonts are WOFF rather than WOFF2."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B passes axe with zero violations, has proper landmarks, a skip link, a keyboard-correct radio group, a reset path, a robust mobile menu and a no-JS fallback. It also labels its sample data right where the artifact appears. A is well written and its chart works, but it lacks main and skip links, fails contrast once, has sub-44 px targets, no reset, and the example label sits below the fold. I would change my mind only if B's negative-width console errors turned out to occur on ordinary user resizes, and even then it would be a small fix.",
+  "score_preference_note": ""
+}
