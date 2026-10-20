@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rent a licensed kitchen by the shift – Ovenhour</title>
+<meta name="description" content="Ovenhour is a booking site where licensed commercial kitchens rent their empty hours to small food makers. A kitchen lists idle hours, house rules and equipment; a maker books one shift and sees exactly what comes with it.">
+<meta name="theme-color" content="#eceeeb">
+<meta property="og:site_name" content="Ovenhour">
+<meta property="og:title" content="Kitchens close at ten. Licenses don't.">
+<meta property="og:description" content="Licensed commercial kitchens rent their empty hours to small food makers. One shift, with the equipment and house rules listed up front.">
+<meta property="og:image" content="https://ovenhour.example/og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kitchens close at ten. Licenses don't.">
+<meta name="twitter:description" content="Licensed commercial kitchens rent their empty hours to small food makers. One shift, with the equipment and house rules listed up front.">
+<meta name="twitter:image" content="https://ovenhour.example/og.png">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<header class="top" id="top">
+  <a class="skip" href="#sheet">Skip to the shift sheet</a>
+  <div class="wrap top-row">
+    <a class="brand" href="#top" aria-label="Ovenhour, home">
+      <svg class="mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+        <circle cx="14" cy="14" r="12" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <path d="M14 14 L14 3.5 A10.5 10.5 0 0 1 24.5 14 Z" fill="#e39a2e"/>
+      </svg>
+      <span>Ovenhour</span>
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Site">
+      <a href="#sheet">The shift sheet</a>
+      <a href="#county">County rules</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#makers">For makers</a>
+      <a class="btn btn-fill nav-cta" href="https://ovenhour.example/kitchens">Publish your kitchen's hours</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap hero-top">
+    <h1 id="h1"><span class="l1">Kitchens close at ten.</span> <span class="l2">Licenses don't.</span></h1>
+    <div class="hero-copy">
+    <p class="sub">Ovenhour is a booking site where licensed commercial kitchens rent their empty hours to small food makers. A kitchen lists idle hours, house rules and equipment; a maker books one shift and sees exactly what comes with it.</p>
+    <div class="actions">
+      <div class="action">
+        <a class="btn btn-fill" href="https://ovenhour.example/kitchens">Publish your kitchen's hours</a>
+        <p class="beside">Sign-up is open now. No maker can book yet, so you set up your hours before anyone sees them.</p>
+      </div>
+      <div class="action">
+        <a class="btn btn-line" href="#makers">Tell us the shift you need</a>
+        <p class="beside">No account. Your note goes to the founders' inbox with your county on it.</p>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="wrap ledger" id="sheet">
+    <aside class="side side-k" aria-labelledby="side-k-t">
+      <p class="side-title" id="side-k-t">If you run the kitchen</p>
+      <ol class="side-list">
+        <li>Mark the hours you are dark. Nothing else is offered.</li>
+        <li>Write the house rules once. Every booking carries them.</li>
+        <li>List what a maker may use, and what they may not touch.</li>
+      </ol>
+    </aside>
+
+    <article class="sheet" data-mode="kitchen" aria-labelledby="sheet-title">
+      <div class="sheet-head">
+        <div class="sheet-id">
+          <p class="stamp">Example listing</p>
+          <p class="sheet-title" id="sheet-title">A 40-seat restaurant kitchen</p>
+          <p class="sheet-note">No kitchen is listed yet. This is the sheet a real listing follows; the hours, equipment and price are illustrative.</p>
+        </div>
+        <div class="mode" role="group" aria-label="Read the sheet as">
+          <span class="mode-label" aria-hidden="true">Read as</span>
+          <button type="button" class="mode-btn" data-mode="kitchen" aria-pressed="true">the kitchen</button>
+          <button type="button" class="mode-btn" data-mode="maker" aria-pressed="false">a maker</button>
+        </div>
+      </div>
+
+      <div class="roster" role="group" aria-label="Hours this week, from 06:00 to 06:00 the next morning">
+        <div class="axis" aria-hidden="true">
+          <span style="--t:0">06</span><span style="--t:6">12</span><span style="--t:12">18</span><span style="--t:18">00</span><span style="--t:24">06</span>
+        </div>
+        <div class="day">
+          <span class="day-name">Mon</span>
+          <div class="bar">
+            <button type="button" class="blk" data-day="Mon" data-from="06:00" data-to="14:00" data-h="8" style="--s:0;--l:8" aria-pressed="true">06:00–14:00</button>
+            <button type="button" class="blk" data-day="Mon" data-from="14:00" data-to="22:00" data-h="8" style="--s:8;--l:8" aria-pressed="true">14:00–22:00</button>
+            <button type="button" class="blk" data-day="Mon" data-from="22:00" data-to="06:00" data-h="8" style="--s:16;--l:8" aria-pressed="true">22:00–06:00</button>
+          </div>
+        </div>
+        <div class="day">
+          <span class="day-name">Tue</span>
+          <div class="bar">
+            <span class="svc" style="--s:3;--l:12.5" title="Dinner service 09:00–21:30">service</span>
+            <button type="button" class="blk" data-day="Tue" data-from="22:00" data-to="06:00" data-h="8" style="--s:16;--l:8" aria-pressed="true">22:00–06:00</button>
+          </div>
+        </div>
+        <div class="day">
+          <span class="day-name">Wed</span>
+          <div class="bar">
+            <span class="svc" style="--s:3;--l:12.5" title="Dinner service 09:00–21:30">service</span>
+            <button type="button" class="blk" data-day="Wed" data-from="22:00" data-to="06:00" data-h="8" style="--s:16;--l:8" aria-pressed="true">22:00–06:00</button>
+          </div>
+        </div>
+        <div class="day">
+          <span class="day-name">Thu</span>
+          <div class="bar">
+            <span class="svc" style="--s:3;--l:12.5" title="Dinner service 09:00–21:30">service</span>
+            <button type="button" class="blk" data-day="Thu" data-from="22:00" data-to="06:00" data-h="8" style="--s:16;--l:8" aria-pressed="true">22:00–06:00</button>
+          </div>
+        </div>
+        <div class="day">
+          <span class="day-name">Fri</span>
+          <div class="bar">
+            <span class="svc" style="--s:3;--l:12.5" title="Dinner service 09:00–21:30">service</span>
+            <button type="button" class="blk" data-day="Fri" data-from="22:00" data-to="06:00" data-h="8" style="--s:16;--l:8" aria-pressed="true">22:00–06:00</button>
+          </div>
+        </div>
+        <div class="day">
+          <span class="day-name">Sat</span>
+          <div class="bar">
+            <span class="svc" style="--s:3;--l:12.5" title="Dinner service 09:00–21:30">service</span>
+            <button type="button" class="blk" data-day="Sat" data-from="22:00" data-to="06:00" data-h="8" style="--s:16;--l:8" aria-pressed="true">22:00–06:00</button>
+          </div>
+        </div>
+        <div class="day">
+          <span class="day-name">Sun</span>
+          <div class="bar">
+            <span class="svc" style="--s:4;--l:7" title="Brunch service 10:00–17:00">service</span>
+            <button type="button" class="blk" data-day="Sun" data-from="18:00" data-to="06:00" data-h="12" style="--s:12;--l:12" aria-pressed="true">18:00–06:00</button>
+          </div>
+        </div>
+        <p class="legend"><span class="key key-listed">listed</span> hours a maker can book · <span class="key key-svc">service</span> the kitchen's own hours · <span class="key key-held">held</span> dark but not offered</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-top" role="status" aria-live="polite">
+          <p class="panel-kicker" data-k="Listed this week" data-m="Your shift">Listed this week</p>
+          <p class="panel-line" id="panel-line">9 blocks · 76 h</p>
+          <p class="panel-hint" id="panel-hint">Click a block to hold it back. Held hours are never shown to makers.</p>
+        </div>
+        <dl class="panel-grid">
+          <div>
+            <dt data-k="Makers may use" data-m="You get">Makers may use</dt>
+            <dd>
+              <ul>
+                <li>2 full-size convection ovens</li>
+                <li>6-burner range and flat-top</li>
+                <li>60-qt floor mixer</li>
+                <li>Walk-in: 2 labelled shelves</li>
+                <li>Dry storage: 1 rack</li>
+                <li>3-compartment sink, dish machine</li>
+              </ul>
+            </dd>
+          </div>
+          <div>
+            <dt data-k="Off limits" data-m="Not included">Off limits</dt>
+            <dd>
+              <ul>
+                <li>Fryer and smoker</li>
+                <li>The line's knives and pans</li>
+                <li>Bar and front of house</li>
+              </ul>
+            </dd>
+          </div>
+          <div>
+            <dt data-k="House rules" data-m="You agree to">House rules</dt>
+            <dd>
+              <ul>
+                <li>Clean-down finished inside your block</li>
+                <li>Label and date everything in the walk-in</li>
+                <li>No nut flours (allergen policy)</li>
+                <li>No deliveries before 06:00</li>
+                <li>Nothing of yours stays past Sunday</li>
+              </ul>
+            </dd>
+          </div>
+          <div>
+            <dt data-k="Permit" data-m="Permit">Permit</dt>
+            <dd>
+              <ul>
+                <li>County health permit, full-service restaurant</li>
+                <li>County shown on real listings</li>
+                <li>Price per hour, illustrative: $38</li>
+              </ul>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </article>
+
+    <aside class="side side-m" aria-labelledby="side-m-t">
+      <p class="side-title" id="side-m-t">If you make food</p>
+      <ol class="side-list">
+        <li>Book one block, not a month.</li>
+        <li>See the ovens, the mixer and the walk-in space before you book.</li>
+        <li>The permit, the county and the rules you agree to are on the sheet.</li>
+      </ol>
+    </aside>
+  </div>
+</section>
+
+<section class="band band-how" id="how" aria-labelledby="h-how">
+  <div class="wrap">
+    <h2 id="h-how">A shift carries its hours, its equipment and its house rules</h2>
+    <p class="lede">Both sides read the same sheet. The kitchen writes it once; the maker sees it before booking and again on the night.</p>
+    <ol class="steps">
+      <li>
+        <p class="step-no">1</p>
+        <p class="step-t">The kitchen marks its dark hours</p>
+        <p>Whole blocks, not minutes. A block the kitchen holds back never shows to a maker. Service hours stay the kitchen's own.</p>
+        <div class="frag" aria-hidden="true"><span class="frag-svc">service 09:00–21:30</span><span class="frag-blk">22:00–06:00</span></div>
+      </li>
+      <li>
+        <p class="step-no">2</p>
+        <p class="step-t">The equipment list is the contract</p>
+        <p>Counts and sizes, not brands. Two ovens means two ovens. What is off limits is written next to what is not.</p>
+        <div class="frag frag-list" aria-hidden="true"><span>2 convection ovens</span><span>60-qt mixer</span><span class="frag-no">fryer: off limits</span></div>
+      </li>
+      <li>
+        <p class="step-no">3</p>
+        <p class="step-t">A maker books one block</p>
+        <p>The booking carries the rules, the equipment list and the permit line. Nothing has to be agreed by phone.</p>
+        <div class="frag" aria-hidden="true"><span class="frag-blk frag-sel">Thu 22:00–06:00 · 8 h</span></div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="band band-county" id="county" aria-labelledby="h-county">
+  <div class="wrap county-grid">
+    <div class="county-copy">
+      <h2 id="h-county">Food-safety rules differ by county, so every listing shows its permit</h2>
+      <p>A commercial kitchen is permitted by its county health department, and what you may make there depends on that permit and on your own. So the permit type and the county sit on the sheet, above the price, before you book.</p>
+      <p>We have not chosen launch counties. Makers are the people we hear from most, and where they cook will decide where kitchens are asked to list first.</p>
+    </div>
+
+    <form class="maker-form" id="makers" action="mailto:makers@ovenhour.example" method="post" enctype="text/plain" aria-labelledby="h-makers">
+      <p class="form-title" id="h-makers">Tell us the shift you need</p>
+      <p class="form-note">Two fields. It opens as an email to the founders; nothing is stored here.</p>
+      <div class="field">
+        <label for="f-county">Your county and state</label>
+        <input id="f-county" name="county" type="text" autocomplete="address-level2" required placeholder="e.g. Mecklenburg, NC">
+      </div>
+      <div class="field">
+        <label for="f-make">What you make</label>
+        <input id="f-make" name="makes" type="text" required placeholder="e.g. sourdough, 200 loaves a week">
+      </div>
+      <button class="btn btn-fill" type="submit">Send the founders your shift</button>
+      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      <p class="form-alt">Or write to <a href="mailto:makers@ovenhour.example">makers@ovenhour.example</a>.</p>
+    </form>
+  </div>
+</section>
+
+<section class="band band-price" id="pricing" aria-labelledby="h-price">
+  <div class="wrap price-grid">
+    <h2 id="h-price">Kitchens set the shift price. Ovenhour's fee is not set yet</h2>
+    <div class="price-copy">
+      <p>The plan is for each kitchen to price its own hours, as the example sheet shows with an illustrative $38 an hour. Ovenhour's own fee is not decided. Both will be printed on this page before any booking is charged.</p>
+      <p>There is nothing to pay to sign up a kitchen today.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band band-end" aria-labelledby="h-end">
+  <div class="wrap">
+    <h2 id="h-end">Publish your hours, or tell us where you cook</h2>
+    <div class="actions actions-end">
+      <div class="action">
+        <a class="btn btn-fill" href="https://ovenhour.example/kitchens">Publish your kitchen's hours</a>
+        <p class="beside">Sign-up is open now. No maker can book yet, so you set up your hours before anyone sees them.</p>
+      </div>
+      <div class="action">
+        <a class="btn btn-line" href="#makers">Tell us the shift you need</a>
+        <p class="beside">No account. Your note goes to the founders' inbox with your county on it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot" id="contact">
+  <div class="wrap foot-row">
+    <p class="foot-brand">Ovenhour · licensed kitchens, rented by the shift</p>
+    <ul class="foot-links">
+      <li><a href="https://ovenhour.example/kitchens">Kitchen sign-up</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#county">County rules</a></li>
+      <li><a href="mailto:hello@ovenhour.example">hello@ovenhour.example</a></li>
+    </ul>
+    <p class="foot-note">No kitchens are listed yet. Nothing on this page is a review, a booking count or a partner.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

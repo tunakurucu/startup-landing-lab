@@ -1,0 +1,92 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round3/packets/P001/A/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Every licensed kitchen has hours it sits empty.",
+    "left": 16,
+    "right": 304,
+    "top": 185,
+    "bottom": 311,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 11.84,
+   "text_elements_under_12px": 3,
+   "body_text_length": 6287
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Every licensed kitchen has hours it sits empty.",
+    "left": 16,
+    "right": 304,
+    "top": 146,
+    "bottom": 273,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 11.84,
+   "text_elements_under_12px": 6,
+   "body_text_length": 6340,
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 1
+    }
+   ]
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Every licensed kitchen has hours it sits empty.",
+    "left": 31,
+    "right": 388,
+    "top": 126,
+    "bottom": 283,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 6309
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Every licensed kitchen has hours it sits empty.",
+    "left": 140,
+    "right": 740,
+    "top": 160,
+    "bottom": 424,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 6397,
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 1
+    }
+   ]
+  }
+ }
+}
