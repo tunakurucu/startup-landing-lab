@@ -460,7 +460,7 @@
  },
  {
   "id": "TY-11",
-  "check": "Every face renders as named: a named display, text or data face never falls back to a browser default (Times, Arial, DejaVu, Liberation) because it is missing.",
+  "check": "Every face renders as named for visitors: a named face is shipped with @font-face or is on every major platform, and never falls back to a browser default (Times, Arial, DejaVu, Liberation).",
   "verify": "auto",
   "severity": "block",
   "credit": [
@@ -517,9 +517,9 @@
  },
  {
   "id": "LY-06",
-  "check": "In-page anchor targets and focused controls are not hidden under a sticky header.",
+  "check": "In-page anchor targets and focused controls are never hidden under a sticky or fixed element, tabbing forward or back, at 1440 and 390.",
   "verify": "auto",
-  "severity": "warn",
+  "severity": "block",
   "credit": [
    "VWG",
    "JK",
@@ -767,7 +767,7 @@
  },
  {
   "id": "MB-05",
-  "check": "If the nav collapses on phones, a working menu control replaces it.",
+  "check": "If the nav collapses on phones, a working menu control replaces it, and without JavaScript the menu never covers the headline.",
   "verify": "auto",
   "severity": "block",
   "credit": [
@@ -815,9 +815,9 @@
  },
  {
   "id": "MB-10",
-  "check": "The phone page is at most eight screens tall (6,752px at 390×844); a longer page cuts repeats before adding sections.",
+  "check": "The phone page is at most eight screens tall (6,752px at 390×844) and the signature artifact at most two (1,688px); a longer page cuts repeats and groups long lists.",
   "verify": "auto",
-  "severity": "warn",
+  "severity": "block",
   "credit": [
    "SLL"
   ]
@@ -879,7 +879,7 @@
  },
  {
   "id": "AX-07",
-  "check": "No script errors or console errors while loading.",
+  "check": "No script errors, console errors or malformed markup (an attribute left open by a missing quote) while loading.",
   "verify": "auto",
   "severity": "block",
   "credit": [

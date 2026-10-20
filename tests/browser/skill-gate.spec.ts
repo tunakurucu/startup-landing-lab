@@ -7,11 +7,11 @@ import {spawnSync} from 'node:child_process';
 const GALLERY=['TY-10'];                  // four faces, each with a role: display, text, data, accent
 const INDEX=[...GALLERY,'HR-02','ST-03']; // index pages: choosing a record or an experiment is the action, no hero button
 const KEPT:Record<string,string[]>={
-  '/':[...GALLERY,'MB-10'],
-  '/references':[...INDEX,'CP-11','MB-10'],
+  '/':GALLERY,
+  '/references':[...INDEX,'CP-11'],
   '/skill':[...GALLERY,'CP-11'],
   '/demos':[...INDEX,'CP-11'],
-  '/evals':[...GALLERY,'MB-10'],
+  '/evals':GALLERY,
   '/reference/resend':[...GALLERY,'CP-11'],
   '/demo/relayline':['TY-10','ST-06'],
   '/demo/sidequest':['TY-10','TT-03','MO-06'],

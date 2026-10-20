@@ -75,7 +75,7 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | TY-08 | Body line-height is at least 1.35. | auto | warn | IMP |
 | TY-09 | Weights under 400 appear only at 28px and up; smaller text is 400 or heavier. | auto | warn | JK |
 | TY-10 | A display face that is everywhere (Inter, Space Grotesk, Fraunces, Roboto, Poppins, Montserrat) has a stated reason, and every face has a role (display, text, data). | auto | warn | IMP GST AFD |
-| TY-11 | Every face renders as named: a named display, text or data face never falls back to a browser default (Times, Arial, DejaVu, Liberation) because it is missing. | auto | block | SLL WEB |
+| TY-11 | Every face renders as named for visitors: a named face is shipped with @font-face or is on every major platform, and never falls back to a browser default (Times, Arial, DejaVu, Liberation). | auto | block | SLL WEB |
 
 ## Layout
 
@@ -86,7 +86,7 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | LY-03 | No text is cut off by its container. | auto | block | IMP |
 | LY-04 | Body text keeps at least 12px from the screen edge on phones. | auto | block | IMP |
 | LY-05 | No boxed card sits inside another boxed card. | auto | warn | IMP |
-| LY-06 | In-page anchor targets and focused controls are not hidden under a sticky header. | auto | warn | VWG JK WCAG |
+| LY-06 | In-page anchor targets and focused controls are never hidden under a sticky or fixed element, tabbing forward or back, at 1440 and 390. | auto | block | VWG JK WCAG |
 | LY-07 | A footer exists and holds real destinations. | auto | warn | SLL |
 | LY-08 | A 200-character unbroken string typed into any text field and submitted causes no sideways scroll at 390px. | auto | block | SLL |
 
@@ -131,12 +131,12 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | MB-02 | On phones, the primary action and navigation controls are at least 44×44px. | auto | warn | GST APL |
 | MB-03 | Every other control is at least 24×24px or has enough space around it (WCAG 2.5.8); links inside sentences are exempt. | auto | block | WCAG VWG |
 | MB-04 | Inputs use at least 16px text, so phones do not zoom on focus. | auto | warn | EK VWG |
-| MB-05 | If the nav collapses on phones, a working menu control replaces it. | auto | block | GST |
+| MB-05 | If the nav collapses on phones, a working menu control replaces it, and without JavaScript the menu never covers the headline. | auto | block | GST |
 | MB-06 | Dense artifacts are recomposed for phones, not shrunk or removed. | shot | block | SLL |
 | MB-07 | On phones, every control in the signature artifact answers in view: after a tap, something other than the control itself changes on screen, and no control is dead. | auto | block | SLL NNG |
 | MB-08 | Escape closes an open menu and returns focus to the button that opened it. | auto | block | APG WCAG |
 | MB-09 | On phones, controls inside the signature artifact are at least 44×44px. | auto | block | APL GST |
-| MB-10 | The phone page is at most eight screens tall (6,752px at 390×844); a longer page cuts repeats before adding sections. | auto | warn | SLL |
+| MB-10 | The phone page is at most eight screens tall (6,752px at 390×844) and the signature artifact at most two (1,688px); a longer page cuts repeats and groups long lists. | auto | block | SLL |
 
 ## Accessibility and robustness
 
@@ -148,7 +148,7 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | AX-04 | Nothing is clickable without being a link or button. | auto | block | VWG |
 | AX-05 | Every form control has a label. | auto | block | VWG |
 | AX-06 | The html element declares a language and the page has a main landmark. | auto | block | VWG |
-| AX-07 | No script errors or console errors while loading. | auto | block | IMP GST |
+| AX-07 | No script errors, console errors or malformed markup (an attribute left open by a missing quote) while loading. | auto | block | IMP GST |
 | AX-08 | Links point somewhere real: no empty href, "#" or missing anchor or file. | auto | block | SLL |
 | AX-09 | No broken images. | auto | block | IMP |
 | AX-10 | Results of local actions are announced (aria-live or role=status). | code | warn | VWG |

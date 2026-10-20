@@ -509,7 +509,18 @@ try {
       check('AX-04', r.clickable.length === 0, r.clickable);
       check('AX-05', r.unlabelled === 0, r.unlabelled);
       check('AX-06', !!r.lang && r.main, {lang: r.lang || null, main_landmark: r.main});
-      check('AX-07', loadErrors.length === 0, loadErrors.slice(0, 5));
+      // Malformed markup the parser repaired silently: an attribute whose name holds a quote, '=' or '<' (a missing closing quote).
+      // Read both the live DOM and the HTML as delivered (script may replace the broken rows, but no-JS visitors still get them).
+      let srcHTML = null;
+      try { srcHTML = isFile ? readFileSync(fileURLToPath(url.split('#')[0]), 'utf8') : await (await ctx.request.get(url.split('#')[0], {timeout: 8000})).text(); } catch { /* unknown */ }
+      const badAttrs = await page.evaluate(src => {
+        const out = [];
+        const scan = root => { for (const el of root.querySelectorAll('*')) for (const at of el.attributes) if (/["'=<]/.test(at.name)) { out.push(`<${el.tagName.toLowerCase()} ${at.name.slice(0, 40)}>`); break; } };
+        scan(document);
+        if (src) scan(new DOMParser().parseFromString(src, 'text/html'));
+        return [...new Set(out)].slice(0, 5);
+      }, srcHTML);
+      check('AX-07', loadErrors.length === 0 && badAttrs.length === 0, badAttrs.length ? {errors: loadErrors.slice(0, 5), malformed_attributes: badAttrs, note: 'an attribute name with a quote or = in it means a missing closing quote'} : loadErrors.slice(0, 5));
       const missingFiles = r.fileLinks.filter(f => { try { return !existsSync(fileURLToPath(f.split('#')[0])); } catch { return false; } });
       check('AX-08', !r.emptyLinks.length && !r.missingAnchors.length && !missingFiles.length, {empty: r.emptyLinks, missing_anchor: r.missingAnchors, missing_file: missingFiles});
       check('AX-09', r.broken.length === 0, r.broken);
@@ -603,7 +614,7 @@ try {
 
   // ======================= 390 × 844: the signature artifact, keyboard and stress =======================
   // Fresh pages, so nothing the main pass clicked carries over. Each probe that could navigate reloads the page after.
-  await section('the 390px interaction pass', ['HR-07', 'MB-07', 'MB-08', 'MB-09', 'MB-10', 'AX-12', 'AX-13', 'LY-08'], async () => {
+  await section('the 390px interaction pass', ['HR-07', 'MB-07', 'MB-08', 'MB-09', 'MB-10', 'AX-12', 'AX-13', 'LY-08', 'LY-06', 'MB-05'], async () => {
     let {ctx, page} = await open({width: 390, height: 844});
     const fresh = async () => { await ctx.close(); ({ctx, page} = await open({width: 390, height: 844})); };
     try {
@@ -619,7 +630,9 @@ try {
 
       // MB-10: phone page length.
       const height = await page.evaluate(() => document.documentElement.scrollHeight);
-      check('MB-10', height <= 6752, {page_height_px: height, screens: +(height / 844).toFixed(1)});
+      const sigH = await run(page, () => { const s = signature(); return s && !s.none ? Math.round(box(s.el).height) : (s?.none ? -1 : null); });
+      if (sigH === -1) check('MB-10', true, {page_height_px: height, note: 'declared no signature artifact (an index or document page): length not limited'});
+      else check('MB-10', height <= 6752 && (sigH === null || sigH <= 1688), {page_height_px: height, screens: +(height / 844).toFixed(1), signature_height_px: sigH, limits: 'page at most 8 screens (6,752px); the signature artifact at most 2 screens (1,688px): group, collapse or page a long list'});
 
       // HR-07 at 390, and the signature's controls.
       const sig = await run(page, () => {
@@ -709,6 +722,41 @@ try {
           const back = await btn.evaluate(b => document.activeElement === b);
           check('MB-08', closed && back, {closed_on_escape: closed, focus_returned_to_button: back});
         }
+      }
+
+      // LY-06 at 390: Tab forward, then Shift+Tab back, and check no fixed or sticky element covers the focused control.
+      await fresh();
+      const coveredAt390 = [];
+      await page.evaluate(() => { document.activeElement?.blur?.(); scrollTo({top: 0, behavior: 'instant'}); });
+      const stops = [];
+      for (const key of [...Array(30).fill('Tab'), ...Array(30).fill('Shift+Tab')]) {
+        await page.keyboard.press(key); await page.waitForTimeout(60);
+        const f = await run(page, () => {
+          const el = document.activeElement; if (!el || el === document.body || !seen(el) || fixedAnc(el)) return null;
+          const b = box(el);
+          const pts = [[(b.left + b.right) / 2, (b.top + b.bottom) / 2], [b.left + 2, b.top + 2], [b.right - 2, b.top + 2], [b.left + 2, b.bottom - 2], [b.right - 2, b.bottom - 2]].filter(([x, y]) => x >= 0 && y >= 0 && x < innerWidth && y < innerHeight);
+          const hid = pts.length > 0 && pts.every(([x, y]) => { const t = document.elementFromPoint(x, y); return t && !el.contains(t) && !t.contains(el) && fixedAnc(t); });
+          return {name: label(el).slice(0, 30) || describe(el), hid, by: hid ? describe(fixedAnc(document.elementFromPoint((b.left + b.right) / 2, (b.top + b.bottom) / 2))) : null};
+        });
+        if (f) { stops.push(f.name); if (f.hid) coveredAt390.push(`${f.name} (under ${f.by}, ${key})`); }
+      }
+      check('LY-06', coveredAt390.length === 0, {at: '390×844, Tab then Shift+Tab', focus_stops: stops.length, focused_controls_hidden: [...new Set(coveredAt390)].slice(0, 6)});
+
+      // MB-05 without JavaScript: the phone menu must not cover the headline, and the nav must still be reachable.
+      {
+        const nojs = await browser.newContext({viewport: {width: 390, height: 844}, javaScriptEnabled: false});
+        try {
+          const np = await nojs.newPage();
+          await np.goto(url, {waitUntil: 'domcontentloaded', timeout: 30000}); await np.waitForTimeout(500);
+          const nj = await run(np, () => {
+            const h1 = h1El(); if (!h1) return {h1: false};
+            const b = box(h1); const x = Math.min(innerWidth - 2, (b.left + b.right) / 2), y = Math.min(innerHeight - 2, b.top + Math.min(b.height / 2, 20));
+            const t = document.elementFromPoint(x, y);
+            const coveredBy = t && !h1.contains(t) && !t.contains(h1) && t.closest('nav,header,[role=banner],[role=dialog]') ? describe(t.closest('nav,header,[role=banner],[role=dialog]')) : null;
+            return {h1: true, covered_by: coveredBy};
+          });
+          if (nj.h1 && nj.covered_by) check('MB-05', false, {without_javascript: `the headline is covered by ${nj.covered_by}: hide the menu with a class that script adds (html.js) or use <details>`});
+        } finally { await nojs.close(); }
       }
 
       // LY-08: a long unbroken string in every text field, submitted with Enter and with the field's own button.
@@ -831,12 +879,19 @@ try {
           const fams = stack.split(',').map(x => x.replace(/["']/g, '').trim()).filter(Boolean);
           const first = fams[0];
           if (!first || GENERIC.test(first) || SYSTEM.test(first) || DEFAULTS.test(first)) return null;
-          if (has(first)) return null;
+          if (has(first)) {
+            // Present here, but would visitors have it? Only if the page ships it or every major platform has it.
+            const PLATFORM = /^(Georgia|Times New Roman|Times|Arial|Helvetica|Helvetica Neue|Verdana|Tahoma|Trebuchet MS|Courier New|Courier|Palatino|Palatino Linotype|Book Antiqua|Garamond|Impact|Roboto|Noto Sans|Noto Serif|Menlo|Monaco|Consolas|Segoe UI|Avenir|Avenir Next|Charter|Iowan Old Style|Gill Sans|Optima|Futura|Didot|Baskerville|Hoefler Text|American Typewriter|Cambria|Calibri|Candara|Constantia|Corbel|Franklin Gothic Medium|Lucida Grande|Lucida Console|Andale Mono)$/i;
+            if (declared.has(norm(first)) || PLATFORM.test(first)) return null;
+            return {named: first, renders: first, default_face: false, not_shipped: true};
+          }
           const used = fams.find(f => !GENERIC.test(f) && has(f)) || fams.find(f => GENERIC.test(f)) || 'browser default';
           return {named: first, renders: used, default_face: GENERIC.test(used) || DEFAULTS.test(used) || used === 'browser default'};
         };
         const stacks = [...new Set(textEls().map(el => cs(el).fontFamily))];
-        const fallbacks = stacks.map(resolve).filter(x => x && x.default_face);
+        const resolved = stacks.map(resolve).filter(Boolean);
+        const fallbacks = resolved.filter(x => x.default_face);
+        const unshipped = [...new Set(resolved.filter(x => x.not_shipped).map(x => x.named))];
         // Visible text, without form values and placeholders.
         const text = document.body.innerText;
         const LEAK = /\b((?:per|from|in|according to|not in) the brief|the brief (?:says|said|did not|does not|doesn't|didn't|supplies|supplied|gives|gave|asks)|(?:confirm|check) with the (?:client|founder)|ours to confirm|founder to confirm|to be confirmed by|placeholder (?:text|copy|image|logo)|lorem ipsum|TODO|FIXME|XXX|insert [a-z ]+ here|replace (?:this|with (?:the|your)))\b|\[(?:Company|Product|Name|Your [A-Za-z]+|Customer|Logo|Founder)\]/g;
@@ -858,12 +913,12 @@ try {
           datesSeen++;
           if (!y.some(yy => { const dt = new Date(Date.UTC(yy, mon, day)); return dt.getUTCMonth() === mon && DAYS[dt.getUTCDay()] === dayName; })) wrong.push(`${m[0].trim()} (${y.join(' or ')})`);
         }
-        return {sigAt, fallbacks: fallbacks.slice(0, 4), stacks: stacks.length, leaks, wrong: [...new Set(wrong)].slice(0, 6), datesSeen, years: tryYears};
+        return {sigAt, fallbacks: fallbacks.slice(0, 4), unshipped: unshipped.slice(0, 4), stacks: stacks.length, leaks, wrong: [...new Set(wrong)].slice(0, 6), datesSeen, years: tryYears};
       }, Number(out.checked_on.slice(0, 4)));
       if (v6.sigAt?.none) check('HR-07', true, `declared none: ${v6.sigAt.none}`);
       else if (!v6.sigAt) check('HR-07', false, 'no signature artifact found at 1440: mark the product artifact with data-signature');
       else check('HR-07', v6.sigAt.visible >= Math.min(280, v6.sigAt.height - 1), {at: '1440×900', signature: v6.sigAt.el, marked: v6.sigAt.marked || 'no: guessed; mark it with data-signature', top_px: v6.sigAt.top, visible_px: v6.sigAt.visible, needed_px: Math.min(280, v6.sigAt.height - 1)});
-      check('TY-11', v6.fallbacks.length === 0, v6.fallbacks.length ? {falls_back: v6.fallbacks.map(f => `"${f.named}" is missing; renders as ${f.renders}`), fix: 'ship the face (self-hosted woff2 or a font service) or name an installed face first'} : `${v6.stacks} font stack(s) render as named`);
+      check('TY-11', v6.fallbacks.length === 0 && v6.unshipped.length === 0, v6.fallbacks.length || v6.unshipped.length ? {falls_back: v6.fallbacks.map(f => `"${f.named}" is missing; renders as ${f.renders}`), installed_here_not_shipped: v6.unshipped.map(f => `"${f}" is on this machine but the page does not ship it, so most visitors get the fallback`), fix: 'ship the face with @font-face (a woff2 or woff file next to the page) or name a face every major platform has'} : `${v6.stacks} font stack(s) render as named`);
       check('CP-12', v6.leaks.length === 0, v6.leaks.length ? {builder_notes_on_page: v6.leaks} : 'no builder or client notes found in the visible text');
       check('CP-13', v6.wrong.length === 0, {dates_with_weekdays: v6.datesSeen, wrong_weekday: v6.wrong, years_assumed_when_none_given: v6.years});
 

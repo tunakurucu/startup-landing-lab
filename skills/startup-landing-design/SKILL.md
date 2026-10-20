@@ -3,7 +3,7 @@ name: startup-landing-design
 description: Build, redesign, revise or audit a startup landing page that makes one ownable statement (a character with a job, an inhabited world, the product as a toy, an object, the trade's own notation, monumental type) while staying clear in five seconds, using dated evidence from real startup sites, positioning and copy rules, archetype recipes and 111 checks (79 automatic, 32 judged from screenshots, code or the record). Use for a new startup homepage, a landing-page redesign, a change to one section, a review of an existing site ("audit my homepage"), a request to make a page bold, memorable or less generic, or to avoid generic AI website patterns. Preserves existing brand and framework constraints.
 license: MIT
 metadata:
-  version: "0.6"
+  version: "0.7"
 ---
 
 # Startup landing design
@@ -53,6 +53,7 @@ Read [implementation workflow](references/implementation-workflow.md), [product 
 - **Only use destinations the brief or the project supplies.** Never invent an email address, URL, phone number, calendar link or endpoint, not even on an `.example` domain. If the main action has no real destination yet, it does something real on the page and says what before the visitor commits: a form whose button reads "Save my request on this page" with "Nothing is sent until sign-up opens" beside it, a "Copy this note" button, or a link to the real next step whose label names that step. Never report success ("You're on the list") for something that did not happen. List each missing destination in the record for the client. In blind tests this was the most common hard fail for both arms: four of the skill's five confirmed hard fails in round 3 were invented addresses or a button that scrolled to a dead panel.
 - A button never claims a destination it does not reach: "Book a call" opens a booking, "Read the docs" opens docs.
 - **The signature artifact is one loop on one screen.** Mark it `data-signature`. On a phone the control and its result are visible together, every control changes something visible from the default state, controls are 44px, keyboard use never drops focus, and the sample label sits at its top. The checker operates every control and fails the page when feedback lands off-screen (MB-07).
+- **Say the product's status in the first screen when it is not live. With no sign-up destination, do not collect emails**: offer a calendar reminder, a copy or a print of what the page made. Ship every face you name.
 - **Say what an action does before the click, and add no claims the brief does not make** (features, platforms, prices, "the call is free"). Put useful guesses under *To confirm* in the record.
 - Honesty sits next to the claim it qualifies (a label on the sample, a caption under the number, a line beside the button), never in a section about what the company lacks.
 - Illustrative interfaces say so and do something locally. Do not build a backend to imitate a product that does not exist.
