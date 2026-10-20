@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settle</title>
+<meta name="description" content="Settle is a checklist for closing a parent’s affairs in England and Wales: who to tell, in what order, and what each one needs. Not available yet.">
+<meta name="theme-color" content="#F5F4F0">
+<style>
+  /* Fonts: TeX Gyre Schola (GUST Font License), subset to Latin. See fonts/LICENSE.txt */
+  @font-face { font-family: "Schola"; src: url("fonts/schola-regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Schola"; src: url("fonts/schola-italic.woff") format("woff"); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Schola"; src: url("fonts/schola-bold.woff") format("woff"); font-weight: 700; font-style: normal; font-display: swap; }
+
+  :root {
+    --paper: #F5F4F0;
+    --ink: #22302C;
+    --quiet: #5B6660;
+    --moss: #3F6B52;
+    --moss-deep: #2F5340;
+    --lichen: #E4EAE2;
+    --manila: #ECE3CF;
+    --line: #D3D6CF;
+    --focus: #8DB59C;
+    --serif: "Schola", "Century Schoolbook", "New Century Schoolbook", "Iowan Old Style", "Georgia", serif;
+    --measure: 36rem;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.0625rem; /* 17px */
+    line-height: 1.6;
+    font-feature-settings: "kern", "liga";
+    text-rendering: optimizeLegibility;
+  }
+  @media (min-width: 40em) { body { font-size: 1.125rem; } }
+
+  a { color: var(--moss-deep); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.16em; }
+  a:hover { color: var(--moss); }
+
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
+
+  .wrap { width: 100%; max-width: var(--measure); margin: 0 auto; padding: 0 1.25rem; }
+  @media (min-width: 40em) { .wrap { padding: 0 1.5rem; } }
+
+  /* Header */
+  header.top { padding: 1.25rem 0 0; }
+  header.top .wrap { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .wordmark { font-size: 1.25rem; font-weight: 700; letter-spacing: 0.01em; color: var(--ink); text-decoration: none; }
+  .region { color: var(--quiet); font-size: 0.9375rem; font-style: italic; }
+
+  /* Hero */
+  .hero { padding: 3.5rem 0 1.5rem; }
+  @media (min-width: 40em) { .hero { padding: 5rem 0 2rem; } }
+  h1 {
+    font-size: 2rem; line-height: 1.2; font-weight: 400; letter-spacing: -0.012em;
+    margin: 0 0 1.25rem; max-width: 20ch;
+  }
+  @media (min-width: 40em) { h1 { font-size: 2.625rem; max-width: 26ch; } }
+  .lede { font-size: 1.125rem; margin: 0 0 1rem; max-width: 34rem; }
+  @media (min-width: 40em) { .lede { font-size: 1.25rem; } }
+  .not-yet { margin: 0; color: var(--quiet); }
+
+  /* The honest line */
+  .plain {
+    margin: 2.25rem 0 0;
+    padding: 1rem 1.125rem;
+    background: var(--lichen);
+    border-left: 3px solid var(--moss);
+    border-radius: 0 4px 4px 0;
+    font-size: 1rem;
+  }
+  .plain p { margin: 0; }
+
+  /* Section rhythm */
+  section { padding: 3rem 0 0; }
+  section:last-of-type { padding-bottom: 1rem; }
+  h2 { font-size: 1.5rem; line-height: 1.25; font-weight: 400; margin: 0 0 0.5rem; letter-spacing: -0.008em; }
+  @media (min-width: 40em) { h2 { font-size: 1.75rem; } }
+  .intro { margin: 0 0 1.5rem; color: var(--quiet); max-width: 34rem; }
+  p { margin: 0 0 1rem; }
+
+  /* Checklist */
+  .list { margin: 0; padding: 0; list-style: none; }
+  .group-title {
+    font-size: 1rem; font-style: italic; color: var(--quiet);
+    margin: 1.75rem 0 0.5rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--line);
+  }
+  .list > li + li .group-title { margin-top: 2rem; }
+  .item { position: relative; display: grid; grid-template-columns: 1.6rem 1fr; column-gap: 0.75rem; padding: 0.7rem 0; border-bottom: 1px solid var(--line); }
+  .item:last-child { border-bottom: 0; }
+  .item input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+  .box {
+    width: 1.5rem; height: 1.5rem; margin-top: 0.2rem;
+    border: 1.5px solid var(--ink); border-radius: 3px; background: #fff;
+    display: grid; place-items: center; transition: background 160ms ease, border-color 160ms ease;
+  }
+  .box svg { width: 1rem; height: 1rem; display: block; }
+  .box path { fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 24; stroke-dashoffset: 24; transition: stroke-dashoffset 220ms ease-out 60ms; }
+  .item input:checked ~ .box { background: var(--moss); border-color: var(--moss); }
+  .item input:checked ~ .box path { stroke-dashoffset: 0; }
+  .item input:focus-visible ~ .box { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .item label { cursor: pointer; }
+  .item .what { display: block; }
+  .item input:checked ~ label .what { color: var(--quiet); }
+  .item .when { display: block; font-size: 0.9375rem; color: var(--quiet); font-style: italic; }
+  .item .how { display: block; font-size: 0.9375rem; color: var(--quiet); margin-top: 0.25rem; }
+  .item input:checked ~ label .how { display: none; }
+  .tally { margin: 1.25rem 0 0; font-style: italic; color: var(--quiet); min-height: 1.6em; }
+  .tally button {
+    font: inherit; font-style: italic; color: var(--moss-deep); background: none; border: 0; padding: 0; margin-left: 0.35rem;
+    text-decoration: underline; text-underline-offset: 0.16em; cursor: pointer;
+  }
+
+  /* Sample contact page */
+  .contact {
+    border: 1px solid var(--line); border-radius: 6px; background: #fff; overflow: hidden;
+  }
+  .contact header { padding: 1rem 1.125rem 0.875rem; border-bottom: 1px solid var(--line); }
+  .contact header h3 { margin: 0; font-size: 1.25rem; font-weight: 400; }
+  .contact header p { margin: 0.2rem 0 0; color: var(--quiet); font-size: 0.9375rem; font-style: italic; }
+  .contact .part { padding: 0.9rem 1.125rem; border-bottom: 1px solid var(--line); }
+  .contact .part:last-child { border-bottom: 0; }
+  .contact h4 { margin: 0 0 0.35rem; font-size: 1rem; font-weight: 700; }
+  .contact ul { margin: 0; padding-left: 1.1rem; }
+  .contact li { margin: 0 0 0.25rem; }
+  .contact li:last-child { margin-bottom: 0; }
+  .contact p { margin: 0; }
+  .letter {
+    background: var(--manila); padding: 1rem 1.125rem 1.125rem; font-size: 1rem; line-height: 1.55;
+  }
+  .letter h4 { margin: 0 0 0.6rem; font-size: 1rem; font-weight: 700; }
+  .letter p { margin: 0 0 0.6rem; }
+  .letter p:last-child { margin: 0; }
+  .letter .blank { border-bottom: 1px solid var(--ink); color: var(--quiet); font-style: italic; }
+
+  /* Plain lists */
+  .plainlist { margin: 0; padding: 0; list-style: none; }
+  .plainlist li { padding: 0.75rem 0; border-bottom: 1px solid var(--line); }
+  .plainlist li:last-child { border-bottom: 0; }
+  .plainlist b { font-weight: 700; }
+
+  /* Sign-up */
+  .signup { margin-top: 1rem; }
+  .field { display: flex; flex-direction: column; gap: 0.6rem; }
+  @media (min-width: 30em) { .field { flex-direction: row; align-items: stretch; } }
+  .field label { position: absolute; left: -9999px; }
+  .field input {
+    flex: 1; min-width: 0; font: inherit; color: var(--ink); background: #fff;
+    border: 1.5px solid var(--ink); border-radius: 4px; padding: 0.7rem 0.9rem;
+  }
+  .field input::placeholder { color: #8B948F; }
+  .field button {
+    font: inherit; font-weight: 700; color: #fff; background: var(--moss); border: 1.5px solid var(--moss);
+    border-radius: 4px; padding: 0.7rem 1.1rem; cursor: pointer; white-space: nowrap;
+  }
+  .field button:hover { background: var(--moss-deep); border-color: var(--moss-deep); }
+  .note { margin: 0.75rem 0 0; color: var(--quiet); font-size: 0.9375rem; }
+  .done { display: none; padding: 1rem 1.125rem; background: var(--lichen); border-radius: 4px; }
+  .done p { margin: 0; }
+  .done p + p { margin-top: 0.35rem; color: var(--quiet); font-size: 0.9375rem; }
+  .signup.is-done .field, .signup.is-done .note { display: none; }
+  .signup.is-done .done { display: block; }
+  .error { color: #8A3A2C; font-size: 0.9375rem; margin: 0.5rem 0 0; display: none; }
+  .signup.has-error .error { display: block; }
+
+  /* Footer */
+  footer.end { margin-top: 3.5rem; padding: 2rem 0 3rem; border-top: 1px solid var(--line); color: var(--quiet); font-size: 0.9375rem; }
+  footer.end p { margin: 0 0 0.6rem; }
+  footer.end p:last-child { margin: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .box, .box path { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="wordmark" href="#">Settle</a>
+    <span class="region">England and Wales</span>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <h1>Everyone you need to tell, in the order to tell them.</h1>
+      <p class="lede">After a parent dies, the paperwork arrives all at once. Settle is a checklist that takes it one contact at a time: which accounts, bills and agencies to get in touch with, what each one will ask you for, and a letter you can send to each.</p>
+      <p class="not-yet">It isn’t ready yet. If you’d like to know when it is, there’s a place to leave your email at the bottom of this page.</p>
+
+      <div class="plain">
+        <p>Settle is a checklist, not legal advice, and it only covers England and Wales. If something about your parent’s estate is unclear or disputed, a solicitor or <a href="https://www.citizensadvice.org.uk/family/death-and-wills/">Citizens Advice</a> can help in a way a list can’t.</p>
+      </div>
+    </div>
+  </div>
+
+  <section aria-labelledby="first-weeks">
+    <div class="wrap">
+      <h2 id="first-weeks">The first fortnight, the way Settle lays it out</h2>
+      <p class="intro">This is the beginning of the real list. Tick things off if it helps; this page remembers on your phone, and nowhere else.</p>
+
+      <ul class="list" id="sample">
+        <li>
+          <p class="group-title">In the first few days</p>
+          <ul class="list">
+            <li class="item">
+              <input type="checkbox" id="c1" data-key="register">
+              <span class="box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span>
+              <label for="c1"><span class="what">Register the death</span><span class="when">Within five days, at a register office in England or Wales</span><span class="how">Take the medical certificate of cause of death. The registrar gives you the death certificate and the form the funeral director needs.</span></label>
+            </li>
+            <li class="item">
+              <input type="checkbox" id="c2" data-key="copies">
+              <span class="box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span>
+              <label for="c2"><span class="what">Ask for extra copies of the death certificate</span><span class="when">At the same appointment</span><span class="how">Banks, pension providers and insurers often want to see an original. Five or six copies is usual; each costs a little over ten pounds.</span></label>
+            </li>
+            <li class="item">
+              <input type="checkbox" id="c3" data-key="tuo">
+              <span class="box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span>
+              <label for="c3"><span class="what">Use Tell Us Once</span><span class="when">The registrar gives you a reference number</span><span class="how">One government form tells HMRC, the Department for Work and Pensions, the DVLA, the Passport Office and the council, so you don’t have to ring each of them.</span></label>
+            </li>
+            <li class="item">
+              <input type="checkbox" id="c4" data-key="will">
+              <span class="box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span>
+              <label for="c4"><span class="what">Find the will, if there is one</span><span class="when">Before the funeral, if you can</span><span class="how">It may be at home, with a solicitor, or with the bank. It sometimes says what your parent wanted for the funeral, and it names the executor.</span></label>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p class="group-title">In the first fortnight</p>
+          <ul class="list">
+            <li class="item">
+              <input type="checkbox" id="c5" data-key="bank">
+              <span class="box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span>
+              <label for="c5"><span class="what">Tell the bank or building society</span><span class="when">Once you have a death certificate</span><span class="how">The account is frozen, which stops the direct debits, so this is the moment the bills start needing attention. The funeral bill can usually be paid straight from the account.</span></label>
+            </li>
+            <li class="item">
+              <input type="checkbox" id="c6" data-key="home">
+              <span class="box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span>
+              <label for="c6"><span class="what">Tell the home insurer, landlord or mortgage lender</span><span class="when">Within a couple of weeks</span><span class="how">Home insurance often changes once a house is empty. Telling them early keeps the cover in place while you sort the rest out.</span></label>
+            </li>
+            <li class="item">
+              <input type="checkbox" id="c7" data-key="pension">
+              <span class="box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span>
+              <label for="c7"><span class="what">Tell the employer or pension provider</span><span class="when">Within a couple of weeks</span><span class="how">Payments stop, and some schemes pay something to the family. The state pension is covered by Tell Us Once.</span></label>
+            </li>
+            <li class="item">
+              <input type="checkbox" id="c8" data-key="utilities">
+              <span class="box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span>
+              <label for="c8"><span class="what">Tell gas, electricity, water, phone and broadband</span><span class="when">Once the bank account is frozen</span><span class="how">Ask for the account to be put in the executor’s name, or closed with a final reading. Keep the heating ticking over if the house is empty in winter.</span></label>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <p class="tally" id="tally" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section aria-labelledby="each-one">
+    <div class="wrap">
+      <h2 id="each-one">What Settle gives you for each one</h2>
+      <p class="intro">Every contact on the list opens to a page like this: what they’ll ask for, what happens next, and a letter you can adapt and send.</p>
+
+      <article class="contact" aria-label="Example contact page: the bank">
+        <header>
+          <h3>The bank or building society</h3>
+          <p>Takes about twenty minutes on the phone, or ten in a branch</p>
+        </header>
+        <div class="part">
+          <h4>What they’ll ask for</h4>
+          <ul>
+            <li>A death certificate (original or a certified copy)</li>
+            <li>Your own photo ID and proof of address</li>
+            <li>The account numbers, if you have them; they can look them up from a name and address if not</li>
+          </ul>
+        </div>
+        <div class="part">
+          <h4>What happens next</h4>
+          <p>The accounts are frozen the same day. Standing orders and direct debits stop, so anything paid from the account, from the gas to the TV licence, now needs telling. The bank will pay the funeral director’s invoice directly from the account if you send it to them. Each bank sets its own limit for releasing the balance without probate; they’ll tell you whether you need to apply.</p>
+        </div>
+        <div class="part">
+          <h4>One thing worth knowing</h4>
+          <p>The <a href="https://www.deathnotificationservice.co.uk/">Death Notification Service</a> is free and tells most UK banks and building societies in one go. Settle sends you there first, and keeps the list of who’s been told.</p>
+        </div>
+        <div class="letter">
+          <h4>The letter</h4>
+          <p>Dear Bereavement Team,</p>
+          <p>I am writing to tell you that my <span class="blank">mother</span>, <span class="blank">full name</span>, died on <span class="blank">date</span>. I am her <span class="blank">executor / next of kin</span>. I enclose a certified copy of the death certificate. Please let me know what you need from me to close her accounts, and confirm whether a grant of probate will be required.</p>
+          <p>Yours faithfully,</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="is-isnt">
+    <div class="wrap">
+      <h2 id="is-isnt">What it is, and what it isn’t</h2>
+      <ul class="plainlist">
+        <li><b>It’s a list, in order.</b> What has to happen this week, what can wait a month, and what only matters once probate comes through. Most of it can wait longer than you’d think.</li>
+        <li><b>It’s one page per contact.</b> The phone number, the documents they’ll want, how long they tend to take, and a letter to send if you’d rather write than ring.</li>
+        <li><b>It isn’t legal advice.</b> Settle tells you who to contact and what to bring. It doesn’t tell you what the will means, whether tax is due, or what to do if the family disagrees. For those, see a solicitor.</li>
+        <li><b>It isn’t the probate application.</b> You apply for probate through <a href="https://www.gov.uk/applying-for-probate">GOV.UK</a>. Settle tells you whether you’re likely to need it and what to gather first.</li>
+        <li><b>It’s England and Wales only, for now.</b> Scotland and Northern Ireland have different rules, and we’d rather not guess at them.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="when">
+    <div class="wrap">
+      <h2 id="when">If you’d like to know when it’s ready</h2>
+      <p class="intro">Leave your email and we’ll send one message when Settle opens. Nothing before then, and nothing after.</p>
+
+      <form class="signup" id="signup" action="#" method="post" novalidate>
+        <div class="field">
+          <label for="email">Your email address</label>
+          <input type="email" id="email" name="email" placeholder="Your email address" autocomplete="email" inputmode="email" required>
+          <button type="submit">Tell me when it’s ready</button>
+        </div>
+        <p class="error" id="error">That doesn’t look like an email address. Could you check it?</p>
+        <p class="note">If you’re reading this in the first weeks, there’s no hurry. The page will still be here.</p>
+        <div class="done" role="status">
+          <p>Thank you. We’ll write once, when Settle is ready.</p>
+          <p>In the meantime, <a href="https://www.gov.uk/when-someone-dies">GOV.UK’s guide to what to do when someone dies</a> covers the first steps well.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="end">
+  <div class="wrap">
+    <p>Settle is a checklist, not legal advice. It covers England and Wales only. Nothing on this page replaces advice from a solicitor or from <a href="https://www.citizensadvice.org.uk/family/death-and-wills/">Citizens Advice</a>.</p>
+    <p>The ticks on this page are saved on your device and go nowhere else.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Sample checklist: remembered on this device only.
+  var KEY = 'settle-sample';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#sample input[type=checkbox]'));
+  var tally = document.getElementById('tally');
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { state = {}; }
+
+  boxes.forEach(function (b) {
+    b.checked = !!state[b.dataset.key];
+    b.addEventListener('change', function () {
+      state[b.dataset.key] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+      render();
+    });
+  });
+
+  function render() {
+    var n = boxes.filter(function (b) { return b.checked; }).length;
+    var total = boxes.length;
+    var text;
+    if (n === 0) text = 'Nothing ticked yet. That’s fine.';
+    else if (n === total) text = 'All ' + total + ' done. Everything else can wait a while.';
+    else text = n + ' of ' + total + ' done.';
+    tally.textContent = text;
+    if (n > 0) {
+      var clear = document.createElement('button');
+      clear.type = 'button';
+      clear.textContent = 'Clear the ticks';
+      clear.addEventListener('click', function () {
+        boxes.forEach(function (b) { b.checked = false; });
+        state = {};
+        try { localStorage.removeItem(KEY); } catch (e) {}
+        render();
+      });
+      tally.appendChild(clear);
+    }
+  }
+  render();
+
+  // Sign-up. There is no destination for sign-ups yet: set SIGNUP_ENDPOINT to a URL that
+  // accepts a POST of {email} and the form will send there. Until then, submissions are
+  // acknowledged and kept only in this browser so nothing is silently lost.
+  var SIGNUP_ENDPOINT = '';
+  var form = document.getElementById('signup');
+  var email = document.getElementById('email');
+
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var value = email.value.trim();
+    var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    form.classList.toggle('has-error', !ok);
+    if (!ok) { email.focus(); return; }
+
+    function finish() {
+      form.classList.add('is-done');
+      form.querySelector('.done').setAttribute('tabindex', '-1');
+      form.querySelector('.done').focus();
+    }
+
+    if (SIGNUP_ENDPOINT && window.fetch) {
+      fetch(SIGNUP_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: value })
+      }).then(finish, finish);
+    } else {
+      try {
+        var pending = JSON.parse(localStorage.getItem('settle-interest') || '[]');
+        pending.push({ email: value, at: new Date().toISOString() });
+        localStorage.setItem('settle-interest', JSON.stringify(pending));
+      } catch (e) {}
+      finish();
+    }
+  });
+})();
+</script>
+</body>
+</html>
