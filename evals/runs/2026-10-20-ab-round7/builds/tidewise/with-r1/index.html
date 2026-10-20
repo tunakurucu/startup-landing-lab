@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swim windows for year-round sea swimmers · Tidewise iPhone beta</title>
+<meta name="description" content="Tidewise is an iPhone app for people who swim in the sea all year. It turns the tide, wind, swell and water temperature at your beach into today's swim windows, and warns you when one closes early. Public beta, 40 beaches in the UK and Ireland.">
+<meta name="theme-color" content="#0a1620">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tidewise: check the sea, not the group chat">
+<meta property="og:description" content="An iPhone app that turns tide, wind, swell and water temperature at your beach into today's swim windows. Public beta at 40 UK and Ireland beaches.">
+<meta property="og:image" content="https://tidewise.example/og.png">
+<meta property="og:url" content="https://tidewise.example/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tidewise: check the sea, not the group chat">
+<meta name="twitter:description" content="Today's swim windows at your beach, from tide, wind, swell and water temperature. iPhone public beta.">
+<meta name="twitter:image" content="https://tidewise.example/og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+@font-face{font-family:"Lora";src:url(fonts/lora-var.woff) format("woff");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Inter";src:url(fonts/inter-400.woff) format("woff");font-weight:400;font-display:swap}
+@font-face{font-family:"Inter";src:url(fonts/inter-600.woff) format("woff");font-weight:600;font-display:swap}
+
+:root{
+  /* The sea at 6 am: a pre-dawn ground, foam for text, first light for windows, dawn for action and warnings. */
+  --ink:#0a1620; --deep:#0f2230; --swell:#163246; --line:#2a4556;
+  --foam:#e4eef0; --mist:#a9bfc8; --window:#9fe0d2; --dawn:#f4a27b; --dawn-ink:#1a0f0a;
+  --display:"Lora",Georgia,serif; --text:"Inter",Arial,sans-serif;
+  --step-0:clamp(1.0625rem,1rem + .2vw,1.1875rem);
+  --step--1:clamp(.875rem,.85rem + .1vw,.9375rem);
+  --step-1:clamp(1.25rem,1.1rem + .5vw,1.5rem);
+  --step-2:clamp(1.75rem,1.3rem + 1.6vw,2.75rem);
+  --step-3:clamp(2.25rem,1.5rem + 3.4vw,4.75rem);
+  --space-xs:.5rem; --space-s:1rem; --space-m:1.5rem; --space-l:clamp(2rem,1.5rem + 2vw,3.5rem); --space-xl:clamp(3.5rem,2.5rem + 5vw,8rem);
+  --max:1320px; --gutter:clamp(1rem,.6rem + 2vw,2.5rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul,fieldset{margin:0}
+ol,ul{padding:0;list-style:none}
+fieldset{padding:0;border:0;min-width:0}
+img,svg,video,canvas{display:block;max-width:100%}
+input,button,textarea,select{font:inherit;color:inherit}
+:where(p,li,dd,td,output,[role=status]){overflow-wrap:break-word;min-width:0}
+html{scroll-padding-top:16px;color-scheme:dark}
+body{background:var(--ink);color:var(--foam);font-family:var(--text);font-size:var(--step-0);line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--foam);text-decoration-color:color-mix(in srgb,var(--foam) 55%,transparent);text-underline-offset:.18em}
+a:hover{text-decoration-color:var(--foam)}
+:focus-visible{outline:3px solid var(--window);outline-offset:3px;border-radius:2px}
+.skip{position:absolute;left:12px;top:-80px;padding:12px 16px;background:var(--foam);color:var(--ink);z-index:100;font-weight:600}
+.skip:focus{top:12px}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+.num{font-variant-numeric:tabular-nums}
+
+/* Header */
+.site-head{position:relative;z-index:10}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:var(--space-m);min-height:72px}
+.mark{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--display);font-weight:600;font-size:1.375rem;text-decoration:none;color:var(--foam);min-height:44px}
+.mark svg{width:30px;height:30px}
+.menu-btn{display:none}
+#site-menu{display:flex;align-items:center;gap:.25rem}
+#site-menu a:not(.btn){display:inline-flex;align-items:center;min-height:44px;padding:0 .8rem;font-size:var(--step--1);text-decoration:none;color:var(--mist)}
+#site-menu a:not(.btn):hover{color:var(--foam)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 1.35rem;border-radius:999px;background:var(--dawn);color:var(--dawn-ink);font-weight:600;text-decoration:none;font-size:1rem;border:0;cursor:pointer}
+.btn:hover{background:#ff9466}
+.btn-s{min-height:44px;padding:0 1.1rem;margin-left:.5rem;font-size:.9375rem}
+
+/* Hero */
+.hero{padding-top:clamp(.5rem,2vw,2.5rem)}
+.hero-copy{display:grid;gap:var(--space-m);align-items:end}
+h1{font-family:var(--display);font-weight:500;font-size:var(--step-3);line-height:1.04;letter-spacing:-.012em;overflow-wrap:break-word}
+.lede{font-size:var(--step-0);color:var(--foam);max-width:46ch}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-top:var(--space-m)}
+.cta-note{font-size:var(--step--1);color:var(--mist);max-width:34ch;line-height:1.45}
+
+/* Signature: the sample day */
+.day{margin-top:var(--space-l);border-top:1px solid var(--line);padding-top:var(--space-s);display:grid;gap:var(--space-s) var(--space-l)}
+.day-cap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.25rem 1rem;font-size:var(--step--1);color:var(--mist)}
+.day-cap strong{color:var(--foam);font-weight:600}
+.chart{min-width:0;border-radius:6px;overflow:hidden;background:#0b1823}
+.chart svg{width:100%;height:auto}
+.tide-svg .band,.strips-svg .band{fill:var(--window);fill-opacity:.12}
+.tide-svg .band-edge{stroke:var(--window);stroke-width:3}
+.tide-svg .sea{fill:#123a4d;fill-opacity:.92}
+.curve{fill:none;stroke:#cfe8ea;stroke-width:2.2;stroke-linejoin:round}
+.curve.thin{stroke-width:1.8}
+.sun{stroke:var(--dawn);stroke-width:1.5;stroke-dasharray:2 3}
+.ext{fill:#cfe8ea}
+.you{stroke:var(--dawn);stroke-width:2}
+.you-dot{fill:var(--dawn);stroke:var(--ink);stroke-width:2}
+.you-tag{fill:var(--dawn)}
+.lbl{font-family:var(--text);font-size:13px;color:var(--foam);fill:currentColor;font-variant-numeric:tabular-nums}
+.lbl-band{color:var(--window);font-weight:600}
+.lbl-warn{color:var(--dawn);font-weight:600}
+.lbl-sun{color:#f6c3a7}
+.lbl-tide{color:#d9eaec}
+.lbl-axis{color:var(--mist)}
+.lbl-you{color:var(--dawn-ink);font-weight:600}
+.lbl-row{color:var(--mist)}
+.lbl-rowname{font-size:15px;font-weight:600}
+.lbl-num{font-size:13px}
+.lblbg{fill:#0a1620;fill-opacity:.82}
+.rule{stroke:var(--line);stroke-width:1}
+.arrow{fill:none;stroke:#cfe8ea;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.arrow.on{stroke:var(--dawn)}
+.bar{fill:#6fa9b8}
+
+.controls{display:grid;gap:var(--space-s);min-width:0}
+.readout{background:var(--deep);border:1px solid var(--line);border-radius:6px;padding:1rem 1.1rem;display:grid;gap:.6rem}
+.ro-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .75rem}
+.ro-time{font-family:var(--display);font-size:2.25rem;font-weight:500;line-height:1;font-variant-numeric:tabular-nums lining-nums}
+.ro-light{font-size:var(--step--1);color:var(--mist)}
+.ro-verdict{font-weight:600;font-size:1.0625rem;line-height:1.4;padding-left:.75rem;border-left:3px solid var(--mist)}
+.readout[data-inside="yes"] .ro-verdict{border-left-color:var(--window)}
+.ro-early{font-size:var(--step--1);color:var(--dawn);line-height:1.4}
+.ro-early[hidden]{display:none}
+.ro-vals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem 1rem;border-top:1px solid var(--line);padding-top:.7rem}
+.ro-vals dt{font-size:.875rem;color:var(--mist)}
+.ro-vals dd{font-size:1rem;font-variant-numeric:tabular-nums}
+.ro-vals dd small{display:block;font-size:.875rem;color:var(--mist)}
+.ro-note{font-size:.875rem;color:var(--mist)}
+
+.arrive legend{font-size:var(--step--1);color:var(--mist);margin-bottom:.4rem}
+.chips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.4rem}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;inset:0;margin:0;width:100%;height:100%;cursor:pointer}
+.chip span{display:flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--line);border-radius:6px;font-variant-numeric:tabular-nums;font-weight:600;font-size:1rem;color:var(--foam)}
+.chip input:checked + span{background:var(--foam);color:var(--ink);border-color:var(--foam)}
+.chip input:focus-visible + span{outline:3px solid var(--window);outline-offset:2px}
+.range-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:.1rem .75rem}
+.range-row label{font-size:var(--step--1);color:var(--mist)}
+.range-row output{font-variant-numeric:tabular-nums;font-weight:600}
+.range-row input{grid-column:1 / -1;width:100%;height:44px;accent-color:var(--dawn);cursor:pointer;margin:0}
+.reset{justify-self:start;min-height:44px;padding:0 1rem;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--mist);font-size:.9375rem;cursor:pointer}
+.reset:hover{color:var(--foam);border-color:var(--mist)}
+
+/* Sections */
+section.sec{padding-block:var(--space-xl) 0}
+.sec h2{font-family:var(--display);font-weight:500;font-size:var(--step-2);line-height:1.15;letter-spacing:-.005em;text-wrap:balance;max-width:20ch}
+.sec p{max-width:60ch}
+.sec .lead-p{margin-top:var(--space-s);color:var(--foam)}
+.reads-top{display:grid;gap:var(--space-l);align-items:start}
+.plan{display:grid;gap:.5rem;max-width:360px}
+.plan svg{width:100%;height:auto}
+.plan figcaption,.cove figcaption{font-size:var(--step--1);color:var(--mist);line-height:1.5}
+.strips{margin-top:var(--space-l);min-width:0}
+.strips svg{width:100%;height:auto}
+.strips-cap{margin-top:.6rem;font-size:var(--step--1);color:var(--mist)}
+
+.shift{margin-top:var(--space-l);display:grid;gap:var(--space-m) var(--space-l);border-top:1px solid var(--line);padding-top:var(--space-m)}
+.shift h3{font-family:var(--display);font-weight:500;font-size:var(--step-1);line-height:1.25;text-wrap:balance;max-width:26ch}
+.shift-copy p{margin-top:.6rem;color:var(--mist);max-width:44ch}
+.shift-chart{display:grid;gap:.5rem;align-content:start}
+.shift-row{display:grid;grid-template-columns:8.5rem minmax(0,1fr) 7rem;align-items:center;gap:.75rem}
+.shift-lab{font-size:var(--step--1);color:var(--mist)}
+.shift-val{font-weight:600;text-align:right;font-size:1rem;white-space:nowrap}
+.warn{color:var(--dawn)}
+.shift-track{position:relative;height:28px;border-bottom:1px solid var(--line)}
+.shift-bar,.shift-lost{position:absolute;top:4px;bottom:4px;border-radius:3px}
+.shift-bar{background:var(--window);opacity:.85}
+.shift-lost{background:repeating-linear-gradient(45deg,rgba(244,162,123,.6) 0 2px,transparent 2px 7px);border:1px solid rgba(244,162,123,.6)}
+.shift-axis .shift-track{border:0;height:20px}
+.shift-axis .shift-track span{position:absolute;top:0;transform:translateX(-50%);font-size:.8125rem;color:var(--mist);font-variant-numeric:tabular-nums}
+.shift-axis .shift-track span:first-child{transform:none}
+.shift-axis .shift-track span:last-child{transform:translateX(-100%)}
+.shift-why{font-size:var(--step--1);color:var(--foam);margin-top:.25rem}
+.cove{margin-top:var(--space-l);display:grid;gap:.6rem}
+.cove-art{position:relative}
+.cove-art svg{width:100%;height:auto;border-radius:6px}
+.tag{position:absolute;font-size:.8125rem;line-height:1.25;color:var(--foam);background:rgba(10,22,32,.78);padding:.15rem .4rem;border-radius:3px;white-space:nowrap}
+.ledger{margin-top:var(--space-l);display:grid;gap:var(--space-l);border-top:1px solid var(--line);padding-top:var(--space-m)}
+.ledger h3{font-family:var(--text);font-size:var(--step-1);font-weight:600;line-height:1.25}
+.ledger ul{margin-top:var(--space-s);display:grid;gap:.6rem}
+.ledger li{padding-left:1.25rem;position:relative;max-width:42ch}
+.ledger li::before{content:"";position:absolute;left:0;top:.7em;width:.6rem;height:2px;background:var(--mist)}
+.ledger .yours li::before{background:var(--dawn)}
+
+.beta{padding-bottom:var(--space-xl)}
+.beta-row{margin-top:var(--space-l);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.beta-row div{padding:1rem 0;border-bottom:1px solid var(--line)}
+.beta-row div:nth-last-child(-n+2){border-bottom:0}
+.beta-row dt{font-size:.875rem;color:var(--mist)}
+.beta-row dd{font-family:var(--display);font-size:var(--step-1);font-weight:500}
+
+footer{border-top:1px solid var(--line);padding-block:var(--space-l)}
+.foot{display:grid;gap:var(--space-m)}
+.foot p{font-size:var(--step--1);color:var(--mist);max-width:56ch}
+.foot nav ul{display:flex;flex-wrap:wrap;gap:0 1.25rem}
+.foot nav a{display:inline-flex;align-items:center;min-height:44px;font-size:var(--step--1)}
+
+@media (min-width:820px){
+  .hero-copy{grid-template-columns:minmax(0,7fr) minmax(0,5fr);column-gap:var(--space-l)}
+  .day{grid-template-columns:minmax(0,1fr) 360px;grid-template-areas:"cap cap" "chart readout" "controls readout";align-items:start}
+  .day-cap{grid-area:cap}.chart{grid-area:chart}.readout{grid-area:readout}.controls{grid-area:controls}
+  .controls{grid-template-columns:auto minmax(0,1fr) auto;align-items:end;column-gap:var(--space-m)}
+  .chips{grid-template-columns:repeat(4,4.75rem)}
+  .reads-top{grid-template-columns:minmax(0,1fr) 340px}
+  .ledger{grid-template-columns:1fr 1fr}
+  .shift{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+  .beta-row{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .beta-row div{border-bottom:0;padding-right:1rem}
+  .foot{grid-template-columns:1fr auto;align-items:start}
+}
+@media (min-width:1100px){
+  .day{grid-template-columns:minmax(0,1fr) 380px}
+}
+@media (max-width:819px){
+  .menu-btn{display:inline-flex;align-items:center;min-height:44px;min-width:44px;padding:0 1rem;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--foam);font-weight:600;font-size:.9375rem;cursor:pointer}
+  .bar{min-height:64px;flex-wrap:wrap}
+  .js #site-menu{position:absolute;left:var(--gutter);right:var(--gutter);top:64px;flex-direction:column;align-items:stretch;background:var(--deep);border:1px solid var(--line);border-radius:8px;padding:.5rem}
+  .js #site-menu[hidden]{display:none}
+  #site-menu{flex-wrap:wrap}
+  .js #site-menu a:not(.btn){min-height:48px;font-size:1rem;color:var(--foam)}
+  .js #site-menu .btn-s{margin:.4rem 0 0}
+  .cta-note{max-width:40ch}
+  .tag{font-size:.75rem}
+  .tag-wide{display:none}
+  .shift-row{grid-template-columns:minmax(0,1fr) auto;gap:.25rem .75rem}
+  .shift-row .shift-track{grid-column:1 / -1;grid-row:2}
+  .shift-axis > span:not(.shift-track){display:none}
+  .shift-axis .shift-track span:nth-child(2),.shift-axis .shift-track span:nth-child(4){display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .btn,.reset,.chip span{transition:transform .15s cubic-bezier(.2,.7,.2,1),background-color .15s ease-out}
+  .btn:active,.reset:active{transform:scale(.97)}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap bar">
+    <a class="mark" href="#main" aria-label="Tidewise, back to top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#0f2230"/><path d="M3 20 C 8 9, 12 9, 16 16 S 24 23, 29 12" fill="none" stroke="#e4eef0" stroke-width="2.4" stroke-linecap="round"/><rect x="9" y="6" width="8" height="21" fill="#9fe0d2" fill-opacity=".28"/></svg>
+      Tidewise
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Main">
+      <a href="#sample">Sample day</a>
+      <a href="#reads">What it reads</a>
+      <a href="#limits">Not a lifeguard</a>
+      <a href="#beta">Beaches</a>
+      <a class="btn btn-s" href="https://tidewise.example/beta">Join the iPhone beta</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="hero wrap" aria-labelledby="h1">
+    <div class="hero-copy">
+      <h1 id="h1">Check the sea,<br> not the group chat</h1>
+      <div>
+        <p class="lede">Tidewise is an iPhone app for people who swim in the sea all year. It turns the tide, wind, swell and water temperature at your beach into today’s swim windows, and warns you when one closes early.</p>
+        <div class="cta-row">
+          <a class="btn" href="https://tidewise.example/beta">Join the iPhone beta</a>
+          <p class="cta-note">Public beta at 40 beaches in the UK and Ireland so far. Opens the beta page.</p>
+        </div>
+      </div>
+    </div>
+
+    <figure class="day" id="sample" data-signature aria-labelledby="day-title">
+      <figcaption class="day-cap"><strong id="day-title">Pick when you’ll reach the beach</strong><span>Sample day at a sample south-facing beach, written for this page. Not a forecast.</span></figcaption>
+      <div class="chart" id="hero-chart"><svg xmlns="http://www.w3.org/2000/svg" width="860" height="380" viewBox="0 0 860 380" role="img" aria-labelledby="hero-chart-title" class="tide-svg"><title id="hero-chart-title">Sample day: tide curve from 05:00 to 21:00 with a morning swim window 05:30 to 07:30 that closes early (the overnight forecast said 08:30) and an evening window 16:00 to 19:30. Selected arrival 06:00.</title><defs><linearGradient id="sky" x1="0" x2="1" y1="0" y2="0"><stop offset="0.000" stop-color="#0b1823"/><stop offset="0.104" stop-color="#13253a"/><stop offset="0.150" stop-color="#2c2f45"/><stop offset="0.208" stop-color="#1c3446"/><stop offset="0.771" stop-color="#1c3446"/><stop offset="0.819" stop-color="#2c2f45"/><stop offset="0.875" stop-color="#13253a"/><stop offset="1.000" stop-color="#0b1823"/></linearGradient><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="#f4a27b" stroke-width="1.6" stroke-opacity=".55"/></pattern></defs><rect x="0" y="0" width="860" height="350" fill="url(#sky)"/><rect x="32.5" y="32" width="106" height="318" class="band"/><line x1="32.5" x2="138.5" y1="32" y2="32" class="band-edge"/><text x="37.5" y="48" class="lbl lbl-band">Morning window 05:30–07:30</text><rect x="138.5" y="32" width="53" height="318" fill="url(#hatch)"/><text x="143.5" y="68" class="lbl lbl-warn">Closes early: was 08:30</text><rect x="589" y="32" width="185.5" height="318" class="band"/><line x1="589" x2="774.5" y1="32" y2="32" class="band-edge"/><text x="594" y="48" class="lbl lbl-band">Evening window 16:00–19:30</text><path d="M6,145.1L10.4,142.6L14.8,140.3L19.3,138.2L23.7,136.1L28.1,134.3L32.5,132.5L36.9,130.9L41.3,129.4L45.8,128.1L50.2,127L54.6,126L59,125.1L63.4,124.4L67.8,123.9L72.3,123.5L76.7,123.3L81.1,123.3L85.5,123.4L89.9,123.7L94.3,124.1L98.8,124.7L103.2,125.5L107.6,126.4L112,127.5L116.4,128.7L120.8,130.1L125.3,131.6L129.7,133.3L134.1,135.1L138.5,137.1L142.9,139.2L147.3,141.4L151.8,143.8L156.2,146.3L160.6,148.9L165,151.7L169.4,154.5L173.8,157.5L178.3,160.6L182.7,163.7L187.1,167L191.5,170.3L195.9,173.8L200.3,177.3L204.8,180.8L209.2,184.5L213.6,188.1L218,191.9L222.4,195.7L226.8,199.5L231.3,203.3L235.7,207.2L240.1,211.1L244.5,215L248.9,218.9L253.3,222.8L257.8,226.7L262.2,230.5L266.6,234.4L271,238.2L275.4,242L279.8,245.7L284.3,249.4L288.7,253L293.1,256.6L297.5,260.1L301.9,263.5L306.3,266.9L310.8,270.1L315.2,273.3L319.6,276.4L324,279.3L328.4,282.2L332.8,284.9L337.3,287.5L341.7,290L346.1,292.4L350.5,294.7L354.9,296.8L359.3,298.7L363.8,300.6L368.2,302.2L372.6,303.8L377,305.2L381.4,306.4L385.8,307.5L390.3,308.4L394.7,309.1L399.1,309.7L403.5,310.2L407.9,310.5L412.3,310.6L416.8,310.5L421.2,310.3L425.6,309.9L430,309.3L434.4,308.5L438.8,307.5L443.3,306.4L447.7,305.1L452.1,303.6L456.5,302L460.9,300.2L465.3,298.2L469.8,296.1L474.2,293.8L478.6,291.4L483,288.8L487.4,286.1L491.8,283.2L496.3,280.2L500.7,277.1L505.1,273.9L509.5,270.5L513.9,267L518.3,263.5L522.8,259.8L527.2,256.1L531.6,252.2L536,248.3L540.4,244.3L544.8,240.3L549.3,236.2L553.7,232L558.1,227.8L562.5,223.6L566.9,219.4L571.3,215.1L575.8,210.8L580.2,206.5L584.6,202.3L589,198L593.4,193.8L597.8,189.6L602.3,185.4L606.7,181.3L611.1,177.2L615.5,173.2L619.9,169.2L624.3,165.3L628.8,161.5L633.2,157.8L637.6,154.2L642,150.6L646.4,147.2L650.8,143.9L655.3,140.7L659.7,137.6L664.1,134.7L668.5,131.9L672.9,129.2L677.3,126.7L681.8,124.3L686.2,122.1L690.6,120L695,118.1L699.4,116.4L703.8,114.8L708.3,113.4L712.7,112.2L717.1,111.1L721.5,110.2L725.9,109.5L730.3,109L734.8,108.7L739.2,108.5L743.6,108.5L748,108.7L752.4,109.1L756.8,109.6L761.3,110.3L765.7,111.2L770.1,112.3L774.5,113.5L778.9,114.9L783.3,116.4L787.8,118.1L792.2,120L796.6,122L801,124.2L805.4,126.5L809.8,129L814.3,131.6L818.7,134.3L823.1,137.2L827.5,140.2L831.9,143.3L836.3,146.5L840.8,149.9L845.2,153.3L849.6,156.9L854,160.5L854,350L6,350Z" class="sea"/><path d="M6,145.1L10.4,142.6L14.8,140.3L19.3,138.2L23.7,136.1L28.1,134.3L32.5,132.5L36.9,130.9L41.3,129.4L45.8,128.1L50.2,127L54.6,126L59,125.1L63.4,124.4L67.8,123.9L72.3,123.5L76.7,123.3L81.1,123.3L85.5,123.4L89.9,123.7L94.3,124.1L98.8,124.7L103.2,125.5L107.6,126.4L112,127.5L116.4,128.7L120.8,130.1L125.3,131.6L129.7,133.3L134.1,135.1L138.5,137.1L142.9,139.2L147.3,141.4L151.8,143.8L156.2,146.3L160.6,148.9L165,151.7L169.4,154.5L173.8,157.5L178.3,160.6L182.7,163.7L187.1,167L191.5,170.3L195.9,173.8L200.3,177.3L204.8,180.8L209.2,184.5L213.6,188.1L218,191.9L222.4,195.7L226.8,199.5L231.3,203.3L235.7,207.2L240.1,211.1L244.5,215L248.9,218.9L253.3,222.8L257.8,226.7L262.2,230.5L266.6,234.4L271,238.2L275.4,242L279.8,245.7L284.3,249.4L288.7,253L293.1,256.6L297.5,260.1L301.9,263.5L306.3,266.9L310.8,270.1L315.2,273.3L319.6,276.4L324,279.3L328.4,282.2L332.8,284.9L337.3,287.5L341.7,290L346.1,292.4L350.5,294.7L354.9,296.8L359.3,298.7L363.8,300.6L368.2,302.2L372.6,303.8L377,305.2L381.4,306.4L385.8,307.5L390.3,308.4L394.7,309.1L399.1,309.7L403.5,310.2L407.9,310.5L412.3,310.6L416.8,310.5L421.2,310.3L425.6,309.9L430,309.3L434.4,308.5L438.8,307.5L443.3,306.4L447.7,305.1L452.1,303.6L456.5,302L460.9,300.2L465.3,298.2L469.8,296.1L474.2,293.8L478.6,291.4L483,288.8L487.4,286.1L491.8,283.2L496.3,280.2L500.7,277.1L505.1,273.9L509.5,270.5L513.9,267L518.3,263.5L522.8,259.8L527.2,256.1L531.6,252.2L536,248.3L540.4,244.3L544.8,240.3L549.3,236.2L553.7,232L558.1,227.8L562.5,223.6L566.9,219.4L571.3,215.1L575.8,210.8L580.2,206.5L584.6,202.3L589,198L593.4,193.8L597.8,189.6L602.3,185.4L606.7,181.3L611.1,177.2L615.5,173.2L619.9,169.2L624.3,165.3L628.8,161.5L633.2,157.8L637.6,154.2L642,150.6L646.4,147.2L650.8,143.9L655.3,140.7L659.7,137.6L664.1,134.7L668.5,131.9L672.9,129.2L677.3,126.7L681.8,124.3L686.2,122.1L690.6,120L695,118.1L699.4,116.4L703.8,114.8L708.3,113.4L712.7,112.2L717.1,111.1L721.5,110.2L725.9,109.5L730.3,109L734.8,108.7L739.2,108.5L743.6,108.5L748,108.7L752.4,109.1L756.8,109.6L761.3,110.3L765.7,111.2L770.1,112.3L774.5,113.5L778.9,114.9L783.3,116.4L787.8,118.1L792.2,120L796.6,122L801,124.2L805.4,126.5L809.8,129L814.3,131.6L818.7,134.3L823.1,137.2L827.5,140.2L831.9,143.3L836.3,146.5L840.8,149.9L845.2,153.3L849.6,156.9L854,160.5" class="curve"/><line x1="133.2" x2="133.2" y1="104.7" y2="128.7" class="sun"/><text x="138.2" y="114.7" class="lbl lbl-sun">sunrise 07:24</text><line x1="700.3" x2="700.3" y1="86.1" y2="110.1" class="sun"/><text x="705.3" y="96.1" class="lbl lbl-sun">sunset 18:06</text><circle cx="80.2" cy="123.3" r="3" class="ext"/><text x="80.2" y="145.3" class="lbl lbl-tide" text-anchor="middle">HW 06:24 · 4.6 m</text><circle cx="413.2" cy="310.6" r="3" class="ext"/><text x="413.2" y="298.6" class="lbl lbl-tide" text-anchor="middle">LW 12:41 · 0.8 m</text><circle cx="740.9" cy="108.5" r="3" class="ext"/><text x="740.9" y="130.5" class="lbl lbl-tide" text-anchor="middle">HW 18:52 · 4.9 m</text><text x="6" y="371" class="lbl lbl-axis" text-anchor="start">05:00</text><text x="112" y="371" class="lbl lbl-axis" text-anchor="middle">07:00</text><text x="218" y="371" class="lbl lbl-axis" text-anchor="middle">09:00</text><text x="324" y="371" class="lbl lbl-axis" text-anchor="middle">11:00</text><text x="430" y="371" class="lbl lbl-axis" text-anchor="middle">13:00</text><text x="536" y="371" class="lbl lbl-axis" text-anchor="middle">15:00</text><text x="642" y="371" class="lbl lbl-axis" text-anchor="middle">17:00</text><text x="748" y="371" class="lbl lbl-axis" text-anchor="middle">19:00</text><text x="854" y="371" class="lbl lbl-axis" text-anchor="end">21:00</text><line x1="59" x2="59" y1="32" y2="350" class="you"/><circle cx="59" cy="125.1" r="6" class="you-dot"/><rect x="34" y="353" width="50" height="24" rx="4" class="you-tag"/><text x="59" y="370" class="lbl lbl-you" text-anchor="middle">06:00</text></svg></div>
+      <div class="controls">
+        <fieldset class="arrive">
+          <legend>Arriving at</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="arrive" value="360" checked><span>06:00</span></label>
+            <label class="chip"><input type="radio" name="arrive" value="420"><span>07:00</span></label>
+            <label class="chip"><input type="radio" name="arrive" value="480"><span>08:00</span></label>
+            <label class="chip"><input type="radio" name="arrive" value="1020"><span>17:00</span></label>
+          </div>
+        </fieldset>
+        <div class="range-row">
+          <label for="arrive-range">Or slide to any time</label>
+          <output id="arrive-out" for="arrive-range">06:00</output>
+          <input type="range" id="arrive-range" min="300" max="1260" step="5" value="360" aria-valuetext="06:00">
+        </div>
+        <button class="reset" id="arrive-reset" type="button">Reset to 06:00</button>
+      </div>
+      <div class="readout" id="readout" data-inside="yes">
+          <p class="ro-head"><span class="ro-time" data-read="time">06:00</span><span class="ro-light" data-read="light">Dark until sunrise at 07:24</span></p>
+          <p class="ro-verdict" role="status" aria-live="polite" data-read="verdict">Inside the morning window, 1 h 30 min left.</p>
+          <p class="ro-early" id="early">Closes early today at 07:30, when the wind turns onshore. The overnight forecast said 08:30.</p>
+          <dl class="ro-vals">
+            <div><dt>Tide</dt><dd data-read="tide">4.6 m, rising</dd></div>
+            <div><dt>Wind</dt><dd><span data-read="wind">9 mph NNW</span><small data-read="windrel">offshore</small></dd></div>
+            <div><dt>Swell</dt><dd data-read="swell">0.5 m</dd></div>
+            <div><dt>Sea</dt><dd data-read="sea">12.8 °C</dd></div>
+          </dl>
+          <p class="ro-note">Conditions, not a verdict. You decide whether to swim.</p>
+      </div>
+    </figure>
+  </section>
+
+  <section class="sec wrap" id="reads" aria-labelledby="reads-h">
+    <div class="reads-top">
+      <div>
+        <h2 id="reads-h">Three websites and a tide table, on one line</h2>
+        <p class="lead-p">Each strip below is something you used to look up on its own and piece together on the way down. Tidewise reads all four for your beach and draws today’s swim windows from them. When a window closes early, it warns you.</p>
+      </div>
+      <figure class="plan">
+        <svg viewBox="0 0 360 250" role="img" aria-labelledby="plan-title">
+          <title id="plan-title">Plan of the sample cove, facing south. A north wind blows from the land out to sea; a south-west wind blows in from the sea.</title>
+          <defs><pattern id="landhatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)"><line x1="0" y1="0" x2="0" y2="8" stroke="#2a4556" stroke-width="2"/></pattern></defs>
+          <rect width="360" height="250" fill="#123a4d"/>
+          <path d="M0 0 H360 V92 C 318 96, 292 104, 270 122 C 236 150, 124 150, 90 122 C 68 104, 42 96, 0 92 Z" fill="#0f2230"/>
+          <path d="M0 0 H360 V92 C 318 96, 292 104, 270 122 C 236 150, 124 150, 90 122 C 68 104, 42 96, 0 92 Z" fill="url(#landhatch)"/>
+          <path d="M90 122 C 124 150, 236 150, 270 122" fill="none" stroke="#d8c7a4" stroke-width="6" stroke-linecap="round"/>
+          <path d="M60 104 C 110 168, 250 168, 300 104" fill="none" stroke="#cfe8ea" stroke-width="1.2" stroke-dasharray="3 4" opacity=".7"/>
+          <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M180 18 V 128" stroke="#e4eef0" stroke-width="3"/><path d="M171 116 L180 130 L189 116" stroke="#e4eef0" stroke-width="3"/>
+            <path d="M58 236 L 148 168" stroke="#f4a27b" stroke-width="3"/><path d="M132 168 L150 166 L144 183" stroke="#f4a27b" stroke-width="3"/>
+          </g>
+          <g fill="#0a1620" fill-opacity=".9"><rect x="184" y="25" width="92" height="40" rx="3"/><rect x="160" y="199" width="132" height="40" rx="3"/><rect x="24" y="25" width="44" height="22" rx="3"/><rect x="294" y="171" width="36" height="22" rx="3"/></g>
+          <g font-family="Inter, Arial, sans-serif" font-size="14">
+            <text x="190" y="40" fill="currentColor" style="color:#e4eef0">North wind:</text><text x="190" y="58" fill="currentColor" style="color:#e4eef0">offshore</text>
+            <text x="166" y="214" fill="currentColor" style="color:#f4a27b" font-weight="600">South-west wind:</text><text x="166" y="232" fill="currentColor" style="color:#f4a27b" font-weight="600">onshore</text>
+            <text x="30" y="40" fill="currentColor" style="color:#a9bfc8">Land</text><text x="300" y="186" fill="currentColor" style="color:#a9bfc8">Sea</text>
+          </g>
+          <g transform="translate(330 30)" fill="none" stroke="#a9bfc8" stroke-width="1.5"><circle r="14"/><path d="M0 -9 L4 4 L0 1 L-4 4 Z" fill="#a9bfc8"/></g>
+          <text x="326" y="58" font-family="Inter, Arial, sans-serif" font-size="13" fill="currentColor" style="color:#a9bfc8">N</text>
+        </svg>
+        <figcaption>Onshore or offshore depends on which way the beach faces. The sample beach faces south, so a north wind blows off the land and a south-west wind blows in from the sea.</figcaption>
+      </figure>
+    </div>
+    <div class="strips" id="strips"><svg xmlns="http://www.w3.org/2000/svg" width="1240" height="376" viewBox="0 0 1240 376" role="img" aria-labelledby="strips-title" class="strips-svg"><title id="strips-title">The same sample day as four strips on one time axis: tide, wind, swell and sea temperature, with the morning and evening swim windows drawn through all four.</title><defs><pattern id="hatch2" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="#f4a27b" stroke-width="1.4" stroke-opacity=".5"/></pattern></defs><rect x="201.3" y="10" width="133" height="340" class="band"/><text x="205.3" y="24" class="lbl lbl-band">Morning window</text><rect x="334.3" y="10" width="66.5" height="340" fill="url(#hatch2)"/><rect x="899.5" y="10" width="232.8" height="340" class="band"/><text x="903.5" y="24" class="lbl lbl-band">Evening window</text><text x="0" y="54" class="lbl lbl-rowname">Tide</text><text x="0" y="73" class="lbl lbl-row">from the tide table</text><line x1="168" x2="1232" y1="96" y2="96" class="rule"/><path d="M168,47.2L179.1,46.2L190.2,45.3L201.3,44.5L212.3,43.8L223.4,43.3L234.5,42.9L245.6,42.6L256.7,42.5L267.8,42.5L278.8,42.6L289.9,42.9L301,43.4L312.1,43.9L323.2,44.6L334.3,45.5L345.3,46.4L356.4,47.5L367.5,48.7L378.6,49.9L389.7,51.3L400.8,52.7L411.8,54.3L422.9,55.8L434,57.4L445.1,59.1L456.2,60.8L467.3,62.5L478.3,64.2L489.4,65.9L500.5,67.6L511.6,69.2L522.7,70.8L533.8,72.4L544.8,73.8L555.9,75.2L567,76.6L578.1,77.8L589.2,78.9L600.3,79.9L611.3,80.8L622.4,81.6L633.5,82.2L644.6,82.7L655.7,83.1L666.8,83.3L677.8,83.4L688.9,83.3L700,83.1L711.1,82.7L722.2,82.2L733.3,81.5L744.3,80.7L755.4,79.7L766.5,78.6L777.6,77.4L788.7,76.1L799.8,74.6L810.8,73.1L821.9,71.5L833,69.8L844.1,68L855.2,66.2L866.3,64.4L877.3,62.5L888.4,60.7L899.5,58.8L910.6,56.9L921.7,55.1L932.8,53.4L943.8,51.6L954.9,50L966,48.4L977.1,47L988.2,45.6L999.3,44.3L1010.3,43.2L1021.4,42.2L1032.5,41.3L1043.6,40.6L1054.7,40L1065.8,39.6L1076.8,39.3L1087.9,39.2L1099,39.3L1110.1,39.5L1121.2,39.8L1132.3,40.3L1143.3,41L1154.4,41.7L1165.5,42.7L1176.6,43.7L1187.7,44.9L1198.8,46.2L1209.8,47.5L1220.9,49L1232,50.6" class="curve thin"/><text x="0" y="134" class="lbl lbl-rowname">Wind</text><text x="0" y="153" class="lbl lbl-row">from a wind forecast</text><line x1="168" x2="1232" y1="176" y2="176" class="rule"/><g transform="translate(184.6 151) rotate(180)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow"/></g><text x="184.6" y="122" class="lbl lbl-num" text-anchor="middle">8</text><g transform="translate(251.1 151) rotate(517.5)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow"/></g><text x="251.1" y="122" class="lbl lbl-num" text-anchor="middle">9</text><g transform="translate(317.6 151) rotate(495)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow"/></g><text x="317.6" y="122" class="lbl lbl-num" text-anchor="middle">11</text><g transform="translate(384.1 151) rotate(405)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow on"/></g><text x="384.1" y="122" class="lbl lbl-num lbl-warn" text-anchor="middle">17</text><g transform="translate(450.6 151) rotate(405)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow on"/></g><text x="450.6" y="122" class="lbl lbl-num lbl-warn" text-anchor="middle">19</text><g transform="translate(517.1 151) rotate(405)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow on"/></g><text x="517.1" y="122" class="lbl lbl-num lbl-warn" text-anchor="middle">20</text><g transform="translate(583.6 151) rotate(405)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow on"/></g><text x="583.6" y="122" class="lbl lbl-num lbl-warn" text-anchor="middle">21</text><g transform="translate(650.1 151) rotate(405)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow on"/></g><text x="650.1" y="122" class="lbl lbl-num lbl-warn" text-anchor="middle">19</text><g transform="translate(716.6 151) rotate(427.5)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow on"/></g><text x="716.6" y="122" class="lbl lbl-num lbl-warn" text-anchor="middle">17</text><g transform="translate(783.1 151) rotate(450)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow"/></g><text x="783.1" y="122" class="lbl lbl-num" text-anchor="middle">15</text><g transform="translate(849.6 151) rotate(472.5)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow"/></g><text x="849.6" y="122" class="lbl lbl-num" text-anchor="middle">13</text><g transform="translate(916.1 151) rotate(495)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow"/></g><text x="916.1" y="122" class="lbl lbl-num" text-anchor="middle">11</text><g transform="translate(982.6 151) rotate(517.5)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow"/></g><text x="982.6" y="122" class="lbl lbl-num" text-anchor="middle">9</text><g transform="translate(1049.1 151) rotate(180)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow"/></g><text x="1049.1" y="122" class="lbl lbl-num" text-anchor="middle">8</text><g transform="translate(1115.6 151) rotate(202.5)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow"/></g><text x="1115.6" y="122" class="lbl lbl-num" text-anchor="middle">10</text><g transform="translate(1182.1 151) rotate(270)"><path d="M0,-11 L0,9 M-5,-5 L0,-11 L5,-5" class="arrow"/></g><text x="1182.1" y="122" class="lbl lbl-num" text-anchor="middle">15</text><text x="0" y="214" class="lbl lbl-rowname">Swell</text><text x="0" y="233" class="lbl lbl-row">from a surf forecast</text><line x1="168" x2="1232" y1="256" y2="256" class="rule"/><rect x="169.5" y="230.2" width="30.3" height="25.8" class="bar"/><rect x="202.8" y="233.8" width="30.3" height="22.2" class="bar"/><rect x="236" y="237.5" width="30.3" height="18.5" class="bar"/><rect x="269.3" y="237.5" width="30.3" height="18.5" class="bar"/><rect x="302.5" y="241.2" width="30.3" height="14.8" class="bar"/><rect x="335.8" y="237.5" width="30.3" height="18.5" class="bar"/><rect x="369" y="233.8" width="30.3" height="22.2" class="bar"/><rect x="402.3" y="230.2" width="30.3" height="25.8" class="bar"/><rect x="435.5" y="226.5" width="30.3" height="29.5" class="bar"/><rect x="468.8" y="222.8" width="30.3" height="33.2" class="bar"/><rect x="502" y="219.1" width="30.3" height="36.9" class="bar"/><rect x="535.3" y="215.4" width="30.3" height="40.6" class="bar"/><rect x="568.5" y="211.7" width="30.3" height="44.3" class="bar"/><rect x="601.8" y="211.7" width="30.3" height="44.3" class="bar"/><rect x="635" y="211.7" width="30.3" height="44.3" class="bar"/><rect x="668.3" y="215.4" width="30.3" height="40.6" class="bar"/><rect x="701.5" y="215.4" width="30.3" height="40.6" class="bar"/><rect x="734.8" y="219.1" width="30.3" height="36.9" class="bar"/><rect x="768" y="219.1" width="30.3" height="36.9" class="bar"/><rect x="801.3" y="222.8" width="30.3" height="33.2" class="bar"/><rect x="834.5" y="226.5" width="30.3" height="29.5" class="bar"/><rect x="867.8" y="230.2" width="30.3" height="25.8" class="bar"/><rect x="901" y="233.8" width="30.3" height="22.2" class="bar"/><rect x="934.3" y="233.8" width="30.3" height="22.2" class="bar"/><rect x="967.5" y="237.5" width="30.3" height="18.5" class="bar"/><rect x="1000.8" y="237.5" width="30.3" height="18.5" class="bar"/><rect x="1034" y="241.2" width="30.3" height="14.8" class="bar"/><rect x="1067.3" y="241.2" width="30.3" height="14.8" class="bar"/><rect x="1100.5" y="241.2" width="30.3" height="14.8" class="bar"/><rect x="1133.8" y="237.5" width="30.3" height="18.5" class="bar"/><rect x="1167" y="237.5" width="30.3" height="18.5" class="bar"/><rect x="1200.3" y="237.5" width="30.3" height="18.5" class="bar"/><text x="567" y="200" class="lbl lbl-num" text-anchor="middle">1.2 m</text><text x="251.1" y="216" class="lbl lbl-num" text-anchor="middle">0.5 m</text><text x="0" y="294" class="lbl lbl-rowname">Sea temperature</text><text x="0" y="313" class="lbl lbl-row">from a sea temperature site</text><line x1="168" x2="1232" y1="336" y2="336" class="rule"/><line x1="168" x2="700" y1="316" y2="316" class="curve thin"/><line x1="700" x2="1232" y1="314" y2="314" class="curve thin"/><text x="278.8" y="306" class="lbl lbl-num" text-anchor="middle">12.8 °C</text><text x="943.8" y="304" class="lbl lbl-num" text-anchor="middle">13.0 °C</text><text x="168" y="370" class="lbl lbl-axis" text-anchor="start">05:00</text><text x="301" y="370" class="lbl lbl-axis" text-anchor="middle">07:00</text><text x="434" y="370" class="lbl lbl-axis" text-anchor="middle">09:00</text><text x="567" y="370" class="lbl lbl-axis" text-anchor="middle">11:00</text><text x="700" y="370" class="lbl lbl-axis" text-anchor="middle">13:00</text><text x="833" y="370" class="lbl lbl-axis" text-anchor="middle">15:00</text><text x="966" y="370" class="lbl lbl-axis" text-anchor="middle">17:00</text><text x="1099" y="370" class="lbl lbl-axis" text-anchor="middle">19:00</text><text x="1232" y="370" class="lbl lbl-axis" text-anchor="end">21:00</text></svg></div>
+    <p class="strips-cap">The same sample day as the chart above. Onshore hours are marked in orange; the hatched hour is where the morning window used to end.</p>
+    <div class="shift" aria-labelledby="shift-h">
+      <div class="shift-copy">
+        <h3 id="shift-h">When the wind turns early, the window shrinks and Tidewise warns you</h3>
+        <p>The sample morning, before and after the forecast changed: the wind turns onshore an hour earlier than the overnight forecast said.</p>
+      </div>
+      <div class="shift-chart" role="img" aria-label="Sample morning on a 05:00 to 09:00 axis. Overnight forecast: window 05:30 to 08:30. This morning: window 05:30 to 07:30, because the wind turns onshore at 07:30. The last hour is lost.">
+        <div class="shift-row"><span class="shift-lab">Overnight forecast</span><span class="shift-track"><span class="shift-bar" style="left:12.5%;width:75%"></span></span><span class="shift-val num">05:30–08:30</span></div>
+        <div class="shift-row"><span class="shift-lab">This morning</span><span class="shift-track"><span class="shift-bar" style="left:12.5%;width:50%"></span><span class="shift-lost" style="left:62.5%;width:25%"></span></span><span class="shift-val num warn">05:30–07:30</span></div>
+        <div class="shift-row shift-axis" aria-hidden="true"><span></span><span class="shift-track"><span style="left:0">05:00</span><span style="left:25%">06:00</span><span style="left:50%">07:00</span><span style="left:75%">08:00</span><span style="left:100%">09:00</span></span><span></span></div>
+        <p class="shift-why"><span class="warn">Wind turns onshore at 07:30, 15 mph SW.</span> One hour of the window is gone.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="limits" aria-labelledby="limits-h">
+    <h2 id="limits-h">It shows conditions. You make the call.</h2>
+    <p class="lead-p">Tidewise is not a lifeguard, and it never tells you it’s safe to swim. A swim window is a reading of the tide, wind, swell and water temperature at your beach. Whether you go in is still your decision, made at the water’s edge.</p>
+    <figure class="cove">
+      <div class="cove-art">
+        <svg viewBox="0 0 880 300" role="img" aria-labelledby="cove-title">
+          <title id="cove-title">Cross-section of a cove before sunrise: a cliff and slipway on the left, the beach shelving into the sea, high and low water marks, rocks uncovered at low water, and a swimmer with a tow float.</title>
+          <defs>
+            <linearGradient id="dawnsky" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#0b1823"/><stop offset=".7" stop-color="#16283b"/><stop offset="1" stop-color="#3a3447"/></linearGradient>
+            <pattern id="rockhatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><line x1="0" y1="0" x2="0" y2="9" stroke="#24404f" stroke-width="2"/></pattern>
+          </defs>
+          <rect width="880" height="300" fill="url(#dawnsky)"/>
+          <path d="M840 172 a 26 26 0 0 1 52 0 Z" fill="#f4a27b" opacity=".85"/>
+          <path d="M0 172 H880 V300 H0 Z" fill="#123a4d"/>
+          <path d="M0 40 H86 L120 52 L300 162 L420 192 L560 222 L700 250 L880 282 V300 H0 Z" fill="#0f2230"/>
+          <path d="M0 40 H86 L120 52 L300 162 L420 192 L560 222 L700 250 L880 282 V300 H0 Z" fill="url(#rockhatch)"/>
+          <path d="M300 162 L420 192 L560 222 L700 250 L880 282" fill="none" stroke="#d8c7a4" stroke-width="2.5"/>
+          <path d="M120 56 L 304 168" stroke="#5d7682" stroke-width="9" stroke-linecap="butt"/>
+          <path d="M120 51 L 304 163" stroke="#a9bfc8" stroke-width="1.5"/>
+          <g fill="#1d3442" stroke="#5d7682" stroke-width="1.5"><path d="M470 206 q 14 -16 30 -4 q 10 8 2 14 Z"/><path d="M510 214 q 10 -12 24 -2 q 6 6 0 10 Z"/><path d="M590 230 q 10 -10 22 -1 q 4 5 -2 8 Z"/></g>
+          <line x1="255" x2="880" y1="134" y2="134" stroke="#9fe0d2" stroke-width="1.5" stroke-dasharray="6 5"/>
+          <line x1="590" x2="880" y1="228" y2="228" stroke="#9fe0d2" stroke-width="1.5" stroke-dasharray="6 5"/>
+          <path d="M330 172 H880" stroke="#cfe8ea" stroke-width="2"/>
+          <g transform="translate(700 172)"><line x1="10" y1="0" x2="34" y2="-2" stroke="#e4eef0" stroke-width="1.2"/><rect x="30" y="-12" width="26" height="14" rx="7" fill="#f4a27b"/><circle cx="4" cy="-3" r="7" fill="#e4eef0"/></g>
+        </svg>
+        <span class="tag" style="left:44%;top:37%">High water</span>
+        <span class="tag" style="left:79%;top:68%">Low water</span>
+        <span class="tag" style="left:22%;top:16%">Slipway</span>
+        <span class="tag tag-wide" style="left:50%;top:79%">Rocks at low water</span>
+        <span class="tag tag-wide" style="left:72%;top:46%">You, with a tow float</span>
+      </div>
+      <figcaption>Illustration: a cove at mid-tide, before sunrise. The same beach can be a short wade at high water and a walk over rocks at low water.</figcaption>
+    </figure>
+    <div class="ledger">
+      <div>
+        <h3>What Tidewise reads for your beach</h3>
+        <ul><li>Tide height and times</li><li>Wind speed and direction</li><li>Swell height</li><li>Water temperature</li></ul>
+      </div>
+      <div class="yours">
+        <h3>What only you can read</h3>
+        <ul><li>Flags and lifeguard advice, where your beach has them</li><li>Currents, rips and how the water looks when you get there</li><li>How much cold you can take today, and who is swimming with you</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec beta wrap" id="beta" aria-labelledby="beta-h">
+    <h2 id="beta-h">In public beta on iPhone at 40 beaches</h2>
+    <p class="lead-p">Tidewise covers 40 beaches in the UK and Ireland so far. If you swim at one of them, join the beta and read the morning’s windows before you leave the house.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://tidewise.example/beta">Join the iPhone beta</a>
+      <p class="cta-note">Opens the beta page at tidewise.example.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <a class="mark" href="#main">Tidewise</a>
+      <p>An iPhone app in public beta for year-round sea swimmers. Tidewise shows conditions. It is not a lifeguard and never tells you it’s safe to swim.</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="https://tidewise.example/beta">Join the iPhone beta</a></li>
+        <li><a href="#sample">Sample day</a></li>
+        <li><a href="#limits">Not a lifeguard</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

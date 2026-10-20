@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Periodic KYC review software for credit unions | Refresh</title>
+<meta name="description" content="Refresh runs periodic KYC reviews for credit unions with 20,000 to 200,000 members: who is due, what is on file, a short request for what is missing, and a trail an examiner can follow.">
+<meta name="theme-color" content="#f3f4f1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Refresh: KYC reviews your examiner can follow">
+<meta property="og:description" content="Periodic KYC review software for credit unions with 20,000 to 200,000 members. In pilot at two credit unions.">
+<meta property="og:image" content="https://refresh.example/og.png">
+<meta property="og:url" content="https://refresh.example/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Refresh: KYC reviews your examiner can follow">
+<meta name="twitter:description" content="Periodic KYC review software for credit unions with 20,000 to 200,000 members.">
+<meta name="twitter:image" content="https://refresh.example/og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="fonts/fonts.css">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --ground:#f3f4f1; --surface:#ffffff; --tone:#e4e8e2; --tone-2:#d6dcd4;
+  --ink:#17201c; --ink-2:#47514c; --rule:#c9cec8; --rule-strong:#7f8a83;
+  --action:#1d5c45; --action-hover:#144433; --on-action:#ffffff;
+  --due-ink:#7a4100; --due-fill:#fbe8c8;
+  --ok-ink:#1d5c45; --ok-fill:#dcefe5;
+  --ask-ink:#2c4a7a; --ask-fill:#e1e9f6;
+  --cell:#fff7c2;
+  --display:'TeX Gyre Heros Cn','Arial Narrow',Arial,sans-serif;
+  --text:'TeX Gyre Heros',Helvetica,Arial,sans-serif;
+  --sheet:'Carlito',Calibri,Arial,sans-serif;
+  --s-2xs:4px; --s-xs:8px; --s-s:12px; --s-m:16px; --s-l:24px; --s-xl:40px; --s-2xl:64px;
+  --pad-section:clamp(56px, 4rem + 3vw, 120px);
+  --max:1320px;
+  --gutter:clamp(16px, 1rem + 2vw, 48px);
+}
+*,*::before,*::after{box-sizing:border-box}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul,fieldset{margin:0}
+fieldset{padding:0;border:0;min-width:0}
+ol,ul{padding:0;list-style:none}
+img,svg,video,canvas{display:block;max-width:100%}
+input,button,textarea,select{font:inherit;color:inherit}
+:where(p,li,dd,td,th,output,[role=status]){overflow-wrap:break-word;min-width:0}
+html{scroll-padding-top:16px;-webkit-text-size-adjust:100%}
+body{background:var(--ground);color:var(--ink);font-family:var(--text);font-size:1.0625rem;line-height:1.55;font-variant-numeric:lining-nums}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:2px}
+.skip{position:absolute;left:12px;top:-80px;padding:12px 16px;background:var(--ink);color:var(--ground);z-index:100;text-decoration:none}
+.skip:focus{top:12px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-0.005em;text-wrap:balance}
+h1{font-size:clamp(2.5rem, 1.9rem + 2.6vw, 4.25rem);line-height:1.02;overflow-wrap:break-word}
+h2{font-size:clamp(1.875rem, 1.45rem + 1.6vw, 2.875rem);line-height:1.08;max-width:22ch}
+h3{font-family:var(--text);font-size:1.0625rem;line-height:1.35;letter-spacing:0}
+p{max-width:60ch}
+.mono{font-variant-numeric:tabular-nums}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 22px;border-radius:4px;font-weight:700;text-decoration:none;border:2px solid transparent;cursor:pointer;line-height:1.2}
+.btn-primary{background:var(--action);color:var(--on-action)}
+.btn-primary:hover{background:var(--action-hover)}
+.btn-quiet{background:var(--surface);border-color:var(--rule-strong);color:var(--ink)}
+.btn-quiet:hover{border-color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:default}
+
+/* header */
+.site-head{border-bottom:1px solid var(--rule)}
+.head-row{display:flex;align-items:center;gap:var(--s-m);min-height:68px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:1.5rem;text-decoration:none;min-height:44px}
+.brand svg{width:28px;height:28px}
+.menu-btn{margin-left:auto;min-height:44px;min-width:44px;padding:8px 14px;border:2px solid var(--rule-strong);border-radius:4px;background:var(--surface);font-weight:700;cursor:pointer}
+#site-menu{display:flex}
+#site-menu ul{display:flex;flex-direction:column;gap:0}
+#site-menu a{display:flex;align-items:center;min-height:44px;padding:0 4px;text-decoration:none}
+#site-menu a:not(.btn):hover{text-decoration:underline}
+.js #site-menu[hidden]{display:none}
+@media (max-width:899px){
+  .head-row{flex-wrap:wrap}
+  #site-menu{flex-basis:100%;padding-bottom:var(--s-m)}
+  #site-menu ul{width:100%}
+  #site-menu li + li{border-top:1px solid var(--rule)}
+  #site-menu .btn{margin-top:var(--s-s);width:100%}
+}
+@media (min-width:900px){
+  .menu-btn{display:none}
+  .js #site-menu[hidden],#site-menu{display:flex;margin-left:auto}
+  #site-menu ul{flex-direction:row;align-items:center;gap:var(--s-l)}
+}
+
+/* hero */
+.hero{padding-block:clamp(24px, 1rem + 2vw, 56px) var(--s-xl)}
+.hero-grid{display:grid;gap:var(--s-l)}
+.hero-copy{display:flex;flex-direction:column;gap:var(--s-m)}
+.lede{font-size:clamp(1.0625rem, 1rem + .3vw, 1.25rem);line-height:1.5;max-width:40ch}
+.lede strong{font-weight:700}
+.act{display:flex;flex-direction:column;gap:var(--s-s);margin-top:var(--s-xs)}
+.act .btn{align-self:flex-start}
+.act-note{font-size:.9375rem;color:var(--ink-2);max-width:42ch}
+.cast{margin-top:var(--s-l);border-top:1px solid var(--rule);padding-top:var(--s-m);display:none}
+.cast-h{font-weight:700;font-size:.9375rem;line-height:1.4;margin-bottom:var(--s-s)}
+.cast ul{display:grid;gap:10px}
+.cast li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;font-size:.9375rem;line-height:1.45}
+@media (min-width:1080px){
+  .hero-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px, 4vw, 72px);align-items:start}
+  .cast{display:block}
+}
+
+/* actor marks, shared by the trail and the legend */
+.who{display:inline-block;min-width:76px;padding:2px 8px;border-radius:3px;font-size:.8125rem;font-weight:700;line-height:1.5;text-align:center;border:1px solid currentColor}
+.who-sys{color:var(--ink);background:var(--tone)}
+.who-staff{color:var(--ask-ink);background:var(--ask-fill)}
+.who-member{color:var(--due-ink);background:var(--due-fill)}
+.who-officer{color:var(--ok-ink);background:var(--ok-fill)}
+
+/* the review file: the signature artifact */
+.file{background:var(--surface);border:1px solid var(--rule-strong);border-radius:6px;overflow:hidden}
+.file-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;padding:12px 16px;border-bottom:1px solid var(--rule);background:var(--tone)}
+.file-title{font-size:1.375rem;line-height:1.15;max-width:none}
+.file-sample{font-size:.875rem;color:var(--ink-2)}
+.stages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-bottom:1px solid var(--rule)}
+.chip{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:56px;padding:6px 2px;cursor:pointer;font-weight:700;font-size:.9375rem;line-height:1.2;text-align:center;border-right:1px solid var(--rule);color:var(--ink-2)}
+.chip:last-child{border-right:0}
+.chip .n{font-size:.8125rem;font-weight:400}
+.chip input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.chip.done{color:var(--ink)}
+.chip.done .n::after{content:" ✓"}
+.chip:has(input:checked){background:var(--ink);color:var(--surface)}
+.chip:has(input:focus-visible){outline:3px solid var(--action);outline-offset:-5px;box-shadow:inset 0 0 0 6px var(--surface)}
+.readout{padding:16px 16px 4px;min-height:112px}
+.readout h3{font-family:var(--display);font-size:clamp(1.375rem, 1.2rem + .6vw, 1.75rem);line-height:1.12;margin-bottom:6px}
+.readout p{font-size:1rem;line-height:1.5}
+.sheet{margin:10px 16px 0;font-family:var(--sheet);font-size:.9375rem;line-height:1.3}
+.sheet-cap{font-family:var(--text);font-size:.875rem;color:var(--ink-2);margin-bottom:4px}
+.sheet table{width:100%;border-collapse:collapse;table-layout:fixed;background:#fff}
+.sheet th,.sheet td{border:1px solid #bfc4bf;padding:4px 6px;text-align:left;vertical-align:top}
+.sheet thead th{background:#eef0ec;font-weight:400;color:#47514c;text-align:center;font-size:.8125rem}
+.sheet th.rown{width:46px;background:#eef0ec;font-weight:400;color:#47514c;text-align:center;font-size:.8125rem}
+.sheet td.edited{background:var(--cell)}
+.sheet col.c-last{width:22%}.sheet col.c-status{width:26%}
+.file-ctl{display:flex;flex-wrap:wrap;gap:10px;padding:14px 16px;border-bottom:1px solid var(--rule)}
+.file-ctl .btn{min-height:44px;padding:8px 16px;font-size:.9375rem}
+.file-body{display:grid;gap:0}
+.pane{padding:14px 16px 16px}
+.pane + .pane{border-top:1px solid var(--rule)}
+.pane h4{font-size:.875rem;font-weight:700;color:var(--ink-2);margin-bottom:8px}
+.items li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:8px 0;border-top:1px solid var(--tone-2);font-size:.9375rem;line-height:1.4}
+.items li:first-child{border-top:0}
+.items .what{font-weight:700}
+.items .note{grid-column:1 / -1;color:var(--ink-2);font-size:.875rem}
+.state{display:inline-block;padding:1px 8px;border-radius:3px;font-size:.8125rem;font-weight:700;white-space:nowrap;align-self:start;border:1px solid currentColor}
+.st-none{color:#5b6560;border-style:dashed;background:transparent}
+.st-ok{color:var(--ok-ink);background:var(--ok-fill)}
+.st-ask{color:var(--due-ink);background:var(--due-fill)}
+.st-sent{color:var(--ask-ink);background:var(--ask-fill)}
+.st-dec{color:var(--surface);background:var(--ink);border-color:var(--ink)}
+.trail{counter-reset:t}
+.trail li{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;padding:8px 0 8px;border-top:1px solid var(--tone-2);font-size:.9375rem;line-height:1.4}
+.trail li:first-child{border-top:0}
+.trail time{grid-column:2;font-size:.8125rem;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.trail .who{grid-row:1 / span 2;align-self:start}
+.trail .did{grid-column:2}
+.trail li.new::before{content:"";position:absolute;inset:0 -16px;background:var(--cell);z-index:-1;opacity:1}
+.trail li{z-index:0}
+.empty{color:var(--ink-2);font-size:.9375rem}
+@media (min-width:640px){
+  .file-body{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
+  .pane + .pane{border-top:0;border-left:1px solid var(--rule)}
+}
+@media (max-width:420px){
+  .chip{font-size:.875rem}
+  .readout{min-height:150px}
+}
+
+/* sections */
+section{padding-block:var(--pad-section)}
+.band{background:var(--surface);border-block:1px solid var(--rule)}
+.sec-head{display:grid;gap:var(--s-m);margin-bottom:var(--s-xl)}
+.sec-head p{color:var(--ink-2);max-width:56ch}
+.two{display:grid;gap:var(--s-xl)}
+@media (min-width:960px){.two{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}}
+
+/* policy table */
+.policy{width:100%;border-collapse:collapse;font-size:1rem}
+.policy caption{caption-side:top;text-align:left;font-size:.875rem;color:var(--ink-2);padding-bottom:8px}
+.policy th,.policy td{border-top:1px solid var(--rule);padding:12px 12px 12px 0;text-align:left;vertical-align:top}
+.policy thead th{font-size:.875rem;color:var(--ink-2);border-top:0;padding-bottom:6px}
+.policy tbody th{font-family:var(--display);font-size:1.25rem}
+.policy td.cycle{font-weight:700;white-space:nowrap}
+.signs{display:grid;gap:var(--s-m)}
+.signs li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline}
+.signs p{max-width:48ch}
+@media (max-width:599px){
+  .policy thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .policy tr{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;border-top:1px solid var(--rule);padding:12px 0}
+  .policy th,.policy td{border:0;padding:0}
+  .policy td.items-cell{grid-column:1 / -1}
+}
+
+/* worklist */
+.work{width:100%;border-collapse:collapse}
+.work caption{caption-side:top;text-align:left;font-size:.875rem;color:var(--ink-2);padding-bottom:8px}
+.work th,.work td{border-top:1px solid var(--rule);padding:12px 12px 12px 0;text-align:left;vertical-align:top}
+.work thead th{font-size:.875rem;color:var(--ink-2);border-top:0;padding-bottom:6px}
+.work td:first-child{font-variant-numeric:tabular-nums;font-weight:700}
+@media (max-width:599px){
+  .work thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .work tr{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;border-top:1px solid var(--rule);padding:12px 0}
+  .work td{border:0;padding:0}
+  .work td.next{grid-column:1 / -1}
+}
+
+/* member request */
+.request{background:var(--surface);border:1px solid var(--rule-strong);border-radius:6px;padding:20px;max-width:440px}
+.req-cap{font-size:.875rem;color:var(--ink-2);margin-bottom:12px}
+.request h3{margin-bottom:8px}
+.request ol{list-style:decimal;padding-left:1.4em;display:grid;gap:6px;margin-top:10px}
+.request .line{display:block;margin-top:14px;padding-top:10px;border-top:1px solid var(--rule);font-size:.9375rem;color:var(--ink-2)}
+figure.draw{display:grid;gap:10px}
+figure.draw svg{width:100%;height:auto}
+figure.draw figcaption{font-size:.9375rem;color:var(--ink-2);max-width:46ch}
+
+/* exam */
+.qa{border-top:1px solid var(--rule)}
+.qa details{border-bottom:1px solid var(--rule)}
+.qa summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px;padding:12px 0;cursor:pointer;font-weight:700;list-style:none}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"+";font-size:1.5rem;line-height:1;font-weight:400}
+.qa details[open] summary::after{content:"\2212"}
+.qa details p{padding-bottom:16px}
+.records{display:grid;gap:10px;margin-top:var(--s-l)}
+.records li{display:grid;grid-template-columns:7.5rem 1fr;gap:12px;border-top:1px solid var(--rule);padding-top:10px}
+.records b{font-family:var(--display);font-size:1.125rem}
+
+/* close */
+.close{text-align:left}
+.close .act{margin-top:var(--s-l)}
+.site-foot{border-top:1px solid var(--rule);padding-block:var(--s-xl)}
+.foot-row{display:flex;flex-wrap:wrap;gap:var(--s-m) var(--s-xl);justify-content:space-between}
+.site-foot ul{display:flex;flex-wrap:wrap;gap:0 var(--s-l)}
+.site-foot a{display:inline-flex;align-items:center;min-height:44px}
+.site-foot p{color:var(--ink-2);font-size:.9375rem}
+
+
+/* stage tags: the review's five stages run down the page in the artifact's order */
+.stage-tag{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:.9375rem;color:var(--ink)}
+.stage-tag .n{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:28px;padding:0 8px;border-radius:3px;background:var(--ink);color:var(--surface);font-size:.875rem;font-variant-numeric:tabular-nums}
+.exam-act{margin-top:var(--s-xl);padding-top:var(--s-l);border-top:2px solid var(--ink)}
+.exam-act h3{font-family:var(--display);font-size:clamp(1.5rem, 1.3rem + .8vw, 2rem);line-height:1.1}
+@media (max-width:639px){
+  .trail li{grid-template-columns:auto minmax(0,1fr);align-items:center}
+  .trail .who{grid-row:auto}
+  .trail time{grid-column:2}
+  .trail .did{grid-column:1 / -1}
+  .items li{padding:6px 0}
+}
+
+/* motion: only with no reduced-motion preference */
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .trail li.new::before{animation:settle 900ms cubic-bezier(.2,.7,.2,1) 300ms forwards}
+  @media (hover:hover) and (pointer:fine){
+    .btn{transition:background-color 150ms ease-out, border-color 150ms ease-out}
+  }
+  .btn:active{transform:scale(.97)}
+}
+@media (prefers-reduced-motion:reduce){
+  .trail li.new::before{animation:settle 200ms linear 600ms forwards}
+}
+@keyframes settle{to{opacity:0}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap head-row">
+    <a class="brand" href="#main" aria-label="Refresh, top of page">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="5" fill="#17201c"/><path d="M9 9h10v3H9zM9 15h14v3H9zM9 21h8v3H9z" fill="#f3f4f1"/><path d="M20 22l2.2 2.2L26 20" fill="none" stroke="#7fd3ab" stroke-width="2.4"/></svg>
+      Refresh
+    </a>
+    <button class="menu-btn" aria-expanded="true" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Main">
+      <ul>
+        <li><a href="#officers">For BSA officers</a></li>
+        <li><a href="#members">What members see</a></li>
+        <li><a href="#staff">For member services</a></li>
+        <li><a href="#exam">At exam time</a></li>
+        <li><a class="btn btn-primary" href="https://refresh.example/demo">Book a demo</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1>KYC reviews your examiner can follow</h1>
+        <p class="lede"><strong>Refresh is periodic KYC review software for credit unions with 20,000 to 200,000 members.</strong> It finds who is due, gathers what is on file, asks members only for what is missing and records each step.</p>
+        <div class="act">
+          <a class="btn btn-primary" href="https://refresh.example/demo">Book a demo</a>
+          <p class="act-note">In pilot at two credit unions. Refresh never sets a risk rating; your compliance officer does.</p>
+        </div>
+        <div class="cast">
+          <p class="cast-h">Everyone who touches a review shows up in its trail</p>
+          <ul>
+            <li><span class="who who-sys">Refresh</span><span>finds who is due and gathers the file</span></li>
+            <li><span class="who who-staff">Staff</span><span>member services send requests and check documents</span></li>
+            <li><span class="who who-member">Member</span><span>answers one short request</span></li>
+            <li><span class="who who-officer">Officer</span><span>the BSA officer makes the risk decision</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="file" data-signature id="review" aria-labelledby="file-title">
+        <div class="file-head">
+          <h2 class="file-title" id="file-title">Review file: member 20417</h2>
+          <span class="file-sample">Sample written for this page; the member, staff and dates are invented.</span>
+        </div>
+        <fieldset class="stages">
+          <legend class="sr-only">Review stage</legend>
+          <label class="chip"><input type="radio" name="stage" value="0" checked><span class="n">1</span>Due</label>
+          <label class="chip"><input type="radio" name="stage" value="1"><span class="n">2</span>On file</label>
+          <label class="chip"><input type="radio" name="stage" value="2"><span class="n">3</span>Asked</label>
+          <label class="chip"><input type="radio" name="stage" value="3"><span class="n">4</span>Checked</label>
+          <label class="chip"><input type="radio" name="stage" value="4"><span class="n">5</span>Decided</label>
+        </fieldset>
+        <!--render:start-->
+        <div class="readout" role="status" aria-live="polite" id="readout"><h3>Listed as due on Wed 7 Oct 2026</h3><p>Medium-risk member, last reviewed Mon 7 Oct 2024. Your policy reviews this tier every 24 months, so the member is on today’s list.</p></div>
+        <div class="sheet" id="sheet"><p class="sheet-cap">The same member in a review-date spreadsheet:</p><table><colgroup><col class="c-row"><col class="c-last"><col class="c-status"><col class="c-notes"></colgroup><thead><tr><th class="rown" scope="col"><span class="sr-only">Row</span></th><th scope="col">B · Last review</th><th scope="col">C · Status</th><th scope="col">D · Notes</th></tr></thead><tbody><tr><th class="rown" scope="row">2814</th><td>10/7/24</td><td class="edited">due?</td><td class="edited">found by filtering the sheet by date</td></tr></tbody></table></div>
+        <!--render:end-->
+        <div class="file-ctl">
+          <button class="btn btn-quiet" type="button" id="next">Next stage</button>
+          <button class="btn btn-quiet" type="button" id="reset">Start over</button>
+        </div>
+        <!--render2:start-->
+        <div class="file-body" id="file-body"><div class="pane"><h4>Member details</h4><ul class="items"><li><span class="what">Name and date of birth</span><span class="state st-none">Not gathered yet</span></li><li><span class="what">Home address</span><span class="state st-none">Not gathered yet</span></li><li><span class="what">Expected account activity</span><span class="state st-none">Not gathered yet</span></li><li><span class="what">Photo ID</span><span class="state st-none">Not gathered yet</span></li><li><span class="what">Occupation</span><span class="state st-none">Not gathered yet</span></li></ul></div><div class="pane"><h4>Audit trail, 1 entry</h4><ol class="trail"><li><span class="who who-sys">Refresh</span><time>Wed 7 Oct 2026, 06:00</time><span class="did">Listed as due under the rule: medium risk, every 24 months. Last review Mon 7 Oct 2024.</span></li></ol></div></div>
+        <!--render2:end-->
+      </div>
+    </div>
+  </div>
+
+  <section class="band" id="officers" aria-labelledby="officers-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="stage-tag"><span class="n">1–2</span>Due, On file</p>
+        <h2 id="officers-h">Your policy decides who is due. Your officer decides the risk.</h2>
+        <p>You write the review rules once. Refresh applies them to every member and shows which rule put each one on the list.</p>
+      </div>
+      <div class="two">
+        <table class="policy">
+          <caption>Sample review policy, for illustration. Your credit union sets the tiers, cycles and items.</caption>
+          <thead><tr><th scope="col">Risk tier</th><th scope="col">Review every</th><th scope="col">What each review needs</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">High</th><td class="cycle">12 months</td><td class="items-cell">Photo ID, address, occupation, expected activity, source of funds</td></tr>
+            <tr><th scope="row">Medium</th><td class="cycle">24 months</td><td class="items-cell">Photo ID, address, occupation, expected activity</td></tr>
+            <tr><th scope="row">Low</th><td class="cycle">36 months</td><td class="items-cell">Photo ID, address</td></tr>
+          </tbody>
+        </table>
+        <div>
+          <h3 style="margin-bottom:var(--s-m)">What stays with the officer</h3>
+          <ul class="signs">
+            <li><span class="who who-officer">Officer</span><p>Every risk decision. Refresh prepares the file and records the decision with a name and a time. It never rates a member.</p></li>
+            <li><span class="who who-officer">Officer</span><p>The final read of each file: what was on file, what was asked for and what came back, each with a date, before the decision.</p></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="members" aria-labelledby="members-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="stage-tag"><span class="n">3</span>Asked</p>
+        <h2 id="members-h">Members get one short request that lists only what is missing</h2>
+      </div>
+      <div class="two">
+        <div class="request">
+          <p class="req-cap">Sample request to member 20417, written for this page.</p>
+          <h3>Hi Marisol, please update two things for your account review</h3>
+          <ol>
+            <li>A current photo ID. The one we hold expired in March 2026.</li>
+            <li>Your current occupation.</li>
+          </ol>
+          <span class="line">We already have your address and other details, so we are not asking for them again.</span>
+        </div>
+        <figure class="draw">
+          <svg viewBox="0 0 520 300" role="img" aria-labelledby="old-t">
+            <title id="old-t">A mailed review letter in a window envelope beside a desk phone: the old way of asking members for documents.</title>
+            <g fill="none" stroke="#17201c" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+              <!-- letter sheet, partly out of the envelope -->
+              <path d="M70 40h220v170H70z" fill="#ffffff"/>
+              <path d="M90 64h120M90 80h170M90 96h150" stroke="#7f8a83"/>
+              <path d="M90 120h10M108 120h130M90 136h10M108 136h110M90 152h10M108 152h140M90 168h10M108 168h96M90 184h10M108 184h120" stroke="#7f8a83"/>
+              <!-- envelope -->
+              <path d="M40 120h290v150H40z" fill="#e4e8e2"/>
+              <path d="M40 120l145 82 145-82" />
+              <rect x="70" y="210" width="120" height="38" rx="2" fill="#ffffff"/>
+              <path d="M82 222h70M82 234h50" stroke="#7f8a83"/>
+              <rect x="276" y="134" width="40" height="46" fill="#ffffff"/>
+              <path d="M282 142h28M282 152h28M282 162h18" stroke="#7f8a83"/>
+              <path d="M232 150c10-8 24-8 34 0s24 8 34 0" stroke="#7f8a83"/>
+              <path d="M232 160c10-8 24-8 34 0s24 8 34 0" stroke="#7f8a83"/>
+              <!-- desk phone -->
+              <path d="M370 196h120l-8 64H378z" fill="#ffffff"/>
+              <path d="M360 180c0-26 140-26 140 0v12c0 6-6 10-12 10h-14c-6 0-10-4-10-10v-6c-20-6-58-6-78 0v6c0 6-4 10-10 10h-14c-6 0-12-4-12-10z" fill="#e4e8e2"/>
+              <circle cx="410" cy="220" r="4"/><circle cx="430" cy="220" r="4"/><circle cx="450" cy="220" r="4"/>
+              <circle cx="410" cy="238" r="4"/><circle cx="430" cy="238" r="4"/><circle cx="450" cy="238" r="4"/>
+              <path d="M490 228c20 0 22 30 4 40" stroke="#7f8a83" stroke-dasharray="3 5"/>
+            </g>
+          </svg>
+          <figcaption>The request replaces the letter that lists every document, and the follow-up call when nobody answers it.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="staff" aria-labelledby="staff-h">
+    <div class="wrap two">
+      <div class="sec-head" style="margin-bottom:0">
+        <p class="stage-tag"><span class="n">4</span>Checked</p>
+        <h2 id="staff-h">Member services work one list, not a calendar of letters and callbacks</h2>
+        <p>The list shows every open review, where it stands and the next step. A member with nothing missing goes straight to the officer, with no request at all.</p>
+      </div>
+      <table class="work">
+        <caption>Sample list for Thu 15 Oct 2026, written for this page.</caption>
+        <thead><tr><th scope="col">Member</th><th scope="col">Stage</th><th scope="col">Next step</th></tr></thead>
+        <tbody>
+          <tr><td>22901</td><td><span class="state st-none">Due</span></td><td class="next">Refresh is gathering what is on file</td></tr>
+          <tr><td>40276</td><td><span class="state st-ok">On file</span></td><td class="next">Nothing missing, so no request. Ready for the officer</td></tr>
+          <tr><td>31152</td><td><span class="state st-sent">Asked</span></td><td class="next">Waiting on the member since Fri 9 Oct 2026</td></tr>
+          <tr><td>18830</td><td><span class="state st-ok">Checked</span></td><td class="next">Documents checked. Ready for the officer</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="exam" aria-labelledby="exam-h">
+    <div class="wrap two">
+      <div>
+        <div class="sec-head" style="margin-bottom:var(--s-l)">
+          <p class="stage-tag"><span class="n">5</span>Decided</p>
+          <h2 id="exam-h">When an examiner asks about a member, the answer is already in the trail</h2>
+          <p>No binder to build the week before. Every review keeps the same five sections, in order.</p>
+        </div>
+        <figure class="draw">
+          <svg viewBox="0 0 580 280" role="img" aria-labelledby="binder-t">
+            <title id="binder-t">An open ring binder with five tab dividers labelled Due, On file, Asked, Checked and Decided.</title>
+            <g fill="none" stroke="#17201c" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+              <path d="M20 40h220v210H20z" fill="#e4e8e2"/>
+              <path d="M260 40h220v210H260z" fill="#e4e8e2"/>
+              <path d="M240 40h20v210h-20z" fill="#d6dcd4"/>
+              <path d="M276 52h190v186H276z" fill="#ffffff"/>
+              <circle cx="290" cy="90" r="9" fill="#d6dcd4"/><circle cx="290" cy="145" r="9" fill="#d6dcd4"/><circle cx="290" cy="200" r="9" fill="#d6dcd4"/>
+              <path d="M240 90h50M240 145h50M240 200h50" stroke-width="3"/>
+              <path d="M316 76h110M316 92h120M316 108h90" stroke="#7f8a83"/>
+              <path d="M316 134h14l6 6 12-14" stroke="#1d5c45" stroke-width="2"/>
+              <path d="M356 134h80M316 156h110M316 172h96M316 196h120M316 212h70" stroke="#7f8a83"/>
+              <path d="M480 44h92v38h-92" fill="#ffffff"/>
+              <path d="M480 88h92v38h-92" fill="#ffffff"/>
+              <path d="M480 132h92v38h-92" fill="#ffffff"/>
+              <path d="M480 176h92v38h-92" fill="#ffffff"/>
+              <path d="M480 220h92v38h-92" fill="#17201c"/>
+              <path d="M44 76h170M44 96h150M44 116h170M44 136h120M44 156h160M44 176h140M44 196h170" stroke="#7f8a83"/>
+            </g>
+            <g font-family="'TeX Gyre Heros',Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="currentColor" style="color:#17201c" text-anchor="middle">
+              <text x="526" y="69">Due</text><text x="526" y="113">On file</text><text x="526" y="157">Asked</text><text x="526" y="201">Checked</text><text x="526" y="245" fill="currentColor" style="color:#ffffff">Decided</text>
+            </g>
+          </svg>
+          <figcaption>Each review is filed the same way: Due, On file, Asked, Checked, Decided.</figcaption>
+        </figure>
+      </div>
+      <div>
+        <ul class="records" aria-label="What each trail entry records">
+          <li><b>Who</b><span>Refresh, a named staff member, the member, or the officer</span></li>
+          <li><b>When</b><span>Date and time of each step</span></li>
+          <li><b>Why</b><span>The policy rule that made the member due, and the item that was missing</span></li>
+          <li><b>Decision</b><span>The officer’s rating and note, in their name</span></li>
+        </ul>
+        <div class="qa" style="margin-top:var(--s-xl)">
+          <h3 class="sr-only">Questions an examiner may ask you</h3>
+          <details><summary>Who makes the risk decision?</summary><p>Your compliance officer. Refresh prepares the file and records the decision; it does not rate members.</p></details>
+          <details><summary>Where is member data held, and who can see it?</summary><p>We cover hosting, access and retention in the demo, so you can bring the answers to your exam team.</p></details>
+          <details><summary>Which core systems does it read from?</summary><p>Covered in the demo. Tell us your core system when you book.</p></details>
+          <details><summary>Who else uses it, and with what results?</summary><p>Two credit unions are piloting Refresh. They are not named here, and we have no measured results yet.</p></details>
+        </div>
+        <div class="act exam-act">
+          <h3>See a full review, from due date to decision</h3>
+          <a class="btn btn-primary" href="https://refresh.example/demo">Book a demo</a>
+          <p class="act-note">Opens our booking page. Refresh is in pilot at two credit unions; your compliance officer still makes every risk decision.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-row">
+    <p>Refresh: periodic KYC review software for credit unions.<br>© 2026 Refresh</p>
+    <ul aria-label="Footer">
+      <li><a href="#officers">For BSA officers</a></li>
+      <li><a href="#staff">For member services</a></li>
+      <li><a href="#exam">At exam time</a></li>
+      <li><a href="https://refresh.example/demo">Book a demo</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // menu
+  var b = document.querySelector('.menu-btn'), m = document.getElementById('site-menu');
+  var mq = window.matchMedia('(min-width: 900px)');
+  function set(open){ b.setAttribute('aria-expanded', String(open)); m.hidden = !open && !mq.matches; }
+  set(false);
+  mq.addEventListener('change', function(){ set(false); });
+  b.addEventListener('click', function(){ set(b.getAttribute('aria-expanded') !== 'true'); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && b.getAttribute('aria-expanded') === 'true'){ set(false); b.focus(); } });
+  document.addEventListener('click', function(e){ if (!mq.matches && !m.contains(e.target) && e.target !== b) set(false); });
+  m.addEventListener('focusout', function(e){ if (!mq.matches && !m.contains(e.relatedTarget) && e.relatedTarget !== b) set(false); });
+  m.addEventListener('click', function(e){ if (e.target.closest('a') && !mq.matches) set(false); });
+})();
+</script>
+<script src="review.js"></script>
+</body>
+</html>

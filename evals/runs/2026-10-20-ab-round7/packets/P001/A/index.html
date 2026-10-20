@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewise</title>
+<meta name="description" content="Tidewise is an iPhone app for year-round sea swimmers. It reads the tide, wind, swell and water temperature at your beach and shows today's swim windows. Public beta, 40 beaches in the UK and Ireland.">
+<meta name="theme-color" content="#14212a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314212a'/%3E%3Cpath d='M3 20c4 0 6-9 13-9s9 9 13 9' fill='none' stroke='%23ebd6a8' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root {
+  --night: #14212a;      /* night water: the hero, before first light */
+  --slate: #1d2f39;      /* slate sea */
+  --dusk-1: #263b46;
+  --dusk-2: #3a5260;
+  --haze: #9aabb2;       /* secondary text on dark */
+  --spray: #e3eaea;      /* primary text on dark */
+  --light: #ebd6a8;      /* first light on the horizon */
+  --glass: #86bca9;      /* sea glass: swim windows */
+  --morning: #d9e1e2;    /* the grey morning at the end of the page */
+  --ink: #17262e;        /* text on morning */
+  --ink-2: #4a5d66;
+
+  --sans: system-ui, -apple-system, "SF Pro Text", "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: Charter, "Bitstream Charter", "Iowan Old Style", "Sitka Text", Cambria, Georgia, serif;
+
+  --gutter: clamp(20px, 5vw, 64px);
+  --measure: 34rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--spray);
+  font-family: var(--serif);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--light); outline-offset: 3px; border-radius: 3px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 var(--gutter); }
+
+/* ---------- header ---------- */
+.top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 22px; padding-bottom: 22px;
+  font-family: var(--sans);
+}
+.mark { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 500; font-size: 1.0625rem; letter-spacing: 0.01em; }
+.mark svg { display: block; }
+.top-link { font-size: 0.9375rem; color: var(--haze); text-decoration: none; padding: 8px 2px; }
+.top-link:hover { color: var(--spray); }
+
+/* ---------- hero ---------- */
+.hero {
+  background:
+    linear-gradient(180deg, #101b22 0%, #172731 55%, #23353e 100%);
+  position: relative;
+  overflow: hidden;
+}
+.hero-copy { padding-top: clamp(40px, 9vh, 110px); padding-bottom: 28px; }
+h1 {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(2.75rem, 8.4vw, 6.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  margin: 0 0 0.35em;
+  max-width: 11ch;
+}
+.lede { max-width: var(--measure); color: #c9d4d7; margin: 0 0 1.75rem; font-size: clamp(1.125rem, 1.6vw, 1.25rem); line-height: 1.6; }
+.cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; font-family: var(--sans); }
+.btn {
+  display: inline-block;
+  font-family: var(--sans); font-weight: 600; font-size: 1rem;
+  background: var(--light); color: var(--night);
+  padding: 14px 22px; border-radius: 999px; text-decoration: none;
+  transition: background-color .15s ease;
+}
+.btn:hover { background: #f4e4be; }
+.cta-note { color: var(--haze); font-size: 0.9375rem; }
+
+/* tide figure */
+.tide { margin: 0; padding-top: 8px; }
+.chart {
+  position: relative;
+  height: clamp(250px, 38vw, 400px);
+  touch-action: pan-y;
+  cursor: ew-resize;
+  user-select: none; -webkit-user-select: none;
+}
+.chart svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+.horizon-glow { position: absolute; left: 0; right: 0; top: 0; height: 2px; }
+
+.lbl { position: absolute; font-family: var(--sans); font-size: 0.8125rem; line-height: 1.3; white-space: nowrap; pointer-events: none; }
+.t-axis { position: absolute; left: 0; right: 0; bottom: 8px; height: 18px; }
+.t-axis span { position: absolute; transform: translateX(-50%); font-family: var(--sans); font-size: 0.75rem; color: rgba(227,234,234,.55); font-variant-numeric: tabular-nums; }
+
+.win-label { color: var(--glass); top: 15%; transform: translateX(0); }
+.win-label strong { display: block; font-weight: 600; color: #bfe0d4; font-variant-numeric: tabular-nums; }
+.lost-label { color: var(--light); top: 15%; }
+.lost-label strong { display: block; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.cursor-time {
+  position: absolute; top: -2px; transform: translateX(-50%);
+  font-family: var(--sans); font-size: 0.8125rem; font-weight: 600;
+  background: var(--spray); color: var(--night);
+  padding: 3px 8px; border-radius: 999px; font-variant-numeric: tabular-nums;
+  pointer-events: none; white-space: nowrap;
+}
+
+/* readout */
+.readout {
+  background: var(--slate);
+  border-top: 1px solid rgba(227,234,234,.08);
+  font-family: var(--sans);
+}
+.readout-inner { padding-top: 22px; padding-bottom: 26px; display: grid; gap: 18px; }
+.status { margin: 0; font-size: 1.0625rem; line-height: 1.45; min-height: 2.9em; max-width: 46rem; }
+.status b { font-weight: 600; }
+.status .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; background: var(--haze); }
+.status[data-state="in"] .dot { background: var(--glass); }
+.status[data-state="early"] .dot { background: var(--light); }
+.vals { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 24px; margin: 0; }
+.vals div { min-width: 0; }
+.vals dt { color: var(--haze); font-size: 0.875rem; }
+.vals dd { margin: 2px 0 0; font-size: clamp(1.375rem, 2.6vw, 1.875rem); font-weight: 300; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.vals dd small { font-size: 0.8125rem; font-weight: 400; color: var(--haze); letter-spacing: 0; display: block; white-space: normal; }
+
+.scrub { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 16px; }
+.scrub label { font-size: 0.875rem; color: var(--haze); }
+input[type=range] { width: 100%; accent-color: var(--light); height: 28px; background: transparent; margin: 0; }
+.caption { font-family: var(--sans); font-size: 0.8125rem; color: var(--haze); margin: 0; }
+
+/* ---------- sections: the page gets lighter as the morning goes on ---------- */
+section.band { padding: clamp(64px, 10vw, 128px) 0; }
+.b1 { background: var(--slate); }
+.b2 { background: var(--dusk-1); }
+.b3 { background: var(--dusk-2); }
+.b4 { background: #869ba5; color: #0f1c22; }
+.b3 .muted { color: #bccad0; }
+.b5 { background: var(--morning); color: var(--ink); }
+
+h2 {
+  font-family: var(--sans); font-weight: 300;
+  font-size: clamp(2rem, 4.6vw, 3.5rem);
+  line-height: 1.05; letter-spacing: -0.025em;
+  margin: 0 0 0.6em; max-width: 16ch;
+}
+.prose { max-width: var(--measure); }
+.prose p { margin: 0 0 1em; }
+.muted { color: var(--haze); }
+
+/* before / after */
+.swap { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 6vw, 96px); align-items: start; margin-top: 8px; }
+.tabs-list { list-style: none; margin: 0; padding: 0; font-family: var(--sans); }
+.tabs-list li { padding: 14px 0; border-bottom: 1px solid rgba(227,234,234,.12); display: grid; grid-template-columns: 9.5rem 1fr; gap: 12px; }
+.tabs-list li:first-child { border-top: 1px solid rgba(227,234,234,.12); }
+.tabs-list .src { color: var(--spray); }
+.tabs-list .q { color: var(--haze); }
+.chat { font-family: var(--sans); font-size: 0.9375rem; display: grid; gap: 6px; margin-top: 18px; max-width: 22rem; }
+.chat p { margin: 0; background: #34505c; padding: 8px 12px; border-radius: 16px 16px 16px 4px; width: fit-content; color: #dbe5e6; }
+.chat p.me { justify-self: end; background: #4d6b77; border-radius: 16px 16px 4px 16px; }
+
+.phone-line { font-family: var(--sans); }
+.beach-row { padding: 18px 0; border-bottom: 1px solid rgba(227,234,234,.12); display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; align-items: baseline; }
+.beach-row:first-child { border-top: 1px solid rgba(227,234,234,.12); }
+.beach-row .name { font-size: 1.0625rem; }
+.beach-row .when { font-variant-numeric: tabular-nums; font-size: 1.375rem; font-weight: 300; color: #bfe0d4; text-align: right; }
+.beach-row .why { grid-column: 1 / -1; color: var(--haze); font-size: 0.875rem; }
+.beach-row.none .when { color: var(--haze); }
+.beach-row.early .when { color: var(--light); }
+
+/* what it reads */
+.reads { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px clamp(32px, 6vw, 96px); margin: 48px 0 0; }
+.reads dt { font-family: var(--sans); font-size: 1.25rem; font-weight: 500; margin-bottom: 6px; }
+.reads dd { margin: 0; color: #c3cfd3; max-width: 30rem; }
+
+/* early warning */
+.warn-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 26rem); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.lock {
+  background: linear-gradient(180deg, #223845, #2f4855);
+  border-radius: 36px; padding: 28px 16px 40px;
+  font-family: var(--sans);
+  max-width: 26rem; width: 100%;
+}
+.lock-time { text-align: center; font-size: 3.5rem; font-weight: 200; letter-spacing: -0.02em; line-height: 1; color: #e9eff0; font-variant-numeric: tabular-nums; }
+.lock-date { text-align: center; color: #b6c4c9; font-size: 0.9375rem; margin: 6px 0 26px; }
+.note {
+  background: rgba(227,234,234,.92); color: #142129;
+  border-radius: 18px; padding: 12px 14px 14px;
+  font-size: 0.9375rem; line-height: 1.4;
+}
+.note-head { display: flex; align-items: center; gap: 8px; font-size: 0.8125rem; color: #4a5d66; margin-bottom: 4px; }
+.note-head svg { flex: none; }
+.note-head .ago { margin-left: auto; }
+.note b { font-weight: 600; display: block; margin-bottom: 2px; }
+.lock.pre .note { opacity: 0; }
+.lock.animate .note { animation: drop .6s cubic-bezier(.2,.8,.2,1) both; animation-delay: .25s; }
+@keyframes drop { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+
+/* not a lifeguard */
+.b4 h2 { color: #0f1c22; max-width: 18ch; }
+.b4 .prose p { color: #14232a; }
+.b4 .big { font-family: var(--sans); font-weight: 300; font-size: clamp(1.375rem, 2.4vw, 1.75rem); line-height: 1.35; letter-spacing: -0.01em; max-width: 36rem; color: #0f1c22; margin: 0 0 1.25em; }
+
+/* join */
+.join { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: end; }
+.b5 h2 { color: var(--ink); }
+.b5 .prose p { color: var(--ink-2); }
+.b5 .btn { background: var(--ink); color: var(--morning); }
+.b5 .btn:hover { background: #26404c; }
+.b5 :focus-visible { outline-color: var(--ink); }
+.facts { list-style: none; margin: 0; padding: 0; font-family: var(--sans); }
+.facts li { padding: 14px 0; border-bottom: 1px solid rgba(23,38,46,.18); display: flex; justify-content: space-between; gap: 16px; }
+.facts li:first-child { border-top: 1px solid rgba(23,38,46,.18); }
+.facts span:first-child { color: var(--ink-2); }
+.facts span:last-child { text-align: right; }
+
+footer { background: var(--morning); color: var(--ink-2); font-family: var(--sans); font-size: 0.875rem; }
+footer .wrap { padding-top: 28px; padding-bottom: 40px; border-top: 1px solid rgba(23,38,46,.18); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; }
+footer p { margin: 0; max-width: 40rem; }
+
+/* ---------- hero load: the tide line rises once ---------- */
+.draw svg { clip-path: inset(0 100% 0 0); animation: draw 1.8s cubic-bezier(.4,0,.2,1) .15s forwards; }
+.draw .lbl, .draw .cursor-time { opacity: 0; animation: fade .6s ease 1.6s forwards; }
+@keyframes draw { to { clip-path: inset(0 0 0 0); } }
+@keyframes fade { to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .draw svg, .draw .lbl, .draw .cursor-time, .lock.animate .note { animation: none; opacity: 1; clip-path: none; }
+  .lock.pre .note { opacity: 1; }
+  .btn { transition: none; }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 820px) {
+  .swap, .warn-grid, .join, .reads { grid-template-columns: 1fr; }
+  .vals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lock { margin: 0 auto; }
+}
+@media (max-width: 520px) {
+  body { font-size: 1.0625rem; }
+  .tabs-list li { grid-template-columns: 1fr; gap: 2px; }
+  .scrub { grid-template-columns: 1fr; gap: 4px; }
+  .lost-label { display: none; }
+  .t-axis span.minor { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <header class="wrap top">
+    <a class="mark" href="#" aria-label="Tidewise home">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 20c4 0 6-9 13-9s9 9 13 9" fill="none" stroke="#ebd6a8" stroke-width="2.4" stroke-linecap="round"/></svg>
+      Tidewise
+    </a>
+    <a class="top-link" href="https://tidewise.example/beta">Join the beta</a>
+  </header>
+
+  <div class="wrap hero-copy">
+    <h1>Too lumpy today?</h1>
+    <p class="lede">Tidewise reads the tide, wind, swell and water temperature at your beach and shows the windows when they line up for a swim. One look on the way down, in the dark, before work.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://tidewise.example/beta">Join the public beta</a>
+      <span class="cta-note">iPhone. 40 beaches in the UK and Ireland so far.</span>
+    </div>
+  </div>
+
+  <figure class="tide" id="tide">
+    <div class="chart" id="chart">
+      <svg id="svg" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="seaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2b4552"/>
+            <stop offset="1" stop-color="#1d2f39"/>
+          </linearGradient>
+          <linearGradient id="horizon" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#ebd6a8" stop-opacity="0"/>
+            <stop offset=".55" stop-color="#ebd6a8" stop-opacity=".55"/>
+            <stop offset="1" stop-color="#ebd6a8" stop-opacity=".15"/>
+          </linearGradient>
+          <linearGradient id="fadeGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+            <stop offset=".45" stop-color="#fff" stop-opacity=".8"/>
+            <stop offset="1" stop-color="#fff" stop-opacity="1"/>
+          </linearGradient>
+          <mask id="fade" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="300"><rect width="1000" height="300" fill="url(#fadeGrad)"/></mask>
+          <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="7" height="7" fill="#ebd6a8" fill-opacity=".05"/>
+            <line x1="0" y1="0" x2="0" y2="7" stroke="#ebd6a8" stroke-opacity=".35" stroke-width="1.5"/>
+          </pattern>
+        </defs>
+        <g mask="url(#fade)">
+        <rect class="win-rect" id="winRect" y="0" height="300" fill="#86bca9" fill-opacity=".13"/>
+        <rect class="lost-rect" id="lostRect" y="0" height="300" fill="url(#hatch)"/>
+        <line id="winEdgeA" class="win-rect" y1="0" y2="300" stroke="#86bca9" stroke-opacity=".7" vector-effect="non-scaling-stroke"/>
+        <line id="winEdgeB" class="win-rect" y1="0" y2="300" stroke="#ebd6a8" stroke-opacity=".9" vector-effect="non-scaling-stroke"/>
+        </g>
+        <path class="sea-fill" id="seaFill" fill="url(#seaGrad)"/>
+        <path class="tide-line" id="tideLine" fill="none" stroke="#e3eaea" stroke-width="2" vector-effect="non-scaling-stroke"/>
+        <line class="cursor-line" id="cursorLine" y1="0" y2="300" stroke="#e3eaea" stroke-opacity=".75" stroke-dasharray="3 4" vector-effect="non-scaling-stroke"/>
+        
+      </svg>
+      <div class="lbl win-label" id="winLabel"><strong id="winTimes"></strong>swim window</div>
+      <div class="lbl lost-label" id="lostLabel"><strong id="lostTimes"></strong>lost to the wind</div>
+      <div class="cursor-time" id="cursorTime">06:10</div>
+      <div class="t-axis" id="axis"></div>
+    </div>
+
+    <div class="readout">
+      <div class="wrap readout-inner">
+        <p class="status" id="status" data-state="before" aria-live="polite"><span class="dot"></span><span id="statusText"></span></p>
+        <dl class="vals">
+          <div><dt>Tide</dt><dd><span id="vTide">2.1 m</span><small id="vTideDir">rising</small></dd></div>
+          <div><dt>Wind</dt><dd><span id="vWind">7 mph</span><small id="vWindDir">SW, offshore</small></dd></div>
+          <div><dt>Swell</dt><dd><span id="vSwell">0.4 m</span><small id="vSwellP">8 s period</small></dd></div>
+          <div><dt>Water</dt><dd><span id="vWater">11.8 °C</span><small>near the beach</small></dd></div>
+        </dl>
+        <div class="scrub">
+          <label for="range">Drag through the morning</label>
+          <input id="range" type="range" min="270" max="630" step="5" value="370" aria-valuetext="06:10">
+        </div>
+        <figcaption class="caption">A made-up November morning at an example beach, to show how a window is drawn. Not a forecast.</figcaption>
+      </div>
+    </div>
+  </figure>
+</div>
+
+<section class="band b1" aria-labelledby="h-swap">
+  <div class="wrap">
+    <h2 id="h-swap">Four tabs and a group chat, at half five</h2>
+    <div class="swap">
+      <div>
+        <p class="prose muted">Most mornings you're piecing it together yourself, standing in the hallway with your keys.</p>
+        <ul class="tabs-list">
+          <li><span class="src">Tide table</span><span class="q">Is there enough water over the rocks yet?</span></li>
+          <li><span class="src">Wind forecast</span><span class="q">Offshore, or blowing straight in?</span></li>
+          <li><span class="src">Swell site</span><span class="q">How big, and how far apart?</span></li>
+          <li><span class="src">Sea temperature</span><span class="q">Which gloves?</span></li>
+        </ul>
+        <div class="chat" aria-label="Example group chat">
+          <p>anyone in this morning?</p>
+          <p>looks lumpy from the car park</p>
+          <p class="me">is it too lumpy though</p>
+        </div>
+      </div>
+      <div class="phone-line">
+        <p class="prose muted" style="font-family:var(--serif)">Tidewise puts it on one screen: each of your beaches, and when today's window opens and closes.</p>
+        <div class="beach-row">
+          <span class="name">Your usual beach</span><span class="when">06:20 to 08:00</span>
+          <span class="why">Closes early: wind turns onshore around 08:00</span>
+        </div>
+        <div class="beach-row">
+          <span class="name">The cove round the headland</span><span class="when">07:10 to 09:30</span>
+          <span class="why">Sheltered from the westerly</span>
+        </div>
+        <div class="beach-row none">
+          <span class="name">The long beach</span><span class="when">No window</span>
+          <span class="why">Swell 1.4 m all morning</span>
+        </div>
+        <p class="caption" style="margin-top:14px">Example beaches and times.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band b2" aria-labelledby="h-reads">
+  <div class="wrap">
+    <h2 id="h-reads">What it reads at your beach</h2>
+    <p class="prose muted">The same four things you already check, read for the beach you're actually going to, which way it faces and what the water does there.</p>
+    <dl class="reads">
+      <div><dt>Tide</dt><dd>Height and whether it's coming in or going out, so you know when there's enough water to swim and when you'll be wading back over the stones.</dd></div>
+      <div><dt>Wind</dt><dd>Speed and direction against the way your beach faces. Offshore can mean flat water near the shore; onshore is usually what makes it lumpy.</dd></div>
+      <div><dt>Swell</dt><dd>Height and period. A small, long-period swell and a choppy short one look the same on a map and feel nothing alike in the water.</dd></div>
+      <div><dt>Water temperature</dt><dd>In degrees Celsius, near your beach. The number everyone asks for when you get out.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="band b3" aria-labelledby="h-warn">
+  <div class="wrap warn-grid">
+    <div class="prose">
+      <h2 id="h-warn">When a window closes early, you hear about it</h2>
+      <p>Conditions change between the night before and the morning. If the window you were planning around shrinks or closes, Tidewise tells you, with the reason, so you can go earlier, go elsewhere or leave it for tomorrow.</p>
+      <p class="muted">It won't nudge you to go in. It tells you what changed.</p>
+    </div>
+    <div class="lock" id="lock" aria-label="Example notification on an iPhone lock screen">
+      <div class="lock-time">05:42</div>
+      <div class="lock-date">Tuesday 17 November</div>
+      <div class="note">
+        <div class="note-head">
+          <svg width="18" height="18" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#14212a"/><path d="M3 20c4 0 6-9 13-9s9 9 13 9" fill="none" stroke="#ebd6a8" stroke-width="2.6" stroke-linecap="round"/></svg>
+          <span>Tidewise</span><span class="ago">now</span>
+        </div>
+        <b>Your window now closes at 08:00</b>
+        Last night it ran to 09:10. Wind is turning onshore and building to 15 mph by half eight.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band b4" aria-labelledby="h-life">
+  <div class="wrap">
+    <h2 id="h-life">Conditions, not permission</h2>
+    <p class="big">Tidewise is not a lifeguard. It will never tell you it's safe to swim.</p>
+    <div class="prose">
+      <p>A swim window is the stretch of time when the tide, wind and swell readings at your beach line up. It says nothing about currents it can't see, how you feel that morning or what the water looks like when you get there.</p>
+      <p>You look at the sea, and you decide. Tidewise is there so you arrive knowing what the numbers say.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band b5" id="join" aria-labelledby="h-join">
+  <div class="wrap join">
+    <div class="prose">
+      <h2 id="h-join">Swimming tomorrow morning?</h2>
+      <p>Tidewise is in public beta on iPhone. Join, pick your beaches and check it on the way down.</p>
+      <a class="btn" href="https://tidewise.example/beta">Join the public beta</a>
+    </div>
+    <ul class="facts">
+      <li><span>Phone</span><span>iPhone</span></li>
+      <li><span>Beaches</span><span>40 in the UK and Ireland</span></li>
+      <li><span>Reads</span><span>Tide, wind, swell, water temperature</span></li>
+      <li><span>Stage</span><span>Public beta</span></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Tidewise shows conditions. It is not a lifeguard and does not tell anyone it is safe to swim.</p>
+    <p>&copy; 2026 Tidewise</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var T0 = 270, T1 = 630;            // 04:30 to 10:30, minutes after midnight
+  var NOW = 370;                      // 06:10
+  var TIDE_MIN = 2.4;                 // enough water over the rocks
+  var WIND_MAX = 12, SWELL_MAX = 0.7; // where it gets lumpy at this beach
+  var FORECAST_END = 550;             // last night's window ran to 09:10
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function hhmm(t) { t = Math.round(t); return pad(Math.floor(t / 60)) + ':' + pad(t % 60); }
+  function lerp(a, b, k) { return a + (b - a) * Math.max(0, Math.min(1, k)); }
+
+  function tide(t) { return 2.5 - 1.9 * Math.cos(2 * Math.PI * (t - 200) / 745); }
+  function tideRising(t) { return tide(t + 1) > tide(t); }
+  function wind(t) { return lerp(7, 17, (t - 440) / 80); }
+  function windDir(t) { return t < 455 ? 'SW, offshore' : t < 500 ? 'W, cross-shore' : 'NW, onshore'; }
+  function swell(t) { return lerp(0.4, 1.0, (t - 470) / 90); }
+  function swellPeriod(t) { return Math.round(lerp(9, 5, (t - 470) / 90)); }
+  function water() { return 11.8; }
+
+  // derive the window from the data rather than hard-coding it
+  var winStart = null, winEnd = null;
+  for (var t = T0; t <= T1; t++) {
+    var ok = tide(t) >= TIDE_MIN && wind(t) <= WIND_MAX && swell(t) <= SWELL_MAX;
+    if (ok && winStart === null) winStart = t;
+    if (!ok && winStart !== null && winEnd === null) winEnd = t;
+  }
+  winStart = Math.round(winStart / 5) * 5;
+  winEnd = Math.round(winEnd / 5) * 5;
+
+  var W = 1000, H = 300, YTOP = 46, YBOT = 262;
+  function x(t) { return (t - T0) / (T1 - T0) * W; }
+  function y(h) { return YBOT - (h / 5) * (YBOT - YTOP); }
+  function pct(t) { return ((t - T0) / (T1 - T0) * 100) + '%'; }
+
+  var d = '', step = 3;
+  for (var t2 = T0; t2 <= T1; t2 += step) d += (t2 === T0 ? 'M' : 'L') + x(t2).toFixed(1) + ' ' + y(tide(t2)).toFixed(1);
+  document.getElementById('tideLine').setAttribute('d', d);
+  document.getElementById('seaFill').setAttribute('d', d + 'L' + W + ' ' + H + 'L0 ' + H + 'Z');
+
+  var wr = document.getElementById('winRect');
+  wr.setAttribute('x', x(winStart)); wr.setAttribute('width', x(winEnd) - x(winStart));
+  var lr = document.getElementById('lostRect');
+  lr.setAttribute('x', x(winEnd)); lr.setAttribute('width', x(FORECAST_END) - x(winEnd));
+  ['winEdgeA'].forEach(function (id) { var e = document.getElementById(id); e.setAttribute('x1', x(winStart)); e.setAttribute('x2', x(winStart)); });
+  var eb = document.getElementById('winEdgeB'); eb.setAttribute('x1', x(winEnd)); eb.setAttribute('x2', x(winEnd));
+
+  var winLabel = document.getElementById('winLabel');
+  winLabel.style.left = 'calc(' + pct(winStart) + ' + 10px)';
+  document.getElementById('winTimes').textContent = hhmm(winStart) + ' to ' + hhmm(winEnd);
+  var lostLabel = document.getElementById('lostLabel');
+  lostLabel.style.left = 'calc(' + pct(winEnd) + ' + 10px)';
+  document.getElementById('lostTimes').textContent = hhmm(winEnd) + ' to ' + hhmm(FORECAST_END);
+
+  var axis = document.getElementById('axis');
+  for (var h = 5; h <= 10; h++) {
+    var s = document.createElement('span');
+    s.style.left = pct(h * 60);
+    s.textContent = pad(h) + ':00';
+    if (h % 2 === 0) s.className = 'minor';
+    axis.appendChild(s);
+  }
+
+  var range = document.getElementById('range');
+  var cursorLine = document.getElementById('cursorLine');
+  var cursorTime = document.getElementById('cursorTime');
+  var status = document.getElementById('status');
+  var statusText = document.getElementById('statusText');
+  var chart = document.getElementById('chart');
+
+  function fmt1(v) { return v.toFixed(1); }
+
+  function render(t) {
+    t = Math.max(T0, Math.min(T1, t));
+    var cx = x(t);
+    cursorLine.setAttribute('x1', cx); cursorLine.setAttribute('x2', cx);
+    cursorTime.style.left = pct(t);
+    var label = hhmm(t) + (t === NOW ? ' now' : '');
+    cursorTime.textContent = label;
+    range.setAttribute('aria-valuetext', hhmm(t));
+
+    var th = tide(t), wv = wind(t), sv = swell(t);
+    document.getElementById('vTide').textContent = fmt1(th) + ' m';
+    document.getElementById('vTideDir').textContent = tideRising(t) ? 'rising' : 'falling';
+    document.getElementById('vWind').textContent = Math.round(wv) + ' mph';
+    document.getElementById('vWindDir').textContent = windDir(t);
+    document.getElementById('vSwell').textContent = fmt1(sv) + ' m';
+    document.getElementById('vSwellP').textContent = swellPeriod(t) + ' s period';
+    document.getElementById('vWater').textContent = fmt1(water()) + ' °C';
+
+    var state, msg;
+    if (t < winStart) {
+      state = 'before';
+      msg = '<b>Window opens at ' + hhmm(winStart) + '.</b> Tide is ' + fmt1(th) + ' m and ' + (tideRising(t) ? 'rising' : 'falling') + '; it needs about ' + fmt1(TIDE_MIN) + ' m to cover the rocks at this beach.';
+    } else if (t < winEnd) {
+      var left = winEnd - t;
+      state = 'in';
+      msg = '<b>In the window until ' + hhmm(winEnd) + '</b> (' + (left >= 60 ? Math.floor(left / 60) + ' h ' : '') + (left % 60) + ' min). Wind ' + Math.round(wv) + ' mph ' + windDir(t).split(',')[0] + ', swell ' + fmt1(sv) + ' m.';
+    } else if (t < FORECAST_END) {
+      state = 'early';
+      msg = '<b>Window closed early at ' + hhmm(winEnd) + '.</b> Last night it ran to ' + hhmm(FORECAST_END) + '. Wind ' + windDir(t).split(', ')[1] + ' at ' + Math.round(wv) + ' mph, swell building to ' + fmt1(sv) + ' m.';
+    } else {
+      state = 'after';
+      msg = '<b>No window for the rest of the morning.</b> Onshore wind ' + Math.round(wv) + ' mph and ' + fmt1(sv) + ' m of short swell.';
+    }
+    status.setAttribute('data-state', state);
+    statusText.innerHTML = msg;
+  }
+
+  range.addEventListener('input', function () { render(+range.value); });
+
+  var dragging = false;
+  function fromPointer(e) {
+    var r = chart.getBoundingClientRect();
+    var t = T0 + (e.clientX - r.left) / r.width * (T1 - T0);
+    t = Math.round(t / 5) * 5;
+    t = Math.max(T0, Math.min(T1, t));
+    range.value = t;
+    render(t);
+  }
+  chart.addEventListener('pointerdown', function (e) { dragging = true; chart.setPointerCapture && chart.setPointerCapture(e.pointerId); fromPointer(e); });
+  chart.addEventListener('pointermove', function (e) { if (dragging) fromPointer(e); });
+  ['pointerup', 'pointercancel'].forEach(function (n) { chart.addEventListener(n, function () { dragging = false; }); });
+
+  render(NOW);
+
+  // one orchestrated moment: the tide line draws in on load
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) document.getElementById('tide').classList.add('draw');
+
+  // the notification drops in once, when it comes into view
+  var lock = document.getElementById('lock');
+  if (!reduce && 'IntersectionObserver' in window) {
+    lock.classList.add('pre');
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { lock.classList.remove('pre'); lock.classList.add('animate'); io.disconnect(); } });
+    }, { threshold: 0.4 });
+    io.observe(lock);
+  }
+})();
+</script>
+</body>
+</html>
