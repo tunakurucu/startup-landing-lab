@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rackwise: find any sample in your −80 °C freezers</title>
+<meta name="description" content="Rackwise keeps a live map of your lab's −80 °C freezers: every shelf, rack, box and tube position, with who put each sample there and when.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' rx='5' fill='%2318233A'/%3E%3Cg fill='%23FBFDFD'%3E%3Ccircle cx='8' cy='8' r='3'/%3E%3Ccircle cx='15' cy='8' r='3'/%3E%3Ccircle cx='22' cy='8' r='3'/%3E%3Ccircle cx='8' cy='15' r='3'/%3E%3Ccircle cx='22' cy='15' r='3'/%3E%3Ccircle cx='8' cy='22' r='3'/%3E%3Ccircle cx='15' cy='22' r='3'/%3E%3Ccircle cx='22' cy='22' r='3'/%3E%3C/g%3E%3Ccircle cx='15' cy='15' r='3.4' fill='%23F4C531'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --frost: #E4ECEF;
+    --frost-deep: #D3DEE3;
+    --enamel: #FBFDFD;
+    --ink: #18233A;
+    --ink-soft: #46546A;
+    --steel: #7D8D99;
+    --line: #BFCDD4;
+    --tape: #F4C531;
+    --tape-deep: #D9A814;
+    --cap-blue: #5B86B5;
+    --cap-green: #5E9C78;
+    --cap-pink: #CC7397;
+    --cap-white: #EEF2F3;
+
+    --display: "Bahnschrift", "DIN Alternate", "D-DIN", "DIN Next", "TeX Gyre Heros Cn", "Roboto Condensed", "Arial Narrow", sans-serif;
+    --text: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, "Inter", "Liberation Sans", Roboto, sans-serif;
+
+    --gutter: clamp(16px, 4vw, 48px);
+    --max: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--frost);
+    color: var(--ink);
+    font-family: var(--text);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.005em;
+    margin: 0;
+    font-stretch: semi-condensed;
+  }
+  h1 { font-size: clamp(44px, 7.4vw, 92px); letter-spacing: -0.015em; }
+  h2 { font-size: clamp(32px, 4.4vw, 52px); }
+  h3 { font-size: 24px; line-height: 1.15; }
+  p { margin: 0 0 1em; max-width: 62ch; }
+  .lede { font-size: clamp(18px, 1.6vw, 21px); color: var(--ink-soft); max-width: 40ch; }
+
+  /* header */
+  .top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 20px; padding-bottom: 20px; gap: 16px;
+  }
+  .mark { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--display); font-weight: 700; font-size: 24px; }
+  .mark svg { width: 30px; height: 30px; }
+  .top-link {
+    font-weight: 600; font-size: 15px; text-decoration: none;
+    padding: 10px 16px; border: 2px solid var(--ink); border-radius: 6px;
+    min-height: 44px; display: inline-flex; align-items: center;
+  }
+  .top-link:hover { background: var(--ink); color: var(--enamel); }
+
+  /* buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 56px; padding: 0 28px;
+    background: var(--tape); color: var(--ink);
+    border: 2px solid var(--ink); border-radius: 6px;
+    font-family: var(--display); font-weight: 700; font-size: 21px;
+    text-decoration: none; letter-spacing: 0.005em;
+    box-shadow: 0 3px 0 var(--ink);
+    transition: transform .08s ease, box-shadow .08s ease;
+  }
+  .btn:hover { background: #F7CF4B; }
+  .btn:active { transform: translateY(3px); box-shadow: 0 0 0 var(--ink); }
+
+  /* hero */
+  .hero { padding-top: clamp(24px, 5vw, 64px); padding-bottom: clamp(56px, 8vw, 104px); }
+  .hero-grid {
+    display: grid; gap: clamp(32px, 5vw, 64px);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+  }
+  .hero h1 { margin-bottom: 28px; max-width: 9ch; }
+  .hero .lede { margin-bottom: 32px; }
+  .hero-note { margin-top: 20px; font-size: 15px; color: var(--ink-soft); max-width: 36ch; }
+
+  /* finder */
+  .finder {
+    background: var(--enamel);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    box-shadow: 8px 8px 0 var(--frost-deep);
+    overflow: hidden;
+  }
+  .finder-head { padding: 20px 20px 16px; border-bottom: 2px solid var(--frost-deep); }
+  .finder label { display: block; font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+  .search {
+    position: relative;
+  }
+  .search svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; pointer-events: none; }
+  .search input {
+    width: 100%; min-height: 58px;
+    padding: 0 16px 0 50px;
+    font: 500 19px/1 var(--text); color: var(--ink);
+    background: var(--frost); border: 2px solid var(--line); border-radius: 8px;
+    -webkit-appearance: none; appearance: none;
+  }
+  .search input:focus { outline: none; border-color: var(--ink); background: var(--enamel); }
+  .search input::placeholder { color: var(--steel); }
+  .tries { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
+  .tries span { font-size: 14px; color: var(--ink-soft); margin-right: 2px; }
+  .try {
+    font: 500 14px/1.2 var(--text); color: var(--ink);
+    min-height: 40px; padding: 8px 12px;
+    background: var(--enamel); border: 1.5px solid var(--line); border-radius: 999px; cursor: pointer;
+  }
+  .try:hover { border-color: var(--ink); }
+  .try[aria-pressed="true"] { background: var(--ink); color: var(--enamel); border-color: var(--ink); }
+
+  .result { padding: 20px; }
+  .sample-name { font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1.1; margin: 0 0 14px; }
+
+  .path {
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+    border: 2px solid var(--ink); border-radius: 6px; overflow: hidden;
+    margin: 0 0 20px; padding: 0; list-style: none;
+  }
+  .path li { padding: 8px 10px 10px; border-left: 1.5px solid var(--line); min-width: 0; }
+  .path li:first-child { border-left: 0; }
+  .path li:last-child { background: var(--tape); border-left-color: var(--ink); }
+  .path small { display: block; font-size: 12px; color: var(--ink-soft); line-height: 1.2; }
+  .path li:last-child small { color: var(--ink); }
+  .path b { display: block; font-family: var(--display); font-weight: 700; font-size: clamp(22px, 2.6vw, 32px); line-height: 1.05; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .diagrams { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 5fr); gap: 16px; align-items: stretch; }
+  .diagram { background: var(--frost); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; }
+  .diagram figcaption { font-size: 13px; color: var(--ink-soft); margin-bottom: 8px; line-height: 1.3; }
+  .diagram svg { width: 100%; height: auto; margin: auto 0; }
+
+  .provenance { margin: 18px 0 0; padding: 0; list-style: none; font-size: 15px; }
+  .provenance li { display: grid; grid-template-columns: 7.5em 1fr; gap: 12px; padding: 8px 0; border-top: 1px solid var(--frost-deep); }
+  .provenance li:first-child { border-top: 0; }
+  .provenance time { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .provenance strong { font-weight: 600; }
+
+  .empty { padding: 28px 20px 32px; }
+  .empty p { margin: 0; }
+  .empty strong { font-family: var(--display); font-size: 24px; display: block; margin-bottom: 6px; }
+  .demo-note { font-size: 13px; color: var(--ink-soft); padding: 10px 20px; border-top: 2px solid var(--frost-deep); background: var(--enamel); margin: 0; max-width: none; }
+
+  /* svg pieces */
+  .shelf-frame { fill: var(--enamel); stroke: var(--ink); stroke-width: 2; }
+  .rack { fill: var(--enamel); stroke: var(--steel); stroke-width: 1.2; transition: fill .2s ease; }
+  .rack.on { fill: var(--tape); stroke: var(--ink); stroke-width: 2; }
+  .svg-label { font-family: var(--display); font-size: 11px; fill: var(--ink-soft); }
+  .svg-label.strong { fill: var(--ink); font-weight: 700; }
+  .tube { stroke: rgba(24,35,58,.35); stroke-width: 1; }
+  .well { fill: none; stroke: var(--line); stroke-width: 1.2; }
+  .target-ring { fill: none; stroke: var(--ink); stroke-width: 2.5; }
+  .target { fill: var(--tape); stroke: var(--ink); stroke-width: 2; }
+  @keyframes ping { 0% { r: 7; opacity: .9; } 100% { r: 20; opacity: 0; } }
+  .ping { fill: none; stroke: var(--tape-deep); stroke-width: 3; animation: ping .9s ease-out 2; }
+
+  /* sections */
+  section { padding-top: clamp(64px, 9vw, 120px); padding-bottom: clamp(64px, 9vw, 120px); }
+  .band { background: var(--enamel); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+  .sec-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 5vw, 64px); margin-bottom: clamp(36px, 5vw, 56px); align-items: end; }
+  .sec-head p { margin: 0; color: var(--ink-soft); font-size: 18px; }
+
+  /* trip */
+  .trip-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 5vw, 64px); align-items: start; }
+  .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 56px 1fr; gap: 16px; padding: 22px 0; border-top: 2px solid var(--frost-deep); }
+  .steps li:first-child { border-top: 0; padding-top: 0; }
+  .steps li::before {
+    content: counter(s);
+    font-family: var(--display); font-weight: 700; font-size: 26px;
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 2px solid var(--ink); display: grid; place-items: center; line-height: 1;
+  }
+  .steps li.door::before { background: var(--tape); }
+  .steps h3 { margin: 8px 0 6px; }
+  .steps p { margin: 0; color: var(--ink-soft); }
+
+  .phone {
+    width: 100%; max-width: 340px; margin: 0 auto;
+    background: var(--ink); border-radius: 34px; padding: 14px;
+    box-shadow: 10px 10px 0 var(--frost-deep);
+  }
+  .phone-screen { background: var(--enamel); border-radius: 22px; padding: 22px 18px 18px; }
+  .phone-loc { font-size: 13px; color: var(--ink-soft); margin: 0 0 4px; }
+  .phone-name { font-family: var(--display); font-weight: 700; font-size: 24px; line-height: 1.1; margin: 0 0 14px; }
+  .phone-pos { display: flex; align-items: baseline; gap: 10px; background: var(--tape); border: 2px solid var(--ink); border-radius: 8px; padding: 10px 14px; margin-bottom: 18px; }
+  .phone-pos b { font-family: var(--display); font-size: 44px; line-height: 1; }
+  .phone-pos span { font-size: 14px; line-height: 1.3; }
+  .glove-btn {
+    display: block; width: 100%; min-height: 64px; margin-top: 10px;
+    font: 700 21px/1 var(--display); color: var(--ink);
+    background: var(--enamel); border: 2px solid var(--ink); border-radius: 12px; cursor: pointer;
+  }
+  .glove-btn.primary { background: var(--ink); color: var(--enamel); }
+  .glove-btn[aria-pressed="true"] { background: var(--tape); color: var(--ink); }
+  .phone-status { min-height: 1.5em; margin: 12px 0 0; font-size: 14px; color: var(--ink-soft); text-align: center; }
+  .phone-caption { text-align: center; font-size: 14px; color: var(--ink-soft); margin: 20px auto 0; max-width: 32ch; }
+
+  /* replaces */
+  .then-now { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 4vw, 48px); }
+  .then-now h3 { margin-bottom: 8px; }
+  .then-now > div > p { color: var(--ink-soft); }
+
+  .sheet {
+    margin-top: 20px; border: 1.5px solid var(--line); border-radius: 6px; overflow: hidden;
+    background: var(--enamel); font-size: 14px;
+  }
+  .sheet-bar { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 8px 12px; background: var(--frost); border-bottom: 1.5px solid var(--line); font-size: 13px; color: var(--ink-soft); }
+  .sheet-bar strong { color: var(--ink); font-weight: 600; }
+  .sheet-scroll { overflow-x: auto; }
+  .sheet table { width: 100%; min-width: 440px; border-collapse: collapse; table-layout: fixed; }
+  .sheet th, .sheet td { border-right: 1px solid var(--frost-deep); border-bottom: 1px solid var(--frost-deep); padding: 6px 8px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sheet th { font-weight: 600; background: var(--frost); font-size: 13px; }
+  .sheet td.rownum, .sheet th.rownum { width: 3.6em; color: var(--steel); text-align: right; background: var(--frost); font-variant-numeric: tabular-nums; }
+  .sheet td.doubt { background: #FFF3C9; }
+
+  .label-pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-top: 20px; }
+  .boxlid {
+    border: 1.5px solid var(--line); border-radius: 6px; padding: 16px;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,.9) 0 2px, transparent 3px),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,.8) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 45% 80%, rgba(255,255,255,.9) 0 2px, transparent 3px),
+      linear-gradient(160deg, #EEF3F5, #DCE6EA);
+    background-size: 37px 41px, 29px 31px, 43px 47px, auto;
+    min-height: 150px; display: flex; flex-direction: column; justify-content: center;
+  }
+  .boxlid small { font-size: 12px; color: var(--ink-soft); margin-bottom: 8px; }
+  .faded {
+    font-family: var(--display); font-style: italic; font-size: 26px; line-height: 1.15;
+    color: rgba(24,35,58,.38); filter: blur(.6px); transform: rotate(-2deg); transform-origin: left;
+  }
+  .record {
+    border: 2px solid var(--ink); border-radius: 6px; padding: 14px 16px; background: var(--enamel);
+    min-height: 150px; font-size: 14px;
+  }
+  .record small { font-size: 12px; color: var(--ink-soft); display: block; margin-bottom: 6px; }
+  .record b { font-family: var(--display); font-size: 21px; display: block; line-height: 1.15; margin-bottom: 8px; }
+  .record dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; }
+  .record dt { color: var(--ink-soft); }
+  .record dd { margin: 0; }
+
+  /* people */
+  .people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 4vw, 64px); }
+  .people h3 { margin-bottom: 14px; }
+  .people ul { margin: 0; padding: 0; list-style: none; }
+  .people li { padding: 12px 0 12px 28px; border-top: 1.5px solid var(--frost-deep); position: relative; }
+  .people li::before { content: ""; position: absolute; left: 2px; top: 20px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--ink); }
+  .people li:first-child { border-top: 0; }
+
+  /* not */
+  .not {
+    display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 24px; align-items: start;
+    border: 2px solid var(--ink); border-radius: 10px; padding: clamp(20px, 4vw, 40px);
+    background: var(--enamel);
+  }
+  .not svg { width: 64px; height: 64px; }
+  .not h2 { font-size: clamp(28px, 3.4vw, 40px); margin-bottom: 14px; }
+  .not p { color: var(--ink-soft); }
+  .not p:last-child { margin-bottom: 0; }
+
+  /* cta */
+  .cta { padding-top: clamp(72px, 10vw, 128px); padding-bottom: clamp(72px, 10vw, 128px); }
+  .cta-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 5vw, 64px); align-items: end; }
+  .cta h2 { font-size: clamp(40px, 6vw, 76px); margin-bottom: 20px; max-width: 12ch; }
+  .cta p { color: var(--ink-soft); font-size: 18px; }
+  .cta-side p { margin-bottom: 24px; }
+
+  footer { border-top: 2px solid var(--ink); padding-top: 24px; padding-bottom: 32px; font-size: 14px; color: var(--ink-soft); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer p { margin: 0; }
+
+  @media (max-width: 900px) {
+    .hero-grid, .sec-head, .trip-grid, .cta-grid { grid-template-columns: minmax(0, 1fr); }
+    .hero h1 { max-width: 12ch; }
+    .then-now, .people { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    .top-link { display: none; }
+    .diagrams { grid-template-columns: minmax(0, 1fr); }
+    .diagram svg { max-width: 260px; margin: 0 auto; }
+    .path { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .path li:first-child { grid-column: 1 / -1; border-bottom: 1.5px solid var(--line); }
+    .path li:nth-child(2) { border-left: 0; }
+    .path b { font-size: 24px; }
+    .label-pair { grid-template-columns: minmax(0, 1fr); }
+    .not { grid-template-columns: minmax(0, 1fr); }
+    .not svg { width: 48px; height: 48px; }
+    .provenance li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .finder-head, .result { padding-left: 16px; padding-right: 16px; }
+    .btn { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="mark" href="#top" aria-label="Rackwise home">
+    <svg viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="5" fill="#18233A"/><g fill="#FBFDFD"><circle cx="8" cy="8" r="3"/><circle cx="15" cy="8" r="3"/><circle cx="22" cy="8" r="3"/><circle cx="8" cy="15" r="3"/><circle cx="22" cy="15" r="3"/><circle cx="8" cy="22" r="3"/><circle cx="15" cy="22" r="3"/><circle cx="22" cy="22" r="3"/></g><circle cx="15" cy="15" r="3.4" fill="#F4C531"/></svg>
+    Rackwise
+  </a>
+  <a class="top-link" href="https://rackwise.example/early-access">Request early access</a>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div>
+        <h1>Find the box before you open the door.</h1>
+        <p class="lede">Rackwise is a live map of your lab’s −80&nbsp;°C freezers. Every shelf, rack, box and tube position, with who put each sample there and when.</p>
+        <a class="btn" href="https://rackwise.example/early-access">Request early access</a>
+        <p class="hero-note">Four labs are using Rackwise now. We’re adding more in small groups.</p>
+      </div>
+
+      <div class="finder" id="finder">
+        <div class="finder-head">
+          <label for="q">Search the freezers</label>
+          <div class="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#18233A" stroke-width="2.2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+            <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Sample, box or person" aria-describedby="demo-note">
+          </div>
+          <div class="tries" role="group" aria-label="Example searches">
+            <span>Try</span>
+          </div>
+        </div>
+        <div id="result" aria-live="polite"></div>
+        <p class="demo-note" id="demo-note">This is example data from a made-up lab, so you can see how a search works.</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="band" aria-labelledby="trip-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="trip-h">One trip to the freezer</h2>
+        <p>The search happens at the bench, so the door is only open for the part that has to happen at the freezer.</p>
+      </div>
+      <div class="trip-grid">
+        <ol class="steps">
+          <li>
+            <div>
+              <h3>Look it up before you get up</h3>
+              <p>Search by sample, box name or the person who stored it. You get the freezer, shelf, rack, box and position.</p>
+            </div>
+          </li>
+          <li class="door">
+            <div>
+              <h3>Open the door knowing where to reach</h3>
+              <p>Go straight to shelf 3, pull rack C, take out box 4. No lifting lids on every box in the rack to read the labels.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Take the tube from D5</h3>
+              <p>The position is in the box’s own grid, rows A to I and columns 1 to 9, the way your boxes are already laid out.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Record it with your gloves still on</h3>
+              <p>A phone on the freezer shelf or in your pocket is enough. Big buttons, one tap: taken out, put back, or used up.</p>
+            </div>
+          </li>
+        </ol>
+
+        <div>
+          <div class="phone" aria-label="Example of the Rackwise screen at the freezer">
+            <div class="phone-screen">
+              <p class="phone-loc">Freezer 2, shelf 3, rack C, box 4</p>
+              <p class="phone-name">HEK293T, passage 14</p>
+              <div class="phone-pos"><b>D5</b><span>Row D, column 5<br>Stored by M. Okafor</span></div>
+              <button class="glove-btn primary" type="button" data-act="Taken out">Taken out</button>
+              <button class="glove-btn" type="button" data-act="Put back">Put back</button>
+              <button class="glove-btn" type="button" data-act="Used up">Used up</button>
+              <p class="phone-status" id="phone-status" aria-live="polite"></p>
+            </div>
+          </div>
+          <p class="phone-caption">Sized for a gloved finger. Try a button.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="replace-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="replace-h">What it replaces</h2>
+        <p>The shared spreadsheet and the marker on the box lid both worked once. Then the freezer got defrosted, a postdoc left, and nobody updated row 212.</p>
+      </div>
+      <div class="then-now">
+        <div>
+          <h3>The spreadsheet nobody trusts</h3>
+          <p>It says where things were when someone last remembered to update it. You find out it’s wrong with the door open.</p>
+          <div class="sheet" aria-label="Example of an out-of-date freezer spreadsheet">
+            <div class="sheet-bar"><strong>freezer inventory FINAL v3 (2).xlsx</strong><span>Last edited 7 months ago</span></div>
+            <div class="sheet-scroll"><table>
+              <thead><tr><th class="rownum"></th><th>Sample</th><th>Location</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td class="rownum">210</td><td>HEK293T p12</td><td>F2 shelf 3</td><td>&nbsp;</td></tr>
+                <tr><td class="rownum">211</td><td>HEK293T p14</td><td class="doubt">F2 sh3 box 4?</td><td class="doubt">check w/ Sam</td></tr>
+                <tr><td class="rownum">212</td><td>pRW-44 maxi</td><td class="doubt">F1 → F3??</td><td class="doubt">moved for defrost</td></tr>
+                <tr><td class="rownum">213</td><td>DH5α comp.</td><td>F1 top</td><td>last 3 tubes</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+        <div>
+          <h3>A record for every position</h3>
+          <p>Each tube position keeps its own history: who stored it, who moved it, who took the last one. Nothing depends on handwriting surviving the frost.</p>
+          <div class="label-pair">
+            <div class="boxlid" aria-label="A box lid label faded by frost, reading roughly HEK 2.. p1?">
+              <small>Box lid, after a year at −80&nbsp;°C</small>
+              <span class="faded" aria-hidden="true">H?K 2.. p1?<br>MO 2/?</span>
+            </div>
+            <div class="record">
+              <small>Rackwise, box 4, position D5</small>
+              <b>HEK293T, passage 14</b>
+              <dl>
+                <dt>Stored</dt><dd>M. Okafor, 12 Feb 2026</dd>
+                <dt>Moved</dt><dd>Freezer 1 to 2, 9 Jun 2026, defrost</dd>
+                <dt>Taken out</dt><dd>R. Silva, 2 Oct 2026</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="who-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="who-h">Who it’s for</h2>
+        <p>Lab managers set it up and keep it honest. Everyone else uses it at the freezer, a few times a day.</p>
+      </div>
+      <div class="people">
+        <div>
+          <h3>Lab managers</h3>
+          <ul>
+            <li>Lay out each freezer the way it really is: shelves, racks, boxes and their grid.</li>
+            <li>See who stored what, and what’s still in the freezer after someone leaves the lab.</li>
+            <li>Plan a defrost or a freezer move and keep every box’s location right while it happens.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Researchers and technicians</h3>
+          <ul>
+            <li>Find a sample by name, box or person before walking over.</li>
+            <li>Record a tube going in or coming out with one tap, gloves on.</li>
+            <li>Find an empty position for new samples without opening box after box.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="not-h">
+    <div class="wrap">
+      <div class="not">
+        <svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="#18233A" stroke-width="3" stroke-linecap="round"><rect x="14" y="4" width="36" height="56" rx="4"/><path d="M14 22h36M42 10v6M42 28v10"/></svg>
+        <div>
+          <h2 id="not-h">Rackwise doesn’t monitor freezer temperature</h2>
+          <p>It has no sensors and sends no temperature alarms. Keep the alarm and monitoring system you already rely on. Rackwise tells you where your samples are, not how cold they are.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta band" aria-labelledby="cta-h">
+    <div class="wrap cta-grid">
+      <div>
+        <h2 id="cta-h">Put your freezers on the map</h2>
+        <p>Four labs are testing Rackwise now, at small biotech companies and university labs. We’re opening it to more labs a few at a time.</p>
+      </div>
+      <div class="cta-side">
+        <p>Tell us about your freezers and how you track samples today. We’ll get in touch when there’s room.</p>
+        <a class="btn" href="https://rackwise.example/early-access">Request early access</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Rackwise. Sample locations for −80&nbsp;°C freezers.</p>
+    <p><a href="https://rackwise.example/early-access">Request early access</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var samples = [
+    { id: 'hek', name: 'HEK293T, passage 14', short: 'HEK293T p14', box: 'Cell lines, HEK', freezer: 2, shelf: 3, rack: 'C', boxNo: 4, pos: 'D5', fill: 0.62,
+      history: [['12 Feb 2026', 'Stored by', 'M. Okafor'], ['9 Jun 2026', 'Moved from freezer 1 for the defrost by', 'J. Lindqvist'], ['2 Oct 2026', 'Vial taken out by', 'R. Silva']] },
+    { id: 'prw', name: 'pRW-44 maxiprep', short: 'pRW-44', box: 'Plasmids 2025', freezer: 1, shelf: 2, rack: 'A', boxNo: 2, pos: 'B8', fill: 0.78,
+      history: [['3 Sep 2025', 'Stored by', 'J. Lindqvist'], ['14 Jan 2026', 'Aliquot taken out by', 'A. Mensah']] },
+    { id: 'serum', name: 'Serum, cohort B, donor 118', short: 'Serum B-118', box: 'Cohort B serum', freezer: 3, shelf: 5, rack: 'D', boxNo: 11, pos: 'H2', fill: 0.9,
+      history: [['20 Mar 2026', 'Stored by', 'T. Haddad'], ['20 Mar 2026', 'Box checked against the manifest by', 'T. Haddad']] },
+    { id: 'dh5', name: 'DH5α competent cells, batch 7', short: 'DH5α batch 7', box: 'Competent cells', freezer: 1, shelf: 1, rack: 'B', boxNo: 1, pos: 'A3', fill: 0.18,
+      history: [['5 Aug 2026', 'Stored by', 'R. Silva'], ['30 Sep 2026', 'Last-but-two tube taken out by', 'M. Okafor']] },
+    { id: 'pdo', name: 'Organoid line PDO-09, passage 6', short: 'PDO-09 p6', box: 'Organoids, PDO 01–12', freezer: 2, shelf: 4, rack: 'B', boxNo: 6, pos: 'F7', fill: 0.5,
+      history: [['11 May 2026', 'Stored by', 'A. Mensah']] },
+    { id: 'gfp', name: 'Anti-GFP antibody, aliquot 3 of 10', short: 'Anti-GFP', box: 'Antibodies, shared', freezer: 3, shelf: 1, rack: 'A', boxNo: 3, pos: 'C1', fill: 0.4,
+      history: [['18 Apr 2026', 'Stored by', 'T. Haddad'], ['7 Jul 2026', 'Aliquot 2 taken out by', 'J. Lindqvist']] }
+  ];
+  var people = ['okafor', 'lindqvist', 'silva', 'mensah', 'haddad'];
+
+  var tries = document.querySelector('.tries');
+  var input = document.getElementById('q');
+  var out = document.getElementById('result');
+  var tryButtons = [];
+
+  ['hek', 'prw', 'serum', 'dh5'].forEach(function (id) {
+    var s = samples.filter(function (x) { return x.id === id; })[0];
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'try'; b.textContent = s.short; b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', function () { input.value = s.short; show(s, true); });
+    tries.appendChild(b); tryButtons.push([b, s]);
+  });
+
+  function norm(t) { return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9α]+/g, ' ').trim(); }
+
+  function find(q) {
+    var n = norm(q);
+    if (!n) return samples[0];
+    var words = n.split(' ');
+    var best = null, bestScore = 0;
+    samples.forEach(function (s) {
+      var hay = norm([s.name, s.short, s.box, s.history.map(function (h) { return h[2]; }).join(' ')].join(' '));
+      var score = 0;
+      words.forEach(function (w) { if (hay.indexOf(w) !== -1) score += w.length; });
+      if (words.every(function (w) { return hay.indexOf(w) !== -1; })) score += 100;
+      if (score > bestScore) { bestScore = score; best = s; }
+    });
+    return bestScore >= 100 ? best : null;
+  }
+
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  // deterministic pseudo-random occupancy for each box
+  function rng(seed) { var x = 0; for (var i = 0; i < seed.length; i++) x = (x * 31 + seed.charCodeAt(i)) >>> 0; return function () { x = (x * 1664525 + 1013904223) >>> 0; return x / 4294967296; }; }
+
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(name, attrs, parent) { var e = document.createElementNS(NS, name); for (var k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+
+  function freezerSvg(s) {
+    var racks = ['A', 'B', 'C', 'D'];
+    var svg = el('svg', { viewBox: '0 0 200 236', role: 'img', 'aria-label': 'Freezer ' + s.freezer + ' seen from the front, shelf ' + s.shelf + ', rack ' + s.rack + ' highlighted' });
+    el('rect', { x: 24, y: 18, width: 164, height: 206, rx: 6, class: 'shelf-frame' }, svg);
+    racks.forEach(function (r, i) {
+      var t = el('text', { x: 24 + 10 + i * 38 + 17, y: 12, 'text-anchor': 'middle', class: 'svg-label' + (r === s.rack ? ' strong' : '') }, svg);
+      t.textContent = r;
+    });
+    for (var sh = 1; sh <= 5; sh++) {
+      var y = 18 + 8 + (sh - 1) * 40;
+      var lab = el('text', { x: 14, y: y + 20, 'text-anchor': 'middle', class: 'svg-label' + (sh === s.shelf ? ' strong' : '') }, svg);
+      lab.textContent = sh;
+      if (sh > 1) el('line', { x1: 24, x2: 188, y1: y - 4, y2: y - 4, stroke: '#18233A', 'stroke-width': 1.5 }, svg);
+      racks.forEach(function (r, i) {
+        var on = sh === s.shelf && r === s.rack;
+        el('rect', { x: 24 + 10 + i * 38, y: y, width: 34, height: 30, rx: 2, class: 'rack' + (on ? ' on' : ''), 'data-on': on ? '1' : '' }, svg);
+        for (var k = 1; k < 4; k++) el('line', { x1: 24 + 10 + i * 38 + 3, x2: 24 + 10 + i * 38 + 31, y1: y + k * 7.5, y2: y + k * 7.5, stroke: on ? '#18233A' : '#BFCDD4', 'stroke-width': 0.8 }, svg);
+      });
+    }
+    return svg;
+  }
+
+  function boxSvg(s) {
+    var rows = 'ABCDEFGHI';
+    var tr = rows.indexOf(s.pos[0]), tc = parseInt(s.pos.slice(1), 10) - 1;
+    var svg = el('svg', { viewBox: '0 0 236 236', role: 'img', 'aria-label': 'Box ' + s.boxNo + ' seen from above, a 9 by 9 grid, position ' + s.pos + ' highlighted' });
+    var r = rng(s.id);
+    var caps = ['#5B86B5', '#5E9C78', '#CC7397', '#EEF2F3', '#EEF2F3'];
+    var capFor = caps[Math.floor(r() * 3)];
+    el('rect', { x: 18, y: 18, width: 214, height: 214, rx: 6, fill: '#FBFDFD', stroke: '#18233A', 'stroke-width': 2 }, svg);
+    for (var c = 0; c < 9; c++) {
+      var t = el('text', { x: 18 + 12 + c * 23.6, y: 12, 'text-anchor': 'middle', class: 'svg-label' + (c === tc ? ' strong' : '') }, svg); t.textContent = c + 1;
+    }
+    var target = null;
+    for (var i = 0; i < 9; i++) {
+      var tl = el('text', { x: 8, y: 18 + 16 + i * 23.6, 'text-anchor': 'middle', class: 'svg-label' + (i === tr ? ' strong' : '') }, svg); tl.textContent = rows[i];
+      for (var j = 0; j < 9; j++) {
+        var cx = 18 + 12 + j * 23.6, cy = 18 + 12 + i * 23.6;
+        if (i === tr && j === tc) { target = [cx, cy]; continue; }
+        var filled = r() < s.fill;
+        if (filled) el('circle', { cx: cx, cy: cy, r: 8.5, fill: r() < 0.7 ? capFor : caps[Math.floor(r() * caps.length)], class: 'tube' }, svg);
+        else el('circle', { cx: cx, cy: cy, r: 8.5, class: 'well' }, svg);
+      }
+    }
+    el('circle', { cx: target[0], cy: target[1], r: 10.5, class: 'target' }, svg);
+    var tx = el('text', { x: target[0], y: target[1] + 3.6, 'text-anchor': 'middle', class: 'svg-label strong', 'font-size': '10' }, svg); tx.textContent = s.pos;
+    if (!reduce) el('circle', { cx: target[0], cy: target[1], r: 7, class: 'ping' }, svg);
+    return svg;
+  }
+
+  var current = null;
+  function show(s, animate) {
+    tryButtons.forEach(function (p) { p[0].setAttribute('aria-pressed', p[1] === s ? 'true' : 'false'); });
+    if (!s) {
+      current = null;
+      out.innerHTML = '<div class="empty"><strong>No sample matches “' + esc(input.value.trim()) + '”</strong><p>Check the spelling, or search by box name or by the person who stored it. In this example lab, try “HEK”, “plasmids” or “Okafor”.</p></div>';
+      return;
+    }
+    if (s === current) return;
+    current = s;
+    out.innerHTML =
+      '<div class="result">' +
+        '<p class="sample-name">' + esc(s.name) + '</p>' +
+        '<ol class="path" aria-label="Location">' +
+          '<li><small>Freezer</small><b>' + s.freezer + '</b></li>' +
+          '<li><small>Shelf</small><b>' + s.shelf + '</b></li>' +
+          '<li><small>Rack</small><b>' + s.rack + '</b></li>' +
+          '<li><small>Box</small><b>' + s.boxNo + '</b></li>' +
+          '<li><small>Position</small><b>' + s.pos + '</b></li>' +
+        '</ol>' +
+        '<div class="diagrams">' +
+          '<figure class="diagram" style="margin:0"><figcaption>Freezer ' + s.freezer + ', door open</figcaption><div data-slot="fz"></div></figure>' +
+          '<figure class="diagram" style="margin:0"><figcaption>Box ' + s.boxNo + ': ' + esc(s.box) + '</figcaption><div data-slot="bx"></div></figure>' +
+        '</div>' +
+        '<ul class="provenance" aria-label="History of this position">' +
+          s.history.map(function (h) { return '<li><time>' + h[0] + '</time><span>' + esc(h[1]) + ' <strong>' + esc(h[2]) + '</strong></span></li>'; }).join('') +
+        '</ul>' +
+      '</div>';
+    out.querySelector('[data-slot="fz"]').appendChild(freezerSvg(s));
+    var bxSlot = out.querySelector('[data-slot="bx"]');
+    if (animate && !reduce) {
+      bxSlot.style.opacity = '0.25';
+      setTimeout(function () { bxSlot.appendChild(boxSvg(s)); bxSlot.style.transition = 'opacity .25s ease'; bxSlot.style.opacity = '1'; }, 260);
+    } else {
+      bxSlot.appendChild(boxSvg(s));
+    }
+  }
+
+  var timer;
+  input.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      var v = input.value.trim();
+      if (!v) { current = null; show(samples[0], true); return; }
+      var s = find(v);
+      if (s) { current = current === s ? s : current; show(s, true); }
+      else show(null);
+    }, 140);
+  });
+  input.addEventListener('keydown', function (e) { if (e.key === 'Enter') e.preventDefault(); });
+
+  show(samples[0], false);
+
+  // phone buttons
+  var status = document.getElementById('phone-status');
+  var stamps = { 'Taken out': 'Taken out by you, just now.', 'Put back': 'Put back in D5 by you, just now.', 'Used up': 'Marked used up. D5 is now free.' };
+  document.querySelectorAll('.glove-btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.glove-btn').forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+      status.textContent = stamps[b.getAttribute('data-act')];
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js')</script>
+<title>Swim windows for year-round sea swimmers · Tidewise for iPhone</title>
+<meta name="description" content="Tidewise is an iPhone app for people who swim in the sea all year. It reads the tide, wind, swell and water temperature at your beach and shows today’s swim windows. Public beta, 40 beaches in the UK and Ireland.">
+<meta name="theme-color" content="#0a141c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tidewise: today’s swim windows at your beach">
+<meta property="og:description" content="An iPhone app for year-round sea swimmers. Tide, wind, swell and water temperature in one look, with a warning when a window closes early. Public beta.">
+<meta property="og:image" content="og.png">
+<meta property="og:image:alt" content="A tide curve across a dark morning sky with a shaded swim window that closes early when the wind turns onshore.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tidewise: today’s swim windows at your beach">
+<meta name="twitter:description" content="An iPhone app for year-round sea swimmers. Public beta, 40 beaches in the UK and Ireland.">
+<meta name="twitter:image" content="og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#main" aria-label="Tidewise, back to top">
+      <svg viewBox="0 0 30 18" aria-hidden="true" focusable="false"><path d="M1 13 C6 2 12 2 16 9 S25 16 29 5" fill="none" stroke="#d3e6ec" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="9" r="2.6" fill="#f2c194"/></svg>
+      <span>Tidewise</span>
+    </a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Main">
+      <a href="#how">How windows work</a>
+      <a href="#warnings">Early warnings</a>
+      <a href="#your-call">Your call</a>
+      <a class="btn" href="https://tidewise.example/beta">Join the public beta</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap">
+      <div class="hero-copy">
+        <h1 id="hero-h">Too lumpy today?</h1>
+        <div class="hero-side">
+          <p class="lede">Tidewise is an iPhone app for people who swim in the sea all year. It reads the tide, wind, swell and water temperature at your beach and shows today’s swim windows.</p>
+          <div class="cta-row">
+            <a class="btn" href="https://tidewise.example/beta">Join the public beta</a>
+            <p class="cta-note">iPhone public beta. 40 UK and Ireland beaches so far.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sig" data-signature data-morning-now="onshore">
+        <div class="sig-head">
+          <p class="sig-label"><b>Sample mornings at an imaginary cove</b>Written for this page, not a forecast.<span class="sig-how"> Pick one, then drag to when you’d get in.</span></p>
+          <div class="tabs" role="group" aria-label="Sample morning">
+            {{TABS}}
+          </div>
+        </div>
+
+        <div class="pt">
+          <div class="pt-inner">
+            <div class="pt-frame" role="img" aria-label="Tide height from 05:00 to 13:00 drawn as the sea surface, with swim windows shaded. The readout beside it gives the same information as text.">
+              <svg class="pt-svg intro" viewBox="0 0 {{VW}} {{VH}}" preserveAspectRatio="none" aria-hidden="true" focusable="false">{{SVG}}</svg>
+              <div class="pt-marker" aria-hidden="true">{{MARKER}}</div>
+              <div class="pt-labels" aria-hidden="true">{{LABELS}}</div>
+            </div>
+            <div class="pt-axis" aria-hidden="true">{{AXIS}}</div>
+          </div>
+          <div class="range-row">
+            <label for="arrive">When you’d get in</label>
+            <span class="range-hint">05:00 to 13:00, five-minute steps</span>
+            <output id="arrive-out" for="arrive">{{TIME}}</output>
+          </div>
+          <input type="range" id="arrive" min="300" max="780" step="5" value="{{TVALUE}}" aria-valuetext="{{TIME}}">
+        </div>
+
+        <ul class="legend" aria-label="Chart key">
+          <li><i class="k-win"></i>Swim window</li>
+          <li><i class="k-ghost"></i>Last night’s window</li>
+          <li><i class="k-limit"></i>2.2 m tide limit (sample)</li>
+        </ul>
+        <div class="readout-col">
+          <div class="readout" role="status" aria-live="polite">{{READOUT}}</div>
+          <p class="ro-foot">Conditions only. Tidewise never tells you it’s safe to swim; you decide on the beach.</p>
+          <button type="button" class="reset" data-reset>Reset the sample</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-1" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <h2 id="how-h">A window opens only when tide, swell and wind all agree</h2>
+      <p class="prose">Each condition gets its own lane across the morning. The window is the stretch where all three lanes are inside their limits at once. Water temperature rides along on every window, so you know how cold it will be.</p>
+      <p class="prose">The limits on this page are made up for one imaginary cove.</p>
+      <div class="lanes-wrap">
+        <p class="lanes-cap">Lanes for the sample above: <b data-lanes-title>{{TITLE}}</b></p>
+        <ul class="lanes">{{LANES}}</ul>
+        <div class="lanes-axis" aria-hidden="true"><div class="lanes-axis-inner">{{AXIS}}</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-2" aria-labelledby="old-h">
+    <div class="wrap">
+      <h2 id="old-h">Three websites, a tide table and the group chat become one line</h2>
+      <div class="ledger">
+        <div class="ledger-col">
+          <h3>05:40, the old way</h3>
+          <ul class="tt" aria-label="What you check now, for the same sample morning">
+            <li><span>Tide table</span><span>High water 08:40, 4.5 m</span></li>
+            <li><span>Wind forecast</span><span>W 8 mph, then NE 15–19 mph</span></li>
+            <li><span>Swell forecast</span><span>0.4–0.6 m</span></li>
+            <li><span>Sea temperature</span><span>13.4°C</span></li>
+            <li><span>Group chat</span><span>“Too lumpy today?”</span></li>
+          </ul>
+        </div>
+        <div class="ledger-col">
+          <h3>The same morning in Tidewise</h3>
+          <div class="oneline">
+            <p>Imaginary cove: <span class="w">window 05:16–07:42</span>. <span class="e">Closes early</span>, the wind turns onshore. Water 13.4°C.</p>
+            <small>Sample line, written for this page.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-3" id="warnings" aria-labelledby="warn-h">
+    <div class="wrap split">
+      <div>
+        <h2 id="warn-h">When a window closes early, Tidewise warns you</h2>
+        <p class="prose">Forecasts shift overnight. If the window you planned around now ends sooner, Tidewise tells you the new closing time before you’re in the water.</p>
+        <div class="warn-card">
+          <p class="tag">Sample warning, written for this page</p>
+          <p class="msg">Imaginary cove: your window now closes at <b>07:42, not 09:30</b>. The wind turns onshore, 15 mph by 07:45.</p>
+        </div>
+      </div>
+      <div class="scenes">
+        <figure class="scene">
+          <svg viewBox="0 0 400 220" role="img" aria-label="The cove as forecast last night: wind blowing from the land out to sea, flat water.">
+            <rect width="400" height="122" class="d-sky2"/>
+            <circle cx="330" cy="122" r="14" class="d-faint"/>
+            <rect y="120" width="400" height="100" class="d-sea"/>
+            <rect y="186" width="400" height="34" class="d-sea2"/>
+            <path d="M0 102 H30 V140 H48 V152 H76 V164 H104 V176 H0 Z" class="d-land2"/>
+            <path d="M0 176 H130 L150 220 H0 Z" class="d-land"/>
+            <path d="M140 150 h90 M250 141 h70 M180 168 h120 M300 160 h80 M200 198 h140" class="d-faint"/>
+            <path d="M60 46 H190 M180 39 L191 46 L180 53 M90 76 H220 M210 69 L221 76 L210 83" class="d-wind"/>
+          </svg>
+          <figcaption><b>Last night</b>Wind from the land, flat water until 09:30</figcaption>
+        </figure>
+        <figure class="scene">
+          <svg viewBox="0 0 400 220" role="img" aria-label="The cove at 07:42: wind blowing from the sea onto the beach, choppy water.">
+            <rect width="400" height="122" class="d-sky2"/>
+            <circle cx="330" cy="116" r="14" class="d-faint"/>
+            <rect y="120" width="400" height="100" class="d-sea"/>
+            <rect y="186" width="400" height="34" class="d-sea2"/>
+            <path d="M0 102 H30 V140 H48 V152 H76 V164 H104 V176 H0 Z" class="d-land2"/>
+            <path d="M0 176 H130 L150 220 H0 Z" class="d-land"/>
+            <path d="M136 152 l8 -6 l8 6 l8 -6 l8 6 M196 140 l8 -6 l8 6 l8 -6 l8 6 M262 150 l8 -6 l8 6 l8 -6 l8 6 l8 -6 l8 6 M176 172 l8 -7 l8 7 l8 -7 l8 7 l8 -7 l8 7 M300 170 l8 -7 l8 7 l8 -7 l8 7 M220 200 l9 -8 l9 8 l9 -8 l9 8 l9 -8 l9 8 M340 196 l9 -8 l9 8 l9 -8 l9 8" class="d-stroke"/>
+            <path d="M370 46 H240 M250 39 L239 46 L250 53 M340 76 H210 M220 69 L209 76 L220 83" class="d-warn"/>
+          </svg>
+          <figcaption><b>07:42 this morning</b>Wind off the sea, chop building on the beach</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-3" id="your-call" aria-labelledby="call-h">
+    <div class="wrap call">
+      <div>
+        <h2 id="call-h">Tidewise shows the water. Getting in is your call.</h2>
+        <p class="prose"><strong>Tidewise is not a lifeguard, and it will never tell you it’s safe to swim.</strong> It shows what the tide, wind, swell and water are doing at your beach, and when they line up. You look at the sea when you get there, and you decide.</p>
+        <ul class="never">
+          <li><span>You will see</span><span>Window, closes early, outside the windows, no window</span></li>
+          <li><span>You won’t see</span><span>“Safe to swim”</span></li>
+        </ul>
+      </div>
+      <svg viewBox="0 0 520 300" role="img" aria-label="Concrete steps going down into the sea at first light, with a towel and a tow float left on the steps.">
+        <rect width="520" height="152" class="d-sky"/>
+        <rect y="150" width="520" height="150" class="d-sea"/>
+        <rect y="244" width="520" height="56" class="d-sea2"/>
+        <path d="M0 150 H520" class="d-faint"/>
+        <path d="M0 112 H130 V146 H196 V180 H262 V214 H328 V248 H394 V300 H0 Z" class="d-land2"/>
+        <path d="M0 112 H130 M130 146 H196 M196 180 H262 M262 214 H328 M328 248 H394" class="d-stroke"/>
+        <rect x="0" y="222" width="520" height="78" class="d-sea" fill-opacity=".82"/>
+        <path d="M0 222 H520" class="d-stroke"/>
+        <path d="M410 236 h50 M300 262 h90 M440 270 h60 M60 252 h80" class="d-faint"/>
+        <rect x="30" y="98" width="72" height="14" rx="2" class="d-obj"/>
+        <path d="M38 105 H94" class="d-faint"/>
+        <rect x="140" y="126" width="46" height="20" rx="10" class="d-obj"/>
+        <path d="M186 136 c14 4 10 18 22 22 s14 10 20 20" class="d-faint"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="band band-4" id="beta" aria-labelledby="beta-h">
+    <div class="wrap beta">
+      <div>
+        <h2 id="beta-h">40 beaches in the UK and Ireland so far</h2>
+        <p class="prose">Tidewise is in public beta on iPhone. You join through the beta page.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn" href="https://tidewise.example/beta">Join the public beta</a>
+        <p class="cta-note">Opens the beta page at tidewise.example/beta.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <p class="foot-brand">Tidewise</p>
+      <p>An iPhone app for year-round sea swimmers. Not a lifeguard: it shows conditions, and you decide whether to swim.</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="#how">How windows work</a></li>
+        <li><a href="#warnings">Early warnings</a></li>
+        <li><a href="#your-call">Your call</a></li>
+        <li><a href="https://tidewise.example/beta">Join the public beta</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+<script src="tide.js"></script>
+</body>
+</html>

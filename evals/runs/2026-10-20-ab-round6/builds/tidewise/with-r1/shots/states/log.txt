@@ -1,0 +1,28 @@
+1440 default | 06:30 In a window, 05:16–07:42 Closes in 1 h 12 min. Closes early: last night it ran to 09:30. Tide 3.4 m, rising Wind 7 mph NW, offshore Swell 0.4 m Water 13.4
+1440 calm | 06:30 In a window, 05:46–12:34 Closes in 6 h 4 min. Tide 2.9 m, rising Wind 5 mph W, offshore Swell 0.2 m Water 13.6°C
+1440 swell | 06:30 No window between 05:00 and 13:00 Nothing lines up this morning. Tide 1.6 m is under the 2.2 m sample limit. Swell 1.2 m is over the 0.7 m sample limit. W
+1440 onshore-0800 | 08:00 Outside the windows The last one closed at 07:42, early: last night it ran to 09:30. Wind 17 mph onshore is over the 14 mph sample limit. Tide 4.4 m, risi
+out of range -> [ '780', '13:00' ]
+negative -> [ '300', '05:00' ]
+nonsense -> [ '540', '09:00' ]
+repeat x5 -> 09:00 No window between 05:00 and 13:00 Nothing lines up this morning. Swell 1.3 m is over the 0.7 m sample limit. Wind 20 mph onshore is over the 14 mph sample
+1440 after-reset | 06:30 In a window, 05:16–07:42 Closes in 1 h 12 min. Closes early: last night it ran to 09:30. Tide 3.4 m, rising Wind 7 mph NW, offshore Swell 0.4 m Water 13.4
+focus after tabs: arrive
+keyboard End -> 13:00 Outside the windows The last one closed at 12:34. Tide 1.8 m is under the 2.2 m sample limit. Tide 1.8 m, falling Wind 8 mph SW, offshore Swell 0.3 m Wate
+1440 keyboard-end | 13:00 Outside the windows The last one closed at 12:34. Tide 1.8 m is under the 2.2 m sample limit. Tide 1.8 m, falling Wind 8 mph SW, offshore Swell 0.3 m Wate
+focus after reset: reset
+errors []
+390 default | 06:30 In a window, 05:16–07:42 Closes in 1 h 12 min. Closes early: last night it ran to 09:30. Tide 3.4 m, rising Wind 7 mph NW, offshore Swell 0.4 m Water 13.4
+390 calm | 06:30 In a window, 05:46–12:34 Closes in 6 h 4 min. Tide 2.9 m, rising Wind 5 mph W, offshore Swell 0.2 m Water 13.6°C
+390 swell | 06:30 No window between 05:00 and 13:00 Nothing lines up this morning. Tide 1.6 m is under the 2.2 m sample limit. Swell 1.2 m is over the 0.7 m sample limit. W
+390 onshore-0800 | 08:00 Outside the windows The last one closed at 07:42, early: last night it ran to 09:30. Wind 17 mph onshore is over the 14 mph sample limit. Tide 4.4 m, risi
+out of range -> [ '780', '13:00' ]
+negative -> [ '300', '05:00' ]
+nonsense -> [ '540', '09:00' ]
+repeat x5 -> 09:00 No window between 05:00 and 13:00 Nothing lines up this morning. Swell 1.3 m is over the 0.7 m sample limit. Wind 20 mph onshore is over the 14 mph sample
+390 after-reset | 06:30 In a window, 05:16–07:42 Closes in 1 h 12 min. Closes early: last night it ran to 09:30. Tide 3.4 m, rising Wind 7 mph NW, offshore Swell 0.4 m Water 13.4
+focus after tabs: arrive
+keyboard End -> 13:00 Outside the windows The last one closed at 12:34. Tide 1.8 m is under the 2.2 m sample limit. Tide 1.8 m, falling Wind 8 mph SW, offshore Swell 0.3 m Wate
+390 keyboard-end | 13:00 Outside the windows The last one closed at 12:34. Tide 1.8 m is under the 2.2 m sample limit. Tide 1.8 m, falling Wind 8 mph SW, offshore Swell 0.3 m Wate
+focus after reset: reset
+errors []

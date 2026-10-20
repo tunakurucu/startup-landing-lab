@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js')</script>
+<title>Swim windows for year-round sea swimmers · Tidewise for iPhone</title>
+<meta name="description" content="Tidewise is an iPhone app for people who swim in the sea all year. It reads the tide, wind, swell and water temperature at your beach and shows today’s swim windows. Public beta, 40 beaches in the UK and Ireland.">
+<meta name="theme-color" content="#0a141c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tidewise: today’s swim windows at your beach">
+<meta property="og:description" content="An iPhone app for year-round sea swimmers. Tide, wind, swell and water temperature in one look, with a warning when a window closes early. Public beta.">
+<meta property="og:image" content="og.png">
+<meta property="og:image:alt" content="A tide curve across a dark morning sky with a shaded swim window that closes early when the wind turns onshore.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tidewise: today’s swim windows at your beach">
+<meta name="twitter:description" content="An iPhone app for year-round sea swimmers. Public beta, 40 beaches in the UK and Ireland.">
+<meta name="twitter:image" content="og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#main" aria-label="Tidewise, back to top">
+      <svg viewBox="0 0 30 18" aria-hidden="true" focusable="false"><path d="M1 13 C6 2 12 2 16 9 S25 16 29 5" fill="none" stroke="#d3e6ec" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="9" r="2.6" fill="#f2c194"/></svg>
+      <span>Tidewise</span>
+    </a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Main">
+      <a href="#how">How windows work</a>
+      <a href="#warnings">Early warnings</a>
+      <a href="#your-call">Your call</a>
+      <a class="btn" href="https://tidewise.example/beta">Join the public beta</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap">
+      <div class="hero-copy">
+        <h1 id="hero-h">Too lumpy today?</h1>
+        <div class="hero-side">
+          <p class="lede">Tidewise is an iPhone app for people who swim in the sea all year. It reads the tide, wind, swell and water temperature at your beach and shows today’s swim windows.</p>
+          <div class="cta-row">
+            <a class="btn" href="https://tidewise.example/beta">Join the public beta</a>
+            <p class="cta-note">iPhone public beta. 40 UK and Ireland beaches so far.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sig" data-signature data-morning-now="onshore">
+        <div class="sig-head">
+          <p class="sig-label"><b>Sample mornings at an imaginary cove</b>Written for this page, not a forecast.<span class="sig-how"> Pick one, then drag to when you’d get in.</span></p>
+          <div class="tabs" role="group" aria-label="Sample morning">
+            <button type="button" class="tab" data-morning="calm" aria-pressed="false">Calm</button>
+            <button type="button" class="tab" data-morning="onshore" aria-pressed="true">Wind turns onshore</button>
+            <button type="button" class="tab" data-morning="swell" aria-pressed="false">Big swell</button>
+          </div>
+        </div>
+
+        <div class="pt">
+          <div class="pt-inner">
+            <div class="pt-frame" role="img" aria-label="Tide height from 05:00 to 13:00 drawn as the sea surface, with swim windows shaded. The readout beside it gives the same information as text.">
+              <svg class="pt-svg intro" viewBox="0 0 960 300" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect x="0" y="0" width="236.0" height="300" class="sky-night"/><rect x="236.0" y="0" width="66.0" height="300" class="sky-dawn"/><rect x="302.0" y="0" width="658.0" height="300" class="sky-day"/><rect x="324.0" y="50" width="216.0" height="250" class="ghost"/><rect x="32.0" y="50" width="292.0" height="250" class="win"/><path d="M0.0 206.8L1.0 206.9L2.0 206.6L3.0 206.2L4.0 205.6L5.0 205.1L6.0 204.8L7.0 204.5L8.0 204.4L9.0 204.2L10.0 203.7L11.0 203.0L12.0 202.0L13.0 200.7L14.0 199.5L15.0 198.4L16.0 197.6L17.0 197.2L18.0 197.1L19.0 197.2L20.0 197.3L21.0 197.3L22.0 197.1L23.0 196.8L24.0 196.4L25.0 196.0L26.0 195.9L27.0 195.9L28.0 196.1L29.0 196.3L30.0 196.4L31.0 196.2L32.0 195.6L33.0 194.7L34.0 193.5L35.0 192.3L36.0 191.2L37.0 190.3L38.0 189.8L39.0 189.4L40.0 189.1L41.0 188.8L42.0 188.4L43.0 187.7L44.0 187.1L45.0 186.5L46.0 186.1L47.0 186.0L48.0 186.2L49.0 186.6L50.0 187.1L51.0 187.4L52.0 187.4L53.0 187.1L54.0 186.4L55.0 185.5L56.0 184.6L57.0 183.8L58.0 183.2L59.0 182.8L60.0 182.4L61.0 181.9L62.0 181.2L63.0 180.4L64.0 179.4L65.0 178.3L66.0 177.4L67.0 176.7L68.0 176.5L69.0 176.6L70.0 176.9L71.0 177.3L72.0 177.6L73.0 177.7L74.0 177.4L75.0 177.0L76.0 176.5L77.0 176.0L78.0 175.7L79.0 175.5L80.0 175.4L81.0 175.2L82.0 174.8L83.0 174.1L84.0 173.1L85.0 171.8L86.0 170.5L87.0 169.4L88.0 168.5L89.0 168.0L90.0 167.8L91.0 167.8L92.0 167.9L93.0 167.9L94.0 167.7L95.0 167.3L96.0 166.9L97.0 166.6L98.0 166.4L99.0 166.5L100.0 166.7L101.0 167.0L102.0 167.2L103.0 167.0L104.0 166.5L105.0 165.6L106.0 164.5L107.0 163.3L108.0 162.1L109.0 161.3L110.0 160.6L111.0 160.2L112.0 159.9L113.0 159.6L114.0 159.1L115.0 158.5L116.0 157.8L117.0 157.1L118.0 156.7L119.0 156.5L120.0 156.7L121.0 157.2L122.0 157.7L123.0 158.1L124.0 158.2L125.0 157.9L126.0 157.4L127.0 156.5L128.0 155.7L129.0 154.9L130.0 154.3L131.0 153.9L132.0 153.5L133.0 153.1L134.0 152.4L135.0 151.6L136.0 150.5L137.0 149.4L138.0 148.4L139.0 147.7L140.0 147.4L141.0 147.4L142.0 147.8L143.0 148.2L144.0 148.5L145.0 148.7L146.0 148.5L147.0 148.1L148.0 147.7L149.0 147.2L150.0 146.9L151.0 146.8L152.0 146.8L153.0 146.7L154.0 146.4L155.0 145.8L156.0 144.8L157.0 143.6L158.0 142.3L159.0 141.1L160.0 140.1L161.0 139.6L162.0 139.4L163.0 139.4L164.0 139.4L165.0 139.4L166.0 139.3L167.0 138.9L168.0 138.5L169.0 138.2L170.0 138.1L171.0 138.2L172.0 138.5L173.0 138.9L174.0 139.2L175.0 139.2L176.0 138.8L177.0 138.0L178.0 136.9L179.0 135.7L180.0 134.6L181.0 133.7L182.0 133.1L183.0 132.7L184.0 132.4L185.0 132.1L186.0 131.6L187.0 131.0L188.0 130.3L189.0 129.6L190.0 129.1L191.0 129.0L192.0 129.2L193.0 129.7L194.0 130.3L195.0 130.8L196.0 131.0L197.0 130.9L198.0 130.4L199.0 129.7L200.0 128.9L201.0 128.2L202.0 127.7L203.0 127.3L204.0 127.0L205.0 126.6L206.0 126.1L207.0 125.3L208.0 124.2L209.0 123.1L210.0 122.1L211.0 121.3L212.0 121.0L213.0 121.0L214.0 121.4L215.0 121.8L216.0 122.3L217.0 122.5L218.0 122.4L219.0 122.1L220.0 121.7L221.0 121.4L222.0 121.2L223.0 121.2L224.0 121.3L225.0 121.3L226.0 121.1L227.0 120.6L228.0 119.8L229.0 118.6L230.0 117.3L231.0 116.1L232.0 115.2L233.0 114.6L234.0 114.4L235.0 114.4L236.0 114.5L237.0 114.6L238.0 114.4L239.0 114.2L240.0 113.4L241.0 113.1L242.0 113.1L243.0 113.5L244.0 114.3L245.0 115.2L246.0 116.0L247.0 116.4L248.0 116.2L249.0 115.4L250.0 114.4L251.0 112.8L252.0 111.2L253.0 110.0L254.0 109.2L255.0 108.9L256.0 108.6L257.0 108.4L258.0 107.8L259.0 107.0L260.0 106.0L261.0 105.1L262.0 104.5L263.0 104.4L264.0 105.0L265.0 106.1L266.0 107.5L267.0 108.8L268.0 109.6L269.0 109.8L270.0 109.8L271.0 109.0L272.0 108.0L273.0 107.1L274.0 106.5L275.0 106.2L276.0 106.1L277.0 105.9L278.0 105.2L279.0 104.1L280.0 102.5L281.0 100.7L282.0 99.1L283.0 97.9L284.0 97.4L285.0 97.7L286.0 98.6L287.0 99.8L288.0 101.0L289.0 101.8L290.0 102.1L291.0 102.1L292.0 101.8L293.0 101.6L294.0 101.6L295.0 102.1L296.0 102.8L297.0 103.4L298.0 103.6L299.0 103.2L300.0 102.0L301.0 100.1L302.0 97.9L303.0 95.8L304.0 94.2L305.0 93.3L306.0 92.8L307.0 93.2L308.0 93.8L309.0 94.3L310.0 94.4L311.0 94.2L312.0 93.8L313.0 93.5L314.0 93.7L315.0 94.4L316.0 95.9L317.0 97.7L318.0 99.4L319.0 100.5L320.0 100.7L321.0 99.9L322.0 98.3L323.0 96.3L324.0 94.4L325.0 92.8L326.0 91.9L327.0 91.4L328.0 91.3L329.0 91.1L330.0 90.5L331.0 89.4L332.0 88.0L333.0 86.7L334.0 85.8L335.0 85.8L336.0 86.8L337.0 88.6L338.0 90.9L339.0 93.2L340.0 95.0L341.0 95.8L342.0 95.7L343.0 94.9L344.0 93.8L345.0 92.8L346.0 92.3L347.0 92.2L348.0 92.3L349.0 92.2L350.0 91.7L351.0 90.3L352.0 88.2L353.0 85.6L354.0 83.0L355.0 81.2L356.0 80.5L357.0 80.9L358.0 82.4L359.0 84.4L360.0 86.3L361.0 87.8L362.0 88.6L363.0 88.7L364.0 88.6L365.0 88.5L366.0 88.9L367.0 89.8L368.0 91.1L369.0 92.4L370.0 93.2L371.0 93.0L372.0 91.7L373.0 89.4L374.0 86.5L375.0 83.7L376.0 81.4L377.0 80.2L378.0 79.9L379.0 80.4L380.0 81.2L381.0 81.9L382.0 82.2L383.0 82.0L384.0 81.6L385.0 81.3L386.0 81.6L387.0 82.8L388.0 84.7L389.0 87.2L390.0 89.8L391.0 91.7L392.0 92.4L393.0 91.8L394.0 90.1L395.0 87.9L396.0 85.6L397.0 83.8L398.0 82.8L399.0 82.4L400.0 82.3L401.0 82.2L402.0 81.6L403.0 80.3L404.0 78.7L405.0 77.0L406.0 75.9L407.0 75.8L408.0 76.9L409.0 79.1L410.0 81.9L411.0 84.8L412.0 87.0L413.0 88.3L414.0 88.5L415.0 87.9L416.0 87.0L417.0 86.1L418.0 85.8L419.0 85.9L420.0 86.3L421.0 86.5L422.0 86.1L423.0 84.8L424.0 82.6L425.0 79.9L426.0 77.2L427.0 75.1L428.0 74.2L429.0 74.5L430.0 75.9L431.0 78.0L432.0 80.2L433.0 81.9L434.0 82.8L435.0 83.2L436.0 83.2L437.0 83.3L438.0 83.8L439.0 85.0L440.0 86.7L441.0 88.4L442.0 89.6L443.0 89.8L444.0 88.7L445.0 86.6L446.0 83.7L447.0 80.8L448.0 78.5L449.0 77.1L450.0 76.4L451.0 76.9L452.0 77.8L453.0 78.6L454.0 78.9L455.0 78.8L456.0 78.3L457.0 78.0L458.0 78.3L459.0 79.6L460.0 81.9L461.0 84.8L462.0 87.8L463.0 90.1L464.0 91.2L465.0 91.0L466.0 89.7L467.0 87.6L468.0 85.4L469.0 83.7L470.0 82.7L471.0 82.3L472.0 82.4L473.0 82.3L474.0 81.7L475.0 80.5L476.0 78.8L477.0 76.9L478.0 75.6L479.0 75.3L480.0 76.4L481.0 78.6L482.0 81.7L483.0 84.8L484.0 87.5L485.0 89.1L486.0 89.7L487.0 89.4L488.0 88.7L489.0 88.0L490.0 87.8L491.0 88.2L492.0 88.9L493.0 89.4L494.0 89.2L495.0 88.1L496.0 86.0L497.0 83.2L498.0 80.3L499.0 78.0L500.0 76.8L501.0 77.0L502.0 78.4L503.0 80.5L504.0 82.8L505.0 84.7L506.0 85.9L507.0 86.4L508.0 86.5L509.0 86.8L510.0 87.5L511.0 89.0L512.0 91.0L513.0 93.1L514.0 94.7L515.0 95.3L516.0 94.6L517.0 92.7L518.0 89.9L519.0 87.0L520.0 84.5L521.0 82.9L522.0 82.5L523.0 82.9L524.0 83.8L525.0 84.6L526.0 84.9L527.0 84.7L528.0 84.3L529.0 83.9L530.0 84.2L531.0 85.5L532.0 87.8L533.0 90.9L534.0 94.1L535.0 96.8L536.0 98.3L537.0 98.6L538.0 97.6L539.0 95.8L540.0 93.9L541.0 92.2L542.0 91.3L543.0 91.1L544.0 91.3L545.0 91.3L546.0 90.9L547.0 89.8L548.0 88.1L549.0 86.3L550.0 85.0L551.0 84.5L552.0 85.4L553.0 87.4L554.0 90.3L555.0 93.4L556.0 96.2L557.0 98.0L558.0 98.9L559.0 98.9L560.0 98.4L561.0 98.1L562.0 98.1L563.0 98.7L564.0 99.6L565.0 100.3L566.0 100.5L567.0 99.7L568.0 97.9L569.0 95.3L570.0 92.6L571.0 90.3L572.0 89.0L573.0 89.1L574.0 90.2L575.0 92.2L576.0 94.4L577.0 96.2L578.0 97.5L579.0 98.1L580.0 98.3L581.0 98.7L582.0 99.5L583.0 101.1L584.0 103.2L585.0 105.5L586.0 107.4L587.0 108.4L588.0 108.1L589.0 106.6L590.0 104.2L591.0 101.5L592.0 99.2L593.0 97.7L594.0 97.2L595.0 97.6L596.0 98.4L597.0 99.1L598.0 99.5L599.0 99.3L600.0 98.8L601.0 98.4L602.0 98.6L603.0 99.8L604.0 102.1L605.0 105.1L606.0 108.4L607.0 111.2L608.0 113.1L609.0 113.7L610.0 113.1L611.0 111.7L612.0 110.1L613.0 108.8L614.0 108.0L615.0 107.9L616.0 108.2L617.0 108.4L618.0 108.0L619.0 107.0L620.0 105.3L621.0 103.4L622.0 101.9L623.0 101.3L624.0 102.0L625.0 103.9L626.0 106.8L627.0 110.0L628.0 112.8L629.0 114.9L630.0 116.0L631.0 116.3L632.0 116.1L633.0 116.0L634.0 116.2L635.0 117.0L636.0 118.1L637.0 119.2L638.0 119.6L639.0 119.0L640.0 117.4L641.0 115.0L642.0 112.2L643.0 109.9L644.0 108.4L645.0 108.3L646.0 109.3L647.0 111.1L648.0 113.3L649.0 115.2L650.0 116.5L651.0 117.2L652.0 117.5L653.0 117.9L654.0 118.8L655.0 120.5L656.0 122.8L657.0 125.4L658.0 127.6L659.0 129.0L660.0 129.1L661.0 127.5L662.0 125.5L663.0 123.1L664.0 120.9L665.0 119.5L666.0 119.0L667.0 119.3L668.0 120.0L669.0 120.7L670.0 121.0L671.0 120.9L672.0 120.4L673.0 119.9L674.0 120.0L675.0 121.1L676.0 123.2L677.0 126.1L678.0 129.4L679.0 132.4L680.0 134.5L681.0 135.4L682.0 135.2L683.0 134.2L684.0 132.9L685.0 131.8L686.0 131.2L687.0 131.2L688.0 131.6L689.0 131.8L690.0 131.6L691.0 130.7L692.0 129.1L693.0 127.3L694.0 125.7L695.0 125.0L696.0 125.4L697.0 127.1L698.0 129.7L699.0 132.8L700.0 135.7L701.0 137.9L702.0 139.1L703.0 139.6L704.0 139.6L705.0 139.7L706.0 140.1L707.0 141.0L708.0 142.3L709.0 143.6L710.0 144.2L711.0 144.0L712.0 142.7L713.0 140.5L714.0 137.9L715.0 135.6L716.0 134.1L717.0 133.7L718.0 134.5L719.0 136.2L720.0 138.2L721.0 139.9L722.0 141.2L723.0 141.9L724.0 142.3L725.0 142.7L726.0 143.6L727.0 145.3L728.0 147.6L729.0 150.3L730.0 152.7L731.0 154.4L732.0 154.8L733.0 154.0L734.0 152.2L735.0 149.9L736.0 147.8L737.0 146.3L738.0 145.7L739.0 145.9L740.0 146.6L741.0 147.3L742.0 147.5L743.0 147.3L744.0 146.7L745.0 146.1L746.0 146.1L747.0 147.0L748.0 149.0L749.0 152.0L750.0 155.3L751.0 158.5L752.0 160.9L753.0 162.1L754.0 162.2L755.0 161.4L756.0 160.3L757.0 159.3L758.0 158.9L759.0 159.0L760.0 159.4L761.0 159.7L762.0 159.6L763.0 158.8L764.0 157.3L765.0 155.5L766.0 153.9L767.0 152.9L768.0 153.2L769.0 154.6L770.0 157.0L771.0 159.8L772.0 162.6L773.0 164.8L774.0 166.2L775.0 166.8L776.0 167.0L777.0 167.2L778.0 167.7L779.0 168.8L780.0 170.2L781.0 171.6L782.0 172.5L783.0 172.5L784.0 171.4L785.0 169.5L786.0 167.1L787.0 164.8L788.0 163.2L789.0 162.7L790.0 163.3L791.0 164.7L792.0 166.5L793.0 168.2L794.0 169.4L795.0 170.0L796.0 170.4L797.0 170.8L798.0 171.6L799.0 173.2L800.0 175.5L801.0 178.2L802.0 180.8L803.0 182.6L804.0 183.3L805.0 182.9L806.0 181.4L807.0 179.3L808.0 177.4L809.0 176.0L810.0 175.4L811.0 175.5L812.0 176.1L813.0 176.6L814.0 176.9L815.0 176.6L816.0 175.9L817.0 175.2L818.0 175.0L819.0 175.8L820.0 177.5L821.0 180.3L822.0 183.5L823.0 186.6L824.0 189.1L825.0 190.6L826.0 190.9L827.0 190.4L828.0 189.5L829.0 188.7L830.0 188.4L831.0 188.5L832.0 189.0L833.0 189.5L834.0 189.5L835.0 188.7L836.0 187.2L837.0 185.3L838.0 183.4L839.0 182.3L840.0 182.2L841.0 183.8L842.0 185.9L843.0 188.5L844.0 191.2L845.0 193.3L846.0 194.7L847.0 195.4L848.0 195.7L849.0 196.0L850.0 196.6L851.0 197.7L852.0 199.2L853.0 200.7L854.0 201.8L855.0 202.0L856.0 201.2L857.0 199.5L858.0 197.2L859.0 195.0L860.0 193.3L861.0 192.6L862.0 193.0L863.0 194.2L864.0 195.7L865.0 197.2L866.0 198.3L867.0 198.9L868.0 199.1L869.0 199.5L870.0 200.2L871.0 201.7L872.0 203.9L873.0 206.6L874.0 209.2L875.0 211.1L876.0 212.1L877.0 211.9L878.0 210.7L879.0 208.9L880.0 207.1L881.0 205.7L882.0 205.1L883.0 205.1L884.0 205.6L885.0 206.1L886.0 206.2L887.0 205.8L888.0 205.1L889.0 204.3L890.0 203.9L891.0 204.4L892.0 205.9L893.0 208.3L894.0 211.4L895.0 214.4L896.0 216.9L897.0 218.5L898.0 219.0L899.0 218.7L900.0 218.0L901.0 217.4L902.0 217.1L903.0 217.3L904.0 217.9L905.0 218.4L906.0 218.4L907.0 217.7L908.0 216.3L909.0 214.4L910.0 212.5L911.0 211.1L912.0 210.8L913.0 211.7L914.0 213.5L915.0 216.0L916.0 218.6L917.0 220.7L918.0 222.2L919.0 222.9L920.0 223.1L921.0 223.4L922.0 224.1L923.0 225.2L924.0 226.7L925.0 228.2L926.0 229.4L927.0 229.8L928.0 229.2L929.0 227.7L930.0 225.6L931.0 223.4L932.0 221.7L933.0 220.8L934.0 220.9L935.0 221.8L936.0 223.1L937.0 224.4L938.0 225.3L939.0 225.8L940.0 226.0L941.0 226.2L942.0 226.8L943.0 228.1L944.0 230.2L945.0 232.7L946.0 235.3L947.0 237.3L948.0 238.4L949.0 238.5L950.0 237.5L951.0 235.9L952.0 234.2L953.0 232.9L954.0 232.2L955.0 232.1L956.0 232.4L957.0 232.8L958.0 232.9L959.0 232.4L960.0 231.6L960 300L0 300Z" class="sea"/><path d="M0.0 206.8L1.0 206.9L2.0 206.6L3.0 206.2L4.0 205.6L5.0 205.1L6.0 204.8L7.0 204.5L8.0 204.4L9.0 204.2L10.0 203.7L11.0 203.0L12.0 202.0L13.0 200.7L14.0 199.5L15.0 198.4L16.0 197.6L17.0 197.2L18.0 197.1L19.0 197.2L20.0 197.3L21.0 197.3L22.0 197.1L23.0 196.8L24.0 196.4L25.0 196.0L26.0 195.9L27.0 195.9L28.0 196.1L29.0 196.3L30.0 196.4L31.0 196.2L32.0 195.6L33.0 194.7L34.0 193.5L35.0 192.3L36.0 191.2L37.0 190.3L38.0 189.8L39.0 189.4L40.0 189.1L41.0 188.8L42.0 188.4L43.0 187.7L44.0 187.1L45.0 186.5L46.0 186.1L47.0 186.0L48.0 186.2L49.0 186.6L50.0 187.1L51.0 187.4L52.0 187.4L53.0 187.1L54.0 186.4L55.0 185.5L56.0 184.6L57.0 183.8L58.0 183.2L59.0 182.8L60.0 182.4L61.0 181.9L62.0 181.2L63.0 180.4L64.0 179.4L65.0 178.3L66.0 177.4L67.0 176.7L68.0 176.5L69.0 176.6L70.0 176.9L71.0 177.3L72.0 177.6L73.0 177.7L74.0 177.4L75.0 177.0L76.0 176.5L77.0 176.0L78.0 175.7L79.0 175.5L80.0 175.4L81.0 175.2L82.0 174.8L83.0 174.1L84.0 173.1L85.0 171.8L86.0 170.5L87.0 169.4L88.0 168.5L89.0 168.0L90.0 167.8L91.0 167.8L92.0 167.9L93.0 167.9L94.0 167.7L95.0 167.3L96.0 166.9L97.0 166.6L98.0 166.4L99.0 166.5L100.0 166.7L101.0 167.0L102.0 167.2L103.0 167.0L104.0 166.5L105.0 165.6L106.0 164.5L107.0 163.3L108.0 162.1L109.0 161.3L110.0 160.6L111.0 160.2L112.0 159.9L113.0 159.6L114.0 159.1L115.0 158.5L116.0 157.8L117.0 157.1L118.0 156.7L119.0 156.5L120.0 156.7L121.0 157.2L122.0 157.7L123.0 158.1L124.0 158.2L125.0 157.9L126.0 157.4L127.0 156.5L128.0 155.7L129.0 154.9L130.0 154.3L131.0 153.9L132.0 153.5L133.0 153.1L134.0 152.4L135.0 151.6L136.0 150.5L137.0 149.4L138.0 148.4L139.0 147.7L140.0 147.4L141.0 147.4L142.0 147.8L143.0 148.2L144.0 148.5L145.0 148.7L146.0 148.5L147.0 148.1L148.0 147.7L149.0 147.2L150.0 146.9L151.0 146.8L152.0 146.8L153.0 146.7L154.0 146.4L155.0 145.8L156.0 144.8L157.0 143.6L158.0 142.3L159.0 141.1L160.0 140.1L161.0 139.6L162.0 139.4L163.0 139.4L164.0 139.4L165.0 139.4L166.0 139.3L167.0 138.9L168.0 138.5L169.0 138.2L170.0 138.1L171.0 138.2L172.0 138.5L173.0 138.9L174.0 139.2L175.0 139.2L176.0 138.8L177.0 138.0L178.0 136.9L179.0 135.7L180.0 134.6L181.0 133.7L182.0 133.1L183.0 132.7L184.0 132.4L185.0 132.1L186.0 131.6L187.0 131.0L188.0 130.3L189.0 129.6L190.0 129.1L191.0 129.0L192.0 129.2L193.0 129.7L194.0 130.3L195.0 130.8L196.0 131.0L197.0 130.9L198.0 130.4L199.0 129.7L200.0 128.9L201.0 128.2L202.0 127.7L203.0 127.3L204.0 127.0L205.0 126.6L206.0 126.1L207.0 125.3L208.0 124.2L209.0 123.1L210.0 122.1L211.0 121.3L212.0 121.0L213.0 121.0L214.0 121.4L215.0 121.8L216.0 122.3L217.0 122.5L218.0 122.4L219.0 122.1L220.0 121.7L221.0 121.4L222.0 121.2L223.0 121.2L224.0 121.3L225.0 121.3L226.0 121.1L227.0 120.6L228.0 119.8L229.0 118.6L230.0 117.3L231.0 116.1L232.0 115.2L233.0 114.6L234.0 114.4L235.0 114.4L236.0 114.5L237.0 114.6L238.0 114.4L239.0 114.2L240.0 113.4L241.0 113.1L242.0 113.1L243.0 113.5L244.0 114.3L245.0 115.2L246.0 116.0L247.0 116.4L248.0 116.2L249.0 115.4L250.0 114.4L251.0 112.8L252.0 111.2L253.0 110.0L254.0 109.2L255.0 108.9L256.0 108.6L257.0 108.4L258.0 107.8L259.0 107.0L260.0 106.0L261.0 105.1L262.0 104.5L263.0 104.4L264.0 105.0L265.0 106.1L266.0 107.5L267.0 108.8L268.0 109.6L269.0 109.8L270.0 109.8L271.0 109.0L272.0 108.0L273.0 107.1L274.0 106.5L275.0 106.2L276.0 106.1L277.0 105.9L278.0 105.2L279.0 104.1L280.0 102.5L281.0 100.7L282.0 99.1L283.0 97.9L284.0 97.4L285.0 97.7L286.0 98.6L287.0 99.8L288.0 101.0L289.0 101.8L290.0 102.1L291.0 102.1L292.0 101.8L293.0 101.6L294.0 101.6L295.0 102.1L296.0 102.8L297.0 103.4L298.0 103.6L299.0 103.2L300.0 102.0L301.0 100.1L302.0 97.9L303.0 95.8L304.0 94.2L305.0 93.3L306.0 92.8L307.0 93.2L308.0 93.8L309.0 94.3L310.0 94.4L311.0 94.2L312.0 93.8L313.0 93.5L314.0 93.7L315.0 94.4L316.0 95.9L317.0 97.7L318.0 99.4L319.0 100.5L320.0 100.7L321.0 99.9L322.0 98.3L323.0 96.3L324.0 94.4L325.0 92.8L326.0 91.9L327.0 91.4L328.0 91.3L329.0 91.1L330.0 90.5L331.0 89.4L332.0 88.0L333.0 86.7L334.0 85.8L335.0 85.8L336.0 86.8L337.0 88.6L338.0 90.9L339.0 93.2L340.0 95.0L341.0 95.8L342.0 95.7L343.0 94.9L344.0 93.8L345.0 92.8L346.0 92.3L347.0 92.2L348.0 92.3L349.0 92.2L350.0 91.7L351.0 90.3L352.0 88.2L353.0 85.6L354.0 83.0L355.0 81.2L356.0 80.5L357.0 80.9L358.0 82.4L359.0 84.4L360.0 86.3L361.0 87.8L362.0 88.6L363.0 88.7L364.0 88.6L365.0 88.5L366.0 88.9L367.0 89.8L368.0 91.1L369.0 92.4L370.0 93.2L371.0 93.0L372.0 91.7L373.0 89.4L374.0 86.5L375.0 83.7L376.0 81.4L377.0 80.2L378.0 79.9L379.0 80.4L380.0 81.2L381.0 81.9L382.0 82.2L383.0 82.0L384.0 81.6L385.0 81.3L386.0 81.6L387.0 82.8L388.0 84.7L389.0 87.2L390.0 89.8L391.0 91.7L392.0 92.4L393.0 91.8L394.0 90.1L395.0 87.9L396.0 85.6L397.0 83.8L398.0 82.8L399.0 82.4L400.0 82.3L401.0 82.2L402.0 81.6L403.0 80.3L404.0 78.7L405.0 77.0L406.0 75.9L407.0 75.8L408.0 76.9L409.0 79.1L410.0 81.9L411.0 84.8L412.0 87.0L413.0 88.3L414.0 88.5L415.0 87.9L416.0 87.0L417.0 86.1L418.0 85.8L419.0 85.9L420.0 86.3L421.0 86.5L422.0 86.1L423.0 84.8L424.0 82.6L425.0 79.9L426.0 77.2L427.0 75.1L428.0 74.2L429.0 74.5L430.0 75.9L431.0 78.0L432.0 80.2L433.0 81.9L434.0 82.8L435.0 83.2L436.0 83.2L437.0 83.3L438.0 83.8L439.0 85.0L440.0 86.7L441.0 88.4L442.0 89.6L443.0 89.8L444.0 88.7L445.0 86.6L446.0 83.7L447.0 80.8L448.0 78.5L449.0 77.1L450.0 76.4L451.0 76.9L452.0 77.8L453.0 78.6L454.0 78.9L455.0 78.8L456.0 78.3L457.0 78.0L458.0 78.3L459.0 79.6L460.0 81.9L461.0 84.8L462.0 87.8L463.0 90.1L464.0 91.2L465.0 91.0L466.0 89.7L467.0 87.6L468.0 85.4L469.0 83.7L470.0 82.7L471.0 82.3L472.0 82.4L473.0 82.3L474.0 81.7L475.0 80.5L476.0 78.8L477.0 76.9L478.0 75.6L479.0 75.3L480.0 76.4L481.0 78.6L482.0 81.7L483.0 84.8L484.0 87.5L485.0 89.1L486.0 89.7L487.0 89.4L488.0 88.7L489.0 88.0L490.0 87.8L491.0 88.2L492.0 88.9L493.0 89.4L494.0 89.2L495.0 88.1L496.0 86.0L497.0 83.2L498.0 80.3L499.0 78.0L500.0 76.8L501.0 77.0L502.0 78.4L503.0 80.5L504.0 82.8L505.0 84.7L506.0 85.9L507.0 86.4L508.0 86.5L509.0 86.8L510.0 87.5L511.0 89.0L512.0 91.0L513.0 93.1L514.0 94.7L515.0 95.3L516.0 94.6L517.0 92.7L518.0 89.9L519.0 87.0L520.0 84.5L521.0 82.9L522.0 82.5L523.0 82.9L524.0 83.8L525.0 84.6L526.0 84.9L527.0 84.7L528.0 84.3L529.0 83.9L530.0 84.2L531.0 85.5L532.0 87.8L533.0 90.9L534.0 94.1L535.0 96.8L536.0 98.3L537.0 98.6L538.0 97.6L539.0 95.8L540.0 93.9L541.0 92.2L542.0 91.3L543.0 91.1L544.0 91.3L545.0 91.3L546.0 90.9L547.0 89.8L548.0 88.1L549.0 86.3L550.0 85.0L551.0 84.5L552.0 85.4L553.0 87.4L554.0 90.3L555.0 93.4L556.0 96.2L557.0 98.0L558.0 98.9L559.0 98.9L560.0 98.4L561.0 98.1L562.0 98.1L563.0 98.7L564.0 99.6L565.0 100.3L566.0 100.5L567.0 99.7L568.0 97.9L569.0 95.3L570.0 92.6L571.0 90.3L572.0 89.0L573.0 89.1L574.0 90.2L575.0 92.2L576.0 94.4L577.0 96.2L578.0 97.5L579.0 98.1L580.0 98.3L581.0 98.7L582.0 99.5L583.0 101.1L584.0 103.2L585.0 105.5L586.0 107.4L587.0 108.4L588.0 108.1L589.0 106.6L590.0 104.2L591.0 101.5L592.0 99.2L593.0 97.7L594.0 97.2L595.0 97.6L596.0 98.4L597.0 99.1L598.0 99.5L599.0 99.3L600.0 98.8L601.0 98.4L602.0 98.6L603.0 99.8L604.0 102.1L605.0 105.1L606.0 108.4L607.0 111.2L608.0 113.1L609.0 113.7L610.0 113.1L611.0 111.7L612.0 110.1L613.0 108.8L614.0 108.0L615.0 107.9L616.0 108.2L617.0 108.4L618.0 108.0L619.0 107.0L620.0 105.3L621.0 103.4L622.0 101.9L623.0 101.3L624.0 102.0L625.0 103.9L626.0 106.8L627.0 110.0L628.0 112.8L629.0 114.9L630.0 116.0L631.0 116.3L632.0 116.1L633.0 116.0L634.0 116.2L635.0 117.0L636.0 118.1L637.0 119.2L638.0 119.6L639.0 119.0L640.0 117.4L641.0 115.0L642.0 112.2L643.0 109.9L644.0 108.4L645.0 108.3L646.0 109.3L647.0 111.1L648.0 113.3L649.0 115.2L650.0 116.5L651.0 117.2L652.0 117.5L653.0 117.9L654.0 118.8L655.0 120.5L656.0 122.8L657.0 125.4L658.0 127.6L659.0 129.0L660.0 129.1L661.0 127.5L662.0 125.5L663.0 123.1L664.0 120.9L665.0 119.5L666.0 119.0L667.0 119.3L668.0 120.0L669.0 120.7L670.0 121.0L671.0 120.9L672.0 120.4L673.0 119.9L674.0 120.0L675.0 121.1L676.0 123.2L677.0 126.1L678.0 129.4L679.0 132.4L680.0 134.5L681.0 135.4L682.0 135.2L683.0 134.2L684.0 132.9L685.0 131.8L686.0 131.2L687.0 131.2L688.0 131.6L689.0 131.8L690.0 131.6L691.0 130.7L692.0 129.1L693.0 127.3L694.0 125.7L695.0 125.0L696.0 125.4L697.0 127.1L698.0 129.7L699.0 132.8L700.0 135.7L701.0 137.9L702.0 139.1L703.0 139.6L704.0 139.6L705.0 139.7L706.0 140.1L707.0 141.0L708.0 142.3L709.0 143.6L710.0 144.2L711.0 144.0L712.0 142.7L713.0 140.5L714.0 137.9L715.0 135.6L716.0 134.1L717.0 133.7L718.0 134.5L719.0 136.2L720.0 138.2L721.0 139.9L722.0 141.2L723.0 141.9L724.0 142.3L725.0 142.7L726.0 143.6L727.0 145.3L728.0 147.6L729.0 150.3L730.0 152.7L731.0 154.4L732.0 154.8L733.0 154.0L734.0 152.2L735.0 149.9L736.0 147.8L737.0 146.3L738.0 145.7L739.0 145.9L740.0 146.6L741.0 147.3L742.0 147.5L743.0 147.3L744.0 146.7L745.0 146.1L746.0 146.1L747.0 147.0L748.0 149.0L749.0 152.0L750.0 155.3L751.0 158.5L752.0 160.9L753.0 162.1L754.0 162.2L755.0 161.4L756.0 160.3L757.0 159.3L758.0 158.9L759.0 159.0L760.0 159.4L761.0 159.7L762.0 159.6L763.0 158.8L764.0 157.3L765.0 155.5L766.0 153.9L767.0 152.9L768.0 153.2L769.0 154.6L770.0 157.0L771.0 159.8L772.0 162.6L773.0 164.8L774.0 166.2L775.0 166.8L776.0 167.0L777.0 167.2L778.0 167.7L779.0 168.8L780.0 170.2L781.0 171.6L782.0 172.5L783.0 172.5L784.0 171.4L785.0 169.5L786.0 167.1L787.0 164.8L788.0 163.2L789.0 162.7L790.0 163.3L791.0 164.7L792.0 166.5L793.0 168.2L794.0 169.4L795.0 170.0L796.0 170.4L797.0 170.8L798.0 171.6L799.0 173.2L800.0 175.5L801.0 178.2L802.0 180.8L803.0 182.6L804.0 183.3L805.0 182.9L806.0 181.4L807.0 179.3L808.0 177.4L809.0 176.0L810.0 175.4L811.0 175.5L812.0 176.1L813.0 176.6L814.0 176.9L815.0 176.6L816.0 175.9L817.0 175.2L818.0 175.0L819.0 175.8L820.0 177.5L821.0 180.3L822.0 183.5L823.0 186.6L824.0 189.1L825.0 190.6L826.0 190.9L827.0 190.4L828.0 189.5L829.0 188.7L830.0 188.4L831.0 188.5L832.0 189.0L833.0 189.5L834.0 189.5L835.0 188.7L836.0 187.2L837.0 185.3L838.0 183.4L839.0 182.3L840.0 182.2L841.0 183.8L842.0 185.9L843.0 188.5L844.0 191.2L845.0 193.3L846.0 194.7L847.0 195.4L848.0 195.7L849.0 196.0L850.0 196.6L851.0 197.7L852.0 199.2L853.0 200.7L854.0 201.8L855.0 202.0L856.0 201.2L857.0 199.5L858.0 197.2L859.0 195.0L860.0 193.3L861.0 192.6L862.0 193.0L863.0 194.2L864.0 195.7L865.0 197.2L866.0 198.3L867.0 198.9L868.0 199.1L869.0 199.5L870.0 200.2L871.0 201.7L872.0 203.9L873.0 206.6L874.0 209.2L875.0 211.1L876.0 212.1L877.0 211.9L878.0 210.7L879.0 208.9L880.0 207.1L881.0 205.7L882.0 205.1L883.0 205.1L884.0 205.6L885.0 206.1L886.0 206.2L887.0 205.8L888.0 205.1L889.0 204.3L890.0 203.9L891.0 204.4L892.0 205.9L893.0 208.3L894.0 211.4L895.0 214.4L896.0 216.9L897.0 218.5L898.0 219.0L899.0 218.7L900.0 218.0L901.0 217.4L902.0 217.1L903.0 217.3L904.0 217.9L905.0 218.4L906.0 218.4L907.0 217.7L908.0 216.3L909.0 214.4L910.0 212.5L911.0 211.1L912.0 210.8L913.0 211.7L914.0 213.5L915.0 216.0L916.0 218.6L917.0 220.7L918.0 222.2L919.0 222.9L920.0 223.1L921.0 223.4L922.0 224.1L923.0 225.2L924.0 226.7L925.0 228.2L926.0 229.4L927.0 229.8L928.0 229.2L929.0 227.7L930.0 225.6L931.0 223.4L932.0 221.7L933.0 220.8L934.0 220.9L935.0 221.8L936.0 223.1L937.0 224.4L938.0 225.3L939.0 225.8L940.0 226.0L941.0 226.2L942.0 226.8L943.0 228.1L944.0 230.2L945.0 232.7L946.0 235.3L947.0 237.3L948.0 238.4L949.0 238.5L950.0 237.5L951.0 235.9L952.0 234.2L953.0 232.9L954.0 232.2L955.0 232.1L956.0 232.4L957.0 232.8L958.0 232.9L959.0 232.4L960.0 231.6" class="surface"/><line x1="0" x2="960" y1="193.5" y2="193.5" class="limit"/><line x1="324.0" x2="324.0" y1="50" y2="300" class="early"/></svg>
+              <div class="pt-marker" aria-hidden="true"><span class="you-line" style="left:18.750%;height:44.92%"></span><span class="you-dot" style="left:18.750%;top:44.92%"></span></div>
+              <div class="pt-labels" aria-hidden="true"><span class="lb lb-sky lb-minor lb-before" style="left:24.583%">First light 06:58</span><span class="lb lb-sky" style="left:31.458%">Sunrise 07:31</span><span class="lb lb-win" style="left:3.333%">Window 05:16–07:42</span><span class="lb lb-hw" style="left:45.833%;top:calc(27.40% + 1.4em)">High water 08:40, 4.5 m</span><span class="lb lb-early" style="left:33.750%"><b>Closes 07:42, not 09:30</b>Wind turns onshore</span></div>
+            </div>
+            <div class="pt-axis" aria-hidden="true"><span style="left:0.000%">05:00</span><span style="left:12.500%">06:00</span><span style="left:25.000%">07:00</span><span style="left:37.500%">08:00</span><span style="left:50.000%">09:00</span><span style="left:62.500%">10:00</span><span style="left:75.000%">11:00</span><span style="left:87.500%">12:00</span><span style="left:100.000%">13:00</span></div>
+          </div>
+          <div class="range-row">
+            <label for="arrive">When you’d get in</label>
+            <span class="range-hint">05:00 to 13:00, five-minute steps</span>
+            <output id="arrive-out" for="arrive">06:30</output>
+          </div>
+          <input type="range" id="arrive" min="300" max="780" step="5" value="390" aria-valuetext="06:30">
+        </div>
+
+        <ul class="legend" aria-label="Chart key">
+          <li><i class="k-win"></i>Swim window</li>
+          <li><i class="k-ghost"></i>Last night’s window</li>
+          <li><i class="k-limit"></i>2.2 m tide limit (sample)</li>
+        </ul>
+        <div class="readout-col">
+          <div class="readout" role="status" aria-live="polite"><p class="ro-time"><span class="ro-clock">06:30</span> <span class="ro-state ro-in">In a window, 05:16–07:42</span></p><p class="ro-note ro-early">Closes in 1 h 12 min. Closes early: last night it ran to 09:30.</p><dl class="ro-grid"><div><dt>Tide</dt><dd>3.4 m, rising</dd></div><div><dt>Wind</dt><dd>7 mph NW, offshore</dd></div><div><dt>Swell</dt><dd>0.4 m</dd></div><div><dt>Water</dt><dd>13.4°C</dd></div></dl></div>
+          <p class="ro-foot">Conditions only. Tidewise never tells you it’s safe to swim; you decide on the beach.</p>
+          <button type="button" class="reset" data-reset>Reset the sample</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-1" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <h2 id="how-h">A window opens only when tide, swell and wind all agree</h2>
+      <p class="prose">Each condition gets its own lane across the morning. The window is the stretch where all three lanes are inside their limits at once. Water temperature rides along on every window, so you know how cold it will be.</p>
+      <p class="prose">The limits on this page are made up for one imaginary cove.</p>
+      <div class="lanes-wrap">
+        <p class="lanes-cap">Lanes for the sample above: <b data-lanes-title>Wind turns onshore</b></p>
+        <ul class="lanes"><li class="lane "><p class="lane-name"><b>Tide</b> <span>over 2.2 m</span></p><div class="lane-bar"><svg viewBox="0 0 960 20" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect x="0" y="9" width="960" height="2" class="lane-off"/><rect x="32.0" y="2" width="816.0" height="16" rx="2" class="lane-on"/></svg></div><p class="lane-runs">05:16–12:04</p></li><li class="lane "><p class="lane-name"><b>Swell</b> <span>under 0.7 m</span></p><div class="lane-bar"><svg viewBox="0 0 960 20" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect x="0" y="9" width="960" height="2" class="lane-off"/><rect x="0.0" y="2" width="960.0" height="16" rx="2" class="lane-on"/></svg></div><p class="lane-runs">before 05:00–after 13:00</p></li><li class="lane "><p class="lane-name"><b>Wind</b> <span>onshore under 14 mph, offshore under 18</span></p><div class="lane-bar"><svg viewBox="0 0 960 20" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect x="0" y="9" width="960" height="2" class="lane-off"/><rect x="0.0" y="2" width="324.0" height="16" rx="2" class="lane-on"/><rect x="920.0" y="2" width="40.0" height="16" rx="2" class="lane-on"/></svg></div><p class="lane-runs">before 05:00–07:42, 12:40–after 13:00</p></li><li class="lane lane-result"><p class="lane-name"><b>Window</b> <span>all three at once</span></p><div class="lane-bar"><svg viewBox="0 0 960 20" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect x="0" y="9" width="960" height="2" class="lane-off"/><rect x="32.0" y="2" width="292.0" height="16" rx="2" class="lane-on"/></svg></div><p class="lane-runs">05:16–07:42</p></li><li class="lane lane-temp"><p class="lane-name"><b>Water</b> <span>shown on every window</span></p><p class="lane-runs">13.4°C all morning</p></li></ul>
+        <div class="lanes-axis" aria-hidden="true"><div class="lanes-axis-inner"><span style="left:0.000%">05:00</span><span style="left:12.500%">06:00</span><span style="left:25.000%">07:00</span><span style="left:37.500%">08:00</span><span style="left:50.000%">09:00</span><span style="left:62.500%">10:00</span><span style="left:75.000%">11:00</span><span style="left:87.500%">12:00</span><span style="left:100.000%">13:00</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-2" aria-labelledby="old-h">
+    <div class="wrap">
+      <h2 id="old-h">Three websites, a tide table and the group chat become one line</h2>
+      <div class="ledger">
+        <div class="ledger-col">
+          <h3>05:40, the old way</h3>
+          <ul class="tt" aria-label="What you check now, for the same sample morning">
+            <li><span>Tide table</span><span>High water 08:40, 4.5 m</span></li>
+            <li><span>Wind forecast</span><span>W 8 mph, then NE 15–19 mph</span></li>
+            <li><span>Swell forecast</span><span>0.4–0.6 m</span></li>
+            <li><span>Sea temperature</span><span>13.4°C</span></li>
+            <li><span>Group chat</span><span>“Too lumpy today?”</span></li>
+          </ul>
+        </div>
+        <div class="ledger-col">
+          <h3>The same morning in Tidewise</h3>
+          <div class="oneline">
+            <p>Imaginary cove: <span class="w">window 05:16–07:42</span>. <span class="e">Closes early</span>, the wind turns onshore. Water 13.4°C.</p>
+            <small>Sample line, written for this page.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-3" id="warnings" aria-labelledby="warn-h">
+    <div class="wrap split">
+      <div>
+        <h2 id="warn-h">When a window closes early, Tidewise warns you</h2>
+        <p class="prose">Forecasts shift overnight. If the window you planned around now ends sooner, Tidewise tells you the new closing time before you’re in the water.</p>
+        <div class="warn-card">
+          <p class="tag">Sample warning, written for this page</p>
+          <p class="msg">Imaginary cove: your window now closes at <b>07:42, not 09:30</b>. The wind turns onshore, 15 mph by 07:45.</p>
+        </div>
+      </div>
+      <div class="scenes">
+        <figure class="scene">
+          <svg viewBox="0 0 400 220" role="img" aria-label="The cove as forecast last night: wind blowing from the land out to sea, flat water.">
+            <rect width="400" height="122" class="d-sky2"/>
+            <circle cx="330" cy="122" r="14" class="d-faint"/>
+            <rect y="120" width="400" height="100" class="d-sea"/>
+            <rect y="186" width="400" height="34" class="d-sea2"/>
+            <path d="M0 102 H30 V140 H48 V152 H76 V164 H104 V176 H0 Z" class="d-land2"/>
+            <path d="M0 176 H130 L150 220 H0 Z" class="d-land"/>
+            <path d="M140 150 h90 M250 141 h70 M180 168 h120 M300 160 h80 M200 198 h140" class="d-faint"/>
+            <path d="M60 46 H190 M180 39 L191 46 L180 53 M90 76 H220 M210 69 L221 76 L210 83" class="d-wind"/>
+          </svg>
+          <figcaption><b>Last night</b>Wind from the land, flat water until 09:30</figcaption>
+        </figure>
+        <figure class="scene">
+          <svg viewBox="0 0 400 220" role="img" aria-label="The cove at 07:42: wind blowing from the sea onto the beach, choppy water.">
+            <rect width="400" height="122" class="d-sky2"/>
+            <circle cx="330" cy="116" r="14" class="d-faint"/>
+            <rect y="120" width="400" height="100" class="d-sea"/>
+            <rect y="186" width="400" height="34" class="d-sea2"/>
+            <path d="M0 102 H30 V140 H48 V152 H76 V164 H104 V176 H0 Z" class="d-land2"/>
+            <path d="M0 176 H130 L150 220 H0 Z" class="d-land"/>
+            <path d="M136 152 l8 -6 l8 6 l8 -6 l8 6 M196 140 l8 -6 l8 6 l8 -6 l8 6 M262 150 l8 -6 l8 6 l8 -6 l8 6 l8 -6 l8 6 M176 172 l8 -7 l8 7 l8 -7 l8 7 l8 -7 l8 7 M300 170 l8 -7 l8 7 l8 -7 l8 7 M220 200 l9 -8 l9 8 l9 -8 l9 8 l9 -8 l9 8 M340 196 l9 -8 l9 8 l9 -8 l9 8" class="d-stroke"/>
+            <path d="M370 46 H240 M250 39 L239 46 L250 53 M340 76 H210 M220 69 L209 76 L220 83" class="d-warn"/>
+          </svg>
+          <figcaption><b>07:42 this morning</b>Wind off the sea, chop building on the beach</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-3" id="your-call" aria-labelledby="call-h">
+    <div class="wrap call">
+      <div>
+        <h2 id="call-h">Tidewise shows the water. Getting in is your call.</h2>
+        <p class="prose"><strong>Tidewise is not a lifeguard, and it will never tell you it’s safe to swim.</strong> It shows what the tide, wind, swell and water are doing at your beach, and when they line up. You look at the sea when you get there, and you decide.</p>
+        <ul class="never">
+          <li><span>You will see</span><span>Window, closes early, outside the windows, no window</span></li>
+          <li><span>You won’t see</span><span>“Safe to swim”</span></li>
+        </ul>
+      </div>
+      <svg viewBox="0 0 520 300" role="img" aria-label="Concrete steps going down into the sea at first light, with a towel and a tow float left on the steps.">
+        <rect width="520" height="152" class="d-sky"/>
+        <rect y="150" width="520" height="150" class="d-sea"/>
+        <rect y="244" width="520" height="56" class="d-sea2"/>
+        <path d="M0 150 H520" class="d-faint"/>
+        <path d="M0 112 H130 V146 H196 V180 H262 V214 H328 V248 H394 V300 H0 Z" class="d-land2"/>
+        <path d="M0 112 H130 M130 146 H196 M196 180 H262 M262 214 H328 M328 248 H394" class="d-stroke"/>
+        <rect x="0" y="222" width="520" height="78" class="d-sea" fill-opacity=".82"/>
+        <path d="M0 222 H520" class="d-stroke"/>
+        <path d="M410 236 h50 M300 262 h90 M440 270 h60 M60 252 h80" class="d-faint"/>
+        <rect x="30" y="98" width="72" height="14" rx="2" class="d-obj"/>
+        <path d="M38 105 H94" class="d-faint"/>
+        <rect x="140" y="126" width="46" height="20" rx="10" class="d-obj"/>
+        <path d="M186 136 c14 4 10 18 22 22 s14 10 20 20" class="d-faint"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="band band-4" id="beta" aria-labelledby="beta-h">
+    <div class="wrap beta">
+      <div>
+        <h2 id="beta-h">40 beaches in the UK and Ireland so far</h2>
+        <p class="prose">Tidewise is in public beta on iPhone. You join through the beta page.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn" href="https://tidewise.example/beta">Join the public beta</a>
+        <p class="cta-note">Opens the beta page at tidewise.example/beta.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <p class="foot-brand">Tidewise</p>
+      <p>An iPhone app for year-round sea swimmers. Not a lifeguard: it shows conditions, and you decide whether to swim.</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="#how">How windows work</a></li>
+        <li><a href="#warnings">Early warnings</a></li>
+        <li><a href="#your-call">Your call</a></li>
+        <li><a href="https://tidewise.example/beta">Join the public beta</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+<script src="tide.js"></script>
+</body>
+</html>
