@@ -1,0 +1,50 @@
+{
+  "packet": "P004",
+  "persona": "buyer",
+  "A": {
+    "scores": {"clarity": 8, "fit": 7, "distinctiveness": 7, "proof": 6, "craft": 7, "mobile": 7, "honesty": 6, "interaction": 6, "copy": 8, "first_screen": 6},
+    "evidence": {
+      "clarity": "1440 and 390: 'Too lumpy today?' plus the lede 'Tidewise reads the tide, wind, swell and water temperature at your beach and shows the windows when they line up for a swim' and 'Join the public beta' make what it does and the next step clear. The word 'app' never appears in the hero; 'iPhone.' only shows up in the small grey note beside the button.",
+      "fit": "Tone fits the pre-dawn swimmer (dark slate, 'One look on the way down, in the dark, before work'). It covers the 'not a lifeguard' constraint in its own band ('Conditions, not permission') and in the footer, and it uses the supplied beta URL. Only one fixed sample morning, and it never answers 'is my beach one of the 40?'.",
+      "distinctiveness": "The full-bleed tide curve under the hero, the 'Four tabs and a group chat, at half five' section with chat bubbles ('looks lumpy from the car park') and the lock-screen notification all come from this product. The rest is a familiar stack of text bands (the 'What it reads' 2x2 definition grid, the facts list).",
+      "proof": "The hero tide chart is operable (I dragged the 'Drag through the morning' slider 04:30 to 10:30 and the status went before > in > early > after). The readout sits under the chart, though: status at y=1051 at 1440 and y=805 at 390, both below the first viewport. It shows one morning only, and the early-close case appears only if you drag past 08:00.",
+      "craft": "Clean light-weight type and a good colour progression down the page from dark to dawn. At 1440 the right half of the hero is empty above the chart. The lock-screen card renders empty (just '05:42 / Tuesday 17 November') until scrolled into view, as the operator's full-page shot shows. Axe flags 1 colour-contrast node at 390 and 1440.",
+      "mobile": "390: no overflow, 54px CTA, header link 'Join the beta' 40px tall. The chart reflows and the 'lost to the wind' label is hidden (display:none). Readout and slider stack well below the fold, at y~805 and y~1114. Tapping the chart at 390 (touch tap at 70% across) did not move the cursor; only the slider responds.",
+      "honesty": "1440 and 390 first screen: the chart shows a '06:10 now' pill and '06:20 to 08:00 swim window' with no sample label in view. The caption 'A made-up November morning at an example beach... Not a forecast.' sits below the slider (y=1275 at 1440, y=1160 at 390). For a swimmer wary of being told it's safe, a 'now' swim window that looks live is the wrong first impression. The lock-screen notification ('Your window now closes at 08:00') has no visible example label, only an aria-label. 'Example beaches and times.' is labelled properly.",
+      "interaction": "Slider works by mouse and keyboard (ArrowRight moved it and updated the '06:10' pill and aria-valuetext). Clicking the chart at 1440 set 07:50 and status 'In the window until 08:00 (10 min)'. There are no alternate mornings and no reset, and a touch tap on the chart at 390 did nothing. No console errors.",
+      "copy": "Specific and in the swimmer's world: 'Is there enough water over the rocks yet?', 'Which gloves?', 'It won't nudge you to go in. It tells you what changed.', 'Conditions, not permission'. Minor: the status string reads '(1 h 0 min)' at 07:00.",
+      "first_screen": "1440: headline, lede, CTA and the top of an unlabelled curve with '06:10 now / 06:20 to 08:00 swim window'. 390: the same, cut off at the axis. The promise is specific and the action matches, but the readout that backs it up is out of view and the example is unlabelled where it appears."
+    },
+    "problems": [
+      "The hero chart shows '06:10 now' and a 'swim window' with no sample label in the first viewport at 1440 or 390; the 'made-up... not a forecast' caption only appears below the slider",
+      "The demo is a single fixed morning with no reset or alternate conditions, and its readout sits below the first screen at every width; tapping the chart on a phone does nothing",
+      "The lock-screen notification example has no visible 'example' label, and the page never answers whether the visitor's beach is among the 40"
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {"clarity": 9, "fit": 9, "distinctiveness": 8, "proof": 9, "craft": 8, "mobile": 8, "honesty": 9, "interaction": 9, "copy": 8, "first_screen": 8},
+    "evidence": {
+      "clarity": "1440 and 390: 'Too lumpy today?' plus 'Tidewise is an iPhone app for people who swim in the sea all year. It reads the tide, wind, swell and water temperature at your beach and shows today's swim windows.' Then 'Join the public beta' and 'iPhone public beta. 40 UK and Ireland beaches so far.' What, who and next step are all in the first lines.",
+      "fit": "Every brief fact appears: iPhone, public beta via tidewise.example/beta, 40 beaches, early-close warning, and the 'not a lifeguard' constraint resolved deliberately ('You won't see: \"Safe to swim\"'). The 'three websites, a tide table and the group chat' replacement is shown side by side. Dark palette plus dawn/sunrise markers on the chart give the 6 am feel. Like A, it doesn't say which 40 beaches.",
+      "distinctiveness": "The hero artifact draws the sea surface itself, choppier when wind turns onshore. It marks first light and sunrise, shows a ghost of last night's window, and has a 'Closes 07:42, not 09:30' callout. The lanes section shows how a window is computed, and the 'old way' ledger mirrors the same sample morning. A standard serif-headline layout otherwise.",
+      "proof": "1440: the operable chart, three morning tabs and a readout ('06:30 In a window, 05:16-07:42 / Closes in 1 h 12 min. Closes early: last night it ran to 09:30') are all in the first viewport. Numbers stay consistent across sections: the lanes, the ledger ('W 8 mph, then NE 15-19 mph') and the warning card ('07:42, not 09:30') all match the onshore sample. Every block is labelled sample.",
+      "craft": "Sharp hierarchy and consistent spacing. At 1440 the header, hero and full artifact fit in one 900px screen. Axe is clean at 390 and 1440. The lanes section at 390 is dense, with monospace run text ('before 05:00-07:42, 12:40-after 13:00') that is cramped but readable.",
+      "mobile": "390: no overflow. Menu button 79x44 opens a menu (the links worked; tapping 'Early warnings' scrolled to #warnings and closed it; Escape closes it). Tabs are 44px tall, the slider is 44px tall, and the chart plus the 'Window 05:16-07:42' label are in the first screen. The text readout starts below the fold (~y=800), but the chart labels change in view when you tap a tab.",
+      "honesty": "'Sample mornings at an imaginary cove / Written for this page, not a forecast.' sits directly above the artifact at 1440 and 390. The ledger says 'Sample line, written for this page.', the warning card says 'Sample warning, written for this page', and the lanes say 'limits on this page are made up'. The readout footer reads 'Conditions only. Tidewise never tells you it's safe to swim'. The final CTA says 'Opens the beta page at tidewise.example/beta.'",
+      "interaction": "Tabs Calm, Wind turns onshore and Big swell each redraw the chart, labels, readout and the lanes section below ('Lanes for the sample above: Big swell'). Slider 05:00-13:00 gives Outside / In a window / No window states, with reasons ('Swell 1.2 m is over the 0.7 m sample limit. Wind 19 mph onshore is over the 14 mph sample limit.'). 'Reset the sample' returned to Wind turns onshore at 06:30. ArrowRight moved it to 06:35. No console errors at any width.",
+      "copy": "Concrete and consistent: 'Closes 07:42, not 09:30', 'Wind off the sea, chop building on the beach', 'Tidewise shows the water. Getting in is your call.', 'You won't see \"Safe to swim\"'. A little more explanatory and technical than A in places ('Each condition gets its own lane across the morning').",
+      "first_screen": "1440: a specific promise, the CTA, a labelled sample chart showing an early-closing window and the live readout, all in one viewport. 390: headline, lede, CTA, sample label, tabs and chart with window/early-close labels are in view, but the text readout and the safety line sit just below the fold."
+    },
+    "problems": [
+      "At 390 the text readout (time, state, 'Conditions only...' line) starts below the first screen; only the chart labels give feedback in view",
+      "Neither page shows which 40 beaches are covered or how you pick yours, which is a swimmer's first practical doubt",
+      "The lanes section at 390 is dense, with cramped monospace run times that a pre-dawn phone reader will skim past"
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "As the wary dawn swimmer, B answers 'is this going to tell me it's safe?' right at the artifact: it is labelled as a sample of an imaginary cove, it explains why there's no window, and it says outright that you won't see 'safe to swim'. A's hero shows an unlabelled '06:10 now' swim window. B's demo also does more of the product's real job (three mornings, early-close, reasons, reset) inside the first screen. What would change my mind: if A labelled its hero chart in view and added contrasting mornings, its warmer copy could close the gap.",
+  "score_preference_note": ""
+}
