@@ -1,0 +1,407 @@
+{
+ "band": 6,
+ "tests": {
+  "brief_level": {
+   "wins": 4,
+   "ties": 0,
+   "losses": 0,
+   "n_untied": 4,
+   "p_two_sided": 0.125,
+   "p_ties_as_losses": 0.125
+  },
+  "pair_level": {
+   "wins": 4,
+   "ties": 0,
+   "losses": 0,
+   "n_untied": 4,
+   "p_two_sided": 0.125,
+   "note": "pairs within a brief are not independent; secondary only"
+  }
+ },
+ "sensitivity": {
+  "band_0": {
+   "wins": 4,
+   "ties": 0,
+   "losses": 0,
+   "n_untied": 4,
+   "p_two_sided": 0.125,
+   "p_ties_as_losses": 0.125
+  },
+  "band_12": {
+   "wins": 4,
+   "ties": 0,
+   "losses": 0,
+   "n_untied": 4,
+   "p_two_sided": 0.125,
+   "p_ties_as_losses": 0.125
+  }
+ },
+ "brief_verdicts": {
+  "driftcheck": "win",
+  "executor": "win",
+  "kiln": "win",
+  "liftplan": "win"
+ },
+ "pairs": [
+  {
+   "packet": "P001",
+   "pair": "kiln-r1",
+   "brief": "kiln",
+   "x": "kiln/with-r1",
+   "y": "kiln/without-r1",
+   "x_side": "B",
+   "S_x": 249,
+   "S_y": 214,
+   "delta": 35,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [],
+   "verdict": "win",
+   "why": "majority preference and summed score agree",
+   "personas": {
+    "designer": {
+     "x_total": 84,
+     "y_total": 72,
+     "x_total8": 67,
+     "y_total8": 58,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 2,
+      "fit": -1,
+      "distinctiveness": 0,
+      "proof": 2,
+      "craft": 1,
+      "mobile": 2,
+      "honesty": 1,
+      "interaction": 2,
+      "copy": 0,
+      "first_screen": 3
+     }
+    },
+    "buyer": {
+     "x_total": 84,
+     "y_total": 72,
+     "x_total8": 67,
+     "y_total8": 57,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 2,
+      "fit": -1,
+      "distinctiveness": 1,
+      "proof": 1,
+      "craft": 1,
+      "mobile": 2,
+      "honesty": 2,
+      "interaction": 2,
+      "copy": 0,
+      "first_screen": 2
+     }
+    },
+    "engineer": {
+     "x_total": 81,
+     "y_total": 70,
+     "x_total8": 65,
+     "y_total8": 55,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 1,
+      "fit": 0,
+      "distinctiveness": 0,
+      "proof": 2,
+      "craft": 2,
+      "mobile": 2,
+      "honesty": 1,
+      "interaction": 2,
+      "copy": 0,
+      "first_screen": 1
+     }
+    }
+   }
+  },
+  {
+   "packet": "P002",
+   "pair": "liftplan-r1",
+   "brief": "liftplan",
+   "x": "liftplan/with-r1",
+   "y": "liftplan/without-r1",
+   "x_side": "B",
+   "S_x": 245,
+   "S_y": 221,
+   "delta": 24,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [],
+   "verdict": "win",
+   "why": "majority preference and summed score agree",
+   "personas": {
+    "designer": {
+     "x_total": 85,
+     "y_total": 74,
+     "x_total8": 68,
+     "y_total8": 59,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 1,
+      "fit": 1,
+      "distinctiveness": -1,
+      "proof": 1,
+      "craft": 1,
+      "mobile": 3,
+      "honesty": 2,
+      "interaction": 1,
+      "copy": 0,
+      "first_screen": 2
+     }
+    },
+    "buyer": {
+     "x_total": 82,
+     "y_total": 74,
+     "x_total8": 65,
+     "y_total8": 58,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 0,
+      "fit": -1,
+      "distinctiveness": -1,
+      "proof": 1,
+      "craft": 1,
+      "mobile": 2,
+      "honesty": 3,
+      "interaction": 2,
+      "copy": -1,
+      "first_screen": 2
+     }
+    },
+    "engineer": {
+     "x_total": 78,
+     "y_total": 73,
+     "x_total8": 62,
+     "y_total8": 58,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 0,
+      "fit": -1,
+      "distinctiveness": -1,
+      "proof": 0,
+      "craft": 1,
+      "mobile": 2,
+      "honesty": 1,
+      "interaction": 2,
+      "copy": 0,
+      "first_screen": 1
+     }
+    }
+   }
+  },
+  {
+   "packet": "P003",
+   "pair": "driftcheck-r1",
+   "brief": "driftcheck",
+   "x": "driftcheck/with-r1",
+   "y": "driftcheck/without-r1",
+   "x_side": "A",
+   "S_x": 255,
+   "S_y": 214,
+   "delta": 41,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [],
+   "verdict": "win",
+   "why": "majority preference and summed score agree",
+   "personas": {
+    "designer": {
+     "x_total": 87,
+     "y_total": 71,
+     "x_total8": 69,
+     "y_total8": 56,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 1,
+      "distinctiveness": 1,
+      "proof": 3,
+      "craft": 1,
+      "mobile": 2,
+      "honesty": 1,
+      "interaction": 3,
+      "copy": 1,
+      "first_screen": 2
+     }
+    },
+    "buyer": {
+     "x_total": 83,
+     "y_total": 75,
+     "x_total8": 67,
+     "y_total8": 60,
+     "prefers_x": true,
+     "confidence": "medium",
+     "diff": {
+      "clarity": 1,
+      "fit": 0,
+      "distinctiveness": 1,
+      "proof": 2,
+      "craft": 0,
+      "mobile": 0,
+      "honesty": 0,
+      "interaction": 3,
+      "copy": 0,
+      "first_screen": 1
+     }
+    },
+    "engineer": {
+     "x_total": 85,
+     "y_total": 68,
+     "x_total8": 69,
+     "y_total8": 53,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 2,
+      "distinctiveness": 2,
+      "proof": 3,
+      "craft": 1,
+      "mobile": 2,
+      "honesty": 2,
+      "interaction": 3,
+      "copy": 0,
+      "first_screen": 1
+     }
+    }
+   }
+  },
+  {
+   "packet": "P004",
+   "pair": "executor-r1",
+   "brief": "executor",
+   "x": "executor/with-r1",
+   "y": "executor/without-r1",
+   "x_side": "A",
+   "S_x": 247,
+   "S_y": 187,
+   "delta": 60,
+   "votes_x": 3,
+   "hf_x": [],
+   "hf_y": [
+    "HF1"
+   ],
+   "verdict": "win",
+   "why": "other page hard-failed",
+   "personas": {
+    "designer": {
+     "x_total": 82,
+     "y_total": 62,
+     "x_total8": 66,
+     "y_total8": 49,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 1,
+      "fit": 3,
+      "distinctiveness": 1,
+      "proof": 3,
+      "craft": 0,
+      "mobile": 0,
+      "honesty": 6,
+      "interaction": 3,
+      "copy": 0,
+      "first_screen": 3
+     }
+    },
+    "buyer": {
+     "x_total": 79,
+     "y_total": 67,
+     "x_total8": 63,
+     "y_total8": 52,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 0,
+      "fit": 1,
+      "distinctiveness": 1,
+      "proof": 3,
+      "craft": 0,
+      "mobile": -1,
+      "honesty": 4,
+      "interaction": 3,
+      "copy": -1,
+      "first_screen": 2
+     }
+    },
+    "engineer": {
+     "x_total": 86,
+     "y_total": 58,
+     "x_total8": 69,
+     "y_total8": 45,
+     "prefers_x": true,
+     "confidence": "high",
+     "diff": {
+      "clarity": 2,
+      "fit": 4,
+      "distinctiveness": 2,
+      "proof": 3,
+      "craft": 2,
+      "mobile": 1,
+      "honesty": 6,
+      "interaction": 4,
+      "copy": 1,
+      "first_screen": 3
+     }
+    }
+   }
+  }
+ ],
+ "retest": [],
+ "same_arm": [],
+ "persona": {
+  "designer": {
+   "prefers_with": 4,
+   "prefers_without": 0,
+   "mean_total_with": 84.5,
+   "mean_total_without": 69.75,
+   "mean_total8_with": 67.5,
+   "mean_total8_without": 55.5
+  },
+  "buyer": {
+   "prefers_with": 4,
+   "prefers_without": 0,
+   "mean_total_with": 82,
+   "mean_total_without": 72,
+   "mean_total8_with": 65.5,
+   "mean_total8_without": 56.75
+  },
+  "engineer": {
+   "prefers_with": 4,
+   "prefers_without": 0,
+   "mean_total_with": 82.5,
+   "mean_total_without": 67.25,
+   "mean_total8_with": 66.25,
+   "mean_total8_without": 52.75
+  }
+ },
+ "mean_criterion_diff_with_minus_without": {
+  "clarity": 1,
+  "fit": 0.67,
+  "distinctiveness": 0.5,
+  "proof": 2,
+  "craft": 0.92,
+  "mobile": 1.42,
+  "honesty": 2.42,
+  "interaction": 2.5,
+  "copy": 0,
+  "first_screen": 1.92
+ },
+ "hard_fail_runs_by_arm": {
+  "with": {},
+  "without": {
+   "HF1": 1
+  }
+ }
+}

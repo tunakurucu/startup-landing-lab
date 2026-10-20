@@ -14,6 +14,7 @@ Mark the product artifact with `data-signature` (one element per page). The chec
 - **The default state is already a good result**, and a Reset returns everything, view toggles included.
 - **The sample label sits at the top of the artifact**, beside its title ("Sample week, written for this page"), never only in a footer under it.
 - **Audit the sample like a copy editor.** Counts add up ("3 problems" lists three), dates carry the right weekday for their year (CP-13), states agree with each other (no "Awaiting approval" beside "Approved 14:32"), the demo obeys every rule the copy states (if the copy says reefers only take reefer doors, the demo refuses a dry van), today's sample never duplicates another day's, and the visitor's real clock never leaks into a fixed sample story.
+- **The result stays where the visitor is looking.** After a control runs, never scroll the page away from it; if the result is taller than the space left, put its verdict line first and keep the details below (MB-07 now needs the main changed element at least half on screen).
 - **Two screens at most on a phone.** The artifact is at most 1,688px tall at 390 (MB-10). A long list is grouped (this week, later), shows the first few with a "Show all 11" control, or pages; the whole page stays within eight screens.
 - **The action follows the input.** An action that uses what the visitor set (copy my list, check my lift) sits after the controls it depends on, never above them acting on the sample.
 - **A sticky result never covers a control.** On a phone, a pinned result strip hides the field the visitor is tabbing to (LY-06 tabs both ways at 390). Put the result above the controls, or make it sticky only where the viewport is at least 700px tall, and give controls `scroll-margin` equal to the strip's height.
@@ -26,6 +27,7 @@ Mark the product artifact with `data-signature` (one element per page). The chec
 - **No claims the brief does not make.** Do not add product features, platforms, limits, prices or commercial terms the brief did not state ("the call is free", "priced per legal entity", "no sales call", "free sandbox", "costs nothing when the run passes"). Write the useful ones in the record under *To confirm* for the client instead.
 - **Say the product's status in the first screen** when it is not live ("Settle is in development; this is the checklist it will give you"). A visitor should never learn in the fifth section that nothing exists yet.
 - **No destination for sign-ups? Do not collect emails.** An email saved only in the visitor's own browser collects nothing for the founder and misleads the visitor; graders failed it every time. Offer a real local action instead: download a calendar reminder (`.ics`) for the launch month, copy or print the useful thing the page made, or follow the project where the brief gives a link. List the missing endpoint first under *To confirm*.
+- **The person who pays sees the control they get.** When one audience pays and another uses (owner and members, manager and appointed person), the payer gets a second, smaller artifact showing what they set or decide (the firing schedule, shelf rules, the sign-off log), not one paragraph. Beside the main action, say what happens after the click (what the trial or pilot involves first), in the brief's terms.
 - **Every audience the brief names gets its own answer.** The person who pays and the person who uses each get a section that answers their first doubt and says what the next step involves, in the brief's terms; unknowns (pilot length, effort) are stated as questions the first call answers, not invented.
 - **No notes to the builder or client on the page** ("ours to confirm with the client", "per the brief", "TODO", "[Company]") (CP-12).
 - Big numbers in the first screen are results the brief supplies or nothing. A large "100%" labelled "in this example" still reads as a claim.
@@ -38,7 +40,8 @@ body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul{margin:0}
 ol,ul{padding:0;list-style:none}               /* add list styles back where a list should look like one */
 img,svg,video,canvas{display:block;max-width:100%}
 input,button,textarea,select{font:inherit;color:inherit}
-:where(p,li,dd,td,output,[role=status]){overflow-wrap:anywhere;min-width:0}
+:where(p,li,dd,td,output,[role=status]){overflow-wrap:break-word;min-width:0}   /* break-word, not anywhere: anywhere splits identifiers mid-name in tables */
+.echo{overflow-wrap:anywhere}                  /* only on elements that print what the visitor typed */
 .skip{position:absolute;left:12px;top:-60px;padding:12px 16px;background:var(--ink);color:var(--paper);z-index:100}
 .skip:focus{top:12px}                          /* visible when focused (AX-13); never only .sr-only */
 ```

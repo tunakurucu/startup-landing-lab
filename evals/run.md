@@ -197,3 +197,19 @@ No build drew or chose a character; the briefs and the dealt hands did not lead 
 **Deviations.** None beyond round 3's operating notes (same packet cleaning, same adjudicator prompt). The skill copy used was frozen at `80d59dc`, before the two fixes that round 3 produced (no invented destinations, the 3× overflow check); those are untested by any round.
 
 **Limits.** Four briefs, k = 1, no retest packets; agent graders playing a designer, a buyer and an engineer; one model family; not a conversion result. Do not add these wins to rounds 1–3.
+
+## v0.6: blind A/B, round 5 (2026-10-20, skill at `51cd338`)
+
+Pre-registered in `runs/2026-10-20-ab-round5/PREREG.md` before any build, with a target of a mean skill-page total above 87 of 100. Four new briefs: a pottery-studio kiln app (kiln), crane lift plans (liftplan), an open-source migration-drift CLI (driftcheck) and a checklist for a grieving executor with no sign-up destination (executor). v0.6 added the build baseline and eleven automatic checks that operate the signature artifact on a phone.
+
+**Result: the skill page won all four briefs and all 12 grader runs; the 87 target was not met.** Mean skill-page total 83.0 (range 78–87), no-skill 69.7. No skill page had a hard fail; one no-skill page had a confirmed HF1 (a sign-up that thanked the visitor while saving the address only in their browser). Full table: `runs/2026-10-20-ab-round5/results/summary.md`.
+
+**Deviation.** Partway through, the builder model was changed at the person's request: the two Fable builds still running were stopped, and the kiln and driftcheck pairs were rebuilt on `claude-opus-5-5`, both arms, so each pair stays like-for-like. Liftplan and executor are Fable pairs as pre-registered. Skill pages averaged 82.0 on the Fable pairs and 84.0 on the Opus pairs; no-skill 68.0 and 71.3. Details in `DEVIATIONS.md`.
+
+**What graders still marked down on skill pages**, and what v0.7 does about each:
+- The paying audience got one paragraph while the user got the artifact (kiln, liftplan): the payer now gets a second, smaller artifact showing what they control, and the next step is described beside the main action.
+- On phones the artifact ran 1,900–3,000px and a sticky readout covered focused controls: MB-10 (block) caps the artifact at two screens, and LY-06 (block) tabs both ways at 390.
+- Fonts present on the build machine but not shipped (Lora, Inter) or Linux defaults named first (DejaVu): TY-11 fails both.
+- The phone menu covered the headline without JavaScript; a static row had a missing quote: MB-05 and AX-07 now read the page without script and as delivered.
+- The product's not-yet-launched status sat in the fifth section and the email form saved locally: the status goes in the first screen, and with no destination the page offers a calendar reminder or a copy instead of asking for an email.
+- A demo stamped "Not issued" where the brief said the product never decides: demo verdicts stay advisory when the brief limits authority.
