@@ -1,0 +1,71 @@
+{
+  "packet": "P006",
+  "persona": "buyer",
+  "A": {
+    "scores": {
+      "clarity": 8,
+      "fit": 8,
+      "distinctiveness": 6,
+      "proof": 7,
+      "craft": 7,
+      "mobile": 7,
+      "honesty": 7,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 5
+    },
+    "evidence": {
+      "clarity": "1440 and 390: eyebrow 'For BSA officers at community banks and credit unions', H1 'When the examiner asks why you closed an alert, the answer is already in the file.', subhead lists reviewer/checks/decision/reason in one record. As a BSA officer I could repeat it. Next step is clear ('Request a sandbox'), though it does not say it is an email until the sandbox section.",
+      "fit": "Both audiences get a real section: the sample case for the BSA officer, 'For the CEO and the board' Q&A (replace monitoring? who can edit a closed file? cost?) for the CEO. Lead-with tension is resolved openly in 'Why we lead with the examiner' with no invented time-saved numbers. No-compliance/no-regulator/no-SOC 2 constraints each stated. Sandbox section says it is set up by hand via email and the mailto pre-fills Institution/Role/Alert types.",
+      "distinctiveness": "The case-file stepper (case ID, Open/Closed chip, timeline 'What the examiner sees') is product-specific, and the closed-alert sample matches the headline. The rest is a familiar stack: centred serif hero, three-column 'why' cards, three-box 'where it sits' diagram, green CTA band.",
+      "proof": "Sample case CF-2026-0142 is operable and internally consistent ($19,400/mo average, $56,300 trailing 30 days, 3 CTRs, profile updated to $55,000; timeline matches every entry). It answers the officer's doubt, 'would the closed-alert reasoning hold up?'. But it starts below the first screen at 1440 (section heading at y~790, the case box below the fold) and at 390.",
+      "craft": "Clean serif/sans pairing and steady spacing. At 1440 the first screen is a left-aligned text column with the right ~45% empty. Probe axe reports 1 serious color-contrast node at 390/1440. Footer note and sample-side text are small and grey but readable.",
+      "mobile": "390: no overflow. The step list becomes a horizontal strip that auto-scrolls to the current step. Pressing Next scrolls the newly revealed block into view with Back/Next directly below (step 4 decision visible next to the buttons). No nav menu at all; the header shows only a 37px 'Request a sandbox', so the board section is reachable only by scrolling. Step tabs are 40px and 'Copy address' is 26px tall.",
+      "honesty": "The sample is labelled 'This is a made-up alert at a made-up bank' right above the case, and again in the footer. The sandbox section states before the click that setup is by hand and starts with an email. The 'does not claim' items are honest but delivered as a separate section near the end. It invents product facts the brief does not give: 'We price per institution, not per user or per alert', 'Export the file as a PDF, or give the examiner read-only access', 'No one can edit or delete'.",
+      "interaction": "1440/768/390: Next went through steps 1-5, the status chip changed Open\u2192Closed, 'Step n of 5' updated, and Next became 'Start over' and reset to step 1. Clicking step 3 directly jumped; ArrowRight from a focused step advanced to step 4. 'Copy address' showed 'Copied.' with a fallback message. Hero 'Request a sandbox' scrolled to #sandbox, and the mailto there carries a prefilled subject and body. No console errors.",
+      "copy": "Specific, in the officer's own words: 'An alert that was closed often has a spreadsheet row and a memory', 'Not a ticket here, a note there, and a PDF somewhere on a shared drive.' Board answers are plain. Step notes are written, not defaulted. Some lines run long for the CEO skim.",
+      "first_screen": "1440: the eyebrow, H1, subhead and both CTAs are in view, but no artifact or example backs the promise; the right half is empty and the sample heading only peeks in at the bottom. 390: the promise and both buttons are visible, nothing backs them, and the hero CTA label does not say it leads to an email."
+    },
+    "problems": [
+      "The first screen at 1440 and 390 makes the promise with nothing in view to back it: the sample case, the page's best proof, starts below the fold and the 1440 right half is empty.",
+      "The hero 'Request a sandbox' only scrolls to a section near the bottom; the email mechanism is explained there rather than beside the button. On mobile there is no nav menu, so the CEO/board path is buried in a long scroll.",
+      "Unsupported product specifics (per-institution pricing, PDF export, examiner read-only access) and the disclosures sit in a stand-alone 'does not claim' list late on the page. Small tap targets at 390: Copy address 26px, step tabs 40px."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 7,
+      "honesty": 8,
+      "interaction": 8,
+      "copy": 8,
+      "first_screen": 8
+    },
+    "evidence": {
+      "clarity": "H1 'Alert reviews an examiner can follow without you in the room.' is followed by 'Casefold is a case-file tool for BSA officers at community banks and credit unions. Each monitoring alert gets a reviewer, the evidence checked, a decision and the reason, in one record.' Under the buttons: 'One email to sandbox@casefold.example. We set the sandbox up by hand and reply with a login.' What, who and next step are all answered in the hero.",
+      "fit": "BSA officer: the sample case plus an 'examiner asks / in the record / in the sample' table. CEO: 'Written for the CEO and the board' with a dated 'Board brief' document (what it is, what it is not, who writes, security status: no SOC 2, cost, what the sandbox involves) meant to be taken into the meeting, which is a real second path. Examiner readiness leads with no invented time-saved numbers. 'Where it fits' says it does not detect or file anything.",
+      "distinctiveness": "The hero is a live case file: status chip (Open\u2192Assigned\u2192In review\u2192Awaiting approval\u2192Decided), Owner/Next action that change per step, earlier sections folding to one-line summaries, and the examiner history moving to the top at step 5. The board brief is styled as a document. Structure comes from the product, not the usual kit.",
+      "proof": "1440: the sample case is operable in the first viewport, labelled 'Fictional customer, staff and amounts. Illustrative only.' Numbers are consistent: 9,400+9,650+9,200+9,800 = $38,050; '$3,900 a week' against 'no week above $12,000'; the prior alert ALT-1764 is cited in both evidence and reason; the history has six entries, matching the table's 'Six entries'. A refer-for-SAR structuring case shows real judgement being recorded.",
+      "craft": "Sharp hierarchy: serif display H1, sans body, mono for IDs and amounts, a consistent grey/green palette. Probe axe is clean at 390 and 1440, with no overflow. At 1440 the hero copy column has dead space under it once the case grows, which is minor.",
+      "mobile": "390: the Menu button opens a list, the 'For the board' link scrolled to the section, and the menu closed. The case starts within the first screen. Step tabs become numbered 44px tabs and Back/Next are full-width. But at step 4 (Decision) the page does not scroll: the decision and quote render below the fold under three folded summaries, so only the step note and the 'Awaiting approval' chip change near the tap. Show buttons are 28px. The header menu omits 'Request a sandbox'.",
+      "honesty": "The fictional label sits at the top of the artifact at every width and again in the footer. The primary action is a mailto, and the line directly under it says exactly what happens (one email, hand setup, reply with a login, sample alerts only). No SOC 2 and no regulator approval are stated plainly inside the board brief. Unsupported additions: 'the sandbox itself has no charge', 'Pricing is quoted per institution', 'CSV export, or typed in', 'Ask for the current description of controls'. The founder would need to confirm these.",
+      "interaction": "1440/768/390: Next step walked steps 1-5 with the status, owner, next action and step note all updating; Next disabled and relabelled 'Last step' at 5. Back works. Clicking tab 3 jumped there; ArrowRight on a focused tab moved to 4 (Home/End are wired too). The 'Show' summary toggled to 'Hide' with aria-expanded true. The mobile menu toggles and Escape closes it. No console errors. There is no restart at the end, and on phone the revealed content is off-screen.",
+      "copy": "Uses the customer's own world: 'teller 14', 'Refer for a SAR decision', 'I am not satisfied this is ordinary business', 'We say so up front rather than after procurement', 'Step through a sandbox before anyone signs anything.' Section headlines are long full sentences and a little heavy, but terms are consistent (case file, record, sandbox).",
+      "first_screen": "1440: the H1, the BSA-officer subhead, 'Request a sandbox' with what happens next, and the labelled sample case with flagged deposits are all in one viewport. 390: the promise, both buttons and the email explanation are visible, with the sample case heading and its fictional label at the very bottom; the artifact itself needs one scroll."
+    },
+    "problems": [
+      "390: stepping to Decision or later reveals content below the fold without scrolling to it, so the visitor sees only the note and chip change and must scroll to find the result.",
+      "Product and pricing specifics the brief does not supply (CSV import, free sandbox, reply with a login, a 'description of controls' document) are stated as fact and need founder confirmation.",
+      "Mobile details: the header menu has no 'Request a sandbox', the summary 'Show' buttons are 28px, and the stepper ends with Next disabled rather than a restart."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "As a BSA officer arriving cold, B shows me a labelled, operable case file next to the promise on the first screen, and tells me exactly what happens when I click 'Request a sandbox'. As the CEO, B gives me a board brief I could take into the meeting, with the no-SOC 2 and no-regulator facts in it. A is honest and well written, and its closed-alert sample fits its headline, but its proof sits below the fold and its board path is a plainer Q&A. I would change my mind if A moved its sample into the first screen and B's unsupported pricing and integration claims turned out to be false."
+}
