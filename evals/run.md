@@ -157,3 +157,43 @@ Mean per-criterion difference, skill minus no skill, all personas: clarity +0.86
 - 2026-10-20 14:30 UTC. Adjudication (step 8). Each flagged side was copied to its own folder outside the repository with only that page, its probe output and screenshots, the brief, the hard-fail table and the flags (18 sides). The protocol's adjudicator prompt was extended with environment notes (where Playwright is, where to keep scratch files) and one instruction: check a phone-layout flag at a device scale factor of 3 as well as 1, because one grader found an overflow that appears only on dense screens. The same build can appear in two packets (retests); each packet side is adjudicated separately, and a confirmation in either attaches to the build, as the protocol says.
 
 **Limits.** Agent graders playing a designer, a buyer and an engineer, not people; builders and graders are from one model family. Not a conversion result. Twelve fictional briefs, one model, one client version, one skill commit. The operator who assembled packets had also read the build summaries, so the analyst was not blind to which page was which before unblinding, although grading and adjudication were. These twelve briefs informed the v0.5 changes, so they are no longer unseen; round 4 uses new briefs.
+
+## v0.5: blind A/B, round 4 (2026-10-20, skill at `80d59dc`)
+
+Pre-registered before the first build: [PREREG.md](runs/2026-10-20-ab-round4/PREREG.md). Four new briefs written to pull different statement levels: a family dinner app (pantry), dock appointment software for warehouses (dockside), an open-source CLI for replaying flaky tests (replay) and unclaimed-property compliance for finance teams (escheat). Each was built once with skill v0.5 (the statement layer, the five-second line and the artifact stress test) and once without (k = 1, seed 919235640). Same builders, graders, rubric, hard-fail table and blind adjudication as round 3; only the buyer cards are new. Everything is in [runs/2026-10-20-ab-round4](runs/2026-10-20-ab-round4/).
+
+| Brief | Pair | Verdict (skill page) | Why | Votes for skill page | S with | S without | Δ | Hard fails with / without |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| dockside | dockside-r1 | win | other page hard-failed | 3/3 | 237 | 207 | +30 | - / HF2 |
+| escheat | escheat-r1 | win | majority preference and summed score agree | 3/3 | 239 | 197 | +42 | - / - |
+| pantry | pantry-r1 | win | other page hard-failed | 3/3 | 236 | 196 | +40 | - / HF2 |
+| replay | replay-r1 | win | other page hard-failed | 3/3 | 238 | 181 | +57 | - / HF2,HF3 |
+
+**Result.** The skill page won all 4 briefs (exact two-sided sign test, p = 0.125). Four briefs cannot reach significance, as the pre-registration said before any build; read this as descriptive. All 12 gradings preferred the skill page. Three of the four wins came from the other page hard-failing, but the summed scores favour the skill page by 30 to 57 points of 300 in every brief, so the verdicts do not rest on the hard fails alone.
+
+| Persona | Prefers skill page | Prefers other | Mean /100 with | Mean /100 without | Mean /80 (round 1-2 criteria) with | without |
+| --- | --- | --- | --- | --- | --- | --- |
+| designer | 4 | 0 | 78.75 | 65 | 63.25 | 51 |
+| buyer | 4 | 0 | 80.25 | 66.25 | 64.25 | 52 |
+| engineer | 4 | 0 | 78.5 | 64 | 63.5 | 50.5 |
+
+Mean per-criterion difference, skill minus no skill (1–10 per criterion): clarity +1.0, fit +1.25, distinctiveness +0.75, proof +2.08, craft +1.0, mobile +1.67, honesty +2.67, interaction +2.08, copy +0.42, first_screen +1.17. Clarity and interaction, the criteria v0.5 targeted, were both positive.
+
+**Hard fails.** None confirmed on any skill page. Without the skill: three fabricated-proof fails (a pantry page saying setup "takes about a minute the first time", a dock page claiming dispatchers "book in under a minute" and "twenty seconds", a CLI page quoting "roughly 2–4%" overhead "in our measurements") and one unreadable-mobile fail (the CLI demo terminal cut off its own lines at 390 px).
+
+**What the statement layer produced.** Each skill build recorded its dealt hand, chosen move, level and name test:
+
+| Brief | Move | Level | "The one with the…" |
+| --- | --- | --- | --- |
+| dockside | inhabited world | bold | dock doors you book under |
+| escheat | before and after | quiet | check list sorted into deadlines |
+| pantry | before and after (first hand rejected with reasons, redealt) | bold | fridge shelf that plans your week |
+| replay | product as a toy | bold | CI-and-laptop twin tape |
+
+No build drew or chose a character; the briefs and the dealt hands did not lead there, so the character guidance is untested.
+
+**Cost.** Skill builds: median 30 minutes (24–35), about 101,000 output tokens, 83 tool calls. No-skill builds: median 9 minutes (7–13), about 35,000 output tokens, 31 tool calls. The statement layer and stress test make builds about 40% longer than v0.4's (median 30 vs 21 minutes). All four no-skill builds loaded the client's built-in frontend-design skill.
+
+**Deviations.** None beyond round 3's operating notes (same packet cleaning, same adjudicator prompt). The skill copy used was frozen at `80d59dc`, before the two fixes that round 3 produced (no invented destinations, the 3× overflow check); those are untested by any round.
+
+**Limits.** Four briefs, k = 1, no retest packets; agent graders playing a designer, a buyer and an engineer; one model family; not a conversion result. Do not add these wins to rounds 1–3.
