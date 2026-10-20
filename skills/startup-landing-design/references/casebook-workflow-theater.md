@@ -551,3 +551,39 @@ Avoid/limit: Roughly 50 running animations on load at both widths, several survi
 Measured 2026-10-19: desktop h1 60.8px, weight 500, tracking -0.035em; body 17px; 3 sections; phone h1 38.4px.
 
 On phones: Nav collapses to logo plus hamburger; the news bar shortens its text. Hero stacks eyebrow, h1 (38px), subhead, email field, then the app frame. The founders' logo grid becomes two columns with ten visible marks (including 'Y Combinator', 'DoorDash', 'MIT', 'UCLA'); story cards become a horizontal swipe showing one card; later sections rendered blank in the full-page capture because their content reveals on scroll.
+
+## Remuner · workflow-theater
+
+https://www.remuner.com/ · desktop-mobile-audit
+
+A conventional SaaS hero is followed by tabbed panels of product UI where an AI assistant drafts plans and answers questions, carrying the argument through screens.
+
+Observed: A dark promo bar ('Remu AI vs Excel: we put it to the test') sits above a white nav. On a deep indigo ground, the left column holds the h1 with a green underline stroke under 'drive results', a green subhead, a grey paragraph and two pill buttons; the right column holds a dashboard screenshot with a play button. Capterra and G2 ratings and three G2 badges follow, with a client-logo strip at the fold. Operated the 'Automate' tab: the panel swapped from 'Any plan structure, live in minutes with Remu AI' to 'From CRM data to approved payouts, on autopilot' with an issue-table and chat mockup. A HubSpot email-capture modal ('Wonder how Sales Directors manage variable pay?') appeared on load and blocked clicks until closed. The client-logo strip moves on load; with reducedMotion 'reduce' that strip still moved.
+
+Copy: H1: "The sales compensation software to drive results"; primary action "Book a demo" (nav: "Book a Meeting"). First-screen proof is a dashboard screenshot, Capterra 5/5 and G2 4.9/5 ratings, three G2 badges and a client-logo strip.
+
+Transfer: When the product's value is a calculation people distrust, show the calculation surface itself (plan builder, payout table) rather than describing it. Put the AI assistant inside real product mockups with concrete sample questions so the AI claim is tied to a recognisable workflow. Use one tab set per job-to-be-done (Design, Automate, Motivate) to keep a broad platform scannable in a single section.
+
+Avoid/limit: The load-time modal and cookie banner bury the hero and block interaction, and the calculator withholds results behind 'Unlock full report'. Thirteen-plus sections, small body text and many mixed accents make the page long and visually busy, and the stats band gives percentages without stated sources.
+
+Measured 2026-10-20: desktop h1 43px, weight 600, tracking -0.047em; body 14px; 13 sections; phone h1 32px.
+
+On phones: At 390 the nav collapses to the logo mark, a 'Book a Meeting' pill and a menu icon. The modal fills most of the first screen. Feature tabs stack as full-width cards, the stats band stacks its three numbers vertically, and the calculator stacks inputs above results. Measured h1 drops to 32px; the page grows to 14,128px.
+
+## Ambiguous AI · workflow-theater
+
+https://www.ambiguous.ai · desktop-mobile-audit
+
+Full-fidelity app mockups switched by task tabs, plus a split 'what your team sees / what your agent runs' panel, stage the human-and-agent workspace claim.
+
+Observed: A floating rounded white nav bar sits over a pale ground with a blue haze at the top right. Centred: a 'Backed by a16z Speedrun' line, a two-line h1 with 'Human-AI Collaboration' in blue, a one-line subhead, a 'Works with' row of six agent-tool logos, an orange 'Create a workspace' button beside a grey 'Invite your agent' button, and three check-marked terms. Colourful app icons (docs, chat, calendar, mail) float at both edges. Operated the 'Fill a column from a doc' tab: the mockup switched from a Docs NDA with a comment thread to a Sheets 'Prospect Research' table with an 'Ambi' assistant side panel (empty at the moment of capture). On load and scroll no frame-to-frame change was detected in the first screen at 1440. With reducedMotion 'reduce' the first screen also showed no change.
+
+Copy: H1: "The Workspace Built For Human-AI Collaboration."; primary action "Create a workspace" (secondary "Invite your agent"). First-screen proof is the a16z Speedrun backing line, compatibility logos for agent tools and three plan terms (free up to 5 members, 1,000 AI actions a month, sign up in under 60 seconds).
+
+Transfer: Give the agent its own entry point beside the human one ('Invite your agent' next to 'Create a workspace') when agents are first-class users. Show the same action twice, as UI the team sees and as the code the agent runs, to prove an API-parity claim in one glance. Name scenario tabs as concrete jobs ('Redline a contract', 'Triage your inbox') instead of feature names. Put the price comparison against the stack being replaced in the page body when the product's pitch is consolidation.
+
+Avoid/limit: Inter in bold Title Case with a blue accent word reads as a common AI-startup default. Breadth (18 apps, many tabs) risks diluting the core claim, the mockups are too small to read on phones, and the employer-logo row signals founders' backgrounds rather than customers, which a visitor could misread.
+
+Measured 2026-10-20: desktop h1 72px, weight 700, tracking -0.02em; body 16px; 7 sections; phone h1 35.1px.
+
+On phones: At 390 the nav keeps the logo, a compact orange 'Create a workspace' button and a menu icon. Floating app icons gather into a single row above the h1, which drops to a measured 35.1px over three lines. 'Works with' logos form a 3×2 grid, buttons go full width, the app directory list is dropped in favour of Docs/Sheets/Slides pills over the preview, and scenario tabs scroll horizontally.

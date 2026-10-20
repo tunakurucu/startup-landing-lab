@@ -5,25 +5,25 @@
 Known limits found while auditing against these numbers: `sticky_nav` misses a nav pinned through a wrapper element (several reference sites were recorded false while their bar stayed pinned); `nav_height_px` is wrong where the header element wraps the hero; a page that scrolls inside an inner container (for example mmm.page) reports a one-screen height and zero sections; `dark_background` comes from the first-screen capture and can disagree with what a person sees on pages whose hero loads late; `animations_on_load` counts animations the browser reports, including ones with no visible effect. Audited records note each disagreement in their limitations.
 
 <!-- summary:start -->
-## What 330 startup homepages actually do
+## What 329 startup homepages actually do
 
 | Measure | 10th pct | 25th | Median | 75th | 90th |
 | --- | --- | --- | --- | --- | --- |
 | Desktop h1 size (px) | 44 | 54 | **64** | 76 | 96 |
 | Desktop h1 weight | 400 | 400 | **500** | 600 | 700 |
 | Desktop h1 tracking (em) | −0.05 | −0.035 | **−0.025** | −0.01 | 0 |
-| h1 ÷ body size | 2.4 | 3.0 | **3.6** | 4.5 | 5.4 |
-| Desktop body size (px) | 14.0 | 16.0 | **17.0** | 19.0 | 21.0 |
-| Body characters per line | 36 | 45 | **56** | 67 | 82 |
+| h1 ÷ body size | 2.4 | 3.0 | **3.7** | 4.5 | 5.4 |
+| Desktop body size (px) | 14.0 | 16.0 | **17.0** | 19.0 | 22.0 |
+| Body characters per line | 36 | 45 | **56** | 67 | 81 |
 | Phone h1 size (px) | 26 | 32 | **38** | 44 | 49 |
 | Phone h1 ÷ desktop h1 | 0.45 | 0.50 | **0.59** | 0.67 | 0.80 |
 | Phone body size (px) | 14.0 | 15.0 | **16.0** | 17.0 | 18.0 |
 | Font families in use | 1 | 2 | **2** | 3 | 4 |
 | Top-level sections | 1 | 5 | **7** | 9 | 11 |
-| Desktop nav height (px) | 44 | 58 | **69** | 87 | 217 |
+| Desktop nav height (px) | 44 | 58 | **70** | 88 | 413 |
 
-- A `prefers-reduced-motion` rule was found on 237 of 330 pages (60 had none; 33 could not be inspected because their CSS is cross-origin).
-- 127 heroes sit on a dark ground and 203 on a light one (median luminance of the first-screen capture).
+- A `prefers-reduced-motion` rule was found on 237 of 329 pages (59 had none; 33 could not be inspected because their CSS is cross-origin).
+- 126 heroes sit on a dark ground and 203 on a light one (median luminance of the first-screen capture).
 - 184 headers are sticky or fixed.
 - 254 pages had animations running at load; 155 contain a `<video>`, 114 a `<canvas>`.
 - Pages that scrolled sideways at 390 px: 7.

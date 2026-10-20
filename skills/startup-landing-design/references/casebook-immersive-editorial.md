@@ -381,3 +381,39 @@ Avoid/limit: Two large video panels failed to load here and rendered as blank wh
 Measured 2026-10-20: desktop h1 96px, weight 300, tracking -0.035em; body 20px; 7 sections; phone h1 40px.
 
 On phones: Hero stays full-bleed with the headline on two lines at 40px and both pills stacked full-width; the logo marquee shows two logos at a time. The positioning statement runs seven lines. Feature list keeps its two-column name/description rows at reduced width; stat band and security grid stack to one column; the knowledge-base card goes above the 'Firm standards' copy. Page height 7,615px versus 6,183px on desktop.
+
+## Rex · immersive-editorial
+
+https://www.rex.inc · desktop-mobile-audit
+
+A light-weight serif headline over a warm off-white ground leads into a blurred-photo panel carrying three outcome metrics, so an AI back-office service reads as calm and enterprise-grade.
+
+Observed: A thin framed nav with a ruled content column sits on an off-white ground. The left column holds a customer pill ('synthesia AI-native order-to-cash with Rex') and a two-line serif h1; the right column holds a two-sentence pitch and an inline email field joined to a dark 'Book a demo' button plus a sparkle icon button. Below, a wide blurred-photo panel shows '12d', '90%+' and '30m' metrics over a row of seven process chips, then a ticker of running counters. Operated step '03 Run' in 'How Rex works': the left list expanded Run's description and collapsed Scope, and the right panel swapped from a 'REX EXTRACTED' account card to a 'NEEDS APPROVAL' card ('Apply $44K credit memo to INV-2847', Approve/Edit). On load the hero media panel changed between frames and the counter row scrolls with changing values. With reducedMotion 'reduce' the first screen showed no change between frames.
+
+Copy: H1: "AI operations partner for order to cash"; primary action "Book a demo" (inline with an email field). First-screen proof is a named customer pill (Synthesia), three outcome metrics (12d faster DSO, 90%+ touchless communications, 30m average response time) and live-looking activity counters.
+
+Transfer: For a service that replaces headcount, lead with two or three outcome metrics in the first screen rather than a product screenshot. Embed small, specific UI cards (an approval with an invoice number, an agent queue) inside atmospheric imagery so evidence and mood share one surface. A light-weight serif display on a warm ground can signal enterprise calm without resorting to dark-mode tech tropes. Put the demo request inline with an email field next to the pitch so the first action needs no navigation.
+
+Avoid/limit: Blurred photography and tiny monospaced captions lower legibility, and the metrics carry no stated basis or sample. The counter ticker implies live data that a visitor cannot verify. The page is long on mobile (about 18,900px) and the launch film and many tiles repeat the same agent story.
+
+Measured 2026-10-20: desktop h1 54px, weight 300, tracking -0.022em; body 16px; 12 sections; phone h1 42px.
+
+On phones: At 390 the nav reduces to the logo and a menu icon. The h1 wraps to three lines at a measured 42px; the pitch and email form stack beneath it. The metrics panel stacks the three numbers vertically and wraps process chips into a two-column grid. Capability tiles become a single column of square images with captions, and the page grows to 18,863px.
+
+## Spore.Bio · immersive-editorial
+
+https://www.spore.bio/ · desktop-mobile-audit
+
+A pixel-bitmap display face over pixelated greyscale imagery turns a lab-instrument company into a sparse sequence of full-screen statements with very little body copy.
+
+Observed: A full-bleed greyscale image of large blurred pixel squares fades to black at the bottom. Centred over it: a two-line h1 in a pixel display face ('MICROBIOLOGY,' in white, 'REINVENTED.' in mint green) and a one-line sans subhead. A floating dark pill nav (Mission, Technology, Product, Team, Resources) sits at the bottom of the viewport; the top bar holds only the logo, 'Request a discovery call' and 'Join us'. Operated 'Technology' in the floating pill nav: it navigated to a separate page (/tech-science) with a dark radial-glow statement ('Pasteur began with a microscope...') and the pill now highlighting Technology. During scroll the industries list highlighted one word in blue at a time and the adjacent image changed. With reducedMotion 'reduce', the h1 still assembled on load (letters partly drawn in one frame, complete later).
+
+Copy: H1: "Microbiology, reinvented." (rendered in capitals); primary action "Request a discovery call". The first screen offers no proof beyond the one-line claim 'The new, ultra fast, AI-based microbiology testing technology'; press coverage appears near the end.
+
+Transfer: Derive the display type and imagery from one product-specific motif (here, the pixel as the unit of imaging) so the identity explains the technology. When the technology is hard to show, let one declarative capability sentence carry a full screen instead of diagrams. Let press and announcements serve as the proof section when the buyer is regulated and slow to buy, rather than inventing metrics.
+
+Avoid/limit: Very little copy (about 48 visible words in the candidate check) and no first-screen proof leave regulated buyers without detail on validation or throughput. Scroll-gated content leaves blank stretches, low-contrast grey labels hurt legibility, and the headline animation ignores reduced motion.
+
+Measured 2026-10-20: desktop h1 112px, weight 700, tracking 0em; body 20px; 7 sections; phone h1 48px.
+
+On phones: At 390 the top bar becomes a translucent logo chip and a square menu button; the floating pill nav is not shown in the first screen. The h1 drops to a measured 48px on two lines and the subhead wraps to two lines. The industries list becomes one item per line, the instrument image moves above the contact form, and the page is 9,827px.

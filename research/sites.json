@@ -14261,5 +14261,578 @@
         "dark_background": false
       }
     }
+  },
+  {
+    "id": "remuner",
+    "name": "Remuner",
+    "url": "https://www.remuner.com/",
+    "category": "Sales & CRM",
+    "archetype": "workflow-theater",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A conventional SaaS hero is followed by tabbed panels of product UI where an AI assistant drafts plans and answers questions, carrying the argument through screens.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "pear",
+    "round": "Pear portfolio (listed stages: Seed)",
+    "verification_url": "https://pear.vc/companies/",
+    "geography_evidence": null,
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "A dark promo bar ('Remu AI vs Excel: we put it to the test') sits above a white nav. On a deep indigo ground, the left column holds the h1 with a green underline stroke under 'drive results', a green subhead, a grey paragraph and two pill buttons; the right column holds a dashboard screenshot with a play button. Capterra and G2 ratings and three G2 badges follow, with a client-logo strip at the fold.",
+      "typography": "Measured h1: IBM Plex Sans, 43px, weight 600, tracking -0.047em, line-height 1.2. Measured body: Montserrat, 14px, line-height 1.4, measure 93ch on desktop. Section headings use the same semibold sans and appear larger than the h1 in the captures (e.g. 'Everything you need to run compensation, end to end'). Small spaced uppercase green labels ('PLAN DESIGN', 'DATA & CLOSE') introduce tab panels.",
+      "visual_system": "Indigo-to-violet gradient bands alternate with white and pale lavender sections; teal-green is the action and accent colour. Product evidence is cropped UI cards (plan builder, issue table, chat replies) floated on pale panels. Illustrated 3D-style icons sit on the role cards. A dark indigo footer closes the page.",
+      "page_sequence": "Promo bar → hero with ratings → client logos → 'Meet Remu' AI section with three feature tabs and sample prompts → 'Everything you need' Design/Automate/Motivate tabs → stats band (15%, 95%, +2) → savings calculator with blurred results → six role cards → integrations and security → video testimonial carousel → resources → newsletter → closing CTA → footer with competitor-comparison links.",
+      "interaction": "Operated the 'Automate' tab: the panel swapped from 'Any plan structure, live in minutes with Remu AI' to 'From CRM data to approved payouts, on autopilot' with an issue-table and chat mockup. A HubSpot email-capture modal ('Wonder how Sales Directors manage variable pay?') appeared on load and blocked clicks until closed. The client-logo strip moves on load; with reducedMotion 'reduce' that strip still moved.",
+      "accessibility": "On load a cookie banner and an email-capture modal cover the hero at both widths; the modal intercepted pointer events. Body copy is 14px. Inactive tab labels and hero paragraph are light grey on light and indigo grounds respectively. The logo strip keeps moving under reduced motion. No horizontal overflow at 1440 or 390.",
+      "mobile": "At 390 the nav collapses to the logo mark, a 'Book a Meeting' pill and a menu icon. The modal fills most of the first screen. Feature tabs stack as full-width cards, the stats band stacks its three numbers vertically, and the calculator stacks inputs above results. Measured h1 drops to 32px; the page grows to 14,128px.",
+      "copy": "H1: \"The sales compensation software to drive results\"; primary action \"Book a demo\" (nav: \"Book a Meeting\"). First-screen proof is a dashboard screenshot, Capterra 5/5 and G2 4.9/5 ratings, three G2 badges and a client-logo strip."
+    },
+    "interpretation": {
+      "principles": [
+        "When the product's value is a calculation people distrust, show the calculation surface itself (plan builder, payout table) rather than describing it.",
+        "Put the AI assistant inside real product mockups with concrete sample questions so the AI claim is tied to a recognisable workflow.",
+        "Use one tab set per job-to-be-done (Design, Automate, Motivate) to keep a broad platform scannable in a single section."
+      ],
+      "fit": "Suits mid-market B2B tools sold to operations buyers who compare vendors on features and reviews. It would be wrong for a developer tool or consumer product where a gated calculator and modal interruptions read as sales friction.",
+      "risks": "The load-time modal and cookie banner bury the hero and block interaction, and the calculator withholds results behind 'Unlock full report'. Thirteen-plus sections, small body text and many mixed accents make the page long and visually busy, and the stats band gives percentages without stated sources."
+    },
+    "limitations": [
+      "The modal was removed programmatically after Escape to operate the tab; its intended close behaviour was not tested.",
+      "The hero video behind the play button was not played; its content is unverified.",
+      "Stats (15%, 95%, +2) and review scores were not independently verified.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://www.remuner.com/",
+      "https://pear.vc/companies/"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 43,
+        "h1_weight": 600,
+        "h1_tracking_em": -0.047,
+        "h1_line_height": 1.2,
+        "h1_family": "IBM Plex Sans",
+        "display_px": 43,
+        "body_px": 14,
+        "body_line_height": 1.4,
+        "body_measure_ch": 93,
+        "families": [
+          "IBM Plex Sans",
+          "Montserrat",
+          "Arial"
+        ],
+        "content_width_px": 1440,
+        "nav_height_px": 67,
+        "sticky_nav": true,
+        "hero_height_px": 940,
+        "section_count": 13,
+        "page_height_px": 9118,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 19,
+        "animations_after_scroll": 24,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": true
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 32,
+        "h1_weight": 600,
+        "h1_tracking_em": -0.062,
+        "h1_line_height": 1.3,
+        "h1_family": "IBM Plex Sans",
+        "display_px": 32,
+        "body_px": 14,
+        "body_line_height": 1.4,
+        "body_measure_ch": 46,
+        "families": [
+          "IBM Plex Sans",
+          "Montserrat"
+        ],
+        "content_width_px": 330,
+        "nav_height_px": 60,
+        "sticky_nav": true,
+        "hero_height_px": 1149,
+        "section_count": 15,
+        "page_height_px": 14128,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 19,
+        "animations_after_scroll": 19,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "rex",
+    "name": "Rex",
+    "url": "https://www.rex.inc",
+    "category": "Finance & accounting",
+    "archetype": "immersive-editorial",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A light-weight serif headline over a warm off-white ground leads into a blurred-photo panel carrying three outcome metrics, so an AI back-office service reads as calm and enterprise-grade.",
+    "yc_status": "verified-yc",
+    "batch": "S26",
+    "program": "yc",
+    "verification_url": "https://www.ycombinator.com/companies/rex-inc",
+    "geography_evidence": "https://www.ycombinator.com/companies/rex-inc",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "A thin framed nav with a ruled content column sits on an off-white ground. The left column holds a customer pill ('synthesia AI-native order-to-cash with Rex') and a two-line serif h1; the right column holds a two-sentence pitch and an inline email field joined to a dark 'Book a demo' button plus a sparkle icon button. Below, a wide blurred-photo panel shows '12d', '90%+' and '30m' metrics over a row of seven process chips, then a ticker of running counters.",
+      "typography": "Measured h1: family 'tid', 54px, weight 300, tracking -0.022em, line-height 1.0 - a light high-contrast serif. Measured body: 'gdGaio', 16px, line-height 1.5, 41ch measure. Families also include 'geist' and 'chivoMono'; small monospaced uppercase labels caption metrics ('FASTER DSO') and section kickers ('SECURITY', 'COMPARISON'). Section headings pair a dark serif phrase with a grey continuation ('Built for enterprise.').",
+      "visual_system": "Warm off-white ground with hairline rules and dot terminals marking the column edges. Media panels are soft-focus office photography with grain and thin curved line overlays, holding small white UI cards (agent list, DSO chart, credit-memo approval). One near-black integrations band breaks the light ground. Accent colour is restrained: a dark teal button and small status dots.",
+      "page_sequence": "Hero with metrics panel and counter ticker → Synthesia case-study card → logo row (Y, Vercel, Forbes, NVIDIA) → 'Finance operations now run on agents' launch-film poster → eight capability tiles (Agents, Mission Control, SLAs...) → three tall solution cards → dark integrations band → 'Built for enterprise' SOC2/GDPR/SSO cards → 'How Rex works' four-step selector → comparison table vs outsourcing → FAQ → footer.",
+      "interaction": "Operated step '03 Run' in 'How Rex works': the left list expanded Run's description and collapsed Scope, and the right panel swapped from a 'REX EXTRACTED' account card to a 'NEEDS APPROVAL' card ('Apply $44K credit memo to INV-2847', Approve/Edit). On load the hero media panel changed between frames and the counter row scrolls with changing values. With reducedMotion 'reduce' the first screen showed no change between frames.",
+      "accessibility": "Metric captions and counter labels are very small monospaced grey text on light or photographic grounds. The grey second half of headings is low contrast against off-white. The sparkle icon button beside 'Book a demo' has no visible text label. No horizontal overflow at either width; mobile email field and button appear about 44px tall.",
+      "mobile": "At 390 the nav reduces to the logo and a menu icon. The h1 wraps to three lines at a measured 42px; the pitch and email form stack beneath it. The metrics panel stacks the three numbers vertically and wraps process chips into a two-column grid. Capability tiles become a single column of square images with captions, and the page grows to 18,863px.",
+      "copy": "H1: \"AI operations partner for order to cash\"; primary action \"Book a demo\" (inline with an email field). First-screen proof is a named customer pill (Synthesia), three outcome metrics (12d faster DSO, 90%+ touchless communications, 30m average response time) and live-looking activity counters."
+    },
+    "interpretation": {
+      "principles": [
+        "For a service that replaces headcount, lead with two or three outcome metrics in the first screen rather than a product screenshot.",
+        "Embed small, specific UI cards (an approval with an invoice number, an agent queue) inside atmospheric imagery so evidence and mood share one surface.",
+        "A light-weight serif display on a warm ground can signal enterprise calm without resorting to dark-mode tech tropes.",
+        "Put the demo request inline with an email field next to the pitch so the first action needs no navigation."
+      ],
+      "fit": "Suits AI-native services and back-office automation sold to finance or operations executives who value restraint and credibility. It would be wrong for a self-serve developer tool where visitors need to try the product immediately.",
+      "risks": "Blurred photography and tiny monospaced captions lower legibility, and the metrics carry no stated basis or sample. The counter ticker implies live data that a visitor cannot verify. The page is long on mobile (about 18,900px) and the launch film and many tiles repeat the same agent story."
+    },
+    "limitations": [
+      "The launch film and the 'Explore with AI' sparkle control were not opened.",
+      "Whether the counter values reflect live data could not be verified.",
+      "Outcome metrics were not independently verified.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://www.rex.inc",
+      "https://www.ycombinator.com/companies/rex-inc"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 54,
+        "h1_weight": 300,
+        "h1_tracking_em": -0.022,
+        "h1_line_height": 1,
+        "h1_family": "tid",
+        "display_px": 54,
+        "body_px": 16,
+        "body_line_height": 1.5,
+        "body_measure_ch": 41,
+        "families": [
+          "gdGaio",
+          "geist",
+          "tid",
+          "chivoMono"
+        ],
+        "content_width_px": 1104,
+        "nav_height_px": 72,
+        "sticky_nav": true,
+        "hero_height_px": 1008,
+        "section_count": 12,
+        "page_height_px": 11702,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 24,
+        "animations_after_scroll": 24,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 42,
+        "h1_weight": 300,
+        "h1_tracking_em": -0.022,
+        "h1_line_height": 1,
+        "h1_family": "tid",
+        "display_px": 42,
+        "body_px": 16,
+        "body_line_height": 1.5,
+        "body_measure_ch": 33,
+        "families": [
+          "gdGaio",
+          "geist",
+          "tid",
+          "chivoMono"
+        ],
+        "content_width_px": 342,
+        "nav_height_px": 72,
+        "sticky_nav": true,
+        "hero_height_px": 1335,
+        "section_count": 12,
+        "page_height_px": 18863,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 24,
+        "animations_after_scroll": 24,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "spore-bio",
+    "name": "Spore.Bio",
+    "url": "https://www.spore.bio/",
+    "category": "Biotech",
+    "archetype": "immersive-editorial",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A pixel-bitmap display face over pixelated greyscale imagery turns a lab-instrument company into a sparse sequence of full-screen statements with very little body copy.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "ef",
+    "round": "EF portfolio (founded 2023)",
+    "verification_url": "https://www.joinef.com/portfolio/",
+    "geography_evidence": "https://www.joinef.com/portfolio/",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "A full-bleed greyscale image of large blurred pixel squares fades to black at the bottom. Centred over it: a two-line h1 in a pixel display face ('MICROBIOLOGY,' in white, 'REINVENTED.' in mint green) and a one-line sans subhead. A floating dark pill nav (Mission, Technology, Product, Team, Resources) sits at the bottom of the viewport; the top bar holds only the logo, 'Request a discovery call' and 'Join us'.",
+      "typography": "Measured h1: Offbit 101, 112px, weight 700, tracking 0, line-height 1.1, set in capitals. Measured body: Archivo Variablefont Wdth Wght, 20px, line-height 1.3, 31ch measure; Poppins also present. The pixel face recurs for the mission statement and the industries list; small grey uppercase sans labels ('APPLICATION', 'JOIN THE EARLY ADOPTERS') act as kickers.",
+      "visual_system": "Black and white grounds alternate with one saturated royal-blue contact band; mint green highlights key words. Imagery is pixelated or soft-focus: the hero pixel grid, a glowing teal ring for the 'TMSI' technology section, a pixel-edged cut-out of the instrument and pixel-edged pill drops. Press cards use pale lavender tiles with publication logos.",
+      "page_sequence": "Pixel hero → black mission statement ('The first direct method that can detect, quantify, and identify micro-organisms...') → 'TMSI' technology teaser with glowing ring and 'Discover our technology' → white industries list (water, beverages, cosmetics, pharma, cell/gene, food) → blue 'Join the early adopters' contact form beside the instrument → 'Hungry for more?' press and news list → dark blue footer repeating the pixel headline.",
+      "interaction": "Operated 'Technology' in the floating pill nav: it navigated to a separate page (/tech-science) with a dark radial-glow statement ('Pasteur began with a microscope...') and the pill now highlighting Technology. During scroll the industries list highlighted one word in blue at a time and the adjacent image changed. With reducedMotion 'reduce', the h1 still assembled on load (letters partly drawn in one frame, complete later).",
+      "accessibility": "Grey kicker and subhead text on near-white ('APPLICATION', 'Designed for seamless integration...') is low contrast, especially at 390. The pixel display face in capitals reduces letter distinction for long statements. The headline entrance still runs under reduced motion. Full-page captures show long empty black and white stretches where content appears only on scroll. No horizontal overflow.",
+      "mobile": "At 390 the top bar becomes a translucent logo chip and a square menu button; the floating pill nav is not shown in the first screen. The h1 drops to a measured 48px on two lines and the subhead wraps to two lines. The industries list becomes one item per line, the instrument image moves above the contact form, and the page is 9,827px.",
+      "copy": "H1: \"Microbiology, reinvented.\" (rendered in capitals); primary action \"Request a discovery call\". The first screen offers no proof beyond the one-line claim 'The new, ultra fast, AI-based microbiology testing technology'; press coverage appears near the end."
+    },
+    "interpretation": {
+      "principles": [
+        "Derive the display type and imagery from one product-specific motif (here, the pixel as the unit of imaging) so the identity explains the technology.",
+        "When the technology is hard to show, let one declarative capability sentence carry a full screen instead of diagrams.",
+        "Let press and announcements serve as the proof section when the buyer is regulated and slow to buy, rather than inventing metrics."
+      ],
+      "fit": "Suits deep-tech or hardware companies at pre-commercial stage, recruiting partners and talent more than selling. It would be wrong for a product with self-serve purchase or many SKUs, where visitors need specifications and pricing fast.",
+      "risks": "Very little copy (about 48 visible words in the candidate check) and no first-screen proof leave regulated buyers without detail on validation or throughput. Scroll-gated content leaves blank stretches, low-contrast grey labels hurt legibility, and the headline animation ignores reduced motion."
+    },
+    "limitations": [
+      "Nine product and sector videos were present but paused with autoplay off; their content and triggers were not verified.",
+      "The pill nav links to separate pages, so no in-page control was operated; the contact form was not submitted.",
+      "Measurement reports no sticky nav, while the pill appeared fixed at the bottom during the live scroll; the discrepancy was not resolved.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://www.spore.bio/",
+      "https://www.joinef.com/portfolio/"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 112,
+        "h1_weight": 700,
+        "h1_tracking_em": 0,
+        "h1_line_height": 1.1,
+        "h1_family": "Offbit 101",
+        "display_px": 112,
+        "body_px": 20,
+        "body_line_height": 1.3,
+        "body_measure_ch": 31,
+        "families": [
+          "Archivo Variablefont Wdth Wght",
+          "Offbit 101",
+          "Poppins"
+        ],
+        "content_width_px": 1067,
+        "nav_height_px": 30,
+        "sticky_nav": false,
+        "hero_height_px": 900,
+        "section_count": 7,
+        "page_height_px": 10371,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 0,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 48,
+        "h1_weight": 700,
+        "h1_tracking_em": 0,
+        "h1_line_height": 1.1,
+        "h1_family": "Offbit 101",
+        "display_px": 48,
+        "body_px": 16,
+        "body_line_height": 1.3,
+        "body_measure_ch": 27,
+        "families": [
+          "Archivo Variablefont Wdth Wght",
+          "Offbit 101",
+          "Poppins"
+        ],
+        "content_width_px": 318,
+        "nav_height_px": 0,
+        "sticky_nav": false,
+        "hero_height_px": 844,
+        "section_count": 7,
+        "page_height_px": 9827,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 0,
+        "has_video": true,
+        "has_canvas": false,
+        "dark_background": true
+      }
+    }
+  },
+  {
+    "id": "ambiguous-ai",
+    "name": "Ambiguous AI",
+    "url": "https://www.ambiguous.ai",
+    "category": "Productivity",
+    "archetype": "workflow-theater",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "Full-fidelity app mockups switched by task tabs, plus a split 'what your team sees / what your agent runs' panel, stage the human-and-agent workspace claim.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "a16z-speedrun",
+    "round": "SR005",
+    "verification_url": "https://speedrun.a16z.com/companies/ambiguous-ai",
+    "geography_evidence": "https://speedrun.a16z.com/companies/ambiguous-ai",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "A floating rounded white nav bar sits over a pale ground with a blue haze at the top right. Centred: a 'Backed by a16z Speedrun' line, a two-line h1 with 'Human-AI Collaboration' in blue, a one-line subhead, a 'Works with' row of six agent-tool logos, an orange 'Create a workspace' button beside a grey 'Invite your agent' button, and three check-marked terms. Colourful app icons (docs, chat, calendar, mail) float at both edges.",
+      "typography": "Measured h1: Inter, 72px, weight 700, tracking -0.02em, line-height 1.1, set in Title Case. Measured body: Google Sans Flex, 16px, line-height 1.5, 88ch measure. JetBrains Mono is present and used in the agent code panel ('agent.ts'). Section headings are bold sans at a smaller size, centred.",
+      "visual_system": "Near-white and very pale grey bands with a soft blue gradient at hero and closing CTA. Orange is the single action colour; blue marks the h1 accent. Product evidence is full-width light-theme app chrome (Docs, Sheets, Mail) with a left rail of coloured app icons. Glossy 3D-style app icons are the recurring motif; customer-employer logos (Uber, Microsoft, Amazon, Meta, Google) appear greyed.",
+      "page_sequence": "Hero → 'Brought to you by AI professionals from' logo row → '18 AI-Native Applications in One Place' app directory beside a Docs preview → 'An AI coworker that actually does the work' with four scenario tabs and app mockup → 'One workspace, two ways in' app tabs with UI and code side by side → pricing comparison ($465/mo vs $0) → testimonial carousel → FAQ accordion → 'Start free. 18 apps included.' CTA with MCP/CLI/REST links → footer.",
+      "interaction": "Operated the 'Fill a column from a doc' tab: the mockup switched from a Docs NDA with a comment thread to a Sheets 'Prospect Research' table with an 'Ambi' assistant side panel (empty at the moment of capture). On load and scroll no frame-to-frame change was detected in the first screen at 1440. With reducedMotion 'reduce' the first screen also showed no change.",
+      "accessibility": "Greyed employer logos and small check-marked terms are low contrast on the pale ground. App mockup text inside the scenario panels is very small at both widths. On mobile the main buttons are full width and well over 44px tall, but scenario tabs are clipped at the right edge of their row. No horizontal page overflow at 1440 or 390.",
+      "mobile": "At 390 the nav keeps the logo, a compact orange 'Create a workspace' button and a menu icon. Floating app icons gather into a single row above the h1, which drops to a measured 35.1px over three lines. 'Works with' logos form a 3×2 grid, buttons go full width, the app directory list is dropped in favour of Docs/Sheets/Slides pills over the preview, and scenario tabs scroll horizontally.",
+      "copy": "H1: \"The Workspace Built For Human-AI Collaboration.\"; primary action \"Create a workspace\" (secondary \"Invite your agent\"). First-screen proof is the a16z Speedrun backing line, compatibility logos for agent tools and three plan terms (free up to 5 members, 1,000 AI actions a month, sign up in under 60 seconds)."
+    },
+    "interpretation": {
+      "principles": [
+        "Give the agent its own entry point beside the human one ('Invite your agent' next to 'Create a workspace') when agents are first-class users.",
+        "Show the same action twice, as UI the team sees and as the code the agent runs, to prove an API-parity claim in one glance.",
+        "Name scenario tabs as concrete jobs ('Redline a contract', 'Triage your inbox') instead of feature names.",
+        "Put the price comparison against the stack being replaced in the page body when the product's pitch is consolidation."
+      ],
+      "fit": "Suits horizontal productivity suites and agent platforms where breadth and agent compatibility are the differentiators. It would be wrong for a single-purpose tool, where 18 apps and many tabs would dilute one clear job.",
+      "risks": "Inter in bold Title Case with a blue accent word reads as a common AI-startup default. Breadth (18 apps, many tabs) risks diluting the core claim, the mockups are too small to read on phones, and the employer-logo row signals founders' backgrounds rather than customers, which a visitor could misread."
+    },
+    "limitations": [
+      "The scenario panel may play a scripted sequence after a tab switch; only one frame 1.5s after the click was captured.",
+      "Pricing figures and testimonial metrics were not independently verified.",
+      "Mobile 'animations_on_load' measured 6 running animations; what moved at 390 was not observed live.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://www.ambiguous.ai",
+      "https://speedrun.a16z.com/companies/ambiguous-ai"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 72,
+        "h1_weight": 700,
+        "h1_tracking_em": -0.02,
+        "h1_line_height": 1.1,
+        "h1_family": "Inter",
+        "display_px": 72,
+        "body_px": 16,
+        "body_line_height": 1.5,
+        "body_measure_ch": 88,
+        "families": [
+          "Google Sans Flex",
+          "Inter",
+          "JetBrains Mono"
+        ],
+        "content_width_px": 960,
+        "nav_height_px": 60,
+        "sticky_nav": true,
+        "hero_height_px": 5286,
+        "section_count": 7,
+        "page_height_px": 6493,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 0,
+        "animations_after_scroll": 0,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 35.1,
+        "h1_weight": 700,
+        "h1_tracking_em": -0.02,
+        "h1_line_height": 1.1,
+        "h1_family": "Inter",
+        "display_px": 35.1,
+        "body_px": 16,
+        "body_line_height": 1.5,
+        "body_measure_ch": 44,
+        "families": [
+          "Google Sans Flex",
+          "Inter",
+          "JetBrains Mono"
+        ],
+        "content_width_px": 342,
+        "nav_height_px": 48,
+        "sticky_nav": true,
+        "hero_height_px": 5101,
+        "section_count": 7,
+        "page_height_px": 6927,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "observed",
+        "animations_on_load": 6,
+        "animations_after_scroll": 0,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": false
+      }
+    }
+  },
+  {
+    "id": "finni-health",
+    "name": "Finni Health",
+    "url": "https://www.finnihealth.com/",
+    "category": "Healthcare",
+    "archetype": "expressive-world",
+    "archetype_note": null,
+    "inspected_on": "2026-10-20",
+    "summary": "A fox mascot, blob-shaped photo frames and saturated orange, violet and green bands make an autism-care service feel warm, while a zip-code match field sits above the headline.",
+    "yc_status": "not-verified",
+    "batch": null,
+    "program": "ef",
+    "round": "EF portfolio (founded 2022)",
+    "verification_url": "https://www.joinef.com/portfolio/",
+    "geography_evidence": "https://www.joinef.com/portfolio/",
+    "coverage": "desktop-mobile-audit",
+    "viewports": {
+      "desktop": "1440 × 900: rendered, scrolled, one control operated",
+      "tablet": "not inspected",
+      "mobile": "390 × 844: rendered and measured"
+    },
+    "observations": {
+      "hero": "On a light grey ground, the left column stacks an orange kicker ('Navigating Autism, Together'), a short dark line about 1,000+ families in 25+ states, a zip-code field with an orange 'Find a match' button, and then the large violet h1. The right column holds a family photo in a rounded diamond frame with a white pill of three checks (insurance, HIPAA, families helped). A white 'We accept most insurance' bar with payer logos sits on an orange arc at the fold.",
+      "typography": "Measured h1: Outfit, 56px, weight 700, tracking 0, line-height 1.1, in violet. Measured body: General Sans, 16px, line-height 1.3, 83ch measure; Switzer also present. Section headings use the same rounded geometric sans in orange with a violet second clause; small outlined pill labels ('Provider-Led Care', 'The Finni Match') act as kickers.",
+      "visual_system": "Full-width bands of orange, violet, light grey, grass green and near-black. A cartoon fox mascot recurs across sections, alongside illustrated scenes (bedtime, a flower-and-bush hill) and white blob shapes holding statistics. Photography of children and families appears in rounded cards. Coloured tag chips list support areas. Orange is the action colour throughout.",
+      "page_sequence": "Hero with zip match → insurance logo bar → orange 'Finni providers are the best in the business' stat blobs → violet 'big feelings... big results' outcome cards with photos → three-step intake process → 'takes the weight off autism care' illustrated card with support tags → 'Snug as a glove' therapist profile and accordion → Parent Portal tabs (Scheduling, Progress Tracking, Insurance Management) → green testimonial → dark FAQ and contact → 'Find a provider with Finni Today' zip CTA → orange footer with state links.",
+      "interaction": "Operated the 'Progress Tracking' tab: the active pill turned orange and the carousel slid from the violet 'Shared Calendar and Scheduling' card to an orange 'Progress Tracking' card with a phone mockup showing '7 of 9 Treatment Goals Mastered' and a bar chart. On load the insurance logo row scrolls horizontally; with reducedMotion 'reduce' it still moved.",
+      "accessibility": "White body text on orange and violet bands and orange text on light grey look low contrast. Stat text inside the blobs is small and orange-on-white. The logo row keeps moving under reduced motion. The zip field relies on placeholder text ('Enter Zip Code') with no visible label. On mobile the 'Find a match' button appears about 40px tall. No horizontal overflow.",
+      "mobile": "At 390 the photo moves above the copy, everything centres, and the h1 drops to a measured 36px and sits below the zip form. The nav keeps the logo, an orange 'Get Started' pill and a menu icon. The three stat blobs stack vertically, outcome cards become a horizontal strip, and the page is 10,810px tall.",
+      "copy": "H1: \"Finni Delivers Expert ABA & Mental Health Care Nationwide\"; primary action \"Find a match\" (nav: \"Get Started\"). First-screen proof is the '1,000+ families in over 25 states' line, the insurance/HIPAA/families check pill and a row of insurer logos (Medicaid, UnitedHealthcare, Aetna, Kaiser Permanente, Anthem, Cigna, Optum)."
+    },
+    "interpretation": {
+      "principles": [
+        "When the first question a visitor has is 'is this available to me?', put the eligibility input (a zip code) in the first screen ahead of the headline.",
+        "Show the payer or partner logos that decide whether a customer can buy, not just brand-name customers, directly under the hero.",
+        "A recurring mascot can soften a clinical, anxious decision and give long pages a consistent thread between sections.",
+        "Preview the logged-in product (a parent portal) with tabbed phone mockups so post-purchase experience becomes part of the pitch."
+      ],
+      "fit": "Suits consumer-facing healthcare, childcare and family services where trust, warmth and coverage matter more than technical depth. It would be wrong for a clinical B2B tool sold to health systems, where cartoon motifs could undercut perceived rigour.",
+      "risks": "The zip field sits above the h1, so the reading order puts the action before the claim. Outcome ranges (40-50%, 30-40%) carry no stated method. Many saturated bands and white-on-orange text weaken contrast, and the logo marquee ignores reduced motion. A large dark band near the FAQ rendered mostly empty in captures."
+    },
+    "limitations": [
+      "The zip-code match form was not submitted, so the matching flow is unverified.",
+      "Measurement reports no sticky nav, but during the live scroll the nav stayed at the top; the discrepancy was not resolved.",
+      "The dark band near the FAQ showed only the phrase 'long wait lists' in the full-page capture; its intended content was not seen.",
+      "Single browser, single inspection date; homepage content can change."
+    ],
+    "sources": [
+      "https://www.finnihealth.com/",
+      "https://www.joinef.com/portfolio/"
+    ],
+    "measurements": {
+      "measured_on": "2026-10-20",
+      "desktop": {
+        "width": 1440,
+        "h1_px": 56,
+        "h1_weight": 700,
+        "h1_tracking_em": 0,
+        "h1_line_height": 1.1,
+        "h1_family": "Outfit",
+        "display_px": 56,
+        "body_px": 16,
+        "body_line_height": 1.3,
+        "body_measure_ch": 83,
+        "families": [
+          "General Sans",
+          "Outfit",
+          "Switzer"
+        ],
+        "content_width_px": 1152,
+        "nav_height_px": 32,
+        "sticky_nav": false,
+        "hero_height_px": 900,
+        "section_count": 11,
+        "page_height_px": 9590,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "unverified",
+        "animations_on_load": 4,
+        "animations_after_scroll": 0,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": false
+      },
+      "mobile": {
+        "width": 390,
+        "h1_px": 36,
+        "h1_weight": 700,
+        "h1_tracking_em": 0,
+        "h1_line_height": 1,
+        "h1_family": "Outfit",
+        "display_px": 36,
+        "body_px": 16,
+        "body_line_height": 1.3,
+        "body_measure_ch": 50,
+        "families": [
+          "General Sans",
+          "Outfit",
+          "Switzer"
+        ],
+        "content_width_px": 352,
+        "nav_height_px": 0,
+        "sticky_nav": false,
+        "hero_height_px": 977,
+        "section_count": 11,
+        "page_height_px": 10810,
+        "horizontal_overflow": false,
+        "reduced_motion_rule": "unverified",
+        "animations_on_load": 4,
+        "animations_after_scroll": 0,
+        "has_video": false,
+        "has_canvas": false,
+        "dark_background": false
+      }
+    }
   }
 ]

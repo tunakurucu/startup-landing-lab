@@ -307,3 +307,21 @@ Avoid/limit: Scroll-gated reveals leave text absent for assistive tech and captu
 Measured 2026-10-20: desktop h1 72px, weight 300, tracking -0.05em; body 16px; 4 sections; phone h1 32px.
 
 On phones: Announcement bar wraps to two lines; nav collapses to logo and hamburger. Hero stacks h1 (32px), the robot render cropped at the right edge, the blurb, the video thumbnail, then the yellow and white buttons full-width. Company, Cassie and Sonny sections become text-then-photo stacks; the blue-ruled rows stack heading over paragraph; the form sits in a full-width yellow panel; footer links become one long column.
+
+## Finni Health · expressive-world
+
+https://www.finnihealth.com/ · desktop-mobile-audit
+
+A fox mascot, blob-shaped photo frames and saturated orange, violet and green bands make an autism-care service feel warm, while a zip-code match field sits above the headline.
+
+Observed: On a light grey ground, the left column stacks an orange kicker ('Navigating Autism, Together'), a short dark line about 1,000+ families in 25+ states, a zip-code field with an orange 'Find a match' button, and then the large violet h1. The right column holds a family photo in a rounded diamond frame with a white pill of three checks (insurance, HIPAA, families helped). A white 'We accept most insurance' bar with payer logos sits on an orange arc at the fold. Operated the 'Progress Tracking' tab: the active pill turned orange and the carousel slid from the violet 'Shared Calendar and Scheduling' card to an orange 'Progress Tracking' card with a phone mockup showing '7 of 9 Treatment Goals Mastered' and a bar chart. On load the insurance logo row scrolls horizontally; with reducedMotion 'reduce' it still moved.
+
+Copy: H1: "Finni Delivers Expert ABA & Mental Health Care Nationwide"; primary action "Find a match" (nav: "Get Started"). First-screen proof is the '1,000+ families in over 25 states' line, the insurance/HIPAA/families check pill and a row of insurer logos (Medicaid, UnitedHealthcare, Aetna, Kaiser Permanente, Anthem, Cigna, Optum).
+
+Transfer: When the first question a visitor has is 'is this available to me?', put the eligibility input (a zip code) in the first screen ahead of the headline. Show the payer or partner logos that decide whether a customer can buy, not just brand-name customers, directly under the hero. A recurring mascot can soften a clinical, anxious decision and give long pages a consistent thread between sections. Preview the logged-in product (a parent portal) with tabbed phone mockups so post-purchase experience becomes part of the pitch.
+
+Avoid/limit: The zip field sits above the h1, so the reading order puts the action before the claim. Outcome ranges (40-50%, 30-40%) carry no stated method. Many saturated bands and white-on-orange text weaken contrast, and the logo marquee ignores reduced motion. A large dark band near the FAQ rendered mostly empty in captures.
+
+Measured 2026-10-20: desktop h1 56px, weight 700, tracking 0em; body 16px; 11 sections; phone h1 36px.
+
+On phones: At 390 the photo moves above the copy, everything centres, and the h1 drops to a measured 36px and sits below the zip form. The nav keeps the logo, an orange 'Get Started' pill and a menu icon. The three stat blobs stack vertically, outcome cards become a horizontal strip, and the page is 10,810px tall.
