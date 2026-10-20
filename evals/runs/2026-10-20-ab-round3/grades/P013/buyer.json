@@ -1,0 +1,56 @@
+{
+  "packet": "P013",
+  "persona": "buyer",
+  "A": {
+    "scores": {"clarity": 7, "fit": 7, "distinctiveness": 7, "proof": 7, "craft": 7, "mobile": 6, "honesty": 6, "interaction": 6, "copy": 8, "first_screen": 6},
+    "evidence": {
+      "clarity": "1440 and 390: the H1 'Every answer cites your policy, or it tells you it couldn't.' never says 'security questionnaire'; as a sales-engineering lead arriving cold I only learn the category from the lede ('drafts replies to the security questionnaires your enterprise buyers send'). Once read, the what/who/next is clear and the 'Request a pilot' action has an obvious object via the note 'Email pilots@paperwren.example'.",
+      "fit": "Demo shows one answer drafted and checked with nothing uploaded, as asked; mailto goes to the supplied pilots@paperwren.example with a pre-filled body (Company / Who approves / Questionnaires per quarter). The audience tension is resolved deliberately toward the security lead ('Written for the person who has to approve it'), but the sales engineer, the person who owes the questionnaire this week, gets a single aside paragraph ('For the sales engineer waiting on all this...'), close to a token line.",
+      "distinctiveness": "Yellow highlighter motif ties the logo mark, citation chips and highlighted source passages together; serif document typography and a five-step 'Read / Find / Draft / Check / Your call' strip are specific to this product. Below the demo the 'three points' row and pilot card are a familiar structure.",
+      "proof": "1440: scrolled to the demo, it autoplayed through all 5 steps in ~15s; at step 4 each sentence shows 'Matches §4.1' / 'Matches §2.3' and the source column highlights the exact passage, with 'No section on rotation.' in red and a 'Needs review: key rotation' flag. This answers the security lead's 'AI makes things up' doubt very directly. But at 1440 the first screen only shows the question at step 1 (no draft yet), and on 390 the demo starts below the first screen.",
+      "craft": "Clean serif/sans pairing and consistent rules. At 1440 the demo at step 1 is a large empty white area (answer column min-height 520px with only the question in it) until it autoplays; probe axe reports 12 color-contrast nodes at 1440 (muted greys like the dimmed policy list and 'Send back'). Metadata line 'Item 7.3' wraps awkwardly onto its own line at 1440.",
+      "mobile": "390: no horizontal overflow, text >=12px, but the top nav is simply hidden at <640px with no menu replacement; step buttons are 34x34px (labels hidden, only numbers, with 'Step 5 of 5: Your call' text added). The answer and the source column stack, so the cited passages sit ~1000px below the draft; tapping citation '1' did scroll src-1 into view (top 618px). First screen at 390 is headline, lede and CTA only.",
+      "honesty": "Demo is introduced as 'a fictional vendor's policy library... Nothing is uploaded' right above it, and the pilot section states no accuracy/time-saved figures. But the sales aside claims 'a draft that arrives already checked gets approved in one pass instead of three', an unsupported review-rounds saving that contradicts the page's own 'no time-saved figures'. 'A person replies, usually the same day' is a service promise not in the brief. At step 5 the reviewer sentence and 'Approved' appear on their own without any action, which slightly dresses up an animation as a review.",
+      "interaction": "Operated at 1440/768/390: step buttons 1-5 jump states correctly, Replay restarts from step 1, citation chip scrolls to and pulses the source passage, no console errors. But 'Send back' does nothing (DOM unchanged after click at all three widths), and 'Approve' has tabindex=-1 and approval fires automatically, so the reviewer controls are a picture of buttons. No reset beyond Replay.",
+      "copy": "Specific, written microcopy: 'Gaps are flagged, not filled', 'It won't guess a key rotation period, assume a certification, or borrow an answer from a previous questionnaire you didn't write', pilot steps that read like a real offer. Weak spots: the 'one pass instead of three' line and the H1's indirectness.",
+      "first_screen": "1440: specific promise (cites your policy or says it couldn't) plus CTA, and the demo's question is just visible at the bottom, but no drafted/cited answer is in view to back the promise. 390: headline, lede and 'Request a pilot' only; nothing in view makes the promise believable."
+    },
+    "problems": [
+      "Unsupported saving claim 'gets approved in one pass instead of three' contradicts the brief's 'no time-saved numbers' and the page's own disclaimer",
+      "Reviewer controls in the demo are fake: 'Send back' does nothing, 'Approve' is not focusable and approval happens automatically",
+      "Sales-engineer audience gets one aside paragraph; mobile has no nav and the demo/sources sit far below the first screen at 390"
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF2",
+        "evidence": "Section #review, paragraph .aside-note: 'a draft that arrives already checked gets approved in one pass instead of three. The speed comes from fewer rounds'. This is a quantified efficiency/savings claim stated as fact; the brief says there are no accuracy or time-saved numbers, and the page itself later says 'we don't have accuracy or time-saved figures we'd put on a page'.",
+        "steps": "Open packets/P013/A/index.html from disk at 1440x900, scroll to 'Written for the person who has to approve it'; read the yellow-bordered paragraph below the three points."
+      }
+    ]
+  },
+  "B": {
+    "scores": {"clarity": 9, "fit": 9, "distinctiveness": 7, "proof": 8, "craft": 8, "mobile": 7, "honesty": 8, "interaction": 8, "copy": 8, "first_screen": 8},
+    "evidence": {
+      "clarity": "H1 'Security questionnaires drafted from your own policies. Every answer cited or flagged.' plus lede ('an AI agent that drafts answers to the security questionnaires enterprise buyers send you... your security lead approves each line') and CTA 'Request a pilot by email' with 'Opens a blank email to pilots@paperwren.example. Nothing to upload, no call to book.' A cold sales-engineering lead could repeat it accurately after one screen at 1440 and at 390.",
+      "fit": "Both named audiences get a real path: a four-stage handoff strip (Sales engineer -> Paperwren -> Security lead -> Sales engineer) and separate 'If you're the sales engineer' / 'If you're the security lead' blocks. Demo shows a drafted+cited answer and a flagged-not-drafted one, nothing uploaded. Mailto to the supplied address; three unnamed partners and no numbers are stated as such. Tone is sober and right for security buyers.",
+      "distinctiveness": "The footnote/citation device runs through the page (superscript notes in the copy, a 'Notes on this page' section: 'Every claim above carries a note or a flag, the way an answer should'), mono section labels and an agent log. The hero itself is a familiar copy-left/card-right split and the rest is ruled lists, so structure is not radically product-specific.",
+      "proof": "1440: the sample card sits beside the headline in the first viewport showing question, agent log, draft with [1]/[2] citations and quoted source passages with section numbers. Tab 'Q 9.1 Penetration test' shows 'No source in your policies, so nothing was drafted' with the closest unused passage, exactly the security lead's doubt. Sentence-level verification is less explicit than a check step; at 390 the card starts at y=768, below the first screen.",
+      "craft": "Consistent token-based type scale and spacing, clean at 1440/768/390, axe reports 0 violations. Footnote superscripts render at 8.84-11.56px and handoff 'OWNER' labels at 11px; the 2-column source quotes at 1440 are dense but tidy.",
+      "mobile": "390: no overflow; nav becomes a row of three 44px links rather than disappearing; CTA is full width 355x52; tabs become stacked 48px rows; Approve/Send back 152x48. But the sample card begins at the very bottom of the first screen (top 768px) and its reviewer buttons are ~2224px down; footnote links are 13x14px tap targets.",
+      "honesty": "Card header says 'Illustrative: a made-up questionnaire and made-up policies. Nothing here is uploaded or sent.' and the reviewer is 'Priya Natarajan · Security lead (sample)' at point of use, visible at 390. Accuracy/time saved shown as 'Not measured yet', CTA says exactly what opens. Minor: note 5 'Sales engineers tell us the draft changes their work...' is an unsourced anecdotal claim, and the 'what we lack' box plus notes section leans on disclosure volume.",
+      "interaction": "Operated at 1440/768/390: Approve -> 'APPROVED Priya Natarajan approved it...', Send back -> 'SENT BACK...', Write the answer / Mark not applicable on Q 9.1 each update the status in place, focus moves to a 'Reset the sample' button that restores state; tabs switch by click and ArrowLeft/Right; 'Replay the draft' replays the log and reveals with the card height held, then re-enables. No console errors. Small nit: 'Returned to drafting with her note' when no note was written.",
+      "copy": "Plain, specific nouns from the buyer's world ('14 documents, 212 sections. Nothing else.', 'Flagged questions reach her first, not last', 'Not for you yet if your policies live in people's heads'). Some repetition of 'cited or flagged / approves each line' across hero, steps and roles, and the notes section restates claims already made.",
+      "first_screen": "1440: one viewport holds a specific outcome for a named job, a labelled sample with draft, citations and sources, and an action labelled 'Request a pilot by email' that matches the mailto. 390: promise and full-width CTA with what it opens are visible, but only the sample card's top edge peeks in at the bottom, so nothing in view backs it up yet."
+    },
+    "problems": [
+      "At 390 the sample starts below the first screen and its reviewer actions are ~2200px down, so a phone visitor sees promise without proof",
+      "Note 5's 'Sales engineers tell us...' is an unsourced anecdote, and the stack of 'Not measured yet' facts plus a Notes section adds disclosure weight",
+      "Footnote superscripts are 9-12px with ~13x14px tap targets; the hero split layout is a common template"
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "medium",
+  "reason": "As the sales-engineering lead B tells me in one screen what it is and lets me click through a cited answer and a flagged one beside the headline; as the security lead I get my own path and controls that actually approve, send back and reset. As the founder I would ship B tomorrow; A has the more convincing sentence-by-sentence check animation but its reviewer buttons are fake and it states a 'one pass instead of three' saving we cannot back. A version of A with real reviewer controls, no invented saving and a real sales-engineer section would change my mind.",
+  "score_preference_note": ""
+}
