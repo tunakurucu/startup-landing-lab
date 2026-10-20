@@ -1,0 +1,34 @@
+[
+ {
+  "workdir": "W001",
+  "run": "rackwise/with-r1"
+ },
+ {
+  "workdir": "W002",
+  "run": "tidewise/with-r1"
+ },
+ {
+  "workdir": "W003",
+  "run": "kycrefresh/without-r1"
+ },
+ {
+  "workdir": "W004",
+  "run": "rackwise/without-r1"
+ },
+ {
+  "workdir": "W005",
+  "run": "kycrefresh/with-r1"
+ },
+ {
+  "workdir": "W006",
+  "run": "flagsweep/without-r1"
+ },
+ {
+  "workdir": "W007",
+  "run": "tidewise/without-r1"
+ },
+ {
+  "workdir": "W008",
+  "run": "flagsweep/with-r1"
+ }
+]

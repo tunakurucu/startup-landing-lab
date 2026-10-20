@@ -1,0 +1,48 @@
+{
+ "meta": {
+  "seed": 606062020,
+  "k": 1,
+  "retest": 0,
+  "python": "3.13.16",
+  "briefs": [
+   "flagsweep",
+   "kycrefresh",
+   "rackwise",
+   "tidewise"
+  ]
+ },
+ "packets": [
+  {
+   "kind": "primary",
+   "brief": "rackwise",
+   "pair": "rackwise-r1",
+   "A": "rackwise/with-r1",
+   "B": "rackwise/without-r1",
+   "packet": "P001"
+  },
+  {
+   "kind": "primary",
+   "brief": "flagsweep",
+   "pair": "flagsweep-r1",
+   "A": "flagsweep/with-r1",
+   "B": "flagsweep/without-r1",
+   "packet": "P002"
+  },
+  {
+   "kind": "primary",
+   "brief": "kycrefresh",
+   "pair": "kycrefresh-r1",
+   "A": "kycrefresh/without-r1",
+   "B": "kycrefresh/with-r1",
+   "packet": "P003"
+  },
+  {
+   "kind": "primary",
+   "brief": "tidewise",
+   "pair": "tidewise-r1",
+   "A": "tidewise/without-r1",
+   "B": "tidewise/with-r1",
+   "packet": "P004"
+  }
+ ]
+}
