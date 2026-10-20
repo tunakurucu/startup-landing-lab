@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alert case files for BSA officers at community banks — Casefold</title>
+<meta name="description" content="Casefold turns each monitoring alert into one case file: the reviewer, the evidence checked, the decision and the reason, written so an examiner can follow it. Step through a sample case, then ask for a sandbox.">
+<meta property="og:title" content="Alert case files for BSA officers at community banks — Casefold">
+<meta property="og:description" content="Each monitoring alert gets a reviewer, the evidence checked, a decision and the reason, in one record an examiner can follow. Step through a sample case.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Casefold">
+<meta property="og:image" content="https://casefold.example/share-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Alert case files for BSA officers at community banks — Casefold">
+<meta name="twitter:description" content="Each monitoring alert gets a reviewer, the evidence checked, a decision and the reason, in one record an examiner can follow.">
+<meta name="twitter:image" content="https://casefold.example/share-card.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ffffff'/%3E%3Crect x='6' y='4' width='20' height='24' fill='none' stroke='%23141a1f' stroke-width='2'/%3E%3Cpath d='M10 11h12M10 16h12M10 21h7' stroke='%23141a1f' stroke-width='2'/%3E%3Crect x='19' y='19' width='8' height='8' fill='%230f5c4e'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ffffff'/%3E%3Crect x='6' y='4' width='20' height='24' fill='none' stroke='%23141a1f' stroke-width='2'/%3E%3Cpath d='M10 11h12M10 16h12M10 21h7' stroke='%23141a1f' stroke-width='2'/%3E%3Crect x='19' y='19' width='8' height='8' fill='%230f5c4e'/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  :root {
+    --ink: #141a1f;
+    --ink-2: #3d4650;
+    --ink-3: #5b6570;
+    --rule: #d3d8de;
+    --rule-soft: #e6e9ed;
+    --page: #ffffff;
+    --desk: #eef0f3;
+    --paper: #ffffff;
+    --accent: #0f5c4e;
+    --accent-ink: #ffffff;
+    --accent-soft: #e3efea;
+    --mark: #fff3c4;
+    --open: #8a5a00;
+    --open-soft: #fdf1d6;
+    --done-soft: #e3efea;
+    --font-display: Charter, "Bitstream Charter", "Iowan Old Style", "Source Serif Pro", Georgia, "Times New Roman", serif;
+    --font-text: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
+    --s-1: 0.25rem; --s-2: 0.5rem; --s-3: 0.75rem; --s-4: 1rem; --s-5: 1.5rem; --s-6: 2rem; --s-7: 3rem; --s-8: 4.5rem; --s-9: 6.5rem;
+    --w-page: 1240px;
+    --w-text: 60ch;
+    --h1: clamp(2.25rem, 1.45rem + 2.55vw, 3.55rem);
+    --h2: clamp(1.55rem, 1.2rem + 1.15vw, 2.2rem);
+    --h3: clamp(1.15rem, 1.05rem + 0.35vw, 1.35rem);
+    --body: 1.0625rem;
+    --small: 0.9375rem;
+    --tiny: 0.8125rem;
+    --ease-out: cubic-bezier(.2,.7,.2,1);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-text);
+    font-size: var(--body);
+    line-height: 1.55;
+    font-kerning: normal;
+  }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 700; margin: 0; letter-spacing: -0.005em; overflow-wrap: break-word; }
+  h1 { font-size: var(--h1); line-height: 1.08; text-wrap: balance; }
+  h2 { font-size: var(--h2); line-height: 1.18; text-wrap: balance; }
+  h3 { font-size: var(--h3); line-height: 1.25; }
+  p { margin: 0; max-width: var(--w-text); text-wrap: pretty; }
+  p + p { margin-top: var(--s-4); }
+  a { color: inherit; }
+  p a, li a, dd a { text-decoration: underline; text-underline-offset: 0.14em; text-decoration-thickness: 1px; }
+  .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.92em; }
+  .muted { color: var(--ink-3); }
+  .small { font-size: var(--small); }
+  .visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .dark :focus-visible { outline-color: #ffffff; }
+  .wrap { width: min(100% - 2.5rem, var(--w-page)); margin-inline: auto; }
+  @media (max-width: 640px) { .wrap { width: calc(100% - 2.5rem); } }
+
+  /* Actions */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2);
+    min-height: 3rem; padding: 0.7rem 1.2rem; border-radius: 3px;
+    font: inherit; font-weight: 600; font-size: 1rem; line-height: 1.2; text-decoration: none; cursor: pointer;
+    border: 1.5px solid var(--accent); background: var(--accent); color: var(--accent-ink);
+    transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out), color 160ms var(--ease-out);
+  }
+  .btn.secondary { background: transparent; color: var(--accent); }
+  .dark .btn.secondary { color: #ffffff; border-color: #ffffff; }
+  @media (hover:hover) and (pointer:fine) {
+    .btn:hover { background: #0b4a3f; border-color: #0b4a3f; }
+    .btn.secondary:hover { background: var(--accent-soft); color: var(--accent); }
+    .dark .btn.secondary:hover { background: rgba(255,255,255,.12); color: #ffffff; }
+  }
+
+  /* Header */
+  .site-header { border-bottom: 1px solid var(--rule-soft); background: var(--page); }
+  .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); min-height: 4.25rem; }
+  .brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; letter-spacing: -0.01em; min-height: 2.75rem; }
+  .brand svg { width: 26px; height: 26px; }
+  .site-nav { display: flex; align-items: center; gap: var(--s-4); }
+  .site-nav ul { display: flex; gap: var(--s-2); list-style: none; margin: 0; padding: 0; }
+  .site-nav ul a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.7rem; text-decoration: none; font-size: var(--small); color: var(--ink-2); border-radius: 3px; }
+  @media (hover:hover) and (pointer:fine) { .site-nav ul a:hover { color: var(--ink); background: var(--desk); } }
+  .site-nav .btn { min-height: 2.75rem; padding: 0.45rem 1rem; }
+  .menu-btn { display: none; min-width: 2.75rem; min-height: 2.75rem; padding: 0 0.75rem; font: inherit; font-size: var(--small); font-weight: 600; background: var(--page); color: var(--ink); border: 1.5px solid var(--rule); border-radius: 3px; cursor: pointer; }
+  @media (max-width: 860px) {
+    .site-nav ul { display: none; }
+    .menu-btn { display: inline-flex; align-items: center; gap: .4rem; }
+    .site-header.open .site-nav ul { display: flex; flex-direction: column; align-items: stretch; gap: 0; position: absolute; left: 0; right: 0; top: 4.25rem; background: var(--page); border-bottom: 1px solid var(--rule); padding: var(--s-2) 1.25rem var(--s-4); z-index: 5; }
+    .site-header.open .site-nav ul a { min-height: 3rem; font-size: 1rem; }
+    .site-header { position: relative; }
+  }
+  @media (max-width: 480px) { .site-nav .btn { display: none; } }
+
+  /* Hero */
+  .hero { padding: var(--s-7) 0 var(--s-8); }
+  .hero .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s-7) var(--s-8); align-items: start; }
+  .hero-copy { max-width: 34rem; }
+  .hero-copy h1 { margin-bottom: var(--s-5); }
+  .hero-copy .lede { font-size: 1.15rem; line-height: 1.5; color: var(--ink-2); max-width: 32rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-6); align-items: center; }
+  .beside { margin-top: var(--s-3); font-size: var(--small); color: var(--ink-3); max-width: 32rem; }
+  .beside .mono { color: var(--ink-2); }
+  @media (max-width: 980px) {
+    .hero .wrap { grid-template-columns: 1fr; gap: var(--s-6); }
+    .hero-copy { max-width: 38rem; }
+  }
+
+  /* Sample case: the artifact */
+  .case { background: var(--desk); border: 1px solid var(--rule-soft); border-radius: 2px; padding: var(--s-4); }
+  .case-head { display: flex; justify-content: space-between; gap: var(--s-3); align-items: baseline; flex-wrap: wrap; margin-bottom: var(--s-3); }
+  .case-head .title { font-weight: 600; font-size: var(--small); }
+  .case-head .label { font-size: var(--tiny); color: var(--ink-3); }
+  .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; margin: 0; padding: 0; }
+  .step {
+    display: flex; align-items: center; gap: .55rem; min-height: 2.75rem; padding: .4rem .6rem; width: 100%;
+    font: inherit; font-size: var(--tiny); font-weight: 600; line-height: 1.2; text-align: left; color: var(--ink-2);
+    background: transparent; border: 1px solid transparent; border-bottom: 3px solid var(--rule); border-radius: 2px; cursor: pointer;
+    transition: border-color 160ms var(--ease-out), background-color 160ms var(--ease-out), color 160ms var(--ease-out);
+  }
+  .step .n { font-family: var(--font-mono); font-size: .78rem; color: var(--ink-3); white-space: nowrap; }
+  .step[aria-selected="true"] { color: var(--ink); border-color: var(--rule-soft); border-bottom-color: var(--accent); background: #ffffff; }
+  .step[aria-selected="true"] .n { color: var(--accent); }
+  .step.done .n::after { content: " ✓"; color: var(--accent); }
+  @media (hover:hover) and (pointer:fine) { .step:hover { color: var(--ink); border-bottom-color: var(--ink-3); } .step[aria-selected="true"]:hover { border-bottom-color: var(--accent); } }
+  .step-note { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s-3); align-items: start; padding: var(--s-3) 0 var(--s-3); border-bottom: 1px solid var(--rule); margin-bottom: var(--s-3); }
+  .step-note p { font-size: var(--small); color: var(--ink-2); max-width: none; }
+  .step-note p strong { color: var(--ink); }
+  .pager { display: flex; gap: var(--s-2); }
+  .pager button { min-width: 2.75rem; min-height: 2.75rem; padding: 0 .8rem; font: inherit; font-size: var(--small); font-weight: 600; background: transparent; color: var(--ink); border: 1.5px solid var(--ink-3); border-radius: 3px; cursor: pointer; }
+  .pager button:disabled { color: var(--ink-3); cursor: default; opacity: .55; }
+  @media (hover:hover) and (pointer:fine) { .pager button:not(:disabled):hover { border-color: var(--ink-2); } }
+
+  .doc { background: var(--paper); border: 1px solid var(--rule); border-radius: 2px; font-size: var(--small); line-height: 1.45; }
+  .doc-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--s-2) var(--s-4); padding: var(--s-3) var(--s-4); border-bottom: 1px solid var(--rule); }
+  .doc-top .id { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em; }
+  .doc-top .id .mono { font-size: 1rem; font-weight: 500; color: var(--ink-2); margin-left: .35rem; }
+  .status { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--font-mono); font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; padding: .28rem .55rem; border-radius: 2px; background: var(--open-soft); color: var(--open); }
+  .status.decided { background: var(--done-soft); color: var(--accent); }
+  .owner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); padding: var(--s-3) var(--s-4); border-bottom: 1px solid var(--rule-soft); background: #fafbfc; }
+  .owner div { display: grid; gap: .1rem; }
+  .owner dt, .f dt, .ev dt { font-size: var(--tiny); color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
+  .owner dd, .f dd, .ev dd { margin: 0; }
+  .owner dd strong { font-weight: 600; }
+  .sec { padding: var(--s-4); border-bottom: 1px solid var(--rule-soft); }
+  .sec:last-child { border-bottom: 0; }
+  .sec .sec-h { font-family: var(--font-text); font-size: var(--tiny); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); margin: 0 0 var(--s-3); display: flex; justify-content: space-between; gap: var(--s-3); }
+  .sec .sec-h .when { font-weight: 400; text-transform: none; letter-spacing: 0; font-family: var(--font-mono); font-size: var(--tiny); }
+  .f { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3) var(--s-4); margin: 0; }
+  .f .span { grid-column: 1 / -1; }
+  .f dd.list { display: grid; gap: .25rem; }
+  .f dd.list span { display: flex; justify-content: space-between; gap: var(--s-3); border-bottom: 1px dotted var(--rule); padding-bottom: .15rem; }
+  .f dd.list span:last-child { border-bottom: 0; font-weight: 600; }
+  .ev { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); }
+  .ev li { display: grid; grid-template-columns: 1.35rem minmax(0, 1fr); gap: var(--s-2) var(--s-2); padding: var(--s-2) 0; border-top: 1px solid var(--rule-soft); }
+  .ev li:first-child { border-top: 0; padding-top: 0; }
+  .ev .box { width: 1.05rem; height: 1.05rem; border: 1.5px solid var(--accent); border-radius: 2px; display: inline-grid; place-items: center; color: var(--accent); font-size: .8rem; line-height: 1; margin-top: .15rem; }
+  .ev .what { font-weight: 600; }
+  .ev .note { color: var(--ink-2); }
+  .ev .by { font-family: var(--font-mono); font-size: var(--tiny); color: var(--ink-3); }
+  .decision { display: grid; gap: var(--s-3); }
+  .decision .verdict { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; }
+  .decision blockquote { margin: 0; padding-left: var(--s-4); border-left: 2px solid var(--accent); color: var(--ink); max-width: none; }
+  .decision blockquote p { max-width: none; }
+  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }
+  .sign div { display: grid; gap: .1rem; }
+  .sign .who { font-weight: 600; }
+  .sign .t { font-family: var(--font-mono); font-size: var(--tiny); color: var(--ink-3); }
+  .history { list-style: none; margin: 0; padding: 0; display: grid; }
+  .history li { display: grid; grid-template-columns: 12.5rem minmax(0, 1fr); gap: var(--s-3); padding: .35rem 0; border-top: 1px solid var(--rule-soft); }
+  .history li:first-child { border-top: 0; }
+  .history .t { font-family: var(--font-mono); font-size: var(--tiny); color: var(--ink-3); white-space: nowrap; }
+  .sec.examiner { background: #fafbfc; }
+  .sec.examiner p { max-width: none; color: var(--ink-2); }
+  .just { animation: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .just { animation: mark 900ms var(--ease-out) 1; }
+    @keyframes mark { from { background-color: var(--mark); } to { background-color: transparent; } }
+  }
+  .js .sec[hidden] { display: none; }
+  .sec.folded > :not(.sec-h):not(.summary) { display: none; }
+  .sec.folded .sec-h { margin-bottom: .35rem; }
+  .summary { display: none; justify-content: space-between; align-items: center; gap: var(--s-3); }
+  .sec.folded .summary { display: flex; }
+  .summary .text { color: var(--ink-2); }
+  .summary button { flex: none; min-height: 1.75rem; padding: 0 .6rem; font: inherit; font-size: var(--tiny); font-weight: 600; color: var(--accent); background: transparent; border: 1px solid var(--rule); border-radius: 3px; cursor: pointer; }
+  .sec.open .summary { display: flex; margin-bottom: var(--s-3); }
+  .sec.open .summary .text { display: none; }
+  @media (hover:hover) and (pointer:fine) { .summary button:hover { border-color: var(--accent); } }
+  @media (min-width: 981px) { .hero-copy { position: sticky; top: var(--s-6); } }
+  html:not(.js) .sec[hidden] { display: block; }
+  .no-js-only { display: none; }
+  html:not(.js) .no-js-only { display: block; }
+  html:not(.js) .steps, html:not(.js) .step-note { display: none; }
+
+  @media (max-width: 640px) {
+    .case { padding: var(--s-3); }
+    .steps { gap: 3px; }
+    .step { justify-content: center; padding: .4rem .2rem; }
+    .step .name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .step .n { font-size: .95rem; color: var(--ink-2); }
+    .step[aria-selected="true"] .n { color: var(--accent); }
+    .step-note { grid-template-columns: 1fr; }
+    .pager { display: grid; grid-template-columns: 1fr 1fr; }
+    .doc-top { padding: var(--s-3); }
+    .owner, .sec { padding: var(--s-3); }
+    .owner, .f, .sign { grid-template-columns: 1fr; }
+    .f dd.list span { flex-direction: column; gap: 0; }
+    .history li { grid-template-columns: 1fr; gap: 0; }
+    .sec .sec-h { flex-direction: column; gap: .15rem; }
+  }
+
+  /* Sections */
+  .section { padding: var(--s-8) 0; }
+  .section.alt { background: var(--desk); }
+  .section-head { max-width: 46rem; margin-bottom: var(--s-6); }
+  .section-head p { margin-top: var(--s-4); color: var(--ink-2); }
+  .dark { background: var(--ink); color: #ffffff; }
+  .dark .muted, .dark .section-head p { color: #c5ccd3; }
+
+  /* Questions table */
+  .qa { width: 100%; border-collapse: collapse; font-size: var(--small); }
+  .qa th, .qa td { text-align: left; vertical-align: top; padding: var(--s-4) var(--s-4) var(--s-4) 0; border-top: 1px solid var(--rule); }
+  .qa thead th { border-top: 0; font-size: var(--tiny); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); font-weight: 600; padding-top: 0; }
+  .qa th[scope="row"] { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; width: 24%; }
+  .qa td.field { width: 30%; }
+  .qa td.sample { color: var(--ink-2); }
+  .qa td.sample .mono { color: var(--ink-3); display: block; margin-top: .2rem; }
+  @media (max-width: 760px) {
+    .qa, .qa tbody { display: block; width: 100%; }
+    .qa thead { display: none; }
+    .qa tr { display: grid; gap: .5rem; padding: var(--s-4) 0; border-top: 1px solid var(--rule); }
+    .qa th, .qa td, .qa th[scope="row"], .qa td.field, .qa td.sample { display: block; border-top: 0; padding: 0; width: auto; }
+    .qa tbody tr:first-child { border-top: 0; }
+    .qa td.field::before { content: "In the record: "; color: var(--ink-3); }
+  }
+
+  /* Flow */
+  .flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: var(--s-3); align-items: stretch; margin-top: var(--s-6); }
+  .flow .node { border: 1px solid var(--rule); border-radius: 2px; background: #ffffff; padding: var(--s-4); display: grid; gap: .3rem; align-content: start; }
+  .flow .node.you { background: transparent; border-style: dashed; }
+  .flow .node.here { border-color: var(--accent); border-width: 1.5px; }
+  .flow .node .k { font-size: var(--tiny); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); }
+  .flow .node .v { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; }
+  .flow .node p { font-size: var(--small); color: var(--ink-2); max-width: none; }
+  .flow .arrow { display: grid; place-items: center; color: var(--ink-3); }
+  .flow .arrow svg { width: 2rem; height: 1.2rem; }
+  .flow .arrow span { font-size: var(--tiny); color: var(--ink-3); text-align: center; max-width: 7rem; }
+  @media (max-width: 860px) {
+    .flow { grid-template-columns: 1fr; }
+    .flow .arrow svg { transform: rotate(90deg); }
+  }
+
+  /* Board brief */
+  .brief { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: var(--s-6) var(--s-8); align-items: start; }
+  .brief-doc { background: #ffffff; border: 1px solid var(--rule); border-radius: 2px; padding: var(--s-5) var(--s-6); }
+  .brief-doc .head { display: flex; justify-content: space-between; gap: var(--s-3); align-items: baseline; flex-wrap: wrap; padding-bottom: var(--s-4); border-bottom: 1px solid var(--rule); margin-bottom: var(--s-2); }
+  .brief-doc .head .t { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; }
+  .brief-doc dl { margin: 0; }
+  .brief-doc .row { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: var(--s-2) var(--s-5); padding: var(--s-4) 0; border-top: 1px solid var(--rule-soft); }
+  .brief-doc .row:first-of-type { border-top: 0; }
+  .brief-doc dt { font-weight: 600; }
+  .brief-doc dd { margin: 0; color: var(--ink-2); font-size: var(--small); }
+  .brief-doc dd p { max-width: none; }
+  .brief-doc dd p + p { margin-top: .5rem; }
+  .brief-aside p { color: var(--ink-2); }
+  @media (max-width: 980px) { .brief { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .brief-doc { padding: var(--s-4); } .brief-doc .row { grid-template-columns: 1fr; gap: .25rem; } }
+
+  /* Final */
+  .final .wrap { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--s-6) var(--s-8); align-items: start; }
+  .final ol { margin: 0; padding-left: 1.3rem; display: grid; gap: var(--s-3); max-width: 34rem; }
+  .final ol li { padding-left: .3rem; }
+  .final ol li::marker { font-family: var(--font-mono); color: #9aa6b1; }
+  .final .beside { color: #c5ccd3; }
+  .final .beside .mono { color: #ffffff; }
+  @media (max-width: 860px) { .final .wrap { grid-template-columns: 1fr; } }
+
+  /* Footer */
+  .site-footer { padding: var(--s-6) 0 var(--s-7); border-top: 1px solid var(--rule-soft); font-size: var(--small); color: var(--ink-2); }
+  .site-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-4) var(--s-6); align-items: start; }
+  .site-footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4); }
+  .site-footer a { text-decoration: underline; text-underline-offset: .14em; display: inline-flex; align-items: center; min-height: 1.75rem; }
+  .site-footer .legal { width: 100%; font-size: var(--tiny); color: var(--ink-3); margin-top: var(--s-2); }
+</style>
+</head>
+<body>
+<header class="site-header" id="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Casefold, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="6" y="4" width="20" height="24" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 11h12M10 16h12M10 21h7" stroke="currentColor" stroke-width="2"/><rect x="19" y="19" width="8" height="8" fill="#0f5c4e"/></svg>
+      Casefold
+    </a>
+    <nav class="site-nav" aria-label="Site">
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+      <ul id="site-menu">
+        <li><a href="#sample">Sample case</a></li>
+        <li><a href="#record">The record</a></li>
+        <li><a href="#fits">Where it fits</a></li>
+        <li><a href="#board">For the board</a></li>
+        <li><a href="#cost">Pricing</a></li>
+      </ul>
+      <a class="btn" href="mailto:sandbox@casefold.example?subject=Sandbox%20request">Request a sandbox</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="hero-copy">
+        <h1 id="h1">Alert reviews an examiner can follow without you in the room.</h1>
+        <p class="lede">Casefold is a case-file tool for BSA officers at community banks and credit unions. Each monitoring alert gets a reviewer, the evidence checked, a decision and the reason, in one record.</p>
+        <div class="actions">
+          <a class="btn" href="mailto:sandbox@casefold.example?subject=Sandbox%20request">Request a sandbox</a>
+          <a class="btn secondary" href="#sample">Step through the sample case</a>
+        </div>
+        <p class="beside">One email to <span class="mono">sandbox@casefold.example</span>. We set the sandbox up by hand and reply with a login. It runs on sample alerts, so none of your bank's data is involved.</p>
+      </div>
+
+      <div class="case" id="sample">
+        <div class="case-head">
+          <span class="title">A sample case, step by step</span>
+          <span class="label">Fictional customer, staff and amounts. Illustrative only.</span>
+        </div>
+        <div class="steps" role="tablist" aria-label="Steps of the sample case">
+          <button class="step" role="tab" id="tab-1" aria-selected="true" aria-controls="doc" type="button" data-step="1"><span class="n">1</span><span class="name">Alert raised</span></button>
+          <button class="step" role="tab" id="tab-2" aria-selected="false" aria-controls="doc" type="button" data-step="2" tabindex="-1"><span class="n">2</span><span class="name">Reviewer assigned</span></button>
+          <button class="step" role="tab" id="tab-3" aria-selected="false" aria-controls="doc" type="button" data-step="3" tabindex="-1"><span class="n">3</span><span class="name">Evidence checked</span></button>
+          <button class="step" role="tab" id="tab-4" aria-selected="false" aria-controls="doc" type="button" data-step="4" tabindex="-1"><span class="n">4</span><span class="name">Decision and reason</span></button>
+          <button class="step" role="tab" id="tab-5" aria-selected="false" aria-controls="doc" type="button" data-step="5" tabindex="-1"><span class="n">5</span><span class="name">What the examiner sees</span></button>
+        </div>
+        <div class="step-note">
+          <p id="step-note" role="status" aria-live="polite"><strong>Step 1 of 5, Alert raised.</strong> The monitoring system flags four cash deposits just under the reporting threshold. Casefold opens one case file and holds the alert exactly as it came in.</p>
+          <div class="pager">
+            <button type="button" id="prev" disabled>Back</button>
+            <button type="button" id="next">Next step</button>
+          </div>
+        </div>
+        <p class="no-js-only small muted" style="margin-bottom:.75rem">Without scripts, the whole sample case is shown at once: alert, reviewer, evidence, decision and the examiner's view.</p>
+
+        <article class="doc" id="doc" role="tabpanel" aria-labelledby="tab-1" aria-label="Sample case file ALT-2031">
+          <div class="doc-top">
+            <div class="id">Case file <span class="mono">ALT-2031</span></div>
+            <span class="status" id="status">Open</span>
+          </div>
+          <dl class="owner">
+            <div><dt>Owner</dt><dd id="owner"><strong>Unassigned</strong></dd></div>
+            <div><dt>Next action</dt><dd id="next-action">Assign a reviewer</dd></div>
+          </dl>
+
+          <section class="sec" id="s1" data-summary="Harbor Point Auto Sales LLC · four cash deposits, $38,050 in four days">
+            <div class="sec-h">Alert <span class="when">2026-03-07 06:10</span></div>
+            <dl class="f">
+              <div class="span"><dt>Rule</dt><dd>Cash structuring: deposits under $10,000 on four consecutive business days</dd></div>
+              <div><dt>Customer</dt><dd>Harbor Point Auto Sales LLC</dd></div>
+              <div><dt>Account</dt><dd>Business checking <span class="mono">···4471</span></dd></div>
+              <div><dt>Source</dt><dd>Monitoring system export</dd></div>
+              <div><dt>Risk rating on file</dt><dd>Moderate</dd></div>
+              <div class="span"><dt>Deposits flagged</dt>
+                <dd class="list">
+                  <span><span>Mar 3 · Main St branch · teller 14</span><span class="mono">$9,400</span></span>
+                  <span><span>Mar 4 · Main St branch · teller 14</span><span class="mono">$9,650</span></span>
+                  <span><span>Mar 5 · Eastgate branch · teller 31</span><span class="mono">$9,200</span></span>
+                  <span><span>Mar 6 · Main St branch · teller 14</span><span class="mono">$9,800</span></span>
+                  <span><span>Four days</span><span class="mono">$38,050</span></span>
+                </dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="sec" id="s2" data-summary="D. Okafor, assigned by M. Reyes · due 2026-03-13" hidden>
+            <div class="sec-h">Reviewer <span class="when">2026-03-07 09:12</span></div>
+            <dl class="f">
+              <div><dt>Assigned to</dt><dd>D. Okafor, BSA Analyst</dd></div>
+              <div><dt>Assigned by</dt><dd>M. Reyes, BSA Officer</dd></div>
+              <div><dt>Due</dt><dd><span class="mono">2026-03-13</span></dd></div>
+              <div><dt>Approval needed from</dt><dd>M. Reyes, BSA Officer</dd></div>
+            </dl>
+          </section>
+
+          <section class="sec" id="s3" data-summary="Five items checked, 2026-03-09 to 2026-03-10" hidden>
+            <div class="sec-h">Evidence checked <span class="when">2026-03-09 to 2026-03-10</span></div>
+            <ul class="ev">
+              <li><span class="box" aria-hidden="true">✓</span><div><div class="what">Twelve months of account history</div><div class="note">Cash deposits averaged about $3,900 a week. No week above $12,000 until this one.</div><div class="by">D. Okafor · 2026-03-09 10:04</div></div></li>
+              <li><span class="box" aria-hidden="true">✓</span><div><div class="what">Customer file</div><div class="note">Used-car dealer, opened 2021. Expected cash activity at onboarding: moderate.</div><div class="by">D. Okafor · 2026-03-09 10:31</div></div></li>
+              <li><span class="box" aria-hidden="true">✓</span><div><div class="what">Currency transaction reports</div><div class="note">None on file for this customer. Each of the four deposits stayed under the threshold.</div><div class="by">D. Okafor · 2026-03-09 11:15</div></div></li>
+              <li><span class="box" aria-hidden="true">✓</span><div><div class="what">Teller notes</div><div class="note">All four deposits were made by the same employee, across two branches.</div><div class="by">D. Okafor · 2026-03-10 09:20</div></div></li>
+              <li><span class="box" aria-hidden="true">✓</span><div><div class="what">Earlier alerts on this customer</div><div class="note">One, in September 2025 (<span class="mono">ALT-1764</span>), closed as consistent with the business.</div><div class="by">D. Okafor · 2026-03-10 09:48</div></div></li>
+            </ul>
+          </section>
+
+          <section class="sec" id="s4" data-summary="Refer for a SAR decision · approved by M. Reyes 2026-03-11" hidden>
+            <div class="sec-h">Decision <span class="when">2026-03-11 10:40</span></div>
+            <div class="decision">
+              <div class="verdict">Refer for a SAR decision</div>
+              <blockquote>
+                <p>Four deposits in four days, each just under the threshold, by the same employee at two branches. The customer file expected moderate cash, and the account history shows about $3,900 a week, not $38,050 in four days. A similar pattern was closed last September. I am not satisfied this is ordinary business.</p>
+              </blockquote>
+              <div class="sign">
+                <div><span class="who">D. Okafor, BSA Analyst</span><span class="t">Decided 2026-03-11 10:40</span></div>
+                <div><span class="who">M. Reyes, BSA Officer</span><span class="t">Approved 2026-03-11 14:32</span></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="sec examiner" id="s5" hidden>
+            <div class="sec-h">History <span class="when">as shown to an examiner</span></div>
+            <ol class="history">
+              <li><span class="t">2026-03-07 06:10</span><span>Alert received from the monitoring system export</span></li>
+              <li><span class="t">2026-03-07 09:12</span><span>Assigned to D. Okafor by M. Reyes, due 2026-03-13</span></li>
+              <li><span class="t">2026-03-09 10:04</span><span>First evidence item checked (account history)</span></li>
+              <li><span class="t">2026-03-10 09:48</span><span>Fifth and last evidence item checked (earlier alerts)</span></li>
+              <li><span class="t">2026-03-11 10:40</span><span>Decision and reason recorded by D. Okafor</span></li>
+              <li><span class="t">2026-03-11 14:32</span><span>Approved by M. Reyes; case decided</span></li>
+            </ol>
+            <p style="margin-top:.9rem">Who, what they checked, what they decided, why, and when, in the order it happened. Each part of the record is one line below and opens in full.</p>
+          </section>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="record" aria-labelledby="h-record">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="h-record">Every record answers the questions an examiner asks first: who, what, when and why.</h2>
+        <p>A reviewer cannot close a case without filling these in. The sample above shows each one in place.</p>
+      </div>
+      <table class="qa">
+        <thead><tr><th scope="col">The examiner asks</th><th scope="col">In the record</th><th scope="col">In the sample case</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Who reviewed it?</th><td class="field">Reviewer, who assigned them, and the person who approved the decision</td><td class="sample">D. Okafor, assigned by M. Reyes, who then approved <span class="mono">ALT-2031 · step 2 and 4</span></td></tr>
+          <tr><th scope="row">What did they look at?</th><td class="field">A checklist of the evidence, with a note on each item and the time it was checked</td><td class="sample">Five items: account history, customer file, CTRs, teller notes, earlier alerts <span class="mono">step 3</span></td></tr>
+          <tr><th scope="row">What did they decide?</th><td class="field">One decision, chosen from the outcomes your program defines</td><td class="sample">Refer for a SAR decision <span class="mono">step 4</span></td></tr>
+          <tr><th scope="row">Why?</th><td class="field">The reason, in the reviewer's own words, kept with the decision</td><td class="sample">“Not satisfied this is ordinary business,” with the three facts behind it <span class="mono">step 4</span></td></tr>
+          <tr><th scope="row">When?</th><td class="field">A timestamp on every entry, shown in order</td><td class="sample">Six entries between March 7 and March 11 <span class="mono">step 5</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section alt" id="fits" aria-labelledby="h-fits">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="h-fits">It starts after your monitoring system raises the alert, and stops before the SAR is filed.</h2>
+        <p>Casefold does not detect anything and does not file anything. It keeps the record of what your reviewer did with each alert in between.</p>
+      </div>
+      <div class="flow" role="group" aria-label="Where Casefold sits: monitoring system, then Casefold, then your SAR process">
+        <div class="node you">
+          <span class="k">Already yours</span>
+          <span class="v">Monitoring system</span>
+          <p>Raises the alert. Stays as it is.</p>
+        </div>
+        <div class="arrow"><svg viewBox="0 0 32 20" aria-hidden="true" focusable="false"><path d="M2 10h24M20 4l7 6-7 6" fill="none" stroke="currentColor" stroke-width="2"/></svg><span>CSV export, or typed in</span></div>
+        <div class="node here">
+          <span class="k">Casefold</span>
+          <span class="v">One case file per alert</span>
+          <p>Reviewer, evidence, decision, reason, history. Open until the BSA officer approves.</p>
+        </div>
+        <div class="arrow"><svg viewBox="0 0 32 20" aria-hidden="true" focusable="false"><path d="M2 10h24M20 4l7 6-7 6" fill="none" stroke="currentColor" stroke-width="2"/></svg><span>Decided record</span></div>
+        <div class="node you">
+          <span class="k">Already yours</span>
+          <span class="v">SAR decision and filing</span>
+          <p>Stays with your BSA officer and your existing process.</p>
+        </div>
+      </div>
+      <p class="small muted" style="margin-top:1.5rem">Alerts come in from a CSV export of your monitoring system, or are typed in by hand. Ask about a direct connection for your system in the sandbox email.</p>
+    </div>
+  </section>
+
+  <section class="section" id="board" aria-labelledby="h-board">
+    <div class="wrap">
+      <div class="brief">
+        <div class="brief-aside">
+          <h2 id="h-board">Written for the CEO and the board, who sign off on anything that touches compliance.</h2>
+          <p style="margin-top:1rem">The BSA officer will use it. The board approves it. This is the short version to take into that meeting, with the parts a board asks about and the parts we will not claim.</p>
+        </div>
+        <div class="brief-doc">
+          <div class="head"><span class="t">Board brief</span><span class="small muted">Casefold, as of October 2026</span></div>
+          <dl>
+            <div class="row"><dt>What it is</dt><dd><p>A case-file tool for alert reviews. One record per alert: reviewer, evidence checked, decision, reason and history.</p></dd></div>
+            <div class="row"><dt>What it is not</dt><dd><p>It does not make the bank compliant and does not replace the BSA program, the monitoring system or the BSA officer's judgment. No regulator has reviewed or approved it, and we do not say otherwise.</p></dd></div>
+            <div class="row"><dt>Who writes in a record</dt><dd><p>The assigned reviewer and the approving BSA officer. Every entry carries the name and the time of the person who made it, as in the sample above.</p></dd></div>
+            <div class="row"><dt>Security status</dt><dd><p>There is no SOC 2 report yet. We say so up front rather than after procurement. Ask for the current description of controls before the board meeting.</p></dd></div>
+            <div class="row" id="cost"><dt>What it costs</dt><dd><p>Pricing is quoted per institution after the sandbox. There is no public price list yet, and the sandbox itself has no charge.</p></dd></div>
+            <div class="row"><dt>What the sandbox involves</dt><dd><p>One email. We set it up by hand and reply with a login. It holds sample alerts only; nothing is connected to the bank's systems and no customer data is involved.</p></dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark final" aria-labelledby="h-final">
+    <div class="wrap">
+      <div>
+        <h2 id="h-final">Step through a sandbox before anyone signs anything.</h2>
+        <div class="actions">
+          <a class="btn secondary" href="mailto:sandbox@casefold.example?subject=Sandbox%20request">Request a sandbox</a>
+        </div>
+        <p class="beside">Email <span class="mono">sandbox@casefold.example</span> with your institution's name. Sample alerts only; no card and no call needed to get in.</p>
+      </div>
+      <div>
+        <p class="small muted" style="margin-bottom:.75rem">What happens after you email</p>
+        <ol>
+          <li>We set up a sandbox by hand for your institution and reply with a login.</li>
+          <li>You work a few sample alerts through to a decided record, the way the sample above runs.</li>
+          <li>If it fits, we quote a price and answer the board's questions in writing.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <strong>Casefold</strong> · Case files for alert reviews at community banks and credit unions.
+    </div>
+    <ul>
+      <li><a href="#sample">Sample case</a></li>
+      <li><a href="#record">The record</a></li>
+      <li><a href="#fits">Where it fits</a></li>
+      <li><a href="#board">Board brief</a></li>
+      <li><a href="#cost">Pricing</a></li>
+      <li><a href="mailto:sandbox@casefold.example?subject=Sandbox%20request">sandbox@casefold.example</a></li>
+    </ul>
+    <p class="legal">© 2026 Casefold. The sample case on this page is fictional: the customer, staff, amounts and dates are made up to show the shape of a record.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var steps = {
+    1: {status: 'Open', cls: '', owner: 'Unassigned', next: 'Assign a reviewer',
+        note: '<strong>Step 1 of 5, Alert raised.</strong> The monitoring system flags four cash deposits just under the reporting threshold. Casefold opens one case file and holds the alert exactly as it came in.'},
+    2: {status: 'Assigned', cls: '', owner: 'D. Okafor, BSA Analyst', next: 'Check the evidence',
+        note: '<strong>Step 2 of 5, Reviewer assigned.</strong> The BSA officer names a reviewer and a due date. From here the record shows who owns the case and who must approve the outcome.'},
+    3: {status: 'In review', cls: '', owner: 'D. Okafor, BSA Analyst', next: 'Record a decision and the reason',
+        note: '<strong>Step 3 of 5, Evidence checked.</strong> Each item is ticked by name, with a note and a time. An examiner sees what was looked at and what it showed, not just that something was checked.'},
+    4: {status: 'Awaiting approval', cls: '', owner: 'M. Reyes, BSA Officer', next: 'Approve, or send back to the reviewer',
+        note: '<strong>Step 4 of 5, Decision and reason.</strong> The reviewer picks one outcome and writes why, in their own words. The BSA officer approves or sends it back. Both names and times stay on the record.'},
+    5: {status: 'Decided', cls: 'decided', owner: 'No one. Case decided', next: 'None. Record complete',
+        note: '<strong>Step 5 of 5, What the examiner sees.</strong> The finished record folds to one page: the history first, then each part on one line. Any line opens to its detail. This is what you hand over.'}
+  };
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.step'));
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var note = document.getElementById('step-note'), status = document.getElementById('status');
+  var owner = document.getElementById('owner'), nextAction = document.getElementById('next-action');
+  var doc = document.getElementById('doc');
+  var current = 1;
+  var secs = [];
+  for (var j = 1; j <= 5; j++) secs.push(document.getElementById('s' + j));
+  secs.forEach(function (sec, idx) {
+    if (!sec.getAttribute('data-summary')) return;
+    var row = document.createElement('div'); row.className = 'summary';
+    var text = document.createElement('span'); text.className = 'text'; text.textContent = sec.getAttribute('data-summary');
+    var btn = document.createElement('button'); btn.type = 'button'; btn.textContent = 'Show'; btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', 'Show the ' + sec.querySelector('.sec-h').firstChild.textContent.trim().toLowerCase() + ' part of the record');
+    btn.addEventListener('click', function () {
+      var open = sec.classList.toggle('folded') === false;
+      sec.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? 'Hide' : 'Show';
+    });
+    row.appendChild(text); row.appendChild(btn);
+    sec.insertBefore(row, sec.querySelector('.sec-h').nextSibling);
+  });
+  function fold(sec, yes) {
+    sec.classList.toggle('folded', yes);
+    sec.classList.remove('open');
+    var b = sec.querySelector('.summary button');
+    if (b) { b.setAttribute('aria-expanded', yes ? 'false' : 'true'); b.textContent = 'Show'; }
+  }
+  function show(n, focusTab) {
+    n = Math.max(1, Math.min(5, n));
+    var s = steps[n];
+    current = n;
+    tabs.forEach(function (t) {
+      var k = Number(t.getAttribute('data-step'));
+      var sel = k === n;
+      t.setAttribute('aria-selected', sel ? 'true' : 'false');
+      t.tabIndex = sel ? 0 : -1;
+      t.classList.toggle('done', k < n);
+      if (sel && focusTab) t.focus();
+    });
+    var s5 = secs[4];
+    if (n === 5 && doc.querySelector('.sec') !== s5) doc.insertBefore(s5, secs[0]);
+    if (n !== 5 && doc.querySelector('.sec') === s5) doc.appendChild(s5);
+    for (var i = 1; i <= 5; i++) {
+      var sec = secs[i - 1];
+      var wasHidden = sec.hidden;
+      sec.hidden = i > n;
+      if (i < 5) fold(sec, n === 5 || i < n);
+      sec.classList.remove('just');
+      if (i === n && wasHidden) { void sec.offsetWidth; sec.classList.add('just'); }
+    }
+    status.textContent = s.status;
+    status.className = 'status ' + s.cls;
+    owner.innerHTML = '<strong></strong>';
+    owner.firstChild.textContent = s.owner;
+    nextAction.textContent = s.next;
+    note.innerHTML = s.note;
+    doc.setAttribute('aria-labelledby', 'tab-' + n);
+    prev.disabled = n === 1;
+    next.disabled = n === 5;
+    next.textContent = n === 5 ? 'Last step' : 'Next step';
+  }
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () { show(Number(t.getAttribute('data-step')), false); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); show(current + 1, true); }
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); show(current - 1, true); }
+      else if (e.key === 'Home') { e.preventDefault(); show(1, true); }
+      else if (e.key === 'End') { e.preventDefault(); show(5, true); }
+    });
+  });
+  prev.addEventListener('click', function () { show(current - 1, false); });
+  next.addEventListener('click', function () { show(current + 1, false); });
+
+  var header = document.querySelector('.site-header'), menuBtn = document.querySelector('.menu-btn');
+  menuBtn.addEventListener('click', function () {
+    var open = header.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuBtn.textContent = open ? 'Close' : 'Menu';
+  });
+  document.querySelectorAll('#site-menu a').forEach(function (a) {
+    a.addEventListener('click', function () { header.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.textContent = 'Menu'; });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && header.classList.contains('open')) { header.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.textContent = 'Menu'; menuBtn.focus(); }
+  });
+})();
+</script>
+</body>
+</html>
