@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tallyhall: bookkeeping for churches and small charities</title>
+<meta name="description" content="Two volunteers count the Sunday offering on a phone and both sign it off. The count posts to the ledger, and at year end Tallyhall produces each donor's giving statement. For churches and small charities in the UK and the US.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231E4D3A'/%3E%3Cg stroke='%23EAF1E6' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M8 7v18M13 7v18M18 7v18M23 7v18'/%3E%3Cpath d='M5 21L27 11' stroke='%23F08A80'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+:root{
+  --pad:#EAF1E6;        /* columnar pad green */
+  --pad-deep:#DCE8D6;
+  --rule:#B4CEAE;       /* printed ledger rule */
+  --green:#1E4D3A;      /* ledger-cover green */
+  --green-ink:#163B2C;
+  --ink:#1C2333;        /* blue-black ink */
+  --ink-soft:#46506A;
+  --red:#B3362F;        /* totals and corrections */
+  --paper:#FBFCFA;
+  --serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Caladea, Georgia, serif;
+  --sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --measure: 36rem;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--pad);color:var(--ink);
+  font-family:var(--serif);font-size:1.125rem;line-height:1.6;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+img,svg{display:block}
+a{color:var(--green)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:3px}
+.wrap{max-width:72rem;margin:0 auto;padding:0 1.5rem}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:#fff;padding:.5rem 1rem;z-index:10}
+.skip:focus{left:1rem;top:1rem}
+
+/* ---------- header ---------- */
+.top{border-bottom:1px solid var(--rule);background:var(--pad)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:4.25rem}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--ink);font-weight:700;font-size:1.3rem;letter-spacing:-.01em}
+.brand svg{width:30px;height:30px;flex:none}
+.top nav{display:flex;align-items:center;gap:1.5rem;font-family:var(--sans);font-size:.95rem}
+.top nav a{color:var(--ink);text-decoration:none}
+.top nav a:hover{text-decoration:underline;text-underline-offset:4px}
+.top nav a.btn{color:#fff}
+.top nav a.btn:hover{text-decoration:none}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:var(--sans);font-weight:600;font-size:1rem;line-height:1.2;
+  background:var(--green);color:#fff;text-decoration:none;border:0;cursor:pointer;
+  padding:.9rem 1.35rem;border-radius:6px;box-shadow:0 2px 0 var(--green-ink);
+}
+.btn:hover{background:var(--green-ink)}
+.btn:active{transform:translateY(1px);box-shadow:none}
+.btn.small{padding:.55rem .95rem;font-size:.92rem}
+.btn.quiet{background:transparent;color:var(--green);box-shadow:inset 0 0 0 1.5px var(--green)}
+.btn.quiet:hover{background:var(--pad-deep)}
+@media (max-width:760px){.top nav .navlink{display:none}}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;overflow:hidden;
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 31px, rgba(140,180,134,.35) 31px 32px);
+}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:3rem;align-items:center;padding-top:4.5rem;padding-bottom:5rem}
+.hero h1{
+  font-size:clamp(2.4rem,5.2vw,4.1rem);line-height:1.04;letter-spacing:-.02em;margin:0 0 1.5rem;font-weight:700;
+  max-width:13ch;
+}
+.hero .lede{font-size:1.25rem;line-height:1.55;max-width:var(--measure);margin:0 0 2rem;color:var(--ink)}
+.hero .actions{display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+.hero .fine{font-family:var(--sans);font-size:.92rem;color:var(--ink-soft);margin:1.25rem 0 0;max-width:32rem;line-height:1.5}
+
+/* ---------- the phone demo ---------- */
+.demo{display:flex;flex-direction:column;align-items:center;gap:1rem}
+.currency{
+  display:inline-flex;font-family:var(--sans);font-size:.88rem;background:var(--paper);
+  border:1px solid var(--rule);border-radius:999px;padding:3px;
+}
+.currency button{font:inherit;border:0;background:none;color:var(--ink);padding:.35rem .9rem;border-radius:999px;cursor:pointer}
+.currency button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.phone{
+  width:100%;max-width:340px;background:var(--ink);border-radius:40px;padding:12px;
+  box-shadow:0 1px 0 rgba(255,255,255,.15) inset, 0 24px 48px -24px rgba(28,35,51,.55);
+}
+.screen{background:#fff;border-radius:30px;overflow:hidden;font-family:var(--sans);color:var(--ink);min-height:560px;display:flex;flex-direction:column}
+.screen .bar{display:flex;justify-content:space-between;font-size:.75rem;font-weight:600;padding:.75rem 1.4rem .25rem}
+.app-head{padding:.5rem 1.25rem .9rem;border-bottom:1px solid #E3E8E1}
+.app-head .svc{font-size:.78rem;color:#5A6378;margin:0}
+.app-head h2{font-family:var(--sans);font-size:1.15rem;margin:.1rem 0 .6rem;letter-spacing:-.01em}
+.steps{display:flex;gap:.35rem;list-style:none;margin:0;padding:0;font-size:.72rem;font-weight:600}
+.steps li{flex:1;padding:.3rem .4rem;border-radius:5px;background:#EEF1EC;color:#69728A;text-align:center}
+.steps li[aria-current="step"]{background:var(--green);color:#fff}
+.steps li.done{background:#D5E6CF;color:var(--green)}
+.pane{padding:.6rem 1.25rem 1rem;flex:1;display:flex;flex-direction:column}
+.pane[hidden]{display:none}
+.group{font-size:.72rem;color:#5A6378;margin:.7rem 0 .2rem;font-weight:600}
+.row{display:grid;grid-template-columns:3.2rem 1fr 4.6rem;align-items:center;gap:.5rem;padding:.32rem 0;border-bottom:1px solid #EEF1EC;font-size:.88rem}
+.row .den{font-weight:600}
+.row .amt{text-align:right;font-variant-numeric:tabular-nums}
+.stepper{display:flex;align-items:center;gap:.35rem}
+.stepper button{
+  width:28px;height:28px;border-radius:50%;border:1px solid #C9D3C6;background:#fff;color:var(--ink);
+  font:600 1rem/1 var(--sans);cursor:pointer;display:grid;place-items:center;padding:0
+}
+.stepper button:hover{background:#EEF4EB}
+.stepper output{min-width:1.8rem;text-align:center;font-variant-numeric:tabular-nums;font-weight:600}
+.row.fixed .note{color:#5A6378;font-size:.8rem}
+.total{
+  display:flex;justify-content:space-between;align-items:baseline;margin-top:.7rem;padding-top:.5rem;
+  font-weight:700;font-size:1.05rem;font-variant-numeric:tabular-nums;
+}
+.total .figure{border-bottom:3px double var(--red);padding-bottom:1px}
+.app-btn{
+  margin-top:auto;font:600 .95rem var(--sans);border:0;border-radius:10px;background:var(--green);color:#fff;
+  padding:.85rem 1rem;cursor:pointer;width:100%
+}
+.app-btn:hover{background:var(--green-ink)}
+.app-btn:disabled{background:#C9D3C6;color:#5A6378;cursor:default}
+.pane p.help{font-size:.82rem;color:#5A6378;margin:.6rem 0;line-height:1.45}
+.sig{border:1px solid #E3E8E1;border-radius:10px;padding:.7rem .8rem .55rem;margin:.55rem 0}
+.sig .who{display:flex;justify-content:space-between;font-size:.8rem;color:#5A6378}
+.sig .who strong{color:var(--ink)}
+.sig .line{height:52px;border-bottom:1px solid #9AA39A;position:relative;display:flex;align-items:center;justify-content:center}
+.sig .line svg{position:absolute;inset:4px 8px 2px;width:calc(100% - 16px);height:calc(100% - 6px);overflow:visible;pointer-events:none;visibility:hidden}
+.sig.signed .line svg{visibility:visible}
+.sig .line path{fill:none;stroke:#24357A;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.sig .sign-btn{font:600 .82rem var(--sans);background:#fff;border:1.5px solid var(--green);color:var(--green);border-radius:8px;padding:.4rem .8rem;cursor:pointer}
+.sig .sign-btn:hover{background:#EEF4EB}
+.sig.signed .sign-btn{display:none}
+.sig .stamp{font-size:.72rem;color:#5A6378;margin-top:.3rem;min-height:1em;font-variant-numeric:tabular-nums}
+.posted{
+  margin:.8rem 0;padding:.8rem .9rem;border-radius:10px;background:#EEF4EB;border:1px solid #CFE0C9;font-size:.85rem
+}
+.posted strong{display:block;font-size:.95rem;margin-bottom:.15rem;color:var(--green)}
+.ledger-mini{width:100%;border-collapse:collapse;font-size:.78rem;margin-top:.4rem;font-variant-numeric:tabular-nums}
+.ledger-mini th{text-align:left;font-weight:600;color:#5A6378;padding:.3rem .2rem;border-bottom:1px solid #CFE0C9}
+.ledger-mini td{padding:.35rem .2rem;border-bottom:1px solid #E3E8E1;vertical-align:top}
+.ledger-mini td:last-child,.ledger-mini th:last-child{text-align:right}
+.ledger-mini td:first-child,.ledger-mini td:last-child{white-space:nowrap}
+.ledger-mini tr.new td{background:#FFF8D6}
+.demo-caption{font-family:var(--sans);font-size:.85rem;color:var(--ink-soft);text-align:center;max-width:22rem;margin:0}
+
+@keyframes write{from{stroke-dashoffset:var(--len)}to{stroke-dashoffset:0}}
+.sig.signed path{stroke-dasharray:var(--len);animation:write 1.1s ease-out both}
+@keyframes settle{from{background:#FFE58A}to{background:#FFF8D6}}
+.ledger-mini tr.new td{animation:settle 1.6s ease-out both}
+@media (prefers-reduced-motion: reduce){
+  .sig.signed path,.ledger-mini tr.new td{animation:none}
+}
+
+/* ---------- sections ---------- */
+section{padding:5.5rem 0}
+.section-head{max-width:40rem;margin-bottom:2.75rem}
+h2{font-size:clamp(1.85rem,3.4vw,2.6rem);line-height:1.12;letter-spacing:-.015em;margin:0 0 1rem;font-weight:700}
+h3{font-size:1.3rem;line-height:1.25;margin:0 0 .5rem;font-weight:700}
+.section-head p{margin:0;font-size:1.15rem;color:var(--ink-soft);max-width:var(--measure)}
+p{margin:0 0 1rem}
+
+/* replaces: a page from the ledger */
+.replaces{background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.ledger{
+  border:1px solid var(--rule);background:#fff;
+  background-image:linear-gradient(to right, transparent calc(42% - 4px), var(--rule) calc(42% - 4px), var(--rule) calc(42% - 3px), transparent calc(42% - 3px), transparent calc(42% - 1px), var(--rule) calc(42% - 1px), var(--rule) 42%, transparent 42%);
+}
+.ledger .lrow{display:grid;grid-template-columns:42% 58%;border-bottom:1px solid var(--rule)}
+.ledger .lrow:last-child{border-bottom:0}
+.ledger .lhead{font-family:var(--sans);font-size:.85rem;font-weight:600;color:var(--green);background:#F2F7EF}
+.ledger .lhead div{padding:.7rem 1.4rem}
+.ledger .was,.ledger .now{padding:1.4rem}
+.ledger .was{font-size:1.2rem;line-height:1.4}
+.ledger .was s{text-decoration:none;background:linear-gradient(var(--red),var(--red)) no-repeat 0 55%/100% 1.5px;color:var(--ink-soft)}
+.ledger .now{font-size:1.08rem}
+.ledger .now strong{display:block;font-size:1.2rem;margin-bottom:.2rem}
+.ledger-note{font-family:var(--sans);font-size:.88rem;color:var(--ink-soft);margin:1rem 0 0;max-width:44rem}
+@media (max-width:700px){
+  .ledger{background-image:none}
+  .ledger .lrow{grid-template-columns:1fr}
+  .ledger .lhead{display:none}
+  .ledger .was{padding-bottom:.25rem}
+  .ledger .now{padding-top:.5rem}
+}
+
+/* a Sunday, in order */
+.sunday ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;counter-reset:s;border-top:3px double var(--green)}
+.sunday li{padding:1.5rem 1.5rem 0 0;position:relative}
+.sunday li + li{padding-left:1.5rem;border-left:1px solid var(--rule)}
+.sunday .when{font-family:var(--sans);font-size:.88rem;font-weight:600;color:var(--green);margin:0 0 .75rem;display:flex;gap:.5rem;align-items:baseline}
+.sunday .when span{display:inline-grid;place-items:center;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--green);color:#fff;font-size:.8rem;flex:none}
+.sunday li p{font-size:1.02rem;margin:0}
+@media (max-width:900px){
+  .sunday ol{grid-template-columns:1fr 1fr;row-gap:2rem}
+  .sunday li:nth-child(3){padding-left:0;border-left:0}
+}
+@media (max-width:560px){
+  .sunday ol{grid-template-columns:1fr;row-gap:0}
+  .sunday li,.sunday li + li{padding:1.25rem 0;border-left:0;border-bottom:1px solid var(--rule)}
+}
+
+/* year end */
+.yearend{background:var(--green);color:#EAF1E6}
+.yearend .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem;align-items:center}
+.yearend h2{color:#fff}
+.yearend p{color:#D3E3CD;font-size:1.12rem;max-width:var(--measure)}
+.yearend ul{margin:1.5rem 0 0;padding:0;list-style:none;font-family:var(--sans);font-size:.98rem;color:#EAF1E6}
+.yearend li{padding:.6rem 0 .6rem 1.75rem;border-top:1px solid rgba(234,241,230,.2);position:relative}
+.yearend li::before{content:"";position:absolute;left:.15rem;top:1.05rem;width:.8rem;height:.45rem;border-left:2px solid #9FD08F;border-bottom:2px solid #9FD08F;transform:rotate(-45deg)}
+.statement{
+  background:var(--paper);color:var(--ink);padding:2rem 2rem 1.75rem;border-radius:2px;
+  box-shadow:0 30px 50px -30px rgba(0,0,0,.6);transform:rotate(1.2deg);font-size:.98rem;
+}
+.statement .sample{font-family:var(--sans);font-size:.75rem;color:var(--ink-soft);border:1px solid var(--rule);display:inline-block;padding:.1rem .5rem;border-radius:3px;margin-bottom:1rem}
+.statement h3{font-size:1.35rem;margin:0}
+.statement .org{color:var(--ink-soft);margin:0 0 1.25rem;font-size:.95rem}
+.statement .to{display:flex;justify-content:space-between;gap:1rem;font-size:.95rem;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:.6rem 0;margin-bottom:.75rem}
+.statement table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums lining-nums}
+.statement td{padding:.28rem 0;border-bottom:1px dotted #C5D3C1}
+.statement td:last-child{text-align:right}
+.statement tfoot td{border:0;padding-top:.7rem;font-weight:700;font-size:1.08rem}
+.statement tfoot td:last-child span{border-bottom:3px double var(--red)}
+.statement .thanks{margin:1.25rem 0 0;font-style:italic;color:var(--ink-soft);font-size:.95rem}
+@media (max-width:860px){.yearend .wrap{grid-template-columns:1fr;gap:3rem}.statement{transform:none}}
+
+/* what it is not */
+.not .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:4rem;align-items:start}
+.not-list{margin:0;padding:0;list-style:none}
+.not-list li{padding:1.25rem 0 1.25rem 3rem;border-bottom:1px solid var(--rule);position:relative}
+.not-list li:first-child{border-top:1px solid var(--rule)}
+.not-list li svg{position:absolute;left:0;top:1.45rem;width:28px;height:28px}
+.not-list h3{margin-bottom:.25rem}
+.not-list p{margin:0;color:var(--ink-soft)}
+@media (max-width:860px){.not .wrap{grid-template-columns:1fr;gap:2rem}}
+
+/* committee */
+.committee{background:var(--paper);border-top:1px solid var(--rule)}
+.qa{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 3.5rem;margin:0}
+.qa div{padding:1.4rem 0;border-top:1px solid var(--rule)}
+.qa dt{font-weight:700;font-size:1.15rem;margin-bottom:.35rem}
+.qa dd{margin:0;color:var(--ink-soft);max-width:34rem}
+.committee .print-row{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-top:2.5rem;padding-top:1.5rem;border-top:3px double var(--green)}
+.committee .print-row p{margin:0;font-family:var(--sans);font-size:.95rem;color:var(--ink-soft);flex:1 1 18rem}
+@media (max-width:760px){.qa{grid-template-columns:1fr}}
+
+/* closing */
+.closing{text-align:left}
+.closing .card{
+  background:#fff;border:1px solid var(--rule);border-left:6px solid var(--green);
+  padding:2.75rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2rem;align-items:center
+}
+.closing h2{margin-bottom:.5rem}
+.closing p{margin:0;color:var(--ink-soft);max-width:var(--measure)}
+@media (max-width:760px){.closing .card{grid-template-columns:1fr;padding:2rem 1.5rem}}
+
+footer{padding:2.5rem 0 3rem;font-family:var(--sans);font-size:.88rem;color:var(--ink-soft);border-top:1px solid var(--rule)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
+footer p{margin:0;max-width:40rem}
+
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;gap:3rem;padding-top:3rem}
+  .hero h1{max-width:16ch}
+}
+@media (max-width:480px){
+  .wrap{padding:0 1rem}
+  section{padding:4rem 0}
+  .hero .actions .btn{width:100%}
+  .statement{padding:1.5rem 1.25rem}
+  .screen{min-height:540px}
+}
+
+/* ---------- print: a one-page summary for the committee ---------- */
+.print-only{display:none}
+@media print{
+  @page{margin:18mm}
+  body{background:#fff;font-size:11.5pt;line-height:1.45}
+  body > *:not(.print-only){display:none !important}
+  .print-only{display:block;color:#000}
+  .print-only h1{font-size:20pt;margin:0 0 4pt}
+  .print-only h2{font-size:13pt;margin:14pt 0 4pt}
+  .print-only p,.print-only li{margin:0 0 4pt}
+  .print-only ul{margin:0;padding-left:14pt}
+  .print-only .sub{color:#333;margin-bottom:10pt}
+  .print-only .foot{margin-top:16pt;border-top:1pt solid #999;padding-top:6pt;font-size:10pt}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Tallyhall, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="#1E4D3A"/><g stroke="#EAF1E6" stroke-width="2.6" stroke-linecap="round"><path d="M8 7v18M13 7v18M18 7v18M23 7v18"/><path d="M5 21L27 11" stroke="#F08A80"/></g></svg>
+      Tallyhall
+    </a>
+    <nav aria-label="Main">
+      <a class="navlink" href="#sunday">How a Sunday works</a>
+      <a class="navlink" href="#year-end">Year end</a>
+      <a class="navlink" href="#committee">For the committee</a>
+      <a class="btn small" href="https://tallyhall.example/trial">Start free trial</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <h1>Counted by two. Signed by two. Written down once.</h1>
+      <p class="lede">Tallyhall keeps the books for churches and small charities. Two volunteers count the Sunday offering on a phone and both sign it off. The count goes straight into the ledger, and at year end every donor’s giving statement is ready to send.</p>
+      <div class="actions">
+        <a class="btn" href="https://tallyhall.example/trial">Start your free 60-day trial</a>
+        <a class="btn quiet" href="#sunday">How a Sunday works</a>
+      </div>
+      <p class="fine">For churches and charities in the UK and the US. Tallyhall keeps the record of your money. It never holds or moves any of it.</p>
+    </div>
+
+    <div class="demo" aria-labelledby="demo-title">
+      <div class="currency" role="group" aria-label="Count in">
+        <button type="button" data-cur="GBP" aria-pressed="true">Pounds, UK</button>
+        <button type="button" data-cur="USD" aria-pressed="false">Dollars, US</button>
+      </div>
+
+      <div class="phone">
+        <div class="screen">
+          <div class="bar" aria-hidden="true"><span>12:06</span><span>Tallyhall</span></div>
+          <div class="app-head">
+            <p class="svc" id="svc">Sunday 19 October, morning service</p>
+            <h2 id="demo-title">Offering count</h2>
+            <ol class="steps" aria-label="Progress">
+              <li data-step="count" aria-current="step">1 Count</li>
+              <li data-step="sign">2 Sign off</li>
+              <li data-step="posted">3 Posted</li>
+            </ol>
+          </div>
+
+          <!-- pane: count -->
+          <div class="pane" id="pane-count">
+            <div id="rows"></div>
+            <div class="total"><span>Total counted</span><span class="figure" id="total" aria-live="polite">£0.00</span></div>
+            <p class="help">Try it: tap + and − to change the count.</p>
+            <button class="app-btn" type="button" id="to-sign">Finish count, ask both to sign</button>
+          </div>
+
+          <!-- pane: sign -->
+          <div class="pane" id="pane-sign" hidden>
+            <p class="help" style="margin-top:.2rem">Both counters check the total of <strong id="sign-total">£0.00</strong> and sign. The count isn’t finished until both have.</p>
+            <div class="sig" id="sig-a">
+              <div class="who"><strong>Ruth Adeyemi</strong><span>First counter</span></div>
+              <div class="line">
+                <button class="sign-btn" type="button" data-sig="a">Sign as Ruth</button>
+                <svg viewBox="0 0 220 44" aria-hidden="true"><path d="M8 32c6-14 10-24 14-22 5 3-6 22-2 23 4 1 9-14 14-15 4-1 0 12 4 12s7-10 11-10-1 9 3 9 6-8 10-8m8-6c-2 8-3 14 0 14 4 0 8-9 12-9s1 8 5 8c5 0 9-11 14-11 3 0 0 9 4 9 5 0 9-6 14-6 6 0 12 2 20-1"/></svg>
+              </div>
+              <div class="stamp" id="stamp-a"></div>
+            </div>
+            <div class="sig" id="sig-b">
+              <div class="who"><strong>Sam Whitlock</strong><span>Second counter</span></div>
+              <div class="line">
+                <button class="sign-btn" type="button" data-sig="b">Sign as Sam</button>
+                <svg viewBox="0 0 220 44" aria-hidden="true"><path d="M30 14c-8-6-20-2-18 6 2 7 18 4 16 13-2 7-16 6-20 2m30-10c-3 6-4 11-1 11 4 0 6-10 9-10 2 0 0 9 3 9 4 0 5-9 8-9s1 9 4 9c4 0 6-12 9-12 3 0 1 11 5 11 3 0 5-6 8-14 2 8 1 14 4 14 5 0 10-8 16-8 10 0 24-2 40-6"/></svg>
+              </div>
+              <div class="stamp" id="stamp-b"></div>
+            </div>
+            <p class="help" id="sign-status" aria-live="polite">Waiting for both signatures.</p>
+          </div>
+
+          <!-- pane: posted -->
+          <div class="pane" id="pane-posted" hidden>
+            <div class="posted" role="status">
+              <strong>Posted to the ledger</strong>
+              <span id="posted-line">Signed by Ruth Adeyemi and Sam Whitlock.</span>
+            </div>
+            <table class="ledger-mini" aria-label="General fund ledger">
+              <thead><tr><th>Date</th><th>Entry</th><th>Amount</th></tr></thead>
+              <tbody id="ledger-body"></tbody>
+            </table>
+            <p class="help">Envelopes and cheques are recorded against each giver, ready for their statement at year end.</p>
+            <button class="app-btn" type="button" id="again">Count again</button>
+          </div>
+        </div>
+      </div>
+      <p class="demo-caption">A working sample of the counting screen. Names and amounts are made up.</p>
+    </div>
+  </div>
+</div>
+
+<section class="replaces" aria-labelledby="replaces-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="replaces-title">What it takes off the treasurer’s desk</h2>
+      <p>Three things most small congregations still run on, and what you use instead.</p>
+    </div>
+    <div class="ledger" role="table" aria-label="What Tallyhall replaces">
+      <div class="lrow lhead" role="row"><div role="columnheader">What you have now</div><div role="columnheader">With Tallyhall</div></div>
+      <div class="lrow" role="row">
+        <div class="was" role="cell"><s>The paper counting sheet</s></div>
+        <div class="now" role="cell"><strong>A count on a phone</strong>Two volunteers count notes, coins, envelopes and cheques together, then both sign it off before the bags go in the safe.</div>
+      </div>
+      <div class="lrow" role="row">
+        <div class="was" role="cell"><s>The spreadsheet only the treasurer understands</s></div>
+        <div class="now" role="cell"><strong>A ledger the count posts into</strong>Each signed count goes straight into the books. Nobody types the figures in again on Monday night.</div>
+      </div>
+      <div class="lrow" role="row">
+        <div class="was" role="cell"><s>A January spent writing giving statements by hand</s></div>
+        <div class="now" role="cell"><strong>Statements from the year’s counts</strong>At year end Tallyhall produces each donor’s giving statement from what was counted and signed all year.</div>
+      </div>
+    </div>
+    <p class="ledger-note">Struck through with a single line, the way a ledger correction should be: you can still read what was there.</p>
+  </div>
+</section>
+
+<section class="sunday" id="sunday" aria-labelledby="sunday-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="sunday-title">How a Sunday works</h2>
+      <p>The same four steps every week, whoever is on the rota.</p>
+    </div>
+    <ol>
+      <li>
+        <p class="when"><span>1</span>After the service</p>
+        <h3>Two people count</h3>
+        <p>Two volunteers count the offering together on one phone: notes, coins, envelopes and cheques, each on its own line.</p>
+      </li>
+      <li>
+        <p class="when"><span>2</span>Before anyone goes home</p>
+        <h3>Both sign it off</h3>
+        <p>Each counter checks the total and signs. One signature isn’t enough, so no one is ever left vouching for the money alone.</p>
+      </li>
+      <li>
+        <p class="when"><span>3</span>As soon as it’s signed</p>
+        <h3>It posts to the ledger</h3>
+        <p>The signed count goes into the books with both counters’ names on it. The treasurer sees it without retyping a thing.</p>
+      </li>
+      <li>
+        <p class="when"><span>4</span>In January</p>
+        <h3>Statements are ready</h3>
+        <p>Each donor’s giving for the year is gathered into a statement, built from the counts you already signed.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="yearend" id="year-end" aria-labelledby="yearend-title">
+  <div class="wrap">
+    <div>
+      <h2 id="yearend-title">Get January back</h2>
+      <p>Without it, giving statements mean January evenings spent with last year’s counting sheets. With Tallyhall they come from the counts your volunteers signed each week, so the figures on the statement are the figures in the books.</p>
+      <ul>
+        <li>One statement for each donor, for the whole year</li>
+        <li>Built from signed counts, not copied out again</li>
+        <li>In pounds for UK organisations, in dollars for US ones</li>
+      </ul>
+    </div>
+    <figure class="statement" aria-label="Sample giving statement" style="margin:0">
+      <span class="sample">Sample</span>
+      <h3>Giving statement, 2026</h3>
+      <p class="org">Your church or charity</p>
+      <div class="to"><span>For: Margaret Ellison</span><span>Envelope 112</span></div>
+      <table>
+        <tbody id="stmt-body"></tbody>
+        <tfoot><tr><td>Total given in 2026</td><td><span id="stmt-total"></span></td></tr></tfoot>
+      </table>
+      <p class="thanks">Thank you for your generosity this year.</p>
+    </figure>
+  </div>
+</section>
+
+<section class="not" aria-labelledby="not-title">
+  <div class="wrap">
+    <div>
+      <h2 id="not-title">It keeps the record. It never touches the money.</h2>
+      <p style="color:var(--ink-soft);max-width:var(--measure)">If you’re weighing up whether to trust software with the collection, start with what Tallyhall doesn’t do.</p>
+    </div>
+    <ul class="not-list">
+      <li>
+        <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12.5" fill="none" stroke="#B3362F" stroke-width="2"/><path d="M6 22L22 6" stroke="#B3362F" stroke-width="2"/></svg>
+        <h3>It isn’t a payment processor</h3>
+        <p>No card readers, no transfers, no money passing through us. Your cash and cheques reach the bank the way they do now.</p>
+      </li>
+      <li>
+        <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12.5" fill="none" stroke="#B3362F" stroke-width="2"/><path d="M6 22L22 6" stroke="#B3362F" stroke-width="2"/></svg>
+        <h3>It doesn’t take online donations</h3>
+        <p>There’s no giving page and no donate button. Tallyhall is for counting and recording what you’ve received.</p>
+      </li>
+      <li>
+        <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12.5" fill="none" stroke="#1E4D3A" stroke-width="2"/><path d="M8 14.5l4 4 8-9" fill="none" stroke="#1E4D3A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>It does keep two names on every count</h3>
+        <p>Every count in the ledger carries the signatures of the two people who counted it, which is the protection your volunteers and your donors are owed.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="committee" id="committee" aria-labelledby="committee-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="committee-title">For the committee or trustees</h2>
+      <p>The treasurer uses Tallyhall every week, but it’s usually a committee that decides. These are the questions they tend to ask.</p>
+    </div>
+    <dl class="qa">
+      <div><dt>What does it actually do?</dt><dd>It records the Sunday count on a phone, has two volunteers sign it off, posts it to the ledger, and produces each donor’s giving statement at year end.</dd></div>
+      <div><dt>Does it handle any money?</dt><dd>No. It isn’t a payment processor and doesn’t take online donations. It keeps the record; your bank keeps the money.</dd></div>
+      <div><dt>Who else uses it?</dt><dd>About 40 congregations. We don’t publish their names or their figures, and we won’t publish yours.</dd></div>
+      <div><dt>Does it work where we are?</dt><dd>Yes, if you’re a church or charity in the UK or the US.</dd></div>
+      <div><dt>What will it replace?</dt><dd>The paper counting sheet, the treasurer’s own spreadsheet, and writing giving statements by hand each January.</dd></div>
+      <div><dt>How do we try it?</dt><dd>Start a free 60-day trial. You can keep the old counting sheet going alongside it for a few Sundays and compare the two.</dd></div>
+    </dl>
+    <div class="print-row">
+      <p>Taking this to a meeting? Print a one-page summary for the agenda papers.</p>
+      <button class="btn quiet" type="button" id="print">Print a summary for the committee</button>
+    </div>
+  </div>
+</section>
+
+<section class="closing" aria-labelledby="closing-title">
+  <div class="wrap">
+    <div class="card">
+      <div>
+        <h2 id="closing-title">Try it for the next eight Sundays</h2>
+        <p>Sixty days is enough to count, sign and post every week for two months, and to see how the ledger looks at the end of it.</p>
+      </div>
+      <a class="btn" href="https://tallyhall.example/trial">Start your free 60-day trial</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong style="color:var(--ink)">Tallyhall</strong>, bookkeeping for churches and small charities in the UK and the US.</p>
+    <p>Tallyhall is not a payment processor and does not take online donations.</p>
+  </div>
+</footer>
+
+<!-- shown only when printed -->
+<div class="print-only" aria-hidden="true">
+  <h1>Tallyhall</h1>
+  <p class="sub">Bookkeeping for churches and small charities in the UK and the US. A summary for the finance committee or trustees.</p>
+  <h2>What it does</h2>
+  <ul>
+    <li>Two volunteers count the Sunday offering on a phone and both sign it off.</li>
+    <li>The signed count posts to the ledger, with both names on it.</li>
+    <li>At year end it produces each donor’s giving statement from the year’s counts.</li>
+  </ul>
+  <h2>What it replaces</h2>
+  <ul>
+    <li>The paper counting sheet.</li>
+    <li>A spreadsheet only the treasurer understands.</li>
+    <li>Writing giving statements by hand in January.</li>
+  </ul>
+  <h2>What it does not do</h2>
+  <ul>
+    <li>It is not a payment processor and never holds or moves money.</li>
+    <li>It does not take online donations.</li>
+  </ul>
+  <h2>Who uses it</h2>
+  <p>About 40 congregations. Tallyhall does not publish their names or figures.</p>
+  <h2>Trying it</h2>
+  <p>A free 60-day trial is available at https://tallyhall.example/trial. You can run it alongside the current counting sheet for a few Sundays and compare.</p>
+  <p class="foot">Printed from the Tallyhall website.</p>
+</div>
+
+<script>
+(function(){
+  var CUR = {
+    GBP:{
+      sym:'£', locale:'en-GB', cheques:'Cheques',
+      svc:'Sunday 19 October, morning service',
+      groups:[
+        {name:'Notes', rows:[{d:'£20',v:20,n:9},{d:'£10',v:10,n:23},{d:'£5',v:5,n:31}]},
+        {name:'Coins', rows:[{d:'£2',v:2,n:27},{d:'£1',v:1,n:48},{d:'Other',fixed:23.85,note:'50p and smaller'}]},
+        {name:'Envelopes and cheques', rows:[{d:'Env.',fixed:415,note:'14 envelopes'},{d:'Chq.',fixed:240,note:'3 cheques'}]}
+      ],
+      stmt:[['January to March',120],['April to June',120],['July to September',150],['October to December',160]]
+    },
+    USD:{
+      sym:'$', locale:'en-US', cheques:'Checks',
+      svc:'Sunday, October 19, morning service',
+      groups:[
+        {name:'Bills', rows:[{d:'$20',v:20,n:14},{d:'$10',v:10,n:26},{d:'$5',v:5,n:33},{d:'$1',v:1,n:71}]},
+        {name:'Coins', rows:[{d:'Coins',fixed:9.65,note:'all coins, bagged'}]},
+        {name:'Envelopes and checks', rows:[{d:'Env.',fixed:520,note:'16 envelopes'},{d:'Chk.',fixed:385,note:'4 checks'}]}
+      ],
+      stmt:[['January to March',150],['April to June',150],['July to September',175],['October to December',200]]
+    }
+  };
+  var cur = 'GBP', state = null, signed = {a:false,b:false};
+  var $ = function(id){return document.getElementById(id)};
+
+  function money(x){
+    var c = CUR[cur];
+    return c.sym + x.toLocaleString(c.locale,{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  function fresh(){ state = JSON.parse(JSON.stringify(CUR[cur].groups)); }
+  function total(){
+    var t=0; state.forEach(function(g){g.rows.forEach(function(r){t += r.fixed!=null ? r.fixed : r.v*r.n;});});
+    return Math.round(t*100)/100;
+  }
+  function renderRows(){
+    var html='';
+    state.forEach(function(g,gi){
+      html += '<p class="group">'+g.name+'</p>';
+      g.rows.forEach(function(r,ri){
+        if(r.fixed!=null){
+          html += '<div class="row fixed"><span class="den">'+r.d+'</span><span class="note">'+r.note+'</span><span class="amt">'+money(r.fixed)+'</span></div>';
+        } else {
+          html += '<div class="row"><span class="den">'+r.d+'</span><span class="stepper">'+
+            '<button type="button" data-g="'+gi+'" data-r="'+ri+'" data-d="-1" aria-label="One fewer '+r.d+'">−</button>'+
+            '<output aria-label="Number of '+r.d+'">'+r.n+'</output>'+
+            '<button type="button" data-g="'+gi+'" data-r="'+ri+'" data-d="1" aria-label="One more '+r.d+'">+</button>'+
+            '</span><span class="amt">'+money(r.v*r.n)+'</span></div>';
+        }
+      });
+    });
+    $('rows').innerHTML = html;
+    $('total').textContent = money(total());
+  }
+  $('rows').addEventListener('click', function(e){
+    var b = e.target.closest('button[data-d]'); if(!b) return;
+    var r = state[+b.dataset.g].rows[+b.dataset.r];
+    r.n = Math.max(0, r.n + (+b.dataset.d));
+    var row = b.closest('.row');
+    row.querySelector('output').textContent = r.n;
+    row.querySelector('.amt').textContent = money(r.v*r.n);
+    $('total').textContent = money(total());
+  });
+
+  function show(step){
+    ['count','sign','posted'].forEach(function(s,i,arr){
+      $('pane-'+s).hidden = s!==step;
+      var li = document.querySelector('.steps li[data-step="'+s+'"]');
+      var idx = arr.indexOf(step);
+      if(s===step){li.setAttribute('aria-current','step');} else {li.removeAttribute('aria-current');}
+      li.classList.toggle('done', i < idx);
+    });
+  }
+  function resetSigs(){
+    signed = {a:false,b:false};
+    ['a','b'].forEach(function(k){ $('sig-'+k).classList.remove('signed'); $('stamp-'+k).textContent=''; });
+    $('sign-status').textContent = 'Waiting for both signatures.';
+  }
+  $('to-sign').addEventListener('click', function(){
+    $('sign-total').textContent = money(total());
+    resetSigs(); show('sign');
+    var first = document.querySelector('#pane-sign .sign-btn'); if(first) first.focus();
+  });
+  var times = {a:'12:09', b:'12:10'};
+  document.querySelectorAll('.sign-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var k = btn.dataset.sig, other = k==='a'?'b':'a';
+      signed[k] = true;
+      var sig = $('sig-'+k), path = sig.querySelector('path');
+      path.style.setProperty('--len', Math.ceil(path.getTotalLength()));
+      sig.classList.add('signed');
+      $('stamp-'+k).textContent = 'Signed at ' + times[k];
+      if(signed.a && signed.b){
+        $('sign-status').textContent = 'Both signed. Posting to the ledger…';
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        setTimeout(post, reduce ? 300 : 1400);
+      } else {
+        $('sign-status').textContent = 'One signature so far. Waiting for the second counter.';
+        var ob = $('sig-'+other).querySelector('.sign-btn'); if(ob) ob.focus();
+      }
+    });
+  });
+  function post(){
+    var t = money(total());
+    var d1 = cur==='GBP' ? '12 Oct' : 'Oct 12', d2 = cur==='GBP' ? '19 Oct' : 'Oct 19';
+    var prev = cur==='GBP' ? 1312.40 : 2104.15;
+    $('ledger-body').innerHTML =
+      '<tr><td>'+d1+'</td><td>Sunday offering<br><span style="color:#5A6378">Counted by J. Price, L. Moss</span></td><td>'+money(prev)+'</td></tr>'+
+      '<tr class="new"><td>'+d2+'</td><td>Sunday offering<br><span style="color:#5A6378">Counted by R. Adeyemi, S. Whitlock</span></td><td>'+t+'</td></tr>';
+    $('posted-line').textContent = t + ' to the general fund. Signed by Ruth Adeyemi and Sam Whitlock at ' + times.b + '.';
+    show('posted');
+    $('again').focus();
+  }
+  $('again').addEventListener('click', function(){ fresh(); renderRows(); resetSigs(); show('count'); $('to-sign').focus(); });
+
+  function renderStatement(){
+    var c = CUR[cur], html='', t=0;
+    c.stmt.forEach(function(r){ t+=r[1]; html += '<tr><td>'+r[0]+'</td><td>'+money(r[1])+'</td></tr>'; });
+    $('stmt-body').innerHTML = html;
+    $('stmt-total').textContent = money(t);
+  }
+  function setCurrency(c){
+    cur = c;
+    document.querySelectorAll('.currency button').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.cur===c ? 'true':'false'); });
+    $('svc').textContent = CUR[c].svc;
+    fresh(); renderRows(); resetSigs(); show('count'); renderStatement();
+  }
+  document.querySelectorAll('.currency button').forEach(function(b){
+    b.addEventListener('click', function(){ setCurrency(b.dataset.cur); });
+  });
+  $('print').addEventListener('click', function(){ window.print(); });
+
+  setCurrency('GBP');
+})();
+</script>
+</body>
+</html>

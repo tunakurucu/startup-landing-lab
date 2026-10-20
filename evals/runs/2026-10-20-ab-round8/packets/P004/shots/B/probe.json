@@ -1,0 +1,80 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round8/packets/P004/B/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Counted by two. Written once.",
+    "left": 16,
+    "right": 304,
+    "top": 93,
+    "bottom": 213,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 15,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3863
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Counted by two. Written once.",
+    "left": 17,
+    "right": 373,
+    "top": 93,
+    "bottom": 175,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 15,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3863,
+   "axe": []
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Counted by two. Written once.",
+    "left": 25,
+    "right": 743,
+    "top": 100,
+    "bottom": 198,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 14,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3926
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Counted by two. Written once.",
+    "left": 138,
+    "right": 690,
+    "top": 114,
+    "bottom": 240,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 14,
+   "text_elements_under_12px": 0,
+   "body_text_length": 3998,
+   "axe": []
+  }
+ }
+}

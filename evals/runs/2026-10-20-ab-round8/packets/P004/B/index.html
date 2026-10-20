@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bookkeeping for churches and small charities | Tallyhall</title>
+<meta name="description" content="Bookkeeping for churches and small charities. Two volunteers count Sunday’s offering on a phone and both sign it off; the count posts to the ledger, and at year end each donor’s giving statement is ready. Free 60-day trial, UK and US.">
+<meta name="theme-color" content="#e8f0e1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tallyhall: counted by two, written once">
+<meta property="og:description" content="Bookkeeping for churches and small charities: the Sunday count, signed by two volunteers, posts to the ledger and becomes each donor’s giving statement.">
+<meta property="og:image" content="https://tallyhall.example/og.png">
+<meta property="og:url" content="https://tallyhall.example/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tallyhall: counted by two, written once">
+<meta name="twitter:description" content="Bookkeeping for churches and small charities. Free 60-day trial.">
+<meta name="twitter:image" content="https://tallyhall.example/og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+@font-face{font-family:"Schola";src:url(fonts/schola-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Schola";src:url(fonts/schola-regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Carlito";src:url(fonts/carlito-regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Carlito";src:url(fonts/carlito-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}
+
+:root{
+  /* ground and material: the treasurer's analysis pad */
+  --paper:#e8f0e1;        /* page ground, pale ledger green */
+  --sheet:#fcfdf9;        /* a sheet of the pad */
+  --rule:#c3d4b9;         /* green ruling */
+  --rule-strong:#8fae80;
+  --ink:#17231b;          /* printed ink */
+  --ink-2:#3d4f43;        /* secondary text */
+  --red:#a3241c;          /* the total's double rule; a line that doesn't agree */
+  --red-tint:#f8e4e0;
+  --pen:#1f3a8a;          /* blue-black pen: signatures and the one action */
+  --pen-dark:#162a66;
+  --agree:#2a6a3d;        /* a line both counters agree on */
+  --agree-tint:#e1eedb;
+  --focus-light:#ffffff;
+
+  --display:"Schola","TeX Gyre Schola","Century Schoolbook",Georgia,serif;
+  --text:"Carlito",Calibri,"Segoe UI",sans-serif;
+
+  --step--1:0.9375rem;
+  --step-0:clamp(1.0625rem,1.02rem + .19vw,1.1875rem);
+  --step-1:clamp(1.25rem,1.15rem + .45vw,1.5rem);
+  --step-2:clamp(1.6rem,1.35rem + 1.1vw,2.25rem);
+  --step-3:clamp(2.4rem,1.95rem + 2.05vw,4rem);
+
+  --space-2xs:.375rem; --space-xs:.625rem; --space-s:1rem; --space-m:1.5rem; --space-l:2.5rem; --space-xl:4rem; --space-2xl:clamp(4.5rem,3rem + 4vw,7rem);
+  --wrap:1240px;
+  --gutter:clamp(1rem,.6rem + 2vw,2.5rem);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul{margin:0}
+ol,ul{padding:0;list-style:none}
+img,svg,video,canvas{display:block;max-width:100%}
+input,button,textarea,select{font:inherit;color:inherit}
+:where(p,li,dd,td,th,output,[role=status]){overflow-wrap:break-word;min-width:0}
+.echo{overflow-wrap:anywhere}
+
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--text);font-size:var(--step-0);line-height:1.55;font-kerning:normal}
+a{color:var(--pen);text-underline-offset:.18em;text-decoration-thickness:1px}
+:focus-visible{outline:3px solid var(--pen-dark);outline-offset:2px;box-shadow:0 0 0 6px var(--focus-light)}
+.skip{position:absolute;left:12px;top:-60px;padding:12px 16px;background:transparent;color:var(--paper);z-index:100;border-radius:4px}
+.skip:focus{top:12px;background:var(--ink)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gutter)}
+.num{font-variant-numeric:tabular-nums lining-nums}
+
+h1,h2,h3{font-family:var(--display);font-weight:700;color:var(--ink);text-wrap:balance}
+h2{font-size:var(--step-2);line-height:1.15;letter-spacing:-.005em}
+h3{font-size:var(--step-1);line-height:1.25}
+p{text-wrap:pretty}
+
+/* ---------- header ---------- */
+.site-head{border-bottom:1px solid var(--rule)}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--space-m);min-height:68px}
+.brand{display:inline-flex;align-items:center;gap:.6rem;color:var(--ink);text-decoration:none;font-family:var(--display);font-weight:700;font-size:1.375rem;min-height:44px}
+.brand svg{width:34px;height:26px}
+.menu-btn{display:none;min-height:44px;min-width:44px;padding:0 1rem;border:1.5px solid var(--ink);background:transparent;border-radius:6px;font-weight:700;cursor:pointer}
+#site-menu{display:flex;align-items:center;gap:var(--space-m)}
+#site-menu a:not(.btn){color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+#site-menu a:not(.btn):hover{text-decoration:underline}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.7rem 1.35rem;border-radius:6px;background:var(--pen);color:#fff;font-weight:700;text-decoration:none;border:0;line-height:1.2;cursor:pointer;transition:background-color .15s ease-out}
+.btn:hover{background:var(--pen-dark)}
+.btn:active{transform:scale(.98)}
+.btn-small{min-height:44px;padding:.55rem 1rem}
+
+@media (max-width:899px){
+  .menu-btn{display:inline-flex;align-items:center}
+  .site-head .wrap{flex-wrap:wrap}
+  #site-menu{flex-basis:100%;flex-direction:column;align-items:stretch;gap:0;padding-bottom:var(--space-s)}
+  #site-menu a:not(.btn){border-top:1px solid var(--rule);padding:.5rem 0}
+  #site-menu .btn{margin-top:var(--space-xs)}
+  .js #site-menu[hidden]{display:none}
+}
+@media (min-width:900px){ #site-menu[hidden]{display:flex} }
+
+/* ---------- hero ---------- */
+.hero{padding-block:clamp(1.5rem,1rem + 2vw,3rem) clamp(2.5rem,2rem + 3vw,4.5rem)}
+.hero-grid{display:grid;gap:var(--space-l);align-items:start}
+@media (min-width:1000px){ .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2.5rem,1rem + 3vw,4.5rem)} .hero h1{font-size:clamp(2.6rem,.4rem + 4.1vw,3.75rem)} }
+.hero h1{font-size:var(--step-3);line-height:1.04;letter-spacing:-.012em}
+.hero .lede{margin-top:var(--space-m);max-width:34rem;font-size:var(--step-0)}
+.hero .lede strong{font-weight:700}
+.act{margin-top:var(--space-l);display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-xs)}
+.act .note{color:var(--ink-2);max-width:30rem;font-size:var(--step--1);line-height:1.45}
+.roles{margin-top:var(--space-l);border-top:2px solid var(--ink);max-width:34rem}
+.roles div{display:grid;grid-template-columns:7.5rem 1fr;gap:.75rem;padding:.55rem 0;border-bottom:1px solid var(--rule)}
+.roles dt{font-family:var(--display);font-weight:700}
+.roles dd{color:var(--ink-2);line-height:1.45}
+.scope{margin-top:var(--space-s);color:var(--ink-2);font-size:var(--step--1);line-height:1.45;max-width:34rem}
+
+/* ---------- the count sheet (signature artifact) ---------- */
+.sheet{background:var(--sheet);border:1px solid var(--rule-strong);border-radius:4px;box-shadow:0 1px 0 rgba(23,35,27,.06),0 10px 30px -18px rgba(23,35,27,.35);position:relative}
+.sheet-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:var(--space-xs) var(--space-s);padding:var(--space-s) var(--space-s) var(--space-xs);border-bottom:2px solid var(--ink)}
+.sheet-kicker{font-size:.9375rem;color:var(--ink-2);line-height:1.35}
+.sheet-title{font-family:var(--display);font-weight:700;font-size:1.25rem;line-height:1.2}
+.region{border:0;padding:0;margin:0;display:flex;gap:.375rem;align-items:center}
+.region legend{float:left;margin-right:.375rem;font-size:.9375rem;color:var(--ink-2)}
+.region input{position:absolute;opacity:0;width:1px;height:1px}
+.region label{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:56px;padding:0 .75rem;border:1.5px solid var(--rule-strong);border-radius:6px;cursor:pointer;font-weight:700;background:transparent}
+.region input:checked + label{border-color:var(--ink);background:var(--ink);color:var(--sheet)}
+.region input:focus-visible + label{outline:3px solid var(--pen-dark);outline-offset:2px;box-shadow:0 0 0 6px var(--focus-light)}
+
+.status{padding:.7rem var(--space-s);font-weight:700;line-height:1.35;min-height:3.4rem;border-bottom:1px solid var(--rule);background:var(--red-tint);color:#6e1812;display:flex;gap:.6rem;align-items:flex-start}
+.status[data-tone="agree"]{background:var(--agree-tint);color:#1d4a2a}
+.status[data-tone="posted"]{background:#e3e8f6;color:var(--pen-dark)}
+.status .mark{flex:none;margin-top:.15rem;width:18px;height:18px}
+.status .sub{display:block;font-weight:400}
+
+.lines{width:100%;border-collapse:collapse}
+.lines th,.lines td{padding:0 .5rem;height:46px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:middle}
+.lines thead th{height:34px;font-size:.9375rem;font-weight:700;color:var(--ink-2);border-bottom:1px solid var(--rule-strong)}
+.lines .c-ann,.lines .c-val{text-align:right;font-family:var(--display);font-size:1.0625rem}
+.lines .c-ann{border-left:1px solid var(--rule);border-right:1px solid var(--rule);width:4.5rem}
+.lines .c-item{font-weight:700}
+.lines .c-item small{display:block;font-weight:400;color:var(--ink-2);font-size:.875rem;line-height:1.2}
+.lines .ann-inline{display:none}
+.lines .c-dev{width:1%;white-space:nowrap}
+.lines .c-val{width:7.5rem;color:var(--ink-2);white-space:nowrap}
+.lines .c-ok{width:2rem;padding:0 .25rem}
+.lines tr.off td{background:#fdf1ee}
+.lines tr.off .c-item{color:var(--red)}
+.stepper{display:inline-flex;align-items:center;gap:4px}
+.stepper button{width:44px;height:44px;border:1.5px solid var(--rule-strong);background:transparent;border-radius:6px;font-size:1.375rem;line-height:1;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.stepper button:hover:not(:disabled){border-color:var(--ink)}
+.stepper button:disabled{opacity:.4;cursor:default}
+.stepper input{width:4.75rem;height:44px;border:1.5px solid var(--rule-strong);border-radius:6px;background:#fff;text-align:right;padding:0 .5rem;font-family:var(--display);font-size:1.0625rem;font-variant-numeric:tabular-nums}
+.stepper input[readonly]{background:transparent;border-color:transparent}
+.ok-mark{width:20px;height:20px}
+.lines tfoot td{height:50px;border-bottom:0;border-top:3px double var(--red);font-weight:700}
+.lines tfoot .c-ann,.lines tfoot .c-dev,.lines tfoot .c-val{font-family:var(--display)}
+
+.signoff{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-s);padding:var(--space-s);border-top:1px solid var(--rule)}
+.sig{display:flex;flex-direction:column;gap:.4rem}
+.sig-line{position:relative;height:42px;border-bottom:1.5px solid var(--ink)}
+.sig-line svg{position:absolute;left:4px;bottom:2px;width:150px;height:40px;overflow:visible}
+.sig-line path{fill:none;stroke:var(--pen);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.sig-name{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 .5rem;font-size:.9375rem;color:var(--ink-2)}
+.sig button{min-height:44px;border:1.5px solid var(--pen);color:var(--pen);background:transparent;border-radius:6px;font-weight:700;cursor:pointer;padding:0 .75rem}
+.sig button:hover:not(:disabled){background:#eef1fa}
+.sig button:disabled{opacity:.5;cursor:default}
+.sheet-foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.5rem var(--space-s);padding:0 var(--space-s) var(--space-s);font-size:.9375rem;color:var(--ink-2)}
+.linkish{min-height:44px;border:0;background:none;color:var(--pen);text-decoration:underline;text-underline-offset:.18em;cursor:pointer;padding:0 .25rem;font-weight:700}
+
+@media (max-width:759px) and (min-height:700px){
+  .status{position:sticky;top:0;z-index:2}
+  .sheet :is(input,button){scroll-margin-top:7.5rem;scroll-margin-bottom:1rem}
+}
+@media (max-width:999px){
+  .hero-copy{display:contents}
+  .hero-grid{gap:0}
+  .hero h1{order:1}
+  .hero .lede{order:2}
+  .hero .act{order:3;margin-bottom:var(--space-l)}
+  .sheet{order:4}
+  .hero .roles{order:5;margin-top:var(--space-l)}
+  .hero .scope{order:6;margin-top:var(--space-s)}
+}
+@media (max-width:639px){
+  .roles div{grid-template-columns:1fr;gap:0}
+  .sheet-head{padding-inline:.75rem;padding-top:.6rem}
+  .sheet-title{font-size:1.0625rem}
+  .act{margin-top:var(--space-m)}
+  .hero .act{margin-bottom:var(--space-m)}
+  .status{padding-inline:.75rem}
+  .signoff{padding:.75rem;gap:.75rem}
+  .sheet-foot{padding:0 .75rem .75rem}
+}
+.sheet{container-type:inline-size;container-name:sheet}
+.lines .c-item{white-space:nowrap}
+@container sheet (max-width:530px){
+  .lines .c-val{display:none}
+}
+@container sheet (max-width:440px){
+  .lines th,.lines td{padding:0 .3rem}
+  .lines .c-ann{display:none}
+  .lines .ann-inline{display:block;font-weight:400;font-size:.9375rem;line-height:1.2;color:var(--ink-2);font-family:var(--display)}
+  .lines tr.off .ann-inline{color:var(--red)}
+  .lines .c-item{font-size:1rem;line-height:1.2}
+  .lines .c-item small{display:none}
+  .stepper{gap:3px}
+  .stepper input{width:4.1rem;padding:0 .3rem}
+  .lines .c-ok{width:1.5rem}
+  .lines .c-item{white-space:normal}
+}
+@container sheet (max-width:330px){
+  .lines th,.lines td{padding:0 .15rem}
+  .lines .c-ok{width:1.1rem;padding:0}
+  .stepper input{width:4.1rem;padding:0 .25rem}
+}
+
+/* ---------- sections ---------- */
+.section{padding-block:var(--space-2xl) 0}
+.section-head{max-width:46rem}
+.section-head p{margin-top:var(--space-s);color:var(--ink-2);max-width:40rem}
+
+/* "instead of": the old paper beside the thing that replaces it */
+.instead{margin-top:var(--space-l);display:grid;grid-template-columns:9rem 1fr;gap:var(--space-s);align-items:center;max-width:30rem}
+.instead .obj{width:100%;height:auto}
+.instead figcaption{color:var(--ink-2);line-height:1.4}
+.instead figcaption span{display:block;font-family:var(--display);font-weight:700;color:var(--red)}
+.stmt-wrap{display:grid;gap:0 var(--space-xl)}
+@media (min-width:1000px){ .stmt-wrap{grid-template-columns:minmax(0,7fr) minmax(0,4fr)} .stmt-wrap .stmt-grid{grid-column:1 / -1} .instead-head{margin-top:0;align-self:end} }
+
+/* ledger */
+.split{display:grid;gap:var(--space-l);align-items:start}
+@media (min-width:1000px){ .split{grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:var(--space-xl)} }
+.split .section-head p + p{margin-top:var(--space-s)}
+.page-obj{background:var(--sheet);border:1px solid var(--rule-strong);border-radius:4px;padding:var(--space-m)}
+.obj-label{font-size:.9375rem;color:var(--ink-2);margin-bottom:.25rem}
+.obj-title{font-family:var(--display);font-weight:700;font-size:1.3rem;line-height:1.25;padding-bottom:.6rem;border-bottom:2px solid var(--ink)}
+.ledger{width:100%;border-collapse:collapse;margin-top:.25rem}
+.ledger th,.ledger td{text-align:left;padding:.65rem .5rem;border-bottom:1px solid var(--rule);vertical-align:top;font-size:1rem}
+.ledger thead th{font-size:.9375rem;color:var(--ink-2);font-weight:700;border-bottom:1px solid var(--rule-strong)}
+.ledger .amt{text-align:right;font-family:var(--display);white-space:nowrap}
+.ledger .who{display:flex;flex-wrap:wrap;gap:.15rem .9rem}
+.ledger .who span{white-space:nowrap}
+.ledger .t{color:var(--ink-2)}
+.ledger tfoot td{border-top:3px double var(--red);border-bottom:0;font-weight:700}
+.state{display:inline-block;font-weight:700;white-space:nowrap}
+.state.posted{color:var(--agree)}
+.state.waiting{color:var(--red)}
+.ledger tr.just-posted td{animation:none}
+@media (prefers-reduced-motion:no-preference){
+  .ledger tr.just-posted td{animation:inkdry 1.2s ease-out 1}
+  @keyframes inkdry{from{background-color:#dfe5f5}to{background-color:transparent}}
+}
+@media (max-width:639px){
+  .ledger thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  .ledger,.ledger tbody,.ledger tfoot{display:block}
+  .ledger tr{display:grid;grid-template-columns:4.2rem 1fr auto;gap:.15rem .5rem;padding:.6rem 0;border-bottom:1px solid var(--rule)}
+  .ledger td{border:0;padding:0;font-size:1rem}
+  .ledger tbody td:nth-child(2){grid-column:1 / -1;grid-row:2;color:var(--ink-2)}
+  .ledger tbody td:nth-child(3){grid-column:3;grid-row:1}
+  .ledger tbody td:nth-child(4){grid-column:2;grid-row:1}
+  .ledger tfoot tr{grid-template-columns:1fr auto;border-bottom:0;border-top:3px double var(--red)}
+  .ledger tfoot td:empty{display:none}
+  .page-obj{padding:var(--space-s)}
+}
+.checks{margin-top:var(--space-m);display:grid;gap:.6rem}
+.checks li{padding-left:1.6rem;position:relative}
+.checks li::before{content:"";position:absolute;left:.15rem;top:.55em;width:.8rem;height:.45rem;border-left:2px solid var(--agree);border-bottom:2px solid var(--agree);transform:rotate(-45deg)}
+
+/* statements */
+.stmt-grid{display:grid;gap:var(--space-l);margin-top:var(--space-l);align-items:start}
+@media (min-width:1000px){ .stmt-grid{grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:var(--space-xl)} }
+.statement .addr{display:grid;gap:.1rem;margin:.9rem 0 .4rem;line-height:1.35}
+.statement .addr strong{font-family:var(--display)}
+.statement table{width:100%;border-collapse:collapse;margin-top:.5rem}
+.statement td{padding:.5rem .25rem;border-bottom:1px solid var(--rule);vertical-align:top}
+.statement td.amt{text-align:right;font-family:var(--display);white-space:nowrap}
+.statement tr.more td{color:var(--ink-2);font-style:italic}
+.statement tfoot td{border-top:3px double var(--red);border-bottom:0;font-weight:700;padding-top:.6rem}
+.statement .thanks{margin-top:var(--space-s);color:var(--ink-2)}
+.env{display:grid;gap:var(--space-s)}
+.env svg{width:100%;max-width:360px;height:auto}
+.env p{color:var(--ink-2);max-width:26rem}
+
+/* questions */
+.qa{margin-top:var(--space-l);border-top:2px solid var(--ink);max-width:52rem}
+.qa details{border-bottom:1px solid var(--rule)}
+.qa summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:var(--space-s);align-items:center;min-height:56px;padding:.6rem 0;font-weight:700;font-size:var(--step-0)}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"+";font-family:var(--display);font-size:1.5rem;line-height:1;flex:none}
+.qa details[open] summary::after{content:"\2212"}
+.qa details p{padding:0 0 var(--space-s);max-width:44rem;color:var(--ink-2)}
+
+/* close */
+.close{padding-block:var(--space-2xl)}
+.close-inner{border-top:2px solid var(--ink);padding-top:var(--space-l);display:grid;gap:var(--space-m);align-items:center}
+@media (min-width:900px){ .close-inner{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)} .close .instead{margin-top:0;justify-self:end} }
+.close h2{font-size:var(--step-2);max-width:18ch}
+
+.site-foot{border-top:1px solid var(--rule);padding-block:var(--space-l);color:var(--ink-2);font-size:var(--step--1)}
+.site-foot .wrap{display:flex;flex-wrap:wrap;gap:var(--space-s) var(--space-l);justify-content:space-between;align-items:center}
+.site-foot ul{display:flex;flex-wrap:wrap;gap:0 var(--space-m)}
+.site-foot a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink)}
+
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .sig-line path.draw{stroke-dasharray:400;stroke-dashoffset:400;animation:sign .45s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes sign{to{stroke-dashoffset:0}}
+}
+@media (prefers-reduced-motion:reduce){
+  .btn:active{transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#main" aria-label="Tallyhall, back to top">
+      <svg viewBox="0 0 34 26" aria-hidden="true"><g stroke="#17231b" stroke-width="2.6" stroke-linecap="round"><path d="M6 4v18M12 4v18M18 4v18M24 4v18"/><path d="M2 19 30 6" stroke="#1f3a8a"/></g></svg>
+      Tallyhall
+    </a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Main">
+      <a href="#count">The count</a>
+      <a href="#ledger">For trustees</a>
+      <a href="#statements">Giving statements</a>
+      <a href="#questions">Questions</a>
+      <a class="btn btn-small" href="https://tallyhall.example/trial">Start a free 60-day trial</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 id="h1">Counted by two. Written once.</h1>
+        <p class="lede"><strong>Tallyhall is bookkeeping for churches and small charities.</strong> Two volunteers count Sunday’s offering on a phone and both sign it off; the count posts to your ledger, and at year end each donor’s giving statement is ready.</p>
+        <div class="act">
+          <a class="btn" href="https://tallyhall.example/trial">Start a free 60-day trial</a>
+          <p class="note">Free for 60 days: eight Sundays of counting to show your finance committee before anyone decides.</p>
+        </div>
+        <dl class="roles">
+          <div><dt>Counters</dt><dd>count the offering on one phone, and both sign before it goes anywhere.</dd></div>
+          <div><dt>Treasurer</dt><dd>gets the signed count in the ledger without typing it again.</dd></div>
+          <div><dt>Trustees</dt><dd>see two names against every Sunday’s total, and can try it before they adopt it.</dd></div>
+        </dl>
+        <p class="scope">Tallyhall keeps the record of what your counters count. It is not a payment processor and does not take online donations. For organisations in the UK and the US.</p>
+      </div>
+
+      <div class="sheet" data-signature id="count" aria-labelledby="sheet-title">
+        <div class="sheet-head">
+          <div>
+            <p class="sheet-kicker">Sample count, written for this page. Fix the line that doesn’t agree, then sign.</p>
+            <p class="sheet-title" id="sheet-title">Sunday 18 October 2026 · <span data-k="service">10:30 service</span></p>
+          </div>
+          <fieldset class="region">
+            <legend>Counting in</legend>
+            <input type="radio" name="region" id="r-uk" value="uk" checked><label for="r-uk">UK £</label>
+            <input type="radio" name="region" id="r-us" value="us"><label for="r-us">US $</label>
+          </fieldset>
+        </div>
+
+        <div class="status" id="status" role="status" aria-live="polite" data-tone="off">
+          <svg class="mark" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 4.5v5.5M9 12.6v.4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          <span id="status-text">£5 notes don’t agree: Ann counted 9, Dev counted 8. <span class="sub">Recount, correct Dev’s line, then both can sign.</span></span>
+        </div>
+
+        <table class="lines" aria-describedby="status">
+          <thead>
+            <tr><th scope="col">Item</th><th scope="col" class="c-ann">Ann</th><th scope="col" class="c-dev">Dev <span class="sr-only">(editable)</span></th><th scope="col" class="c-val">Value</th><th scope="col" class="c-ok"><span class="sr-only">Agrees</span></th></tr>
+          </thead>
+          <tbody id="rows">
+            <tr data-i="0"><th scope="row" class="c-item">£50 notes<span class="ann-inline">Ann 2</span></th><td class="c-ann num">2</td><td class="c-dev"><span class="stepper"><button type="button" data-step="-1" aria-label="One fewer £50 note">−</button><input type="text" inputmode="numeric" maxlength="4" value="2" aria-label="Dev’s count of £50 notes" autocomplete="off"><button type="button" data-step="1" aria-label="One more £50 note">+</button></span></td><td class="c-val num">£100.00</td><td class="c-ok"></td></tr>
+            <tr data-i="1"><th scope="row" class="c-item">£20 notes<span class="ann-inline">Ann 31</span></th><td class="c-ann num">31</td><td class="c-dev"><span class="stepper"><button type="button" data-step="-1" aria-label="One fewer £20 note">−</button><input type="text" inputmode="numeric" maxlength="4" value="31" aria-label="Dev’s count of £20 notes" autocomplete="off"><button type="button" data-step="1" aria-label="One more £20 note">+</button></span></td><td class="c-val num">£620.00</td><td class="c-ok"></td></tr>
+            <tr data-i="2"><th scope="row" class="c-item">£10 notes<span class="ann-inline">Ann 38</span></th><td class="c-ann num">38</td><td class="c-dev"><span class="stepper"><button type="button" data-step="-1" aria-label="One fewer £10 note">−</button><input type="text" inputmode="numeric" maxlength="4" value="38" aria-label="Dev’s count of £10 notes" autocomplete="off"><button type="button" data-step="1" aria-label="One more £10 note">+</button></span></td><td class="c-val num">£380.00</td><td class="c-ok"></td></tr>
+            <tr data-i="3" class="off"><th scope="row" class="c-item">£5 notes<span class="ann-inline">Ann 9</span></th><td class="c-ann num">9</td><td class="c-dev"><span class="stepper"><button type="button" data-step="-1" aria-label="One fewer £5 note">−</button><input type="text" inputmode="numeric" maxlength="4" value="8" aria-label="Dev’s count of £5 notes" autocomplete="off"><button type="button" data-step="1" aria-label="One more £5 note">+</button></span></td><td class="c-val num">£40.00</td><td class="c-ok"></td></tr>
+            <tr data-i="4"><th scope="row" class="c-item">Coins<small>£, by bag</small><span class="ann-inline">Ann £63.40</span></th><td class="c-ann num">63.40</td><td class="c-dev"><span class="stepper"><button type="button" data-step="-1" aria-label="£1 less in coins">−</button><input type="text" inputmode="decimal" maxlength="8" value="63.40" aria-label="Dev’s coin total in pounds" autocomplete="off"><button type="button" data-step="1" aria-label="£1 more in coins">+</button></span></td><td class="c-val num">£63.40</td><td class="c-ok"></td></tr>
+            <tr data-i="5"><th scope="row" class="c-item">Cheques<small>£, 3 cheques</small><span class="ann-inline">Ann £178.00</span></th><td class="c-ann num">178.00</td><td class="c-dev"><span class="stepper"><button type="button" data-step="-1" aria-label="£1 less in cheques">−</button><input type="text" inputmode="decimal" maxlength="8" value="178.00" aria-label="Dev’s cheque total in pounds" autocomplete="off"><button type="button" data-step="1" aria-label="£1 more in cheques">+</button></span></td><td class="c-val num">£178.00</td><td class="c-ok"></td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td>Total<span class="ann-inline">Ann <span id="tot-ann-inline">£1,386.40</span></span></td><td class="c-ann num" id="tot-ann">£1,386.40</td><td class="c-dev num" id="tot-dev">£1,381.40</td><td class="c-val num" id="tot-diff">£5.00 short</td><td class="c-ok"></td></tr>
+          </tfoot>
+        </table>
+
+        <div class="signoff">
+          <div class="sig" data-who="ann">
+            <div class="sig-line" aria-hidden="true"><svg viewBox="0 0 150 40"></svg></div>
+            <p class="sig-name"><span>Ann P., counter</span><span class="sig-when"></span></p>
+            <button type="button" data-sign="ann">Ann signs</button>
+          </div>
+          <div class="sig" data-who="dev">
+            <div class="sig-line" aria-hidden="true"><svg viewBox="0 0 150 40"></svg></div>
+            <p class="sig-name"><span>Dev M., counter</span><span class="sig-when"></span></p>
+            <button type="button" data-sign="dev">Dev signs</button>
+          </div>
+        </div>
+        <div class="sheet-foot">
+          <span>Nothing here is sent anywhere; it runs on this page.</span>
+          <button type="button" class="linkish" id="reset">Start the count again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section" id="ledger" aria-labelledby="h-ledger">
+    <div class="wrap split">
+      <div class="section-head">
+        <h2 id="h-ledger">Trustees see two names against every Sunday’s total</h2>
+        <p>The finance committee or trustees decide whether to adopt Tallyhall, and they answer for the money afterwards. The ledger shows them each count, who signed it, and what was posted.</p>
+        <ul class="checks">
+          <li>No count posts until both counters have signed.</li>
+          <li>If a figure changes after someone signs, the signature is cleared and they sign again.</li>
+          <li>The Sunday you just counted above lands here once both have signed.</li>
+        </ul>
+        <figure class="instead">
+          <svg class="obj" viewBox="0 0 340 380" role="img" aria-label="Drawing of a printed spreadsheet with coloured cells, three tabs along the bottom and a handwritten sticky note on the corner.">
+            <g transform="rotate(1.5 170 200)">
+              <rect x="10" y="50" width="310" height="280" fill="#fff" stroke="#17231b" stroke-width="1.6"/>
+              <g stroke="#9aa79e"><path d="M10 120h310M10 150h310M10 180h310M10 210h310M10 240h310M10 270h310M10 300h310M44 90v240M124 90v240M196 90v240M262 90v240"/></g>
+              <rect x="10" y="50" width="310" height="40" fill="#e6ebe2" stroke="#17231b" stroke-width="1.2"/>
+              <path d="M10 90h310" stroke="#17231b"/>
+              <g fill="#17231b" opacity=".75"><rect x="20" y="66" width="62" height="9" rx="2"/><rect x="94" y="66" width="44" height="9" rx="2"/></g>
+              <g fill="#9fb98f"><rect x="125" y="151" width="70" height="28"/><rect x="197" y="211" width="64" height="28"/><rect x="263" y="121" width="56" height="28"/></g>
+              <g fill="#f3d36b" opacity=".85"><rect x="45" y="241" width="78" height="28"/><rect x="263" y="271" width="56" height="28"/></g>
+              <g stroke="#17231b" stroke-width="3" stroke-linecap="round" opacity=".6"><path d="M54 105h48M54 135h40M54 165h52M54 195h44M54 225h50M54 285h44M54 315h36M136 105h44M206 105h40M272 105h36M136 195h40M206 165h40M272 225h36M136 255h44M206 285h40"/></g>
+              <path d="M10 330l10 22h82l10-22M112 330l10 18h70l10-18M202 330l10 18h86l10-18" fill="#f4f6f1" stroke="#17231b" stroke-width="1.2"/>
+              <path d="M30 342h50M132 340h40M222 340h56" stroke="#17231b" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+              <g transform="translate(206 22) rotate(6)">
+                <rect width="112" height="100" fill="#f6dd78" stroke="#a88f2a" stroke-width="1.2"/>
+                <path d="M14 30c8-8 14 8 22 0s14 8 22 0 12 6 20 0M14 56c8-8 14 8 22 0s14 8 22 0M14 80c10-6 16 6 26 0" fill="none" stroke="#1f3a8a" stroke-width="2.2" stroke-linecap="round"/>
+              </g>
+            </g>
+          </svg>
+          <figcaption><span>Instead of</span> the spreadsheet only the treasurer understands.</figcaption>
+        </figure>
+      </div>
+      <div class="page-obj">
+        <p class="obj-label">Sample ledger, written for this page</p>
+        <p class="obj-title"><span data-k="fund">Unrestricted offerings</span> · October 2026</p>
+        <table class="ledger">
+          <thead><tr><th scope="col">Sunday</th><th scope="col">Counted and signed by</th><th scope="col" class="amt">Amount</th><th scope="col">State</th></tr></thead>
+          <tbody>
+            <tr><td data-l="Sunday">4 Oct</td><td data-l="Signed by"><span class="who"><span>Ruth S. <span class="t">11:41</span></span><span>Ann P. <span class="t">11:43</span></span></span></td><td class="amt num" data-l="Amount" data-k="l1">£1,212.75</td><td data-l="State"><span class="state posted">Posted</span></td></tr>
+            <tr><td data-l="Sunday">11 Oct</td><td data-l="Signed by"><span class="who"><span>Dev M. <span class="t">11:49</span></span><span>Ruth S. <span class="t">11:50</span></span></span></td><td class="amt num" data-l="Amount" data-k="l2">£1,148.20</td><td data-l="State"><span class="state posted">Posted</span></td></tr>
+            <tr id="ledger-live"><td data-l="Sunday">18 Oct</td><td data-l="Signed by"><span class="who" id="live-who"><span>Ann P. <span class="t">not signed</span></span><span>Dev M. <span class="t">not signed</span></span></span></td><td class="amt num" data-l="Amount" id="live-amt">—</td><td data-l="State"><span class="state waiting" id="live-state">Waiting for two signatures</span></td></tr>
+          </tbody>
+          <tfoot><tr><td colspan="2">Posted this month</td><td class="amt num" id="month-total">£2,360.95</td><td></td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="statements" aria-labelledby="h-stmt">
+    <div class="wrap stmt-wrap">
+      <div class="section-head">
+        <h2 id="h-stmt">January’s giving statements come out of the year’s counts</h2>
+        <p>Every named gift a count records belongs to a donor. At year end Tallyhall produces each donor’s statement from those lines, so nobody copies a year of envelopes out by hand.</p>
+      </div>
+      <figure class="instead instead-head">
+          <svg class="obj" viewBox="0 0 340 380" role="img" aria-label="Drawing of a stack of hand-addressed envelopes with a fountain pen lying across them.">
+            <g transform="translate(20 70)">
+              <g transform="rotate(-6 150 120)"><rect x="0" y="40" width="290" height="180" fill="#f4f6f1" stroke="#17231b" stroke-width="1.4"/></g>
+              <g transform="rotate(3 150 120)"><rect x="6" y="30" width="290" height="180" fill="#fbfbf6" stroke="#17231b" stroke-width="1.4"/></g>
+              <g transform="rotate(-1.5 150 120)">
+                <rect x="2" y="20" width="290" height="180" fill="#fff" stroke="#17231b" stroke-width="1.6"/>
+                <path d="M2 20l145 92 145-92" fill="none" stroke="#c3d4b9" stroke-width="1.2"/>
+                <rect x="236" y="34" width="40" height="46" fill="none" stroke="#a3241c" stroke-width="1.4" stroke-dasharray="4 3"/>
+                <path d="M70 136c8-9 14 9 22 0s14 9 22 0 12 6 20 0 10 5 18 0M70 160c8-9 14 9 22 0s14 9 22 0 12 6 20 0M70 182c8-7 12 7 20 0s12 7 20 0 10 5 18 0 10 4 16 0" fill="none" stroke="#1f3a8a" stroke-width="2.2" stroke-linecap="round"/>
+              </g>
+              <g transform="translate(10 236) rotate(-12)">
+                <rect x="0" y="0" width="200" height="16" rx="8" fill="#1f3a8a"/>
+                <rect x="150" y="-2" width="12" height="20" rx="2" fill="#c9a94a"/>
+                <path d="M200 2l26 6-26 6z" fill="#17231b"/>
+              </g>
+            </g>
+          </svg>
+          <figcaption><span>Instead of</span> a January of statements written out by hand.</figcaption>
+        </figure>
+      <div class="stmt-grid">
+        <article class="page-obj statement" aria-label="Sample giving statement">
+          <p class="obj-label">Sample giving statement, written for this page</p>
+          <p class="obj-title">Giving statement · 1 January to 31 December 2025</p>
+          <div class="addr"><strong data-k="donor">Mrs E. Okafor</strong><span>Donor no. 22</span></div>
+          <table>
+            <tbody>
+              <tr><td>5 Jan</td><td>Envelope</td><td class="amt num" data-k="g20">£20.00</td></tr>
+              <tr><td>12 Jan</td><td>Envelope</td><td class="amt num" data-k="g20">£20.00</td></tr>
+              <tr class="more"><td colspan="2">42 more Sunday envelopes</td><td class="amt num" data-k="g840">£840.00</td></tr>
+              <tr><td>20 Apr</td><td>Easter <span data-k="cheque">cheque</span></td><td class="amt num" data-k="g100">£100.00</td></tr>
+              <tr><td>28 Dec</td><td>Envelope</td><td class="amt num" data-k="g20">£20.00</td></tr>
+            </tbody>
+            <tfoot><tr><td colspan="2">Total given in 2025 · 45 envelopes and 1 <span data-k="cheque">cheque</span></td><td class="amt num" data-k="g1000">£1,000.00</td></tr></tfoot>
+          </table>
+          <p class="thanks">Thank you for your giving this year.</p>
+        </article>
+        <div class="env">
+          <svg viewBox="0 0 340 230" role="img" aria-label="Drawing of a weekly offering envelope marked number 22, with spaces for the date and the amount filled in by hand.">
+            <rect x="6" y="20" width="320" height="196" fill="#fff" stroke="#17231b" stroke-width="1.6"/>
+            <path d="M6 20l160 70 160-70" fill="none" stroke="#c3d4b9" stroke-width="1.4"/>
+            <rect x="22" y="104" width="92" height="92" fill="#fcfdf9" stroke="#17231b" stroke-width="1.6"/>
+            <text x="68" y="128" font-family="Carlito, Calibri, sans-serif" font-size="15" fill="#3d4f43" text-anchor="middle">No.</text>
+            <text x="68" y="178" font-family="Schola, Georgia, serif" font-weight="700" font-size="46" fill="#17231b" text-anchor="middle">22</text>
+            <text x="132" y="128" font-family="Carlito, Calibri, sans-serif" font-size="15" fill="#3d4f43">Sunday</text>
+            <path d="M190 130h120" stroke="#17231b" stroke-width="1.2"/>
+            <path d="M196 124c7-8 12 8 19 0s12 8 19 0 10 6 16 0" fill="none" stroke="#1f3a8a" stroke-width="2.2" stroke-linecap="round"/>
+            <text x="132" y="176" font-family="Carlito, Calibri, sans-serif" font-size="15" fill="#3d4f43">Amount</text>
+            <path d="M190 178h120" stroke="#17231b" stroke-width="1.2"/>
+            <path d="M200 170c6-12 10 10 16-2s10 8 16 0" fill="none" stroke="#1f3a8a" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M132 200h178M132 203h178" stroke="#a3241c" stroke-width="1"/>
+          </svg>
+          <p>The envelope your donors already use, with their number on it. Its amount goes into Sunday’s count, and that line is what ends up on the statement.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="questions" aria-labelledby="h-qa">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="h-qa">Tallyhall records the money. It never handles it.</h2>
+        <p>The questions a careful treasurer, or a committee, asks first.</p>
+      </div>
+      <div class="qa">
+        <details open>
+          <summary>Does Tallyhall take or move any money?</summary>
+          <p>No. Tallyhall is not a payment processor and does not take online donations. It records the cash and cheques your volunteers count, keeps the ledger and produces the giving statements.</p>
+        </details>
+        <details>
+          <summary>Does it work for us in the UK or the US?</summary>
+          <p>Yes. Tallyhall works for churches and small charities in both, which is why the sample count above switches between pounds and dollars.</p>
+        </details>
+        <details>
+          <summary>Who uses it already?</summary>
+          <p>About 40 congregations. None of them is named here, and we don’t publish figures about them.</p>
+        </details>
+        <details>
+          <summary>How do we try it before the committee decides?</summary>
+          <p>Start the free trial: it runs for 60 days, so you can count with it on the Sundays before the meeting and take the ledger with you.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="close" aria-labelledby="h-close">
+    <div class="wrap"><div class="close-inner">
+      <div>
+        <h2 id="h-close">Count next Sunday’s offering with Tallyhall.</h2>
+        <div class="act">
+          <a class="btn" href="https://tallyhall.example/trial">Start a free 60-day trial</a>
+          <p class="note">The free trial runs for 60 days. Tallyhall works for churches and small charities in the UK and the US.</p>
+        </div>
+      </div>
+      <figure class="instead">
+          <svg class="obj" viewBox="0 0 340 380" role="img" aria-label="Drawing of a paper counting sheet: handwritten figures, one total crossed out and written again, and two signatures at the bottom.">
+            <g transform="rotate(-3 170 200)">
+              <rect x="20" y="30" width="300" height="330" fill="#fff" stroke="#17231b" stroke-width="1.6"/>
+              <path d="M20 74h300M20 96h300M20 118h300M20 140h300M20 162h300M20 184h300M20 206h300M20 228h300M20 250h300M20 272h300" stroke="#c3d4b9"/>
+              <path d="M64 30v270M65.5 30v270" stroke="#a3241c" stroke-width=".9"/>
+              <path d="M220 74v226" stroke="#17231b"/>
+              <path d="M40 54h120" stroke="#17231b" stroke-width="5" stroke-linecap="round"/>
+              <g fill="none" stroke="#1f3a8a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M80 90c6-8 12 8 18 0s10 6 16 0M236 90c5-6 10 6 16 0 5-6 10 4 16 0"/>
+                <path d="M80 134c6-8 12 8 18 0s10 6 16 0 9 4 14 0M236 134c5-6 10 6 16 0 5-6 10 4 16 0"/>
+                <path d="M80 178c6-8 12 8 18 0s10 6 16 0M236 178c5-6 10 6 16 0"/>
+                <path d="M80 222c6-8 12 8 18 0s10 6 16 0 9 4 14 0M236 222c5-6 10 6 16 0 5-6 10 4 16 0 4-4 8 3 12 0"/>
+                <path d="M228 262c6-9 12 9 18 0s12 9 18 0 10 7 16 0"/>
+                <path d="M226 252l66 20M230 276l60-26" stroke="#a3241c"/>
+                <path d="M236 292c5-6 10 6 16 0 5-6 10 4 16 0 4-4 8 3 12 0"/>
+                <path d="M44 336c10-16 18 12 28-6s14 10 24-2 8 6 14 4"/>
+                <path d="M190 338c8-20 12 14 22-4 6-10 10 8 18 0s14 4 30-6"/>
+              </g>
+              <path d="M20 304h300M20 307h300" stroke="#a3241c"/>
+              <path d="M276 16v58a10 10 0 0 0 20 0V24a6 6 0 0 0-12 0v46" fill="none" stroke="#5c6b61" stroke-width="2.4" stroke-linecap="round"/>
+            </g>
+          </svg>
+          <figcaption><span>Instead of</span> the paper counting sheet, typed up again on Monday.</figcaption>
+        </figure>
+    </div></div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>Tallyhall · bookkeeping for churches and small charities</p>
+    <ul>
+      <li><a href="#count">The sample count</a></li>
+      <li><a href="#ledger">For trustees</a></li>
+      <li><a href="#statements">Giving statements</a></li>
+      <li><a href="https://tallyhall.example/trial">Start a free 60-day trial</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(() => {
+  // ---- menu ----
+  const b = document.querySelector('.menu-btn'), m = document.getElementById('site-menu');
+  const mq = matchMedia('(max-width: 899px)');
+  const set = open => { b.setAttribute('aria-expanded', open); m.hidden = !open; };
+  set(false);
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && b.getAttribute('aria-expanded') === 'true') { set(false); b.focus(); } });
+  document.addEventListener('click', e => { if (mq.matches && !m.contains(e.target) && e.target !== b) set(false); });
+  m.addEventListener('focusout', e => { if (mq.matches && !m.contains(e.relatedTarget) && e.relatedTarget !== b) set(false); });
+  m.addEventListener('click', e => { if (mq.matches && e.target.closest('a')) set(false); });
+
+  // ---- sample data (one source for the count, the ledger and the statement) ----
+  const R = {
+    uk: { cur: '£', service: '10:30 service', fund: 'Unrestricted offerings', donor: 'Mrs E. Okafor', cheque: 'cheque',
+      rows: [
+        { item: '£50 notes', unit: 50, ann: 2, dev: 2, kind: 'n', one: '£50 note' },
+        { item: '£20 notes', unit: 20, ann: 31, dev: 31, kind: 'n', one: '£20 note' },
+        { item: '£10 notes', unit: 10, ann: 38, dev: 38, kind: 'n', one: '£10 note' },
+        { item: '£5 notes',  unit: 5,  ann: 9,  dev: 8,  kind: 'n', one: '£5 note' },
+        { item: 'Coins', sub: '£, by bag', ann: 63.40, dev: 63.40, kind: 'a', what: 'coins', acc: 'coin total in pounds' },
+        { item: 'Cheques', sub: '£, 3 cheques', ann: 178.00, dev: 178.00, kind: 'a', what: 'cheques', acc: 'cheque total in pounds' }
+      ],
+      ledger: [1212.75, 1148.20] },
+    us: { cur: '$', service: '10:00 worship', fund: 'General Fund', donor: 'Ellen Okafor', cheque: 'check',
+      rows: [
+        { item: '$20 bills', unit: 20, ann: 28, dev: 28, kind: 'n', one: '$20 bill' },
+        { item: '$10 bills', unit: 10, ann: 22, dev: 22, kind: 'n', one: '$10 bill' },
+        { item: '$5 bills',  unit: 5,  ann: 9,  dev: 8,  kind: 'n', one: '$5 bill' },
+        { item: '$1 bills',  unit: 1,  ann: 64, dev: 64, kind: 'n', one: '$1 bill' },
+        { item: 'Coins', sub: '$, by roll', ann: 11.35, dev: 11.35, kind: 'a', what: 'coins', acc: 'coin total in dollars' },
+        { item: 'Checks', sub: '$, 5 checks', ann: 415.00, dev: 415.00, kind: 'a', what: 'checks', acc: 'check total in dollars' }
+      ],
+      ledger: [1290.50, 1174.25] }
+  };
+  const MAX_N = 999, MAX_A = 9999.99;
+  const SIGN_TIMES = { ann: '11:52', dev: '11:54' };
+  const SIG_PATHS = {
+    ann: 'M6 30c6-18 10-22 14-10s2 16 8 4 6-20 12-8 4 12 10 6c6-6 8 2 14-2 8-6 10 2 18-4 6-4 14-2 22-6',
+    dev: 'M8 26c4-14 14-22 16-8 2 12-8 14-4 4 4-12 16-12 18 0 1 8 6 2 10-2s8 4 14 0 10-6 16-2 12 2 20-4'
+  };
+
+  const $ = s => document.querySelector(s);
+  const sheet = $('#count'), rowsEl = [...document.querySelectorAll('#rows tr')];
+  const statusEl = $('#status'), statusText = $('#status-text');
+  const fmt = (v, cur) => cur + v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  let region = 'uk', dev = [], signed = { ann: false, dev: false }, posted = false, note = '';
+
+  const rowValue = (r, n) => r.kind === 'n' ? n * r.unit : n;
+  const parse = (r, raw) => {
+    const s = String(raw).trim();
+    if (s === '') return { empty: true };
+    const n = r.kind === 'n' ? parseInt(s, 10) : Math.round(parseFloat(s) * 100) / 100;
+    if (!isFinite(n)) return { empty: true };
+    return { n };
+  };
+
+  function sanitize(input, r) {
+    const before = input.value;
+    let v = r.kind === 'n' ? before.replace(/[^0-9]/g, '') : before.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1').replace(/^(\d*\.\d{0,2}).*$/, '$1');
+    if (v !== before) { input.value = v; note = 'Numbers only: anything else was taken out.'; }
+  }
+
+  function evaluate() {
+    const D = R[region];
+    const off = [], empty = [], over = [];
+    let annT = 0, devT = 0;
+    D.rows.forEach((r, i) => {
+      annT += rowValue(r, r.ann);
+      const p = parse(r, dev[i]);
+      const tr = rowsEl[i];
+      let ok = false;
+      if (p.empty) { empty.push(r.item); }
+      else if ((r.kind === 'n' && p.n > MAX_N) || (r.kind === 'a' && p.n > MAX_A)) { over.push(r); }
+      else { devT += rowValue(r, p.n); ok = Math.abs(p.n - r.ann) < 0.005; if (!ok) off.push({ r, n: p.n }); }
+      tr.classList.toggle('off', !ok);
+      tr.querySelector('.c-val').textContent = p.empty || over.includes(r) ? '—' : fmt(rowValue(r, p.n), D.cur);
+      tr.querySelector('.c-ok').innerHTML = ok ? '<svg class="ok-mark" viewBox="0 0 20 20" role="img" aria-label="agrees"><path d="M4 10.5l4 4 8-9" fill="none" stroke="#2a6a3d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '<svg class="ok-mark" viewBox="0 0 20 20" role="img" aria-label="does not agree"><path d="M5 5l10 10M15 5L5 15" fill="none" stroke="#a3241c" stroke-width="2.6" stroke-linecap="round"/></svg>';
+    });
+    const agree = !off.length && !empty.length && !over.length;
+    $('#tot-ann').textContent = fmt(annT, D.cur);
+    $('#tot-ann-inline').textContent = fmt(annT, D.cur);
+    $('#tot-dev').textContent = empty.length || over.length ? '—' : fmt(devT, D.cur);
+    const diff = Math.round((devT - annT) * 100) / 100;
+    $('#tot-diff').textContent = agree ? 'agrees' : (empty.length || over.length) ? '—' : (diff === 0 ? 'lines differ' : fmt(Math.abs(diff), D.cur) + (diff < 0 ? ' short' : ' over'));
+    return { agree, off, empty, over, annT };
+  }
+
+  function say(tone, main, sub) {
+    statusEl.dataset.tone = tone;
+    const icon = tone === 'off'
+      ? '<svg class="mark" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 4.5v5.5M9 12.6v.4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>'
+      : '<svg class="mark" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5.2 9.4l2.6 2.6 5-5.4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    statusEl.querySelector('.mark').outerHTML = icon;
+    statusText.innerHTML = '';
+    statusText.append(main);
+    if (sub) { const s = document.createElement('span'); s.className = 'sub'; s.textContent = sub; statusText.append(' ', s); }
+  }
+
+  function drawSig(who, on, animate) {
+    const box = sheet.querySelector(`.sig[data-who="${who}"]`);
+    const svg = box.querySelector('svg');
+    svg.innerHTML = on ? `<path class="${animate ? 'draw' : ''}" d="${SIG_PATHS[who]}"/>` : '';
+    box.querySelector('.sig-when').textContent = on ? 'signed ' + SIGN_TIMES[who] : '';
+    const btn = box.querySelector('button');
+    btn.textContent = on ? (who === 'ann' ? 'Ann has signed' : 'Dev has signed') : (who === 'ann' ? 'Ann signs' : 'Dev signs');
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
+
+  function updateLedger(state) {
+    const D = R[region];
+    const who = $('#live-who');
+    const t = w => signed[w] ? SIGN_TIMES[w] : 'not signed';
+    who.innerHTML = `<span>Ann P. <span class="t">${t('ann')}</span></span><span>Dev M. <span class="t">${t('dev')}</span></span>`;
+    const base = D.ledger[0] + D.ledger[1];
+    const st = $('#live-state'), row = $('#ledger-live');
+    if (posted) {
+      $('#live-amt').textContent = fmt(state.annT, D.cur);
+      st.textContent = 'Posted'; st.className = 'state posted';
+      $('#month-total').textContent = fmt(base + state.annT, D.cur);
+      row.classList.remove('just-posted'); void row.offsetWidth; row.classList.add('just-posted');
+    } else {
+      $('#live-amt').textContent = '—';
+      const n = (signed.ann ? 1 : 0) + (signed.dev ? 1 : 0);
+      st.textContent = n === 1 ? 'Waiting for one signature' : 'Waiting for two signatures';
+      st.className = 'state waiting';
+      $('#month-total').textContent = fmt(base, D.cur);
+      row.classList.remove('just-posted');
+    }
+  }
+
+  function refresh(extra) {
+    const D = R[region];
+    const s = evaluate();
+    let msg;
+    if (posted) {
+      say('posted', `Signed by Ann at ${SIGN_TIMES.ann} and Dev at ${SIGN_TIMES.dev}. Posted to the ledger: ${fmt(s.annT, D.cur)} to ${D.fund}.`, 'The ledger below now shows this Sunday.');
+    } else if (s.over.length) {
+      const r = s.over[0];
+      say('off', r.kind === 'n' ? `${MAX_N.toLocaleString('en-GB')} is the most ${r.item} one line takes on this sample.` : `${fmt(MAX_A, D.cur)} is the most one line takes on this sample.`, 'Check the figure for ' + r.item + ' and enter it again.');
+    } else if (s.empty.length) {
+      say('off', `No figure from Dev for ${s.empty.join(', ')}.`, 'Every line needs a count from both people before anyone signs.');
+    } else if (s.off.length === 1) {
+      const { r, n } = s.off[0];
+      const show = v => r.kind === 'n' ? String(v) : fmt(v, D.cur);
+      say('off', `${r.item} don’t agree: Ann counted ${show(r.ann)}, Dev counted ${show(n)}.`, extra || 'Recount, correct Dev’s line, then both can sign.');
+    } else if (s.off.length > 1) {
+      say('off', `${s.off.length} lines don’t agree: ${s.off.map(o => o.r.item).join(', ')}.`, extra || 'Recount those lines before anyone signs.');
+    } else {
+      const n = (signed.ann ? 1 : 0) + (signed.dev ? 1 : 0);
+      const head = `Both counts agree: ${fmt(s.annT, D.cur)}.`;
+      say('agree', head, extra || (n === 0 ? 'Ann and Dev can both sign now.' : signed.ann ? `Ann signed at ${SIGN_TIMES.ann}. Waiting for Dev.` : `Dev signed at ${SIGN_TIMES.dev}. Waiting for Ann.`));
+    }
+    if (note && !posted) { const s2 = document.createElement('span'); s2.className = 'sub'; s2.textContent = note; statusText.append(' ', s2); }
+    note = '';
+    updateLedger(s);
+    // lock the count once it is posted
+    rowsEl.forEach(tr => {
+      tr.querySelector('input').readOnly = posted;
+      tr.querySelectorAll('button').forEach(x => x.disabled = posted);
+    });
+    sheet.querySelectorAll('[data-sign]').forEach(x => x.disabled = posted);
+    return s;
+  }
+
+  function loadRegion(key) {
+    region = key;
+    const D = R[key];
+    dev = D.rows.map(r => r.kind === 'n' ? String(r.dev) : r.dev.toFixed(2));
+    signed = { ann: false, dev: false }; posted = false;
+    D.rows.forEach((r, i) => {
+      const tr = rowsEl[i];
+      const th = tr.querySelector('.c-item');
+      th.textContent = r.item;
+      if (r.sub) { const sm = document.createElement('small'); sm.textContent = r.sub; th.append(sm); }
+      const ai = document.createElement('span'); ai.className = 'ann-inline'; ai.textContent = 'Ann ' + (r.kind === 'n' ? r.ann : D.cur + r.ann.toFixed(2)); th.append(ai);
+      tr.querySelector('.c-ann').textContent = r.kind === 'n' ? r.ann : r.ann.toFixed(2);
+      const inp = tr.querySelector('input');
+      inp.value = dev[i];
+      inp.inputMode = r.kind === 'n' ? 'numeric' : 'decimal';
+      inp.maxLength = r.kind === 'n' ? 4 : 8;
+      inp.setAttribute('aria-label', r.kind === 'n' ? `Dev’s count of ${r.item}` : `Dev’s ${r.acc}`);
+      const [minus, plus] = tr.querySelectorAll('button');
+      minus.setAttribute('aria-label', r.kind === 'n' ? `One fewer ${r.one}` : `${D.cur}1 less in ${r.what}`);
+      plus.setAttribute('aria-label', r.kind === 'n' ? `One more ${r.one}` : `${D.cur}1 more in ${r.what}`);
+    });
+    document.querySelectorAll('[data-k="service"]').forEach(e => e.textContent = D.service);
+    document.querySelectorAll('[data-k="fund"]').forEach(e => e.textContent = D.fund);
+    document.querySelectorAll('[data-k="donor"]').forEach(e => e.textContent = D.donor);
+    document.querySelectorAll('[data-k="cheque"]').forEach(e => e.textContent = D.cheque);
+    document.querySelectorAll('[data-k="l1"]').forEach(e => e.textContent = fmt(D.ledger[0], D.cur));
+    document.querySelectorAll('[data-k="l2"]').forEach(e => e.textContent = fmt(D.ledger[1], D.cur));
+    const g = { g20: 20, g840: 840, g100: 100, g1000: 1000 };
+    for (const k in g) document.querySelectorAll(`[data-k="${k}"]`).forEach(e => e.textContent = fmt(g[k], D.cur));
+    drawSig('ann', false); drawSig('dev', false);
+  }
+
+  function changed(i, value) {
+    dev[i] = value;
+    let extra = '';
+    if (signed.ann || signed.dev) {
+      const who = signed.ann && signed.dev ? 'Ann and Dev' : signed.ann ? 'Ann' : 'Dev';
+      signed = { ann: false, dev: false };
+      drawSig('ann', false); drawSig('dev', false);
+      extra = `The count changed after ${who} signed, so the signature was cleared.`;
+    }
+    const s = refresh(extra || undefined);
+    if (extra && s.agree) say('agree', `Both counts agree: ${fmt(s.annT, R[region].cur)}.`, extra + ' Sign again.');
+  }
+
+  rowsEl.forEach((tr, i) => {
+    const inp = tr.querySelector('input');
+    inp.addEventListener('input', () => { sanitize(inp, R[region].rows[i]); changed(i, inp.value); });
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); inp.blur(); inp.focus(); } });
+    tr.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => {
+      const r = R[region].rows[i];
+      const p = parse(r, dev[i]);
+      let n = p.empty ? 0 : p.n;
+      n = n + Number(btn.dataset.step);
+      if (n < 0) { n = 0; note = 'A count can’t go below zero.'; }
+      if (r.kind === 'n' && n > MAX_N) n = MAX_N + 1;
+      const v = r.kind === 'n' ? String(n) : (Math.round(n * 100) / 100).toFixed(2);
+      inp.value = v;
+      changed(i, v);
+    }));
+  });
+
+  sheet.querySelectorAll('[data-sign]').forEach(btn => btn.addEventListener('click', () => {
+    if (posted) return;
+    const who = btn.dataset.sign;
+    const s = evaluate();
+    if (!s.agree) {
+      refresh();
+      const name = who === 'ann' ? 'Ann' : 'Dev';
+      const why = s.empty.length ? 'a line has no figure from Dev' : s.over.length ? 'a figure is out of range' : `${s.off.map(o => o.r.item).join(', ')} don’t agree`;
+      say('off', `${name} can’t sign yet: ${why}.`, 'Both counts have to agree line by line before anyone signs.');
+      return;
+    }
+    if (signed[who]) {
+      signed[who] = false; drawSig(who, false);
+      refresh(`${who === 'ann' ? 'Ann' : 'Dev'} took the signature back.`);
+      return;
+    }
+    signed[who] = true; drawSig(who, true, true);
+    if (signed.ann && signed.dev) {
+      posted = true;
+      refresh();
+      $('#reset').focus();
+    } else refresh();
+  }));
+
+  document.querySelectorAll('input[name="region"]').forEach(r => r.addEventListener('change', () => {
+    loadRegion(r.value);
+    refresh(r.value === 'us' ? 'Now the US sample: dollars, $1 bills and checks. Recount and correct Dev’s line.' : 'Now the UK sample: pounds, coins by the bag and cheques. Recount and correct Dev’s line.');
+  }));
+
+  $('#reset').addEventListener('click', () => {
+    document.getElementById('r-uk').checked = true;
+    loadRegion('uk');
+    refresh('Back to the start of the sample. Recount, correct Dev’s line, then both can sign.');
+  });
+
+  // On phones the result line is pinned at the top of the sheet; keep the focused control clear of it.
+  sheet.addEventListener('focusin', e => {
+    if (getComputedStyle(statusEl).position !== 'sticky' || e.target === statusEl) return;
+    const sb = statusEl.getBoundingClientRect(), tb = e.target.getBoundingClientRect();
+    if (tb.top < sb.bottom + 8 && tb.bottom > sb.top) window.scrollBy({ top: tb.top - sb.bottom - 12, behavior: 'instant' });
+  });
+
+  loadRegion('uk');
+  refresh();
+})();
+</script>
+</body>
+</html>
