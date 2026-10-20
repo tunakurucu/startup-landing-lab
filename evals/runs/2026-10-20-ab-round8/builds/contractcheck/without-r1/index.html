@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contractcheck</title>
+<meta name="description" content="Contractcheck runs your OpenAPI spec against your staging API on every pull request and fails the check when a response no longer matches the spec.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2316202E'/%3E%3Cpath d='M9 11h9M9 16h14M9 21h6' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='23' cy='21' r='3' fill='%23E5484D'/%3E%3C/svg%3E">
+<style>
+:root{
+  --paper:#EDF1F5;
+  --surface:#FFFFFF;
+  --ink:#16202E;
+  --ink-2:#4A5568;
+  --rule:#CBD3DE;
+  --rule-soft:#E2E7EE;
+  --spec:#2457C5;
+  --spec-bg:#EAF0FC;
+  --got:#C62F3A;
+  --got-bg:#FCECEE;
+  --pass:#1D7F4E;
+  --pass-bg:#E6F4EC;
+  --code-bg:#F6F8FA;
+  --focus:#2457C5;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  --maxw: 1180px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#11161E; --surface:#18202B; --ink:#E8EDF3; --ink-2:#A3AFBF;
+    --rule:#2E3947; --rule-soft:#232D39; --spec:#7FA4F5; --spec-bg:#1B2840;
+    --got:#FF7B83; --got-bg:#36191D; --pass:#5BCB8F; --pass-bg:#15301F;
+    --code-bg:#141B24; --focus:#7FA4F5; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#11161E; --surface:#18202B; --ink:#E8EDF3; --ink-2:#A3AFBF;
+  --rule:#2E3947; --rule-soft:#232D39; --spec:#7FA4F5; --spec-bg:#1B2840;
+  --got:#FF7B83; --got-bg:#36191D; --pass:#5BCB8F; --pass-bg:#15301F;
+  --code-bg:#141B24; --focus:#7FA4F5; color-scheme: dark;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;}
+a{color:inherit}
+code,.mono{font-family:var(--mono);font-size:.88em}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:12px;background:var(--surface);padding:8px 12px;z-index:10}
+
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.01em;text-decoration:none}
+.brand svg{flex:none}
+.top nav{display:flex;align-items:center;gap:22px;font-size:15px}
+.top nav a{text-decoration:none;color:var(--ink-2)}
+.top nav a:hover{color:var(--ink)}
+.top nav .btn{color:var(--surface)}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:8px;font-weight:600;font-size:15.5px;text-decoration:none;border:1.5px solid var(--ink);line-height:1.2;cursor:pointer}
+.btn-solid{background:var(--ink);color:var(--surface)}
+.btn-solid:hover{background:#000}
+:root[data-theme="dark"] .btn-solid:hover{background:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn-solid:hover{background:#fff}}
+.btn-line{background:transparent;color:var(--ink)}
+.btn-line:hover{background:var(--surface)}
+.top nav .btn{padding:8px 14px;font-size:14.5px}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;align-items:start;padding:28px 0 72px}
+.hero h1{font-size:clamp(2.1rem,3.9vw,3.35rem);line-height:1.04;letter-spacing:-.035em;font-weight:800;margin:18px 0 20px;max-width:13ch}
+.hero .lede{font-size:18px;color:var(--ink-2);margin:0 0 28px;max-width:44ch}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:22px}
+.price-note{font-size:14.5px;color:var(--ink-2);margin:0}
+.price-note strong{color:var(--ink);font-weight:600}
+
+/* ---------- check run panel ---------- */
+.run{background:var(--surface);border:1px solid var(--rule);border-radius:12px;overflow:hidden;box-shadow:0 1px 0 var(--rule-soft),0 24px 48px -28px rgba(22,32,46,.35)}
+.run-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border-bottom:1px solid var(--rule-soft);font-size:13.5px;color:var(--ink-2)}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+.seg{flex:none}
+.seg button{font:inherit;font-size:13px;padding:5px 11px;white-space:nowrap;background:transparent;color:var(--ink-2);border:0;cursor:pointer}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.run-head{display:flex;gap:14px;align-items:flex-start;padding:18px 20px 16px;border-bottom:1px solid var(--rule-soft)}
+.status-icon{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;margin-top:2px}
+.is-fail .status-icon{background:var(--got)}
+.is-pass .status-icon{background:var(--pass)}
+.run-title{font-weight:700;font-size:17px;line-height:1.3;margin:0}
+.run-meta{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:6px;font-size:13.5px;color:var(--ink-2)}
+.run-meta code{font-size:12.5px}
+
+.fails{list-style:none;margin:0;padding:0}
+.fail{border-bottom:1px solid var(--rule-soft)}
+.fail:last-child{border-bottom:0}
+.fail > button{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 12px;align-items:baseline;padding:13px 20px;cursor:pointer}
+.fail > button:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+.fail > button:hover{background:var(--code-bg)}
+.kind{font-size:12.5px;font-weight:600;color:var(--got);background:var(--got-bg);padding:2px 8px;border-radius:5px;white-space:nowrap}
+.op{font-family:var(--mono);font-size:14px;overflow-wrap:anywhere}
+.op b{font-weight:700}
+.chev{width:12px;height:12px;transition:transform .18s ease;color:var(--ink-2);align-self:center}
+.fail > button[aria-expanded="true"] .chev{transform:rotate(90deg)}
+.op-note{grid-column:2 / 3;font-size:14px;color:var(--ink-2)}
+.detail{padding:0 20px 18px}
+.detail[hidden]{display:none}
+.diff{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border:1px solid var(--rule);border-radius:8px;overflow:hidden;font-family:var(--mono);font-size:12.8px;line-height:1.6}
+.diff > div{padding:10px 12px;min-width:0}
+.diff .spec{background:var(--spec-bg);border-right:1px solid var(--rule)}
+.diff .resp{background:var(--code-bg)}
+.diff h4{font-family:var(--sans);font-size:12.5px;font-weight:600;margin:0 0 6px}
+.diff .spec h4{color:var(--spec)}
+.diff .resp h4{color:var(--got)}
+.diff pre{margin:0;white-space:pre-wrap;word-break:break-word;font:inherit}
+.diff mark{background:transparent;color:var(--got);font-weight:700;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+.diff .spec mark{color:var(--spec)}
+.where{margin:10px 0 0;font-size:13.5px;color:var(--ink-2)}
+.run-foot{padding:13px 20px;background:var(--code-bg);border-top:1px solid var(--rule-soft);font-size:14px;color:var(--ink-2)}
+.passlist{list-style:none;margin:0;padding:6px 0}
+.passlist li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:9px 20px;font-size:14px}
+.passlist .ok{font-size:12.5px;font-weight:600;color:var(--pass);background:var(--pass-bg);padding:2px 8px;border-radius:5px}
+.passlist .n{color:var(--ink-2);font-size:13px}
+.view[hidden]{display:none}
+.example-note{font-size:13px;color:var(--ink-2);margin:10px 2px 0}
+
+/* ---------- sections ---------- */
+section.block{padding:72px 0;border-top:1px solid var(--rule)}
+.block h2{font-size:clamp(1.6rem,2.6vw,2.15rem);line-height:1.12;letter-spacing:-.025em;font-weight:800;margin:0 0 14px;max-width:22ch}
+.block .intro{color:var(--ink-2);max-width:58ch;margin:0 0 36px}
+.two{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:48px}
+
+/* catches */
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--rule);border-radius:12px;background:var(--surface);overflow:hidden}
+.rule{padding:24px 24px 26px}
+.rule + .rule{border-left:1px solid var(--rule-soft)}
+.rule h3{font-size:18px;margin:10px 0 8px;letter-spacing:-.01em}
+.rule p{margin:0 0 14px;font-size:15.5px;color:var(--ink-2)}
+.rule .pair{font-family:var(--mono);font-size:13px;line-height:1.7;border-left:3px solid var(--rule);padding-left:12px}
+.rule .pair .s{color:var(--spec)}
+.rule .pair .g{color:var(--got)}
+
+/* steps */
+.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:0}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;padding:20px 0;border-top:1px solid var(--rule-soft)}
+.steps li:first-child{border-top:0;padding-top:4px}
+.steps li::before{content:counter(s);width:32px;height:32px;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:15px}
+.steps h3{font-size:17.5px;margin:3px 0 4px}
+.steps p{margin:0;color:var(--ink-2);max-width:60ch}
+
+/* before/after */
+.compare{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+.case{border-radius:12px;padding:24px;border:1px solid var(--rule);background:var(--surface)}
+.case h3{font-size:17.5px;margin:0 0 14px}
+.case ol{margin:0;padding-left:20px;color:var(--ink-2)}
+.case ol li{margin:0 0 8px;padding-left:4px}
+.case ol li:last-child{margin:0}
+.case.now{background:transparent;border-style:dashed}
+.case.with{border-color:var(--ink)}
+.case .t{color:var(--ink);font-weight:600}
+
+/* staging only */
+.scope{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) ;align-items:center;gap:0;max-width:760px;margin-top:8px}
+.node{border:1.5px solid var(--ink);border-radius:10px;padding:14px 16px;background:var(--surface)}
+.node b{display:block;font-size:15.5px}
+.node span{font-size:13.5px;color:var(--ink-2)}
+.node.prod{border-style:dashed;border-color:var(--rule);background:transparent;color:var(--ink-2)}
+.node.prod b{color:var(--ink-2);text-decoration:line-through;text-decoration-thickness:1.5px}
+.link{padding:0 10px;text-align:center;font-size:12.5px;color:var(--ink-2);min-width:120px}
+.link svg{display:block;margin:2px auto 0}
+.link .arr-v{display:none}
+.scope-col{display:grid;gap:12px}
+.facts{margin:28px 0 0;padding:0;list-style:none;display:grid;gap:10px;max-width:62ch}
+.facts li{padding-left:22px;position:relative;color:var(--ink-2)}
+.facts li::before{content:"";position:absolute;left:2px;top:.62em;width:8px;height:8px;border-radius:2px;background:var(--ink)}
+
+/* pricing */
+.plans{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:20px;align-items:stretch}
+.plan{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:26px}
+.plan h3{font-size:17px;margin:0 0 4px;font-weight:600}
+.amount{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin:6px 0 4px}
+.amount small{font-size:16px;font-weight:500;color:var(--ink-2);letter-spacing:0}
+.plan p{margin:0;color:var(--ink-2);font-size:15.5px}
+.calc{margin-top:22px;padding-top:20px;border-top:1px solid var(--rule-soft);display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.calc label{font-size:15px;font-weight:600}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:var(--surface)}
+.stepper button{font:inherit;width:38px;height:38px;border:0;background:var(--code-bg);color:var(--ink);cursor:pointer;font-size:18px}
+.stepper button:hover{background:var(--rule-soft)}
+.stepper input{width:56px;height:38px;border:0;border-left:1px solid var(--rule);border-right:1px solid var(--rule);text-align:center;font:inherit;font-weight:600;background:var(--surface);color:var(--ink);-moz-appearance:textfield}
+.stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.total{font-size:15.5px;color:var(--ink-2)}
+.total output{color:var(--ink);font-weight:700;font-size:17px}
+.calc-hint{flex-basis:100%;font-size:14px;color:var(--ink-2);margin:0}
+
+/* closing */
+.close{padding:80px 0 88px;border-top:1px solid var(--rule)}
+.close h2{font-size:clamp(1.7rem,3vw,2.5rem);letter-spacing:-.03em;line-height:1.1;font-weight:800;margin:0 0 14px;max-width:24ch}
+.close p{color:var(--ink-2);margin:0 0 26px;max-width:56ch}
+footer{border-top:1px solid var(--rule);padding:24px 0 40px;font-size:14px;color:var(--ink-2)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+footer nav{display:flex;gap:20px}
+
+/* ---------- responsive ---------- */
+@media (max-width: 980px){
+  .hero{grid-template-columns:1fr;gap:28px;padding-bottom:56px}
+  .hero h1{max-width:18ch}
+  .two{grid-template-columns:1fr;gap:8px}
+  .rules{grid-template-columns:1fr}
+  .rule + .rule{border-left:0;border-top:1px solid var(--rule-soft)}
+}
+@media (max-width: 720px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .top{padding:14px 0}
+  .top nav{gap:14px}
+  .top nav .docs-link{display:none}
+  .hero{padding-top:8px;gap:22px}
+  .hero h1{margin:8px 0 12px;font-size:2rem}
+  .hero .lede{font-size:16.5px;margin-bottom:18px}
+  .cta{margin-bottom:14px}
+  .cta .btn{flex:1 1 auto;justify-content:center}
+  .run-head{padding:14px 14px 12px}
+  .run-bar{padding:8px 10px 8px 14px}
+  .seg button{padding:5px 9px}
+  .fail > button{padding:12px 14px;grid-template-columns:minmax(0,1fr) auto}
+  .fail > button .kind{grid-column:1 / 2;justify-self:start}
+  .fail > button .chev{grid-row:1;grid-column:2}
+  .op,.op-note{grid-column:1 / -1}
+  .detail{padding:0 14px 16px}
+  .diff{grid-template-columns:1fr}
+  .diff .spec{border-right:0;border-bottom:1px solid var(--rule)}
+  .run-foot{padding:12px 14px}
+  .passlist li{padding:8px 14px;grid-template-columns:auto minmax(0,1fr)}
+  .passlist .n{display:none}
+  section.block{padding:56px 0}
+  .compare,.plans{grid-template-columns:1fr}
+  .scope{grid-template-columns:1fr;gap:0}
+  .link{padding:10px 0}
+  .link{display:flex;align-items:center;justify-content:center;gap:10px;flex-direction:row-reverse}
+  .link .arr-h{display:none}
+  .link .arr-v{display:block;margin:0}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;animation:none !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#" aria-label="Contractcheck home">
+      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="currentColor"/><path d="M9 11h9M9 16h14M9 21h6" stroke="var(--paper)" stroke-width="2.4" stroke-linecap="round"/><circle cx="23" cy="21" r="3" fill="#E5484D"/></svg>
+      Contractcheck
+    </a>
+    <nav aria-label="Primary">
+      <a class="docs-link" href="#how">How it works</a>
+      <a class="docs-link" href="#pricing">Pricing</a>
+      <a href="https://contractcheck.example/docs">Docs</a>
+      <a class="btn btn-solid" href="https://github.com/apps/contractcheck">Install</a>
+    </nav>
+  </header>
+</div>
+
+<main id="main">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <h1>Catch the API change before a client team does.</h1>
+        <p class="lede">Contractcheck runs your OpenAPI spec against your staging API on every pull request. When a response stops matching the spec, the check fails and points to the field, the endpoint and the spec line.</p>
+        <div class="cta">
+          <a class="btn btn-solid" href="https://github.com/apps/contractcheck">Install the GitHub App</a>
+          <a class="btn btn-line" href="https://contractcheck.example/docs">Read the docs</a>
+        </div>
+        <p class="price-note"><strong>Free</strong> for public repositories. <strong>$19 a month</strong> per private repository.</p>
+      </div>
+
+      <div>
+        <div class="run is-fail" id="run" aria-label="Example Contractcheck run on a pull request">
+          <div class="run-bar">
+            <span>Checks on pull request #482</span>
+            <div class="seg" role="group" aria-label="Show run state">
+              <button type="button" data-view="fail" aria-pressed="true">Failing</button>
+              <button type="button" data-view="pass" aria-pressed="false">After the fix</button>
+            </div>
+          </div>
+
+          <!-- Failing view -->
+          <div class="view" data-view="fail">
+            <div class="run-head">
+              <span class="status-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></span>
+              <div>
+                <p class="run-title">contractcheck / staging failed: 3 responses don’t match <code>openapi.yaml</code></p>
+                <div class="run-meta"><span>Commit <code>a91f3c2</code></span><span>43 of 46 operations matched</span><span>Ran in 38s</span></div>
+              </div>
+            </div>
+            <ul class="fails">
+              <li class="fail">
+                <button type="button" aria-expanded="true" aria-controls="f1">
+                  <span class="kind">Missing field</span>
+                  <span class="op"><b>GET</b> /orders/{id} &nbsp;200</span>
+                  <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span class="op-note">Required field <code>currency</code> is not in the response.</span>
+                </button>
+                <div class="detail" id="f1">
+                  <div class="diff">
+                    <div class="spec"><h4>Spec expects</h4><pre>Order:
+  required:
+    - id
+    - total
+    - <mark>currency</mark>
+    - status</pre></div>
+                    <div class="resp"><h4>Staging returned</h4><pre>{
+  "id": "ord_81F2",
+  "total": 41.90,
+  "status": "paid"
+}
+<mark>currency: missing</mark></pre></div>
+                  </div>
+                  <p class="where">Spec: <code>openapi.yaml</code> line 214, <code>components.schemas.Order</code></p>
+                </div>
+              </li>
+              <li class="fail">
+                <button type="button" aria-expanded="false" aria-controls="f2">
+                  <span class="kind">Changed type</span>
+                  <span class="op"><b>GET</b> /customers/{id}/invoices &nbsp;200</span>
+                  <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span class="op-note"><code>items[].amount_due</code> should be an integer. Staging sent a string.</span>
+                </button>
+                <div class="detail" id="f2" hidden>
+                  <div class="diff">
+                    <div class="spec"><h4>Spec expects</h4><pre>amount_due:
+  type: <mark>integer</mark>
+  description: Cents</pre></div>
+                    <div class="resp"><h4>Staging returned</h4><pre>"items": [
+  {
+    "id": "inv_2207",
+    "amount_due": <mark>"4190"</mark>
+  }
+]</pre></div>
+                  </div>
+                  <p class="where">Spec: <code>openapi.yaml</code> line 388, <code>components.schemas.Invoice</code></p>
+                </div>
+              </li>
+              <li class="fail">
+                <button type="button" aria-expanded="false" aria-controls="f3">
+                  <span class="kind">Undocumented status</span>
+                  <span class="op"><b>POST</b> /refunds &nbsp;409</span>
+                  <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span class="op-note">The spec documents 201, 400 and 404 for this operation. Not 409.</span>
+                </button>
+                <div class="detail" id="f3" hidden>
+                  <div class="diff">
+                    <div class="spec"><h4>Spec documents</h4><pre>responses:
+  "201": Refund created
+  "400": Invalid request
+  "404": Charge not found</pre></div>
+                    <div class="resp"><h4>Staging returned</h4><pre><mark>409 Conflict</mark>
+{
+  "error": "refund_already_issued"
+}</pre></div>
+                  </div>
+                  <p class="where">Spec: <code>openapi.yaml</code> line 512, <code>paths./refunds.post</code></p>
+                </div>
+              </li>
+            </ul>
+            <div class="run-foot">Fix the handler or update the spec, then push. The check runs again on the new commit.</div>
+          </div>
+
+          <!-- Passing view -->
+          <div class="view is-pass" data-view="pass" hidden>
+            <div class="run-head">
+              <span class="status-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 14 14"><path d="M2.5 7.5l3 3 6-7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <div>
+                <p class="run-title">contractcheck / staging passed: every response matches <code>openapi.yaml</code></p>
+                <div class="run-meta"><span>Commit <code>c04e7b9</code></span><span>46 of 46 operations matched</span><span>Ran in 36s</span></div>
+              </div>
+            </div>
+            <ul class="passlist">
+              <li><span class="ok">Matches</span><span class="op"><b>GET</b> /orders/{id} &nbsp;200</span><span class="n">currency added</span></li>
+              <li><span class="ok">Matches</span><span class="op"><b>GET</b> /customers/{id}/invoices &nbsp;200</span><span class="n">amount_due is an integer</span></li>
+              <li><span class="ok">Matches</span><span class="op"><b>POST</b> /refunds &nbsp;409</span><span class="n">409 added to the spec</span></li>
+              <li><span class="ok">Matches</span><span class="op">43 other operations</span><span class="n">unchanged</span></li>
+            </ul>
+            <div class="run-foot">The pull request can merge. Client teams get the API the spec describes.</div>
+          </div>
+        </div>
+        <p class="example-note">An example run. Endpoints and values are illustrative.</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="block" aria-labelledby="catches-h">
+    <div class="wrap">
+      <h2 id="catches-h">Three ways a response drifts from the spec</h2>
+      <p class="intro">Each one compiles, passes unit tests, and breaks somebody else’s client. Contractcheck fails the check for all three.</p>
+      <div class="rules">
+        <div class="rule">
+          <span class="kind">Missing field</span>
+          <h3>A required field stops appearing</h3>
+          <p>A refactor drops a property from a serializer. The spec still lists it as required.</p>
+          <div class="pair"><span class="s">spec: currency (required)</span><br><span class="g">got: no currency</span></div>
+        </div>
+        <div class="rule">
+          <span class="kind">Changed type</span>
+          <h3>A field comes back as a different type</h3>
+          <p>A number turns into a string, an object into an array, a value into null.</p>
+          <div class="pair"><span class="s">spec: amount_due integer</span><br><span class="g">got: "4190" string</span></div>
+        </div>
+        <div class="rule">
+          <span class="kind">Undocumented status</span>
+          <h3>A new error code nobody wrote down</h3>
+          <p>An endpoint starts returning a status code the spec never mentions, so clients have no handler for it.</p>
+          <div class="pair"><span class="s">spec: 201, 400, 404</span><br><span class="g">got: 409</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="how" aria-labelledby="how-h">
+    <div class="wrap two">
+      <div>
+        <h2 id="how-h">How it runs</h2>
+      </div>
+      <ol class="steps">
+        <li><div><h3>Install the GitHub App</h3><p>Add Contractcheck from <a href="https://github.com/apps/contractcheck">github.com/apps/contractcheck</a> and choose the repositories it runs on.</p></div></li>
+        <li><div><h3>Point it at your spec and your staging API</h3><p>Tell it where your OpenAPI file lives in the repository and the base URL of your staging environment. The <a href="https://contractcheck.example/docs">docs</a> walk through setup.</p></div></li>
+        <li><div><h3>Open a pull request</h3><p>Contractcheck calls the operations in your spec against staging and compares every response to its schema and its documented status codes.</p></div></li>
+        <li><div><h3>Read the check on the pull request</h3><p>Green when every response matches. Red when one doesn’t, with the endpoint, the field, what the spec expects and what staging sent.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="replace-h">
+    <div class="wrap">
+      <h2 id="replace-h">Find out on the pull request, not from a bug report</h2>
+      <p class="intro">Without a check, a broken contract usually reaches you through someone else.</p>
+      <div class="compare">
+        <div class="case now">
+          <h3>Today</h3>
+          <ol>
+            <li>A change to a response merges. Unit tests pass.</li>
+            <li>It ships. A client team’s parser fails on <code>"4190"</code>.</li>
+            <li>They file a bug. You trace it back through a week of merges.</li>
+            <li>The Postman collection that would have caught it hasn’t been run since spring.</li>
+          </ol>
+        </div>
+        <div class="case with">
+          <h3>With Contractcheck</h3>
+          <ol>
+            <li>The change opens as a pull request.</li>
+            <li class="t">The check fails on that pull request, naming <code>amount_due</code> and the spec line.</li>
+            <li>The author fixes the code or updates the spec before merging.</li>
+            <li>The spec stays the source of truth, checked on every pull request, with nothing to maintain by hand.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="scope-h">
+    <div class="wrap two">
+      <div>
+        <h2 id="scope-h">It reads staging. Never production.</h2>
+      </div>
+      <div>
+        <div class="scope" role="img" aria-label="Contractcheck sends requests to your staging API and reads the responses. It has no connection to production.">
+          <div class="node"><b>Contractcheck</b><span>runs on each pull request</span></div>
+          <div class="link">requests and responses
+            <svg class="arr-v" width="12" height="36" viewBox="0 0 12 36" aria-hidden="true"><path d="M6 2v30M2 26l4 6 4-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="arr-h" width="100" height="12" viewBox="0 0 100 12" aria-hidden="true"><path d="M2 6h94M90 2l6 4-6 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="scope-col">
+            <div class="node"><b>Staging API</b><span>the base URL you configure</span></div>
+            <div class="node prod"><b>Production</b><span>never contacted</span></div>
+          </div>
+        </div>
+        <ul class="facts">
+          <li>The only thing it reads from your API is the responses your staging environment returns.</li>
+          <li>Production traffic, data and credentials stay out of it.</li>
+          <li>Results show up where your team already works: the checks on the pull request.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="pricing" aria-labelledby="pricing-h">
+    <div class="wrap">
+      <h2 id="pricing-h">Pricing</h2>
+      <p class="intro">Priced per repository, so the cost is easy to put in front of whoever approves it.</p>
+      <div class="plans">
+        <div class="plan">
+          <h3>Public repositories</h3>
+          <div class="amount">Free</div>
+          <p>Every check, on every pull request, for any public repository.</p>
+        </div>
+        <div class="plan">
+          <h3>Private repositories</h3>
+          <div class="amount">$19 <small>a month per repository</small></div>
+          <p>The same check on every pull request, for each private repository you install it on.</p>
+          <div class="calc">
+            <label for="repos">Private repositories</label>
+            <div class="stepper">
+              <button type="button" data-step="-1" aria-label="One fewer repository">−</button>
+              <input id="repos" type="number" inputmode="numeric" min="1" max="999" value="3">
+              <button type="button" data-step="1" aria-label="One more repository">+</button>
+            </div>
+            <span class="total"><output id="total" for="repos" aria-live="polite">$57</output> a month</span>
+            <p class="calc-hint" id="calc-hint">3 repositories × $19</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="close" aria-labelledby="close-h">
+    <div class="wrap">
+      <h2 id="close-h">Put the spec on every pull request.</h2>
+      <p>Install the app, point it at your OpenAPI file and staging URL, and the next pull request gets a check.</p>
+      <div class="cta">
+        <a class="btn btn-solid" href="https://github.com/apps/contractcheck">Install the GitHub App</a>
+        <a class="btn btn-line" href="https://contractcheck.example/docs">Read the docs</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Contractcheck</span>
+    <nav aria-label="Footer">
+      <a href="https://contractcheck.example/docs">Docs</a>
+      <a href="https://github.com/apps/contractcheck">GitHub App</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Expand/collapse failure details
+  document.querySelectorAll('.fail > button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      var panel = document.getElementById(btn.getAttribute('aria-controls'));
+      if (panel) panel.hidden = open;
+    });
+  });
+
+  // Failing / after-the-fix toggle
+  var run = document.getElementById('run');
+  var segs = run.querySelectorAll('.seg button');
+  segs.forEach(function(b){
+    b.addEventListener('click', function(){
+      var v = b.getAttribute('data-view');
+      segs.forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+      run.querySelectorAll('.view').forEach(function(el){ el.hidden = el.getAttribute('data-view') !== v; });
+      run.classList.toggle('is-fail', v === 'fail');
+      run.classList.toggle('is-pass', v === 'pass');
+    });
+  });
+
+  // Pricing calculator
+  var input = document.getElementById('repos');
+  var total = document.getElementById('total');
+  var hint = document.getElementById('calc-hint');
+  function clamp(n){ n = Math.round(Number(n)); if (!isFinite(n) || n < 1) n = 1; if (n > 999) n = 999; return n; }
+  function update(){
+    var n = clamp(input.value);
+    total.textContent = '$' + (n * 19).toLocaleString('en-US');
+    hint.textContent = n + (n === 1 ? ' repository' : ' repositories') + ' × $19';
+  }
+  input.addEventListener('input', function(){ if (input.value !== '') update(); });
+  input.addEventListener('change', function(){ input.value = clamp(input.value); update(); });
+  document.querySelectorAll('.stepper button').forEach(function(b){
+    b.addEventListener('click', function(){
+      input.value = clamp(clamp(input.value) + Number(b.getAttribute('data-step')));
+      update();
+    });
+  });
+  update();
+})();
+</script>
+</body>
+</html>
