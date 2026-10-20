@@ -29,6 +29,17 @@ Copy this file next to the page as `DESIGN-RECORD.md` and replace every prompt w
 | Brand composition | | | |
 | Counterexample | | | |
 
+## Statement
+- Subject inventory (8–12 things only this product owns; semicolons):
+- Dealt hand (first line of `node scripts/deal.mjs`, with its seed):
+- Chosen move and why, or canon and the buyer-risk reason:
+- Idea sentence ("[inventory thing] becomes [the move]"):
+- The same sentence with the nearest competitor, and why it fails:
+- Statement level (quiet, bold or loud) and why:
+- First viewport at 1440 (placement, sizes, live thing, refused default):
+- First viewport at 390:
+- Name test (the one with the …, eight words or fewer):
+
 ## Hypothesis
 - Archetype and why:
 - Type roles, faces and why they fit this product:
@@ -85,7 +96,7 @@ The other 68 checks run automatically in `check-page.mjs`. Answer each of these 
 | PS-04 | Each of the visitor's first three doubts is answered by a specific artifact on the page. | | |
 | PS-05 | Every section tells the visitor something the sections above did not; repeated claims are cut. | | |
 | PS-07 | Questions to the user carried a recommended default; unanswered ones were assumed and logged. | | |
-| PS-08 | Two hero variants that differ on one named axis (structure, density, emphasis, type or voice) were scored before code, and neither is the category's obvious default or the obvious "anti-default". | | |
+| PS-08 | Two hero variants that differ on one named axis (structure, density, emphasis, type or voice) were scored before code, one of them is the statement dealt and chosen for this product, and neither is the category's obvious default or the obvious "anti-default". | | |
 | PS-09 | Two references serve different jobs, one counterexample is named, what is not borrowed is stated, and departures from the chosen recipe are recorded. | | |
 | CP-03 | The first screen says what kind of thing the product is: a plain category noun or an "X for Y" frame. | | |
 | CP-04 | The record names the visitor's current alternative (including doing nothing), the one advantage only this product has, the category frame, and who it is for and not for; the headline would be false or odd on the alternative's page. | | |
@@ -97,7 +108,7 @@ The other 68 checks run automatically in `check-page.mjs`. Answer each of these 
 | HR-06 | The hero is sized with svh/dvh or by its content, not a fixed 100vh that clips under mobile browser bars. | | |
 | ST-04 | Real proof, when supplied, appears within the first two screenfuls or beside the claim it supports, and every quote carries name, role and company. | | |
 | CO-04 | Accent colour marks state or action and is not sprinkled for decoration. | | |
-| TT-05 | Replacing the logo would not turn this into another company's page. | | |
+| TT-05 | Replacing the logo would not turn this into another company's page, and the idea sentence fails with the nearest competitor's name in it. | | |
 | TT-06 | Compared with each reference on copy, names, numbers, imagery, layout and motion, no distinctive element or combination is reproduced. | | |
 | MO-07 | Hover-only effects sit behind (hover:hover) and (pointer:fine), and staggers stay between 30 and 80ms without blocking input. | | |
 | MO-08 | Every animation has a written contract: trigger, purpose, fallback, duration, easing. | | |

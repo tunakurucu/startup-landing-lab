@@ -62,7 +62,7 @@ CHECKS = [
   ('PS-05', 'Every section tells the visitor something the sections above did not; repeated claims are cut.', 'shot', 'warn', 'SLL GST'),
   ('PS-06', 'There is one primary action, worded the same wherever it appears.', 'auto', 'warn', 'GST NNG'),
   ('PS-07', 'Questions to the user carried a recommended default; unanswered ones were assumed and logged.', 'record', 'warn', 'MP'),
-  ('PS-08', 'Two hero variants that differ on one named axis (structure, density, emphasis, type or voice) were scored before code, and neither is the category\'s obvious default or the obvious "anti-default".', 'record', 'block', 'SLL GST AFD JK AUT'),
+  ('PS-08', 'Two hero variants that differ on one named axis (structure, density, emphasis, type or voice) were scored before code, one of them is the statement dealt and chosen for this product, and neither is the category\'s obvious default or the obvious "anti-default".', 'record', 'block', 'SLL GST AFD JK AUT'),
   ('PS-09', 'Two references serve different jobs, one counterexample is named, what is not borrowed is stated, and departures from the chosen recipe are recorded.', 'record', 'block', 'SLL'),
   # Copy and positioning
   ('CP-01', 'The h1 has 3–12 words and says more than the product or company name.', 'auto', 'warn', 'JS HD NNG'),
@@ -119,7 +119,7 @@ CHECKS = [
   ('TT-02', 'No icon tile stacked above every card heading.', 'auto', 'warn', 'IMP'),
   ('TT-03', 'No small tracked-caps label above nearly every section heading.', 'auto', 'warn', 'IMP AFD'),
   ('TT-04', 'No thick coloured side stripe on cards and no grid, dot or stripe background used as filler.', 'auto', 'warn', 'IMP GST'),
-  ('TT-05', 'Replacing the logo would not turn this into another company\'s page.', 'record', 'block', 'SLL'),
+  ('TT-05', 'Replacing the logo would not turn this into another company\'s page, and the idea sentence fails with the nearest competitor\'s name in it.', 'record', 'block', 'SLL'),
   ('TT-06', 'Compared with each reference on copy, names, numbers, imagery, layout and motion, no distinctive element or combination is reproduced.', 'record', 'block', 'SLL MT'),
   # Motion
   ('MO-01', 'With reduced motion, nothing translates, scales or zooms and nothing is hidden; short fades are allowed.', 'auto', 'block', 'VWG EK SLL WCAG APL'),

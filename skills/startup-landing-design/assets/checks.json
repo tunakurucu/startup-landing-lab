@@ -70,7 +70,7 @@
  },
  {
   "id": "PS-08",
-  "check": "Two hero variants that differ on one named axis (structure, density, emphasis, type or voice) were scored before code, and neither is the category's obvious default or the obvious \"anti-default\".",
+  "check": "Two hero variants that differ on one named axis (structure, density, emphasis, type or voice) were scored before code, one of them is the statement dealt and chosen for this product, and neither is the category's obvious default or the obvious \"anti-default\".",
   "verify": "record",
   "severity": "block",
   "credit": [
@@ -580,7 +580,7 @@
  },
  {
   "id": "TT-05",
-  "check": "Replacing the logo would not turn this into another company's page.",
+  "check": "Replacing the logo would not turn this into another company's page, and the idea sentence fails with the nearest competitor's name in it.",
   "verify": "record",
   "severity": "block",
   "credit": [

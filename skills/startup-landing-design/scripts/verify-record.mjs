@@ -17,7 +17,7 @@ const problems = [];
 if (!existsSync(recordPath)) { console.log(`FAIL\n- ${recordPath} does not exist. Copy assets/decision-record.md there and fill it.`); process.exit(1); }
 const text = readFileSync(recordPath, 'utf8');
 
-const REQUIRED = ['Product interpretation', 'Interview log', 'References', 'Hypothesis', 'Two hero variants before code',
+const REQUIRED = ['Product interpretation', 'Interview log', 'References', 'Statement', 'Hypothesis', 'Two hero variants before code',
   'Gate before implementation', 'Render evidence', 'Checker result', 'Checklist', 'Artifact stress test', 'Gate after render', 'Structural revision', 'Remaining weaknesses', 'Status'];
 const sections = {};
 let current = null;
@@ -47,6 +47,7 @@ const value = (section, key) => (sections[section] || []).map(l => l.match(new R
 const FIELDS = {
   'Product interpretation': ['Five-second line', 'Current alternative', 'The one advantage only this product has', 'Category frame', 'Best-fit customer', "Users' own words", 'Biggest reason not to click'],
   'Two hero variants before code': ['Category default and anti-default'],
+  'Statement': ['Subject inventory', 'Dealt hand', 'Chosen move', 'Idea sentence', 'The same sentence with the nearest competitor', 'Statement level', 'First viewport at 1440', 'First viewport at 390', 'Name test'],
 };
 const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const fieldLine = (section, prefix) => (sections[section] || []).find(l => new RegExp(`^\\s*-\\s+${esc(prefix)}[^:]*:`, 'i').test(l));
@@ -108,6 +109,20 @@ if (checker && !/^unavailable:/i.test(checker)) { try { checkerFacts = JSON.pars
 if (fsQuote && checkerFacts?.first_screen_text) {
   const want = norm(fsQuote[1] || fsQuote[2]);
   for (const [w, seenText] of Object.entries(checkerFacts.first_screen_text)) if (!norm(seenText).includes(want)) problems.push(`the five-second line is not in the first screen at ${w}px (check.json facts.first_screen_text): put it there, or quote the line that is`);
+}
+// Statement (v0.5): a dealt hand with its seed, a real inventory, an idea sentence, a level, a short name.
+const stmt = k => fieldLine('Statement', k)?.replace(/^[^:]*:/, '').trim();
+if ('Statement' in sections) {
+  const inv = stmt('Subject inventory');
+  if (inv && inv.split(/;/).map(x => x.trim()).filter(Boolean).length < 8) problems.push('Statement: the subject inventory needs at least 8 items separated by semicolons');
+  const hand = stmt('Dealt hand');
+  if (hand && !/seed\s+\d+/i.test(hand)) problems.push('Statement: paste the dealt hand with its seed (node scripts/deal.mjs "<product>")');
+  const idea = stmt('Idea sentence');
+  if (idea && !/\bbecomes?\b/i.test(idea)) problems.push('Statement: the idea sentence takes the form "[inventory thing] becomes [the move]"');
+  const lvl = stmt('Statement level');
+  if (lvl && !/^(quiet|bold|loud)\b/i.test(lvl.replace(/[*_`]/g, ''))) problems.push('Statement: the level starts with quiet, bold or loud');
+  const nameTest = stmt('Name test');
+  if (nameTest && nameTest.replace(/^["“]?the one with (the|a|an)\s*/i, '').split(/\s+/).filter(Boolean).length > 8) problems.push('Statement: the name test is eight words or fewer after "the one with the"');
 }
 // Artifact stress test: every probe answered; a fail blocks DONE.
 const PROBES = ['Empty', 'Out of range', 'Nonsense', 'Repeat', 'Reset', 'Keyboard only', 'Phone', 'Reduced motion', "Visitor's own input"];

@@ -1,9 +1,9 @@
 ---
 name: startup-landing-design
-description: Build, redesign, revise or audit a startup landing page using dated evidence from real startup sites, positioning and copy rules, archetype recipes and 100 checks (68 automatic, 32 judged from screenshots, code or the record). Use for a new startup homepage, a landing-page redesign, a change to one section, a review of an existing site ("audit my homepage"), or a request to avoid generic AI website patterns. Preserves existing brand and framework constraints.
+description: Build, redesign, revise or audit a startup landing page that makes one ownable statement (a character with a job, an inhabited world, the product as a toy, an object, the trade's own notation, monumental type) while staying clear in five seconds, using dated evidence from real startup sites, positioning and copy rules, archetype recipes and 100 checks (68 automatic, 32 judged from screenshots, code or the record). Use for a new startup homepage, a landing-page redesign, a change to one section, a review of an existing site ("audit my homepage"), a request to make a page bold, memorable or less generic, or to avoid generic AI website patterns. Preserves existing brand and framework constraints.
 license: MIT
 metadata:
-  version: "0.4"
+  version: "0.5"
 ---
 
 # Startup landing design
@@ -38,9 +38,11 @@ The headline may be the statement; then the **five-second line** carries the fac
 
 Read [reference selection](references/reference-selection.md), [archetypes](references/design-archetypes.md), then the [casebook index](references/casebook.md) and only the casebook file for the family you are considering (read another if the casebook changes your mind). Record two references serving different jobs and one counterexample, each with the dated observed decision, its limit, the transferable principle and the treatment you will not borrow. Unaudited sites are leads, not evidence.
 
-## 4. Choose before coding
+## 4. Make a statement, then choose before coding
 
-Read [page structure](references/page-structure.md), [composition and type](references/composition-and-type.md) and [the detector](references/default-detector.md). Keep the page structure easy to read; put the distinctiveness into the artifact, the voice and the type. Write the hypothesis: type roles and faces (check [observed type](references/type-observed.md) so a default face is a choice, not a reflex), composition, grid, ground and material, artifact, sections, interaction, motion. Name the category's obvious default and the obvious "anti-default", and avoid both. Sketch two hero variants that differ on one named axis; score each 0–10 for fit, identity, originality, composition and proof, and say what a 10 would need. Run the detector on the plan and resolve every block before writing code.
+Read [make a statement](references/statement.md). Every page makes one ownable statement; the only question is how loud. List 8–12 things only this product and its users own, run `node scripts/deal.mjs "<product>"` (add `--level quiet|bold|loud`; bold is the default, and "make it loud" or "make a statement" from the person means loud), choose one dealt move or take canon with the buyer-risk reason, write the idea sentence ("[a thing from the inventory] becomes [the move]") and prove it fails with the nearest competitor's name in it, then write the first-viewport contract at 1440 and 390. Fill the record's Statement section before the hypothesis.
+
+Read [page structure](references/page-structure.md), [composition and type](references/composition-and-type.md) and [the detector](references/default-detector.md). Keep the page structure easy to read; put the distinctiveness into the artifact, the voice and the type. Write the hypothesis: type roles and faces (check [observed type](references/type-observed.md) so a default face is a choice, not a reflex), composition, grid, ground and material, artifact, sections, interaction, motion. Name the category's obvious default and the obvious "anti-default", and avoid both. Sketch two hero variants that differ on one named axis, one of them the chosen statement at the chosen level; score each 0–10 for fit, identity, originality, composition and proof, and say what a 10 would need. Run the detector on the plan and resolve every block before writing code.
 
 ## 5. Build from one recipe
 

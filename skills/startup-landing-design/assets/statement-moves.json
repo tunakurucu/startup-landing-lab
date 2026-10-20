@@ -1,0 +1,154 @@
+{
+  "version": "0.5",
+  "note": "Statement moves dealt by scripts/deal.mjs. Each move is a way to make the first screen ownable while the five-second line keeps it clear. Observed examples are audited records in research/sites.json (one browser, one date each).",
+  "moves": [
+    {
+      "id": "character",
+      "name": "A character with a job",
+      "what": "An original character drawn from the product's subject that does one job in the story: it demonstrates the product, reacts to the visitor's action, or carries the result.",
+      "fits": "Consumer and prosumer products, products people use daily or emotionally, crowded categories where recall matters, developer tools with a playful culture.",
+      "avoid_when": "The buyer is a regulated or high-stakes enterprise committee and the character would be the only thing on the first screen; the character would only decorate.",
+      "first_screen": "The character holds, uses or reacts to the product's real output next to the five-second line; it never stands alone as the hero.",
+      "build": "Rigged SVG of 6-10 parts with a locked face and one accent part (see references/statement.md, characters).",
+      "observed": [
+        "vanta: a line-drawn llama recurring across hero and audience cards",
+        "phantom: the ghost mark set inline inside headlines as a glyph",
+        "finni-health: a cartoon fox recurring across sections with illustrated scenes",
+        "doomersion: the mascot recurs inside the app screens"
+      ]
+    },
+    {
+      "id": "world",
+      "name": "An inhabited world",
+      "what": "The first screen is a place from the visitor's own world (a kitchen pass, a trading floor, a clinic hallway) drawn or built so the product visibly lives in it; nav, headline and action are working parts set inside the world.",
+      "fits": "Products tied to a physical or social setting; operations software; marketplaces; anything whose user works somewhere specific.",
+      "avoid_when": "The world would be a generic office or a desk with a laptop; the scene would push the five-second line below the fold on phones.",
+      "first_screen": "A single scene at a scale where the product's effect is visible inside it (a ticket printing, a shelf restocking), with the five-second line in clear space.",
+      "build": "One graphic language: flat tone steps or a single texture treatment across scene, charts and icons; three levels of detail; a still that reads without motion.",
+      "observed": [
+        "meuze: a halftone restaurant scene pinned through a long scroll track, one dot-matrix treatment across photo, charts and logo",
+        "finni-health: illustrated bedtime and garden scenes in full-width colour bands",
+        "posthog: a product suite presented as a place to explore"
+      ]
+    },
+    {
+      "id": "toy",
+      "name": "The product as a toy",
+      "what": "The first screen is the core interaction, playable with real content in seconds, no sign-up: type, drag, scrub, toggle, and the product's output answers.",
+      "fits": "Tools whose value shows in one action: generators, editors, calculators, converters, APIs with a visible response, schedulers.",
+      "avoid_when": "The real interaction needs data the visitor does not have, or takes minutes; a fake toy that ignores input is worse than none.",
+      "first_screen": "The control is focused or obvious, the default state already shows a good result, and one sentence says it runs locally or on sample data.",
+      "build": "Bounded inputs, visible progress, reset, keyboard path and the artifact stress test; the finished state is the static fallback.",
+      "observed": [
+        "tldraw: a live, drawable canvas beside the install command and a ten-line example",
+        "flora: a draggable node graph proves the product after generated output"
+      ]
+    },
+    {
+      "id": "object",
+      "name": "An object portrait",
+      "what": "The product, or its output, shown as one physical or physical-feeling object at heroic scale: a device, a printed report, a card, a receipt, a package.",
+      "fits": "Hardware; products whose output is a document or artifact; financial products with a card or statement; anything that can be held.",
+      "avoid_when": "There is no honest object (an abstract platform) and the object would be a stand-in metaphor.",
+      "first_screen": "One object, lit and scaled to dominate, with real labels on it and the five-second line beside it.",
+      "build": "HTML or SVG object built from the product's real fields (not an image of text); a poster frame first; at most one rotation or reveal.",
+      "observed": [
+        "button-computer: a full-bleed video of the device clipped to a person",
+        "nori: a physical product image leading to task examples and a direct order action"
+      ]
+    },
+    {
+      "id": "notation",
+      "name": "The audience's own notation",
+      "what": "The page borrows a format the visitor reads every day and the product produces or changes: a ticket, a chart, a score, a ledger line, a recipe card, a lab plate, a shipping label.",
+      "fits": "Vertical software for a trade with its own documents; B2B tools where the buyer recognises the format instantly.",
+      "avoid_when": "The format is a costume (monospace labels on a non-technical product) or the visitor would not recognise it.",
+      "first_screen": "The notation is the hero artifact, filled with the product's result, at a size where it reads; the headline speaks the trade's words.",
+      "build": "Recreate the format in semantic HTML from real fields; keep its conventions (columns, codes, stamps) and drop chrome that is only decoration.",
+      "observed": [
+        "end-close: a matching table with an 'Agent resolved' toast",
+        "canary: replayed failures and diffs as the proof sequence"
+      ]
+    },
+    {
+      "id": "type",
+      "name": "A typographic statement",
+      "what": "The type is the image: one set phrase or the wordmark at monumental scale, composed so the letters themselves carry the idea.",
+      "fits": "Products with a strong single word or claim; brands with a distinctive commissioned or open-licence face; developer and design tools.",
+      "avoid_when": "The phrase needs more than two lines at 390px; the product needs to be seen to be believed.",
+      "first_screen": "At most two lines at every width; the five-second line and the action immediately beneath; the product artifact begins at the fold.",
+      "build": "Size from the measured corpus upward deliberately (HR-04); one face, tight leading, no gradient text, no single accented word.",
+      "observed": [
+        "canary: a two-line poster headline on a yellow highlight bar",
+        "granola: a large serif promise beside a typing meeting-note mock",
+        "gutgutgoose and astro-mechanica: a giant wordmark closing the page"
+      ]
+    },
+    {
+      "id": "data-portrait",
+      "name": "A data portrait",
+      "what": "The product's real or sample data drawn as a striking image: a forecast curve, a network, a heat map, a timeline, labelled so it reads as information first.",
+      "fits": "Analytics, forecasting, infrastructure and finance products whose output is a pattern people care about.",
+      "avoid_when": "The chart would be a fake dashboard of grey bars; the data has no story at a glance.",
+      "first_screen": "One chart with one annotated moment (the spike, the anomaly, the saved hour), sized as a picture, not a dashboard tile.",
+      "build": "SVG from a small dataset in the page; real axes and units; the annotation is text, not only colour.",
+      "observed": [
+        "meuze: a forecast curve with a match-day spike as an operational artifact"
+      ]
+    },
+    {
+      "id": "before-after",
+      "name": "Before and after",
+      "what": "The first screen holds the visitor's current mess and the product's result side by side, or one object that changes from one to the other under the visitor's control.",
+      "fits": "Products that clean, convert, translate, summarise, reconcile, schedule or fix.",
+      "avoid_when": "The before state would mock the customer, or the after state would need invented metrics.",
+      "first_screen": "Both states visible or one control away; a real example labelled as a sample.",
+      "build": "One slider, toggle or step control; both states readable as stills; no auto-flip faster than reading speed.",
+      "observed": [
+        "finni-health: eligibility input ahead of the headline answers the first question directly"
+      ]
+    },
+    {
+      "id": "generative",
+      "name": "A generative system",
+      "what": "A rule-based visual made from the product's own logic (a scheduler's grid, a compiler's tree, a router's paths), animated or seeded, so the image is the product's idea.",
+      "fits": "Infrastructure, AI research, developer platforms, products whose mechanism is beautiful but invisible.",
+      "avoid_when": "The rule has nothing to do with the product (particles for their own sake); text contrast would depend on the animation.",
+      "first_screen": "The system as background or side panel with the five-second line on a stable ground; it settles within five seconds and has a still frame.",
+      "build": "Canvas or SVG, seeded so every capture matches; pauses off-screen and under reduced motion; idles within 5 s (MO-05).",
+      "observed": [
+        "reflection-ai: a slowly drifting dot-matrix canvas as the hero's only image",
+        "modal: a self-assembling dot-matrix cube behind a one-line claim"
+      ]
+    },
+    {
+      "id": "voice",
+      "name": "A voice with a point of view",
+      "what": "The first screen is a sharp, specific opinion in the founders' voice, set with editorial care; the product proof arrives immediately below.",
+      "fits": "Category creators, contrarian products, research labs, small teams selling through belief.",
+      "avoid_when": "The opinion is generic; the buyer needs to see the product before trusting a stance.",
+      "first_screen": "The opinion as the headline, the five-second line under it in plain words, one action, and the product artifact cut by the fold.",
+      "build": "Editorial type pairing, generous measure control, real author attribution; no manifesto wall of text.",
+      "observed": [
+        "traverse: an unstyled text memo",
+        "agency and mindy: a signed letter as the whole homepage when the company winds down"
+      ]
+    }
+  ],
+  "canon": {
+    "id": "canon",
+    "name": "Canon (the plain page done perfectly)",
+    "what": "No statement move: the conventional structure for the category, executed with exact type, real product proof and no template tells.",
+    "use_when": "Only when the person asked for convention, or the buyer's risk is such that any move would cost trust; record why. Never the default."
+  },
+  "worlds": [
+    "objects the user handles at work",
+    "documents and forms the user reads",
+    "rituals and routines of the user's day",
+    "the place where the work happens",
+    "the marks, codes and notations of the trade",
+    "tools and materials of the craft",
+    "the sound, rhythm or timing of the work",
+    "the graphic tradition of the user's culture or region"
+  ]
+}

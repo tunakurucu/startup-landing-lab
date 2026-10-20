@@ -21,6 +21,11 @@ function filled(dir, {status = 'DONE', checkerFailures = [], checker = null, ver
   writeFileSync(join(dir, 'check.json'), JSON.stringify(checker || {status: 'ran', failures: checkerFailures, warnings: [], facts}));
   let t = template.replace(/^(\s*-\s+[^:\n]{3,80}:)\s*$/gm, '$1 decided');
   t = t.replace(/\| (Product explanation|Brand composition|Counterexample) \| \| \| \|/g, '| $1 | a | b | c |');
+  t = t.replace(/^(\s*-\s+Subject inventory[^:\n]*:) decided$/m, '$1 waitlist cards; the front desk phone; cancellation slips; reminder texts; the appointment book; the 2:30 gap; insurance cards; the therapy table')
+    .replace(/^(\s*-\s+Dealt hand[^:\n]*:) decided$/m, '$1 Dealt for "Tipline" with seed 12345')
+    .replace(/^(\s*-\s+Idea sentence[^:\n]*:) decided$/m, '$1 the paper waitlist becomes a character who walks the slot to the next patient')
+    .replace(/^(\s*-\s+Statement level[^:\n]*:) decided$/m, '$1 bold, because clinics are small and personal')
+    .replace(/^(\s*-\s+Name test[^:\n]*:) decided$/m, '$1 the one with the slot-carrying clipboard');
   t = t.replace(/^(\s*-\s+Five-second line[^:\n]*:) decided$/m, `$1 "${line}"`);
   t = t.replace(/^\| (Empty|Out of range|Nonsense|Repeat|Reset|Keyboard only|Phone|Reduced motion|Visitor's own input) \| \| \| \|$/gm, (_, p) => `| ${p} | tried it at 1440 and 390 | responded with a clear message | ${stress[p] || 'pass'} |`);
   t = t.replace(/^(\s*-\s+Users' own words[^:\n]*:) decided$/m, '$1 "my close takes three days" (r/bookkeeping), "the payout never matches" (G2 review), "fees hide in the deposit" (support forum)');
@@ -194,4 +199,15 @@ test('a failed stress probe rules out DONE but allows DONE_WITH_CONCERNS', () =>
   const dir2 = mkdtempSync(join(tmpdir(), 'rec-'));
   filled(dir2, {stress: {'Out of range': 'fail'}, status: 'DONE_WITH_CONCERNS: months field accepts 5000'});
   assert.equal(run(dir2).status, 0, run(dir2).stdout);
+});
+
+test('the statement needs a dealt hand with a seed and a level', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'rec-'));
+  filled(dir);
+  const p = join(dir, 'DESIGN-RECORD.md');
+  writeFileSync(p, readFileSync(p, 'utf8').replace(/with seed 12345/, 'by me').replace(/bold, because/, 'medium, because'));
+  const r = run(dir);
+  assert.equal(r.status, 1);
+  assert.match(r.stdout, /dealt hand with its seed/);
+  assert.match(r.stdout, /quiet, bold or loud/);
 });
