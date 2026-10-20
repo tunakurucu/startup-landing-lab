@@ -1,0 +1,61 @@
+{
+  "packet": "P005",
+  "persona": "buyer",
+  "A": {
+    "scores": {"clarity": 9, "fit": 8, "distinctiveness": 7, "proof": 8, "craft": 8, "mobile": 7, "honesty": 7, "interaction": 6, "copy": 9, "first_screen": 8},
+    "evidence": {
+      "clarity": "Reading as the clinic owner at 1440: H1 'The 2:30 that just cancelled gets filled from your waitlist.' and the subhead names the audience ('small physical therapy clinics'), the mechanism (texts the waitlist one person at a time) and the result (tells the front desk who is coming). The next step, 'Book a 15-minute setup call', is beside it. Nothing later contradicts it.",
+      "fit": "Both audiences get a real path: a patient link in the hero ('Got a text from Chairtime? What it is and how to reply.') and a 'Got a text?' nav item that stays visible at 390 lead to a full section with verification checks and YES/NO/CANCEL/STOP meanings. HIPAA is handled as 'Our HIPAA risk assessment is still in progress, so this page makes no HIPAA compliance claim.' The demo uses a sample clinic. Weak spots: the missing scheduling tool is handled with a CTA that leads to a card that cannot book. The owner's doubt about whether it connects to their scheduler is never answered; 'the front desk tells Chairtime the slot is open' does not say how.",
+      "distinctiveness": "The hero artifact is a five-slot Tuesday schedule strip above a step rail and a text thread. The 'texts' section breaks down each SMS with numbered annotations (01–06). Serif editorial type sets it apart from SaaS templates. Below the hero the structure is a familiar sequence of two-column sections.",
+      "proof": "At 1440 the schedule strip with 'Northside PT (sample)' and 'Filled 1:31' is in the first viewport. Clicking steps 1–4 updates the slot state (Cancelled 1:12 > Offering > Offering, 2nd person > Filled 1:31), the clock and the thread, with pending notes such as 'Waiting for Priya's reply. Her window closes at 1:29 PM'. The times are consistent with the stated fifteen-minute window and are labelled 'an example, not a measured result'.",
+      "craft": "Clean type scale and rhythm at 1440, 768 and 390, and no overflow (probe 0px). There is a large empty area to the right of the H1 at 1440 above the CTA. Body text in the setup card's disclosure is small and muted.",
+      "mobile": "At 390 the headline, subhead, CTA and patient link fit the first screen, and the nav keeps 'Got a text?' visible. The artifact starts at y≈704, below the fold. The strip drops to 3 slots and the step buttons sit in a 2×2 grid at least 44px tall. When I tapped a step, the note below the buttons changed, but the new texts appear about 350px further down (thread top y≈1371), out of view.",
+      "honesty": "Every example is labelled where it appears ('(sample)' in the strip header, the footer note about made-up patients), and nothing is invented. The primary action is the problem. Hero 'Book a 15-minute setup call' scrolls to a card whose small muted line says 'this page cannot take a booking', so the visitor learns this only after clicking. The button in that card, also labelled 'Book a 15-minute setup call', does nothing.",
+      "interaction": "The four step buttons, 'Replay the fill' and 'Stop the replay' all work at every width with no console errors, and aria-pressed and a role=status note are present. However, the repeated primary CTA in the #setup-call card links to #setup-call itself: at 1440 the scroll position stayed at 4136 after the click and nothing else happened. A visitor who arrived wanting to book reaches a dead button.",
+      "copy": "Specific nouns from the clinic and patient world ('front desk marks the cancellation', 'reply window', 'Reply CANCEL if your plans change'). The call agenda is timed by minute ('Minutes 0–5…'). The patient checks are concrete ('It never asks for a card number, insurance details, a password'). Terms stay consistent throughout. One vague line: 'If it is not, you keep the loaded list' does not say where the list is kept.",
+      "first_screen": "At 1440 the view holds a specific outcome for a named audience, the CTA, and the top of the labelled sample schedule showing 'Filled 1:31'. At 390 the promise and CTA are visible, but only the header of the artifact peeks in at the bottom. The CTA label promises a booking the page cannot take."
+    },
+    "problems": [
+      "The primary action cannot book. The hero 'Book a 15-minute setup call' scrolls to a card whose identically labelled button links to its own anchor and does nothing. The 'cannot take a booking' disclosure sits in small muted text under that dead button, not next to the hero CTA.",
+      "The clinic owner's practical doubt about how the front desk marks a slot, and whether it touches their scheduler or EHR, is never answered.",
+      "At 390 the demo starts below the fold, and tapping a step changes texts about 350px below the buttons, out of view."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "The repeat of the primary action in the setup-call card, labelled 'Book a 15-minute setup call' (a.btn inside .book), has href='#setup-call', which is the section it already sits in. Clicking it does nothing: no navigation, no dialog, scroll position unchanged. The hero CTA with the same label only scrolls to this card. The visitor is never told before clicking that no booking is possible; the disclosure is in the muted line under the dead button.",
+        "steps": "Open packets/P005/A/index.html from disk at 1440x900. Click the hero 'Book a 15-minute setup call'; the page scrolls to #setup-call (scrollY≈4136). Click the 'Book a 15-minute setup call' button inside the white card on the right. Nothing happens (scrollY stays 4136, URL stays #setup-call, no dialog opens)."
+      }
+    ]
+  },
+  "B": {
+    "scores": {"clarity": 8, "fit": 8, "distinctiveness": 6, "proof": 8, "craft": 8, "mobile": 6, "honesty": 7, "interaction": 8, "copy": 8, "first_screen": 7},
+    "evidence": {
+      "clarity": "H1 'A cancelled 2:30 doesn't have to stay empty.' is a softer promise than a stated outcome. The lede explains the mechanism clearly ('texts the patients on your waitlist, one at a time, until somebody takes the slot'). The audience, 'For small physical therapy clinics', appears only in grey fine print below the CTAs.",
+      "fit": "Patient path: a hero link 'Got a text from us? Start here' leads to a section with YES/NO/STOP instructions, 'How to know it's us', and a note that it 'will never ask you to tap a link to confirm anything'. A dedicated dark 'Where we stand on HIPAA' band handles the compliance constraint well. The FAQ answers the owner's scheduler doubt ('Does it connect to my scheduling software? Not today.'). The missing booking tool is handled by a dialog plus a one-line BOOKING_URL switch in demo.js.",
+      "distinctiveness": "The hero board (day schedule, numbered waitlist with status pills, text thread, clock) is product-specific, and the clock-at-2:30 logo is a nice touch. The rest is the standard kit: a numbered 'How it works', a definition list of settings, a dark band, an FAQ and a CTA band.",
+      "proof": "At 1440 the full board is in the first viewport and autoplays from 11:02 to Filled 11:12 at 2.4s per step. The seven step dots walk through Cancelled 11:04 > 'Reply by 11:14' (ten-minute window) > Passed > 'Reply by 11:19' > Took it > 'Hannah was never bothered'. The times are consistent. The label 'An example, not a live clinic' sits at the bottom of the board, not next to the clinic name.",
+      "craft": "Solid grid and type, with clear state colours (rose for cancelled, amber for offering, teal for filled) and no overflow. The thread is a fixed-height 330px scroll box that is mostly empty in early steps. The message meta text is about 0.7rem (12px).",
+      "mobile": "At 390 the header keeps 'Book a setup call' but hides 'How it works' and 'Got a text?'; the hero link still covers patients. The board starts at y≈630, below the fold, and its 'example' label is at y≈1486. Step dots are 22×22px and the play button 34×34px, both well under 44px. On the plus side, feedback (thread plus caption) appears right above the controls I tapped.",
+      "honesty": "No compliance claim, and the demo is labelled. But: (1) 'Pick a time that suits your front desk. We'll call you.' implies a working booking, and the 'isn't connected yet' disclosure comes only after the click, in the dialog. (2) The dialog says 'Booking opens shortly', which implies timing. (3) The Rules section says 'Most clinics pick something between five and fifteen minutes', and the FAQ is headed 'Questions clinics ask', implying an existing customer base the brief does not support. (4) The demo's 'You're booked' text goes out from Chairtime, while step 4 says the desk books the patient 'as usual' afterwards.",
+      "interaction": "Every booking CTA (header, hero, call band, footer) opens a native dialog. Escape and 'Okay' close it, and its in-page links close it and scroll to #call (verified at 1440, 768 and 390). Play/pause toggles aria-pressed; the dots jump to any step with caption, clock, slot and waitlist pills all updating; Replay resets and plays. There are no console errors, and it respects reduced motion. The tap targets are tiny.",
+      "copy": "Plain and specific ('Hannah was never bothered', 'Minimum notice… Nobody can get there in time, and the text just annoys them', 'a time, a tap'). The patient section is reassuring and concrete. Weak spots are the implied-customer lines ('Most clinics pick…', 'Questions clinics ask'). The patient reply list omits CANCEL, even though the sample confirmation text tells the patient to reply CANCEL.",
+      "first_screen": "At 1440 there is the mechanism, the CTA, and an autoplaying labelled demo, which is strong. The headline only says the slot 'doesn't have to stay empty', a weaker promise than a filled slot. At 390 the first screen shows the promise, CTA and patient link, and only the dark header of the board ('Riverbend Physical Therapy') with no example label in view."
+    },
+    "problems": [
+      "Implied traction the brief does not support: 'Most clinics pick something between five and fifteen minutes' and 'Questions clinics ask' read as statements about existing customers.",
+      "The booking CTA reads as live ('Pick a time… We'll call you.'). That it is not connected is revealed only in a dialog after the click, and 'Booking opens shortly' implies a date.",
+      "On mobile the demo starts below the fold, its 'example' label is about 900px below the clinic name, and the step dots (22px) and play button (34px) are hard to tap."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF2",
+        "evidence": "The Rules section, 'Reply window' row, states as fact: 'Most clinics pick something between five and fifteen minutes.' This is a usage statistic about clinic customers that the brief does not supply (the brief says there are no clinic logos, testimonials or fill-rate numbers). It is not inside the labelled example board. This is a borderline case for the adjudicator.",
+        "steps": "Open packets/P005/B/index.html from disk at 1440x900. Scroll to the section headed 'You decide who gets texted, and when'. Read the 'Reply window' row."
+      }
+    ]
+  },
+  "preference": "A",
+  "confidence": "medium",
+  "reason": "As the clinic owner, A's first screen states the outcome for my clinic and shows a labelled sample schedule. Its texts, verification steps and HIPAA wording are more exact than B's, and it invents nothing. As the founder, the dead 'Book' button is a one-line fix. B's FAQ answers the scheduler question and its booking dialog is the more graceful handling of the missing link. B also hints at customers it does not have. I would switch to B if A's dead-button flag is judged worse than B's implied-usage lines, or if the scheduler-integration doubt is the owner's deciding question."
+}
