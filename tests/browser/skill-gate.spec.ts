@@ -8,7 +8,7 @@ const GALLERY=['TY-10'];                  // four faces, each with a role: displ
 const INDEX=[...GALLERY,'HR-02','ST-03']; // index pages: choosing a record or an experiment is the action, no hero button
 const KEPT:Record<string,string[]>={
   '/':GALLERY,
-  '/references':INDEX,
+  '/references':[...INDEX,'CP-11'],
   '/skill':[...GALLERY,'CP-11'],
   '/demos':[...INDEX,'CP-11'],
   '/evals':GALLERY,
@@ -19,7 +19,7 @@ const KEPT:Record<string,string[]>={
 };
 // PF-05 is a lab timing (median LCP of three throttled runs), so it is budgeted rather than matched exactly:
 // every page must meet the checker's own 2.5 s, except a record page, which paints its frame first and the
-// 94-record catalog chunk second (about 3 s; the reason is recorded with the other kept warnings).
+// record catalog chunk second (about 3 s; the reason is recorded with the other kept warnings).
 const LCP_BUDGET_MS:Record<string,number>={'/reference/resend':4000};
 const routes=Object.keys(KEPT);
 for(const route of routes){
