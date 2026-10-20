@@ -1,0 +1,29 @@
+{
+  "run": "pantry/with-r1",
+  "workdir": "W007",
+  "brief": "pantry",
+  "arm": "with",
+  "model": "claude-fable-5-1",
+  "client_version": "2.1.304",
+  "start": "2026-10-20T13:02:07Z",
+  "end": "2026-10-20T13:33:11Z",
+  "wall_clock_s": 1864,
+  "tokens": {
+    "input": 278,
+    "output": 111667,
+    "cache_read": 30745027,
+    "cache_create": 602238
+  },
+  "tool_calls": 95,
+  "cap_hit": false,
+  "skill_installed": true,
+  "skill_visible_to_agent": true,
+  "skill_md_read": true,
+  "skill_file_access_in_no_skill_arm": null,
+  "infrastructure_retry": null,
+  "start_note": null,
+  "transcript": "transcript.jsonl (tool calls, assistant text and truncated tool results; harness-injected context removed)",
+  "transcript_source": "ab77d46e1f157c105.output",
+  "harness_skills_invoked": [],
+  "note": "Both arms ran in the same client with its built-in skills visible (for example frontend-design); the arms differ only in whether this skill was installed in the working folder."
+}

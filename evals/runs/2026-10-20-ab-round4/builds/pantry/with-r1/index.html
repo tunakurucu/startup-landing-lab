@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weeknight dinner planner for parents of picky kids · Pantrywise</title>
+<meta name="description" content="Pantrywise is a free iPhone app that plans the week's dinners from what is already in your fridge and cupboard, with a shopping list for only what's missing. Join the waitlist.">
+<meta property="og:site_name" content="Pantrywise">
+<meta property="og:title" content="Plan the week's dinners from the fridge, not the store">
+<meta property="og:description" content="A free iPhone app for parents of picky kids. Tick what's in your fridge; it plans seven dinners around that and writes a shopping list for only what's missing.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pantrywise.example/">
+<meta property="og:image" content="https://pantrywise.example/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Plan the week's dinners from the fridge, not the store">
+<meta name="twitter:description" content="A free iPhone app for parents of picky kids. Tick what's in your fridge; it plans seven dinners around that and writes a shopping list for only what's missing.">
+<meta name="theme-color" content="#FFCF4A">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{
+  --yolk:#FFCF4A; --yolk-deep:#EFB51A; --butter:#FFF3CF; --paper:#FFFCF3; --paper-line:#E8E0C8;
+  --ice:#EEF4F6; --ice-line:#C9D8DF; --ice-deep:#DCE8ED;
+  --ink:#211B33; --ink-2:#4A4460; --ink-3:#6E6884; --ink-line:rgba(33,27,51,.18);
+  --on-dark:#FFFCF3; --on-dark-2:#CFC9DF;
+  --tomato:#D63A1C; --tomato-deep:#B22D12; --leaf:#1E6A3C; --leaf-soft:#E2F0E4;
+  --display:"TeX Gyre Bonum","Bookman Old Style",Bookman,"URW Bookman","Charter","Bitstream Charter",Georgia,"Times New Roman",serif;
+  --text:Inter,"Avenir Next",Avenir,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --w:1260px; --gutter:clamp(1rem, 4vw, 3rem);
+  --s-1:.25rem; --s-2:.5rem; --s-3:.75rem; --s-4:1rem; --s-5:1.5rem; --s-6:2rem; --s-7:3rem; --s-8:4rem; --s-9:6rem;
+  --section-y:clamp(3.5rem, 8vw, 7rem);
+  --r-sheet:4px; --r-chip:999px; --r-panel:22px;
+  --ease-out:cubic-bezier(.2,.7,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:1rem}
+body{margin:0;background:var(--yolk);color:var(--ink);font-family:var(--text);font-size:1.0625rem;line-height:1.5;overflow-wrap:break-word}
+img,svg{display:block;max-width:100%}
+h1,h2,h3{font-family:var(--display);font-weight:700;margin:0;overflow-wrap:break-word}
+h1{font-size:clamp(2.25rem, 1.2rem + 3.9vw, 4.25rem);line-height:1.02;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:clamp(1.875rem, 1.2rem + 2.4vw, 3rem);line-height:1.08;letter-spacing:-.005em;text-wrap:balance}
+h3{font-size:1.375rem;line-height:1.2}
+p{margin:0}
+a{color:inherit}
+p a{text-decoration:underline;text-underline-offset:.15em;text-decoration-thickness:.08em}
+.wrap{max-width:var(--w);margin-inline:auto;padding-inline:var(--gutter)}
+.measure{max-width:58ch}
+.lead{font-size:1.1875rem;line-height:1.5}
+.small{font-size:.9375rem;line-height:1.45}
+.muted{color:var(--ink-2)}
+.k{font-weight:700;text-transform:uppercase;font-size:.6875rem;letter-spacing:.08em}
+.skip{position:absolute;left:var(--gutter);top:-4rem;background:var(--ink);color:var(--on-dark);padding:.6rem .9rem;border-radius:var(--r-chip);z-index:50;text-decoration:none}
+.skip:focus-visible{top:.75rem}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:2.75rem;padding:.65rem 1.15rem;border-radius:var(--r-chip);border:2px solid transparent;font:inherit;font-weight:700;text-decoration:none;cursor:pointer;line-height:1.2;text-align:center}
+.btn-primary{background:var(--tomato);color:#fff;border-color:var(--tomato)}
+.btn-primary:active{background:var(--tomato-deep);border-color:var(--tomato-deep)}
+.btn-lg{min-height:3.5rem;padding:.9rem 1.5rem;font-size:1.125rem}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+@media (hover:hover) and (pointer:fine){
+  .btn-primary:hover{background:var(--tomato-deep);border-color:var(--tomato-deep)}
+  .btn-ghost:hover{background:var(--ink);color:var(--on-dark)}
+  .btn-ghost:hover svg{color:var(--on-dark)}
+}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.band-dark :focus-visible,footer :focus-visible{outline-color:var(--on-dark)}
+
+/* header */
+.top{display:flex;align-items:center;gap:var(--s-5);padding-block:var(--s-4)}
+.wordmark{font-family:var(--display);font-weight:700;font-size:1.5rem;text-decoration:none;letter-spacing:-.01em;display:inline-flex;align-items:center;gap:.5rem;min-height:2.75rem}
+.wordmark svg{width:1.6rem;height:1.6rem}
+.top nav{margin-left:auto}
+.top .links{list-style:none;margin:0;padding:0;display:flex;gap:.25rem}
+.top .links a{display:inline-flex;align-items:center;min-height:2.75rem;padding:.4rem .75rem;border-radius:var(--r-chip);text-decoration:none;font-weight:600}
+@media (hover:hover) and (pointer:fine){.top .links a:hover{background:rgba(33,27,51,.1)}}
+.menu{display:none;position:relative}
+.menu-btn{display:inline-flex;align-items:center;gap:.4rem;min-height:2.75rem;min-width:2.75rem;padding:.4rem .9rem;border:2px solid var(--ink);border-radius:var(--r-chip);font:inherit;font-weight:700;cursor:pointer;background:transparent;color:var(--ink)}
+.menu-btn[aria-expanded="true"]{background:var(--ink);color:var(--on-dark)}
+.menu ul{list-style:none;margin:.5rem 0 0;padding:.5rem;position:absolute;right:0;top:100%;background:var(--paper);border:2px solid var(--ink);border-radius:16px;min-width:14rem;z-index:20}
+.menu ul[hidden]{display:none}
+.menu ul a{display:block;padding:.7rem .9rem;text-decoration:none;font-weight:600;border-radius:10px;min-height:2.75rem}
+@media (max-width:860px){
+  .top .links{display:none}
+  .menu{display:block}
+  .top .btn-primary{display:none}
+}
+
+/* hero */
+.hero{padding-block:var(--s-5) var(--s-8)}
+.hero-copy{display:grid;grid-template-columns:8fr 4fr;gap:var(--s-6) var(--s-8);align-items:start;margin-bottom:var(--s-7)}
+.hero-aside{display:grid;gap:var(--s-5)}
+.cta{display:grid;gap:var(--s-3);justify-items:start}
+.beside{max-width:40ch}
+@media (max-width:980px){.hero-copy{grid-template-columns:1fr;align-items:start}}
+
+/* planner */
+.planner{display:grid;grid-template-columns:6fr 6fr;gap:var(--s-5);align-items:start}
+.planner > *,.shelf > li,.chip-body > span,.dish,.dish > *,.plan-row,.sheet-head > *,.buylist li{min-width:0}
+.chip-body > span,.dish-name,.buylist li,.dish-meta > span{overflow-wrap:break-word}
+@media (max-width:980px){.planner{grid-template-columns:1fr}}
+.panel-title{font-family:var(--display);font-weight:700;font-size:1.375rem;line-height:1.2}
+.panel-note{color:var(--ink-2)}
+.fridge{background:var(--ice);border:2px solid var(--ink);border-radius:var(--r-panel);padding:var(--s-5);box-shadow:inset 0 -6px 0 var(--ice-deep)}
+.fridge-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.25rem .75rem;margin-bottom:var(--s-4)}
+.shelf{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem .5rem;padding-bottom:var(--s-4);border-bottom:3px solid var(--ice-line)}
+@media (max-width:1180px) and (min-width:981px){.shelf{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.shelf{grid-template-columns:repeat(2,1fr);gap:.5rem .4rem}.fridge{padding:var(--s-4)}.chip-body{gap:.4rem;padding:.4rem .5rem .4rem .45rem;font-size:.875rem}.chip-body svg{width:1.35rem;height:1.35rem}.chip-body .mark{width:1rem;height:1rem}.chip input:checked + .chip-body .mark::after{left:.24rem;top:.05rem}}
+@media (max-width:360px){.shelf{grid-template-columns:1fr}}
+.chip{position:relative;display:block}
+.chip input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.chip-body{display:flex;align-items:center;gap:.5rem;min-height:2.75rem;padding:.45rem .6rem .45rem .5rem;border-radius:var(--r-chip);border:2px dashed var(--ink-3);background:transparent;color:var(--ink-2);font-weight:600;font-size:.9375rem;line-height:1.2}
+.chip-body svg{width:1.6rem;height:1.6rem;flex:none;color:var(--ink);opacity:.45}
+.chip-body .mark{margin-left:auto;flex:none;width:1.1rem;height:1.1rem;border-radius:50%;border:2px solid var(--ink-3)}
+.chip input:checked + .chip-body{background:var(--paper);border:2px solid var(--ink);color:var(--ink)}
+.chip input:checked + .chip-body svg{opacity:1}
+.chip input:checked + .chip-body .mark{background:var(--leaf);border-color:var(--leaf);position:relative}
+.chip input:checked + .chip-body .mark::after{content:"";position:absolute;left:.28rem;top:.1rem;width:.3rem;height:.55rem;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.chip:has(> input:focus-visible) > .chip-body{outline:3px solid var(--ink);outline-offset:3px}
+.chip-veto .chip-body{border-style:solid;border-color:var(--ink-line);color:var(--ink-2)}
+.chip-veto input:checked + .chip-body{background:var(--ink);color:var(--on-dark);border-color:var(--ink)}
+.chip-veto input:checked + .chip-body .mark{background:var(--tomato);border-color:var(--tomato)}
+.vetoes{padding-top:var(--s-4)}
+.vetoes .panel-title{font-size:1.125rem;margin-bottom:.25rem}
+.vetoes ul{list-style:none;margin:.6rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}
+.fridge-foot{margin-top:var(--s-5);display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
+.btn-ghost svg{width:1.1rem;height:1.1rem;color:var(--ink)}
+
+.sheet{position:relative;background:var(--paper);border-radius:var(--r-sheet);padding:var(--s-6) var(--s-5) var(--s-5);box-shadow:0 1px 0 rgba(33,27,51,.25),0 10px 28px -14px rgba(90,70,20,.45)}
+.magnet{position:absolute;left:50%;top:-14px;width:30px;height:30px;margin-left:-15px;border-radius:50%;background:var(--tomato);box-shadow:inset -4px -4px 0 var(--tomato-deep),0 2px 0 rgba(33,27,51,.3)}
+.sheet-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.25rem .75rem;margin-bottom:var(--s-4);padding-bottom:var(--s-3);border-bottom:2px solid var(--ink)}
+.sheet-head .panel-title{font-size:1.625rem}
+.plan{list-style:none;margin:0;padding:0;font-variant-numeric:tabular-nums}
+.plan-row{display:grid;grid-template-columns:3.2rem 1fr;gap:.25rem .5rem;padding:.6rem 0;border-bottom:1px solid var(--paper-line);position:relative}
+.plan-row::after{content:"";position:absolute;inset:0;background:var(--yolk);opacity:0;pointer-events:none;border-radius:4px}
+.plan-row.changed::after{animation:flash 700ms var(--ease-out)}
+@keyframes flash{0%{opacity:.55}100%{opacity:0}}
+.day{font-weight:700;font-family:var(--display);font-size:1.0625rem;padding-top:.1rem}
+.dish{display:grid;gap:.2rem}
+.dish-name{font-weight:700;font-size:1.0625rem;line-height:1.3}
+.dish-meta{display:flex;flex-wrap:wrap;gap:.2rem .9rem;font-size:.9375rem;line-height:1.4;color:var(--ink-2)}
+.dish-meta .k{margin-right:.15rem}
+.uses .k{color:var(--leaf)}
+.buy .k{color:var(--tomato)}
+.apart .k{color:var(--ink)}
+.plan-empty{padding:1rem 0}
+.plan-empty p{max-width:40ch}
+.tobuy{margin-top:var(--s-5);padding-top:var(--s-4);border-top:2px solid var(--ink)}
+.tobuy .panel-title{font-size:1.25rem;display:flex;align-items:baseline;gap:.6rem}
+.tobuy .panel-title .k{color:var(--tomato)}
+.buylist{list-style:none;margin:.6rem 0 0;padding:0;columns:2;column-gap:1.5rem}
+@media (max-width:620px){.buylist{columns:1}}
+.buylist li{break-inside:avoid;display:flex;align-items:baseline;gap:.5rem;padding:.3rem 0;font-weight:600}
+.buylist .tick{flex:none;width:1rem;height:1rem;border:2px solid var(--tomato);border-radius:3px;transform:translateY(.15rem)}
+.buylist .count{font-weight:500;color:var(--ink-2);font-size:.9rem}
+.list-empty{font-weight:500;color:var(--ink-2)}
+.sheet-note{margin-top:var(--s-5);font-size:.875rem;line-height:1.45;color:var(--ink-2);max-width:48ch}
+#plan-status{font-weight:600;color:var(--ink-2);font-size:.9375rem}
+
+/* sections */
+section.band{padding-block:var(--section-y)}
+.band-paper{background:var(--paper)}
+.band-butter{background:var(--butter)}
+.band-dark{background:var(--ink);color:var(--on-dark)}
+.band-dark .muted{color:var(--on-dark-2)}
+.band-yolk{background:var(--yolk)}
+.band h2{max-width:22ch}
+.sec-head{display:grid;grid-template-columns:7fr 5fr;gap:var(--s-5) var(--s-8);align-items:end;margin-bottom:var(--s-7)}
+@media (max-width:860px){.sec-head{grid-template-columns:1fr}}
+
+/* how it works */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-6);counter-reset:step}
+@media (max-width:860px){.steps{grid-template-columns:1fr;gap:var(--s-6)}}
+.step{counter-increment:step;display:grid;gap:var(--s-3);align-content:start}
+.step h3{display:flex;gap:.6rem;align-items:baseline}
+.step h3::before{content:counter(step);font-family:var(--text);font-weight:700;font-size:.875rem;color:var(--paper);background:var(--ink);border-radius:50%;width:1.6rem;height:1.6rem;display:inline-flex;align-items:center;justify-content:center;flex:none;transform:translateY(-.15rem)}
+.mini{margin-top:var(--s-3);background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:.9rem 1rem}
+.mini-shelf{display:flex;flex-wrap:wrap;gap:.5rem}
+.mini-chip{display:inline-flex;align-items:center;gap:.4rem;border:2px solid var(--ink);border-radius:var(--r-chip);padding:.3rem .7rem .3rem .5rem;font-size:.9rem;font-weight:600;background:var(--paper)}
+.mini-chip svg{width:1.2rem;height:1.2rem}
+.mini-chip.off{border-style:dashed;border-color:var(--ink-3);color:var(--ink-2)}
+.mini-chip.off svg{opacity:.45}
+.soon{display:inline-block;margin-left:.25rem;font-size:.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:var(--yolk);padding:.1rem .4rem;border-radius:4px}
+.mini .plan-row{border-bottom:0;padding:0}
+.mini-list{list-style:none;margin:0;padding:0}
+.mini-list li{display:flex;align-items:center;gap:.5rem;padding:.25rem 0;font-weight:600}
+.mini-list .tick{width:1.1rem;height:1.1rem;border:2px solid var(--tomato);border-radius:3px;flex:none;position:relative}
+.mini-list .tick.done{background:var(--tomato)}
+.mini-list .tick.done::after{content:"";position:absolute;left:.3rem;top:.05rem;width:.3rem;height:.6rem;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.mini-list .done-text{text-decoration:line-through;color:var(--ink-2)}
+.mini-cap{display:block;margin-top:.6rem;font-size:.8125rem;color:var(--ink-2)}
+
+/* picky */
+.notes{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:var(--s-5);align-items:start}
+@media (max-width:860px){.notes{grid-template-columns:1fr}}
+.note{position:relative;background:var(--paper);color:var(--ink);border-radius:var(--r-sheet);padding:var(--s-6) var(--s-5) var(--s-5);box-shadow:0 12px 30px -16px rgba(0,0,0,.6)}
+.note .magnet{background:var(--yolk);box-shadow:inset -4px -4px 0 var(--yolk-deep),0 2px 0 rgba(0,0,0,.35)}
+.note h3{font-size:1.5rem;margin-bottom:.35rem}
+.note .muted{color:var(--ink-2)}
+.note-plate .muted{color:var(--on-dark-2)}
+.note dl{margin:.5rem 0 0;display:grid;grid-template-columns:auto 1fr;gap:.35rem .75rem}
+.note dt{font-weight:700;text-transform:uppercase;font-size:.6875rem;letter-spacing:.08em;color:var(--ink-2);padding-top:.25rem}
+.note dd{margin:0}
+.note-plate{background:transparent;color:var(--on-dark);box-shadow:none;padding:0}
+.plate{border:2px solid var(--on-dark-2);border-radius:16px;padding:1rem 1.1rem;margin-top:var(--s-4)}
+.plate .dish-name{color:var(--on-dark)}
+.plate .dish-meta{color:var(--on-dark-2)}
+.plate .k{color:var(--yolk)}
+.arrow{font-family:var(--display);font-size:1.25rem;color:var(--yolk);margin:.6rem 0}
+.band-dark .k{color:var(--yolk)}
+
+/* list section */
+.aisle{display:grid;grid-template-columns:5fr 7fr;gap:var(--s-7);align-items:start}
+@media (max-width:860px){.aisle{grid-template-columns:1fr}}
+.phone{background:var(--paper);border:3px solid var(--ink);border-radius:28px;padding:1.1rem 1.1rem 1.4rem;max-width:22rem;box-shadow:0 1px 0 rgba(33,27,51,.25),0 14px 30px -16px rgba(90,70,20,.5)}
+.phone-top{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:.6rem;margin-bottom:.4rem}
+.phone-top .panel-title{font-size:1.25rem}
+.phone .buylist{columns:1}
+.phone .buylist li{padding:.5rem 0;border-bottom:1px solid var(--paper-line);font-size:1.0625rem}
+.phone .buylist .tick{width:1.35rem;height:1.35rem}
+.phone-cap{font-size:.8125rem;color:var(--ink-2);margin-top:.75rem}
+.aisle .prose{display:grid;gap:var(--s-4)}
+
+/* cost */
+.cost{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-6);align-items:start}
+@media (max-width:860px){.cost{grid-template-columns:1fr}}
+.price-card{background:var(--paper);border:2px solid var(--ink);border-radius:var(--r-panel);padding:var(--s-5)}
+.price-card h3{margin-bottom:.35rem}
+.price{font-family:var(--display);font-weight:700;font-size:2.5rem;line-height:1;margin:.25rem 0 .5rem}
+.price-card ul{margin:.75rem 0 0;padding-left:1.1rem}
+.price-card li{margin:.25rem 0}
+.price-card.later{background:transparent;border-style:dashed}
+
+/* faq */
+.faq{display:grid;gap:0;border-top:2px solid var(--ink)}
+.faq details{border-bottom:2px solid var(--ink)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1rem 0;font-family:var(--display);font-weight:700;font-size:1.25rem;line-height:1.25;min-height:2.75rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--text);font-weight:700;font-size:1.5rem;flex:none;width:2rem;height:2rem;display:inline-flex;align-items:center;justify-content:center;border:2px solid var(--ink);border-radius:50%}
+.faq details[open] summary::after{content:"–"}
+.faq details p{padding-bottom:1.1rem;max-width:58ch}
+
+/* final */
+.final{display:grid;grid-template-columns:7fr 5fr;gap:var(--s-5) var(--s-8);align-items:end}
+@media (max-width:860px){.final{grid-template-columns:1fr}}
+
+/* footer */
+footer{background:var(--ink);color:var(--on-dark);padding-block:var(--s-7) var(--s-6)}
+.foot{display:grid;grid-template-columns:1fr auto;gap:var(--s-5);align-items:start}
+@media (max-width:860px){.foot{grid-template-columns:1fr}}
+.foot .wordmark{color:var(--on-dark)}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.25rem 1rem}
+.foot ul a{display:inline-flex;align-items:center;min-height:2.75rem;text-decoration:underline;text-underline-offset:.15em}
+.foot .small{color:var(--on-dark-2)}
+.foot-bottom{margin-top:var(--s-5);padding-top:var(--s-4);border-top:1px solid rgba(255,252,243,.25);display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;color:var(--on-dark-2);font-size:.875rem}
+
+/* motion */
+@media (prefers-reduced-motion:no-preference){
+  .btn{transition:background-color 150ms var(--ease-out),border-color 150ms var(--ease-out),transform 120ms var(--ease-out)}
+  .btn:active{transform:scale(.97)}
+  .chip-body{transition:background-color 150ms var(--ease-out),border-color 150ms var(--ease-out),color 150ms var(--ease-out)}
+  .chip:active .chip-body{transform:scale(.98)}
+  .pulse{animation:pulse 240ms var(--ease-out)}
+  @keyframes pulse{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+}
+@media (prefers-reduced-motion:reduce){
+  .plan-row.changed::after{animation:flash 180ms linear}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-eggs" viewBox="0 0 32 32"><path d="M10 25c-3.3 0-5.5-2.6-5.5-6.2C4.5 14.2 7 8 10 8s5.5 6.2 5.5 10.8c0 3.6-2.2 6.2-5.5 6.2z" fill="#fff" stroke="currentColor" stroke-width="2"/><path d="M22 25c-3.3 0-5.5-2.6-5.5-6.2C16.5 14.2 19 8 22 8s5.5 6.2 5.5 10.8c0 3.6-2.2 6.2-5.5 6.2z" fill="#fff" stroke="currentColor" stroke-width="2"/><circle cx="22" cy="19" r="2.2" fill="#FFCF4A"/><circle cx="10" cy="19" r="2.2" fill="#FFCF4A"/></symbol>
+    <symbol id="i-spinach" viewBox="0 0 32 32"><path d="M16 28C7 22 6 12 16 4c10 8 9 18 0 24z" fill="#DDEFE0" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M16 9v18M16 15l-4-3M16 20l4-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-rice" viewBox="0 0 32 32"><rect x="5" y="11" width="22" height="16" rx="3" fill="#fff" stroke="currentColor" stroke-width="2"/><rect x="3" y="7" width="26" height="5" rx="2" fill="#FFCF4A" stroke="currentColor" stroke-width="2"/><path d="M10 18h2M15 20h2M20 17h2M12 23h2M18 23h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-chicken" viewBox="0 0 32 32"><path d="M20 6a7 7 0 0 1 2 13.7L14 24l-1.6-1.6-1.2 1.2a2.5 2.5 0 1 1-3.5-3.5l1.2-1.2L7.3 17.3 15.5 8.4A7 7 0 0 1 20 6z" fill="#FFCF4A" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-tortillas" viewBox="0 0 32 32"><ellipse cx="16" cy="21" rx="12" ry="4.5" fill="#fff" stroke="currentColor" stroke-width="2"/><ellipse cx="16" cy="16" rx="12" ry="4.5" fill="#FFF3CF" stroke="currentColor" stroke-width="2"/><ellipse cx="16" cy="11" rx="12" ry="4.5" fill="#fff" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-cheddar" viewBox="0 0 32 32"><path d="M4 24V12l24-7v19z" fill="#FFCF4A" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="18" r="2" fill="#fff" stroke="currentColor" stroke-width="1.5"/><circle cx="20" cy="14" r="1.6" fill="#fff" stroke="currentColor" stroke-width="1.5"/><circle cx="21" cy="21" r="1.4" fill="#fff" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-carrots" viewBox="0 0 32 32"><path d="M9 28L20 12l5 5L9 28z" fill="#FFCF4A" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M20 12l-1-6M22 13l6-4M22 11l4-6" fill="none" stroke="#1E6A3C" stroke-width="2" stroke-linecap="round"/><path d="M14 22l3 1M12 25l2 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-peas" viewBox="0 0 32 32"><path d="M8 6h16l2 4v18H6V10z" fill="#DDEFE0" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M6 10h20" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="18" r="2.6" fill="#1E6A3C"/><circle cx="20" cy="18" r="2.6" fill="#1E6A3C"/><circle cx="16" cy="23" r="2.6" fill="#1E6A3C"/></symbol>
+    <symbol id="i-onion" viewBox="0 0 32 32"><path d="M5 20a11 11 0 0 1 22 0z" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 20a7 7 0 0 1 14 0M13 20a3 3 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 20h24" stroke="currentColor" stroke-width="2"/><path d="M14 8c1-3 3-4 2-7M18 8c-1-3-3-4-2-7" fill="none" stroke="#1E6A3C" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-chickpeas" viewBox="0 0 32 32"><rect x="7" y="5" width="18" height="22" rx="2" fill="#fff" stroke="currentColor" stroke-width="2"/><rect x="7" y="11" width="18" height="10" fill="#FFCF4A" stroke="currentColor" stroke-width="2"/><circle cx="13" cy="16" r="1.6" fill="currentColor"/><circle cx="19" cy="16" r="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-pasta" viewBox="0 0 32 32"><rect x="6" y="5" width="20" height="22" rx="2" fill="#FFF3CF" stroke="currentColor" stroke-width="2"/><path d="M11 13l4 3-4 3zM21 13l-4 3 4 3z" fill="#FFCF4A" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 22h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-yogurt" viewBox="0 0 32 32"><path d="M8 10h16l-2 17H10z" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><rect x="5" y="6" width="22" height="5" rx="2" fill="#DDEFE0" stroke="currentColor" stroke-width="2"/><path d="M12 18h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-mark" viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="20" rx="3" fill="#FFCF4A" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="4" r="3" fill="#D63A1C" stroke="currentColor" stroke-width="2"/><path d="M9 13h14M9 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 7H4v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.5 12A8 8 0 1 0 7 6.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="wrap top" id="top">
+  <a class="wordmark" href="#top"><svg aria-hidden="true"><use href="#i-mark"/></svg>Pantrywise</a>
+  <nav aria-label="Page">
+    <ul class="links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#picky">Picky eaters</a></li>
+      <li><a href="#list">The list</a></li>
+      <li><a href="#cost">What it costs</a></li>
+    </ul>
+    <div class="menu">
+      <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu-list">Menu</button>
+      <ul id="menu-list" hidden>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#picky">Picky eaters</a></li>
+        <li><a href="#list">The list</a></li>
+        <li><a href="#cost">What it costs</a></li>
+        <li><a href="https://pantrywise.example/waitlist">Join the iPhone waitlist</a></li>
+      </ul>
+    </div>
+  </nav>
+  <a class="btn btn-primary" href="https://pantrywise.example/waitlist">Join the iPhone waitlist</a>
+</header>
+
+<main id="main">
+<section class="hero wrap" aria-labelledby="h1">
+  <div class="hero-copy">
+    <h1 id="h1">Plan the week’s dinners from the fridge, not the store.</h1>
+    <div class="hero-aside">
+      <p class="lead">Pantrywise is a free iPhone app for parents of picky kids. Tick what’s in your fridge and cupboard; it plans seven weeknight dinners around that and lists only what’s missing.</p>
+      <div class="cta">
+        <a class="btn btn-primary btn-lg" href="https://pantrywise.example/waitlist">Join the iPhone waitlist</a>
+        <p class="beside small muted">Free to use. One email address, and we write when the app is ready. A paid family plan with shared lists comes later; its price isn’t set.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="planner" id="planner" role="region" aria-label="Sample planner: tick what is on the shelf and the week replans">
+    <form class="fridge" id="fridge" aria-labelledby="shelf-title">
+      <div class="fridge-head">
+        <p class="panel-title" id="shelf-title">On the shelf</p>
+        <p class="panel-note small">A sample fridge. Tap what you have.</p>
+      </div>
+      <ul class="shelf">
+        <!-- build:shelf -->
+        <li><label class="chip"><input type="checkbox" name="have" value="eggs" checked><span class="chip-body"><svg aria-hidden="true"><use href="#i-eggs"/></svg><span>Six eggs</span><span class="mark" aria-hidden="true"></span></span></label></li>
+        <li><label class="chip"><input type="checkbox" name="have" value="spinach" checked><span class="chip-body"><svg aria-hidden="true"><use href="#i-spinach"/></svg><span>Half a bag of spinach</span><span class="mark" aria-hidden="true"></span></span></label></li>
+        <li><label class="chip"><input type="checkbox" name="have" value="rice" checked><span class="chip-body"><svg aria-hidden="true"><use href="#i-rice"/></svg><span>Leftover rice</span><span class="mark" aria-hidden="true"></span></span></label></li>
+        <li><label class="chip"><input type="checkbox" name="have" value="chicken" checked><span class="chip-body"><svg aria-hidden="true"><use href="#i-chicken"/></svg><span>Chicken thighs</span><span class="mark" aria-hidden="true"></span></span></label></li>
+        <li><label class="chip"><input type="checkbox" name="have" value="tortillas" checked><span class="chip-body"><svg aria-hidden="true"><use href="#i-tortillas"/></svg><span>Tortillas</span><span class="mark" aria-hidden="true"></span></span></label></li>
+        <li><label class="chip"><input type="checkbox" name="have" value="cheddar" checked><span class="chip-body"><svg aria-hidden="true"><use href="#i-cheddar"/></svg><span>Block of cheddar</span><span class="mark" aria-hidden="true"></span></span></label></li>
+        <li><label class="chip"><input type="checkbox" name="have" value="carrots" checked><span class="chip-body"><svg aria-hidden="true"><use href="#i-carrots"/></svg><span>Carrots</span><span class="mark" aria-hidden="true"></span></span></label></li>
+        <li><label class="chip"><input type="checkbox" name="have" value="peas" checked><span class="chip-body"><svg aria-hidden="true"><use href="#i-peas"/></svg><span>Frozen peas</span><span class="mark" aria-hidden="true"></span></span></label></li>
+        <li><label class="chip"><input type="checkbox" name="have" value="onion" checked><span class="chip-body"><svg aria-hidden="true"><use href="#i-onion"/></svg><span>Half an onion</span><span class="mark" aria-hidden="true"></span></span></label></li>
+        <li><label class="chip"><input type="checkbox" name="have" value="chickpeas"><span class="chip-body"><svg aria-hidden="true"><use href="#i-chickpeas"/></svg><span>Tin of chickpeas</span><span class="mark" aria-hidden="true"></span></span></label></li>
+        <li><label class="chip"><input type="checkbox" name="have" value="pasta"><span class="chip-body"><svg aria-hidden="true"><use href="#i-pasta"/></svg><span>Pasta</span><span class="mark" aria-hidden="true"></span></span></label></li>
+        <li><label class="chip"><input type="checkbox" name="have" value="yogurt"><span class="chip-body"><svg aria-hidden="true"><use href="#i-yogurt"/></svg><span>Plain yogurt</span><span class="mark" aria-hidden="true"></span></span></label></li>
+        <!-- /build:shelf -->
+      </ul>
+      <div class="vetoes">
+        <p class="panel-title">The kids won’t eat</p>
+        <ul>
+          <!-- build:vetoes -->
+          <li><label class="chip chip-veto"><input type="checkbox" name="veto" value="mushrooms"><span class="chip-body"><span>No mushrooms</span><span class="mark" aria-hidden="true"></span></span></label></li>
+          <li><label class="chip chip-veto"><input type="checkbox" name="veto" value="spicy"><span class="chip-body"><span>Nothing spicy</span><span class="mark" aria-hidden="true"></span></span></label></li>
+          <li><label class="chip chip-veto"><input type="checkbox" name="veto" value="mixed"><span class="chip-body"><span>Nothing mixed in</span><span class="mark" aria-hidden="true"></span></span></label></li>
+        <!-- /build:vetoes -->
+        </ul>
+      </div>
+      <div class="fridge-foot">
+        <button type="button" class="btn btn-ghost" id="reset"><svg aria-hidden="true"><use href="#i-undo"/></svg>Put the sample back</button>
+      </div>
+    </form>
+
+    <div class="sheet" aria-labelledby="week-title">
+      <span class="magnet" aria-hidden="true"></span>
+      <div class="sheet-head">
+        <p class="panel-title" id="week-title">This week</p>
+        <p id="plan-status" role="status" aria-live="polite"><!-- build:status -->7 dinners from 9 things on the shelf. 7 things to buy.<!-- /build:status --></p>
+      </div>
+      <ol class="plan" id="plan-rows">
+        <!-- build:rows -->
+<li class="plan-row"><span class="day">Mon</span><span class="dish"><span class="dish-name">Egg fried rice with peas</span><span class="dish-meta"><span class="uses"><span class="k">uses</span> eggs, rice, peas and onion</span> <span class="buy"><span class="k">buy</span> soy sauce</span></span></span></li><li class="plan-row"><span class="day">Tue</span><span class="dish"><span class="dish-name">Pea and spinach soup, cheese toast</span><span class="dish-meta"><span class="uses"><span class="k">uses</span> peas, spinach, onion and cheddar</span> <span class="buy"><span class="k">buy</span> bread and stock cubes</span></span></span></li><li class="plan-row"><span class="day">Wed</span><span class="dish"><span class="dish-name">Chicken and cheddar quesadillas</span><span class="dish-meta"><span class="uses"><span class="k">uses</span> chicken, tortillas and cheddar</span></span></span></li><li class="plan-row"><span class="day">Thu</span><span class="dish"><span class="dish-name">Spinach and cheddar omelette</span><span class="dish-meta"><span class="uses"><span class="k">uses</span> eggs, spinach and cheddar</span></span></span></li><li class="plan-row"><span class="day">Fri</span><span class="dish"><span class="dish-name">Shakshuka with tortillas</span><span class="dish-meta"><span class="uses"><span class="k">uses</span> eggs, tortillas and onion</span> <span class="buy"><span class="k">buy</span> tin of tomatoes</span></span></span></li><li class="plan-row"><span class="day">Sat</span><span class="dish"><span class="dish-name">Tortilla pizzas with grated carrot</span><span class="dish-meta"><span class="uses"><span class="k">uses</span> tortillas, cheddar and carrots</span> <span class="buy"><span class="k">buy</span> passata</span></span></span></li><li class="plan-row"><span class="day">Sun</span><span class="dish"><span class="dish-name">Peanut noodles with carrots</span><span class="dish-meta"><span class="uses"><span class="k">uses</span> carrots and peas</span> <span class="buy"><span class="k">buy</span> noodles and peanut butter</span></span></span></li>
+        <!-- /build:rows -->
+      </ol>
+      <div class="tobuy">
+        <p class="panel-title"><span class="k">To buy</span> <span id="buy-count"><!-- build:count -->7 things<!-- /build:count --></span></p>
+        <ul class="buylist" id="buy-list">
+          <!-- build:list -->
+<li><span class="tick" aria-hidden="true"></span>soy sauce</li><li><span class="tick" aria-hidden="true"></span>bread</li><li><span class="tick" aria-hidden="true"></span>stock cubes</li><li><span class="tick" aria-hidden="true"></span>tin of tomatoes</li><li><span class="tick" aria-hidden="true"></span>passata</li><li><span class="tick" aria-hidden="true"></span>noodles</li><li><span class="tick" aria-hidden="true"></span>peanut butter</li>
+        <!-- /build:list -->
+        </ul>
+      </div>
+      <p class="sheet-note">Sample shelf, sample dinners. The names are plain weeknight dinners written for the app, not recipes from partners; the app plans from your own fridge.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band band-paper" id="how" aria-labelledby="how-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="how-h">It starts from your shelf, not from a recipe list.</h2>
+      <p class="lead measure">Recipe apps pick the dinners first and send you shopping for everything. Pantrywise reads the shelf first, so most of the week is already paid for.</p>
+    </div>
+    <ol class="steps">
+      <li class="step">
+        <h3>Tick what you have.</h3>
+        <p>A short list of staples you tick once, plus whatever is actually in there tonight. Leftovers and open packets get a <em>use soon</em> mark, so they are cooked in the first days, not thrown out on Sunday.</p>
+        <div class="mini" role="img" aria-label="Three shelf items: leftover rice marked use soon, six eggs, and a tin of chickpeas not ticked">
+          <div class="mini-shelf" aria-hidden="true">
+            <span class="mini-chip"><svg><use href="#i-rice"/></svg>Leftover rice<span class="soon">use soon</span></span>
+            <span class="mini-chip"><svg><use href="#i-eggs"/></svg>Six eggs</span>
+            <span class="mini-chip off"><svg><use href="#i-chickpeas"/></svg>Tin of chickpeas</span>
+          </div>
+          <span class="mini-cap" aria-hidden="true">Example</span>
+        </div>
+      </li>
+      <li class="step">
+        <h3>Get a week that uses it.</h3>
+        <p>Each night shows what it takes from the shelf and what it doesn’t. The dinners are plain weeknight food, written so a dish can be served as parts on the plate when a kid needs that.</p>
+        <div class="mini" role="img" aria-label="One plan row: Monday, egg fried rice with peas, uses six eggs, leftover rice, frozen peas and half an onion; buy soy sauce">
+          <div aria-hidden="true">
+            <div class="plan-row"><span class="day">Mon</span><span class="dish"><span class="dish-name">Egg fried rice with peas</span><span class="dish-meta"><span class="uses"><span class="k">uses</span> eggs, leftover rice, peas, onion</span> <span class="buy"><span class="k">buy</span> soy sauce</span></span></span></div>
+          </div>
+          <span class="mini-cap" aria-hidden="true">Example</span>
+        </div>
+      </li>
+      <li class="step">
+        <h3>Shop for the gap.</h3>
+        <p>One list of only what’s missing, counted in packets and tins rather than grams, in the order you walk the shop. It is built to be ticked off with one thumb while the other hand holds a basket.</p>
+        <div class="mini" role="img" aria-label="A shopping list with soy sauce ticked off, and bread and stock cubes still to get">
+          <ul class="mini-list" aria-hidden="true">
+            <li><span class="tick done"></span><span class="done-text">soy sauce</span></li>
+            <li><span class="tick"></span>bread</li>
+            <li><span class="tick"></span>stock cubes</li>
+          </ul>
+          <span class="mini-cap" aria-hidden="true">Example</span>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="band band-dark" id="picky" aria-labelledby="picky-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="picky-h">Picky eaters get a veto, not a lecture.</h2>
+      <p class="lead measure muted">Each kid gets a short no-list: a few things they won’t eat, and a rule or two. The plan treats a no-list as a rule, not a ban. It keeps the dinner and changes the plate.</p>
+    </div>
+    <div class="notes">
+      <div class="note">
+        <span class="magnet" aria-hidden="true"></span>
+        <h3>Max, 6</h3>
+        <p class="small muted">Example no-list</p>
+        <dl>
+          <dt>Won’t eat</dt><dd>mushrooms, “wet” sauce</dd>
+          <dt>Rule</dt><dd>nothing mixed in</dd>
+        </dl>
+      </div>
+      <div class="note">
+        <span class="magnet" aria-hidden="true"></span>
+        <h3>Nora, 9</h3>
+        <p class="small muted">Example no-list</p>
+        <dl>
+          <dt>Won’t eat</dt><dd>anything spicy</dd>
+          <dt>Rule</dt><dd>peas are fine, but not touching rice</dd>
+        </dl>
+      </div>
+      <div class="note note-plate">
+        <p class="k">What the plan does with that</p>
+        <div class="plate">
+          <span class="dish-name">Egg fried rice with peas</span>
+          <p class="arrow" aria-hidden="true">↓ nothing mixed in</p>
+          <span class="dish-name">Rice, egg and peas, in three piles</span>
+          <span class="dish-meta"><span><span class="k">same shelf</span> eggs, leftover rice, peas, onion</span> <span><span class="k">same list</span> soy sauce</span></span>
+        </div>
+        <p class="small muted" style="margin-top:1rem">Mushroom dinners are skipped for the week; spicy ones too. The shelf and the shopping list don’t change, so the picky kid costs nothing extra.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band band-butter" id="list" aria-labelledby="list-h">
+  <div class="wrap">
+    <div class="aisle">
+      <div class="phone" role="region" aria-label="The shopping list, as it would look in the aisle">
+        <div class="phone-top">
+          <p class="panel-title">To buy</p>
+          <p class="small muted" id="phone-sub"><!-- build:phonesub -->7 things for the week<!-- /build:phonesub --></p>
+        </div>
+        <ul class="buylist" id="buy-list-2">
+          <!-- build:list2 -->
+<li><span class="tick" aria-hidden="true"></span>soy sauce</li><li><span class="tick" aria-hidden="true"></span>bread</li><li><span class="tick" aria-hidden="true"></span>stock cubes</li><li><span class="tick" aria-hidden="true"></span>tin of tomatoes</li><li><span class="tick" aria-hidden="true"></span>passata</li><li><span class="tick" aria-hidden="true"></span>noodles</li><li><span class="tick" aria-hidden="true"></span>peanut butter</li>
+        <!-- /build:list2 -->
+        </ul>
+        <p class="phone-cap">This list follows the sample shelf at the top of the page. Change the shelf and it changes.</p>
+      </div>
+      <div class="prose">
+        <h2 id="list-h">The shopping list is only what’s missing.</h2>
+        <p class="lead measure">Seven dinners from a recipe app can mean a list as long as your arm and a full trolley. Planned from the shelf, the same week comes down to the few things you don’t have.</p>
+        <p class="measure">Things are counted the way you buy them: a tin, a bag, a bottle. Something used twice in the week appears once, with a note. Big tick targets, because you’re holding a basket.</p>
+        <p class="measure">Later, the paid family plan will share one list between phones, so whoever is passing the shop sees what is still unticked.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band band-yolk" id="cost" aria-labelledby="cost-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="cost-h">Free now. Family plan later.</h2>
+      <p class="lead measure">No card, no trial clock. The waitlist is for the iPhone app; joining takes one email address.</p>
+    </div>
+    <div class="cost">
+      <div class="price-card">
+        <h3>Pantrywise for one phone</h3>
+        <p class="price">Free</p>
+        <p>The shelf, the week’s dinners, the kids’ no-lists and the shopping list.</p>
+        <ul>
+          <li>iPhone first.</li>
+          <li>Joining the waitlist gets you one email when the app is ready for your phone.</li>
+        </ul>
+      </div>
+      <div class="price-card later">
+        <h3>Family plan</h3>
+        <p class="price">Later</p>
+        <p>Shared lists between phones, and shared no-lists, so grandparents and babysitters cook from the same week.</p>
+        <ul>
+          <li>It will cost money. The price isn’t set, and this page will show it before anyone is charged.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band band-paper" id="faq" aria-labelledby="faq-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="faq-h">What parents ask before they join.</h2>
+    </div>
+    <div class="faq measure" style="max-width:72ch">
+      <details>
+        <summary>Do I have to weigh or count things?</summary>
+        <p>No. The shelf is a list of things, not amounts. “Half a bag of spinach” is as exact as it gets, and the plan stretches a tub of leftover rice to one dinner, a pack of chicken thighs to two.</p>
+      </details>
+      <details>
+        <summary>What if the fridge is nearly empty?</summary>
+        <p>Then the week leans on the cupboard and the list gets longer. Untick everything in the sample above and you’ll see what it does: with nothing on the shelf, it says so instead of inventing a week.</p>
+      </details>
+      <details>
+        <summary>Where do the dinners come from?</summary>
+        <p>From a list of plain weeknight dinners written for the app, not from a recipe site or a partner. The names on this page are examples of that list, not a promise of any particular dish.</p>
+      </details>
+      <details>
+        <summary>Is there an Android version?</summary>
+        <p>The waitlist is for the iPhone app. If that changes, this page will say so.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="band band-yolk" aria-labelledby="final-h">
+  <div class="wrap final">
+    <h2 id="final-h">Start the week from your fridge.</h2>
+    <div class="cta">
+      <a class="btn btn-primary btn-lg" href="https://pantrywise.example/waitlist">Join the iPhone waitlist</a>
+      <p class="beside small muted">Free to use. One email address, and we write when the app is ready.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="wordmark" href="#top"><svg aria-hidden="true"><use href="#i-mark"/></svg>Pantrywise</a>
+        <p class="small" style="max-width:40ch;margin-top:.5rem">A weeknight dinner planner that starts from what’s in the fridge. An iPhone app in development.</p>
+      </div>
+      <ul>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#picky">Picky eaters</a></li>
+        <li><a href="#list">The list</a></li>
+        <li><a href="#cost">What it costs</a></li>
+        <li><a href="https://pantrywise.example/waitlist">Join the iPhone waitlist</a></li>
+      </ul>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Pantrywise</span>
+      <span>Contact details and a privacy policy arrive with the app.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="planner.js"></script>
+<script>
+(function () {
+  var P = window.Pantrywise;
+  if (!P) return;
+  var form = document.getElementById('fridge');
+  var rowsEl = document.getElementById('plan-rows');
+  var listEl = document.getElementById('buy-list');
+  var list2El = document.getElementById('buy-list-2');
+  var statusEl = document.getElementById('plan-status');
+  var countEl = document.getElementById('buy-count');
+  var phoneSub = document.getElementById('phone-sub');
+  var resetBtn = document.getElementById('reset');
+  var lastNames = null;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function readState() {
+    var have = {}, vetoes = {};
+    form.querySelectorAll('input[name="have"]').forEach(function (i) { if (i.checked) have[i.value] = true; });
+    form.querySelectorAll('input[name="veto"]').forEach(function (i) { if (i.checked) vetoes[i.value] = true; });
+    return { have: have, vetoes: vetoes };
+  }
+
+  function countText(r) {
+    var n = r.list.length;
+    if (r.status === 'empty' || !r.rows.length) return '';
+    return n === 0 ? 'nothing' : n === 1 ? '1 thing' : n + ' things';
+  }
+
+  function render(announce) {
+    var r = P.plan(readState());
+    rowsEl.innerHTML = P.renderRows(r);
+    var listHtml = P.renderList(r);
+    listEl.innerHTML = listHtml;
+    list2El.innerHTML = listHtml;
+    var ct = countText(r);
+    countEl.textContent = ct;
+    phoneSub.textContent = ct ? ct + ' for the week' : 'nothing yet';
+    statusEl.textContent = P.summary(r);
+    if (announce) {
+      var names = r.rows.map(function (x) { return x.day + x.name + (x.apart || ''); });
+      var rows = rowsEl.querySelectorAll('.plan-row');
+      rows.forEach(function (row, i) {
+        if (!lastNames || lastNames[i] !== names[i]) {
+          row.classList.add('changed');
+          row.addEventListener('animationend', function () { row.classList.remove('changed'); }, { once: true });
+        }
+      });
+      if (!reduce) {
+        countEl.classList.remove('pulse'); void countEl.offsetWidth; countEl.classList.add('pulse');
+      }
+      lastNames = names;
+    } else {
+      lastNames = r.rows.map(function (x) { return x.day + x.name + (x.apart || ''); });
+    }
+  }
+
+  var menuBtn = document.getElementById('menu-btn'), menuList = document.getElementById('menu-list');
+  if (menuBtn && menuList) {
+    menuBtn.addEventListener('click', function () {
+      var open = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      if (open) menuList.setAttribute('hidden', ''); else menuList.removeAttribute('hidden');
+    });
+    menuList.addEventListener('click', function (e) { if (e.target.closest('a')) { menuBtn.setAttribute('aria-expanded', 'false'); menuList.setAttribute('hidden', ''); } });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menuBtn.getAttribute('aria-expanded') === 'true') { menuBtn.setAttribute('aria-expanded', 'false'); menuList.setAttribute('hidden', ''); menuBtn.focus(); } });
+  }
+
+  form.addEventListener('change', function () { render(true); });
+  form.addEventListener('submit', function (e) { e.preventDefault(); });
+  resetBtn.addEventListener('click', function () {
+    var d = P.defaultState();
+    form.querySelectorAll('input[name="have"]').forEach(function (i) { i.checked = !!d.have[i.value]; });
+    form.querySelectorAll('input[name="veto"]').forEach(function (i) { i.checked = false; });
+    render(true);
+  });
+  render(false);
+})();
+</script>
+</body>
+</html>

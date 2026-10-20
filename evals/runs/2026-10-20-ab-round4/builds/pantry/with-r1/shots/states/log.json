@@ -1,0 +1,1015 @@
+[
+ [
+  "1440",
+  "default",
+  {
+   "status": "7 dinners from 9 things on the shelf. 7 things to buy.",
+   "count": "7 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TuePea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "FriShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPeanut noodles with carrotsuses carrots and peas buy noodles and pe"
+   ],
+   "list": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "list2": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "1440",
+  "untick rice, chicken; tick pasta",
+  {
+   "status": "7 dinners from 8 things on the shelf. 8 things to buy.",
+   "count": "8 things",
+   "rows": [
+    "MonPea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "TueSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "WedShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "ThuCarrot and chickpea traybakeuses carrots and onion buy tin of chick",
+    "FriCarrot and pea frittersuses carrots, peas and eggs buy flour",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPasta with peas and butteruses pasta, peas and cheddar buy butter"
+   ],
+   "list": [
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "tin of chickpeas",
+    "lemon",
+    "flour",
+    "passata",
+    "butter"
+   ],
+   "list2": [
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "tin of chickpeas",
+    "lemon",
+    "flour",
+    "passata",
+    "butter"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "1440",
+  "all three vetoes on",
+  {
+   "status": "6 dinners from 8 things on the shelf. 7 things to buy.",
+   "count": "7 things",
+   "rows": [
+    "MonPea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "TueSpinach and cheddar omeletteuses eggs, spinach and cheddar kids pla",
+    "WedCarrot and chickpea traybakeuses carrots and onion buy tin of chick",
+    "ThuCarrot and pea frittersuses carrots, peas and eggs buy flour kids c",
+    "FriTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SatPasta with peas and butteruses pasta, peas and cheddar buy butter k",
+    "Only 6 dinners fit. With more on the shelf, or one more thing the kids"
+   ],
+   "list": [
+    "bread",
+    "stock cubes",
+    "tin of chickpeas",
+    "lemon",
+    "flour",
+    "passata",
+    "butter"
+   ],
+   "list2": [
+    "bread",
+    "stock cubes",
+    "tin of chickpeas",
+    "lemon",
+    "flour",
+    "passata",
+    "butter"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "1440",
+  "all 12 ticked + all vetoes",
+  {
+   "status": "7 dinners from 12 things on the shelf. 5 things to buy.",
+   "count": "5 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TueChicken noodle soupuses chicken, carrots and onion buy noodles and ",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar kids pla",
+    "FriChickpea and yogurt wrapsuses chickpeas, yogurt, tortillas and spin",
+    "SatCarrot and pea frittersuses carrots, peas and eggs buy flour kids c",
+    "SunTortilla pizzas with grated carrotuses tortillas, cheddar and carro"
+   ],
+   "list": [
+    "soy sauce",
+    "noodles",
+    "stock cubes",
+    "flour",
+    "passata"
+   ],
+   "list2": [
+    "soy sauce",
+    "noodles",
+    "stock cubes",
+    "flour",
+    "passata"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "1440",
+  "nothing ticked",
+  {
+   "status": "Nothing on the shelf, so no plan yet.",
+   "count": "",
+   "rows": [
+    "Nothing on the shelf. Tick at least one thing you have, or this week i"
+   ],
+   "list": [
+    "Nothing to buy until something is on the shelf."
+   ],
+   "list2": [
+    "Nothing to buy until something is on the shelf."
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "1440",
+  "only tortillas",
+  {
+   "status": "3 dinners from 1 thing on the shelf. 6 things to buy.",
+   "count": "6 things",
+   "rows": [
+    "MonChicken and cheddar quesadillasuses tortillas buy chicken thighs an",
+    "TueTortilla pizzas with grated carrotuses tortillas buy block of chedd",
+    "WedFish finger wrapsuses tortillas buy frozen peas and fish fingers",
+    "Only 3 dinners fit. With more on the shelf, or one more thing the kids"
+   ],
+   "list": [
+    "chicken thighs",
+    "block of cheddar for 2 dinners",
+    "carrots",
+    "passata",
+    "frozen peas",
+    "fish fingers"
+   ],
+   "list2": [
+    "chicken thighs",
+    "block of cheddar for 2 dinners",
+    "carrots",
+    "passata",
+    "frozen peas",
+    "fish fingers"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "1440",
+  "eggs clicked three times fast (expect checked)",
+  true,
+  {
+   "status": "6 dinners from 2 things on the shelf. 10 things to buy.",
+   "count": "10 things",
+   "rows": [
+    "MonChicken and cheddar quesadillasuses tortillas buy chicken thighs an",
+    "TueSpinach and cheddar omeletteuses eggs buy half a bag of spinach and",
+    "WedCarrot and pea frittersuses eggs buy carrots, frozen peas and flour",
+    "ThuTortilla pizzas with grated carrotuses tortillas buy block of chedd",
+    "FriSpinach, egg and rice bowlsuses eggs buy half a bag of spinach, lef",
+    "SatFish finger wrapsuses tortillas buy frozen peas and fish fingers",
+    "Only 6 dinners fit. With more on the shelf, or one more thing the kids"
+   ],
+   "list": [
+    "chicken thighs",
+    "block of cheddar for 3 dinners",
+    "half a bag of spinach for 2 dinners",
+    "carrots for 2 dinners",
+    "frozen peas for 2 dinners",
+    "flour",
+    "passata",
+    "leftover rice",
+    "soy sauce",
+    "fish fingers"
+   ],
+   "list2": [
+    "chicken thighs",
+    "block of cheddar for 3 dinners",
+    "half a bag of spinach for 2 dinners",
+    "carrots for 2 dinners",
+    "frozen peas for 2 dinners",
+    "flour",
+    "passata",
+    "leftover rice",
+    "soy sauce",
+    "fish fingers"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "1440",
+  "reset twice",
+  {
+   "status": "7 dinners from 9 things on the shelf. 7 things to buy.",
+   "count": "7 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TuePea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "FriShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPeanut noodles with carrotsuses carrots and peas buy noodles and pe"
+   ],
+   "list": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "list2": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "1440",
+  "keyboard: space on spinach",
+  {
+   "status": "7 dinners from 8 things on the shelf. 8 things to buy.",
+   "count": "8 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TueChicken noodle soupuses chicken, carrots and onion buy noodles and ",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "FriCarrot and pea frittersuses carrots, peas and eggs buy flour",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPasta with peas and butteruses peas and cheddar buy pasta and butte"
+   ],
+   "list": [
+    "soy sauce",
+    "noodles",
+    "stock cubes",
+    "tin of tomatoes",
+    "flour",
+    "passata",
+    "pasta",
+    "butter"
+   ],
+   "list2": [
+    "soy sauce",
+    "noodles",
+    "stock cubes",
+    "tin of tomatoes",
+    "flour",
+    "passata",
+    "pasta",
+    "butter"
+   ],
+   "errors": []
+  },
+  {
+   "focused": "spinach",
+   "outline": "solid 3px"
+  }
+ ],
+ [
+  "1440",
+  "keyboard: enter on reset",
+  {
+   "status": "7 dinners from 9 things on the shelf. 7 things to buy.",
+   "count": "7 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TuePea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "FriShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPeanut noodles with carrotsuses carrots and peas buy noodles and pe"
+   ],
+   "list": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "list2": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "1440",
+  "nonsense: injected have=unicorn",
+  {
+   "status": "7 dinners from 9 things on the shelf. 7 things to buy.",
+   "count": "7 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TuePea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "FriShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPeanut noodles with carrotsuses carrots and peas buy noodles and pe"
+   ],
+   "list": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "list2": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "errors": []
+  },
+  "errors:",
+  []
+ ],
+ [
+  "1440-rm",
+  "default",
+  {
+   "status": "7 dinners from 9 things on the shelf. 7 things to buy.",
+   "count": "7 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TuePea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "FriShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPeanut noodles with carrotsuses carrots and peas buy noodles and pe"
+   ],
+   "list": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "list2": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "1440-rm",
+  "toggle rice under reduced motion; running animations",
+  [
+   {
+    "name": "flash",
+    "target": "plan-row changed",
+    "props": [
+     "opacity",
+     "opacity"
+    ]
+   },
+   {
+    "name": "flash",
+    "target": "plan-row changed",
+    "props": [
+     "opacity",
+     "opacity"
+    ]
+   },
+   {
+    "name": "flash",
+    "target": "plan-row changed",
+    "props": [
+     "opacity",
+     "opacity"
+    ]
+   },
+   {
+    "name": "flash",
+    "target": "plan-row changed",
+    "props": [
+     "opacity",
+     "opacity"
+    ]
+   }
+  ],
+  {
+   "status": "7 dinners from 8 things on the shelf. 6 things to buy.",
+   "count": "6 things",
+   "rows": [
+    "MonPea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "TueChicken noodle soupuses chicken, carrots and onion buy noodles and ",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "FriShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "SatCarrot and pea frittersuses carrots, peas and eggs buy flour",
+    "SunTortilla pizzas with grated carrotuses tortillas, cheddar and carro"
+   ],
+   "list": [
+    "bread",
+    "stock cubes for 2 dinners",
+    "noodles",
+    "tin of tomatoes",
+    "flour",
+    "passata"
+   ],
+   "list2": [
+    "bread",
+    "stock cubes for 2 dinners",
+    "noodles",
+    "tin of tomatoes",
+    "flour",
+    "passata"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "1440-nojs",
+  "first screen without scripts",
+  {
+   "rows": 7,
+   "status": "7 dinners from 9 things on the shelf. 7 things to buy."
+  }
+ ],
+ [
+  "390",
+  "default",
+  {
+   "status": "7 dinners from 9 things on the shelf. 7 things to buy.",
+   "count": "7 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TuePea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "FriShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPeanut noodles with carrotsuses carrots and peas buy noodles and pe"
+   ],
+   "list": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "list2": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "390",
+  "untick rice, chicken; tick pasta",
+  {
+   "status": "7 dinners from 8 things on the shelf. 8 things to buy.",
+   "count": "8 things",
+   "rows": [
+    "MonPea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "TueSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "WedShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "ThuCarrot and chickpea traybakeuses carrots and onion buy tin of chick",
+    "FriCarrot and pea frittersuses carrots, peas and eggs buy flour",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPasta with peas and butteruses pasta, peas and cheddar buy butter"
+   ],
+   "list": [
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "tin of chickpeas",
+    "lemon",
+    "flour",
+    "passata",
+    "butter"
+   ],
+   "list2": [
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "tin of chickpeas",
+    "lemon",
+    "flour",
+    "passata",
+    "butter"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "390",
+  "all three vetoes on",
+  {
+   "status": "6 dinners from 8 things on the shelf. 7 things to buy.",
+   "count": "7 things",
+   "rows": [
+    "MonPea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "TueSpinach and cheddar omeletteuses eggs, spinach and cheddar kids pla",
+    "WedCarrot and chickpea traybakeuses carrots and onion buy tin of chick",
+    "ThuCarrot and pea frittersuses carrots, peas and eggs buy flour kids c",
+    "FriTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SatPasta with peas and butteruses pasta, peas and cheddar buy butter k",
+    "Only 6 dinners fit. With more on the shelf, or one more thing the kids"
+   ],
+   "list": [
+    "bread",
+    "stock cubes",
+    "tin of chickpeas",
+    "lemon",
+    "flour",
+    "passata",
+    "butter"
+   ],
+   "list2": [
+    "bread",
+    "stock cubes",
+    "tin of chickpeas",
+    "lemon",
+    "flour",
+    "passata",
+    "butter"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "390",
+  "all 12 ticked + all vetoes",
+  {
+   "status": "7 dinners from 12 things on the shelf. 5 things to buy.",
+   "count": "5 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TueChicken noodle soupuses chicken, carrots and onion buy noodles and ",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar kids pla",
+    "FriChickpea and yogurt wrapsuses chickpeas, yogurt, tortillas and spin",
+    "SatCarrot and pea frittersuses carrots, peas and eggs buy flour kids c",
+    "SunTortilla pizzas with grated carrotuses tortillas, cheddar and carro"
+   ],
+   "list": [
+    "soy sauce",
+    "noodles",
+    "stock cubes",
+    "flour",
+    "passata"
+   ],
+   "list2": [
+    "soy sauce",
+    "noodles",
+    "stock cubes",
+    "flour",
+    "passata"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "390",
+  "nothing ticked",
+  {
+   "status": "Nothing on the shelf, so no plan yet.",
+   "count": "",
+   "rows": [
+    "Nothing on the shelf. Tick at least one thing you have, or this week i"
+   ],
+   "list": [
+    "Nothing to buy until something is on the shelf."
+   ],
+   "list2": [
+    "Nothing to buy until something is on the shelf."
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "390",
+  "only tortillas",
+  {
+   "status": "3 dinners from 1 thing on the shelf. 6 things to buy.",
+   "count": "6 things",
+   "rows": [
+    "MonChicken and cheddar quesadillasuses tortillas buy chicken thighs an",
+    "TueTortilla pizzas with grated carrotuses tortillas buy block of chedd",
+    "WedFish finger wrapsuses tortillas buy frozen peas and fish fingers",
+    "Only 3 dinners fit. With more on the shelf, or one more thing the kids"
+   ],
+   "list": [
+    "chicken thighs",
+    "block of cheddar for 2 dinners",
+    "carrots",
+    "passata",
+    "frozen peas",
+    "fish fingers"
+   ],
+   "list2": [
+    "chicken thighs",
+    "block of cheddar for 2 dinners",
+    "carrots",
+    "passata",
+    "frozen peas",
+    "fish fingers"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "390",
+  "eggs clicked three times fast (expect checked)",
+  true,
+  {
+   "status": "6 dinners from 2 things on the shelf. 10 things to buy.",
+   "count": "10 things",
+   "rows": [
+    "MonChicken and cheddar quesadillasuses tortillas buy chicken thighs an",
+    "TueSpinach and cheddar omeletteuses eggs buy half a bag of spinach and",
+    "WedCarrot and pea frittersuses eggs buy carrots, frozen peas and flour",
+    "ThuTortilla pizzas with grated carrotuses tortillas buy block of chedd",
+    "FriSpinach, egg and rice bowlsuses eggs buy half a bag of spinach, lef",
+    "SatFish finger wrapsuses tortillas buy frozen peas and fish fingers",
+    "Only 6 dinners fit. With more on the shelf, or one more thing the kids"
+   ],
+   "list": [
+    "chicken thighs",
+    "block of cheddar for 3 dinners",
+    "half a bag of spinach for 2 dinners",
+    "carrots for 2 dinners",
+    "frozen peas for 2 dinners",
+    "flour",
+    "passata",
+    "leftover rice",
+    "soy sauce",
+    "fish fingers"
+   ],
+   "list2": [
+    "chicken thighs",
+    "block of cheddar for 3 dinners",
+    "half a bag of spinach for 2 dinners",
+    "carrots for 2 dinners",
+    "frozen peas for 2 dinners",
+    "flour",
+    "passata",
+    "leftover rice",
+    "soy sauce",
+    "fish fingers"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "390",
+  "reset twice",
+  {
+   "status": "7 dinners from 9 things on the shelf. 7 things to buy.",
+   "count": "7 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TuePea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "FriShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPeanut noodles with carrotsuses carrots and peas buy noodles and pe"
+   ],
+   "list": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "list2": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "390",
+  "keyboard: space on spinach",
+  {
+   "status": "7 dinners from 8 things on the shelf. 8 things to buy.",
+   "count": "8 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TueChicken noodle soupuses chicken, carrots and onion buy noodles and ",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "FriCarrot and pea frittersuses carrots, peas and eggs buy flour",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPasta with peas and butteruses peas and cheddar buy pasta and butte"
+   ],
+   "list": [
+    "soy sauce",
+    "noodles",
+    "stock cubes",
+    "tin of tomatoes",
+    "flour",
+    "passata",
+    "pasta",
+    "butter"
+   ],
+   "list2": [
+    "soy sauce",
+    "noodles",
+    "stock cubes",
+    "tin of tomatoes",
+    "flour",
+    "passata",
+    "pasta",
+    "butter"
+   ],
+   "errors": []
+  },
+  {
+   "focused": "spinach",
+   "outline": "solid 3px"
+  }
+ ],
+ [
+  "390",
+  "keyboard: enter on reset",
+  {
+   "status": "7 dinners from 9 things on the shelf. 7 things to buy.",
+   "count": "7 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TuePea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "FriShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPeanut noodles with carrotsuses carrots and peas buy noodles and pe"
+   ],
+   "list": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "list2": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "390",
+  "nonsense: injected have=unicorn",
+  {
+   "status": "7 dinners from 9 things on the shelf. 7 things to buy.",
+   "count": "7 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TuePea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "FriShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPeanut noodles with carrotsuses carrots and peas buy noodles and pe"
+   ],
+   "list": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "list2": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "errors": []
+  },
+  "errors:",
+  []
+ ],
+ [
+  "390",
+  "menu open",
+  {
+   "expanded": "true",
+   "hidden": false
+  }
+ ],
+ [
+  "390",
+  "menu after Escape",
+  {
+   "expanded": "false",
+   "hidden": true,
+   "focus": "menu-btn"
+  }
+ ],
+ [
+  "390-rm",
+  "default",
+  {
+   "status": "7 dinners from 9 things on the shelf. 7 things to buy.",
+   "count": "7 things",
+   "rows": [
+    "MonEgg fried rice with peasuses eggs, rice, peas and onion buy soy sau",
+    "TuePea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "FriShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "SatTortilla pizzas with grated carrotuses tortillas, cheddar and carro",
+    "SunPeanut noodles with carrotsuses carrots and peas buy noodles and pe"
+   ],
+   "list": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "list2": [
+    "soy sauce",
+    "bread",
+    "stock cubes",
+    "tin of tomatoes",
+    "passata",
+    "noodles",
+    "peanut butter"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "390-rm",
+  "toggle rice under reduced motion; running animations",
+  [
+   {
+    "name": "flash",
+    "target": "plan-row changed",
+    "props": [
+     "opacity",
+     "opacity"
+    ]
+   },
+   {
+    "name": "flash",
+    "target": "plan-row changed",
+    "props": [
+     "opacity",
+     "opacity"
+    ]
+   },
+   {
+    "name": "flash",
+    "target": "plan-row changed",
+    "props": [
+     "opacity",
+     "opacity"
+    ]
+   },
+   {
+    "name": "flash",
+    "target": "plan-row changed",
+    "props": [
+     "opacity",
+     "opacity"
+    ]
+   }
+  ],
+  {
+   "status": "7 dinners from 8 things on the shelf. 6 things to buy.",
+   "count": "6 things",
+   "rows": [
+    "MonPea and spinach soup, cheese toastuses peas, spinach, onion and che",
+    "TueChicken noodle soupuses chicken, carrots and onion buy noodles and ",
+    "WedChicken and cheddar quesadillasuses chicken, tortillas and cheddar",
+    "ThuSpinach and cheddar omeletteuses eggs, spinach and cheddar",
+    "FriShakshuka with tortillasuses eggs, tortillas and onion buy tin of t",
+    "SatCarrot and pea frittersuses carrots, peas and eggs buy flour",
+    "SunTortilla pizzas with grated carrotuses tortillas, cheddar and carro"
+   ],
+   "list": [
+    "bread",
+    "stock cubes for 2 dinners",
+    "noodles",
+    "tin of tomatoes",
+    "flour",
+    "passata"
+   ],
+   "list2": [
+    "bread",
+    "stock cubes for 2 dinners",
+    "noodles",
+    "tin of tomatoes",
+    "flour",
+    "passata"
+   ],
+   "errors": []
+  }
+ ],
+ [
+  "390-nojs",
+  "first screen without scripts",
+  {
+   "rows": 7,
+   "status": "7 dinners from 9 things on the shelf. 7 things to buy."
+  }
+ ]
+]
