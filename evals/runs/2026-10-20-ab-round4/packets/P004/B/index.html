@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rerun — replay a failing CI test on your laptop</title>
+<meta name="description" content="Rerun is an open-source command-line tool that records a failing test run in CI and replays it exactly on your laptop: same inputs, same timing, same network responses.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F1318'/%3E%3Ccircle cx='11' cy='16' r='4' fill='%23E5493F'/%3E%3Cpath d='M18 10l8 6-8 6z' fill='%23F4F5F3'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --paper: #F4F5F3;
+    --paper-2: #EBEDEA;
+    --ink: #161A1F;
+    --muted: #5B6470;
+    --rule: #D6DAD6;
+    --accent: #B3261E;
+    --term-bg: #0F1318;
+    --term-chrome: #171C23;
+    --term-fg: #D5DAE0;
+    --term-dim: #7B8591;
+    --term-pass: #4CC778;
+    --term-fail: #F2635B;
+    --term-warn: #E9B44C;
+    --serif: "Charter", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, "Times New Roman", serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
+    --measure: 62ch;
+    --gutter: clamp(16px, 4vw, 48px);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.55;
+    font-feature-settings: "kern", "liga", "onum";
+  }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  code, kbd, pre, .mono { font-family: var(--mono); }
+  code { font-size: 0.88em; background: var(--paper-2); padding: 0.1em 0.35em; border-radius: 3px; }
+  pre { margin: 0; }
+  p { margin: 0 0 1em; max-width: var(--measure); }
+  h1, h2, h3 { font-weight: 500; line-height: 1.15; letter-spacing: -0.01em; margin: 0; }
+  h2 { font-size: 28px; margin-bottom: 0.6em; max-width: 24ch; }
+  h3 { font-size: 20px; }
+  ul { padding-left: 1.2em; max-width: var(--measure); }
+  li { margin-bottom: 0.3em; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 var(--gutter); }
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: #fff; padding: 8px 12px; z-index: 10; }
+  .skip:focus { left: 8px; }
+
+  /* Header */
+  header.site { padding: 22px 0; display: flex; align-items: baseline; justify-content: space-between; gap: 24px; }
+  .wordmark { font-family: var(--mono); font-size: 17px; color: var(--ink); text-decoration: none; display: inline-flex; align-items: center; gap: 9px; }
+  .wordmark .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); display: inline-block; }
+  nav.site ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 22px; }
+  nav.site a { color: var(--ink); text-decoration: none; font-size: 17px; }
+  nav.site a:hover { text-decoration: underline; }
+
+  /* Hero */
+  .hero { padding: clamp(28px, 6vw, 72px) 0 28px; }
+  .hero h1 { font-size: clamp(34px, 5.2vw, 56px); max-width: 17ch; margin-bottom: 0.5em; }
+  .hero .lede { font-size: clamp(19px, 2vw, 22px); color: var(--ink); max-width: 52ch; }
+  .install { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin: 28px 0 0; }
+  .cmd {
+    display: inline-flex; align-items: stretch; border: 1px solid var(--ink); border-radius: 6px; background: #fff; overflow: hidden;
+    font-family: var(--mono); font-size: 15.5px;
+  }
+  .cmd pre { padding: 11px 16px; white-space: nowrap; overflow-x: auto; }
+  .cmd pre .p { color: var(--muted); }
+  .cmd button {
+    font: inherit; font-size: 14px; border: 0; border-left: 1px solid var(--ink); background: var(--ink); color: #fff; padding: 0 14px; cursor: pointer; min-width: 74px;
+  }
+  .cmd button:hover { background: #2A3038; }
+  .cmd button[data-done="1"] { background: #2E6B45; }
+  .install .alt { font-size: 17px; }
+
+  /* Terminal */
+  .replay { margin: 36px 0 0; }
+  .term {
+    background: var(--term-bg); color: var(--term-fg); border-radius: 10px; overflow: hidden;
+    box-shadow: 0 1px 0 rgba(255,255,255,.4), 0 24px 60px -28px rgba(22,26,31,.55);
+    font-family: var(--mono); font-size: 14.5px; line-height: 1.5;
+  }
+  .term-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    padding: 10px 16px; background: var(--term-chrome); color: var(--term-dim); font-size: 13px; border-bottom: 1px solid #222935;
+  }
+  .term-bar .where { display: inline-flex; align-items: center; gap: 10px; }
+  .rec { display: inline-flex; align-items: center; gap: 7px; color: var(--term-fg); }
+  .rec i { width: 8px; height: 8px; border-radius: 50%; background: var(--term-fail); display: inline-block; }
+  .term[data-playing="1"] .rec i { animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: .25; } }
+  .term-bar .right { display: inline-flex; gap: 14px; }
+  .screen {
+    padding: 16px 18px 12px; min-height: 420px; white-space: pre; overflow-x: auto; tab-size: 4;
+  }
+  .screen .l { display: block; min-height: 1.5em; }
+  .screen .prompt { color: var(--term-fg); }
+  .screen .prompt b { color: var(--term-warn); font-weight: 500; }
+  .screen .dim { color: var(--term-dim); }
+  .screen .key { color: var(--term-dim); }
+  .screen .pass { color: var(--term-pass); }
+  .screen .fail { color: var(--term-fail); }
+  .screen .warn { color: var(--term-warn); }
+  .screen .cursor { display: inline-block; width: 0.6em; height: 1.1em; vertical-align: -0.15em; background: var(--term-fg); }
+  .term[data-playing="1"] .cursor, .term[data-ended="1"] .cursor { animation: blink 1.1s steps(1) infinite; }
+
+  .controls {
+    display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 14px;
+    padding: 10px 14px 12px; background: var(--term-chrome); border-top: 1px solid #222935; color: var(--term-dim); font-size: 13px;
+  }
+  .controls button {
+    font: inherit; font-family: var(--mono); background: transparent; color: var(--term-fg); border: 1px solid #39414D; border-radius: 5px; padding: 5px 10px; cursor: pointer; line-height: 1;
+  }
+  .controls button:hover { border-color: var(--term-fg); }
+  .controls button.play { min-width: 76px; }
+  .controls .time { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .scrub { position: relative; height: 28px; display: flex; align-items: center; }
+  .scrub input[type=range] {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 28px; background: transparent; margin: 0; cursor: pointer;
+  }
+  .scrub input[type=range]::-webkit-slider-runnable-track { height: 4px; background: #2C333D; border-radius: 2px; }
+  .scrub input[type=range]::-moz-range-track { height: 4px; background: #2C333D; border-radius: 2px; }
+  .scrub input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border-radius: 50%; background: var(--term-fg); border: 2px solid var(--term-bg); }
+  .scrub input[type=range]::-moz-range-thumb { width: 10px; height: 10px; border-radius: 50%; background: var(--term-fg); border: 2px solid var(--term-bg); }
+  .scrub .fill { position: absolute; left: 0; top: 12px; height: 4px; background: var(--term-fail); border-radius: 2px; pointer-events: none; width: 0; }
+  .scrub .marks { position: absolute; left: 0; right: 0; top: 12px; height: 4px; pointer-events: none; }
+  .scrub .marks i { position: absolute; top: -3px; width: 2px; height: 10px; background: var(--term-fail); opacity: .7; }
+  .replay-note { color: var(--muted); font-size: 16px; margin: 14px 0 0; max-width: var(--measure); }
+
+  /* Sections */
+  section.block { padding: clamp(44px, 7vw, 88px) 0 0; }
+  section.block + section.block { margin-top: clamp(44px, 7vw, 88px); border-top: 1px solid var(--rule); }
+  .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px 56px; align-items: start; }
+  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+
+  /* Steps */
+  ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: s; max-width: 760px; }
+  ol.steps li { counter-increment: s; display: grid; grid-template-columns: 2.4em minmax(0, 1fr); gap: 0 10px; padding: 22px 0; border-top: 1px solid var(--rule); }
+  ol.steps li:first-child { border-top: 0; padding-top: 6px; }
+  ol.steps li::before { content: counter(s); font-family: var(--mono); color: var(--muted); font-size: 16px; padding-top: 4px; }
+  ol.steps h3 { margin-bottom: 6px; }
+  ol.steps p { margin-bottom: 10px; }
+  ol.steps pre { font-size: 14.5px; background: var(--term-bg); color: var(--term-fg); padding: 12px 14px; border-radius: 6px; overflow-x: auto; }
+  ol.steps pre .c { color: var(--term-dim); }
+  ol.steps pre .o { color: var(--term-dim); }
+
+  /* Contents table */
+  table { border-collapse: collapse; width: 100%; font-size: 17px; }
+  th, td { text-align: left; vertical-align: top; padding: 12px 14px 12px 0; border-top: 1px solid var(--rule); }
+  thead th { border-top: 0; font-weight: 500; color: var(--muted); font-size: 16px; padding-top: 0; }
+  td:first-child, th:first-child { width: 28%; }
+  td .no { color: var(--muted); }
+  .caveat { margin-top: 18px; }
+
+  /* Status */
+  .status dl { margin: 0; max-width: 760px; }
+  .status dl > div { display: grid; grid-template-columns: 10em minmax(0, 1fr); gap: 0 20px; padding: 14px 0; border-top: 1px solid var(--rule); }
+  .status dl > div:first-child { border-top: 0; padding-top: 4px; }
+  .status dt { color: var(--muted); }
+  .status dd { margin: 0; max-width: var(--measure); }
+  @media (max-width: 520px) { .status dl > div { grid-template-columns: 1fr; gap: 4px; } }
+
+  /* FAQ */
+  details { border-top: 1px solid var(--rule); max-width: 760px; }
+  details:last-of-type { border-bottom: 1px solid var(--rule); }
+  summary { cursor: pointer; padding: 16px 0; font-size: 19px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--mono); color: var(--muted); flex: none; }
+  details[open] summary::after { content: "–"; }
+  details .a { padding: 0 0 18px; }
+
+  /* Closing */
+  .close { padding: clamp(44px, 7vw, 88px) 0; margin-top: clamp(44px, 7vw, 88px); border-top: 1px solid var(--rule); }
+  .close h2 { max-width: 22ch; font-size: clamp(26px, 3.4vw, 36px); }
+
+  footer.site { border-top: 1px solid var(--rule); padding: 26px 0 40px; color: var(--muted); font-size: 16px; display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: space-between; }
+  footer.site ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 18px; }
+  footer.site a { color: var(--ink); }
+
+  @media (max-width: 640px) {
+    body { font-size: 17px; }
+    .term-bar .right, .term-bar .run { display: none; }
+    .term { font-size: 13px; border-radius: 8px; }
+    .screen { min-height: 360px; padding: 14px; }
+    .controls { grid-template-columns: auto 1fr; grid-template-rows: auto auto; }
+    .controls .time { grid-column: 2; justify-self: end; }
+    .controls .speed { grid-column: 1; grid-row: 2; }
+    .controls .scrub { grid-column: 1 / -1; grid-row: 1; }
+    .controls .play { grid-row: 2; }
+    .controls .speed { grid-row: 2; grid-column: 2; justify-self: end; }
+    .controls .time { grid-row: 3; grid-column: 1 / -1; justify-self: start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rec i, .cursor { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+  <header class="site">
+    <a class="wordmark" href="#"><span class="dot" aria-hidden="true"></span>rerun</a>
+    <nav class="site" aria-label="Site">
+      <ul>
+        <li><a href="https://rerun.example/docs">Docs</a></li>
+        <li><a href="https://github.example/rerun/rerun">GitHub</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <h1>The test that only fails in CI, failing on your laptop.</h1>
+      <p class="lede">Rerun records a failing test run in CI and replays it exactly where you can put a breakpoint in it. Same inputs, same timing, same network responses. Free, MIT-licensed, one command to install.</p>
+      <div class="install">
+        <div class="cmd">
+          <pre id="install-cmd"><span class="p">$</span> npm install -g @rerun/cli</pre>
+          <button type="button" id="copy" aria-label="Copy install command">Copy</button>
+        </div>
+        <a class="alt" href="https://github.example/rerun/rerun">Read the source</a>
+      </div>
+
+      <div class="replay">
+        <div class="term" id="term" data-playing="0" data-ended="0">
+          <div class="term-bar">
+            <span class="where"><span class="rec"><i aria-hidden="true"></i><span id="rec-label">replaying</span></span><span>ci-8f3a2c<span class="run"> · recorded in GitHub Actions, run 4821</span></span></span>
+            <span class="right"><span>zsh</span><span>~/work/orders</span></span>
+          </div>
+          <div class="screen" id="screen" role="region" aria-label="Terminal output of a replayed test run"></div>
+          <div class="controls">
+            <button type="button" class="play" id="play" aria-label="Play">Play</button>
+            <div class="scrub">
+              <div class="fill" id="fill"></div>
+              <div class="marks" id="marks" aria-hidden="true"></div>
+              <input type="range" id="scrub" min="0" max="8800" step="10" value="0" aria-label="Scrub the replay">
+            </div>
+            <span class="time"><span id="t-now">0:00.0</span> / <span id="t-end">0:08.8</span></span>
+            <button type="button" class="speed" id="speed" aria-label="Playback speed">1×</button>
+          </div>
+        </div>
+        <p class="replay-note">This is a recording of a real replay session, played back in the page. Drag the bar to any point. The red tick is where the test fails, 2,003 ms in — the same millisecond it failed in CI.</p>
+      </div>
+    </section>
+
+    <section class="block" id="how">
+      <div class="two">
+        <div>
+          <h2>Three commands, start to breakpoint</h2>
+          <p>Rerun wraps your existing test command. It doesn’t replace your runner, your assertions, or your CI provider.</p>
+        </div>
+        <ol class="steps">
+          <li>
+            <div>
+              <h3>Record in CI</h3>
+              <p>Put <code>rerun record</code> in front of the test step. On a green run it adds a few hundred milliseconds and writes nothing. On a red run it saves a recording as a build artifact.</p>
+              <pre><span class="c"># .github/workflows/test.yml</span>
+- run: npx @rerun/cli record -- npm test</pre>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Get the recording id from the failed job</h3>
+              <p>The failure summary in the CI log ends with one line. Copy it.</p>
+              <pre><span class="o">1 failing · recording saved · </span>rerun replay ci-8f3a2c</pre>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Replay it locally</h3>
+              <p>Rerun fetches the recording, restores the environment, pins every network response, and runs the same command. Add <code>--inspect</code> to attach your debugger before the first line runs.</p>
+              <pre>rerun replay ci-8f3a2c --inspect</pre>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="block" id="what">
+      <div class="two">
+        <div>
+          <h2>What a recording contains</h2>
+          <p>A recording is a single file. It holds everything the test process observed that could differ between CI and your machine, and nothing that is the same on both.</p>
+          <p>A typical recording for one failing Jest file is 1–5 MB. Recordings are build artifacts; they live wherever your CI already keeps artifacts and expire on the same schedule.</p>
+        </div>
+        <div>
+          <table>
+            <thead>
+              <tr><th scope="col">Source of difference</th><th scope="col">What Rerun does on replay</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Environment</td><td>Restores <code>argv</code>, environment variables, working directory, locale, timezone, and the Node version (via your version manager if installed).</td></tr>
+              <tr><td>Time</td><td>Replays <code>Date.now</code>, <code>performance.now</code>, and timer order so that a 2,003 ms timeout fires at 2,003 ms, not whenever your laptop gets to it.</td></tr>
+              <tr><td>Randomness</td><td>Replays <code>Math.random</code>, <code>crypto.randomUUID</code>, and <code>crypto.randomBytes</code> with the recorded values.</td></tr>
+              <tr><td>Network</td><td>Serves every HTTP and HTTPS response the test received, in the order and at the latency it received them. Your laptop never contacts the real service.</td></tr>
+              <tr><td>DNS and ports</td><td>Resolves the hostnames the test resolved and reserves the ports it got.</td></tr>
+              <tr><td>Filesystem reads</td><td>Snapshots files the test read outside the repository checkout, such as temp files and caches.</td></tr>
+              <tr><td>Scheduling</td><td>Replays the order in which concurrent promises and I/O callbacks resolved, which is where most “only in CI” failures come from.</td></tr>
+              <tr><td><span class="no">Not yet</span></td><td><span class="no">Child processes, WebSockets, and native addons. Rerun warns at record time if the test touches any of these, so you know before you replay.</span></td></tr>
+            </tbody>
+          </table>
+          <p class="caveat">Secrets in environment variables and response bodies are redacted at record time with the same rules your CI provider uses for log masking. You can add your own patterns.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block status" id="status">
+      <div class="two">
+        <div>
+          <h2>Where the project stands</h2>
+          <p>You would normally find a row of company logos here. We don’t have company users we can name yet, so here is what we actually have.</p>
+        </div>
+        <dl>
+          <div><dt>Code</dt><dd>Everything is public at <a href="https://github.example/rerun/rerun">github.example/rerun/rerun</a>, MIT license. The recording format is documented and plain enough to read with <code>tar</code> and <code>jq</code>.</dd></div>
+          <div><dt>Users</dt><dd>Early. Stars on GitHub, issues from people running it in real pipelines, no customers. If you ship it on a team and are willing to be named, open an issue and tell us.</dd></div>
+          <div><dt>Cost</dt><dd>Free. The CLI will stay free and open source. A hosted team version — shared recordings, a web viewer — is planned but not built; there is no waitlist because there is nothing to wait for yet.</dd></div>
+          <div><dt>Support</dt><dd>Jest, Vitest, Mocha, and <code>node --test</code> on Node 18 and newer. GitHub Actions, GitLab CI, CircleCI, and Buildkite. Anything else that can run <code>npx</code> and store an artifact probably works and is untested.</dd></div>
+          <div><dt>Maintainers</dt><dd>Two people, part time. Issues get a reply within a few days; pull requests get a review within a week.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="block" id="faq">
+      <div class="two">
+        <div>
+          <h2>Questions engineers ask first</h2>
+        </div>
+        <div>
+          <details>
+            <summary>Does my code or test data leave my CI?</summary>
+            <div class="a"><p>No. Rerun has no server. Recordings are written to disk in the CI job and stored with your other build artifacts. <code>rerun replay</code> fetches them with the same credentials you already use for your CI provider.</p></div>
+          </details>
+          <details>
+            <summary>What happens if the test passes on replay?</summary>
+            <div class="a"><p>Rerun tells you, and prints a diff of what the process observed versus what was recorded. In practice that means the failure depends on something in the “not yet” row above. That is useful information on its own, and it is the first thing we would like to hear about.</p></div>
+          </details>
+          <details>
+            <summary>Why not just retry the test?</summary>
+            <div class="a"><p>Retrying hides the failure until it reaches production. Replaying it lets you step through the actual interleaving that broke, fix the race, and delete the retry.</p></div>
+          </details>
+          <details>
+            <summary>How much does recording slow down CI?</summary>
+            <div class="a"><p>A few hundred milliseconds of startup, and roughly 2–4% on the test run itself, in our measurements on Jest suites between 500 and 5,000 tests. Numbers and the benchmark script are in the repository.</p></div>
+          </details>
+          <details>
+            <summary>Does it work for languages other than JavaScript?</summary>
+            <div class="a"><p>Not today. The recorder hooks into Node’s module loader and <code>async_hooks</code>, which is why it can capture scheduling without changing your code. Other runtimes would need their own recorder; the replay format is runtime-neutral and we would welcome one.</p></div>
+          </details>
+          <details>
+            <summary>Can I try it without touching my CI config?</summary>
+            <div class="a"><p>Yes. <code>rerun record -- npm test</code> works on your laptop too, so you can record a local run and replay it to see what the tool captures. The repository also includes the recording from the session above, <code>examples/ci-8f3a2c</code>, which you can replay as-is.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="close">
+      <h2>Next time a test fails only in CI, replay it instead of staring at it.</h2>
+      <div class="install">
+        <div class="cmd">
+          <pre><span class="p">$</span> npm install -g @rerun/cli</pre>
+          <button type="button" id="copy2" aria-label="Copy install command">Copy</button>
+        </div>
+        <a class="alt" href="https://rerun.example/docs">Read the docs</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site">
+    <span>Rerun is open source under the MIT license.</span>
+    <ul>
+      <li><a href="https://rerun.example/docs">Docs</a></li>
+      <li><a href="https://github.example/rerun/rerun">GitHub</a></li>
+      <li><a href="https://github.example/rerun/rerun/issues">Issues</a></li>
+      <li><a href="https://rerun.example/docs/changelog">Changelog</a></li>
+    </ul>
+  </footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  // ---------- Replay data ----------
+  // Each event is [time in ms, html]. Times mirror the recorded session.
+  var EVENTS = [
+    [0,    '<span class="prompt">$ <b>rerun</b> replay ci-8f3a2c</span>'],
+    [380,  '<span class="key">  recording  </span>ci-8f3a2c <span class="dim">github-actions · run 4821 · 3h ago · 4.2 MB</span>'],
+    [900,  '<span class="key">  restoring  </span>node 20.11.1 <span class="dim">·</span> TZ=UTC <span class="dim">·</span> 31 env vars <span class="dim">·</span> seed 1716239044'],
+    [1380, '<span class="key">  network    </span>14 responses pinned <span class="dim">· api.stripe.test, inventory.internal</span>'],
+    [1800, '<span class="key">  clock      </span>starts 2026-10-20T06:41:07.233Z <span class="dim">· advances as recorded</span>'],
+    [2300, ''],
+    [2420, '<span class="dim">  &gt; npm test -- orders.spec.ts</span>'],
+    [2900, ''],
+    [3100, '  <span class="pass">✓</span> creates an order <span class="dim">(41 ms)</span>'],
+    [3480, '  <span class="pass">✓</span> applies a discount code <span class="dim">(12 ms)</span>'],
+    [5620, '  <span class="fail">✗</span> refunds within the return window <span class="dim">(2,003 ms)</span>'],
+    [5900, '      <span class="dim">expected</span>  <span class="pass">"refunded"</span>'],
+    [6050, '      <span class="dim">received</span>  <span class="fail">"pending"</span>'],
+    [6200, '      <span class="dim">at</span> orders.spec.ts:48:7'],
+    [6400, '      <span class="dim">at</span> Timeout._onTimeout <span class="dim">(node:internal/timers:573:17)</span>'],
+    [6900, ''],
+    [7000, '  <span class="pass">2 passing</span> <span class="dim">·</span> <span class="fail">1 failing</span> <span class="dim">·</span> <span class="warn">identical to CI run 4821</span>'],
+    [7500, ''],
+    [7600, '<span class="prompt">$ <b>rerun</b> diff ci-8f3a2c local</span>'],
+    [8300, '<span class="key">  compared   </span>2,114 observed values <span class="dim">·</span> <span class="pass">0 differ</span>'],
+    [8700, '']
+  ];
+  var END = 8800;
+  var FAIL_AT = 5620;
+
+  var term = document.getElementById('term');
+  var screen = document.getElementById('screen');
+  var scrub = document.getElementById('scrub');
+  var fill = document.getElementById('fill');
+  var marks = document.getElementById('marks');
+  var play = document.getElementById('play');
+  var speedBtn = document.getElementById('speed');
+  var tNow = document.getElementById('t-now');
+  var recLabel = document.getElementById('rec-label');
+
+  var SPEEDS = [1, 2, 4];
+  var speedIdx = 0;
+  var t = 0;
+  var playing = false;
+  var raf = null;
+  var lastStamp = 0;
+  var renderedCount = null;
+
+  var mark = document.createElement('i');
+  mark.style.left = (FAIL_AT / END * 100) + '%';
+  marks.appendChild(mark);
+
+  function fmt(ms) {
+    var s = ms / 1000;
+    var m = Math.floor(s / 60);
+    var r = s - m * 60;
+    return m + ':' + (r < 10 ? '0' : '') + r.toFixed(1);
+  }
+
+  function render() {
+    var count = 0;
+    for (var i = 0; i < EVENTS.length; i++) { if (EVENTS[i][0] <= t) count = i + 1; }
+    var key = count + (t >= END ? 'e' : '');
+    if (key !== renderedCount) {
+      var html = '';
+      for (var j = 0; j < count; j++) html += '<span class="l">' + EVENTS[j][1] + '</span>';
+      if (t >= END) html += '<span class="l"><span class="prompt">$ </span><span class="cursor" aria-hidden="true"></span></span>';
+      else html += '<span class="l"><span class="cursor" aria-hidden="true"></span></span>';
+      screen.innerHTML = html;
+      renderedCount = key;
+    }
+    var pct = (t / END) * 100;
+    fill.style.width = pct + '%';
+    scrub.value = Math.round(t);
+    tNow.textContent = fmt(t);
+    term.setAttribute('data-playing', playing ? '1' : '0');
+    term.setAttribute('data-ended', (!playing && t >= END) ? '1' : '0');
+    play.textContent = playing ? 'Pause' : (t >= END ? 'Replay' : 'Play');
+    play.setAttribute('aria-label', play.textContent);
+    recLabel.textContent = playing ? 'replaying' : (t >= END ? 'done' : 'paused');
+  }
+
+  function tick(stamp) {
+    if (!playing) return;
+    var dt = (stamp - lastStamp) * SPEEDS[speedIdx];
+    lastStamp = stamp;
+    t = Math.min(END, t + dt);
+    if (t >= END) { playing = false; }
+    render();
+    if (playing) raf = requestAnimationFrame(tick);
+  }
+
+  function start() {
+    if (t >= END) { t = 0; renderedCount = null; }
+    playing = true;
+    lastStamp = performance.now();
+    render();
+    raf = requestAnimationFrame(tick);
+  }
+  function stop() {
+    playing = false;
+    if (raf) cancelAnimationFrame(raf);
+    render();
+  }
+
+  play.addEventListener('click', function () { playing ? stop() : start(); });
+  speedBtn.addEventListener('click', function () {
+    speedIdx = (speedIdx + 1) % SPEEDS.length;
+    speedBtn.textContent = SPEEDS[speedIdx] + '×';
+  });
+  scrub.addEventListener('input', function () {
+    if (playing) stop();
+    t = Number(scrub.value);
+    render();
+  });
+  screen.addEventListener('click', function () { playing ? stop() : start(); });
+  screen.addEventListener('keydown', function (e) {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); playing ? stop() : start(); }
+  });
+
+  // One orchestrated moment: play once when the terminal first comes into view.
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) {
+    t = END; render();
+  } else {
+    render();
+    var started = false;
+    function autoplay() {
+      if (started) return;
+      started = true;
+      setTimeout(start, 500);
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; })) { autoplay(); io.disconnect(); }
+      }, { threshold: 0.35 });
+      io.observe(term);
+    } else {
+      autoplay();
+    }
+  }
+
+  // ---------- Copy buttons ----------
+  var CMD = 'npm install -g @rerun/cli';
+  function wireCopy(btn) {
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var done = function () {
+        btn.textContent = 'Copied';
+        btn.setAttribute('data-done', '1');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.removeAttribute('data-done'); }, 1600);
+      };
+      var fallback = function () {
+        var ta = document.createElement('textarea');
+        ta.value = CMD; ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed'; ta.style.left = '-9999px';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { btn.textContent = 'Select it'; }
+        document.body.removeChild(ta);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(CMD).then(done, fallback);
+      } else fallback();
+    });
+  }
+  wireCopy(document.getElementById('copy'));
+  wireCopy(document.getElementById('copy2'));
+
+  // Code blocks that overflow horizontally need to be reachable from the keyboard.
+  function markScrollable() {
+    var els = document.querySelectorAll('pre, .screen');
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.scrollWidth > el.clientWidth + 1) el.setAttribute('tabindex', '0');
+      else if (el.getAttribute('tabindex') === '0') el.removeAttribute('tabindex');
+    }
+  }
+  markScrollable();
+  window.addEventListener('resize', markScrollable);
+  screen.setAttribute('tabindex', '0');
+})();
+</script>
+</body>
+</html>

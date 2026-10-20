@@ -1,0 +1,665 @@
+{
+  "status": "ran",
+  "target": "file:///home/claude/r4/work/W001/index.html",
+  "checked_on": "2026-10-20",
+  "checks": [
+    {
+      "id": "PS-06",
+      "check": "There is one primary action, worded the same wherever it appears.",
+      "severity": "warn",
+      "pass": true,
+      "detail": [
+        "book a demo",
+        "door 1, dry van"
+      ]
+    },
+    {
+      "id": "CP-01",
+      "check": "The h1 has 3–12 words and says more than the product or company name.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "h1": "Every truck gets a door and a time.",
+        "words": 8,
+        "only_the_brand": false
+      }
+    },
+    {
+      "id": "CP-02",
+      "check": "A subhead of one or two sentences, at most 40 words, follows the h1 and is visible without scrolling.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "subhead": "Dockline is a dock appointment app for mid-size warehouses. You publish slots on your doors; carriers' dispatchers book ",
+        "element": "p",
+        "words": 30,
+        "sentences": 2,
+        "top_px": 251,
+        "visible_without_scrolling": true
+      }
+    },
+    {
+      "id": "CP-07",
+      "check": "The first screen contains none of the generic marketing phrases on the list (for example seamless, supercharge, unlock, unleash, streamline, effortless, all-in-one, next-gen, cutting-edge, revolutionize, \"AI-powered\", \"not just X, it's Y\", \"say goodbye to\").",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "CP-08",
+      "check": "No superlative (best, #1, leading, fastest, world's first, unmatched) appears unless its block also holds a source link or citation.",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "CP-11",
+      "check": "Body copy scores Flesch–Kincaid grade 9 or below, or the record gives the audience reason.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "flesch_kincaid_grade": 5,
+        "words": 570,
+        "sentences": 50
+      }
+    },
+    {
+      "id": "HR-01",
+      "check": "The headline and primary action are visible without scrolling at 1440×900 and 390×844.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "at": "390×844",
+        "h1_top": 89,
+        "first_action_top": 10
+      }
+    },
+    {
+      "id": "HR-02",
+      "check": "The primary action's label starts with a verb and names the outcome in 2–5 words; \"Get started\", \"Learn more\", \"Start now\" or \"Try it now\" alone fail. \"Book a demo\" and \"Join the waitlist\" pass.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "primary_action": "Book a demo",
+        "starts_with_verb": true,
+        "words": 3
+      }
+    },
+    {
+      "id": "HR-04",
+      "check": "A headline above about 6.5rem is the signature of the page and keeps each line to three words or fewer.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "h1_px": 60,
+        "words": 8,
+        "lines": 2
+      }
+    },
+    {
+      "id": "HR-05",
+      "check": "The first screen is not a false floor: at 1440×900 and 390×844 some content below the hero, or a hero element cut by the fold, shows in the bottom 15% of the viewport.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "390×844": "svg#wall \"The dock face: six numbered dock\" shows at 731–854px",
+        "1440×900": "span.who \"Northline\" shows at 757–776px"
+      }
+    },
+    {
+      "id": "ST-01",
+      "check": "Cost is easy to find: a header or footer link to pricing or plans, or visible prices; otherwise the record says how cost is disclosed and why.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "pricing_link": "Pricing",
+        "visible_price": null,
+        "free_statement": null
+      }
+    },
+    {
+      "id": "ST-02",
+      "check": "Within 5 seconds at 390×844, no dialog or fixed overlay covers more than 30% of the viewport, except a legally required consent prompt named in the record.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "overlays_at_5s": []
+      }
+    },
+    {
+      "id": "ST-03",
+      "check": "Clickable things look clickable: the primary action has a fill or a border with at least 3:1 contrast against its surroundings, and links inside paragraphs are underlined or differ from body text by at least 3:1.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "primary_action": {
+          "action": "Book a demo",
+          "fill_contrast": 4.44,
+          "border_contrast": 4.44
+        },
+        "inline_links_checked": 1,
+        "links_not_underlined_and_under_3_to_1": []
+      }
+    },
+    {
+      "id": "ST-05",
+      "check": "The conversion form shows at most three fields before submit, no textarea and at most one select.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "no conversion form on the page"
+    },
+    {
+      "id": "ST-06",
+      "check": "For developer products, the first two screenfuls show an install command or code sample, and the header links to docs or a quickstart; other products are n/a.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "n/a: not a developer product (no code, pre, kbd or install command on the page)"
+    },
+    {
+      "id": "TY-01",
+      "check": "Exactly one h1.",
+      "severity": "block",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "id": "TY-02",
+      "check": "Heading levels never skip (no h1 → h3).",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "TY-03",
+      "check": "The h1 and the first h2 are each at least 1.25× the body size.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "h1_to_body": 2.11,
+        "h2_to_body": 1.58
+      }
+    },
+    {
+      "id": "TY-04",
+      "check": "Headline letter-spacing is no tighter than −0.04em.",
+      "severity": "block",
+      "pass": true,
+      "detail": "0em"
+    },
+    {
+      "id": "TY-05",
+      "check": "Body text is at least 16px on phones.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "19px"
+    },
+    {
+      "id": "TY-06",
+      "check": "No readable text below 11px.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "TY-07",
+      "check": "Body paragraphs stay under about 80 rendered characters per line.",
+      "severity": "warn",
+      "pass": true,
+      "detail": [
+        46,
+        25
+      ]
+    },
+    {
+      "id": "TY-08",
+      "check": "Body line-height is at least 1.35.",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "TY-09",
+      "check": "Weights under 400 appear only at 28px and up; smaller text is 400 or heavier.",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "TY-10",
+      "check": "A display face that is everywhere (Inter, Space Grotesk, Fraunces, Roboto, Poppins, Montserrat) has a stated reason, and every face has a role (display, text, data).",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "display_face": "Helvetica Neue Condensed Bold",
+        "faces": [
+          "Helvetica Neue",
+          "Helvetica Neue Condensed Bold",
+          "ui-monospace"
+        ]
+      }
+    },
+    {
+      "id": "LY-01",
+      "check": "No horizontal scroll at 390px.",
+      "severity": "block",
+      "pass": true,
+      "detail": "at 390"
+    },
+    {
+      "id": "LY-02",
+      "check": "No horizontal scroll at 320px.",
+      "severity": "block",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "LY-03",
+      "check": "No text is cut off by its container.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "LY-04",
+      "check": "Body text keeps at least 12px from the screen edge on phones.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "LY-05",
+      "check": "No boxed card sits inside another boxed card.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 nested card(s)"
+    },
+    {
+      "id": "LY-06",
+      "check": "In-page anchor targets and focused controls are not hidden under a sticky header.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "anchor_targets_checked": 5,
+        "anchors_under_sticky_bar": [],
+        "focused_controls_hidden": []
+      }
+    },
+    {
+      "id": "LY-07",
+      "check": "A footer exists and holds real destinations.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "footer": true,
+        "links": 7
+      }
+    },
+    {
+      "id": "CO-01",
+      "check": "Text meets WCAG AA contrast (4.5:1, or 3:1 for 24px+ or 18.66px+ bold); text over images or gradients is sampled at its worst point.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "axe_violations": [],
+        "sampled_over_images_or_gradients": 0,
+        "sampled_failures": [],
+        "not_sampled": [],
+        "axe_needs_review": [
+          "#rules > .wrap > .tbl-wrap > table > caption (elmPartiallyObscured)",
+          "#rules > .wrap > .tbl-wrap > table > thead > tr > th:nth-child(5) (elmPartiallyObscured)",
+          "th:nth-child(6) (elmPartiallyObscured)",
+          "tr:nth-child(1) > .n:nth-child(5) (elmPartiallyObscured)"
+        ],
+        "method": "axe color-contrast; text axe cannot resolve is screenshotted with the text hidden and judged at the worst 4×4 px cell of its background"
+      }
+    },
+    {
+      "id": "CO-02",
+      "check": "No gradient-filled text and no coloured glow used as decoration.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "gradient_text": 0,
+        "coloured_glow": 0
+      }
+    },
+    {
+      "id": "CO-03",
+      "check": "The ground colour is chosen from where the product is used; cream with a serif display needs a reason.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "cream_ground": false,
+        "serif_display": false,
+        "face": "Helvetica Neue Condensed Bold"
+      }
+    },
+    {
+      "id": "TT-01",
+      "check": "No row of three equal cards with short adjective headings standing in for a product explanation.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 row(s) of adjective cards"
+    },
+    {
+      "id": "TT-02",
+      "check": "No icon tile stacked above every card heading.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 row(s) of icon-topped cards"
+    },
+    {
+      "id": "TT-03",
+      "check": "No small tracked-caps label above nearly every section heading.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 of 5 h2s have a tracked-caps label above"
+    },
+    {
+      "id": "TT-04",
+      "check": "No thick coloured side stripe on cards and no grid, dot or stripe background used as filler.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "side_stripes": 0,
+        "pattern_fill_backgrounds": 0
+      }
+    },
+    {
+      "id": "MO-01",
+      "check": "With reduced motion, nothing translates, scales or zooms and nothing is hidden; short fades are allowed.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "moving": [],
+        "moving_count": 0,
+        "script_motion": [],
+        "hidden_text": 0,
+        "hidden_sample": [],
+        "note": "opacity-only fades are allowed"
+      }
+    },
+    {
+      "id": "MO-02",
+      "check": "After loading and one scroll, no text is still invisible.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "share": "0%",
+        "sample": []
+      }
+    },
+    {
+      "id": "MO-03",
+      "check": "No transition: all.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "MO-04",
+      "check": "Only transform, translate, scale, rotate and opacity animate; never layout properties.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "keyframes": [],
+        "transitions": 0
+      }
+    },
+    {
+      "id": "MO-05",
+      "check": "Nothing that moves or changes by itself runs longer than 5 seconds without a visible pause control, and the h1 and primary action never change by themselves.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "still_changing_after_5s": [],
+        "pause_control": null,
+        "h1_changed": null,
+        "primary_action_changed": null
+      }
+    },
+    {
+      "id": "MO-06",
+      "check": "Overshoot or bounce easing appears only in playful archetypes; entrances never start from scale(0) or ease-in.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "overshoot": [],
+        "from_scale_0": [],
+        "ease_in_entrances": 0
+      }
+    },
+    {
+      "id": "MB-01",
+      "check": "The viewport meta never disables zoom.",
+      "severity": "block",
+      "pass": true,
+      "detail": "width=device-width, initial-scale=1"
+    },
+    {
+      "id": "MB-02",
+      "check": "On phones, the primary action and navigation controls are at least 44×44px.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "under_44x44": []
+      }
+    },
+    {
+      "id": "MB-03",
+      "check": "Every other control is at least 24×24px or has enough space around it (WCAG 2.5.8); links inside sentences are exempt.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "targets_measured": 24,
+        "under_24_without_spacing": [],
+        "note": "links inside sentences are exempt; WCAG 2.5.8 spacing: a 24px circle on each undersized target must not touch another target or its circle"
+      }
+    },
+    {
+      "id": "MB-04",
+      "check": "Inputs use at least 16px text, so phones do not zoom on focus.",
+      "severity": "warn",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "id": "MB-05",
+      "check": "If the nav collapses on phones, a working menu control replaces it.",
+      "severity": "block",
+      "pass": true,
+      "detail": "menu control reveals the navigation"
+    },
+    {
+      "id": "AX-01",
+      "check": "Every link and button has an accessible name.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-02",
+      "check": "Every image has alt text, empty only when decorative.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-03",
+      "check": "Every focusable control shows a focus indicator from the keyboard: an outline at least 2px with at least 3:1 contrast against adjacent colours.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "controls_tabbed": 40,
+        "without_2px_3_to_1_indicator": []
+      }
+    },
+    {
+      "id": "AX-04",
+      "check": "Nothing is clickable without being a link or button.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-05",
+      "check": "Every form control has a label.",
+      "severity": "block",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "id": "AX-06",
+      "check": "The html element declares a language and the page has a main landmark.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "lang": "en",
+        "main_landmark": true
+      }
+    },
+    {
+      "id": "AX-07",
+      "check": "No script errors or console errors while loading.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-08",
+      "check": "Links point somewhere real: no empty href, \"#\" or missing anchor or file.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "empty": [],
+        "missing_anchor": [],
+        "missing_file": []
+      }
+    },
+    {
+      "id": "AX-09",
+      "check": "No broken images.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-11",
+      "check": "With WCAG 1.4.12 text spacing applied (line-height 1.5, paragraph spacing 2em, letter-spacing 0.12em, word-spacing 0.16em), no text is clipped or overlaps.",
+      "severity": "block",
+      "pass": true,
+      "detail": "no new clipping, overlap or sideways scroll with WCAG 1.4.12 spacing at 390 and 1440"
+    },
+    {
+      "id": "PF-01",
+      "check": "Images declare width and height or an aspect-ratio, and images below the first screen load lazily.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "unsized": 0,
+        "eager_below_the_fold": 0
+      }
+    },
+    {
+      "id": "PF-02",
+      "check": "The largest element in the first screen (LCP) is not lazy-loaded or injected after load, and an LCP image has fetchpriority=\"high\" or a preload.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "element": "p.lede \"Dockline is a dock appointment a\"",
+        "tag": "P",
+        "url": null,
+        "t": 148,
+        "image": false,
+        "file": null,
+        "present_at_load": true,
+        "after_load_ms": 16,
+        "lazy": false,
+        "fetchpriority": null,
+        "preload": false,
+        "in_initial_html": "n/a (text)",
+        "problems": []
+      }
+    },
+    {
+      "id": "PF-03",
+      "check": "Web fonts use font-display swap or optional.",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "PF-04",
+      "check": "Layout shift (CLS) through load, one scroll and one interaction stays at or under 0.1.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "cls": 0,
+        "clicked": "button.door-tab \"1\"",
+        "largest_shifts": []
+      }
+    },
+    {
+      "id": "PF-05",
+      "check": "On a throttled mobile profile, lab LCP is at or under 2.5 seconds (a lab estimate, not field data).",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "lab_lcp_ms": 308,
+        "runs": [
+          304,
+          308,
+          336
+        ],
+        "element": "p",
+        "profile": "390×844, 4× CPU slowdown, 1.6 Mbps down, 750 kbps up, 150 ms RTT, cold cache",
+        "note": "median of 3 runs; a lab estimate, not field data; served from a temporary local server so the network throttle applies"
+      }
+    },
+    {
+      "id": "PF-06",
+      "check": "The page has a title and a meta description; for an unknown brand the title leads with the category or audience.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "title": "Dock appointment booking for mid-size warehouses — Dockline",
+        "description": "Dockline lets mid-size warehouses publish dock appointment slots so carriers' dispatchers "
+      }
+    },
+    {
+      "id": "PF-07",
+      "check": "Sharing works: og:title, og:description, an absolute og:image, twitter:card, a favicon and an apple-touch-icon are present, and theme-color matches the page background.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "missing": [],
+        "og_image": "https://dockline.example/og.png",
+        "twitter_card": "summary_large_image",
+        "theme_color": "#e8e9e5",
+        "note": "opened from disk: tags and files were checked, but a share card can only be verified on a public URL"
+      }
+    },
+    {
+      "id": "HP-05",
+      "check": "No false urgency or scarcity: no countdown timer, \"only N left\" or \"spots filling fast\" unless it is true and sourced.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "urgency_phrases": [],
+        "countdown_elements": [],
+        "ticking_text": []
+      }
+    }
+  ],
+  "failures": [],
+  "warnings": [],
+  "not_run": [],
+  "facts": {
+    "first_screen_text": {
+      "390": "Skip to content | Dockline | Menu | Every truck gets a door and a time. | Dockline is a dock appointment app for mid-size warehouses. You publish slots on your doors; carriers' dispatchers book an arrival time instead of calling in and waiting in the yard. | Book a demo | 30 minutes, online. Bring your door count and receiving hours. | In pilot at two mid-size warehouses we can't name yet, with no measured results to show. The day shown here is a sample you can book into. | Yard clock | 09:30 | Sample day, Thursday 22 October, receiving 06:00–16:00. Drag the clock to see who is at which door.",
+      "1440": "Skip to content | Dockline | How booking works | Slot rules | Pricing | Carriers: book a slot | Book a demo | Every truck gets a door and a time. | Dockline is a dock appointment app for mid-size warehouses. You publish slots on your doors; carriers' dispatchers book an arrival time instead of calling in and waiting in the yard. | 30 minutes, online. Bring your door count and receiving hours. | In pilot at two mid-size warehouses we can't name yet, with no measured results to show. The day shown here is a sample you can book into. | Try it the way a dispatcher would: pick an open hour under a door. The booking stays in this page; nothing is sent. | Try it the way a dispatcher would: | Yard clock | 09:30 | Sample day, Thursday 22 October, receiving 06:00–16:00. Drag the clock to see who is at which door. | PECOS | KELLER | MARBURY | OSTRANDER | Dry van | Reefer | Flatbed | Outbound | 06:00 | Keller | Greenway | Ostrander | 07:00 | Pecos | Marbury | 08:00 | Northline | Halvorsen | 09:00 | 10:00 | Open | Tallgrass | 11:00 | 12:00 | Bluegrass"
+    }
+  },
+  "runtime_s": 29.4,
+  "summary": "68 passed, 0 block failures, 0 warnings, 0 not run, of 68 automatic checks"
+}

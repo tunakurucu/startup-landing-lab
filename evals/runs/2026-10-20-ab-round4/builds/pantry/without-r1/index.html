@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pantrywise</title>
+<meta name="description" content="Pantrywise plans the week's dinners around what's already in your fridge and cupboard, with a shopping list for only what's missing. Free iPhone app for parents of picky kids.">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='5' y='2' width='22' height='28' rx='4' fill='%231F2A44'/%3E%3Crect x='8' y='5' width='16' height='8' rx='2' fill='%23F5D35A'/%3E%3Crect x='8' y='15' width='16' height='12' rx='2' fill='%23F5D35A'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="wordmark" href="#top" aria-label="Pantrywise home">
+    <svg class="wordmark-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+      <rect x="5" y="2" width="22" height="28" rx="4" fill="currentColor"/>
+      <rect x="8" y="5" width="16" height="8" rx="2" fill="var(--butter)"/>
+      <rect x="8" y="15" width="16" height="12" rx="2" fill="var(--butter)"/>
+      <rect x="10" y="7" width="2" height="4" rx="1" fill="currentColor"/>
+      <rect x="10" y="17" width="2" height="5" rx="1" fill="currentColor"/>
+    </svg>
+    <span>Pantrywise</span>
+  </a>
+  <a class="button button-small" href="https://pantrywise.example/waitlist">Join the waitlist</a>
+</header>
+
+<main id="top">
+
+  <div class="hero-wrap">
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>Dinner is already in your fridge.</h1>
+      <p class="lede">Tell Pantrywise what you've got. It plans the week's dinners around it, and the shopping list is only what's missing.</p>
+      <div class="cta-row">
+        <a class="button button-primary" href="https://pantrywise.example/waitlist">Join the iPhone waitlist</a>
+        <p class="cta-note">Free to use. iPhone first.</p>
+      </div>
+    </div>
+
+    <div class="fridge" id="demo">
+      <div class="fridge-door">
+        <h2 class="fridge-title">Try it. What's in your fridge right now?</h2>
+        <p class="fridge-hint">Tap what you have. The week updates as you go.</p>
+
+        <div class="shelves" id="shelves">
+          <fieldset class="shelf">
+            <legend>Fridge</legend>
+            <div class="chips" data-group="fridge"></div>
+          </fieldset>
+          <fieldset class="shelf">
+            <legend>Cupboard</legend>
+            <div class="chips" data-group="cupboard"></div>
+          </fieldset>
+          <fieldset class="shelf">
+            <legend>Freezer</legend>
+            <div class="chips" data-group="freezer"></div>
+          </fieldset>
+        </div>
+
+        <div class="plan-wrap">
+          <div class="plan" aria-live="polite">
+            <div class="plan-head">
+              <h3>This week's dinners</h3>
+              <button type="button" class="link-button" id="reshuffle">Shuffle</button>
+            </div>
+            <ol class="week" id="week"></ol>
+          </div>
+
+          <aside class="list" aria-live="polite">
+            <h3>Still need to buy</h3>
+            <ul id="shopping"></ul>
+            <p class="list-empty" id="shopping-empty" hidden>Nothing. The whole week is already in the house.</p>
+          </aside>
+        </div>
+
+        <p class="fridge-foot">These are example dinners to show how the planning works. The app has a full set, each written for a weeknight.</p>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <section class="steps" aria-labelledby="how">
+    <h2 id="how">How a week gets planned</h2>
+    <ol class="step-list">
+      <li>
+        <span class="step-num" aria-hidden="true">1</span>
+        <h3>Take stock</h3>
+        <p>Tap what's in the fridge, the cupboard and the freezer. It takes about a minute the first time, and Pantrywise remembers it between weeks.</p>
+      </li>
+      <li>
+        <span class="step-num" aria-hidden="true">2</span>
+        <h3>Get the week</h3>
+        <p>Five dinners built from what's there, each one thirty minutes or under. Swap any night you don't like and the list adjusts.</p>
+      </li>
+      <li>
+        <span class="step-num" aria-hidden="true">3</span>
+        <h3>Shop for the gap</h3>
+        <p>One short list of what's missing, sorted by aisle. Nothing you already own is on it.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="picky" aria-labelledby="picky">
+    <div class="picky-inner">
+      <h2 id="picky">Made for the table where somebody won't eat the green bits.</h2>
+      <div class="picky-grid">
+        <div class="picky-item">
+          <h3>Build-your-own nights</h3>
+          <p>Tacos, baked potatoes, rice bowls. Everyone gets the same dinner, just assembled differently, so there's one pan to wash and no second meal to cook.</p>
+        </div>
+        <div class="picky-item">
+          <h3>Keep it apart</h3>
+          <p>One tap moves the sauce, the onions or the green bits to the side of the plate for whoever needs that tonight.</p>
+        </div>
+        <div class="picky-item">
+          <h3>Repeat the wins</h3>
+          <p>When a dinner gets eaten without a fight, mark it. Pantrywise brings it back before anyone has time to miss it.</p>
+        </div>
+        <div class="picky-item">
+          <h3>Less in the bin</h3>
+          <p>The half bag of spinach gets used on Tuesday instead of thrown away on Sunday. Things that go off first get planned first.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="price" aria-labelledby="price">
+    <h2 id="price">What it costs</h2>
+    <p>Pantrywise is free. Later there will be a family plan with shared lists, so whoever is at the shop sees the same list as whoever is at home. We haven't set a price for that yet, and the waitlist will hear first.</p>
+  </section>
+
+  <section class="faq" aria-labelledby="faq">
+    <h2 id="faq">Questions people ask</h2>
+    <dl>
+      <div>
+        <dt>Is it on Android?</dt>
+        <dd>iPhone first. Android is planned after that. If you're on Android, join the waitlist anyway and we'll let you know when it's ready.</dd>
+      </div>
+      <div>
+        <dt>Where do the dinners come from?</dt>
+        <dd>We write them ourselves for weeknights: short ingredient lists, thirty minutes or under, and things kids actually eat. No long back-stories above the method.</dd>
+      </div>
+      <div>
+        <dt>Do I have to list everything I own?</dt>
+        <dd>No. Tap the things that go off and the few staples you cook with. Oil, salt, pepper and butter are assumed unless you tell us otherwise.</dd>
+      </div>
+      <div>
+        <dt>What if we don't like a night?</dt>
+        <dd>Swap it. Pantrywise offers another dinner from the same ingredients, and the shopping list changes with it.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="closing">
+    <h2>Tonight's dinner is in there somewhere.</h2>
+    <a class="button button-primary" href="https://pantrywise.example/waitlist">Join the iPhone waitlist</a>
+    <p class="cta-note">Free to use. We'll email once when it's ready.</p>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <p>Pantrywise. Made for weeknights.</p>
+  <a href="https://pantrywise.example/waitlist">Waitlist</a>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

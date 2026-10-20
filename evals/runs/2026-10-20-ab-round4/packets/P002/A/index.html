@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dock appointment booking for mid-size warehouses — Dockline</title>
+<meta name="description" content="Dockline lets mid-size warehouses publish dock appointment slots so carriers' dispatchers book a door and an arrival time instead of calling in and queuing in the yard.">
+<meta property="og:site_name" content="Dockline">
+<meta property="og:title" content="Every truck gets a door and a time — Dockline">
+<meta property="og:description" content="A dock appointment app for mid-size warehouses. You publish slots on your doors; carriers' dispatchers book an arrival time.">
+<meta property="og:image" content="https://dockline.example/og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#e8e9e5">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%232c3036'/%3E%3Cg fill='%23e8e9e5'%3E%3Crect x='4' y='9' width='6' height='12'/%3E%3Crect x='13' y='9' width='6' height='12'/%3E%3Crect x='22' y='9' width='6' height='12'/%3E%3C/g%3E%3Crect x='4' y='23' width='24' height='3' fill='%23e3b422'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{
+  --ground:#e8e9e5; --surface:#f5f5f2; --ink:#171a1d; --muted:#4b5057; --rule:#c6c8c2; --rule-strong:#9ea29e;
+  --wall:#2c3036; --wall-ink:#f1f1ec; --door:#7b838d;
+  --action:#157a3a; --action-ink:#ffffff; --action-hover:#0f5e2c; --yours:#dcefe1; --yours-ink:#0e4d24;
+  --lamp-red:#d1352b; --lamp-green:#2fbe55; --edge:#e3b422;
+  --display:"Helvetica Neue Condensed Bold","HelveticaNeue-CondensedBold","Arial Narrow","TeX Gyre Heros Cn","Roboto Condensed","Liberation Sans Narrow",system-ui,sans-serif;
+  --text:"Helvetica Neue",Helvetica,Arial,"Liberation Sans","TeX Gyre Heros",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono","DejaVu Sans Mono",monospace;
+  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2.5rem; --s5:4rem; --s6:6rem;
+  --wide:1200px;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:80px}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--text);font-size:1.0625rem;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:0;margin:0;text-wrap:balance;overflow-wrap:break-word}
+h1{font-size:clamp(2.5rem,1.5rem + 3vw,3.75rem);line-height:1.02}
+h2{font-size:clamp(1.875rem,1.3rem + 1.8vw,2.75rem);line-height:1.1}
+h3{font-size:1.25rem;line-height:1.25;font-family:var(--text);font-weight:600}
+p{margin:0}
+a{color:inherit}
+p a,li a,dd a{text-decoration:underline;text-underline-offset:.15em}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.skip{position:absolute;left:-999px;top:8px;background:transparent;color:var(--ink);padding:.5rem 1rem;z-index:10}
+.skip:focus{left:8px;background:var(--ink);color:var(--wall-ink)}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.wrap{max-width:var(--wide);margin:0 auto;padding:0 var(--s2)}
+@media (min-width:768px){.wrap{padding:0 var(--s3)}}
+.prose{max-width:62ch}
+
+/* header */
+.top{position:sticky;top:0;z-index:5;background:var(--ground);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:var(--s2);min-height:64px}
+.top .brand{flex:none}
+.brand{display:inline-flex;align-items:center;gap:.6rem;text-decoration:none;font-family:var(--display);font-size:1.5rem;letter-spacing:.01em;min-height:44px}
+.brand svg{width:30px;height:30px}
+.top nav{display:flex;align-items:center;gap:var(--s3);flex:1;justify-content:flex-end}
+.top nav a{text-decoration:none;color:var(--ink);min-height:44px;display:inline-flex;align-items:center;padding:0 .25rem}
+.top nav a:not(.btn):hover{text-decoration:underline;text-underline-offset:.2em}
+.menu-btn{display:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:48px;padding:0 1.25rem;border:2px solid transparent;border-radius:4px;font:inherit;font-weight:600;text-decoration:none;cursor:pointer;background:var(--surface);color:var(--ink);border-color:var(--rule-strong)}
+.btn-primary{background:var(--action);color:var(--action-ink);border-color:var(--action)}
+.btn-primary:hover{background:var(--action-hover);border-color:var(--action-hover)}
+.btn-text{background:transparent;border-color:transparent;text-decoration:underline;text-underline-offset:.15em;padding:0 .5rem}
+.top .btn{min-height:44px}
+@media (max-width:1023px){
+  .top nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--ground);border-bottom:1px solid var(--rule);flex-direction:column;align-items:stretch;gap:0;padding:.5rem var(--s2) 1rem}
+  .top nav.is-open{display:flex}
+  .top nav a{min-height:48px}
+  .top nav a:not(.btn){border-bottom:1px solid var(--rule)}
+  .top nav .btn{margin-top:.75rem}
+  .menu-btn{display:inline-flex;margin-left:auto;align-items:center;min-height:44px;min-width:44px;padding:0 .9rem;background:var(--surface);border:2px solid var(--rule-strong);border-radius:4px;font:inherit;font-weight:600;color:var(--ink);cursor:pointer}
+  .top .cta-mini{margin-left:auto;min-height:44px;padding:0 .9rem}
+  .menu-btn{margin-left:auto}
+  .cta-mini + .menu-btn{margin-left:.5rem}
+}
+@media (max-width:419px){.top .cta-mini{display:none}}
+@media (min-width:1024px){.top .cta-mini{display:none}}
+.top .cta-mini,.top nav .btn{white-space:nowrap}
+
+/* hero */
+.hero{padding:var(--s3) 0 var(--s4)}
+.hero .wrap{display:grid;gap:var(--s3);grid-template-columns:1fr;grid-template-areas:"copy" "dock" "sheet"}
+@media (min-width:900px){
+  .hero{padding:var(--s4) 0 var(--s5)}
+  .hero .wrap{grid-template-columns:5fr 7fr;grid-template-rows:auto 1fr;grid-template-areas:"copy dock" "sheet dock";column-gap:var(--s4);row-gap:var(--s3);align-items:start}
+}
+.hero-copy{grid-area:copy;max-width:34rem}
+.lede{font-size:1.1875rem;margin-top:var(--s3);max-width:30rem}
+.cta{margin-top:var(--s3);display:flex;flex-wrap:wrap;align-items:center;gap:.75rem var(--s2)}
+.beside{color:var(--muted);max-width:18rem;font-size:.9375rem;line-height:1.4}
+.pilot{margin-top:var(--s3);padding-top:var(--s2);border-top:1px solid var(--rule);color:var(--muted);font-size:.9375rem;max-width:28rem}
+.hero-sheet{grid-area:sheet}
+.dock{grid-area:dock;min-width:0}
+
+/* the yard clock */
+.clock{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.75rem;margin-bottom:.75rem}
+.clock label{font-weight:600}
+.clock input[type=range]{width:100%;min-height:44px;margin:0;accent-color:var(--action)}
+.clock output{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.25rem;font-weight:700;min-width:4ch;text-align:right}
+.clock-note{grid-column:1/-1;color:var(--muted);font-size:.9375rem}
+
+/* the dock face */
+.wall{display:block;width:100%;height:auto}
+.wall .plate-text{font-family:var(--display);font-weight:700;font-size:22px}
+.wall .nose-text{font-family:var(--display);font-weight:700;font-size:17px;line-height:26px;letter-spacing:.02em;text-align:center;color:#171a1d;overflow:hidden;white-space:nowrap}
+.trailer{opacity:0;visibility:hidden}
+.trailer.is-in{opacity:1;visibility:visible}
+.lamp-r,.lamp-g{opacity:.18}
+.light.is-red .lamp-r{opacity:1}
+.light.is-green .lamp-g{opacity:1}
+@media (prefers-reduced-motion:no-preference){
+  .trailer{transition:opacity 150ms ease-out,transform 360ms cubic-bezier(.2,.7,.2,1),visibility 0s linear 360ms;transform:translate(-36px,26px)}
+  .trailer.is-in{transform:translate(0,0);transition:opacity 150ms ease-out,transform 360ms cubic-bezier(.2,.7,.2,1),visibility 0s}
+  .lamp-r,.lamp-g{transition:opacity 150ms ease-out}
+}
+@media (max-width:639px){.wall .plate{display:none}}
+@media (max-width:899px){.wall .nose{display:none}}
+
+/* door header row and grid */
+.doors{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:4px}
+.door-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:44px;padding:.35rem .25rem;background:transparent;border:1px solid var(--rule);border-radius:0;font:inherit;color:var(--ink);cursor:pointer;line-height:1.2}
+.door-tab .n{font-family:var(--display);font-weight:700;font-size:1.25rem}
+.door-tab .t{font-size:.8125rem;color:var(--muted)}
+.dock.user .door-tab[aria-pressed=true]{background:var(--ink);color:var(--wall-ink)}
+.dock.user .door-tab[aria-pressed=true] .t{color:#c9ccc6}
+.grid-wrap{position:relative;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.slot{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:.05rem;min-height:48px;padding:.35rem .5rem;border:1px solid var(--rule);background:var(--surface);font:inherit;font-size:.9375rem;line-height:1.3;color:var(--ink);text-align:left;overflow-wrap:anywhere}
+.slot .h{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:700;flex:none}
+.slot .who{min-width:0;max-width:100%}
+button.slot{cursor:pointer;border-style:dashed;border-color:var(--rule-strong);background:transparent}
+button.slot .who{color:var(--muted)}
+button.slot:hover{background:#fff;border-color:var(--ink)}
+button.slot[aria-disabled=true]{cursor:not-allowed;border-style:solid;border-color:var(--rule);background:transparent;color:var(--muted)}
+button.slot[aria-disabled=true] .who{color:var(--muted)}
+.slot.is-booked{background:var(--wall);color:var(--wall-ink);border-color:var(--wall)}
+.slot.is-yours{background:var(--yours);color:var(--yours-ink);border:2px solid var(--action);padding:calc(.4rem - 1px) calc(.5rem - 1px)}
+.slot.is-picked{outline:3px solid var(--ink);outline-offset:-3px}
+.dock.user .grid.col-1 .slot[data-door="1"],.dock.user .grid.col-2 .slot[data-door="2"],.dock.user .grid.col-3 .slot[data-door="3"],.dock.user .grid.col-4 .slot[data-door="4"],.dock.user .grid.col-5 .slot[data-door="5"],.dock.user .grid.col-6 .slot[data-door="6"]{box-shadow:inset 0 0 0 1px var(--ink)}
+.now{display:none;position:absolute;left:0;right:0;top:var(--y,0px);height:0;border-top:2px solid var(--lamp-red);pointer-events:none}
+.now.is-on{display:block}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;margin-top:.75rem;color:var(--muted);font-size:.9375rem}
+.legend .sw{display:inline-block;width:.85em;height:.85em;vertical-align:-.08em;margin-right:.35em;border:1px solid var(--rule-strong)}
+.legend .sw.booked{background:var(--wall);border-color:var(--wall)}
+.legend .sw.open{border-style:dashed;background:var(--surface)}
+.legend .sw.yours{background:var(--yours);border:2px solid var(--action)}
+.board-foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 1rem;align-items:center;margin-top:.75rem;color:var(--muted);font-size:.9375rem}
+.status{min-height:1.5rem;margin-top:.5rem;font-weight:600;color:var(--ink)}
+.status:empty{margin-top:0}
+@media (max-width:639px){
+  .door-tab[aria-pressed=true]{background:var(--ink);color:var(--wall-ink)}
+  .door-tab[aria-pressed=true] .t{color:#c9ccc6}
+  .grid{grid-template-columns:1fr}
+  .grid .slot{display:none;flex-direction:row;align-items:baseline;gap:.5rem;min-height:48px;font-size:1rem}
+  .grid.col-1 .slot[data-door="1"],.grid.col-2 .slot[data-door="2"],.grid.col-3 .slot[data-door="3"],.grid.col-4 .slot[data-door="4"],.grid.col-5 .slot[data-door="5"],.grid.col-6 .slot[data-door="6"]{display:flex;box-shadow:none}
+  .door-tab .t{display:none}
+  .door-tab .n{font-size:1.125rem}
+  .door-tab{min-height:44px}
+}
+@media (min-width:640px){.door-tab .n::before{content:"Door ";font-family:var(--text);font-weight:400;font-size:.8125rem;color:inherit}}
+
+/* booking sheet */
+.sheet{background:var(--surface);border:1px solid var(--rule);padding:var(--s3)}
+.sheet[hidden]{display:none}
+.idle{color:var(--muted);max-width:30rem;border-top:1px solid var(--rule);padding-top:var(--s2)}
+.idle[hidden]{display:none}
+@media (max-width:899px){.idle{display:none}}
+.sheet-title{font-family:var(--display);font-size:1.5rem;line-height:1.1}
+.sheet-sub{color:var(--muted);margin-top:.25rem;font-size:.9375rem}
+.field{display:grid;gap:.3rem;margin-top:var(--s2)}
+.field label{font-weight:600}
+.field input,.field select{font:inherit;font-size:1rem;min-height:44px;padding:.4rem .6rem;border:1px solid var(--rule-strong);border-radius:3px;background:#fff;color:var(--ink);width:100%}
+.field input[aria-invalid=true]{border:2px solid var(--lamp-red)}
+.err{color:#9a2318;font-size:.9375rem;font-weight:600}
+.err:empty{display:none}
+.sheet .row{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:var(--s3);align-items:center}
+.confirm{display:grid;gap:.6rem}
+.confirm dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.25rem 1rem}
+.confirm dt{color:var(--muted)}
+.confirm dd{margin:0;font-weight:600}
+.sms{margin-top:var(--s2);padding:.9rem 1rem;background:#fff;border:1px solid var(--rule);border-radius:12px 12px 12px 2px;font-family:var(--mono);font-size:.9375rem;line-height:1.45;max-width:30rem}
+
+/* sections */
+.sec{padding:var(--s5) 0}
+@media (min-width:900px){.sec{padding:var(--s6) 0}}
+.sec-head{display:grid;gap:var(--s2);max-width:46rem;margin-bottom:var(--s4)}
+.sec-head p{max-width:40rem;color:var(--muted);font-size:1.125rem}
+.rule-top{border-top:1px solid var(--rule)}
+.two{display:grid;gap:var(--s4);grid-template-columns:1fr}
+@media (min-width:900px){.two{grid-template-columns:1fr 1fr;align-items:start}}
+.steps{list-style:none;margin:0;padding:0;counter-reset:step;display:grid;gap:var(--s3)}
+.steps li{counter-increment:step;display:grid;grid-template-columns:3rem 1fr;gap:var(--s2);align-items:start}
+.steps li::before{content:counter(step);font-family:var(--display);font-weight:700;font-size:2rem;line-height:1;color:var(--ink);border-bottom:3px solid var(--ink);padding-bottom:.2rem;text-align:center}
+.steps li p{color:var(--muted);margin-top:.25rem}
+.note{color:var(--muted);font-size:.9375rem}
+.card{background:var(--surface);border:1px solid var(--rule);padding:var(--s3)}
+.card h3{margin-bottom:var(--s2)}
+.ticket{font-family:var(--mono);font-size:.9375rem;line-height:1.5;background:#fff;border:1px solid var(--rule);padding:1rem 1.1rem;border-radius:12px 12px 12px 2px;max-width:32rem}
+.ticket b{font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:.9375rem}
+th,td{text-align:left;padding:.65rem .6rem;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:600;font-size:.875rem;color:var(--muted)}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl-wrap table{min-width:560px}
+@media (max-width:639px){
+  .tbl-wrap table{min-width:0}
+  .col-ref{display:none}
+  td .chip{white-space:normal;border-radius:6px}
+  table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  table.stack tr{display:grid;grid-template-columns:auto 1fr;gap:.15rem .75rem;padding:.75rem 0;border-bottom:1px solid var(--rule)}
+  table.stack td{display:contents;border:0;padding:0}
+  table.stack td::before{content:attr(data-label);color:var(--muted);font-size:.875rem}
+  table.stack td:empty{display:none}
+  table.stack td.n{font-family:var(--mono)}
+  table.stack td:first-child::before{content:"Door"}
+}
+.chip{display:inline-block;padding:.1rem .5rem;border-radius:999px;font-size:.8125rem;font-weight:600;border:1px solid currentColor;white-space:nowrap}
+.chip.ok{color:#0e4d24;background:#dcefe1;border-color:#0e4d24}
+.chip.late{color:#8a1f16;background:#fbe4e1;border-color:#8a1f16}
+.chip.due{color:var(--muted);background:var(--ground)}
+.dark{background:var(--wall);color:var(--wall-ink)}
+.dark .sec-head p,.dark th,.dark .note{color:#c9ccc6}
+.dark th,.dark td{border-color:#4a5058}
+.dark .chip.due{background:transparent;color:#c9ccc6;border-color:#8a9099}
+.dark .chip.ok{background:#1f6a3a;color:#fff;border-color:#1f6a3a}
+.dark .chip.late{background:#a02a1f;color:#fff;border-color:#a02a1f}
+.facts{display:grid;gap:var(--s3);grid-template-columns:1fr;margin:0}
+@media (min-width:768px){.facts{grid-template-columns:repeat(3,1fr)}}
+.facts div{border-top:3px solid var(--ink);padding-top:var(--s2)}
+.facts dt{font-family:var(--display);font-size:1.5rem;font-weight:700;line-height:1.1}
+.facts dd{margin:.6rem 0 0;color:var(--muted)}
+.final{padding:var(--s5) 0 var(--s6)}
+.final .wrap{display:grid;gap:var(--s3);max-width:var(--wide)}
+.final h2{max-width:20ch}
+.final .cta{margin-top:var(--s2)}
+footer{border-top:1px solid var(--rule);padding:var(--s4) 0}
+footer .wrap{display:grid;gap:var(--s3);grid-template-columns:1fr}
+@media (min-width:768px){footer .wrap{grid-template-columns:1fr 1fr}}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+footer a{text-decoration:none;min-height:24px;display:inline-block}
+footer a:hover{text-decoration:underline}
+footer .small{color:var(--muted);font-size:.9375rem;margin-top:var(--s2)}
+</style>
+<noscript><style>.idle,.board-foot button{display:none}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#main" aria-label="Dockline, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="4" fill="#2c3036"/><g fill="#e8e9e5"><rect x="4" y="9" width="6" height="12"/><rect x="13" y="9" width="6" height="12"/><rect x="22" y="9" width="6" height="12"/></g><rect x="4" y="23" width="24" height="3" fill="#e3b422"/></svg>
+      Dockline
+    </a>
+    <a class="btn btn-primary cta-mini" href="https://dockline.example/demo">Book a demo</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" aria-label="Site">
+      <a href="#booking">How booking works</a>
+      <a href="#rules">Slot rules</a>
+      <a href="#pricing">Pricing</a>
+      <a href="https://book.dockline.example">Carriers: book a slot</a>
+      <a class="btn btn-primary" href="https://dockline.example/demo">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap">
+    <div class="hero-copy">
+      <h1 id="h1">Every truck gets a door and a time.</h1>
+      <p class="lede">Dockline is a dock appointment app for mid-size warehouses. You publish slots on your doors; carriers' dispatchers book an arrival time instead of calling in and waiting in the yard.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://dockline.example/demo">Book a demo</a>
+        <p class="beside">30 minutes, online. Bring your door count and receiving hours.</p>
+      </div>
+      <p class="pilot">In pilot at two mid-size warehouses we can't name yet, with no measured results to show. The day shown here is a sample you can book into.</p>
+    </div>
+
+    <div class="hero-sheet idle" id="idle"><p><b>Try it the way a dispatcher would:</b> pick an open hour under a door. The booking stays in this page; nothing is sent.</p></div>
+    <form class="hero-sheet sheet" id="sheet" hidden novalidate aria-labelledby="sheet-title">
+      <p class="sheet-title" id="sheet-title">Book Door 3, 10:00–11:00</p>
+      <p class="sheet-sub">What the dispatcher fills in. Nothing is sent anywhere; this is the sample day.</p>
+      <div class="field">
+        <label for="f-carrier">Carrier</label>
+        <input id="f-carrier" name="carrier" type="text" maxlength="40" autocomplete="organization" required>
+        <p class="err" id="f-carrier-err" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="f-ref">Load reference or PO (optional)</label>
+        <input id="f-ref" name="ref" type="text" maxlength="24" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="f-trailer">Trailer</label>
+        <select id="f-trailer" name="trailer">
+          <option>53′ dry van</option>
+          <option>Reefer</option>
+          <option>Flatbed</option>
+          <option>Box truck</option>
+        </select>
+      </div>
+      <div class="row">
+        <button class="btn btn-primary" type="submit" id="sheet-confirm">Confirm booking</button>
+        <button class="btn btn-text" type="button" id="sheet-cancel">Cancel</button>
+      </div>
+    </form>
+    <div class="hero-sheet sheet confirm" id="done" hidden tabindex="-1" aria-labelledby="done-title">
+      <p class="sheet-title" id="done-title">Booked: Door 3, 10:00–11:00</p>
+      <dl>
+        <dt>Carrier</dt><dd id="done-carrier">—</dd>
+        <dt>Reference</dt><dd class="mono" id="done-ref">—</dd>
+        <dt>Trailer</dt><dd id="done-trailer">—</dd>
+      </dl>
+      <p class="note">An example of the text the driver would get. The wording is ours to confirm with the client.</p>
+      <p class="sms" id="done-sms">Door 3 · 10:00 · Ref DL-0000 · Check in at the gate with this ref. Slot held until 10:20.</p>
+      <div class="row">
+        <button class="btn" type="button" id="done-another">Book another hour</button>
+      </div>
+    </div>
+
+    <div class="dock">
+      <div class="clock">
+        <label for="clock">Yard clock</label>
+        <input id="clock" type="range" min="0" max="40" step="1" value="14" aria-describedby="clock-note">
+        <output for="clock" id="clock-out">09:30</output>
+        <p class="clock-note" id="clock-note">Sample day, Thursday 22 October, receiving 06:00–16:00. Drag the clock to see who is at which door.</p>
+      </div>
+
+      <svg class="wall" id="wall" viewBox="0 0 960 330" role="img" aria-label="The dock face: six numbered dock doors with dock lights and bumpers, a yellow edge line, and the trailers backed in at the doors on the yard clock.">
+        <defs>
+          <g id="door-shape">
+            <rect x="-60" y="56" width="120" height="144" fill="#7b838d" stroke="#1d2024" stroke-width="3"/>
+            <path d="M-58 92h116M-58 128h116M-58 164h116" stroke="#5c636c" stroke-width="2"/>
+            <rect x="-58" y="182" width="14" height="26" fill="#111315"/>
+            <rect x="44" y="182" width="14" height="26" fill="#111315"/>
+          </g>
+          <g id="light-shape">
+            <rect x="-84" y="64" width="16" height="36" rx="2" fill="#111315"/>
+            <circle class="lamp-r" cx="-76" cy="74" r="5" fill="#d1352b"/>
+            <circle class="lamp-g" cx="-76" cy="90" r="5" fill="#2fbe55"/>
+          </g>
+          <g id="trailer-shape">
+            <polygon points="-50,100 50,100 20,134 -80,134" fill="#f3f2ed" stroke="#1d2024" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="50,100 20,134 20,234 50,200" fill="#b9bab4" stroke="#1d2024" stroke-width="2" stroke-linejoin="round"/>
+            <rect x="-80" y="134" width="100" height="100" fill="#dedcd5" stroke="#1d2024" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M-80 162h100" stroke="#1d2024" stroke-width="1.5" opacity=".5"/>
+            <circle cx="40" cy="212" r="8" fill="#111315"/><circle cx="40" cy="212" r="3" fill="#8a8e93"/>
+            <circle cx="27" cy="226" r="8" fill="#111315"/><circle cx="27" cy="226" r="3" fill="#8a8e93"/>
+            <rect x="-72" y="234" width="6" height="12" fill="#111315"/>
+          </g>
+        </defs>
+        <g aria-hidden="true">
+          <rect x="0" y="0" width="960" height="200" fill="#2c3036"/>
+          <rect x="0" y="0" width="960" height="12" fill="#3b4048"/>
+          <rect x="0" y="200" width="960" height="12" fill="#8d9096"/>
+          <rect x="0" y="200" width="960" height="4" fill="#e3b422"/>
+          <rect x="0" y="212" width="960" height="118" fill="#d4d5d0"/>
+          <g stroke="#ebeae4" stroke-width="2" stroke-dasharray="10 8">
+            <path d="M20 212 L-84 330M140 212 L36 330M180 212 L76 330M300 212 L196 330M340 212 L236 330M460 212 L356 330M500 212 L396 330M620 212 L516 330M660 212 L556 330M780 212 L676 330M820 212 L716 330M940 212 L836 330"/>
+          </g>
+          <g id="bays">
+            <g transform="translate(80 0)"><use href="#door-shape"/><g class="light is-red" data-door="1"><use href="#light-shape"/></g><g class="plate"><rect x="-26" y="16" width="52" height="30" rx="2" fill="#eceae4"/><text class="plate-text" x="0" y="38" text-anchor="middle" fill="#171a1d">1</text></g></g>
+            <g transform="translate(240 0)"><use href="#door-shape"/><g class="light is-red" data-door="2"><use href="#light-shape"/></g><g class="plate"><rect x="-26" y="16" width="52" height="30" rx="2" fill="#eceae4"/><text class="plate-text" x="0" y="38" text-anchor="middle" fill="#171a1d">2</text></g></g>
+            <g transform="translate(400 0)"><use href="#door-shape"/><g class="light is-green" data-door="3"><use href="#light-shape"/></g><g class="plate"><rect x="-26" y="16" width="52" height="30" rx="2" fill="#eceae4"/><text class="plate-text" x="0" y="38" text-anchor="middle" fill="#171a1d">3</text></g></g>
+            <g transform="translate(560 0)"><use href="#door-shape"/><g class="light is-red" data-door="4"><use href="#light-shape"/></g><g class="plate"><rect x="-26" y="16" width="52" height="30" rx="2" fill="#eceae4"/><text class="plate-text" x="0" y="38" text-anchor="middle" fill="#171a1d">4</text></g></g>
+            <g transform="translate(720 0)"><use href="#door-shape"/><g class="light is-green" data-door="5"><use href="#light-shape"/></g><g class="plate"><rect x="-26" y="16" width="52" height="30" rx="2" fill="#eceae4"/><text class="plate-text" x="0" y="38" text-anchor="middle" fill="#171a1d">5</text></g></g>
+            <g transform="translate(880 0)"><use href="#door-shape"/><g class="light is-red" data-door="6"><use href="#light-shape"/></g><g class="plate"><rect x="-26" y="16" width="52" height="30" rx="2" fill="#eceae4"/><text class="plate-text" x="0" y="38" text-anchor="middle" fill="#171a1d">6</text></g></g>
+          </g>
+          <g id="trailers">
+            <g transform="translate(80 0)"><g class="trailer is-in" data-door="1"><use href="#trailer-shape"/><foreignObject class="nose" x="-80" y="172" width="100" height="26"><div xmlns="http://www.w3.org/1999/xhtml" class="nose-text">PECOS</div></foreignObject></g></g>
+            <g transform="translate(240 0)"><g class="trailer is-in" data-door="2"><use href="#trailer-shape"/><foreignObject class="nose" x="-80" y="172" width="100" height="26"><div xmlns="http://www.w3.org/1999/xhtml" class="nose-text">KELLER</div></foreignObject></g></g>
+            <g transform="translate(400 0)"><g class="trailer" data-door="3"><use href="#trailer-shape"/><foreignObject class="nose" x="-80" y="172" width="100" height="26"><div xmlns="http://www.w3.org/1999/xhtml" class="nose-text"></div></foreignObject></g></g>
+            <g transform="translate(560 0)"><g class="trailer is-in" data-door="4"><use href="#trailer-shape"/><foreignObject class="nose" x="-80" y="172" width="100" height="26"><div xmlns="http://www.w3.org/1999/xhtml" class="nose-text">MARBURY</div></foreignObject></g></g>
+            <g transform="translate(720 0)"><g class="trailer" data-door="5"><use href="#trailer-shape"/><foreignObject class="nose" x="-80" y="172" width="100" height="26"><div xmlns="http://www.w3.org/1999/xhtml" class="nose-text"></div></foreignObject></g></g>
+            <g transform="translate(880 0)"><g class="trailer is-in" data-door="6"><use href="#trailer-shape"/><foreignObject class="nose" x="-80" y="172" width="100" height="26"><div xmlns="http://www.w3.org/1999/xhtml" class="nose-text">OSTRANDER</div></foreignObject></g></g>
+          </g>
+        </g>
+      </svg>
+
+      <div class="doors" role="group" aria-label="Doors">
+        <button class="door-tab" type="button" aria-pressed="true" aria-label="Door 1, dry van" data-door="1"><span class="n">1</span><span class="t">Dry van</span></button>
+        <button class="door-tab" type="button" aria-pressed="false" aria-label="Door 2, dry van" data-door="2"><span class="n">2</span><span class="t">Dry van</span></button>
+        <button class="door-tab" type="button" aria-pressed="false" aria-label="Door 3, reefer" data-door="3"><span class="n">3</span><span class="t">Reefer</span></button>
+        <button class="door-tab" type="button" aria-pressed="false" aria-label="Door 4, reefer" data-door="4"><span class="n">4</span><span class="t">Reefer</span></button>
+        <button class="door-tab" type="button" aria-pressed="false" aria-label="Door 5, flatbed" data-door="5"><span class="n">5</span><span class="t">Flatbed</span></button>
+        <button class="door-tab" type="button" aria-pressed="false" aria-label="Door 6, outbound" data-door="6"><span class="n">6</span><span class="t">Outbound</span></button>
+      </div>
+      <div class="grid-wrap">
+        <div class="grid col-1" id="grid" role="group" aria-label="Booking grid: one column per door, one row per hour from 06:00 to 15:00">
+
+<div class="slot is-booked" data-door="1" data-hour="6"><span class="h">06:00</span><span class="who">Keller</span></div>
+
+<button type="button" class="slot" aria-label="Passed: 06:00 at Door 2" aria-disabled="true" data-door="2" data-hour="6"><span class="h">06:00</span><span class="who"></span></button>
+
+<div class="slot is-booked" data-door="3" data-hour="6"><span class="h">06:00</span><span class="who">Greenway</span></div>
+
+<button type="button" class="slot" aria-label="Passed: 06:00 at Door 4" aria-disabled="true" data-door="4" data-hour="6"><span class="h">06:00</span><span class="who"></span></button>
+
+<button type="button" class="slot" aria-label="Passed: 06:00 at Door 5" aria-disabled="true" data-door="5" data-hour="6"><span class="h">06:00</span><span class="who"></span></button>
+
+<div class="slot is-booked" data-door="6" data-hour="6"><span class="h">06:00</span><span class="who">Ostrander</span></div>
+
+<button type="button" class="slot" aria-label="Passed: 07:00 at Door 1" aria-disabled="true" data-door="1" data-hour="7"><span class="h">07:00</span><span class="who"></span></button>
+
+<div class="slot is-booked" data-door="2" data-hour="7"><span class="h">07:00</span><span class="who">Pecos</span></div>
+
+<div class="slot is-booked" data-door="3" data-hour="7"><span class="h">07:00</span><span class="who">Marbury</span></div>
+
+<button type="button" class="slot" aria-label="Passed: 07:00 at Door 4" aria-disabled="true" data-door="4" data-hour="7"><span class="h">07:00</span><span class="who"></span></button>
+
+<div class="slot is-booked" data-door="5" data-hour="7"><span class="h">07:00</span><span class="who">Ostrander</span></div>
+
+<button type="button" class="slot" aria-label="Passed: 07:00 at Door 6" aria-disabled="true" data-door="6" data-hour="7"><span class="h">07:00</span><span class="who"></span></button>
+
+<div class="slot is-booked" data-door="1" data-hour="8"><span class="h">08:00</span><span class="who">Northline</span></div>
+
+<div class="slot is-booked" data-door="2" data-hour="8"><span class="h">08:00</span><span class="who">Halvorsen</span></div>
+
+<button type="button" class="slot" aria-label="Passed: 08:00 at Door 3" aria-disabled="true" data-door="3" data-hour="8"><span class="h">08:00</span><span class="who"></span></button>
+
+<div class="slot is-booked" data-door="4" data-hour="8"><span class="h">08:00</span><span class="who">Marbury</span></div>
+
+<button type="button" class="slot" aria-label="Passed: 08:00 at Door 5" aria-disabled="true" data-door="5" data-hour="8"><span class="h">08:00</span><span class="who"></span></button>
+
+<button type="button" class="slot" aria-label="Passed: 08:00 at Door 6" aria-disabled="true" data-door="6" data-hour="8"><span class="h">08:00</span><span class="who"></span></button>
+
+<div class="slot is-booked" data-door="1" data-hour="9"><span class="h">09:00</span><span class="who">Pecos</span></div>
+
+<div class="slot is-booked" data-door="2" data-hour="9"><span class="h">09:00</span><span class="who">Keller</span></div>
+
+<button type="button" class="slot" aria-label="Passed: 09:00 at Door 3" aria-disabled="true" data-door="3" data-hour="9"><span class="h">09:00</span><span class="who"></span></button>
+
+<div class="slot is-booked" data-door="4" data-hour="9"><span class="h">09:00</span><span class="who">Marbury</span></div>
+
+<button type="button" class="slot" aria-label="Passed: 09:00 at Door 5" aria-disabled="true" data-door="5" data-hour="9"><span class="h">09:00</span><span class="who"></span></button>
+
+<div class="slot is-booked" data-door="6" data-hour="9"><span class="h">09:00</span><span class="who">Ostrander</span></div>
+
+<div class="slot is-booked" data-door="1" data-hour="10"><span class="h">10:00</span><span class="who">Northline</span></div>
+
+<button type="button" class="slot" aria-label="Book 10:00 at Door 2" data-door="2" data-hour="10"><span class="h">10:00</span><span class="who">Open</span></button>
+
+<button type="button" class="slot" aria-label="Book 10:00 at Door 3" data-door="3" data-hour="10"><span class="h">10:00</span><span class="who">Open</span></button>
+
+<button type="button" class="slot" aria-label="Book 10:00 at Door 4" data-door="4" data-hour="10"><span class="h">10:00</span><span class="who">Open</span></button>
+
+<div class="slot is-booked" data-door="5" data-hour="10"><span class="h">10:00</span><span class="who">Tallgrass</span></div>
+
+<button type="button" class="slot" aria-label="Book 10:00 at Door 6" data-door="6" data-hour="10"><span class="h">10:00</span><span class="who">Open</span></button>
+
+<button type="button" class="slot" aria-label="Book 11:00 at Door 1" data-door="1" data-hour="11"><span class="h">11:00</span><span class="who">Open</span></button>
+
+<div class="slot is-booked" data-door="2" data-hour="11"><span class="h">11:00</span><span class="who">Halvorsen</span></div>
+
+<div class="slot is-booked" data-door="3" data-hour="11"><span class="h">11:00</span><span class="who">Greenway</span></div>
+
+<button type="button" class="slot" aria-label="Book 11:00 at Door 4" data-door="4" data-hour="11"><span class="h">11:00</span><span class="who">Open</span></button>
+
+<button type="button" class="slot" aria-label="Book 11:00 at Door 5" data-door="5" data-hour="11"><span class="h">11:00</span><span class="who">Open</span></button>
+
+<button type="button" class="slot" aria-label="Book 11:00 at Door 6" data-door="6" data-hour="11"><span class="h">11:00</span><span class="who">Open</span></button>
+
+<div class="slot is-booked" data-door="1" data-hour="12"><span class="h">12:00</span><span class="who">Bluegrass</span></div>
+
+<button type="button" class="slot" aria-label="Book 12:00 at Door 2" data-door="2" data-hour="12"><span class="h">12:00</span><span class="who">Open</span></button>
+
+<button type="button" class="slot" aria-label="Book 12:00 at Door 3" data-door="3" data-hour="12"><span class="h">12:00</span><span class="who">Open</span></button>
+
+<div class="slot is-booked" data-door="4" data-hour="12"><span class="h">12:00</span><span class="who">Greenway</span></div>
+
+<button type="button" class="slot" aria-label="Book 12:00 at Door 5" data-door="5" data-hour="12"><span class="h">12:00</span><span class="who">Open</span></button>
+
+<div class="slot is-booked" data-door="6" data-hour="12"><span class="h">12:00</span><span class="who">Bluegrass</span></div>
+
+<button type="button" class="slot" aria-label="Book 13:00 at Door 1" data-door="1" data-hour="13"><span class="h">13:00</span><span class="who">Open</span></button>
+
+<div class="slot is-booked" data-door="2" data-hour="13"><span class="h">13:00</span><span class="who">Northline</span></div>
+
+<button type="button" class="slot" aria-label="Book 13:00 at Door 3" data-door="3" data-hour="13"><span class="h">13:00</span><span class="who">Open</span></button>
+
+<div class="slot is-booked" data-door="4" data-hour="13"><span class="h">13:00</span><span class="who">Greenway</span></div>
+
+<div class="slot is-booked" data-door="5" data-hour="13"><span class="h">13:00</span><span class="who">Tallgrass</span></div>
+
+<button type="button" class="slot" aria-label="Book 13:00 at Door 6" data-door="6" data-hour="13"><span class="h">13:00</span><span class="who">Open</span></button>
+
+<div class="slot is-booked" data-door="1" data-hour="14"><span class="h">14:00</span><span class="who">Keller</span></div>
+
+<button type="button" class="slot" aria-label="Book 14:00 at Door 2" data-door="2" data-hour="14"><span class="h">14:00</span><span class="who">Open</span></button>
+
+<div class="slot is-booked" data-door="3" data-hour="14"><span class="h">14:00</span><span class="who">Marbury</span></div>
+
+<button type="button" class="slot" aria-label="Book 14:00 at Door 4" data-door="4" data-hour="14"><span class="h">14:00</span><span class="who">Open</span></button>
+
+<button type="button" class="slot" aria-label="Book 14:00 at Door 5" data-door="5" data-hour="14"><span class="h">14:00</span><span class="who">Open</span></button>
+
+<button type="button" class="slot" aria-label="Book 14:00 at Door 6" data-door="6" data-hour="14"><span class="h">14:00</span><span class="who">Open</span></button>
+
+<button type="button" class="slot" aria-label="Book 15:00 at Door 1" data-door="1" data-hour="15"><span class="h">15:00</span><span class="who">Open</span></button>
+
+<div class="slot is-booked" data-door="2" data-hour="15"><span class="h">15:00</span><span class="who">Bluegrass</span></div>
+
+<button type="button" class="slot" aria-label="Book 15:00 at Door 3" data-door="3" data-hour="15"><span class="h">15:00</span><span class="who">Open</span></button>
+
+<button type="button" class="slot" aria-label="Book 15:00 at Door 4" data-door="4" data-hour="15"><span class="h">15:00</span><span class="who">Open</span></button>
+
+<button type="button" class="slot" aria-label="Book 15:00 at Door 5" data-door="5" data-hour="15"><span class="h">15:00</span><span class="who">Open</span></button>
+
+<div class="slot is-booked" data-door="6" data-hour="15"><span class="h">15:00</span><span class="who">Keller</span></div>
+
+</div>
+        <div class="now" id="now" aria-hidden="true"></div>
+      </div>
+      <div class="legend">
+        <span><span class="sw open" aria-hidden="true"></span>Open hour: click to book</span>
+        <span><span class="sw booked" aria-hidden="true"></span>Booked</span>
+        <span><span class="sw yours" aria-hidden="true"></span>Your booking</span>
+        <span>Dock light: red while a trailer is locked at the door, green when it's clear to back in</span>
+      </div>
+      <div class="board-foot">
+        <p>Sample day with made-up carriers. Bookings stay in this page.</p>
+        <button class="btn btn-text" type="button" id="reset">Reset the sample day</button>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="sec dark" id="gate" aria-labelledby="h-gate">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="h-gate">The gate sees who is due, at which door, and who is running late</h2>
+      <p>The receiving list for the day replaces the spreadsheet and the phone. It is the same sample day as the grid above, read at 09:30 from the gate shack.</p>
+    </div>
+    <div class="tbl-wrap" role="region" aria-label="Receiving list, scrolls sideways on narrow screens" tabindex="0">
+      <table>
+        <caption class="note" style="text-align:left;padding-bottom:.6rem">Receiving list at 09:30 on the sample day. Carriers and references are invented.</caption>
+        <thead><tr><th scope="col">Hour</th><th scope="col">Door</th><th scope="col">Carrier</th><th scope="col" class="col-ref">Ref</th><th scope="col">Status</th></tr></thead>
+        <tbody>
+          <tr><td class="n">08:00</td><td class="n">2</td><td>Halvorsen Freight</td><td class="n col-ref">DL-2C8F</td><td><span class="chip due">Departed 08:52</span></td></tr>
+          <tr><td class="n">09:00</td><td class="n">1</td><td>Pecos Freight</td><td class="n col-ref">DL-9A1K</td><td><span class="chip ok">At door since 09:04</span></td></tr>
+          <tr><td class="n">09:00</td><td class="n">2</td><td>Keller Trucking</td><td class="n col-ref">DL-5N3T</td><td><span class="chip ok">At door since 08:58</span></td></tr>
+          <tr><td class="n">09:00</td><td class="n">3</td><td>Greenway Cold Haul</td><td class="n col-ref">DL-8K4V</td><td><span class="chip late">Late: hold ended 09:20, moved to 11:00</span></td></tr>
+          <tr><td class="n">09:00</td><td class="n">4</td><td>Marbury Reefer Lines</td><td class="n col-ref">DL-1R7P</td><td><span class="chip ok">At door since 09:11</span></td></tr>
+          <tr><td class="n">09:00</td><td class="n">6</td><td>Ostrander Logistics</td><td class="n col-ref">DL-6M2D</td><td><span class="chip ok">Loading since 09:02</span></td></tr>
+          <tr><td class="n">10:00</td><td class="n">1</td><td>Northline Transport</td><td class="n col-ref">DL-3H9Q</td><td><span class="chip due">Due; checked in 09:26</span></td></tr>
+          <tr><td class="n">10:00</td><td class="n">3</td><td>Open</td><td class="n col-ref">—</td><td><span class="chip due">Open</span></td></tr>
+          <tr><td class="n">10:00</td><td class="n">5</td><td>Tallgrass Flatbed</td><td class="n col-ref">DL-4W8C</td><td><span class="chip due">Due; not checked in</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note prose" style="margin-top:1.5rem">A truck that misses its hold loses the hour. Door 3 at 10:00 is the open hour you can book in the grid above; book it and the reference you get is what the driver reads out at the gate.</p>
+  </div>
+</section>
+
+<section class="sec rule-top" id="booking" aria-labelledby="h-booking">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="h-booking">Dispatchers book from a link, and the driver gets a door, a time and a reference</h2>
+      <p>No carrier accounts, no app to install. A dispatcher who has never seen Dockline can book from the link in your email signature; the grid above is that page.</p>
+    </div>
+    <div class="two">
+      <ol class="steps">
+        <li><div><h3>Open your warehouse's booking link</h3><p>Every warehouse gets its own page on book.dockline.example. It shows your doors, your receiving hours and today's open hours.</p></div></li>
+        <li><div><h3>Pick a door and an open hour</h3><p>The page only offers doors that take the trailer type, and only hours inside the rules you set. Carrier name and load reference are the whole form.</p></div></li>
+        <li><div><h3>Give the driver the reference</h3><p>The confirmation goes to the dispatcher and, if a number was given, to the driver by text. The gate checks the reference, not a spreadsheet.</p></div></li>
+      </ol>
+      <div class="card">
+        <h3>The confirmation for Door 3 at 10:00</h3>
+        <p class="ticket"><b>Dockline · Riverside DC</b><br>Door 3 · Thu 22 Oct · 10:00–11:00<br>Carrier: Keller Trucking · 53′ dry van · PO 44812<br>Ref <b>DL-7Q2M</b><br>Check in at the gate with this ref. Be in the yard by 09:45. Slot held until 10:20.</p>
+        <p class="note" style="margin-top:1rem">The same booking as the open hour in the grid; "Riverside DC", the carrier and the PO are invented. The hold time comes from the door's rule below.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="sec rule-top" id="rules" aria-labelledby="h-rules">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="h-rules">You set the doors, hours and slot rules once; the booking page follows them</h2>
+      <p>A rule is a line in this sheet. Change the slot length on Door 5 and the carriers' page offers 30-minute hours on Door 5 from then on.</p>
+    </div>
+    <div class="tbl-wrap" role="region" aria-label="Slot rules, scrolls sideways on narrow screens" tabindex="0">
+      <table class="stack">
+        <caption class="note" style="text-align:left;padding-bottom:.6rem">Slot rules for the sample day. Every value is editable per door; these are the defaults the sample uses.</caption>
+        <thead><tr><th scope="col">Door</th><th scope="col">Takes</th><th scope="col">Slot length</th><th scope="col">Receiving hours</th><th scope="col">Hold after start</th><th scope="col">Notes</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Door" class="n">1</td><td data-label="Takes">Dry van, live unload</td><td data-label="Slot length" class="n">60 min</td><td data-label="Receiving hours" class="n">06:00–16:00</td><td data-label="Hold after start" class="n">20 min</td><td data-label="Notes">Floor-loaded freight adds a second hour automatically</td></tr>
+          <tr><td data-label="Door" class="n">2</td><td data-label="Takes">Dry van, live unload</td><td data-label="Slot length" class="n">60 min</td><td data-label="Receiving hours" class="n">06:00–16:00</td><td data-label="Hold after start" class="n">20 min</td><td data-label="Notes"></td></tr>
+          <tr><td data-label="Door" class="n">3</td><td data-label="Takes">Reefer</td><td data-label="Slot length" class="n">60 min</td><td data-label="Receiving hours" class="n">06:00–16:00</td><td data-label="Hold after start" class="n">20 min</td><td data-label="Notes">Temperature check at the gate before the door opens</td></tr>
+          <tr><td data-label="Door" class="n">4</td><td data-label="Takes">Reefer</td><td data-label="Slot length" class="n">60 min</td><td data-label="Receiving hours" class="n">06:00–16:00</td><td data-label="Hold after start" class="n">20 min</td><td data-label="Notes"></td></tr>
+          <tr><td data-label="Door" class="n">5</td><td data-label="Takes">Flatbed, drop</td><td data-label="Slot length" class="n">60 min</td><td data-label="Receiving hours" class="n">06:00–16:00</td><td data-label="Hold after start" class="n">30 min</td><td data-label="Notes">Forklift unload; no dock leveler</td></tr>
+          <tr><td data-label="Door" class="n">6</td><td data-label="Takes">Outbound pickups</td><td data-label="Slot length" class="n">60 min</td><td data-label="Receiving hours" class="n">06:00–16:00</td><td data-label="Hold after start" class="n">15 min</td><td data-label="Notes">Closed to inbound</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note prose" style="margin-top:1.5rem">Block a door for the afternoon and its booked carriers are told, with the next open hour offered. Receiving hours can differ by weekday; the sample uses one set.</p>
+  </div>
+</section>
+
+
+
+<section class="sec rule-top" id="pricing" aria-labelledby="h-pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="h-pricing">What it costs, what setup takes, and what it leaves alone</h2>
+    </div>
+    <dl class="facts">
+      <div><dt>Priced per warehouse, by door count</dt><dd>One price for the warehouse, set by how many dock doors you publish. We quote it on the demo call; there is no public price list yet, and the two pilots are on pilot terms.</dd></div>
+      <div><dt>Setup is a door list and your hours</dt><dd>Doors, what each takes, receiving hours and slot length: the sheet above. Then you send carriers the link. No WMS integration is needed to start.</dd></div>
+      <div><dt>It schedules the door, not the warehouse</dt><dd>Your WMS, your TMS and your yard jockey stay as they are. Dockline decides who arrives when; it does not move trailers or receive freight.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="final rule-top" id="demo" aria-labelledby="h-demo">
+  <div class="wrap">
+    <h2 id="h-demo">See your own doors in it</h2>
+    <p class="prose">Tell us your door count and receiving hours and we'll walk through a booking page set up for your dock, then the gate's list for a day.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://dockline.example/demo">Book a demo</a>
+      <p class="beside">30 minutes, online. Bring your door count and receiving hours.</p>
+    </div>
+    <p class="note">Dispatching for a carrier? Your warehouse's booking page is at <a href="https://book.dockline.example">book.dockline.example</a>.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#main">Dockline</a>
+      <p class="small">Dock appointment booking for mid-size warehouses. Carriers book a door and an hour; the yard stops queuing.</p>
+      <p class="small">© 2026 Dockline. In pilot; not yet generally available.</p>
+    </div>
+    <ul>
+      <li><a href="#gate">What the gate sees</a></li>
+      <li><a href="#booking">How booking works</a></li>
+      <li><a href="#rules">Slot rules</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="https://book.dockline.example">Carriers: book a slot</a></li>
+      <li><a href="https://dockline.example/demo">Book a demo</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var DOORS = [[1,'Dry van'],[2,'Dry van'],[3,'Reefer'],[4,'Reefer'],[5,'Flatbed'],[6,'Outbound']];
+  var FIRST = 6, LAST = 16; // receiving window 06:00-16:00, 60-minute hours
+  var SAMPLE = [
+    [1,6,'Keller'],[1,8,'Northline'],[1,9,'Pecos'],[1,10,'Northline'],[1,12,'Bluegrass'],[1,14,'Keller'],
+    [2,7,'Pecos'],[2,8,'Halvorsen'],[2,9,'Keller'],[2,11,'Halvorsen'],[2,13,'Northline'],[2,15,'Bluegrass'],
+    [3,6,'Greenway'],[3,7,'Marbury'],[3,11,'Greenway'],[3,14,'Marbury'],
+    [4,8,'Marbury'],[4,9,'Marbury'],[4,12,'Greenway'],[4,13,'Greenway'],
+    [5,7,'Ostrander'],[5,10,'Tallgrass'],[5,13,'Tallgrass'],
+    [6,6,'Ostrander'],[6,9,'Ostrander'],[6,12,'Bluegrass'],[6,15,'Keller']
+  ];
+  var state = {clock: 14, bookings: [], picked: null, door: 1, seq: 0};
+  var $ = function(id){ return document.getElementById(id); };
+  var grid = $('grid'), clock = $('clock'), clockOut = $('clock-out'), now = $('now'), status = $('status');
+  var sheet = $('sheet'), done = $('done');
+  var cells = {};
+
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  function hhmm(q){ var h = FIRST + Math.floor(q / 4), m = (q % 4) * 15; return pad(h) + ':' + pad(m); }
+  function hourLabel(h){ return pad(h) + ':00'; }
+  function clockHours(){ return FIRST + state.clock / 4; }
+  function bookingAt(door, hour){ for (var i = 0; i < state.bookings.length; i++){ var b = state.bookings[i]; if (b.door === door && b.hour === hour) return b; } return null; }
+  function ref(){ var s = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', n = (state.seq * 2654435761 + 97) >>> 0, out = ''; for (var i = 0; i < 4; i++){ out += s[n % s.length]; n = Math.floor(n / s.length) + 7; } return 'DL-' + out; }
+  function say(t){ status.textContent = ''; setTimeout(function(){ status.textContent = t; }, 30); }
+
+  function resetSample(){
+    state.bookings = SAMPLE.map(function(b){ return {door: b[0], hour: b[1], carrier: b[2], yours: false}; });
+    state.picked = null; state.clock = 14; clock.value = '14';
+    closeSheet(); done.hidden = true; $('idle').hidden = false; render();
+  }
+
+  function build(){
+    var existing = grid.querySelectorAll('.slot');
+    if (existing.length){ for (var i = 0; i < existing.length; i++) cells[existing[i].dataset.door + ':' + existing[i].dataset.hour] = existing[i]; return; }
+    var frag = document.createDocumentFragment();
+    for (var h = FIRST; h < LAST; h++){
+      for (var d = 0; d < DOORS.length; d++){
+        var door = DOORS[d][0];
+        var el = document.createElement('button');
+        el.type = 'button'; el.className = 'slot'; el.dataset.door = door; el.dataset.hour = h;
+        el.innerHTML = '<span class="h"></span><span class="who"></span>';
+        el.addEventListener('click', onSlot);
+        frag.appendChild(el); cells[door + ':' + h] = el;
+      }
+    }
+    grid.appendChild(frag);
+  }
+
+  function render(){
+    var ch = clockHours();
+    clockOut.value = hhmm(state.clock); clockOut.textContent = hhmm(state.clock);
+    for (var h = FIRST; h < LAST; h++){
+      for (var d = 0; d < DOORS.length; d++){
+        var door = DOORS[d][0], key = door + ':' + h, old = cells[key], b = bookingAt(door, h), el;
+        var passed = h < ch;
+        if (b){
+          el = document.createElement('div');
+          el.className = 'slot is-booked' + (b.yours ? ' is-yours' : '');
+          el.innerHTML = '<span class="h"></span><span class="who"></span>';
+          el.querySelector('.who').textContent = b.carrier + (b.yours ? ' (yours)' : '');
+        } else {
+          el = document.createElement('button'); el.type = 'button'; el.className = 'slot';
+          el.innerHTML = '<span class="h"></span><span class="who"></span>';
+          el.querySelector('.who').textContent = passed ? '' : 'Open';
+          el.setAttribute('aria-label', (passed ? 'Passed: ' : 'Book ') + hourLabel(h) + ' at Door ' + door);
+          if (passed) el.setAttribute('aria-disabled', 'true');
+          el.addEventListener('click', onSlot);
+        }
+        el.dataset.door = door; el.dataset.hour = h;
+        el.querySelector('.h').textContent = hourLabel(h);
+        if (state.picked && state.picked.door === door && state.picked.hour === h) el.classList.add('is-picked');
+        old.parentNode.replaceChild(el, old); cells[key] = el;
+      }
+    }
+    // trailers and lights
+    for (var i = 0; i < DOORS.length; i++){
+      var dn = DOORS[i][0], tr = document.querySelector('.trailer[data-door="' + dn + '"]'), lt = document.querySelector('.light[data-door="' + dn + '"]');
+      var at = null; for (var j = 0; j < state.bookings.length; j++){ var bb = state.bookings[j]; if (bb.door === dn && ch >= bb.hour && ch < bb.hour + 1){ at = bb; break; } }
+      tr.classList.toggle('is-in', !!at);
+      tr.querySelector('.nose-text').textContent = at ? at.carrier.split(' ')[0].toUpperCase() : '';
+      lt.classList.toggle('is-red', !!at); lt.classList.toggle('is-green', !at);
+    }
+    grid.className = 'grid col-' + state.door;
+    var tabs = document.querySelectorAll('.door-tab');
+    for (var k = 0; k < tabs.length; k++) tabs[k].setAttribute('aria-pressed', String(+tabs[k].dataset.door === state.door));
+    placeNow();
+  }
+
+  function placeNow(){
+    var ch = clockHours(), h = Math.min(LAST - 1, Math.floor(ch)), frac = ch - h;
+    var first = cells[state.door + ':' + h];
+    var r = first.getBoundingClientRect(), g = grid.getBoundingClientRect();
+    if (r.height === 0){ now.style.display = 'none'; return; }
+    now.style.display = ''; now.classList.add('is-on');
+    now.style.setProperty('--y', Math.round(r.top - g.top + r.height * frac) + 'px');
+  }
+
+  function onSlot(e){
+    var el = e.currentTarget, door = +el.dataset.door, hour = +el.dataset.hour;
+    if (el.getAttribute('aria-disabled') === 'true'){
+      say(hourLabel(hour) + ' at Door ' + door + ' has passed on the yard clock (' + hhmm(state.clock) + '). Move the clock earlier, or pick a later hour.');
+      return;
+    }
+    state.picked = {door: door, hour: hour};
+    done.hidden = true; $('idle').hidden = true;
+    $('sheet-title').textContent = 'Book Door ' + door + ', ' + hourLabel(hour) + '–' + hourLabel(hour + 1);
+    sheet.hidden = false; render();
+    if (window.innerWidth < 900) sheet.scrollIntoView({block: 'nearest'});
+    $('f-carrier').focus();
+  }
+
+  function closeSheet(){
+    sheet.hidden = true; $('f-carrier').value = ''; $('f-ref').value = '';
+    $('f-carrier').removeAttribute('aria-invalid'); $('f-carrier-err').textContent = '';
+    $('sheet-confirm').disabled = false;
+    var p = state.picked; state.picked = null;
+    return p;
+  }
+
+  sheet.addEventListener('submit', function(e){
+    e.preventDefault();
+    var carrier = $('f-carrier').value.replace(/\s+/g, ' ').trim();
+    if (!carrier){
+      $('f-carrier').setAttribute('aria-invalid', 'true');
+      $('f-carrier-err').textContent = 'Enter the carrier name so the gate knows who to expect.';
+      $('f-carrier').focus(); return;
+    }
+    if (!state.picked || bookingAt(state.picked.door, state.picked.hour)) { say('That hour is no longer open. Pick another.'); closeSheet(); render(); return; }
+    $('sheet-confirm').disabled = true;
+    state.seq++;
+    var p = state.picked, r = ref(), trailer = $('f-trailer').value, load = $('f-ref').value.trim();
+    state.bookings.push({door: p.door, hour: p.hour, carrier: carrier, yours: true, ref: r});
+    closeSheet();
+    $('done-title').textContent = 'Booked: Door ' + p.door + ', ' + hourLabel(p.hour) + '–' + hourLabel(p.hour + 1);
+    $('done-carrier').textContent = carrier + (load ? ' · ' + load : '');
+    $('done-ref').textContent = r;
+    $('done-trailer').textContent = trailer;
+    $('done-sms').textContent = 'Door ' + p.door + ' · ' + hourLabel(p.hour) + ' · Ref ' + r + ' · Check in at the gate with this ref. Be in the yard by ' + pad(p.hour - 1) + ':45. Slot held until ' + pad(p.hour) + ':20.';
+    done.hidden = false; render();
+    say('Booked Door ' + p.door + ', ' + hourLabel(p.hour) + ' to ' + hourLabel(p.hour + 1) + ' for ' + carrier + '. Reference ' + r + '.');
+    done.focus({preventScroll: true}); done.scrollIntoView({block: 'nearest'});
+  });
+  $('sheet-cancel').addEventListener('click', function(){ var p = closeSheet(); $('idle').hidden = false; render(); if (p) cells[p.door + ':' + p.hour].focus(); });
+  sheet.addEventListener('keydown', function(e){ if (e.key === 'Escape'){ e.preventDefault(); $('sheet-cancel').click(); } });
+  $('done-another').addEventListener('click', function(){ done.hidden = true; $('idle').hidden = false; var open = grid.querySelector('button.slot:not([aria-disabled])'); if (open) open.focus(); else say('No open hours left on the sample day. Reset it to start over.'); });
+  $('reset').addEventListener('click', function(){ resetSample(); say('Sample day reset.'); });
+
+  clock.addEventListener('input', function(){ state.clock = +clock.value; render(); });
+  var tabs = document.querySelectorAll('.door-tab');
+  for (var t = 0; t < tabs.length; t++) tabs[t].addEventListener('click', function(e){
+    state.door = +e.currentTarget.dataset.door; document.querySelector('.dock').classList.add('user'); render();
+    var open = 0; for (var h = FIRST; h < LAST; h++){ var c = cells[state.door + ':' + h]; if (c.tagName === 'BUTTON' && !c.hasAttribute('aria-disabled')) open++; }
+    say('Door ' + state.door + ': ' + open + ' open hour' + (open === 1 ? '' : 's') + ' left today.');
+  });
+  window.addEventListener('resize', placeNow);
+
+  // menu
+  var mb = document.querySelector('.menu-btn'), nav = $('site-nav');
+  mb.addEventListener('click', function(){ var open = nav.classList.toggle('is-open'); mb.setAttribute('aria-expanded', String(open)); mb.textContent = open ? 'Close' : 'Menu'; });
+  nav.addEventListener('click', function(e){ if (e.target.tagName === 'A' && nav.classList.contains('is-open')) mb.click(); });
+
+  build(); resetSample();
+})();
+</script>
+</body>
+</html>

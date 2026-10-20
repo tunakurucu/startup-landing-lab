@@ -1,0 +1,30 @@
+past click status: 08:00 at Door 3 has passed on the yard clock (09:30). Move the clock earlier, or pick a later hour.
+sheet visible: true focused: f-carrier
+empty submit error: Enter the carrier name so the gate knows who to expect. invalid: true
+carrier value length after maxlength: 40
+focused right after confirm: done
+second click: Error: locator.click: Element is not visible
+done visible: true status: Booked Door 3, 10:00 to 11:00 for Keller Trucking. Reference DL-UZFY.
+yours cells: 1 bookings total: 28
+focused after confirm: done
+clock out: 10:15 trailer3 in: true light3 red: true
+nose text: KELLER
+clock set to "999" -> 40 16:00
+clock set to "-5" -> 0 06:00
+clock set to "abc" -> 20 11:00
+clock set to "" -> 20 11:00
+at 16:00 open buttons: 0
+after reset: yours 0 clock 09:30 status Sample day reset.
+kbd sheet open: true focus: f-carrier
+after Esc sheet hidden: true focus back on: Book 10:00 at Door 2
+kbd booked: Booked Door 2, 10:00 to 11:00 for Northline. Reference DL-DFEF.
+tab 4: Door 4: 4 open hours left today. pressed: 4
+errors so far: []
+reduced-motion running animations after clock move: []
+trailer transform under RM: none
+nojs grid cells: 60 trailers in: 4
+390 visible cells: 10 status: Door 3: 4 open hours left today.
+390 sheet visible: true sheet top in viewport: [ 375, 844 ]
+390 booked status: Booked Door 3, 10:00 to 11:00 for Keller Trucking. Reference DL-UZFY. done top: 366
+menu expanded: true nav links visible: 5
+320 scrollWidth: [ 320, 320 ]

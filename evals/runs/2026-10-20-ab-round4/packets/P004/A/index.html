@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Replay a failing CI test on your laptop — Rerun CLI</title>
+<meta name="description" content="Rerun is a free, MIT-licensed command-line tool for backend engineers. It records a failing test run in CI and replays it on your machine with the same inputs, timing and network responses.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rerun — it fails in CI. Now it fails on your laptop too.">
+<meta property="og:description" content="A free command-line tool that records a failing test run in CI and replays it on your laptop: same inputs, same timing, same network responses.">
+<meta property="og:url" content="https://rerun.example/">
+<meta property="og:image" content="https://rerun.example/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rerun — it fails in CI. Now it fails on your laptop too.">
+<meta name="twitter:description" content="Records a failing test run in CI and replays it on your laptop: same inputs, same timing, same network responses. Free, MIT-licensed.">
+<meta name="twitter:image" content="https://rerun.example/assets/og.png">
+<meta name="theme-color" content="#f4f5f2">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --bg:#f4f5f2;
+  --panel:#ffffff;
+  --ink:#15171b;
+  --ink-2:#4b5059;
+  --ink-3:#6b7079;
+  --rule:#d4d7d0;
+  --rule-strong:#9ea39b;
+  --tint:#eceee8;
+  --accent:#1f4fd8;
+  --accent-ink:#ffffff;
+  --accent-hover:#163ca8;
+  --fail:#b3261e;
+  --pass:#166534;
+  --code-bg:#15171b;
+  --code-ink:#e8eae4;
+  --code-dim:#9aa09a;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --display:"Helvetica Neue","TeX Gyre Heros",Helvetica,Arial,system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;
+  --s-1:.5rem; --s-2:.75rem; --s-3:1rem; --s-4:1.5rem; --s-5:2rem; --s-6:3rem; --s-7:4.5rem; --s-8:6rem;
+  --section-pad:clamp(3.5rem, 2rem + 4vw, 6.5rem);
+  --max:1280px;
+  --gutter:clamp(1rem, .5rem + 2vw, 2.5rem);
+  --nav-h:64px;
+  --radius:4px;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:calc(var(--nav-h) + 8px)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:1.0625rem;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{margin:0;font-family:var(--display);letter-spacing:-.02em;overflow-wrap:break-word}
+h1{font-size:clamp(2.25rem, 1.4rem + 3vw, 4rem);line-height:1.04;font-weight:700;letter-spacing:-.03em;text-wrap:balance;max-width:20ch;margin-bottom:var(--s-4)}
+h2{font-size:clamp(1.625rem, 1.2rem + 1.6vw, 2.5rem);line-height:1.12;font-weight:700;text-wrap:balance;max-width:26ch}
+h3{font-size:1.125rem;line-height:1.3;font-weight:650;font-family:var(--sans);letter-spacing:0}
+p{margin:0 0 var(--s-3)}
+p:last-child{margin-bottom:0}
+a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.16em}
+a:hover{color:var(--accent)}
+code,kbd,pre{font-family:var(--mono)}
+.measure{max-width:60ch}
+.muted{color:var(--ink-2)}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:var(--gutter)}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 6px var(--bg)}
+.code-ink :focus-visible{outline-color:#fff;box-shadow:0 0 0 6px var(--code-bg)}
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  min-height:44px;padding:.6rem 1.1rem;border-radius:var(--radius);
+  font:inherit;font-weight:600;line-height:1.2;cursor:pointer;text-decoration:none;
+  border:1px solid transparent;transition:background-color .15s cubic-bezier(.2,.7,.2,1),border-color .15s cubic-bezier(.2,.7,.2,1);
+}
+.btn-primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn-secondary{background:transparent;color:var(--ink);border-color:var(--rule-strong)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:transparent;text-decoration:underline;text-underline-offset:.2em}
+@media (hover:hover) and (pointer:fine){
+  .btn-primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+  .btn-secondary:hover{background:var(--tint);border-color:var(--ink)}
+}
+.btn:active{transform:none}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;min-height:var(--nav-h);gap:var(--s-3)}
+.brand{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em;text-decoration:none;min-height:44px}
+.brand svg{width:28px;height:28px}
+.nav-links{display:flex;align-items:center;gap:.25rem;margin:0;padding:0;list-style:none}
+.nav-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 .75rem;text-decoration:none;font-weight:500;border-radius:var(--radius)}
+.nav-links a:hover{text-decoration:underline}
+.nav-links .gh{gap:.4rem}
+.nav-links .gh svg{width:18px;height:18px}
+.nav-menu{display:none}
+@media (max-width:760px){
+  .nav-links.desktop{display:none}
+  .nav-menu{display:block;position:relative}
+  .nav-menu summary{list-style:none;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:44px;min-width:44px;padding:0 .75rem;border:1px solid var(--rule-strong);border-radius:var(--radius);cursor:pointer;font-weight:600;background:var(--panel)}
+  .nav-menu summary::-webkit-details-marker{display:none}
+  .nav-menu[open] summary{background:var(--tint)}
+  .nav-menu ul{position:absolute;right:0;top:calc(100% + 6px);min-width:220px;margin:0;padding:.4rem;list-style:none;background:var(--panel);border:1px solid var(--rule);border-radius:var(--radius);box-shadow:0 12px 32px -12px rgba(21,23,27,.25)}
+  .nav-menu li a{display:flex;align-items:center;min-height:44px;padding:0 .75rem;text-decoration:none;font-weight:500;border-radius:var(--radius)}
+  .nav-menu li a:hover{background:var(--tint)}
+}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(2rem, 1rem + 2.5vw, 3.5rem);padding-bottom:var(--s-6)}
+.hero-grid{display:grid;grid-template-columns:8fr 4fr;gap:var(--s-5) var(--s-7);align-items:start}
+.hero-grid>*{min-width:0}
+.lede{font-size:clamp(1.125rem, 1rem + .5vw, 1.375rem);line-height:1.45;max-width:36ch;margin:0}
+.lede strong{font-weight:650}
+.lede-links{margin-top:var(--s-3);font-size:1rem;color:var(--ink-2)}
+.install{background:var(--panel);color:var(--ink);border:1px solid var(--rule);border-radius:6px;padding:var(--s-3) var(--s-4);display:grid;gap:var(--s-2);min-width:0}
+.install-label{font-family:var(--mono);font-size:.8125rem;color:var(--ink-2);letter-spacing:.02em}
+.install-row{display:flex;align-items:center;gap:var(--s-3);flex-wrap:wrap}
+.install-row code{font-size:1.0625rem;flex:1 1 220px;min-width:0;white-space:nowrap;overflow-x:auto;padding:.4rem 0}
+.install-row code .prompt{color:var(--ink-3)}
+.install .btn-primary{flex:0 0 auto}
+.install-note{margin:0;font-size:.9375rem;color:var(--ink-2);line-height:1.45}
+.copy-status{font-family:var(--mono);font-size:.8125rem;color:var(--pass);min-height:1.2em;margin:0}
+.codeblock .copy-status{color:#b6e3c0}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:var(--s-4)}
+  .lede{max-width:52ch}
+}
+@media (max-width:560px){
+  .install .btn-primary{flex:1 1 100%}
+}
+
+/* ---------- tape (signature artifact) ---------- */
+.tape{margin-top:var(--s-5)}
+.tape-head{display:grid;grid-template-columns:auto 1fr;align-items:baseline;gap:var(--s-2) var(--s-4);margin-bottom:var(--s-3)}
+.tape-head h2{font-size:1.625rem;max-width:none}
+.tape-head p{color:var(--ink-2);max-width:70ch;font-size:1rem}
+@media (max-width:900px){.tape-head{grid-template-columns:1fr}}
+.tape-panel{background:var(--panel);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.tape-controls{display:grid;grid-template-columns:auto 1fr auto;gap:var(--s-3) var(--s-4);align-items:center;padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--rule);background:var(--tint)}
+.tape-controls>*{min-width:0}
+.tape-controls fieldset{border:0;margin:0;padding:0;min-inline-size:0;display:flex;gap:.25rem;flex-wrap:wrap;align-items:center}
+.tape-controls legend{font-size:.8125rem;color:var(--ink-2);padding:0;margin-bottom:.25rem;width:100%}
+.mode{position:relative;display:inline-flex}
+.mode input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.mode span{display:inline-flex;align-items:center;min-height:44px;padding:0 .9rem;border:1px solid var(--rule-strong);border-radius:var(--radius);font-weight:600;font-size:.9375rem;background:var(--panel);font-family:var(--mono);white-space:nowrap}
+.mode input:checked + span{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mode input:focus-visible + span{outline:3px solid var(--ink);outline-offset:3px}
+.transport{display:flex;align-items:center;gap:var(--s-3);flex-wrap:wrap}
+.scrub{display:flex;align-items:center;gap:.75rem;flex:1 1 220px}
+.scrub label{font-size:.875rem;color:var(--ink-2);white-space:nowrap}
+.scrub input[type=range]{flex:1 1 120px;min-width:120px;accent-color:var(--accent);height:44px;margin:0}
+.scrub output{font-family:var(--mono);font-size:.9375rem;font-variant-numeric:tabular-nums;min-width:3.5ch;text-align:right}
+.rec-name{font-family:var(--mono);font-size:.875rem;color:var(--ink-2);justify-self:end;overflow-wrap:anywhere}
+.rec-name b{color:var(--ink);font-weight:600}
+
+.track-head,.ev{display:grid;grid-template-columns:5.5rem 1.3fr 1fr 1fr 5.5rem;gap:0 var(--s-3);align-items:baseline;padding:.7rem var(--s-4)}
+.track-head{font-size:.8125rem;color:var(--ink-2);border-bottom:1px solid var(--rule);font-weight:600;letter-spacing:.01em}
+.track-head .lap{color:var(--accent)}
+.ev{border-bottom:1px solid var(--rule);font-size:.9375rem;position:relative}
+.ev:last-of-type{border-bottom:0}
+.ev::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:transparent}
+.ev.is-head::before{background:var(--accent)}
+.ev.is-done .lap{color:var(--ink)}
+.ev .t{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink-3);font-size:.875rem}
+.ev .what{font-family:var(--mono);font-size:.875rem;color:var(--ink);overflow-wrap:anywhere}
+.ev .what small{display:block;font-family:var(--sans);font-size:.8125rem;color:var(--ink-2);margin-top:.15rem}
+.ev .ci,.ev .lap{font-family:var(--mono);font-size:.875rem;overflow-wrap:anywhere}
+.ev .lap{color:var(--ink-3)}
+.ev .lap .pending{color:var(--ink-3)}
+.ev .m{font-size:.8125rem;font-weight:600;white-space:nowrap}
+.ev .m.same{color:var(--pass)}
+.ev .m.diff{color:var(--fail)}
+.ev .m.none{color:var(--ink-3);font-weight:500}
+.fail{color:var(--fail);font-weight:700}
+.pass{color:var(--pass);font-weight:700}
+.ev-highlight{animation:none}
+@media (prefers-reduced-motion:no-preference){
+  .ev.is-head{animation:rowflash .5s cubic-bezier(.2,.7,.2,1)}
+  @keyframes rowflash{from{background:#e6ecfb}to{background:transparent}}
+}
+.outcome{padding:var(--s-3) var(--s-4);border-top:1px solid var(--rule);background:var(--tint);display:grid;grid-template-columns:auto 1fr;gap:var(--s-3);align-items:start;font-size:1rem}
+.outcome .badge{font-family:var(--mono);font-size:.8125rem;font-weight:700;padding:.25rem .5rem;border-radius:var(--radius);white-space:nowrap;margin-top:.1rem}
+.outcome .badge.fail{background:var(--fail);color:#fff}
+.outcome .badge.pass{background:var(--pass);color:#fff}
+.outcome .badge.idle{background:var(--rule-strong);color:#fff}
+.outcome p{margin:0;max-width:72ch}
+.tape-foot{display:flex;justify-content:space-between;gap:var(--s-3);flex-wrap:wrap;margin-top:var(--s-2);font-size:.875rem;color:var(--ink-2)}
+@media (max-width:900px){
+  .tape-controls{grid-template-columns:1fr}
+  .rec-name{justify-self:start}
+  .track-head{display:none}
+  .ev{grid-template-columns:1fr auto;grid-template-areas:"t m" "what what" "ci ci" "lap lap";gap:.35rem var(--s-3);padding:.8rem var(--s-3)}
+  .ev .t{grid-area:t}.ev .what{grid-area:what}.ev .ci{grid-area:ci}.ev .lap{grid-area:lap}.ev .m{grid-area:m}
+  .ev .ci,.ev .lap{display:grid;grid-template-columns:4rem 1fr;gap:.5rem;align-items:baseline}
+  .ev .ci::before,.ev .lap::before{font-family:var(--sans);font-size:.75rem;font-weight:600;letter-spacing:.02em;color:var(--ink-2)}
+  .tape-panel{display:flex;flex-direction:column}
+  .outcome{order:-1;border-top:0;border-bottom:1px solid var(--rule)}
+  .outcome .badge{justify-self:start}
+  .ev .ci::before{content:"CI run"}
+  .ev .lap::before{content:"Laptop"}
+  .ev.is-done .lap::before{color:var(--accent)}
+  .outcome{grid-template-columns:1fr}
+}
+
+/* ---------- sections ---------- */
+section.band{padding-block:var(--section-pad)}
+section.band + section.band{border-top:1px solid var(--rule)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--s-4) var(--s-7);align-items:end;margin-bottom:var(--s-6)}
+.sec-head p{color:var(--ink-2);max-width:56ch;font-size:1.0625rem}
+@media (max-width:900px){.sec-head{grid-template-columns:1fr;gap:var(--s-3)}}
+
+/* mechanism */
+.pins{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+.pins li{min-width:0;padding:var(--s-4);border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);display:grid;grid-template-rows:auto auto 1fr;gap:.5rem}
+.pins h3{display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem .75rem;min-width:0}
+.pins h3 code{overflow-wrap:anywhere}
+.pins h3 code{font-size:.8125rem;color:var(--ink-2);font-weight:400}
+.pins dl{margin:0;display:grid;grid-template-columns:5.5rem 1fr;gap:.35rem .75rem;font-size:.9375rem}
+.pins dt{color:var(--ink-2);font-weight:600;font-size:.8125rem;padding-top:.15rem}
+.pins dd{margin:0}
+.pins dd code{font-size:.875rem;background:var(--tint);padding:.05rem .3rem;border-radius:3px}
+@media (max-width:760px){.pins{grid-template-columns:1fr}}
+
+/* steps + code */
+.steps-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--s-5) var(--s-7);align-items:start}
+.steps-grid>*{min-width:0}
+.steps{list-style:none;margin:0;padding:0;counter-reset:step}
+.steps li{counter-increment:step;display:grid;grid-template-columns:2.5rem 1fr;gap:var(--s-3);padding:var(--s-3) 0;border-top:1px solid var(--rule)}
+.steps li:last-child{border-bottom:1px solid var(--rule)}
+.steps li::before{content:counter(step);font-family:var(--mono);font-size:.875rem;color:var(--ink-2);padding-top:.25rem}
+.steps h3{margin-bottom:.25rem}
+.steps p{font-size:.9375rem;color:var(--ink-2)}
+.codeblock{background:var(--code-bg);color:var(--code-ink);border-radius:6px;padding:var(--s-4);overflow:hidden}
+.codeblock .cb-head{display:flex;justify-content:space-between;align-items:center;gap:var(--s-3);flex-wrap:wrap;margin-bottom:var(--s-3);font-family:var(--mono);font-size:.8125rem;color:var(--code-dim)}
+.codeblock .cb-head b{color:var(--code-ink);font-weight:600}
+.codeblock pre{margin:0;font-size:.9375rem;line-height:1.6;overflow-x:auto;tab-size:2}
+.codeblock .c{color:var(--code-dim)}
+.codeblock .o{color:#b6e3c0}
+.codeblock .r{color:#f4a09a}
+.codeblock .cb-note{margin:var(--s-3) 0 0;font-size:.875rem;color:var(--code-dim);line-height:1.5}
+.codeblock .cb-note a{color:var(--code-ink)}
+@media (max-width:900px){.steps-grid{grid-template-columns:1fr}}
+
+/* limits */
+.limits{list-style:none;margin:0;padding:0;display:grid;gap:0;max-width:72ch}
+.limits li{display:grid;grid-template-columns:minmax(0,14rem) 1fr;gap:var(--s-2) var(--s-4);padding:var(--s-3) 0;border-top:1px solid var(--rule)}
+.limits li:last-child{border-bottom:1px solid var(--rule)}
+.limits h3{font-size:1rem}
+.limits p{font-size:.9375rem;color:var(--ink-2)}
+@media (max-width:600px){.limits li{grid-template-columns:1fr}}
+
+/* pricing */
+.price-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--s-5) var(--s-7);align-items:start}
+.price-card{border:1px solid var(--rule);background:var(--panel);border-radius:6px;padding:var(--s-4);display:grid;gap:var(--s-2)}
+.price-card .amount{font-family:var(--display);font-size:clamp(2.5rem, 2rem + 2vw, 3.75rem);font-weight:700;letter-spacing:-.03em;line-height:1}
+.price-card ul{margin:0;padding-left:1.1rem;color:var(--ink-2);font-size:.9375rem}
+.price-card li{margin:.2rem 0}
+.price-card .planned{border-top:1px solid var(--rule);padding-top:var(--s-2);font-size:.9375rem;color:var(--ink-2)}
+@media (max-width:900px){.price-grid{grid-template-columns:1fr}}
+
+/* final */
+.final{padding-block:var(--section-pad);border-top:1px solid var(--rule);background:var(--tint)}
+.final .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-5) var(--s-7);align-items:center}
+.final .wrap>*{min-width:0}
+@media (max-width:900px){.final .wrap{grid-template-columns:1fr}}
+
+/* footer */
+footer{border-top:1px solid var(--rule);padding-block:var(--s-5);font-size:.9375rem;color:var(--ink-2)}
+footer .wrap{display:flex;justify-content:space-between;gap:var(--s-3);flex-wrap:wrap;align-items:center}
+footer ul{list-style:none;margin:0;padding:0;display:flex;gap:var(--s-4);flex-wrap:wrap}
+footer a{color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Rerun, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#15171b"/><rect x="6" y="10" width="20" height="2.5" rx="1.25" fill="#fff"/><rect x="6" y="19.5" width="20" height="2.5" rx="1.25" fill="#fff"/><rect x="19" y="6" width="2.5" height="20" rx="1.25" fill="#1f4fd8"/></svg>
+      rerun
+    </a>
+    <ul class="nav-links desktop">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#limits">Limits</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="https://rerun.example/docs">Docs</a></li>
+      <li><a class="gh" href="https://github.example/rerun/rerun"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></li>
+    </ul>
+    <details class="nav-menu">
+      <summary aria-label="Open menu">Menu</summary>
+      <ul>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#limits">Limits</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="https://rerun.example/docs">Docs</a></li>
+        <li><a href="https://github.example/rerun/rerun">GitHub</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <h1>It fails in CI. Now it fails on your laptop too.</h1>
+          <p class="lede"><strong>Rerun is a free command-line tool for backend engineers.</strong> It records a failing test run in CI and replays it on your machine: same inputs, same timing, same network responses.</p>
+          <p class="lede-links">Open source under the MIT license. <a href="https://rerun.example/docs">Read the docs</a> or <a href="https://github.example/rerun/rerun">browse the source on GitHub</a>.</p>
+        </div>
+
+        <div class="install" aria-labelledby="install-label">
+          <span class="install-label" id="install-label">Install (npm)</span>
+          <div class="install-row">
+            <code id="install-cmd"><span class="prompt">$ </span>npm install -g @rerun/cli</code>
+            <button class="btn btn-primary js-copy" type="button" data-copy="npm install -g @rerun/cli" data-status="copy-status-1">Copy install command</button>
+          </div>
+          <p class="copy-status" id="copy-status-1" role="status" aria-live="polite"></p>
+          <p class="install-note">Free and MIT-licensed. No account needed.</p>
+        </div>
+      </div>
+
+      <!-- Signature artifact: the twin-track replay tape -->
+      <div class="tape" id="tape">
+        <div class="tape-head">
+          <h2>A recorded CI failure, replayed in your browser</h2>
+          <p>The left track is what CI recorded for test run 8841. Press Replay and the right track fills in with what your laptop would do, event by event.</p>
+        </div>
+
+        <div class="tape-panel">
+          <div class="tape-controls">
+            <fieldset>
+              <legend>Run the laptop track with</legend>
+              <label class="mode"><input type="radio" name="mode" value="rerun" checked><span>rerun replay ci-8841</span></label>
+              <label class="mode"><input type="radio" name="mode" value="plain"><span>npm test (no rerun)</span></label>
+            </fieldset>
+            <div class="transport">
+              <button class="btn btn-secondary" type="button" id="play">Replay the run</button>
+              <div class="scrub">
+                <label for="step">Step</label>
+                <input type="range" id="step" min="0" max="7" value="7" step="1" aria-valuetext="7 of 7 events">
+                <output for="step" id="step-out">7/7</output>
+              </div>
+            </div>
+            <div class="rec-name">recording <b>ci-8841.rerun</b> · checkout.test.ts</div>
+          </div>
+
+          <div class="track-head" aria-hidden="true">
+            <span>t (s)</span>
+            <span>Event</span>
+            <span>CI run 8841 · recorded</span>
+            <span class="lap" id="lap-head">Your laptop · rerun replay</span>
+            <span>Match</span>
+          </div>
+
+          <div id="events" role="list" aria-label="Recorded events and their replay on the laptop">
+            <!-- rows rendered by script; a static copy of the completed replay follows for no-script readers -->
+          </div>
+
+          <noscript>
+            <table style="width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.875rem">
+              <caption style="text-align:left;padding:.5rem 1.5rem;color:var(--ink-2)">Completed replay (scripts are off, so the controls above are inactive).</caption>
+              <tbody>
+                <tr><td style="padding:.5rem 1.5rem">0.012</td><td>Date.now()</td><td>2026-03-14T23:59:58.912Z</td><td>2026-03-14T23:59:58.912Z</td><td>same</td></tr>
+                <tr><td style="padding:.5rem 1.5rem">0.044</td><td>GET /v1/coupons/SPRING24</td><td>200 · expires 2026-03-15T00:00:00Z</td><td>200 from recording</td><td>same</td></tr>
+                <tr><td style="padding:.5rem 1.5rem">1.305</td><td>POST /v1/orders</td><td>200 · total 100.00 · coupon expired</td><td>200 from recording · total 100.00</td><td>same</td></tr>
+                <tr><td style="padding:.5rem 1.5rem">1.318</td><td>expect(order.total).toBe(80)</td><td>FAIL · received 100</td><td>FAIL · received 100</td><td>same</td></tr>
+              </tbody>
+            </table>
+          </noscript>
+
+          <div class="outcome" role="status" aria-live="polite" id="outcome">
+            <span class="badge fail" id="outcome-badge">FAIL · reproduced</span>
+            <p id="outcome-text">Failure reproduced: 7 of 7 recorded events matched. The coupon expired at midnight UTC while the test waited 1.2 s for a price lock. That is a clock bug, and now it is on your machine, under your debugger.</p>
+          </div>
+        </div>
+        <div class="tape-foot">
+          <span>Sample recording written for this page. It runs in your browser; nothing is installed, fetched or sent.</span>
+          <span>Times are seconds since the test started.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>The test is not random. Its inputs are.</h2>
+        <p>A test that passes on your laptop and fails in CI is reading something different on each machine. Rerun records the four sources of that difference while the test runs in CI, then feeds the recorded values back in the same order on your laptop.</p>
+      </div>
+      <ul class="pins">
+        <li>
+          <h3>Clock <code>Date · performance.now · timers</code></h3>
+          <dl>
+            <dt>Recorded</dt><dd>Every read of the clock, and when each timer fired.</dd>
+            <dt>Replayed</dt><dd>The same values in the same order. A <code>setTimeout(1200)</code> that crossed midnight in CI crosses midnight again on your laptop at two in the afternoon.</dd>
+          </dl>
+        </li>
+        <li>
+          <h3>Network <code>http · https · fetch</code></h3>
+          <dl>
+            <dt>Recorded</dt><dd>Each outgoing request with its response status, headers, body and latency.</dd>
+            <dt>Replayed</dt><dd>Responses are served from the recording. No pricing service, no staging database, no VPN. The test cannot tell the difference.</dd>
+          </dl>
+        </li>
+        <li>
+          <h3>Randomness <code>Math.random · crypto.randomUUID · randomBytes</code></h3>
+          <dl>
+            <dt>Recorded</dt><dd>Every random value the process drew.</dd>
+            <dt>Replayed</dt><dd>The same draws, so generated ids, shuffled fixtures and sampled rows come out identical.</dd>
+          </dl>
+        </li>
+        <li>
+          <h3>Environment <code>process.env · argv · cwd · test order</code></h3>
+          <dl>
+            <dt>Recorded</dt><dd>The variables, arguments and the order the runner chose for the files.</dd>
+            <dt>Replayed</dt><dd>Applied before the first test file loads, so <code>TZ</code>, feature flags and ordering match the CI run.</dd>
+          </dl>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" id="install">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Two commands: one in CI, one on your laptop</h2>
+        <p>The recorder wraps your existing test command. It costs nothing when the run passes; a failing run leaves a recording behind, and that recording is all the laptop needs.</p>
+      </div>
+      <div class="steps-grid">
+        <ol class="steps">
+          <li>
+            <div>
+              <h3>Wrap the test command in CI</h3>
+              <p>Prefix the command your pipeline already runs. On a green run the recording is discarded. On a red run it is written to <code>.rerun/</code> and the run id is printed in the log.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Keep the recording as a CI artifact</h3>
+              <p>One file per failing run. Upload it the way you upload coverage or screenshots, so anyone on the team can pull it later.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Replay it on your laptop</h3>
+              <p>Rerun fetches the recording, starts the same test under it and stops at the same assertion. Attach your debugger, add a log line, replay again; the inputs do not move.</p>
+            </div>
+          </li>
+        </ol>
+        <div class="codeblock code-ink">
+          <div class="cb-head"><b>ci.yml · and your shell</b><span>Example. Exact flags are in the docs.</span></div>
+<pre tabindex="0" aria-label="Example terminal session: record in CI, replay on a laptop"><code><span class="c"># In CI: record the run. Nothing changes when tests pass.</span>
+$ npx rerun record -- npm test
+<span class="r">  ✗ checkout › applies a coupon that expires at midnight</span>
+<span class="o">  rerun: wrote .rerun/ci-8841.rerun (1 failing test, 7 events, 41 KB)</span>
+
+<span class="c"># On your laptop: replay it.</span>
+$ rerun replay ci-8841
+<span class="o">  rerun: pinned clock, 2 responses, 1 random draw, 14 env vars</span>
+<span class="r">  ✗ checkout › applies a coupon that expires at midnight
+    expect(order.total).toBe(80)
+    Expected: 80   Received: 100</span></code></pre>
+          <p class="cb-note">Command names and output are illustrative; the <a href="https://rerun.example/docs">docs</a> have the current flags. The sample above is the same run the tape at the top replays.</p>
+          <p class="copy-status" id="copy-status-2" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="limits">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>What a replay cannot do yet</h2>
+        <p>Rerun replays one Node.js process's inputs. Read this before you spend an afternoon on it.</p>
+      </div>
+      <ul class="limits">
+        <li>
+          <h3>Races between processes</h3>
+          <p>Two workers fighting over the same database row are a scheduling problem, not an input problem. Rerun replays what one process saw; it does not reproduce the operating system's interleaving.</p>
+        </li>
+        <li>
+          <h3>Child processes and native addons</h3>
+          <p>Only the Node.js process that runs the tests is recorded. A subprocess, or a native addon that reads the clock or opens sockets outside Node's APIs, bypasses the recorder.</p>
+        </li>
+        <li>
+          <h3>Node.js runners only</h3>
+          <p>The recorder hooks Node's clock, network and random APIs. Services written in Go, Java or Python are not supported today.</p>
+        </li>
+        <li>
+          <h3>Recordings contain real data</h3>
+          <p>A recording holds response bodies and environment values from the CI run. Treat a <code>.rerun</code> file the way you treat a log file: keep it inside your CI artifact store and do not paste it into a public issue.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" id="pricing">
+    <div class="wrap">
+      <div class="price-grid">
+        <div>
+          <h2>Free and MIT-licensed. A hosted team version is planned, not built.</h2>
+          <p class="muted measure" style="margin-top:1rem">Everything on this page is in the public repository: install it, read the recorder, fork it. If your team wants shared recordings and a history of flaky runs across projects, that is the hosted version on the roadmap. Nothing is for sale today, and the CLI stays free either way.</p>
+          <p class="muted measure">The project is early. There are GitHub stars and no customer logos, so the proof on this page is the replay above and the source.</p>
+        </div>
+        <div class="price-card">
+          <span class="amount">$0</span>
+          <ul>
+            <li>The full CLI: record in CI, replay locally</li>
+            <li>Unlimited recordings, stored in your own CI artifacts</li>
+            <li>MIT license, no account, no usage limits</li>
+          </ul>
+          <p class="planned"><b>Planned:</b> a hosted team version with shared recordings and flaky-run history. Not built yet; no date to announce.</p>
+          <a class="btn btn-secondary" href="https://github.example/rerun/rerun">View the source on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" id="get">
+    <div class="wrap">
+      <div>
+        <h2>Record the next failing run.</h2>
+        <p class="muted" style="margin-top:.75rem;max-width:48ch">Install the CLI, prefix your CI test command, and the next red run comes home with you.</p>
+      </div>
+      <div class="install" aria-labelledby="install-label-2">
+        <span class="install-label" id="install-label-2">Install (npm)</span>
+        <div class="install-row">
+          <code><span class="prompt">$ </span>npm install -g @rerun/cli</code>
+          <button class="btn btn-primary js-copy" type="button" data-copy="npm install -g @rerun/cli" data-status="copy-status-3">Copy install command</button>
+        </div>
+        <p class="copy-status" id="copy-status-3" role="status" aria-live="polite"></p>
+        <p class="install-note">Free and MIT-licensed. No account needed. <a href="https://rerun.example/docs">Read the docs</a> for the record and replay flags.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Rerun · an open-source test record-and-replay CLI</span>
+    <ul>
+      <li><a href="https://rerun.example/docs">Docs</a></li>
+      <li><a href="https://github.example/rerun/rerun">GitHub</a></li>
+      <li><a href="https://github.example/rerun/rerun">MIT license</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  // The sample recording. Every value here was written for this page; nothing is measured.
+  var EVENTS = [
+    { t: '0.000', what: 'process.env', note: '14 variables captured before the first test file loads',
+      ci: 'NODE_ENV=test TZ=UTC CI=true … (14)',
+      rerun: 'same 14 variables, from recording',
+      plain: 'NODE_ENV=test TZ=America/New_York … (11)', plainDiff: true },
+    { t: '0.012', what: 'Date.now()', note: 'the test creates a coupon that expires at the next midnight',
+      ci: '2026-03-14T23:59:58.912Z',
+      rerun: '2026-03-14T23:59:58.912Z · pinned',
+      plain: '2026-03-14T14:05:31.004Z', plainDiff: true },
+    { t: '0.031', what: 'Math.random()', note: 'order id for the checkout',
+      ci: '0.7301 → ord_7301',
+      rerun: '0.7301 → ord_7301 · seeded',
+      plain: '0.2186 → ord_2186', plainDiff: true },
+    { t: '0.044', what: 'GET pricing.internal/v1/coupons/SPRING24', note: 'coupon lookup',
+      ci: '200 in 61 ms · expires_at 2026-03-15T00:00:00Z',
+      rerun: '200 from recording · same body, 0 ms',
+      plain: '200 in 58 ms · same body', plainDiff: false },
+    { t: '0.105', what: 'setTimeout(1200)', note: 'waits for the price lock',
+      ci: 'fires at 2026-03-15T00:00:00.112Z',
+      rerun: 'fires at 2026-03-15T00:00:00.112Z · pinned',
+      plain: 'fires at 2026-03-14T14:05:32.206Z', plainDiff: true },
+    { t: '1.305', what: 'POST checkout.internal/v1/orders', note: 'checkout with coupon SPRING24',
+      ci: '200 · total 100.00 · coupon: expired',
+      rerun: '200 from recording · total 100.00 · coupon: expired',
+      plain: '200 in 74 ms · total 80.00 · coupon: applied', plainDiff: true },
+    { t: '1.318', what: 'expect(order.total).toBe(80)', note: 'the assertion',
+      ci: '<span class="fail">FAIL</span> · received 100',
+      rerun: '<span class="fail">FAIL</span> · received 100',
+      plain: '<span class="pass">PASS</span> · received 80', plainDiff: true }
+  ];
+  var TOTAL = EVENTS.length;
+  var list = document.getElementById('events');
+  var stepInput = document.getElementById('step');
+  var stepOut = document.getElementById('step-out');
+  var playBtn = document.getElementById('play');
+  var lapHead = document.getElementById('lap-head');
+  var badge = document.getElementById('outcome-badge');
+  var outText = document.getElementById('outcome-text');
+  var modeInputs = document.querySelectorAll('input[name="mode"]');
+  var timer = null;
+  var state = { mode: 'rerun', step: TOTAL };
+
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+  function render() {
+    var rows = '';
+    for (var i = 0; i < TOTAL; i++) {
+      var e = EVENTS[i];
+      var done = i < state.step;
+      var head = done && i === state.step - 1;
+      var lap, m;
+      if (!done) { lap = '<span class="pending">–</span>'; m = '<span class="m none">–</span>'; }
+      else if (state.mode === 'rerun') { lap = e.rerun; m = '<span class="m same">same</span>'; }
+      else { lap = e.plain; m = e.plainDiff ? '<span class="m diff">differs</span>' : '<span class="m same">same</span>'; }
+      rows += '<div class="ev' + (done ? ' is-done' : '') + (head ? ' is-head' : '') + '" role="listitem">' +
+        '<span class="t">' + e.t + '</span>' +
+        '<span class="what">' + esc(e.what) + '<small>' + esc(e.note) + '</small></span>' +
+        '<span class="ci"><span class="v">' + e.ci + '</span></span>' +
+        '<span class="lap"><span class="v">' + lap + '</span></span>' +
+        m + '</div>';
+    }
+    list.innerHTML = rows;
+    stepInput.value = state.step;
+    stepInput.setAttribute('aria-valuetext', state.step + ' of ' + TOTAL + ' events');
+    stepOut.textContent = state.step + '/' + TOTAL;
+    lapHead.textContent = state.mode === 'rerun' ? 'Your laptop · rerun replay' : 'Your laptop · npm test';
+    renderOutcome();
+  }
+
+  function renderOutcome() {
+    var s = state.step;
+    badge.className = 'badge';
+    if (s === 0) {
+      badge.classList.add('idle'); badge.textContent = 'READY';
+      outText.textContent = 'Recording loaded: 7 events from CI run 8841. Press Replay, or drag the step slider, to run the laptop track.';
+      return;
+    }
+    if (s < TOTAL) {
+      badge.classList.add('idle');
+      if (timer) {
+        badge.textContent = 'RUNNING';
+        outText.textContent = (state.mode === 'rerun'
+          ? 'Replaying event ' + s + ' of ' + TOTAL + ' from the recording.'
+          : 'Running event ' + s + ' of ' + TOTAL + ' with the laptop’s own clock, network and random values.');
+      } else {
+        badge.textContent = 'STOPPED AT ' + s + '/' + TOTAL;
+        outText.textContent = 'Stopped after event ' + s + ' of ' + TOTAL + '. Press Replay to run from the start, or drag the step slider.';
+      }
+      return;
+    }
+    if (state.mode === 'rerun') {
+      badge.classList.add('fail'); badge.textContent = 'FAIL · reproduced';
+      outText.textContent = 'Failure reproduced: 7 of 7 recorded events matched. The coupon expired at midnight UTC while the test waited 1.2 s for a price lock. That is a clock bug, and now it is on your machine, under your debugger.';
+    } else {
+      badge.classList.add('pass'); badge.textContent = 'PASS · not reproduced';
+      outText.textContent = 'Passed on the laptop. 6 of 7 events differ from the CI run: environment, clock, random id, timer, the order response and the assertion. The afternoon clock never crosses midnight, so there is nothing to debug and the test stays flaky.';
+    }
+  }
+
+  function stop() {
+    var wasRunning = !!timer;
+    if (timer) { clearTimeout(timer); timer = null; }
+    playBtn.textContent = 'Replay the run';
+    playBtn.setAttribute('aria-pressed', 'false');
+    if (wasRunning) renderOutcome();
+  }
+
+  function play() {
+    stop();
+    state.step = 0; render();
+    playBtn.textContent = 'Stop';
+    playBtn.setAttribute('aria-pressed', 'true');
+    var interval = 380;
+    function tick() {
+      if (state.step >= TOTAL) { stop(); return; }
+      state.step += 1; render();
+      if (state.step >= TOTAL) { stop(); return; }
+      timer = setTimeout(tick, interval);
+    }
+    timer = setTimeout(tick, interval);
+  }
+
+  playBtn.addEventListener('click', function () { if (timer) { stop(); } else { play(); } });
+  stepInput.addEventListener('input', function () {
+    if (timer) stop();
+    var v = parseInt(stepInput.value, 10);
+    if (isNaN(v)) v = 0;
+    state.step = Math.max(0, Math.min(TOTAL, v));
+    render();
+  });
+  Array.prototype.forEach.call(modeInputs, function (r) {
+    r.addEventListener('change', function () {
+      if (!r.checked) return;
+      if (timer) stop();
+      state.mode = r.value;
+      render();
+    });
+  });
+
+  render();
+
+  // Copy buttons: the one real action on the page.
+  Array.prototype.forEach.call(document.querySelectorAll('.js-copy'), function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      var status = document.getElementById(btn.getAttribute('data-status'));
+      function ok() { if (status) status.textContent = 'Copied: ' + text; }
+      function fail() { if (status) status.textContent = 'Could not copy. Select the command and copy it by hand.'; }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(ok, fail);
+      } else {
+        try {
+          var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', '');
+          ta.style.position = 'absolute'; ta.style.left = '-9999px'; document.body.appendChild(ta); ta.select();
+          var done = document.execCommand('copy'); document.body.removeChild(ta); done ? ok() : fail();
+        } catch (e) { fail(); }
+      }
+    });
+  });
+
+  // Close the phone menu after choosing a link.
+  var menu = document.querySelector('.nav-menu');
+  if (menu) menu.addEventListener('click', function (ev) { if (ev.target.closest('a')) menu.removeAttribute('open'); });
+})();
+</script>
+</body>
+</html>

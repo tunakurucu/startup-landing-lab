@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unclaimed property software for finance teams — Holdfast</title>
+<meta name="description" content="Holdfast tracks uncashed checks and dormant customer balances, works out which state each one belongs to and when it is due, and prepares the report that state requires. For controllers at companies with 200 to 2,000 employees.">
+<meta property="og:title" content="Every stale check has a state deadline — Holdfast">
+<meta property="og:description" content="Unclaimed property software for finance teams. Holdfast tracks uncashed checks and dormant balances and prepares each state's report by its deadline.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://holdfast.example/">
+<meta property="og:image" content="https://holdfast.example/og.png">
+<meta property="og:site_name" content="Holdfast">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Every stale check has a state deadline — Holdfast">
+<meta name="twitter:description" content="Unclaimed property software for finance teams. Holdfast tracks uncashed checks and dormant balances and prepares each state's report by its deadline.">
+<meta name="twitter:image" content="https://holdfast.example/og.png">
+<meta name="theme-color" content="#f6f6f3">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  :root {
+    --paper: #f6f6f3;
+    --sheet: #ffffff;
+    --ink: #151614;
+    --ink-2: #4f524c;
+    --ink-3: #62655e;
+    --rule: #d6d7d1;
+    --rule-2: #e7e8e3;
+    --act: #0b5a3c;
+    --act-hover: #073f2a;
+    --act-tint: #e4efe8;
+    --past: #9b1c1c;
+    --past-tint: #f8e7e7;
+    --font-display: Charter, "Bitstream Charter", "Iowan Old Style", Georgia, Cambria, "Times New Roman", serif;
+    --font-text: Inter, "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+    --font-data: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
+    --space-xs: 0.5rem;
+    --space-s: 1rem;
+    --space-m: 1.5rem;
+    --space-l: 2.5rem;
+    --space-xl: clamp(3rem, 2rem + 3.5vw, 5.5rem);
+    --measure: 62ch;
+    --max: 1320px;
+    --gutter: clamp(1rem, 0.5rem + 2.5vw, 3rem);
+    --nav-h: 64px;
+    --ease-out: cubic-bezier(.2,.7,.2,1);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: calc(var(--nav-h) + 8px); }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-text);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 700; margin: 0; text-wrap: balance; overflow-wrap: break-word; }
+  h1 { font-size: clamp(2rem, 1.1rem + 3vw, 3.875rem); line-height: 1.04; letter-spacing: -0.012em; max-width: 22ch; }
+  h2 { font-size: clamp(1.625rem, 1.1rem + 1.6vw, 2.5rem); line-height: 1.12; letter-spacing: -0.008em; max-width: 26ch; }
+  h3 { font-size: 1.25rem; line-height: 1.25; }
+  p { margin: 0; }
+  p + p { margin-top: var(--space-s); }
+  a { color: inherit; }
+  main p a, main li a { text-decoration: underline; text-underline-offset: 0.14em; text-decoration-thickness: 1px; }
+  .wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+  .prose { max-width: var(--measure); }
+  .muted { color: var(--ink-2); }
+  .small { font-size: 0.9375rem; line-height: 1.5; }
+  .data { font-family: var(--font-data); font-variant-numeric: tabular-nums; font-size: 0.875rem; letter-spacing: 0; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+  /* Focus */
+  :focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; box-shadow: 0 0 0 6px var(--paper); border-radius: 2px; }
+  .seg label:has(input:focus-visible) { outline: 3px solid var(--ink); outline-offset: 2px; box-shadow: 0 0 0 6px var(--sheet); }
+
+  /* Actions */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: 48px; padding: 0.7rem 1.25rem;
+    background: var(--act); color: #fff; text-decoration: none;
+    font-weight: 600; font-size: 1rem; line-height: 1.2; border-radius: 4px; border: 1px solid var(--act);
+    transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out);
+  }
+  @media (hover:hover) and (pointer:fine) { .btn:hover { background: var(--act-hover); border-color: var(--act-hover); } }
+  .btn:active { background: var(--act-hover); }
+  .btn-sm { min-height: 44px; padding: 0.5rem 1rem; font-size: 0.9375rem; }
+  .btn-quiet {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0.5rem 0.75rem;
+    background: transparent; color: var(--ink); border: 1px solid var(--rule); border-radius: 4px;
+    font: inherit; font-size: 0.9375rem; font-weight: 500; cursor: pointer;
+    transition: border-color 160ms var(--ease-out), background-color 160ms var(--ease-out);
+  }
+  @media (hover:hover) and (pointer:fine) { .btn-quiet:hover { border-color: var(--ink-3); background: var(--paper); } }
+  .textlink { display: inline-flex; align-items: center; min-height: 44px; gap: 0.35rem; color: var(--ink); font-weight: 500; text-decoration: underline; text-underline-offset: 0.16em; }
+
+  /* Header */
+  .site-header { position: sticky; top: 0; z-index: 10; background: var(--paper); border-bottom: 1px solid var(--rule); }
+  .site-header .wrap { min-height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; gap: var(--space-s); }
+  .wordmark { display: inline-flex; align-items: center; gap: 0.55rem; min-height: 44px; font-family: var(--font-display); font-weight: 700; font-size: 1.375rem; letter-spacing: -0.01em; text-decoration: none; color: var(--ink); }
+  .wordmark svg { width: 22px; height: 22px; }
+  .site-nav { display: flex; align-items: center; gap: var(--space-m); }
+  .site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--space-s); }
+  .site-nav ul a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.5rem; text-decoration: none; font-size: 0.9375rem; font-weight: 500; color: var(--ink-2); }
+  .site-nav ul a:hover { color: var(--ink); }
+  .menu-btn { display: none; min-width: 44px; min-height: 44px; padding: 0 0.75rem; background: transparent; border: 1px solid var(--rule); border-radius: 4px; font: inherit; font-size: 0.9375rem; font-weight: 500; color: var(--ink); cursor: pointer; }
+  @media (max-width: 760px) {
+    .site-nav { gap: var(--space-xs); }
+    .site-nav ul { display: none; }
+    .menu-btn { display: inline-flex; align-items: center; justify-content: center; }
+    .site-header.menu-open .site-nav ul { display: flex; position: absolute; left: 0; right: 0; top: var(--nav-h); flex-direction: column; gap: 0; background: var(--paper); border-bottom: 1px solid var(--rule); padding: var(--space-xs) var(--gutter) var(--space-s); }
+    .site-header.menu-open .site-nav ul a { width: 100%; min-height: 48px; }
+    .site-nav .btn-sm { padding-inline: 0.75rem; }
+  }
+  @media (max-width: 560px) { .site-nav .btn-sm { display: none; } }
+
+  /* Hero */
+  .hero { padding-block: var(--space-l) var(--space-xl); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--space-l) clamp(2rem, 1rem + 3vw, 4.5rem); align-items: start; margin-top: var(--space-m); }
+  .hero .sub { font-size: 1.125rem; line-height: 1.5; max-width: 48ch; color: var(--ink); }
+  .hero .cta { margin-top: var(--space-m); display: flex; flex-direction: column; gap: var(--space-xs); align-items: flex-start; }
+  .hero .cta .beside { max-width: 42ch; }
+  .hero .more { margin-top: var(--space-s); }
+  .hero-summary { margin: var(--space-l) 0 0; max-width: 46ch; border-top: 1px solid var(--rule); }
+  .hero-summary .row { display: flex; justify-content: space-between; gap: var(--space-s); align-items: baseline; padding: 0.55rem 0; border-bottom: 1px solid var(--rule-2); }
+  .hero-summary .row.head { padding-top: 0.6rem; }
+  .hero-summary .row.head dt, .hero-summary .row.head dd { font-size: 0.8125rem; color: var(--ink-3); }
+  .hero-summary dt { font-weight: 500; font-size: 0.9375rem; white-space: nowrap; }
+  .hero-summary dd { margin: 0; text-align: right; }
+  .hero-summary .row.past dt, .hero-summary .row.past dd { color: var(--past); }
+  .hero-summary .row.due dt, .hero-summary .row.due dd { color: var(--act); }
+  @media (max-width: 640px) { .hero-summary { margin-top: var(--space-m); max-width: none; } .hero-summary .row { flex-wrap: wrap; } .hero-summary dd { text-align: left; } }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+
+  /* Register artifact */
+  .register { margin: 0; background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .reg-head { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-s); align-items: baseline; justify-content: space-between; padding: var(--space-s) var(--space-s) 0.75rem; border-bottom: 1px solid var(--rule-2); }
+  .reg-title { font-weight: 600; font-size: 0.9375rem; }
+  .reg-title .data { color: var(--ink-3); margin-left: 0.5rem; }
+  .reg-controls { display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-m); align-items: end; padding: 0.75rem var(--space-s); border-bottom: 1px solid var(--rule-2); background: var(--sheet); }
+  .seg { margin: 0; padding: 0; border: 0; min-width: 0; }
+  .seg .row { display: inline-flex; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; max-width: 100%; }
+  .seg label { display: inline-flex; align-items: center; min-height: 44px; padding: 0.4rem 0.9rem; white-space: nowrap; font-size: 0.9375rem; font-weight: 500; color: var(--ink-2); cursor: pointer; background: var(--sheet); position: relative; }
+  .seg label + label { border-left: 1px solid var(--rule); }
+  .seg input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+  .seg label:has(input:checked) { background: var(--ink); color: #fff; }
+  .reg-inputs { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: end; }
+  .field { display: flex; flex-direction: column; gap: 0.2rem; }
+  .field label { font-size: 0.8125rem; font-weight: 500; color: var(--ink-2); letter-spacing: 0.01em; }
+  .field input, .field select { font: inherit; font-size: 1rem; min-height: 44px; padding: 0.35rem 0.6rem; border: 1px solid var(--rule); border-radius: 4px; background: var(--sheet); color: var(--ink); }
+  .field input[aria-invalid="true"] { border-color: var(--past); }
+  .reg-msg { padding: 0.5rem var(--space-s); font-size: 0.9375rem; color: var(--ink-2); border-bottom: 1px solid var(--rule-2); }
+  .reg-msg:empty { display: none; }
+  .reg-msg.err { color: var(--past); }
+  .reg-table-wrap { overflow-x: auto; }
+  table.ledger { width: 100%; border-collapse: collapse; font-family: var(--font-data); font-variant-numeric: tabular-nums; font-size: 0.875rem; line-height: 1.4; }
+  table.ledger th, table.ledger td { text-align: left; padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--rule-2); vertical-align: top; }
+  table.ledger th { font-family: var(--font-text); font-weight: 500; font-size: 0.75rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-3); background: var(--paper); }
+  table.ledger td.num, table.ledger th.num { text-align: right; white-space: nowrap; }
+  table.ledger td.meta { white-space: nowrap; }
+  table.ledger td.payee { white-space: normal; width: 30%; }
+  table.ledger td.payee { font-family: var(--font-text); font-size: 0.9375rem; }
+  table.ledger .note { display: block; font-family: var(--font-text); font-size: 0.8125rem; color: var(--ink-3); }
+  table.ledger tr.group th { font-family: var(--font-text); text-transform: none; letter-spacing: 0; font-size: 0.9375rem; font-weight: 600; color: var(--ink); background: var(--paper); padding-top: 0.8rem; padding-bottom: 0.5rem; }
+  table.ledger tr.group.past th { color: var(--past); background: var(--past-tint); }
+  table.ledger tr.group.due th { color: var(--act); background: var(--act-tint); }
+  table.ledger tr.group th .grp { display: flex; justify-content: space-between; gap: var(--space-s); align-items: baseline; }
+  table.ledger tr.group th .sum { font-family: var(--font-data); font-weight: 500; white-space: nowrap; }
+  table.ledger tr.tracked td:first-child { box-shadow: inset 3px 0 0 var(--ink); }
+  table.ledger tfoot td { font-weight: 600; border-bottom: 0; background: var(--paper); }
+  .chip { display: inline-block; font-family: var(--font-text); font-size: 0.8125rem; font-weight: 500; padding: 0.1rem 0.45rem; border-radius: 3px; background: var(--paper); color: var(--ink-2); white-space: nowrap; }
+  .chip.past { background: var(--past-tint); color: var(--past); }
+  .chip.due { background: var(--act-tint); color: var(--act); }
+  .reg-foot { padding: 0.75rem var(--space-s) var(--space-s); font-size: 0.8125rem; line-height: 1.5; color: var(--ink-2); border-top: 1px solid var(--rule-2); max-width: 80ch; }
+  .view-swap { transition: opacity 180ms var(--ease-out); }
+  .view-swap.is-swapping { opacity: 0.55; }
+  @media (prefers-reduced-motion: reduce) { .view-swap { transition: none; } .view-swap.is-swapping { opacity: 1; } }
+  @media (max-width: 860px) {
+    .reg-controls { grid-template-columns: 1fr; }
+    .seg .row { display: flex; }
+    .seg label { flex: 1 1 0; justify-content: center; text-align: center; padding-inline: 0.5rem; white-space: normal; line-height: 1.25; }
+    .reg-inputs .field { flex: 1 1 140px; }
+    table.ledger, table.ledger tbody, table.ledger tfoot { display: block; }
+    table.ledger thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    table.ledger tr:not(.group) { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; column-gap: 0.6rem; row-gap: 0.15rem; padding: 0.6rem var(--space-s); border-bottom: 1px solid var(--rule-2); }
+    table.ledger tr:not(.group) td { display: block; padding: 0; border: 0; min-width: 0; }
+    table.ledger td.payee { grid-column: 1 / 3; grid-row: 1; font-size: 0.9375rem; font-weight: 500; width: auto; }
+    table.ledger td.amt { grid-column: 3; grid-row: 1; }
+    table.ledger td.meta { color: var(--ink-3); font-size: 0.8125rem; grid-row: 2; white-space: normal; }
+    table.ledger td.meta:first-child { grid-column: 1; }
+    table.ledger td.meta:not(:first-child) + td.meta { text-align: right; white-space: nowrap; }
+    table.ledger td[data-l]::before { content: attr(data-l) " "; }
+    table.ledger td.status { grid-column: 1 / -1; grid-row: 3; margin-top: 0.2rem; }
+    table.ledger .chip { white-space: normal; }
+    table.ledger .note { display: inline; }
+    table.ledger .note::before { content: " — "; }
+    table.ledger tr.group, table.ledger tr.group th { display: block; }
+    table.ledger tfoot tr { display: flex; justify-content: space-between; padding: 0.6rem var(--space-s); }
+    table.ledger tfoot td { display: block; padding: 0; border: 0; }
+    table.ledger tfoot td:empty { display: none; }
+    table.ledger tr.tracked { box-shadow: inset 3px 0 0 var(--ink); }
+    table.ledger tr.tracked td:first-child { box-shadow: none; }
+    .hero .more { display: none; }
+  }
+
+  /* Sections */
+  .section { padding-block: var(--space-xl); border-top: 1px solid var(--rule); }
+  .section-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-m) var(--space-l); align-items: end; margin-bottom: var(--space-l); }
+  .section-head .lead { max-width: 48ch; }
+  @media (max-width: 900px) { .section-head { grid-template-columns: 1fr; align-items: start; } }
+
+  /* Timeline */
+  .timeline { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-m); counter-reset: step; }
+  .timeline li { position: relative; padding-top: var(--space-s); border-top: 2px solid var(--ink); }
+  .timeline li::before { counter-increment: step; content: counter(step); position: absolute; top: -0.85rem; left: 0; width: 1.5rem; height: 1.5rem; display: grid; place-items: center; background: var(--ink); color: var(--paper); font-family: var(--font-data); font-size: 0.75rem; border-radius: 50%; }
+  .timeline .when { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; display: block; margin-bottom: 0.25rem; }
+  .timeline .what { font-size: 0.8125rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); display: block; margin-bottom: 0.6rem; }
+  .timeline p { font-size: 0.9375rem; line-height: 1.5; color: var(--ink-2); }
+  .timeline .frag { margin-top: 0.9rem; padding: 0.6rem 0.7rem; background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; font-family: var(--font-data); font-size: 0.8125rem; line-height: 1.45; color: var(--ink); overflow-wrap: anywhere; }
+  .timeline .frag.past { border-color: var(--past); color: var(--past); }
+  .timeline .frag.due { border-color: var(--act); color: var(--act); }
+  @media (max-width: 1040px) { .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) {
+    .timeline { grid-template-columns: 1fr; gap: 0; border-left: 2px solid var(--ink); }
+    .timeline li { border-top: 0; padding: 0 0 var(--space-m) var(--space-m); }
+    .timeline li::before { top: 0; left: calc(-0.75rem - 1px); }
+    .timeline li:last-child { padding-bottom: 0; }
+  }
+  .caption { margin-top: var(--space-m); font-size: 0.875rem; color: var(--ink-2); max-width: 70ch; }
+
+  /* State rules */
+  .rules-grid { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: var(--space-l); align-items: start; }
+  @media (max-width: 900px) { .rules-grid { grid-template-columns: 1fr; } }
+  .rules { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .rules-wrap { overflow-x: auto; }
+  table.rules-table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+  table.rules-table th, table.rules-table td { text-align: left; padding: 0.6rem var(--space-s); border-bottom: 1px solid var(--rule-2); vertical-align: top; }
+  table.rules-table th { font-weight: 500; font-size: 0.75rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-3); background: var(--paper); white-space: nowrap; }
+  table.rules-table td.data { font-size: 0.875rem; white-space: nowrap; }
+  table.rules-table tr:last-child td { border-bottom: 0; }
+  .rules-foot { padding: 0.75rem var(--space-s); font-size: 0.8125rem; line-height: 1.5; color: var(--ink-2); border-top: 1px solid var(--rule-2); background: var(--paper); }
+  .rules-foot { max-width: 78ch; }
+  .aside h3 { margin-bottom: 0.5rem; }
+  .aside p + h3 { margin-top: var(--space-m); }
+
+  /* Report */
+  .report { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; max-width: 880px; }
+  .report-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem var(--space-s); padding: var(--space-s); border-bottom: 1px solid var(--rule-2); }
+  .report-head .title { font-weight: 600; }
+  .report dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.3rem var(--space-m); margin: 0; padding: var(--space-s); border-bottom: 1px solid var(--rule-2); font-size: 0.9375rem; }
+  .report dt { color: var(--ink-3); }
+  .report dd { margin: 0; }
+  .report-wrap { overflow-x: auto; }
+  table.report-table { width: 100%; border-collapse: collapse; font-family: var(--font-data); font-variant-numeric: tabular-nums; font-size: 0.875rem; }
+  table.report-table th, table.report-table td { text-align: left; padding: 0.55rem var(--space-s); border-bottom: 1px solid var(--rule-2); vertical-align: top; }
+  table.report-table th { font-family: var(--font-text); font-weight: 500; font-size: 0.75rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-3); background: var(--paper); white-space: nowrap; }
+  table.report-table td.num, table.report-table th.num { text-align: right; white-space: nowrap; }
+  .report-foot { padding: 0.75rem var(--space-s); font-size: 0.8125rem; line-height: 1.5; color: var(--ink-2); max-width: 78ch; }
+  @media (max-width: 640px) { .report dl { grid-template-columns: 1fr; gap: 0; } .report dt { margin-top: 0.4rem; } }
+
+  /* Call */
+  .call-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-l); align-items: start; }
+  @media (max-width: 900px) { .call-grid { grid-template-columns: 1fr; } }
+  ol.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; }
+  ol.steps li { display: grid; grid-template-columns: 2.25rem 1fr; gap: var(--space-s); padding: var(--space-s) 0; border-top: 1px solid var(--rule); }
+  ol.steps li:last-child { border-bottom: 1px solid var(--rule); }
+  ol.steps li::before { counter-increment: s; content: counter(s); font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; line-height: 1.1; color: var(--ink); }
+  ol.steps h3 { font-family: var(--font-text); font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.25rem; }
+  ol.steps p { color: var(--ink-2); font-size: 0.9375rem; }
+  ol.steps li > div { max-width: 58ch; }
+  .fit dl { margin: 0; }
+  .fit dt { font-weight: 600; margin-top: var(--space-s); }
+  .fit dt:first-child { margin-top: 0; }
+  .fit dd { margin: 0.25rem 0 0; color: var(--ink-2); }
+
+  /* Closing */
+  .closing { padding-block: var(--space-xl); border-top: 1px solid var(--rule); background: var(--sheet); }
+  .closing .cta { margin-top: var(--space-m); display: flex; flex-direction: column; gap: var(--space-xs); align-items: flex-start; }
+  .closing .beside { max-width: 44ch; }
+
+  /* Footer */
+  .site-footer { border-top: 1px solid var(--rule); padding-block: var(--space-l); font-size: 0.9375rem; color: var(--ink-2); }
+  .site-footer .wrap { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: var(--space-m) var(--space-l); }
+  .site-footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 var(--space-m); }
+  .site-footer ul a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 0.14em; }
+  .site-footer .legal { max-width: 60ch; }
+  @media (max-width: 760px) { .site-footer .wrap { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<a class="sr-only" href="#main">Skip to content</a>
+<header class="site-header" id="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="#top" aria-label="Holdfast, home">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="2" fill="#151614"/><path d="M7 6v12M17 6v12M7 12h10" stroke="#f6f6f3" stroke-width="2.4" stroke-linecap="square"/></svg>
+      Holdfast
+    </a>
+    <nav class="site-nav" aria-label="Site">
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" id="menu-btn">Menu</button>
+      <ul id="site-menu">
+        <li><a href="#clock">How it works</a></li>
+        <li><a href="#states">State rules</a></li>
+        <li><a href="#report">The report</a></li>
+      </ul>
+      <a class="btn btn-sm" href="https://holdfast.example/assessment">Request an assessment call</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="h1">
+    <div class="wrap">
+      <h1 id="h1">Every stale check has a state deadline.</h1>
+      <div class="hero-grid">
+        <div>
+          <p class="sub">Holdfast is unclaimed property software for finance teams. It tracks uncashed checks and dormant customer balances, works out which state each one belongs to and when it is due, and prepares the report that state requires.</p>
+          <div class="cta">
+            <a class="btn" href="https://holdfast.example/assessment">Request an assessment call</a>
+            <p class="beside small muted">The call is free. Bring your outstanding-check list and we show you which states it already touches.</p>
+          </div>
+          <dl class="hero-summary" id="summary" aria-label="Summary of the sample list">
+            <div class="row head"><dt>In the sample list, as of</dt><dd class="data" id="sum-asof">Oct 20, 2026</dd></div>
+            <div class="row past"><dt>Past due</dt><dd><span class="data" id="sum-past">2 checks · $499.15</span></dd></div>
+            <div class="row due"><dt>Next filing</dt><dd><span class="data" id="sum-next">California, Nov 1, 2026 · 1 check · $2,310.00</span></dd></div>
+            <div class="row"><dt>Still on the clock</dt><dd><span class="data" id="sum-run">8 checks · $6,225.24</span></dd></div>
+          </dl>
+          <p class="more"><a class="textlink" href="#clock">See how one check becomes a filing <span aria-hidden="true">↓</span></a></p>
+        </div>
+
+        <figure class="register" id="register" aria-labelledby="reg-title">
+          <div class="reg-head">
+            <div class="reg-title" id="reg-title">Outstanding checks <span class="data">Ashby Tool &amp; Die, Inc. · sample data</span></div>
+            <div class="small muted" id="reg-count">12 checks · $10,318.39</div>
+          </div>
+          <div class="reg-controls">
+            <fieldset class="seg" id="view-seg">
+              <legend class="sr-only">Sort the list</legend>
+              <div class="row">
+                <label><input type="radio" name="view" value="rec"> As your bank rec lists it</label>
+                <label data-sll-click><input type="radio" name="view" value="file" checked> As Holdfast files it</label>
+              </div>
+            </fieldset>
+            <div class="reg-inputs">
+              <div class="field">
+                <label for="asof">As of</label>
+                <input type="date" id="asof" value="2026-10-20" min="2020-01-01" max="2035-12-31" aria-describedby="reg-msg">
+              </div>
+              <div class="field">
+                <label for="inc">State of incorporation</label>
+                <select id="inc">
+                  <option value="DE" selected>Delaware</option>
+                  <option value="CA">California</option>
+                  <option value="FL">Florida</option>
+                  <option value="IL">Illinois</option>
+                  <option value="MA">Massachusetts</option>
+                  <option value="NY">New York</option>
+                  <option value="PA">Pennsylvania</option>
+                  <option value="TX">Texas</option>
+                  <option value="XX">Another state</option>
+                </select>
+              </div>
+              <button class="btn-quiet" type="button" id="reset">Reset sample</button>
+            </div>
+          </div>
+          <p class="reg-msg" id="reg-msg"></p>
+          <noscript><p class="reg-msg">Sorting and the date controls need JavaScript. The list below is shown as Holdfast files it, as of Oct 20, 2026, for a company incorporated in Delaware.</p></noscript>
+          <p class="sr-only" id="reg-status" role="status" aria-live="polite"></p>
+          <div class="reg-table-wrap view-swap" id="reg-view">
+            <table class="ledger" id="ledger">
+              <caption class="sr-only">The same checks sorted by state deadline, as of Oct 20, 2026</caption>
+              <thead>
+                <tr><th scope="col">Check</th><th scope="col">Payee</th><th scope="col" class="num">Amount</th><th scope="col">State</th><th scope="col">Dormant</th><th scope="col">Deadline</th></tr>
+              </thead>
+              <tbody id="ledger-body">
+<tr class="group past"><th scope="colgroup" colspan="6"><span class="grp"><span class="lbl">Past due · 2 checks</span><span class="sum">$499.15</span></span></th></tr>
+<tr><td class="meta">10211</td><td class="payee">Marlow Office Supply</td><td class="num amt">$86.40</td><td class="meta">PA</td><td class="meta" data-l="dormant">Aug 19, 2024</td><td class="status"><span class="chip past">Was due Apr 15, 2025</span></td></tr>
+<tr><td class="meta">10388</td><td class="payee">D. Okafor <span class="note">expense reimbursement</span></td><td class="num amt">$412.75</td><td class="meta">NY</td><td class="meta" data-l="dormant">Feb 3, 2025</td><td class="status"><span class="chip past">Was due Mar 10, 2026</span></td></tr>
+<tr class="group due"><th scope="colgroup" colspan="6"><span class="grp"><span class="lbl">Report to California by Nov 1, 2026 · 12 days · 1 check</span><span class="sum">$2,310.00</span></span></th></tr>
+<tr><td class="meta">10517</td><td class="payee">Coastal Temp Staffing</td><td class="num amt">$2,310.00</td><td class="meta">CA</td><td class="meta" data-l="dormant">Jun 30, 2026</td><td class="status"><span class="chip due">Report by Nov 1, 2026</span></td></tr>
+<tr class="group due"><th scope="colgroup" colspan="6"><span class="grp"><span class="lbl">Report to Texas by Jul 1, 2027 · 254 days · 1 check</span><span class="sum">$1,284.00</span></span></th></tr>
+<tr class="tracked"><td class="meta">10492</td><td class="payee">Ridgeline Freight LLC <span class="note">followed below</span></td><td class="num amt">$1,284.00</td><td class="meta">TX</td><td class="meta" data-l="dormant">Apr 14, 2026</td><td class="status"><span class="chip due">Report by Jul 1, 2027</span></td></tr>
+<tr class="group "><th scope="colgroup" colspan="6"><span class="grp"><span class="lbl">Clock still running · 8 checks</span><span class="sum">$6,225.24</span></span></th></tr>
+<tr><td class="meta">10688</td><td class="payee">Pinecrest Catering</td><td class="num amt">$198.25</td><td class="meta">MA</td><td class="meta" data-l="dormant">Jan 22, 2027</td><td class="status"><span class="chip">Report by Nov 1, 2027</span></td></tr>
+<tr><td class="meta">10811</td><td class="payee">Brightwater Plumbing</td><td class="num amt">$1,075.00</td><td class="meta">IL</td><td class="meta" data-l="dormant">Sep 3, 2027</td><td class="status"><span class="chip">Report by May 1, 2028</span></td></tr>
+<tr><td class="meta">10977</td><td class="payee">Halvorsen Consulting</td><td class="num amt">$3,400.00</td><td class="meta">TX</td><td class="meta" data-l="dormant">Jul 29, 2028</td><td class="status"><span class="chip">Report by Jul 1, 2029</span></td></tr>
+<tr><td class="meta">10603</td><td class="payee">Keystone Signage</td><td class="num amt">$530.00</td><td class="meta">DE <span class="note">no address on file</span></td><td class="meta" data-l="dormant">Nov 8, 2028</td><td class="status"><span class="chip">Report by Mar 1, 2029</span></td></tr>
+<tr><td class="meta">11043</td><td class="payee">Northgate Courier</td><td class="num amt">$74.10</td><td class="meta">NY</td><td class="meta" data-l="dormant">Jan 15, 2029</td><td class="status"><span class="chip">Report by Mar 10, 2030</span></td></tr>
+<tr><td class="meta">10745</td><td class="payee">Lakeside Uniform Co.</td><td class="num amt">$642.90</td><td class="meta">FL</td><td class="meta" data-l="dormant">May 17, 2029</td><td class="status"><span class="chip">Report by May 1, 2030</span></td></tr>
+<tr><td class="meta">10902</td><td class="payee">R. Nakamura <span class="note">customer refund</span></td><td class="num amt">$59.99</td><td class="meta">DE</td><td class="meta" data-l="dormant">Feb 11, 2030</td><td class="status"><span class="chip">Report by Mar 1, 2031</span></td></tr>
+<tr><td class="meta">11120</td><td class="payee">Summit Print Shop</td><td class="num amt">$245.00</td><td class="meta">DE <span class="note">no address on file</span></td><td class="meta" data-l="dormant">Jun 2, 2031</td><td class="status"><span class="chip">Report by Mar 1, 2032</span></td></tr>
+</tbody>
+              <tfoot>
+                <tr><td colspan="2">12 checks outstanding</td><td class="num">$10,318.39</td><td colspan="3"></td></tr>
+              </tfoot>
+            </table>
+          </div>
+          <figcaption class="reg-foot">Sample data. The sorted view uses an eight-state sample of Holdfast’s rule table as read on Oct 20, 2026, for vendor checks; payroll and other property types run on shorter clocks in many states. The product shows the current rule and its source for every state. Not legal advice.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="clock" aria-labelledby="h-clock">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="h-clock">One check, five dates: issued, stale, dormant, letter, report.</h2>
+        <p class="lead muted">Check 10492 from the list above, to a freight carrier in Texas. Each date comes from the check itself and the state’s rule. Holdfast keeps every item on this clock, so the report is a list to confirm rather than a search to start.</p>
+      </div>
+      <ol class="timeline">
+        <li>
+          <span class="what">Issued</span>
+          <span class="when">Apr 14, 2023</span>
+          <p>Check 10492 to Ridgeline Freight LLC for $1,284.00 goes out. It leaves your bank rec only when it is cashed, voided or reported.</p>
+          <div class="frag">10492 · Ridgeline Freight LLC · $1,284.00 · TX</div>
+        </li>
+        <li>
+          <span class="what">Stale</span>
+          <span class="when">Oct 14, 2023</span>
+          <p>Six months on, the bank may refuse it. It is still the payee’s money. Writing it back to income is the entry auditors look for first.</p>
+          <div class="frag">Status: outstanding 6 months · do not write off</div>
+        </li>
+        <li>
+          <span class="what">Dormant</span>
+          <span class="when">Apr 14, 2026</span>
+          <p>Texas counts three years from the check date. Holdfast dates this for each state and flags the item the day it lands.</p>
+          <div class="frag due">Dormant · TX · 3 years · reportable in the Jul 2027 cycle</div>
+        </li>
+        <li>
+          <span class="what">Letter</span>
+          <span class="when">Before May 1, 2027</span>
+          <p>A notice to the payee’s last known address, sent in the state’s window before filing. Holdfast lists which checks need one and by when.</p>
+          <div class="frag">Due-diligence notice · Ridgeline Freight LLC · Austin, TX</div>
+        </li>
+        <li>
+          <span class="what">Report and remit</span>
+          <span class="when">Jul 1, 2027</span>
+          <p>The Texas report goes in, in the state’s format, with the $1,284.00. Ridgeline can claim it from the Comptroller from then on.</p>
+          <div class="frag">TX holder report · period to Mar 1, 2027 · 1 property · $1,284.00</div>
+        </li>
+      </ol>
+      <p class="caption">Dates use the Texas rule as it read on Oct 20, 2026: a three-year dormancy period, a March 1 cutoff and a July 1 report. Sample check, sample payee. Not legal advice.</p>
+    </div>
+  </section>
+
+  <section class="section" id="states" aria-labelledby="h-states">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="h-states">Each deadline carries its rule and the date it was last checked.</h2>
+        <p class="lead muted">Rules move. A state changes its cutoff, shortens a dormancy period or adds a property type, and last year’s calendar is wrong. Holdfast shows the rule behind every date so your controller, your auditor and your counsel are reading the same line.</p>
+      </div>
+      <div class="rules-grid">
+        <div class="rules">
+          <div class="rules-wrap">
+            <table class="rules-table">
+              <caption class="sr-only">Sample of eight state rules for vendor checks</caption>
+              <thead>
+                <tr><th scope="col">State</th><th scope="col">Dormancy</th><th scope="col">Period ends</th><th scope="col">Report due</th><th scope="col">Last checked</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>California</td><td class="data">3 years</td><td class="data">Jun 30</td><td class="data">Nov 1 <span class="note muted">notice report</span></td><td class="data">Oct 20, 2026</td></tr>
+                <tr><td>Delaware</td><td class="data">5 years</td><td class="data">Dec 31</td><td class="data">Mar 1</td><td class="data">Oct 20, 2026</td></tr>
+                <tr><td>Florida</td><td class="data">5 years</td><td class="data">Dec 31</td><td class="data">May 1</td><td class="data">Oct 20, 2026</td></tr>
+                <tr><td>Illinois</td><td class="data">3 years</td><td class="data">Dec 31</td><td class="data">May 1</td><td class="data">Oct 20, 2026</td></tr>
+                <tr><td>Massachusetts</td><td class="data">3 years</td><td class="data">Jun 30</td><td class="data">Nov 1</td><td class="data">Oct 20, 2026</td></tr>
+                <tr><td>New York</td><td class="data">3 years</td><td class="data">Dec 31</td><td class="data">Mar 10</td><td class="data">Oct 20, 2026</td></tr>
+                <tr><td>Pennsylvania</td><td class="data">3 years</td><td class="data">Dec 31</td><td class="data">Apr 15</td><td class="data">Oct 20, 2026</td></tr>
+                <tr><td>Texas</td><td class="data">3 years</td><td class="data">Mar 1</td><td class="data">Jul 1</td><td class="data">Oct 20, 2026</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="rules-foot">Sample: eight of the states Holdfast covers, for vendor checks only, as the rule table read on Oct 20, 2026. In the product each row also carries the statute it comes from. Confirm dates with your counsel before you file; Holdfast is not a law firm and does not give legal advice.</p>
+        </div>
+        <div class="aside">
+          <h3>Where a check goes when there is no address</h3>
+          <p class="muted">A payee with no last known address on file is reported to your state of incorporation, not to the state where you cut the check. Change the state in the list above and the two unaddressed checks move with it.</p>
+          <h3>What changes the clock</h3>
+          <p class="muted">Property type first: payroll checks, customer credits and vendor checks often run on different periods in the same state. Then the last activity date, which a reissue or a written confirmation can reset. Holdfast records both against each item.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="report" aria-labelledby="h-report">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="h-report">The report comes out in the format the state’s portal takes.</h2>
+        <p class="lead muted">When a deadline arrives, the items that belong to it are already grouped. Holdfast builds the holder report in the standard file the state accepts, with the summary your auditor will ask for.</p>
+      </div>
+      <div class="report">
+        <div class="report-head">
+          <span class="title">California notice report</span>
+          <span class="data muted">due Nov 1, 2026 · sample</span>
+        </div>
+        <dl>
+          <dt>Holder</dt><dd>Ashby Tool &amp; Die, Inc. <span class="muted">(sample company)</span></dd>
+          <dt>Report period</dt><dd>Jul 1, 2025 to Jun 30, 2026</dd>
+          <dt>Properties</dt><dd>1 item · $2,310.00</dd>
+        </dl>
+        <div class="report-wrap">
+          <table class="report-table">
+            <caption class="sr-only">Sample properties in the California notice report</caption>
+            <thead>
+              <tr><th scope="col">Owner</th><th scope="col">Last known address</th><th scope="col">Property type</th><th scope="col">Last activity</th><th scope="col" class="num">Amount</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Coastal Temp Staffing</td><td>San Diego, CA 92101</td><td>Vendor check</td><td>Jun 30, 2023</td><td class="num">$2,310.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="report-foot">Illustrative. Names, addresses and amounts are sample data; the sample check 10517 from the list above is the only item that reaches this cycle. The product writes the state’s file format and keeps the filed copy with its confirmation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="call" aria-labelledby="h-call">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="h-call">The assessment call starts from your check list, not a demo.</h2>
+        <p class="lead muted">Most teams we talk to found out they had an obligation from an audit letter. The call is for working out, with the list in front of us, how much of that letter is already answered.</p>
+      </div>
+      <div class="call-grid">
+        <ol class="steps">
+          <li>
+            <div>
+              <h3>Bring the outstanding-check list and any customer credit balances</h3>
+              <p>A spreadsheet export from your bank rec and AR aging is enough. Nothing needs to be cleaned up first.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>We sort it by state and show the next deadline for each</h3>
+              <p>The same view as the list above, on your own items: what is past due, what is due in the coming cycle, and what is still on the clock.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>You leave with what a first filing involves, and where to bring in counsel</h3>
+              <p>Which states, which forms, which letters, and the points where a lawyer should look before you file. We will tell you if Holdfast is not the right fit.</p>
+            </div>
+          </li>
+        </ol>
+        <div class="fit">
+          <dl>
+            <dt>Built for</dt>
+            <dd>Controllers and accounting managers at companies with 200 to 2,000 employees, paying vendors and refunding customers in more than one state, with no unclaimed-property program yet.</dd>
+            <dt>Not for</dt>
+            <dd>Companies that need a law firm to represent them in an audit, or a tax department that already runs a filing program across every state. We will say so on the call.</dd>
+            <dt>Cost</dt>
+            <dd>The call is free. Software pricing is quoted on the call, by number of legal entities.</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing" aria-labelledby="h-close">
+    <div class="wrap">
+      <h2 id="h-close">Find out which states your register already touches.</h2>
+      <div class="cta">
+        <a class="btn" href="https://holdfast.example/assessment">Request an assessment call</a>
+        <p class="beside small muted">The call is free. Bring your outstanding-check list and we show you which states it already touches.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <p><strong>Holdfast</strong> · unclaimed property software for finance teams</p>
+      <p class="legal small">Holdfast prepares unclaimed-property reports and shows each state’s rule with its source. It is not a law firm and does not give legal advice. State rules and dates on this page are a sample as read on Oct 20, 2026; confirm them with your counsel before filing.</p>
+    </div>
+    <ul>
+      <li><a href="https://holdfast.example/assessment">Request an assessment call</a></li>
+      <li><a href="#clock">How it works</a></li>
+      <li><a href="#states">State rules</a></li>
+      <li><a href="#report">The report</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  // Header menu on narrow screens.
+  var header = document.getElementById('site-header');
+  var menuBtn = document.getElementById('menu-btn');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', function () {
+      var open = header.classList.toggle('menu-open');
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.getElementById('site-menu').addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') { header.classList.remove('menu-open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && header.classList.contains('menu-open')) { header.classList.remove('menu-open'); menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.focus(); }
+    });
+  }
+
+  // Sample rule table: vendor checks only, as read on Oct 20, 2026. Illustrative. Not legal advice.
+  var RULES = {
+    CA: { name: 'California', years: 3, cutoff: [6, 30], report: [11, 1] },
+    DE: { name: 'Delaware', years: 5, cutoff: [12, 31], report: [3, 1] },
+    FL: { name: 'Florida', years: 5, cutoff: [12, 31], report: [5, 1] },
+    IL: { name: 'Illinois', years: 3, cutoff: [12, 31], report: [5, 1] },
+    MA: { name: 'Massachusetts', years: 3, cutoff: [6, 30], report: [11, 1] },
+    NY: { name: 'New York', years: 3, cutoff: [12, 31], report: [3, 10] },
+    PA: { name: 'Pennsylvania', years: 3, cutoff: [12, 31], report: [4, 15] },
+    TX: { name: 'Texas', years: 3, cutoff: [3, 1], report: [7, 1] }
+  };
+  var CHECKS = [
+    { no: '10211', payee: 'Marlow Office Supply', note: '', date: '2021-08-19', state: 'PA', amt: 86.40 },
+    { no: '10388', payee: 'D. Okafor', note: 'expense reimbursement', date: '2022-02-03', state: 'NY', amt: 412.75 },
+    { no: '10492', payee: 'Ridgeline Freight LLC', note: 'followed below', date: '2023-04-14', state: 'TX', amt: 1284.00, tracked: true },
+    { no: '10517', payee: 'Coastal Temp Staffing', note: '', date: '2023-06-30', state: 'CA', amt: 2310.00 },
+    { no: '10603', payee: 'Keystone Signage', note: '', date: '2023-11-08', state: '', amt: 530.00 },
+    { no: '10688', payee: 'Pinecrest Catering', note: '', date: '2024-01-22', state: 'MA', amt: 198.25 },
+    { no: '10745', payee: 'Lakeside Uniform Co.', note: '', date: '2024-05-17', state: 'FL', amt: 642.90 },
+    { no: '10811', payee: 'Brightwater Plumbing', note: '', date: '2024-09-03', state: 'IL', amt: 1075.00 },
+    { no: '10902', payee: 'R. Nakamura', note: 'customer refund', date: '2025-02-11', state: 'DE', amt: 59.99 },
+    { no: '10977', payee: 'Halvorsen Consulting', note: '', date: '2025-07-29', state: 'TX', amt: 3400.00 },
+    { no: '11043', payee: 'Northgate Courier', note: '', date: '2026-01-15', state: 'NY', amt: 74.10 },
+    { no: '11120', payee: 'Summit Print Shop', note: '', date: '2026-06-02', state: '', amt: 245.00 }
+  ];
+  var DEFAULT_ASOF = '2026-10-20', DEFAULT_INC = 'DE', MIN = '2020-01-01', MAX = '2035-12-31';
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  function parse(s) { var p = s.split('-').map(Number); return Date.UTC(p[0], p[1] - 1, p[2]); }
+  function utc(y, m, d) { return Date.UTC(y, m - 1, d); }
+  function fmt(t) { var d = new Date(t); return MONTHS[d.getUTCMonth()] + ' ' + d.getUTCDate() + ', ' + d.getUTCFullYear(); }
+  function money(n) { return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function addYears(t, n) { var d = new Date(t); return utc(d.getUTCFullYear() + n, d.getUTCMonth() + 1, d.getUTCDate()); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  // The first reporting cycle whose cutoff is on or after the dormancy date.
+  function cycleFor(rule, dormant) {
+    var y = new Date(dormant).getUTCFullYear() - 1;
+    for (var i = 0; i < 4; i++) {
+      var c = utc(y + i, rule.cutoff[0], rule.cutoff[1]);
+      if (c >= dormant) {
+        var r = utc(y + i, rule.report[0], rule.report[1]);
+        if (r <= c) r = utc(y + i + 1, rule.report[0], rule.report[1]);
+        return { cutoff: c, report: r };
+      }
+    }
+    return null;
+  }
+  function classify(chk, asof, inc) {
+    var state = chk.state || inc, rule = RULES[state];
+    var out = { chk: chk, state: state, unaddressed: !chk.state };
+    if (!rule) { out.kind = 'unknown'; return out; }
+    out.rule = rule;
+    out.dormant = addYears(parse(chk.date), rule.years);
+    var cy = cycleFor(rule, out.dormant);
+    out.report = cy.report;
+    if (out.dormant > asof) out.kind = 'running';
+    else if (out.report <= asof) out.kind = 'past';
+    else out.kind = 'due';
+    return out;
+  }
+
+  var body = document.getElementById('ledger-body');
+  var table = document.getElementById('ledger');
+  var view = document.getElementById('reg-view');
+  var msg = document.getElementById('reg-msg');
+  var status = document.getElementById('reg-status');
+  var asofEl = document.getElementById('asof');
+  var incEl = document.getElementById('inc');
+  var seg = document.getElementById('view-seg');
+  var caption = table.querySelector('caption');
+  var thead = table.querySelector('thead tr');
+  var lastGood = DEFAULT_ASOF;
+  var sumAsof = document.getElementById('sum-asof'), sumPast = document.getElementById('sum-past'), sumNext = document.getElementById('sum-next'), sumRun = document.getElementById('sum-run');
+  function count(items) { var sum = items.reduce(function (s, x) { return s + x.chk.amt; }, 0); return items.length + (items.length === 1 ? ' check' : ' checks') + ' · ' + money(sum); }
+  function summarize(asof, inc) {
+    var all = CHECKS.map(function (c) { return classify(c, asof, inc); });
+    var past = all.filter(function (x) { return x.kind === 'past'; });
+    var due = all.filter(function (x) { return x.kind === 'due'; }).sort(function (a, b) { return a.report - b.report; });
+    var running = all.filter(function (x) { return x.kind === 'running'; });
+    sumAsof.textContent = fmt(asof);
+    sumPast.textContent = past.length ? count(past) : 'none';
+    if (due.length) { var first = due.filter(function (x) { return x.report === due[0].report && x.state === due[0].state; }); sumNext.textContent = first[0].rule.name + ', ' + fmt(first[0].report) + ' · ' + count(first); }
+    else sumNext.textContent = 'none scheduled';
+    sumRun.textContent = running.length ? count(running) : 'none';
+  }
+  var swapTimer = null;
+
+  function currentView() { var r = seg.querySelector('input:checked'); return r ? r.value : 'rec'; }
+
+  function readAsof() {
+    var v = asofEl.value;
+    asofEl.setAttribute('aria-invalid', 'false');
+    msg.className = 'reg-msg';
+    if (!v) { msg.textContent = 'No date entered, so the list is shown as of ' + fmt(parse(lastGood)) + '.'; return parse(lastGood); }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(v) || isNaN(parse(v))) { asofEl.setAttribute('aria-invalid', 'true'); msg.className = 'reg-msg err'; msg.textContent = 'That is not a date Holdfast can read. Showing the list as of ' + fmt(parse(lastGood)) + '.'; return parse(lastGood); }
+    if (v < MIN || v > MAX) { asofEl.setAttribute('aria-invalid', 'true'); msg.className = 'reg-msg err'; msg.textContent = 'Pick a date between Jan 1, 2020 and Dec 31, 2035; the sample rule table only covers that range. Showing the list as of ' + fmt(parse(lastGood)) + '.'; return parse(lastGood); }
+    msg.textContent = '';
+    lastGood = v;
+    return parse(v);
+  }
+
+  function rowRec(c) {
+    return '<tr' + (c.tracked ? ' class="tracked"' : '') + '><td class="meta">' + c.no + '</td><td class="payee">' + esc(c.payee) + (c.note ? ' <span class="note">' + esc(c.note) + '</span>' : '') + '</td><td class="num amt">' + money(c.amt) + '</td><td class="meta" data-l="issued">' + fmt(parse(c.date)) + '</td><td class="meta">' + (c.state || 'none on file') + '</td></tr>';
+  }
+  function rowFile(x) {
+    var c = x.chk, st = x.unaddressed ? x.state + ' <span class="note">no address on file</span>' : x.state;
+    var dormant = x.kind === 'unknown' ? '—' : fmt(x.dormant);
+    var chip;
+    if (x.kind === 'past') chip = '<span class="chip past">Was due ' + fmt(x.report) + '</span>';
+    else if (x.kind === 'due') chip = '<span class="chip due">Report by ' + fmt(x.report) + '</span>';
+    else if (x.kind === 'running') chip = '<span class="chip">Report by ' + fmt(x.report) + '</span>';
+    else chip = '<span class="chip">Rule not in this sample · shown in the product</span>';
+    return '<tr' + (c.tracked ? ' class="tracked"' : '') + '><td class="meta">' + c.no + '</td><td class="payee">' + esc(c.payee) + (c.note ? ' <span class="note">' + esc(c.note) + '</span>' : '') + '</td><td class="num amt">' + money(c.amt) + '</td><td class="meta">' + st + '</td><td class="meta" data-l="dormant">' + dormant + '</td><td class="status">' + chip + '</td></tr>';
+  }
+  function groupRow(cls, label, items) {
+    var sum = items.reduce(function (s, x) { return s + x.chk.amt; }, 0);
+    return '<tr class="group ' + cls + '"><th scope="colgroup" colspan="6"><span class="grp"><span class="lbl">' + label + ' · ' + items.length + (items.length === 1 ? ' check' : ' checks') + '</span><span class="sum">' + money(sum) + '</span></span></th></tr>';
+  }
+
+  function render(announce) {
+    var v = currentView();
+    var asof = readAsof();
+    var inc = incEl.value;
+    var html = '', said = '';
+    if (v === 'rec') {
+      caption.textContent = 'Sample outstanding checks, in the order the bank reconciliation lists them';
+      thead.innerHTML = '<th scope="col">Check</th><th scope="col">Payee</th><th scope="col" class="num">Amount</th><th scope="col">Date</th><th scope="col">Address state</th>';
+      html = CHECKS.map(rowRec).join('');
+      said = 'Sorted as the bank reconciliation lists it: 12 checks by check number.';
+    } else {
+      caption.textContent = 'The same checks sorted by state deadline, as of ' + fmt(asof);
+      thead.innerHTML = '<th scope="col">Check</th><th scope="col">Payee</th><th scope="col" class="num">Amount</th><th scope="col">State</th><th scope="col">Dormant</th><th scope="col">Deadline</th>';
+      var all = CHECKS.map(function (c) { return classify(c, asof, inc); });
+      var past = all.filter(function (x) { return x.kind === 'past'; }).sort(function (a, b) { return a.report - b.report; });
+      var due = all.filter(function (x) { return x.kind === 'due'; }).sort(function (a, b) { return a.report - b.report; });
+      var running = all.filter(function (x) { return x.kind === 'running'; }).sort(function (a, b) { return a.dormant - b.dormant; });
+      var unknown = all.filter(function (x) { return x.kind === 'unknown'; });
+      if (past.length) html += groupRow('past', 'Past due', past) + past.map(rowFile).join('');
+      // Group the due items by report date and state.
+      var i = 0;
+      while (i < due.length) {
+        var key = due[i].report + '|' + due[i].state, grp = [];
+        while (i < due.length && due[i].report + '|' + due[i].state === key) grp.push(due[i++]);
+        var days = Math.round((grp[0].report - asof) / 86400000);
+        html += groupRow('due', 'Report to ' + grp[0].rule.name + ' by ' + fmt(grp[0].report) + ' · ' + days + (days === 1 ? ' day' : ' days'), grp) + grp.map(rowFile).join('');
+      }
+      if (running.length) html += groupRow('', 'Clock still running', running) + running.map(rowFile).join('');
+      if (unknown.length) html += groupRow('', 'State not in this eight-state sample', unknown) + unknown.map(rowFile).join('');
+      said = 'Sorted by state deadline as of ' + fmt(asof) + ': ' + past.length + ' past due, ' + due.length + ' due in a coming cycle, ' + running.length + ' still on the clock' + (unknown.length ? ', ' + unknown.length + ' outside the sample' : '') + '.';
+    }
+    body.innerHTML = html;
+    summarize(asof, inc);
+    table.querySelector('tfoot tr').innerHTML = '<td colspan="2">12 checks outstanding</td><td class="num">$10,318.39</td><td colspan="' + (v === 'rec' ? 2 : 3) + '"></td>';
+    if (announce) status.textContent = said;
+    if (window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      view.classList.add('is-swapping');
+      clearTimeout(swapTimer);
+      swapTimer = setTimeout(function () { view.classList.remove('is-swapping'); }, 20);
+    }
+  }
+
+  seg.addEventListener('change', function () { render(true); });
+  asofEl.addEventListener('change', function () { render(true); });
+  asofEl.addEventListener('input', function () { if (asofEl.value && asofEl.value.length === 10) render(false); });
+  incEl.addEventListener('change', function () { render(true); });
+  document.getElementById('reset').addEventListener('click', function () {
+    asofEl.value = DEFAULT_ASOF; incEl.value = DEFAULT_INC; lastGood = DEFAULT_ASOF;
+    render(true);
+    status.textContent = 'Sample reset: as of ' + fmt(parse(DEFAULT_ASOF)) + ', incorporated in Delaware. ' + status.textContent;
+  });
+})();
+</script>
+</body>
+</html>

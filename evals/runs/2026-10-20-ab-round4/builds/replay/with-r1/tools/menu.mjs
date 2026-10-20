@@ -1,0 +1,11 @@
+import {chromium} from '/home/claude/r3/deps/node_modules/playwright/index.mjs';
+import {pathToFileURL} from 'node:url';
+const b = await chromium.launch(); const p = await b.newPage({viewport:{width:390,height:844}});
+await p.goto(pathToFileURL(process.cwd()+'/index.html').href); await p.waitForTimeout(200);
+console.log(await p.locator('.nav-menu summary').evaluate(e=>{const r=e.getBoundingClientRect();return [r.x,r.y,r.width,r.height,getComputedStyle(e).display, getComputedStyle(e.parentElement).display]}));
+await p.locator('.nav-menu summary').click({force:true}); await p.waitForTimeout(200);
+console.log('open', await p.locator('.nav-menu').getAttribute('open'));
+await p.screenshot({path:'shots/states/390-menu-open.png'});
+await p.locator('.nav-menu a[href="#limits"]').click(); await p.waitForTimeout(600);
+console.log('scrollY', await p.evaluate(()=>scrollY), 'open after', await p.locator('.nav-menu').getAttribute('open'));
+await b.close();

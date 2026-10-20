@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dockline — dock appointment slots for warehouses</title>
+  <meta name="description" content="Dockline publishes your dock appointment slots so carriers book an arrival window instead of calling receiving or queuing in the yard.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23243440'/%3E%3Crect x='6' y='6' width='20' height='16' fill='%23f6f6f3'/%3E%3Crect x='4' y='24' width='24' height='4' fill='%23f3b42a'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="wrap top">
+  <a class="wordmark" href="#" aria-label="Dockline home">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="3" fill="#243440"/><rect x="6" y="6" width="20" height="15" fill="#f6f6f3"/><rect x="4" y="24" width="24" height="4" fill="#f3b42a"/></svg>
+    Dockline
+  </a>
+  <nav aria-label="Page">
+    <a href="#morning">Why</a>
+    <a href="#setup">Setup</a>
+    <a href="#dispatchers">For dispatchers</a>
+    <a href="#pilots">Pilots</a>
+    <a class="btn btn-primary" href="https://dockline.example/demo">Book a demo</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-copy">
+      <h1 id="hero-title">Give every truck a door and a time.</h1>
+      <p class="lede">Dockline publishes your dock appointment slots. Carriers book a window instead of calling receiving, and your yard stops being a waiting room.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://dockline.example/demo">Book a demo</a>
+        <a class="btn btn-ghost" href="#board">Try the board below</a>
+        <p class="for-dispatch">Dispatching a truck? <a href="https://book.dockline.example">Book an arrival at book.dockline.example</a></p>
+      </div>
+    </div>
+
+    <div class="board-wrap"><div class="board-shell" id="board">
+      <div class="board-head">
+        <div><strong>Receiving, Building B</strong> &nbsp;<span>Tuesday 21 Oct · doors open 06:00–17:00, closed 12:00–12:30</span></div>
+        <div class="board-legend" aria-hidden="true">
+          <span class="k-booked"><i></i>Booked</span>
+          <span class="k-open"><i></i>Open</span>
+          <span class="k-now"><i></i>Now</span>
+        </div>
+      </div>
+      <div class="board-scroll" tabindex="0" aria-label="Dock schedule, scrolls sideways">
+        <div class="board" id="grid" role="group" aria-label="Today's dock schedule, by door. Open windows are buttons; choose one to book it.">
+          <noscript><p style="grid-column: 1 / -1; padding: 20px;">The live board needs JavaScript. Doors 1 to 6, 06:00 to 17:00, with booked windows shown as blocks and open windows as buttons.</p></noscript>
+        </div>
+      </div>
+      <div class="dock-edge" aria-hidden="true"></div>
+      <form class="booking" id="booking" hidden aria-live="polite">
+        <div class="booking-head">
+          <div class="window" id="bk-window">Door 4 · 09:30–10:30<small>Live unload, 60-minute window</small></div>
+          <button type="button" class="btn btn-light" id="bk-close">Close</button>
+        </div>
+        <div id="bk-form">
+          <div class="booking-row">
+            <label>Carrier <input id="bk-carrier" type="text" placeholder="e.g. Harlan Freight" autocomplete="organization"></label>
+            <label>PO or BOL number <input id="bk-po" type="text" inputmode="numeric" placeholder="e.g. 88347"></label>
+            <label>Trailer
+              <select id="bk-trailer">
+                <option>53' dry van</option>
+                <option>53' reefer</option>
+                <option>48' dry van</option>
+                <option>Flatbed</option>
+                <option>Box truck</option>
+              </select>
+            </label>
+            <label>Pallets <input id="bk-pallets" type="number" min="1" max="30" value="22"></label>
+          </div>
+          <div class="booking-actions" style="margin-top:16px">
+            <button type="submit" class="btn btn-primary">Book this window</button>
+            <p class="muted" style="color:#b5c2cc;font-size:14px">This is a sample board. Nothing you enter leaves this page.</p>
+          </div>
+        </div>
+        <div id="bk-done" class="confirm" hidden>
+          <div class="ref" id="bk-ref">DL-4482</div>
+          <p id="bk-done-text">Booked. The driver gives this reference at the gate. Arrive up to 15 minutes early; more than 20 minutes late and the window is released.</p>
+          <div class="booking-actions"><button type="button" class="btn btn-light" id="bk-another">Book another window</button></div>
+        </div>
+      </form>
+      <div class="board-foot">
+        <span>This is what receiving sees on the office screen. Dispatchers see the same doors, with their own bookings highlighted.</span>
+        <span>Sample data. Nothing here is a real carrier.</span>
+      </div>
+    </div></div>
+  </section>
+
+  <section id="morning" class="wrap" aria-labelledby="morning-title">
+    <div class="section-head">
+      <h2 id="morning-title">One trailer's morning, two ways.</h2>
+      <p class="lede">A 53' dry van with 22 pallets, due at your Building B receiving dock. Same truck, same driver, same freight.</p>
+    </div>
+    <div class="morning">
+      <div class="lane">
+        <h3>Phone and spreadsheet <span>the way it works today</span></h3>
+        <div class="lane-scroll">
+          <div class="lane-track" aria-label="Timeline without Dockline, 04:00 to 11:00">
+            <div class="seg drive" style="grid-column: 1 / 5"><b>04:30 Dispatcher calls receiving</b><small>No answer before 07:00. Sends the truck anyway.</small></div>
+            <div class="seg wait" style="grid-column: 5 / 12"><b>06:10 Arrives. Parks on the shoulder.</b><small>No door. Detention starts at 08:10, billed to you.</small></div>
+            <div class="seg work" style="grid-column: 12 / 15"><b>09:45 Door 2 frees up</b><small>Unloaded by 10:50</small></div>
+          </div>
+          <div class="lane-ticks" aria-hidden="true">
+            <span>04:00</span><span></span><span>05:00</span><span></span><span>06:00</span><span></span><span>07:00</span><span></span><span>08:00</span><span></span><span>09:00</span><span></span><span>10:00</span><span></span>
+          </div>
+        </div>
+        <p class="lane-note">Three hours and thirty-five minutes in the yard. Receiving did not know he was coming, and the spreadsheet said Door 2 was free at 06:00. It was not.</p>
+      </div>
+
+      <div class="lane">
+        <h3>With Dockline <span>booked the evening before</span></h3>
+        <div class="lane-scroll">
+          <div class="lane-track" aria-label="Timeline with Dockline, 04:00 to 11:00">
+            <div class="seg booked" style="grid-column: 1 / 5"><b>Already booked: Door 2, 08:00–09:00</b><small>Reference DL-4471, made at 17:20 yesterday</small></div>
+            <div class="seg drive" style="grid-column: 5 / 9"><b>Leaves at 06:40</b><small>Driver knows the window, so he sleeps in</small></div>
+            <div class="seg work" style="grid-column: 9 / 11"><b>08:00 At Door 2</b><small>Gate 07:52 · unloaded 08:55</small></div>
+            <div class="seg gone" style="grid-column: 11 / 15"><b>Gone before lunch</b><small>Door 2 turns to the next booking</small></div>
+          </div>
+          <div class="lane-ticks" aria-hidden="true">
+            <span>04:00</span><span></span><span>05:00</span><span></span><span>06:00</span><span></span><span>07:00</span><span></span><span>08:00</span><span></span><span>09:00</span><span></span><span>10:00</span><span></span>
+          </div>
+        </div>
+        <p class="lane-note">Eight minutes in the yard. Nobody called anyone. The spreadsheet is gone, because the board is the spreadsheet.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="setup" class="wrap" aria-labelledby="setup-title">
+    <div class="section-head">
+      <h2 id="setup-title">The rules you already have, written down once.</h2>
+      <p class="lede">Every dock has rules. Most of them live in the receiving lead's head and on a laminated sheet at the guard shack. Dockline turns the sheet into settings, and carriers can only book what the sheet allows.</p>
+    </div>
+    <div class="setup">
+      <div class="sheet">
+        <h3>Receiving, Building B <span>what carriers see</span></h3>
+        <dl>
+          <dt>Hours</dt><dd>06:00–17:00, Monday to Friday. <em>Closed 12:00–12:30.</em></dd>
+          <dt>Doors 1, 2, 4</dt><dd>Live unload, 60-minute windows. <em>Floor-loaded freight needs 90.</em></dd>
+          <dt>Door 3</dt><dd>Drop trailers only, 30-minute windows. <em>Drop-and-hook, no lumper.</em></dd>
+          <dt>Door 5</dt><dd>Reefer only. <em>Temperature logged at check-in.</em></dd>
+          <dt>Door 6</dt><dd>Out of service until Thursday. <em>Leveler repair.</em></dd>
+          <dt>Grace</dt><dd>15 minutes early, 20 minutes late. <em>After that the window is released.</em></dd>
+          <dt>Per carrier</dt><dd>Two bookings an hour, four a day. <em>Preferred carriers: no limit.</em></dd>
+          <dt>Required</dt><dd>PO or BOL number, trailer type, pallet count.</dd>
+        </dl>
+        <p class="foot">Last changed by R. Okafor, receiving lead, yesterday 16:40.</p>
+      </div>
+      <div class="setup-copy">
+        <h3>Everything on the sheet is a setting.</h3>
+        <p class="measure">Change the lunch closure at 16:40 and dispatchers see it at 16:40. Take a door out of service and its windows disappear; the bookings already on it get moved, and their dispatchers get told.</p>
+        <ul>
+          <li>Doors are typed: live unload, drop, reefer, flatbed-only. A dry van can't book the reefer door by mistake.</li>
+          <li>Window length is per door. A drop takes 30 minutes; a floor-loaded live unload takes 90. The board knows the difference.</li>
+          <li>Blackouts for lunch, shift change and inventory counts, by door or for the whole building.</li>
+          <li>Limits per carrier, so one broker can't take every morning window on a Monday.</li>
+          <li>Preferred carriers get earlier access to next week's windows. Everyone else sees them Thursday.</li>
+        </ul>
+        <p class="measure muted">Setup takes about an hour with your door list and your hours. We do it with you on the first call.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="dispatchers" class="dispatch" aria-labelledby="dispatch-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="dispatch-title">Dispatchers book in under a minute. No account.</h2>
+        <p class="lede">A dispatcher sending trucks to forty consignees will not learn forty portals. So there is nothing to learn: one link, three fields, pick a window.</p>
+      </div>
+      <ol class="steps" style="list-style:none;padding:0;margin-top:clamp(28px,4vw,48px)">
+        <li class="step">
+          <h3>Open the warehouse's link</h3>
+          <p>Each warehouse has one address. The board shows today and the next ten days, with the rules from the dock sheet already applied.</p>
+          <div class="ex"><b>book.dockline.example/building-b</b><span>Works on a phone in a truck stop at 04:30.</span></div>
+        </li>
+        <li class="step">
+          <h3>Enter what the gate will ask for</h3>
+          <p>PO or BOL number, trailer type, pallet count. If the warehouse requires a SCAC or a temperature, it asks here, not at the gate.</p>
+          <div class="ex"><b>PO 88347 · 53' dry van · 22 pallets</b><span>Dockline remembers the carrier for next time.</span></div>
+        </li>
+        <li class="step">
+          <h3>Pick a window, get a reference</h3>
+          <p>Only windows this truck can use are shown. Booking it gives a reference the driver reads out at the gate. Reschedule or cancel from the same link; a cancelled window reopens for everyone.</p>
+          <div class="ex"><b>DL-4471 · Door 2 · Tue 08:00–09:00</b><span>Sent by text to the driver, by email to dispatch.</span></div>
+        </li>
+      </ol>
+      <div class="dispatch-foot">
+        <p>The dispatcher never sees a login screen. If a carrier books with you every week, they get a saved list of their trucks and the booking takes twenty seconds.</p>
+        <a class="btn btn-light" href="https://book.dockline.example">Go to book.dockline.example</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="dayof" class="wrap" aria-labelledby="dayof-title">
+    <div class="section-head">
+      <h2 id="dayof-title">On the day, the board runs the yard.</h2>
+    </div>
+    <div class="dayof">
+      <div>
+        <h3>Gate</h3>
+        <p>The guard types the reference or scans it off the driver's phone. Dockline shows which door, whether the truck is early, and whether the window is still held.</p>
+      </div>
+      <div>
+        <h3>Early and late</h3>
+        <p>Early trucks wait in a marked lane and get called forward when their door clears. Late past the grace window and the booking releases; the driver is told to rebook, not to park.</p>
+      </div>
+      <div>
+        <h3>Doors that run over</h3>
+        <p>Drag a booking to another door and the dispatcher gets the change. Receiving decides, the carrier finds out, nobody calls anybody.</p>
+      </div>
+      <div>
+        <h3>End of day</h3>
+        <p>Every arrival, check-in and departure time is kept. When a carrier sends a detention invoice, you have the gate stamp.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="pilots" class="pilots" aria-labelledby="pilots-title">
+    <div class="wrap inner">
+      <h2 id="pilots-title" class="big">Two warehouses are running it on live docks.</h2>
+      <div>
+        <p class="measure">Both are mid-size receiving operations, one with eight doors and one with fourteen. Neither has agreed to be named, so we won't name them.</p>
+        <p class="measure">We also don't have numbers to show you yet. We'll publish dwell time, no-show rate and detention claims once a pilot has run a full quarter, measured against the quarter before, and we'll show the method. Until then, ask us for a walkthrough and judge it on the board.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta wrap" aria-labelledby="cta-title">
+    <div class="inner">
+      <h2 id="cta-title">See your own doors on the board.</h2>
+      <p class="lede">Bring your door list and your receiving hours. We set the board up live on the call, and you leave with a link your carriers could use the same day.</p>
+      <a class="btn btn-primary" href="https://dockline.example/demo">Book a demo</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>Dockline · dock appointment slots for mid-size warehouses</span>
+  <span>Dispatchers: <a href="https://book.dockline.example">book.dockline.example</a></span>
+  <span><a href="https://dockline.example/demo">Book a demo</a></span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

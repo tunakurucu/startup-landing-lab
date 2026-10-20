@@ -1,0 +1,31 @@
+{
+  "run": "escheat/without-r1",
+  "workdir": "W004",
+  "brief": "escheat",
+  "arm": "without",
+  "model": "claude-fable-5-1",
+  "client_version": "2.1.304",
+  "start": "2026-10-20T12:44:55Z",
+  "end": "2026-10-20T12:55:21Z",
+  "wall_clock_s": 626,
+  "tokens": {
+    "input": 108,
+    "output": 41286,
+    "cache_read": 5418118,
+    "cache_create": 130861
+  },
+  "tool_calls": 32,
+  "cap_hit": false,
+  "skill_installed": false,
+  "skill_visible_to_agent": false,
+  "skill_md_read": false,
+  "skill_file_access_in_no_skill_arm": false,
+  "infrastructure_retry": null,
+  "start_note": null,
+  "transcript": "transcript.jsonl (tool calls, assistant text and truncated tool results; harness-injected context removed)",
+  "transcript_source": "a29685df6a83b2428.output",
+  "harness_skills_invoked": [
+    "frontend-design"
+  ],
+  "note": "Both arms ran in the same client with its built-in skills visible (for example frontend-design); the arms differ only in whether this skill was installed in the working folder."
+}

@@ -1,0 +1,86 @@
+{
+ "url": "file:///home/claude/startup-landing-lab/evals/runs/2026-10-20-ab-round4/packets/P003/B/index.html",
+ "chromium": "141.0.7390.37",
+ "widths": {
+  "320": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Every stale check has a state deadline.",
+    "left": 16,
+    "right": 304,
+    "top": 105,
+    "bottom": 172,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 8220
+  },
+  "390": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Every stale check has a state deadline.",
+    "left": 18,
+    "right": 372,
+    "top": 105,
+    "bottom": 172,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 8220,
+   "axe": [
+    {
+     "id": "scrollable-region-focusable",
+     "impact": "serious",
+     "nodes": 2
+    }
+   ]
+  },
+  "768": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Every stale check has a state deadline.",
+    "left": 27,
+    "right": 504,
+    "top": 105,
+    "bottom": 190,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 8278
+  },
+  "1440": {
+   "console_errors": [],
+   "page_errors": [],
+   "blocked_requests": [],
+   "failed_requests": [],
+   "horizontal_overflow_px": 0,
+   "h1": {
+    "text": "Every stale check has a state deadline.",
+    "left": 104,
+    "right": 817,
+    "top": 105,
+    "bottom": 231,
+    "within_viewport_x": true
+   },
+   "smallest_text_px": 12,
+   "text_elements_under_12px": 0,
+   "body_text_length": 8331,
+   "axe": []
+  }
+ }
+}
