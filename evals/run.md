@@ -213,3 +213,12 @@ Pre-registered in `runs/2026-10-20-ab-round5/PREREG.md` before any build, with a
 - The phone menu covered the headline without JavaScript; a static row had a missing quote: MB-05 and AX-07 now read the page without script and as delivered.
 - The product's not-yet-launched status sat in the fifth section and the email form saved locally: the status goes in the first screen, and with no destination the page offers a calendar reminder or a copy instead of asking for an email.
 - A demo stamped "Not issued" where the brief said the product never decides: demo verdicts stay advisory when the brief limits authority.
+
+## v0.7: blind A/B, round 6 (2026-10-20, skill at `2492853`)
+
+Pre-registered (`runs/2026-10-20-ab-round6/PREREG.md`), four new briefs: a sea-swimming app (tidewise), lab freezer inventory (rackwise), an open-source flag-cleanup CLI (flagsweep) and KYC reviews for credit unions (kycrefresh). Every build on `claude-opus-5-5` (no further Fable runs, at the person's request), graded by fresh `claude-opus-5-5` agents, so this is not a cross-family test.
+
+**Result: the skill page won all four briefs and all 12 grader runs; the 87 target was not met.** Mean skill-page total 84.25 (82–86), no-skill 71.1; no hard fails on either side. Fit rose most (8.58, from 7.83), after v0.7 gave the paying audience its own artifact; craft and distinctiveness (7.83 each) are now the lowest. Three of the four skill builds copied open-licence fonts from the build machine into the page, following the skill, which reaches outside the builder prompt's folder limit; logged in `DEVIATIONS.md`. Full table: `runs/2026-10-20-ab-round6/results/summary.md`.
+
+The person then raised the target to 91 and asked to keep rebuilding the same sites on the graders' feedback. v0.8 was written from round 6's notes, and round 7 rebuilds these four skill pages with it.
+

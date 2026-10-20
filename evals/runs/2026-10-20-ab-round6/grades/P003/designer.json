@@ -2,7 +2,18 @@
   "packet": "P003",
   "persona": "designer",
   "A": {
-    "scores": {"clarity": 8, "fit": 8, "distinctiveness": 6, "proof": 7, "craft": 7, "mobile": 6, "honesty": 8, "interaction": 4, "copy": 7, "first_screen": 7},
+    "scores": {
+      "clarity": 8,
+      "fit": 8,
+      "distinctiveness": 6,
+      "proof": 7,
+      "craft": 7,
+      "mobile": 6,
+      "honesty": 8,
+      "interaction": 4,
+      "copy": 7,
+      "first_screen": 7
+    },
     "evidence": {
       "clarity": "1440 and 390: H1 'Periodic KYC reviews that hold up when the examiner asks.' plus a lede saying it finds who is due, gathers what is on file, and asks members only for what is missing. 'Built for credit unions with 20,000 to 200,000 members' sits under the CTAs. The what and the who are clear by the end of the lede. The headline alone does not say who it is for.",
       "fit": "Every explicit ask is met. 'Book a demo' goes to https://refresh.example/demo in the header, hero and closing. A dark band titled 'The risk decision stays with your compliance officer' covers the officer-decides line. 'Questions your examiner will ask' gives six Q&A pairs. 'Where Refresh is today' says the two pilots are unnamed and there are no measured results. Steps carry 'Done by Refresh / checked by member-service staff', and 'What the member sees' covers members. The tone is calm and right for compliance.",
@@ -23,7 +34,18 @@
     "hard_fail_flags": []
   },
   "B": {
-    "scores": {"clarity": 9, "fit": 9, "distinctiveness": 8, "proof": 9, "craft": 8, "mobile": 8, "honesty": 9, "interaction": 8, "copy": 9, "first_screen": 9},
+    "scores": {
+      "clarity": 9,
+      "fit": 9,
+      "distinctiveness": 8,
+      "proof": 9,
+      "craft": 8,
+      "mobile": 8,
+      "honesty": 9,
+      "interaction": 8,
+      "copy": 9,
+      "first_screen": 9
+    },
     "evidence": {
       "clarity": "1440: the H1 'KYC reviews your examiner can follow' sits beside a bold 'Refresh is periodic KYC review software for credit unions.' followed by what it does and a 'Book a demo' button. The what, who and next step are all in the first two lines. Every later section restates one examiner question rather than introducing new framing.",
       "fit": "Each section opens with an 'Examiner:' question ('How do you decide who is due?', 'Who decided this risk rating?', 'Show me what happened, in order.'). That directly addresses the brief's 'reassure a compliance officer who will be asked by examiners'. The officer-decides constraint is in the hero note, in the artifact ('Refresh doesn't make this call') and in a duties table where 'Decide the member's risk rating' reads 'No' under Refresh. Staff appear in the due-list section, and members get a sample request. Pilot status and the lack of numbers are stated in the hero and the closing section.",
@@ -33,7 +55,8 @@
       "mobile": "390: the layout is recomposed rather than shrunk. The header has the Book a demo button and a Menu button (44px); the menu opened, Escape closed it, and tapping 'Exam trail' closed it and scrolled to the section. The tabs become a 5-up grid of 52px buttons, and the artifact is visible in the first viewport. Step feedback appears immediately below the tabs; the 'says' line sat at y 244 after the tap. The due list and duties table become cards, the binder drawing is dropped, and nothing overflows at 390 or 320. The spreadsheet 'today' pane sits below the long 'now' pane, so the comparison is less visible on phone.",
       "honesty": "Labels sit where the example appears: 'Fictional member', 'Sample October list... Fictional members', 'Example values. Yours are set by your compliance officer', 'Riverbend Credit Union (fictional)', 'Sample trail'. The hero states 'Refresh is in pilot at two credit unions.' The closing section explains why there are no numbers, and the CTA note says 'Opens the demo booking page at refresh.example.' before the click.",
       "interaction": "Tabs are real buttons with aria-pressed. Mouse clicks worked at all three widths; Enter on a focused tab and Tab plus Space both switched steps. A polite live region announces the step text, and items that changed flash yellow. The mobile menu handles Escape, outside click and focus leaving it. No console or page errors at any width. All five 'Book a demo' links resolve to https://refresh.example/demo. Minor: no arrow-key movement between tabs, and the mini-trail pane only exists at 1000px and up.",
-      "copy": "Specific nouns from the customer's world: 'OK per MC, see email', 'called, left msg x2', 'Someone filters the sheet by next-due date and trusts that the column is current.', 'ID on file expired 2026-08-31', 'employer field is blank'. Buttons and labels say what they do ('Read the full trail', 'Pick a step'). The officer-decides line recurs several times, but deliberately."
+      "copy": "Specific nouns from the customer's world: 'OK per MC, see email', 'called, left msg x2', 'Someone filters the sheet by next-due date and trusts that the column is current.', 'ID on file expired 2026-08-31', 'employer field is blank'. Buttons and labels say what they do ('Read the full trail', 'Pick a step'). The officer-decides line recurs several times, but deliberately.",
+      "first_screen": "1440x900, without scrolling: the H1 'KYC reviews your examiner can follow', the bold line 'Refresh is periodic KYC review software for credit unions.', 'Book a demo' (to https://refresh.example/demo), the note 'Your compliance officer makes every risk decision. Refresh is in pilot at two credit unions.', and the operable sample review (tabs plus the J. Alvarez file, labelled 'Sample review · Fictional member. Pick a step.') down to the officer decision box are all in view. 390x844: the headline, the one-line definition, 'Book a demo', the officer-decides and pilot note, the 'Sample review' label, all five step tabs and the top of the member file are in view. So at both widths one viewport holds a specific outcome, the audience, a believable labelled artifact and an action whose label matches its destination."
     },
     "problems": [
       "On phone the 'same step today' spreadsheet pane is pushed below the long Refresh pane, so the before/after inside the artifact is mostly lost at 390.",
