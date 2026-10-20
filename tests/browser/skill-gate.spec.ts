@@ -1,5 +1,5 @@
 import {test,expect} from '@playwright/test';
-import {execFileSync} from 'node:child_process';
+import {spawnSync} from 'node:child_process';
 
 // The site must pass the skill's own 68 automatic checks (v0.4). Block failures are never allowed.
 // Warnings are allowed only where docs/demo-decisions.md records the product reason ("Gate warnings we kept");
@@ -25,7 +25,11 @@ const routes=Object.keys(KEPT);
 for(const route of routes){
   test(`skill gate: ${route}`,async()=>{
     test.setTimeout(150000);
-    const result=JSON.parse(execFileSync(process.execPath,['skills/startup-landing-design/scripts/check-page.mjs',`http://127.0.0.1:4173/startup-landing-lab/#${route}`],{encoding:'utf8'}));
+    // spawnSync keeps the checker's JSON when it exits 1 (block failures), so the assertion can name the failing check.
+    const run=spawnSync(process.execPath,['skills/startup-landing-design/scripts/check-page.mjs',`http://127.0.0.1:4173/startup-landing-lab/#${route}`],{encoding:'utf8',maxBuffer:32*1024*1024});
+    const result=JSON.parse(run.stdout||'{}');
+    const failed=(result.checks||[]).filter((c:{pass:boolean,severity:string})=>c.pass===false&&c.severity==='block');
+    expect(failed,`block failures on ${route}: ${JSON.stringify(failed)}`).toEqual([]);
     expect(result.checks).toHaveLength(68);
     expect(result.failures).toEqual([]);
     expect(result.not_run).toEqual([]);
