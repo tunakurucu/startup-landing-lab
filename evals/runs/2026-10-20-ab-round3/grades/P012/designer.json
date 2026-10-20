@@ -1,0 +1,60 @@
+{
+  "packet": "P012",
+  "persona": "designer",
+  "A": {
+    "scores": {"clarity": 9, "fit": 7, "distinctiveness": 7, "proof": 8, "craft": 8, "mobile": 7, "honesty": 6, "interaction": 8, "copy": 8, "first_screen": 7},
+    "evidence": {
+      "clarity": "1440 first screen: H1 'Know what the council will decide on your street, before they vote' plus one sub line saying model drafts, volunteer checks, every summary links to the original, 'Pick a neighbourhood and we email you when it comes up'. What, who and next step are all there; nothing later contradicts it.",
+      "fit": "Neutrality is shown, not asserted: the #checked section shows the model draft with 'This would be a welcome boost for a tired block' and 'Neighbours have fought the change for months' struck out and annotated 'Struck: an opinion'. Original-item link on every digest row. Clerks get a dedicated paragraph ('For city clerks: summaries are drafted from the packet as posted...'). Weaker: funders get nothing of their own, and Spanish readers get one bilingual sentence under the button and a 'Language' fact, not a path.",
+      "distinctiveness": "Agenda-as-artifact hero: official serif council wording above sans plain-language summary, mono item numbers and tags, yellow highlighter on matched items, and the strike/insert draft-review card. Recognisable as a civic reading tool. Structure is otherwise a conventional two-column hero then stacked sections, and type is system Helvetica/Times.",
+      "proof": "1440: the 'Sample agenda' digest sits beside the form in the first viewport; choosing Riverbend highlights item 8.A and the status line reads 'For Riverbend, this agenda would send one alert with item 8.A, and item 11 listed as citywide.' Westgate gives an honest no-match state. Sample alert email and a linked sample-agenda-item.html with anchors (#item-8a etc.) that resolve.",
+      "craft": "Tight token-based spacing, clear hierarchy, serif/sans/mono roles used consistently; no defects found at 1440, 768 or 390. Minor: at 1440 the post-submit status box starts at y=869 so it is mostly below the 900 fold; 'Checked by' line and packet link wrap awkwardly under the tags in the digest at 1440.",
+      "mobile": "390: real Menu button (44px) opens a stacked nav and closes on link tap; full-width 48px button; no overflow at 390/320. But the digest starts at y=1026, so picking a neighbourhood at 390 changes content off-screen, and the 'Open item 6.B in the packet' links are 23px tall.",
+      "honesty": "Every example is labelled where it appears ('Sample agenda', 'Four items from an illustrative agenda... Not a record of any real council', 'Sample alert · illustrative', footer note on initials). No invented numbers or partners. But the sign-up says 'Get alerts for my neighbourhood' with 'Always free... Unsubscribe in one click' and only after clicking reveals 'Not sent yet. Sign-up is not connected to a mailing list' — disclosure comes after the click.",
+      "interaction": "Operated at 1440/768/390: empty submit shows 'Choose a neighbourhood first.' and focuses the select; 'bad' email shows 'That email address does not look complete.'; valid submit shows the not-sent statement; both forms behave the same; select resets to the prompt state when cleared. Visible focus outline at every Tab stop; no console errors. Feedback on submit lands at/below the fold at 1440 and 390.",
+      "copy": "Specific and from the resident's world: 'This is a hearing, not a vote. Anyone can speak for up to three minutes', 'Consent items are voted on together without discussion'. Button says what it is for; error messages are written. Minor: 'The original item' as a nav label is odd.",
+      "first_screen": "1440: specific promise, labelled sample digest that responds to the form, and the form itself in one viewport. 390: promise and form are in view but no artifact; and the button label promises alerts the page cannot yet send."
+    },
+    "problems": [
+      "The primary action's real result (nothing is sent, no list exists) is only disclosed after the click, while the pre-click copy ('Always free... Unsubscribe in one click') implies a live list.",
+      "At 390 the digest is below the form (y≈1026), so the select's live highlighting and the submit status both happen off-screen.",
+      "Funders and Spanish-speaking residents get no real path of their own; Spanish is one sentence under the button."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {"clarity": 8, "fit": 6, "distinctiveness": 6, "proof": 7, "craft": 7, "mobile": 6, "honesty": 3, "interaction": 7, "copy": 8, "first_screen": 6},
+    "evidence": {
+      "clarity": "H1 'Know what your city council is about to decide, before the meeting.' plus a sub line explaining it reads the agenda PDF and emails you 'when your street or a topic you follow is on it'. Clear, but the form only offers neighbourhoods (no topic), and the buttons say 'street', so the promise and the control disagree.",
+      "fit": "Strong second-audience paths: a full Spanish section (#espanol) and a 'For city clerks and funders: where we are' status table with 'Partner cities: None yet'. But it invents things the brief does not support: a named pilot city 'Linden Falls' presented as real, 'Every regular council meeting since September 2026', Spanish-language alert emails as a live option, and a sign-up that mails an address the brief never supplied.",
+      "distinctiveness": "The all-caps monospace agenda packet excerpt beside a structured summary (What's being decided / What happens / How to take part / Cost) is a product-specific idea, as is the yellow match highlight. The rest is a familiar kit: hero form plus card, three numbered steps, tinted alternating sections, three-column status grid.",
+      "proof": "1440: the alert card is in the first viewport and swaps per neighbourhood (Riverview, Eastgate no-match, 'Not sure' citywide digest all checked). Second screen pairs the original item with the summary; a full five-item agenda follows with one item marked 'Draft, not yet checked'. Good material, but none of it is labelled as an example; it is introduced as 'one real item from the October 28 agenda'.",
+      "craft": "Consistent serif scale and tinted section rhythm. Defects: after an empty submit at 1440 the select and email inputs fall out of vertical alignment (email box shifts ~8px lower, errors wrap to two lines on the left); large empty area under the alert card in the 1440 hero; axe reports one serious colour-contrast node at 390 and 1440.",
+      "mobile": "390: no menu — five nav items wrap into two rows (~150px of header) with 37px targets. Form stacks well, but the alert sample starts at y≈1117, so the select's live preview is off-screen, and the 'Almost there' confirmation appears at y≈856, below the 844 fold. No overflow at 390/320.",
+      "honesty": "Presents fabricated context as fact: 'Here is one real item from the October 28 agenda', a Linden Falls agenda page styled with a city seal and clerk@lindenfalls.gov, named volunteers ('Checked by Dana R., Oct 24', 'Luis M.', 'Priya S.'), 'Every regular council meeting since September 2026', 'we fix it within one working day'. Nothing is labelled sample. The submit's mailto mechanism is explained only after the click ('Your email app should have opened').",
+      "interaction": "Operated at 1440/768/390: empty submit marks both fields invalid with inline messages and focuses the select; neighbourhood select swaps the alert card with a short fade (respects reduced motion); Spanish checkbox feeds the mailto body; choice remembered in localStorage. Valid submit navigates to mailto:alerts@commonread.org and shows the 'Almost there' panel. No console errors. Primary action routes to an unsupplied address (see hard fail).",
+      "copy": "Plain and specific ('sign up at the chamber door before 6:30 pm', 'Staff say none; the applicant paid the fees'); the Spanish section is genuinely written, not machine filler. Inconsistency: CTAs say 'street' while the control is neighbourhood; 'topic you follow' has no control.",
+      "first_screen": "1440: promise, interactive alert card and form in one viewport, but 'Send me alerts for my street' actually opens an email draft to an unsupplied address. 390: promise and form only; nav eats the top; no artifact in view."
+    },
+    "problems": [
+      "Primary action sends the visitor's email client to alerts@commonread.org, an address the brief did not supply.",
+      "Invented facts presented as real and unlabelled: 'one real item', the Linden Falls pilot, named volunteers, 'every regular council meeting since September 2026', a one-working-day correction promise.",
+      "Phone layout has no menu (nav wraps into two rows of 37px links) and the alert preview and sign-up confirmation both land below the fold at 390."
+    ],
+    "hard_fail_flags": [
+      {
+        "code": "HF1",
+        "evidence": "The primary action 'Send me alerts for my street' (and the header CTA leading to it) builds and navigates to mailto:alerts@commonread.org?subject=Alerts%20for%20<area>... The brief supplies no email address or domain; commonread.org is not an .example placeholder.",
+        "steps": "Open packets/P012/B/index.html from disk at 1440x900. Choose 'Northside' in 'Your neighbourhood', type me@test.org in 'Email address', click 'Send me alerts for my street'. The page requests mailto:alerts@commonread.org (see script.js lines building `href = 'mailto:alerts@commonread.org'`), and the shown panel says 'If nothing opened, email alerts@commonread.org'."
+      },
+      {
+        "code": "HF2",
+        "evidence": "Unlabelled facts not in the brief presented as fact: coverage claim 'Meetings covered: Every regular council meeting since September 2026' in the clerks/funders table; 'Here is one real item from the October 28 agenda, next to the summary we sent'; performance claim 'we fix it within one working day'. No sample/illustrative label appears anywhere on the page or the linked agenda page.",
+        "steps": "Open packets/P012/B/index.html. Read the #how section intro ('Here is one real item...'), then the #clerks section table row 'Meetings covered' and the paragraph 'If there's an error in a summary we fix it within one working day'. Search the page for 'sample' or 'illustrative': no matches."
+      }
+    ]
+  },
+  "preference": "A",
+  "confidence": "high",
+  "reason": "A puts a labelled, operable sample agenda beside the sign-up at 1440 and shows neutrality through the struck-opinion draft, with every example labelled and no invented facts. B has the stronger Spanish and clerk/funder sections, but it routes its primary action to an unsupplied email address and presents an invented city, volunteers and coverage as real. I would change my mind only if B's address and pilot facts were supplied by the client and labelled as examples, and A still disclosed its not-yet-live sign-up only after the click."
+}
