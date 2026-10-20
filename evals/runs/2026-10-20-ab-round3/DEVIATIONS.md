@@ -7,3 +7,5 @@
 ## Blinding scrub notes (step 6)
 
 - P016 side B: "DESIGN-RECORD" remains in README.md outside a comment (visible text or identifier); left in place
+- 2026-10-20 06:05 UTC. Grading started before the last two builds (W023 kitchens/with, W024 cancellations/with) finished, so packets P001 and P005 did not exist yet. Jobs in `grade_queue.json` are run in queue order except that the six jobs on P001 and P005 are deferred until those packets are assembled, then run in their queue order. Graders never see more than one packet, so the order change cannot leak information between packets.
+- 2026-10-20 06:05 UTC. Packet cleaning (step 6.1) also removed builder tooling folders (`tools/`, `tests/`, `shots-v1/`) that the page never references, and dropped README lines that named removed process files (logged in `scrub-<side>.diff` for P016 side B). brewday sides were built in a hard-linked copy of the round's install outside the repository because Turbopack refuses a `node_modules` symlink that resolves outside its root; the build logs say so.
