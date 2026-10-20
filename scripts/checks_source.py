@@ -82,11 +82,12 @@ CHECKS = [
   # Hero
   ('HR-01', 'The headline and primary action are visible without scrolling at 1440×900 and 390×844.', 'auto', 'block', 'GST VWG NNG'),
   ('HR-02', 'The primary action\'s label starts with a verb and names the outcome in 2–5 words; "Get started", "Learn more", "Start now" or "Try it now" alone fail. "Book a demo" and "Join the waitlist" pass.', 'auto', 'warn', 'IMP GST VWG NNG'),
-  ('HR-03', 'The headline has no single-word last line at any of the three widths.', 'shot', 'warn', 'IMP VWG JK'),
+  ('HR-03', 'The headline has no single-word last line at 390 or 1440.', 'auto', 'warn', 'IMP VWG JK'),
   ('HR-04', 'A headline above about 6.5rem is the signature of the page and keeps each line to three words or fewer.', 'auto', 'warn', 'IMP SLL'),
   ('HR-05', 'The first screen is not a false floor: at 1440×900 and 390×844 some content below the hero, or a hero element cut by the fold, shows in the bottom 15% of the viewport.', 'auto', 'warn', 'NNG'),
   ('HR-06', 'The hero is sized with svh/dvh or by its content, not a fixed 100vh that clips under mobile browser bars.', 'code', 'warn', 'EK'),
   ('HR-07', 'The signature artifact (marked `data-signature`) shows at least 280px of itself, or all of itself, in the first screen at 390×844 and at 1440×900.', 'auto', 'block', 'SLL NNG'),
+  ('HR-08', 'The 1440 first screen has no empty block of 320×140px or more, covering 8% of it, reaching the middle of the page: no action floating in an empty column, no hole above the headline.', 'auto', 'warn', 'SLL'),
   # Structure and conversion
   ('ST-01', 'Cost is easy to find: a header or footer link to pricing or plans, or visible prices; otherwise the record says how cost is disclosed and why.', 'auto', 'warn', 'NNG SO HS'),
   ('ST-02', 'Within 5 seconds at 390×844, no dialog or fixed overlay covers more than 30% of the viewport, except a legally required consent prompt named in the record.', 'auto', 'warn', 'GOOG NNG'),

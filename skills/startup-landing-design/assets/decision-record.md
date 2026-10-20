@@ -88,7 +88,7 @@ Each screenshot cell is a relative `.png` path, or `unavailable: "<decisive erro
 - Optional tools (Impeccable detect, web-design-guidelines): result, or "not run: <reason>":
 
 ## Checklist
-The other 79 checks run automatically in `check-page.mjs`. Answer each of these from the screenshots, the code or this record: `pass`, `fail`, `n/a`, or `unverified` when the evidence could not be produced (for example, no render). A block-severity `fail` or any `unverified` rules out DONE. See `references/checklist.md` for severity and credit.
+The other 81 checks run automatically in `check-page.mjs`. Answer each of these from the screenshots, the code or this record: `pass`, `fail`, `n/a`, or `unverified` when the evidence could not be produced (for example, no render). A block-severity `fail` or any `unverified` rules out DONE. See `references/checklist.md` for severity and credit.
 
 <!-- checklist:start -->
 | ID | Check | Verdict (pass / fail / n/a / unverified) | Evidence |
@@ -107,7 +107,6 @@ The other 79 checks run automatically in `check-page.mjs`. Answer each of these 
 | CP-06 | The record lists at least three phrases in the target users' own words with their source, or says none exist yet; the hero uses or adapts one. | | |
 | CP-09 | One line next to the primary action answers the biggest reason not to click: cost, card, time, setup or data. | | |
 | CP-10 | Section headings carry the argument on their own: reading only the headings explains the product. | | |
-| HR-03 | The headline has no single-word last line at any of the three widths. | | |
 | HR-06 | The hero is sized with svh/dvh or by its content, not a fixed 100vh that clips under mobile browser bars. | | |
 | ST-04 | Real proof, when supplied, appears within the first two screenfuls or beside the claim it supports, and every quote carries name, role and company. | | |
 | CO-04 | Accent colour marks state or action and is not sprinkled for decoration. | | |

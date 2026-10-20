@@ -1,4 +1,4 @@
-// Run the automatic checks from assets/checks.json (79 of the skill's 111) against a rendered page.
+// Run the automatic checks from assets/checks.json (81 of the skill's 112) against a rendered page.
 // Usage: node scripts/check-page.mjs <url-or-html-file>
 // Prints JSON: every check with id, severity, pass and detail, plus failures (block), warnings (warn) and not_run.
 // Exits 1 when any block-severity check fails, and 3 when no browser could run: it then still prints JSON with
@@ -8,7 +8,7 @@
 // PF-05 throttles CPU and network through the Chrome DevTools Protocol. A page opened from disk is served from a
 // temporary local HTTP server (127.0.0.1, this one measurement only) so the network throttle applies. Its numbers
 // are lab estimates, not field data. Every other check runs on the page exactly as given.
-// The other 32 checks need eyes: they are answered in DESIGN-RECORD.md and enforced by verify-record.mjs.
+// The other 31 checks need eyes: they are answered in DESIGN-RECORD.md and enforced by verify-record.mjs.
 import {launch, load, Unavailable} from './browser.mjs';
 import {resolve, dirname, extname, relative, sep} from 'node:path';
 import {existsSync, readFileSync, statSync} from 'node:fs';
@@ -187,6 +187,20 @@ function helpers() {
       if (n > bestN || (n === bestN && best && b.width * b.height < box(best).width * box(best).height)) { best = el; bestN = n; }
     }
     return best ? {el: best, marked: false} : null;
+  };
+  // Words on the last rendered line of an element (HR-03): each word's box, grouped by line top.
+  var lastLineWords = el => {
+    const tops = [];
+    const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+      const re = /\S+/g; let m;
+      while ((m = re.exec(n.textContent))) { const g = document.createRange(); g.setStart(n, m.index); g.setEnd(n, m.index + m[0].length); const q = g.getClientRects()[0]; if (q && q.width > 0) tops.push({top: q.top, word: m[0]}); }
+    }
+    if (!tops.length) return null;
+    const last = Math.max(...tops.map(t => t.top));
+    const lines = new Set(tops.map(t => Math.round(t.top / 4))).size;
+    const onLast = tops.filter(t => t.top > last - 4);
+    return {lines, words: onLast.length, text: onLast.map(t => t.word).join(' ')};
   };
   var textRects = el => { const r = [];for (const n of el.childNodes) if (n.nodeType === 3 && n.textContent.trim()) { const g = document.createRange(); g.selectNodeContents(n); r.push(...[...g.getClientRects()].filter(q => q.width > 0 && q.height > 0)); } return r; };
 }
@@ -614,7 +628,7 @@ try {
 
   // ======================= 390 × 844: the signature artifact, keyboard and stress =======================
   // Fresh pages, so nothing the main pass clicked carries over. Each probe that could navigate reloads the page after.
-  await section('the 390px interaction pass', ['HR-07', 'MB-07', 'MB-08', 'MB-09', 'MB-10', 'AX-12', 'AX-13', 'LY-08', 'LY-06', 'MB-05'], async () => {
+  await section('the 390px interaction pass', ['HR-07', 'MB-07', 'MB-08', 'MB-09', 'MB-10', 'AX-12', 'AX-13', 'LY-08', 'LY-06', 'MB-05', 'HR-03'], async () => {
     let {ctx, page} = await open({width: 390, height: 844});
     const fresh = async () => { await ctx.close(); ({ctx, page} = await open({width: 390, height: 844})); };
     try {
@@ -627,6 +641,10 @@ try {
         return {el: describe(el), w: Math.round(b.width), h: Math.round(b.height), onScreen, opacity: visibleOpacity(el), skip: /skip/i.test(label(el))};
       });
       check('AX-13', !!tab1.none || (tab1.onScreen && tab1.w >= 16 && tab1.h >= 16 && tab1.opacity > 0.5), tab1.none ? 'nothing on the page takes focus' : {first_tab_stop: tab1.el, size: `${tab1.w}×${tab1.h}px`, on_screen: tab1.onScreen, opacity: +tab1.opacity.toFixed(2)});
+
+      // HR-03 at 390: the headline's last line holds more than one word.
+      const orphan390 = await run(page, () => { const h = h1El(); return h ? lastLineWords(h) : null; });
+      if (orphan390) part.orphan390 = orphan390;
 
       // MB-10: phone page length.
       const height = await page.evaluate(() => document.documentElement.scrollHeight);
@@ -703,8 +721,13 @@ try {
             const content = shown.filter(el => !el.matches(CTL_SEL) && !el.closest(CTL_SEL));
             const inView = content.filter(el => vis(el) >= 0.5 && box(el).height >= 16);
             const biggest = content.filter(el => !content.some(o => o !== el && o.contains(el))).sort((x, y) => box(y).width * box(y).height - box(x).width * box(x).height)[0];
+            // A live region (role=status, aria-live, output) that changed is the result's text: it must be at least half on screen.
+            const LIVE = '[aria-live]:not([aria-live=off]),[role=status],[role=alert],output';
+            const lives = [...new Set(shown.map(el => el.closest(LIVE)).filter(Boolean))].filter(el => seen(el) && !el.closest('.sr-only,.visually-hidden') && box(el).width > 2 && box(el).height > 2);
+            const liveOff = lives.filter(el => vis(el) < 0.5);
+            if (liveOff.length) inView.length = 0;
             const a = document.activeElement;
-            return {changed: changed.length, inView: inView.length, focusLost: !a || a === document.body, sample: describe(biggest || changed.find(el => seen(el)) || changed[0]) + (biggest ? ` ${Math.round(vis(biggest) * 100)}% on screen` : '')};
+            return {changed: changed.length, inView: inView.length, focusLost: !a || a === document.body, sample: liveOff.length ? `${describe(liveOff[0])} (the live result text) ${Math.round(vis(liveOff[0]) * 100)}% on screen` : describe(biggest || changed.find(el => seen(el)) || changed[0]) + (biggest ? ` ${Math.round(vis(biggest) * 100)}% on screen` : '')};
           }, i);
           probed.push(`${sig.labels[i]}: ${res.changed} changed, ${res.inView} in view`);
           if (res.changed === 0 && !/reset|clear|undo|start over|download|export|save .*file|copy/i.test(sig.labels[i])) dead.push(sig.labels[i]);
@@ -807,7 +830,7 @@ try {
 
   // ======================= 1440 × 900 =======================
   let d = null;
-  await section('the 1440px pass', ['HR-01', 'HR-02', 'HR-04', 'PS-06', 'CP-01', 'CP-02', 'CP-07', 'CP-08', 'CP-11', 'ST-01', 'ST-03', 'ST-05', 'ST-06', 'TY-07', 'TY-10', 'LY-01', 'LY-05', 'LY-06', 'LY-07', 'CO-02', 'CO-03', 'TT-01', 'TT-02', 'TT-03', 'TT-04', 'MO-04', 'MO-06', 'PF-03', 'PF-06', 'PF-07', 'AX-03', 'HR-07', 'TY-11', 'CP-12', 'CP-13', 'CO-01'], async () => {
+  await section('the 1440px pass', ['HR-01', 'HR-02', 'HR-04', 'PS-06', 'CP-01', 'CP-02', 'CP-07', 'CP-08', 'CP-11', 'ST-01', 'ST-03', 'ST-05', 'ST-06', 'TY-07', 'TY-10', 'LY-01', 'LY-05', 'LY-06', 'LY-07', 'CO-02', 'CO-03', 'TT-01', 'TT-02', 'TT-03', 'TT-04', 'MO-04', 'MO-06', 'PF-03', 'PF-06', 'PF-07', 'AX-03', 'HR-07', 'TY-11', 'CP-12', 'CP-13', 'CO-01', 'HR-03', 'HR-08'], async () => {
     const {ctx: c, page: p} = await open({width: 1440, height: 900});
     try {
       d = await run(p, () => {
@@ -932,6 +955,47 @@ try {
       check('TY-11', v6.fallbacks.length === 0 && v6.unshipped.length === 0, v6.fallbacks.length || v6.unshipped.length ? {falls_back: v6.fallbacks.map(f => `"${f.named}" is missing; renders as ${f.renders}`), installed_here_not_shipped: v6.unshipped.map(f => `"${f}" is on this machine but the page does not ship it, so most visitors get the fallback`), fix: 'ship the face with @font-face (a woff2 or woff file next to the page) or name a face every major platform has'} : `${v6.stacks} font stack(s) render as named`);
       check('CP-12', v6.leaks.length === 0, v6.leaks.length ? {builder_notes_on_page: v6.leaks} : 'no builder or client notes found in the visible text');
       check('CP-13', v6.wrong.length === 0, {dates_with_weekdays: v6.datesSeen, wrong_weekday: v6.wrong, years_assumed_when_none_given: v6.years});
+
+      // HR-03 at 1440, and HR-08: the largest empty block in the 1440 first screen, below the header.
+      const comp = await run(p, () => {
+        scrollTo({top: 0, behavior: 'instant'});
+        const h = h1El(); const orphan = h ? lastLineWords(h) : null;
+        const C = 24, W = Math.floor(innerWidth / C), H = Math.floor(innerHeight / C);
+        const grid = Array.from({length: H}, () => new Uint8Array(W));
+        const mark = r => { for (let y = Math.max(0, Math.floor(r.top / C)); y < Math.min(H, Math.ceil(r.bottom / C)); y++) for (let x = Math.max(0, Math.floor(r.left / C)); x < Math.min(W, Math.ceil(r.right / C)); x++) grid[y][x] = 1; };
+        // Content: text, media, controls, and boxes drawn with their own fill or a full border.
+        const ground = toRGBA(cs(document.body).backgroundColor);
+        for (const el of document.querySelectorAll('body *')) {
+          if (!seen(el)) continue; const b = box(el); if (b.bottom < 0 || b.top > innerHeight) continue;
+          if (/^(IMG|SVG|CANVAS|VIDEO|INPUT|SELECT|TEXTAREA|BUTTON|PICTURE|IFRAME)$/i.test(el.tagName)) { mark(b); continue; }
+          for (const q of textRects(el)) mark(q);
+          const st = cs(el); const bg = toRGBA(st.backgroundColor);
+          const filledBox = bg[3] > 0.5 && (Math.abs(bg[0] - ground[0]) + Math.abs(bg[1] - ground[1]) + Math.abs(bg[2] - ground[2]) > 24) && b.width < innerWidth * 0.9;
+          const framed = parseFloat(st.borderTopWidth) > 0 && parseFloat(st.borderLeftWidth) > 0 && b.width < innerWidth * 0.9 && b.height > 40;
+          if (filledBox || framed) mark(b);
+        }
+        const hd = document.querySelector('header,[role=banner]'); const top = hd && !(h && hd.contains(h)) ? Math.min(H - 1, Math.ceil(box(hd).bottom / C)) : 0;
+        // Largest all-empty rectangle (histogram method), from the header to the fold.
+        let best = {a: 0}; const hist = new Array(W).fill(0);
+        for (let y = top; y < H; y++) {
+          for (let x = 0; x < W; x++) hist[x] = grid[y][x] ? 0 : hist[x] + 1;
+          const st = [];
+          for (let x = 0; x <= W; x++) {
+            const hgt = x < W ? hist[x] : 0; let start = x;
+            while (st.length && st[st.length - 1][1] >= hgt) { const [s0, h0] = st.pop(); const a = h0 * (x - s0); if (a > best.a) best = {a, x: s0, w: x - s0, h: h0, y: y - h0 + 1}; start = s0; }
+            st.push([start, hgt]);
+          }
+        }
+        return {orphan, empty: best.a ? {left: best.x * C, top: best.y * C, width: best.w * C, height: best.h * C, share: +(best.a / (W * (H - top) || 1)).toFixed(2)} : null};
+      });
+      {
+        const o = [part.orphan390 && ['390', part.orphan390], comp.orphan && ['1440', comp.orphan]].filter(x => x && x[1].lines > 1 && x[1].words === 1);
+        check('HR-03', o.length === 0, o.length ? {single_word_last_line: o.map(([w, x]) => `${w}px: "${x.text}"`), fix: 'text-wrap: balance on the h1, or a non-breaking space before the last word'} : 'no single-word last line at 390 or 1440');
+      }
+      const e = comp.empty;
+      // The page's own side margins do not count: the block must reach into the middle half of the screen.
+      const central = !!e && e.left < 1440 * 0.75 && e.left + e.width > 1440 * 0.25;
+      check('HR-08', !(central && e.width >= 320 && e.height >= 140 && e.share >= 0.08), e ? {largest_empty_block: `${e.width}×${e.height}px at (${e.left}, ${e.top})`, share_of_first_screen: e.share, note: central && e.share >= 0.08 && e.width >= 320 && e.height >= 140 ? 'a hole in the first screen: move the action, the status line or the artifact into it, or tighten the grid' : undefined} : 'no empty block');
 
       // CO-01 at 1440 too: header buttons and wide layouts get their own colours at desktop widths.
       const axeMod1440 = await load('@axe-core/playwright', {optional: true});

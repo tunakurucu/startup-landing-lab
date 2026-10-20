@@ -77,7 +77,7 @@ test('an unanswered checklist item blocks completion', () => {
   writeFileSync(p, readFileSync(p, 'utf8').replace(/^\| PS-01 \| ([^|]+) \| pass \| [^|]+ \|$/m, '| PS-01 | $1 | | |'));
   const r = run(dir);
   assert.equal(r.status, 1);
-  assert.match(r.stdout, /Checklist: 1 of 32/);
+  assert.match(r.stdout, /Checklist: 1 of 31/);
 });
 test('a failed block-severity checklist item rules out DONE', () => {
   const dir = mkdtempSync(join(tmpdir(), 'rec-'));

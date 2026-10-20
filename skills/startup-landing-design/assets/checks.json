@@ -249,8 +249,8 @@
  },
  {
   "id": "HR-03",
-  "check": "The headline has no single-word last line at any of the three widths.",
-  "verify": "shot",
+  "check": "The headline has no single-word last line at 390 or 1440.",
+  "verify": "auto",
   "severity": "warn",
   "credit": [
    "IMP",
@@ -294,6 +294,15 @@
   "credit": [
    "SLL",
    "NNG"
+  ]
+ },
+ {
+  "id": "HR-08",
+  "check": "The 1440 first screen has no empty block of 320×140px or more, covering 8% of it, reaching the middle of the page: no action floating in an empty column, no hole above the headline.",
+  "verify": "auto",
+  "severity": "warn",
+  "credit": [
+   "SLL"
   ]
  },
  {

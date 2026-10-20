@@ -1,6 +1,6 @@
-# The 111 checks
+# The 112 checks
 
-Generated from `assets/checks.json`. **79 auto** checks are decided by `scripts/check-page.mjs`; **14 screenshot**, **3 code** and **15 record** checks are answered in the `## Checklist` section of `DESIGN-RECORD.md`, one line each: `ID | pass, fail or n/a | evidence`. `scripts/verify-record.mjs` refuses to finish while any of them is unanswered.
+Generated from `assets/checks.json`. **81 auto** checks are decided by `scripts/check-page.mjs`; **13 screenshot**, **3 code** and **15 record** checks are answered in the `## Checklist` section of `DESIGN-RECORD.md`, one line each: `ID | pass, fail or n/a | evidence`. `scripts/verify-record.mjs` refuses to finish while any of them is unanswered.
 
 **block** = fix before calling the page done, or end with DONE_WITH_CONCERNS. **warn** = fix, or record the product reason it stays.
 
@@ -44,11 +44,12 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | --- | --- | --- | --- | --- |
 | HR-01 | The headline and primary action are visible without scrolling at 1440×900 and 390×844. | auto | block | GST VWG NNG |
 | HR-02 | The primary action's label starts with a verb and names the outcome in 2–5 words; "Get started", "Learn more", "Start now" or "Try it now" alone fail. "Book a demo" and "Join the waitlist" pass. | auto | warn | IMP GST VWG NNG |
-| HR-03 | The headline has no single-word last line at any of the three widths. | shot | warn | IMP VWG JK |
+| HR-03 | The headline has no single-word last line at 390 or 1440. | auto | warn | IMP VWG JK |
 | HR-04 | A headline above about 6.5rem is the signature of the page and keeps each line to three words or fewer. | auto | warn | IMP SLL |
 | HR-05 | The first screen is not a false floor: at 1440×900 and 390×844 some content below the hero, or a hero element cut by the fold, shows in the bottom 15% of the viewport. | auto | warn | NNG |
 | HR-06 | The hero is sized with svh/dvh or by its content, not a fixed 100vh that clips under mobile browser bars. | code | warn | EK |
 | HR-07 | The signature artifact (marked `data-signature`) shows at least 280px of itself, or all of itself, in the first screen at 390×844 and at 1440×900. | auto | block | SLL NNG |
+| HR-08 | The 1440 first screen has no empty block of 320×140px or more, covering 8% of it, reaching the middle of the page: no action floating in an empty column, no hole above the headline. | auto | warn | SLL |
 
 ## Structure and conversion
 

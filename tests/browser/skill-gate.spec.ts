@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 import {spawnSync} from 'node:child_process';
 
-// The site must pass the skill's own 79 automatic checks (v0.6). Block failures are never allowed.
+// The site must pass the skill's own 81 automatic checks (v0.8). Block failures are never allowed.
 // Warnings are allowed only where docs/demo-decisions.md records the product reason ("Gate warnings we kept");
 // KEPT lists exactly those per route, so a new warning fails and a fixed one must be removed here too.
 const GALLERY=['TY-10'];                  // four faces, each with a role: display, text, data, accent
@@ -30,7 +30,7 @@ for(const route of routes){
     const result=JSON.parse(run.stdout||'{}');
     const failed=(result.checks||[]).filter((c:{pass:boolean,severity:string})=>c.pass===false&&c.severity==='block');
     expect(failed,`block failures on ${route}: ${JSON.stringify(failed)}`).toEqual([]);
-    expect(result.checks).toHaveLength(79);
+    expect(result.checks).toHaveLength(81);
     expect(result.failures).toEqual([]);
     expect(result.not_run).toEqual([]);
     expect(result.warnings.filter((w:string)=>w!=='PF-05').sort()).toEqual([...KEPT[route]].sort());
