@@ -1,0 +1,50 @@
+{
+  "packet": "P009",
+  "persona": "engineer",
+  "A": {
+    "scores": {"clarity": 8, "fit": 8, "distinctiveness": 7, "proof": 8, "craft": 7, "mobile": 7, "honesty": 7, "interaction": 7, "copy": 8, "first_screen": 8},
+    "evidence": {
+      "clarity": "h1 'Nothing from tonight's close gets lost by tomorrow's open.' plus lead 'Shiftnote is a shift logbook for restaurant managers...' names product, audience and job; CTA 'Start a free trial' with note 'Opens the signup page at app.shiftnote.example' directly beside it at 1440 (y=673) and 390 (y=426).",
+      "fit": "Name, unchanged logo.svg (byte-identical to before/) and both brand colours kept as tokens (--indigo #3B3FD9, --coral #FF7A59 used for open-item dots). Old 'trusted by' strip and testimonials removed. All 4 signup links go to https://app.shiftnote.example/signup. Owner audience gets its own artifact (Step 3 'Week of 13 Oct' table) that stacks into labelled blocks at <=720px. Manager-on-phone path is the hero note.",
+      "distinctiveness": "Product artifacts drawn as a ticket/chit (dashed header rule, mono timestamps, uppercase tags 86/REPAIR/STAFF/CASH/GUEST) rather than a phone mockup; three steps each paired with a different state of the same note (close, open, week). Structure is still a familiar hero + steps + features + CTA band.",
+      "proof": "1440: the 'Close note' sample with two live 'Mark handled' buttons sits in the first viewport; clicking one changed state to 'Handled · Sam, 12:15 pm', button to 'Undo', and Undo restored 'Open · Sam, opening Wed'. Step 1 composer adds entries. Sample numbers consistent across hero note, opening view and week table (walk-in 41°F, deposit bag, Marco covering 7:10 am).",
+      "craft": "Clean token sheet (type scale, spacing s1-s5, colours) with sections commented; JS in an IIFE with null guards, uses textContent (typed '<img src=x onerror=alert(1)>' rendered as text). Zero console/page errors, zero axe violations, no external requests. Defect: 390, typed 300 unbroken characters into 'What does the next shift need to know?' and pressed 'Add to tonight's note' -> document scrollWidth exceeds viewport by 2182px (.so-far li grid track has no min-width:0 / overflow-wrap:anywhere). No skip link. og:image points at www.shiftnote.example, a host the brief did not supply (meta only). Week table set to display:block on mobile can drop table semantics.",
+      "mobile": "390 and 320: 0px overflow as delivered, smallest text 13px. 'Menu' toggle opens a full-width list (links 44px, CTA 48px), Escape closed it and returned focus to the toggle, tapping 'How it works' closed it and scrolled (#how top 72px, clear of 64px sticky header via scroll-padding). Week table recomposes into blocks with 'Owner:' labels. Chips, 'Mark handled' and 'Add to tonight's note' are 40px tall, under 44px.",
+      "honesty": "Note captioned 'Sample note... The restaurant and the people are made up; nothing you press here is saved or sent' and composer hint 'Sample only; nothing is sent' - but the caption sits at the bottom of the 5-entry figure (below the fold at 390). 'Shiftnote is new, so there are no customer names or quotes' stated in hero. Unsupported: 'free' trial and 'No sales call; you set it up yourself' are not in the brief, and the page describes features (per-item owners, 'Mark handled', weekly owner view, owner-first sorting) the brief never mentions.",
+      "interaction": "Keyboard: Tab order brand > nav > header CTA > hero CTA > inline link > 2x Mark handled > 5 chips > input > Add > closing CTA > footer, 3px outline on every stop, no traps. Chips are aria-pressed buttons (Space on 'Cash' set it true and others false). Enter in input adds. Empty and whitespace-only input are rejected, but the only message 'Write something first.' goes to an sr-only live region - sighted users see nothing but refocus. No way to remove or reset added entries short of reload. Long unbroken input breaks layout (see craft). Status/handled timestamps use the real clock ('12:15 pm') inside a Tue-night/Wed-morning sample.",
+      "copy": "Restaurant nouns throughout ('86', 'walk-in reading 41°F', 'deposit bag is in the safe, not dropped', 'before the first ticket'); every button says what it does ('Add to tonight's note', 'Mark handled'); 'What stays out' scopes the product. Slightly long lead and a few long section heads.",
+      "first_screen": "1440: specific promise, CTA with destination note, and an operable sample note in view. 390: h1, lead, CTA and destination note in view; the note header 'Close note' and first entry begin at ~y572, but its 'Sample' label is not in the first viewport."
+    },
+    "problems": [
+      "Composer: a long unbroken entry (pasted URL, 300 chars) makes the whole page scroll sideways by 2182px at 390; add min-width:0 / overflow-wrap:anywhere on .so-far li and a maxlength.",
+      "Empty-input error is announced only to screen readers; sighted users get no visible message, and added entries cannot be removed or reset.",
+      "Unbriefed claims: 'free' trial, 'No sales call', and specific features (owners, Mark handled, weekly owner view) presented as product fact; sample label sits at the bottom of the hero note."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {"clarity": 8, "fit": 6, "distinctiveness": 7, "proof": 6, "craft": 7, "mobile": 7, "honesty": 7, "interaction": 5, "copy": 8, "first_screen": 7},
+    "evidence": {
+      "clarity": "h1 'What close needs to tell open.' is a little cryptic alone, but the lead 'Shiftnote is a shared logbook for restaurant managers. What ran out, who called in sick, what needs fixing...' resolves it immediately; CTA 'Start a free trial' with 'Takes you to app.shiftnote.example to sign up.' below it at 1440 (y=527) and 390 (y=377).",
+      "fit": "Name, byte-identical logo.svg and both colours kept (--indigo for actions, --coral for the margin rule and tags). Fake logos/testimonials removed. All 3 signup links go to the brief URL. The owner gets one step ('Sunday night - The owner reads the whole week') and nothing to look at; the old menu script was deleted, and below 760px the 'How it works'/'What goes in' nav simply disappears with no menu.",
+      "distinctiveness": "The artifact is a ruled logbook page (repeating-gradient rules, coral margin line, serif handwriting-ish entries, times in the margin) reused for the categories list - recognisably a binder. Rest of the page is a standard steps/features/why/CTA band sequence.",
+      "proof": "1440: 'Example handover - Tuesday close for Wednesday open' visible in the first viewport with four realistic entries. It is entirely static (no controls), so it shows what a note looks like but not the open/handled/owner flow. 390: starts at ~y550 below the CTA and an extra 'Read an example handover' link.",
+      "craft": "18KB of HTML/CSS, no JS, no web fonts, no external requests; tokens for colour, rule pitch and margin width; skip link present; 0 console errors, 0 axe violations, smallest text 12px (margin timestamps). Defects: no scroll-padding-top, so 390: tapping 'Read an example handover' scrolls #example to top:0 and the 64px sticky header covers the 'Example handover' kicker and half the title; html {scroll-behavior:smooth} is not gated behind prefers-reduced-motion; header CTA 40px tall.",
+      "mobile": "390/320: 0px overflow, header keeps logo + CTA, hero h1/lead/CTA in the first screen, steps recompose to a time column + text. No menu at all below 760px (nav links hidden, no toggle) - acceptable for a 2-link page but the section anchors are unreachable from the header. Header CTA 40px tall, 'Read an example handover' link 26px tall.",
+      "honesty": "Artifact labelled 'Example handover' at its top, visible next to it at 390. Closing section 'No logos to show you. No case studies yet.' is honest but is a section about what the company lacks. 'free' trial is not in the brief (shared with A). No invented features beyond the brief ('One log per restaurant... That's the whole product.').",
+      "interaction": "Only links: Tab order skip > brand > nav > header CTA > hero CTA > closing CTA > footer brand, 3px outline at every stop; skip link focused visibly at 390 and moved to #main. 'Read an example handover' works but lands under the sticky header. Main artifact has nothing to operate, so there are no states to test; entries fade in with a prefers-reduced-motion guard (reduced: all entries opacity 1).",
+      "copy": "Concrete and in the customer's voice ('Walk-in compressor is making that noise again', 'Table 14 wobbles - there's a wedge under it', 'The binder stays at the host stand'); 'Why not the group chat?' answers the real objection. CTA notes say what happens. Four tags match the brief's three categories plus 'Heads up'.",
+      "first_screen": "1440: promise, CTA with destination and the example log in view. 390: promise and CTA in view, example begins at the bottom edge only; the h1 alone is less specific than the lead."
+    },
+    "problems": [
+      "The core artifact is a static picture of a note; nothing shows or lets you try how an opener acknowledges items or how the owner reads the week, and the owner audience gets one paragraph.",
+      "Anchor jumps land under the 64px sticky header (no scroll-padding-top): 390 'Read an example handover' hides the artifact's label and title.",
+      "Mobile nav removed with no replacement; smooth scrolling ignores prefers-reduced-motion; header CTA 40px."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "A",
+  "confidence": "medium",
+  "reason": "A ships a working, keyboard-accessible artifact for both audiences (hero note with Mark handled/Undo, composer, owner week view that stacks on phones) with clean tokenised CSS and guarded JS, while B is a lean, robust but static page whose owner path is one paragraph. A's real defects (layout overflow from a long unbroken entry, sr-only-only empty error, unbriefed feature claims) are fixable in minutes; if the client confirmed A's features don't exist, B's narrower claims would change my mind.",
+  "score_preference_note": ""
+}
