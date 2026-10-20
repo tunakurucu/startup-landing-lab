@@ -1,0 +1,50 @@
+{
+  "packet": "P004",
+  "persona": "designer",
+  "A": {
+    "scores": {"clarity": 7, "fit": 7, "distinctiveness": 7, "proof": 5, "craft": 7, "mobile": 6, "honesty": 6, "interaction": 6, "copy": 8, "first_screen": 6},
+    "evidence": {
+      "clarity": "1440 and 390: H1 'Too lumpy today?' is a question, not a promise; the serif lede then says it reads tide, wind, swell and water temperature at your beach and shows the windows, with 'Join the public beta' plus 'iPhone. 40 beaches in the UK and Ireland so far.' Audience (year-round swimmers) is only implied by 'in the dark, before work'.",
+      "fit": "Tone fits the brief well: night-water palette, a page that gets lighter band by band (slate -> dusk -> grey morning), a 'Conditions, not permission' section and a footer line saying it is not a lifeguard. Early-warning shown as a lock-screen notification. But the hero artifact shows only one morning and only the tide curve, so the multi-factor 'window' idea is told more than shown.",
+      "distinctiveness": "Own ideas: tide line drawing in across the hero, hatched 'lost to the wind' band, group-chat bubbles ('looks lumpy from the car park'), lock-screen notification, bands lightening like dawn. Elsewhere it falls back to a 2x2 text grid ('What it reads at your beach') and a key/value facts list in the closing band.",
+      "proof": "A scrubbable tide chart sits in the first screen, but at 1440 its readout (status + values) starts at y=1028, below the 900px fold, and the chart itself only draws the tide; wind and swell appear as numbers only after scrolling. One fixed morning, no alternate scenarios. Numbers are consistent (window 06:20-08:00, last night 09:10) across hero, beach list and lock screen.",
+      "craft": "Light 300-weight sans display with a serif body is refined and the band colour progression is deliberate. Defects: at 1440 the right half of the first screen above the chart is empty; range input is 28px tall; header 'Join the beta' link is 40px; axe flags one contrast failure at 390/1440; at 390 the 'lost to the wind' label is hidden so the hatched band is unexplained.",
+      "mobile": "390: stacks cleanly, no overflow, chart visible in the first screen, but the status line is cut at the 844px fold and the four values and the slider sit below it; the slider is 28px tall (chart drag compensates); hatched band loses its label; no menu needed (single link). 320 shot clean.",
+      "honesty": "First screen shows a '06:10 now' pill on made-up data; the 'A made-up November morning at an example beach... Not a forecast.' caption is at y=1275 at 1440 and y=1160 at 390, well below the fold. The lock-screen notification ('Tuesday 17 November', 'Your window now closes at 08:00') has no visible example label (aria-label only). Beach list is labelled 'Example beaches and times.' and the CTA goes to the brief's beta URL.",
+      "interaction": "Operated at 1440 and 390: slider through 05:00-10:30 gives four written states ('Window opens at 06:20...', 'In the window until 08:00 (1 h 20 min)', 'Window closed early at 08:00. Last night it ran to 09:10', 'No window for the rest of the morning'); pointer drag on the chart moves the cursor (to 08:40); Home/End keys work; no console errors. No scenario choice, no reset, the lock screen animates once and is not interactive.",
+      "copy": "Specific and written: 'Four tabs and a group chat, at half five', 'Sea temperature - Which gloves?', 'lost to the wind', 'It won't nudge you to go in. It tells you what changed.' Status messages are genuinely written per state. Headline is borrowed from the brief rather than earning its own promise.",
+      "first_screen": "1440: headline, lede, CTA and the tide curve with '06:10 now', '06:20 to 08:00 swim window' and '08:00 to 09:10 lost to the wind' after the 1.6s draw-in; no readout, no sample label in view. 390: headline, lede, CTA and chart, the status line cut at the fold. Promise is specific but nothing in view explains why the window ends."
+    },
+    "problems": [
+      "The hero artifact's readout, values and 'made-up morning' label all sit below the fold at 1440 (readout y=1028) and the label at y=1160 at 390, while the first screen shows a '06:10 now' pill on sample data.",
+      "The artifact is thin: one fixed morning, only the tide drawn, no scenarios or reset, so the multi-factor window and 'closes early' idea is asserted more than demonstrated.",
+      "1440 first screen leaves the right half empty above the chart; small targets (28px slider, 40px header link) and the lock-screen notification has no visible example label."
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {"clarity": 9, "fit": 8, "distinctiveness": 8, "proof": 9, "craft": 7, "mobile": 8, "honesty": 9, "interaction": 8, "copy": 8, "first_screen": 9},
+    "evidence": {
+      "clarity": "1440 and 390: 'Too lumpy today?' followed immediately by 'Tidewise is an iPhone app for people who swim in the sea all year. It reads the tide, wind, swell and water temperature at your beach and shows today's swim windows.' then 'Join the public beta' and 'iPhone public beta. 40 UK and Ireland beaches so far.' What, who and next step all in the first lines.",
+      "fit": "Closes-early and not-a-lifeguard both appear in the first screen ('Closes 07:42, not 09:30', 'Conditions only. Tidewise never tells you it's safe to swim; you decide on the beach.'); 'You won't see: \"Safe to swim\"' resolves the safety tension. Pre-dawn palette with first light/sunrise bands fits '6 am'; the monospace data grid in the readout leans a little toward a weather-app feel.",
+      "distinctiveness": "The sea surface is drawn choppier as swell and onshore wind rise (Big swell vs Calm visibly differ), sky shades by first light/sunrise, per-condition lanes explain how a window is found, and a 'the old way' ledger versus one sample line. Weaker: the concrete-steps illustration in 'Your call' is crude blocks doing little work.",
+      "proof": "Operable in the first screen at both widths: three sample mornings, a time slider and a readout that states the window, time left, early closure and which limit fails ('Swell 1.2 m is over the 0.7 m sample limit'). Lanes section updates with the chosen morning. Numbers agree across hero, ledger (high water 08:40, 4.5 m; 13.4C) and warning card (07:42, not 09:30).",
+      "craft": "Deliberate tokens, serif display with sans text and mono data, consistent spacing. Defects: 1440 hero leaves an empty block above the H1 at top-left while the lede sits top-right, and the first screen is dense; 'Pick one, then drag to when you'd get in.' leaves 'in.' as an orphan at 1440; Wind readout wraps '7 mph NW, / offshore'; the 'Your call' steps illustration is crude.",
+      "mobile": "390: recomposed with H1, lede, CTA, labelled sample, three tabs, chart and slider in the first 844px; all measured targets >=44px; no overflow at 390 or 320; Menu opens a panel, Escape closes it, tapping 'Early warnings' closes it and scrolls. Readout sits just below the fold under the slider, and the chart legend is detached below Reset.",
+      "honesty": "'Sample mornings at an imaginary cove / Written for this page, not a forecast.' sits directly above the chart at 1440, 768 and 390; the ledger line and warning card each carry 'Sample line/warning, written for this page'; the closing CTA says 'Opens the beta page at tidewise.example/beta.' No invented proof.",
+      "interaction": "Operated at 1440, 768, 390: Calm (window 05:46-12:34, 'Closes in 6 h 4 min'), Big swell ('No window between 05:00 and 13:00' with three failing reasons), Wind turns onshore; slider at 05:00/08:40/10:00/13:00 gives 'Next window opens at 05:16' / 'The last one closed at 07:42, early...'; Reset restores onshore at 06:30; tabs expose aria-pressed; no console errors. At 390 the text feedback lands just below the fold when dragging, though the chart marker moves in view.",
+      "copy": "Specific: 'Three websites, a tide table and the group chat become one line', 'A window opens only when tide, swell and wind all agree', failure reasons in plain units. Some repetition of 'written for this page', a missing unit in 'offshore under 18', and the 'Your call' copy restates the hero footnote.",
+      "first_screen": "1440: specific outcome for named audience, labelled sample chart showing 'Window 05:16-07:42' and 'Closes 07:42, not 09:30 / Wind turns onshore', readout, and 'Join the public beta' whose destination is stated later. 390: H1, lede, CTA, sample label, tabs, chart with the same window and early-close labels, and the slider all within 844px."
+    },
+    "problems": [
+      "1440 first screen is dense and its composition is uneven: empty block above the H1, lede top-right, tabs detached from the sample label, and an orphaned 'in.'",
+      "At 390 the readout that answers each drag sits below the fold under the slider, and the chart legend is pushed below the Reset button, far from the chart.",
+      "Secondary illustrations are weak (the 'Your call' concrete-steps drawing is crude blocks) and the mono data grid nudges the hero toward a weather-dashboard feel."
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "B",
+  "confidence": "high",
+  "reason": "B puts a labelled, operable artifact in the first screen at every width that actually demonstrates the product's two ideas (a window needs all conditions to agree, and it can close early) and states the safety stance right next to it. A has the more poetic restraint and better closing bands, but its artifact is thin and its readout and sample label sit below the fold. A version of A with the readout and label in view and a second scenario would close much of the gap.",
+  "score_preference_note": ""
+}
