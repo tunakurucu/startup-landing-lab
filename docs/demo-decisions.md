@@ -40,7 +40,7 @@ Scroll revision (v0.5): the first version revealed the handoff columns, the chap
 
 ## Gate warnings we kept, and why
 
-The skill's checker (v0.4) runs 68 automatic checks on every page in CI. No page has a block failure. The warnings below stay, each with the product reason the checklist asks for; `tests/browser/skill-gate.spec.ts` lists exactly these per route and fails if any other warning appears or any of these goes away unrecorded; PF-05, a lab timing, is held to a per-route budget there instead of matched exactly.
+The skill's checker (v0.6) runs 79 automatic checks on every page in CI. No page has a block failure. The warnings below stay, each with the product reason the checklist asks for; `tests/browser/skill-gate.spec.ts` lists exactly these per route and fails if any other warning appears or any of these goes away unrecorded; PF-05, a lab timing, is held to a per-route budget there instead of matched exactly.
 
 | Page | Check | Why it stays |
 | --- | --- | --- |
@@ -50,6 +50,7 @@ The skill's checker (v0.4) runs 68 automatic checks on every page in CI. No page
 | Experiments | CP-11 reading grade 11.0 | The page is 106 words, most of them category labels ("Developer infrastructure", "Professional operations") and principle tags, which the formula counts as sentences. The two prose sentences score under grade 9. |
 | References index | CP-11 reading grade 9.1 | The index prints each audited record's one-sentence summary as the auditor wrote it (3,493 words across 136 records), with company and category names the formula counts as long words. It sits 0.1 over the line; shortening the summaries would change the research. |
 | Record pages (`/reference/…`) | CP-11 reading grade about 11 | The page is the audit record itself: observations, measurements and limitations written for designers and engineers, naming computed values and typographic terms. Rewriting the research for grade 9 would change what was observed. |
+| Home, Field guide, Evals | MB-10 longer than eight phone screens | These are an index of 136 records, the project's front page and an evaluation report, not product landing pages. Their length is the content; each declares `data-signature="none"` with that reason, which `verify-record` would refuse on a landing page build. |
 | Record pages (`/reference/…`) | PF-05 lab LCP about 3 s on the throttled phone profile | A record is a deep link into the 135-record catalog. The page frame paints at about 1.9 s like every other route; the record itself arrives with the catalog chunk (164 kB compressed) a second later. Splitting the catalog into one chunk per record needs a build step the project does not have; until then the gate test budgets this route at 4 s instead of 2.5 s. |
 | Relayline | TY-10 common display face (Inter) | Identity comes from the trace and the monospace identifiers; the display face is deliberately neutral so it does not compete with the instrument. |
 | Relayline | ST-06 code shown, no docs link in the header | Relayline is fictional and has no documentation. A header "Docs" link that scrolled to a prose section would promise a destination it cannot reach (HP-04), so the header offers the working trace instead. |

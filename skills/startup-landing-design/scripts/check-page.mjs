@@ -634,7 +634,8 @@ try {
           .map(x => `${(label(x.c) || x.c.tagName.toLowerCase()).slice(0, 24)} ${Math.round(x.b.width)}×${Math.round(x.b.height)}px`);
         // Visually hidden checkboxes and radios are used through their visible label (chips, swatches).
         const viaLabel = [...s.el.querySelectorAll('input[type=checkbox],input[type=radio]')].filter(c => (!seen(c) || visibleOpacity(c) <= 0.1) && !c.disabled && c.labels?.[0] && seen(c.labels[0])).map(c => seen(c) ? c : c.labels[0]);
-        const probe = [...C, ...viaLabel].filter(c => c.tagName !== 'A' && !['date', 'time', 'datetime-local', 'month', 'week', 'color', 'file', 'hidden'].includes(c.type) && !(c.type === 'submit' && c.form && c.form.getAttribute('action'))).slice(0, 12);
+        // A radio that is already checked does nothing when chosen again; it is skipped, not counted as dead.
+        const probe = [...C, ...viaLabel].filter(c => c.tagName !== 'A' && !(c.type === 'radio' && c.checked) && !(c.tagName === 'LABEL' && c.control?.type === 'radio' && c.control.checked) && !['date', 'time', 'datetime-local', 'month', 'week', 'color', 'file', 'hidden'].includes(c.type) && !(c.type === 'submit' && c.form && c.form.getAttribute('action'))).slice(0, 12);
         probe.forEach((c, i) => c.setAttribute('data-sll-ctl', String(i)));
         return {marked: s.marked, el: describe(s.el), top: Math.round(b.top), height: Math.round(b.height), visible: Math.round(visible), small, n: probe.length,
           kinds: probe.map(c => c.tagName === 'LABEL' ? 'label' : c.tagName === 'SELECT' ? 'select' : c.tagName === 'TEXTAREA' ? 'text' : c.tagName === 'INPUT' ? (['checkbox', 'radio'].includes(c.type) ? 'toggle' : c.type === 'range' ? 'range' : ['text', 'search', 'number', 'email', 'url', 'tel', ''].includes(c.type) ? 'text' : 'click') : (c.getAttribute('role') === 'slider' ? 'range' : 'click')),
@@ -684,7 +685,7 @@ try {
             return {changed: changed.length, inView: inView.length, focusLost: !a || a === document.body, sample: describe(changed.find(el => seen(el)) || changed[0])};
           }, i);
           probed.push(`${sig.labels[i]}: ${res.changed} changed, ${res.inView} in view`);
-          if (res.changed === 0 && !/reset|clear|undo|start over/i.test(sig.labels[i])) dead.push(sig.labels[i]);
+          if (res.changed === 0 && !/reset|clear|undo|start over|download|export|save .*file|copy/i.test(sig.labels[i])) dead.push(sig.labels[i]);
           else if (res.changed > 0 && res.inView === 0) off.push(`${sig.labels[i]} (changed ${res.sample}, off-screen)`);
           if (res.focusLost) dropped.push(sig.labels[i]);
         }

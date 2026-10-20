@@ -1,17 +1,17 @@
 import {test,expect} from '@playwright/test';
 import {spawnSync} from 'node:child_process';
 
-// The site must pass the skill's own 68 automatic checks (v0.4). Block failures are never allowed.
+// The site must pass the skill's own 79 automatic checks (v0.6). Block failures are never allowed.
 // Warnings are allowed only where docs/demo-decisions.md records the product reason ("Gate warnings we kept");
 // KEPT lists exactly those per route, so a new warning fails and a fixed one must be removed here too.
 const GALLERY=['TY-10'];                  // four faces, each with a role: display, text, data, accent
 const INDEX=[...GALLERY,'HR-02','ST-03']; // index pages: choosing a record or an experiment is the action, no hero button
 const KEPT:Record<string,string[]>={
-  '/':GALLERY,
-  '/references':[...INDEX,'CP-11'],
+  '/':[...GALLERY,'MB-10'],
+  '/references':[...INDEX,'CP-11','MB-10'],
   '/skill':[...GALLERY,'CP-11'],
   '/demos':[...INDEX,'CP-11'],
-  '/evals':GALLERY,
+  '/evals':[...GALLERY,'MB-10'],
   '/reference/resend':[...GALLERY,'CP-11'],
   '/demo/relayline':['TY-10','ST-06'],
   '/demo/sidequest':['TY-10','TT-03','MO-06'],
@@ -30,7 +30,7 @@ for(const route of routes){
     const result=JSON.parse(run.stdout||'{}');
     const failed=(result.checks||[]).filter((c:{pass:boolean,severity:string})=>c.pass===false&&c.severity==='block');
     expect(failed,`block failures on ${route}: ${JSON.stringify(failed)}`).toEqual([]);
-    expect(result.checks).toHaveLength(68);
+    expect(result.checks).toHaveLength(79);
     expect(result.failures).toEqual([]);
     expect(result.not_run).toEqual([]);
     expect(result.warnings.filter((w:string)=>w!=='PF-05').sort()).toEqual([...KEPT[route]].sort());
