@@ -2,8 +2,9 @@
 // Usage: node scripts/measure.mjs <sites.json> <out.jsonl> [--shots <dir>]
 //   sites.json: [{"id": "...", "url": "https://..."}]
 // Stores numbers only. Screenshots (optional) are temporary research evidence and must not be committed.
-// One visit per site per viewport; robots.txt "Disallow: /" for all agents is respected; 4xx/5xx stops that site.
+// One visit per site per viewport; robots.txt is respected for the "*" group (RFC 9309 matching, see robots.mjs); 4xx/5xx stops that site.
 import {chromium} from 'playwright';
+import {robotsBlocked} from './robots.mjs';
 import {readFileSync, appendFileSync, mkdirSync} from 'node:fs';
 import {join} from 'node:path';
 
@@ -19,21 +20,6 @@ const browser = await chromium.launch();
 const today = new Date().toISOString().slice(0, 10);
 const VIEWPORTS = [{name: 'desktop', width: 1440, height: 900}, {name: 'mobile', width: 390, height: 844}];
 
-async function robotsBlocked(ctx, url) {
-  try {
-    const r = await ctx.request.get(new URL('/robots.txt', url).href, {timeout: 10000});
-    if (!r.ok()) return false;
-    const txt = await r.text();
-    let star = false;
-    for (const raw of txt.split('\n')) {
-      const line = raw.split('#')[0].trim();
-      if (/^user-agent:\s*\*$/i.test(line)) star = true;
-      else if (/^user-agent:/i.test(line)) star = false;
-      else if (star && /^disallow:\s*\/\s*$/i.test(line)) return true;
-    }
-  } catch { /* no robots.txt reachable: proceed */ }
-  return false;
-}
 
 function collect() {
   const cs = el => getComputedStyle(el);
@@ -91,7 +77,7 @@ for (const site of sites) {
   const record = {id: site.id, url: site.url, measured_on: today, viewports: {}, error: null};
   const ctx = await browser.newContext({viewport: VIEWPORTS[0], proxy: isLocal(site.url) ? undefined : proxy});
   try {
-    if (await robotsBlocked(ctx, site.url)) { record.error = 'robots.txt disallows all agents'; throw null; }
+    if (await robotsBlocked(ctx, site.url)) { record.error = 'robots.txt disallows this page'; throw null; }
     for (const vp of VIEWPORTS) {
       const page = await ctx.newPage();
       await page.setViewportSize({width: vp.width, height: vp.height});

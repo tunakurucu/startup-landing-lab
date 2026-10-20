@@ -58,41 +58,41 @@ Rules. The visitor's action or a visible step control drives the sequence; if a 
 Under `prefers-reduced-motion: reduce` the page tells the same story with less movement (MO-01). Sequences still change state, instantly or with a crossfade of 200 ms or less (recommended). Counters show the final number. Video holds its poster. Parallax, zoom, spin, animated blur, depth movement and scroll-linked translation are gone; a sticky stage may stay, but nothing scrubs inside it. Nothing is hidden and no content waits. The substitution is the same timing with opacity in place of transform (Head); fades are allowed because opacity and colour changes are not motion (W3C; Apple). Reduced means fewer and gentler, not zero (Kowalski). Measured leaders skip reveals entirely under reduce, so content is present on arrival. The media query is a courtesy; the pause control is the requirement (MO-05).
 
 <!-- motion:start -->
-## What 256 startup homepages do
+## What 257 startup homepages do
 
-Measured with `scripts/measure-motion.mjs` on 2026-10-20: headless Chromium at 1440 × 900, one normal visit (load, scroll in steps, hover the primary action and nav) and one reload with `prefers-reduced-motion: reduce`. 23 sites failed to load and 4 returned low-confidence records; both are left out. Counts describe what moved in this browser on this date, not timing or easing, and say nothing about whether the motion helped.
+Measured with `scripts/measure-motion.mjs` on 2026-10-20: headless Chromium at 1440 × 900, one normal visit (load, scroll in steps, hover the primary action and nav) and one reload with `prefers-reduced-motion: reduce`. 22 sites failed to load and 4 returned low-confidence records; both are left out. Counts describe what moved in this browser on this date, not timing or easing, and say nothing about whether the motion helped.
 
 | Observed | Pages | Share |
 | --- | --- | --- |
-| First-screen copy hidden at first paint, waiting for an entrance animation | 183 | 71% |
+| First-screen copy hidden at first paint, waiting for an entrance animation | 184 | 72% |
 | The h1 itself hidden at first paint | 63 | 25% |
-| Text that started hidden and was still hidden when the visit ended (can include unopened tabs, carousel slides and menus) | 117 | 46% |
-| Text revealed by scroll (entrance on scroll) | 130 | 51% |
-| Something animating forever at load (spinner, pulse, marquee, float) | 148 | 58% |
-| A marquee or ticker running | 55 | 21% |
+| Text that started hidden and was still hidden when the visit ended (can include unopened tabs, carousel slides and menus) | 118 | 46% |
+| Text revealed by scroll (entrance on scroll) | 131 | 51% |
+| Something animating forever at load (spinner, pulse, marquee, float) | 149 | 58% |
+| A marquee or ticker running | 56 | 22% |
 | Pinned scene that changes while the page scrolls | 21 | 8% |
-| Scroll-linked behaviour of any kind (77 with no moving element counted, 54 one to three elements, 17 four or more) | 148 | 58% |
-| CSS `animation-timeline` present in the stylesheets | 96 | 38% |
+| Scroll-linked behaviour of any kind (78 with no moving element counted, 54 one to three elements, 17 four or more) | 149 | 58% |
+| CSS `animation-timeline` present in the stylesheets | 97 | 38% |
 | Parallax layers | 38 | 15% |
 | Scroll-scrubbed video | 6 | 2% |
-| Scroll snap | 137 | 54% |
+| Scroll snap | 138 | 54% |
 | Animated number counter | 31 | 12% |
-| `<video>` on the page / autoplaying | 124 / 86 | 48% / 34% |
-| `<canvas>` / WebGL context | 80 / 78 | 31% / 30% |
-| Primary action or nav changed on hover | 199 | 78% |
+| `<video>` on the page / autoplaying | 124 / 86 | 48% / 33% |
+| `<canvas>` / WebGL context | 81 / 78 | 32% / 30% |
+| Primary action or nav changed on hover | 200 | 78% |
 
 **Under reduced motion**
 
-- A `prefers-reduced-motion` rule was found on 225 pages (88%); the page met all of this measure's conditions (nothing moving forever, nothing hidden, no autoplaying video) on 157 (61%).
+- A `prefers-reduced-motion` rule was found on 226 pages (88%); the page met all of this measure's conditions (nothing moving forever, nothing hidden, no autoplaying video) on 158 (61%).
 - Something still animated forever on 59 pages, a marquee on 10, and video kept playing on 10.
 - Copy stayed hidden (because its entrance animation was removed without showing the end state) on 14. This is the failure MO-02 exists for: the reduced-motion visitor gets less page, not less motion.
 
 **What this means for a build**
 
-- Hidden-until-animated copy is common (71% of first screens) and is the pattern that costs most: it delays reading, fails captures and crawlers, and is the one reduced motion most often breaks. Ship copy visible at first paint (MO-02).
+- Hidden-until-animated copy is common (72% of first screens) and is the pattern that costs most: it delays reading, fails captures and crawlers, and is the one reduced motion most often breaks. Ship copy visible at first paint (MO-02).
 - Pinned, scrubbed stages are rare (8%). Scroll-linked behaviour is common (58%) but small: a stylesheet timeline or a handful of elements, not a moving story. A pinned stage is a signature, which is why the skill allows one per page.
 - Infinite motion is the norm at load (58%) and survives reduced motion on 23%; give anything that runs past five seconds a pause control (MO-05) and stop it under reduce (MO-01).
-- Libraries detected: Framer Motion / Motion 139, Lenis smooth scroll 48, ScrollTrigger 41, GSAP 37, Lottie 34, three.js 23, Swiper 21, Rive 12. Site builders: framer 30, webflow 23. The library does not decide the quality; the contract does.
+- Libraries detected: Framer Motion / Motion 139, Lenis smooth scroll 48, ScrollTrigger 41, GSAP 37, Lottie 34, three.js 24, Swiper 21, Rive 12. Site builders: framer 30, webflow 23. The library does not decide the quality; the contract does.
 <!-- motion:end -->
 
 ## Sources

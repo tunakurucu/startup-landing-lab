@@ -1,0 +1,49 @@
+{
+  "packet": "P011",
+  "persona": "designer",
+  "A": {
+    "scores": {"clarity": 8, "fit": 8, "distinctiveness": 7, "proof": 8, "craft": 7, "mobile": 7, "honesty": 9, "interaction": 8, "copy": 8, "first_screen": 8},
+    "evidence": {
+      "clarity": "1440: H1 'Find the env var set on your laptop and nowhere else.' names a specific pain; the lead then says exactly what it is (command-line checker, scans code, compares with .env.example and CI, exits non-zero). The headline alone undersells the 'unused' half, so a stranger needs the lead to repeat the full job.",
+      "fit": "No GUI respected: the artifact is terminal-style output plus the three source files it compares. npm-only install, no Homebrew, private repo until 1.0, and 'The help output is the documentation' section all reflect the brief. The platform audience gets the 'In CI' section with an exit-code list and 'This is the step for the team that owns CI', which is a real path but still a secondary one inside a developer-first page.",
+      "distinctiveness": "The linked census (5-row report wired to src/config.ts, .env.example and ci.yml panes that highlight the selected variable) comes straight from what the product does: diff three lists. The visual language (mono headings, grey ground, hairline rules, yellow highlight) is the familiar dev-tool look; remove the artifact and it is a competent generic CLI page.",
+      "proof": "1440: the operable report sits in the right column of the first screen, labelled 'Example output' above it. Clicking each of the 5 rows changes the pane captions ('FEATURE_FLAGS_URL: missing here' in red) and highlights the matching line. Small inconsistency: summary reads '3 problems' while listing 1+2+1 = 4 findings, and the job log prints 4 lines then '3 problems.'",
+      "craft": "Consistent token scale and rhythm; rows meet 44px. Defects: 1440 the help-output <pre> is clipped inside its box (scrollWidth 829 vs 670), cutting '(default: first file in .g' and '(for variables set outside'; 1440 the hero action group wraps so 'Read the help output' sits alone under the command box; the three source panes start at y=883, just below the 900px fold, so the highlight a click produces is off-screen.",
+      "mobile": "390: table recomposed into labelled stacks (code / .env.example / ci.yml per variable), nav links 44px tall, no overflow at 390 or 320, copy feedback 'Copied: npx envcensus' appears right under the button. But the artifact begins around y=900, below the first screen, and tapping a row puts the explanation below the list and the pane highlight ~150px further down, out of view for top rows.",
+      "honesty": "'Example output. The column layout of the shipped build may differ.' sits directly above the report at every width; help text captioned 'Example of the help text; run the command for the shipped version'; CI log captioned 'Example output on the sample repo above'. 'Who it is for' states when it is not for you. No numbers, users or speed claims.",
+      "interaction": "Operated at 1440, 768, 390: all 5 rows are <button aria-pressed>, each updates the detail line (role=status) and all three pane captions; Tab reaches every row with a visible outline; 'Copy the scan command' (hero and closing) and 'Copy the workflow step' all copied to clipboard and showed inline status that clears after 4s; 'Read the help output' scrolls to #reference as labelled. Feedback for the panes lands below the fold at 1440 and 390.",
+      "copy": "Specific and in the developer's world: 'A new teammate copies the example and the app breaks on first run', 'the failure shows up far from the cause', the What envcensus saw / The fix table. Buttons say what happens ('Copy the scan command'). Inconsistencies: workflow uses bare 'npx envcensus --ci' while the help defines '--ci <file>'; '3 problems' against 4 listed findings.",
+      "first_screen": "1440: specific pain headline, plain lead, copy-command action and the labelled, operable sample report all in one viewport. 390: headline, lead, command box and 'Copy the scan command' in view, but no artifact, so the promise is not backed until the second screen."
+    },
+    "problems": [
+      "Artifact feedback lands off-screen: source panes sit below the fold at 1440 (top 883px) and below the tapped row at 390, so the highlight a click produces is often unseen",
+      "Help-output block is clipped horizontally at 1440, cutting the defaults column of the one piece of documentation the brief says exists",
+      "Sample counts disagree with themselves ('3 problems' beside 4 listed findings) and '--ci' is used as a bare flag in the workflow but takes a file in the help"
+    ],
+    "hard_fail_flags": []
+  },
+  "B": {
+    "scores": {"clarity": 9, "fit": 7, "distinctiveness": 7, "proof": 7, "craft": 7, "mobile": 6, "honesty": 6, "interaction": 5, "copy": 8, "first_screen": 7},
+    "evidence": {
+      "clarity": "H1 'Every environment variable your code reads, checked against .env.example and CI.' plus the lede ('tells you which ones nobody set and which ones nothing reads anymore. It runs on your machine') and '$ npx envcensus' give what, for whom and next step in one glance at 1440 and 390.",
+      "fit": "Terminal-table artifact instead of app screenshots, npm-only, no Homebrew, private source, no benchmark, help-as-docs all reflected; CI owner gets 'If you own the pipeline rather than the application' and a GitHub Actions step. But it adds capability claims the brief does not give: Python/Go/Ruby/shell read detection, '--format github' annotations, a GitLab example.",
+      "distinctiveness": "Serif body and headline on a pale green paper ground, ruled 'census ledger' table with a tally footer: an editorial register look uncommon for dev tools, and the census metaphor is taken literally. Below the ledger the structure is a standard left-heading/right-content split repeated five times, and the ledger itself is static.",
+      "proof": "1440: the 12-row census table starts at y=590 and its first verdict ('missing from .env.example') is visible in the first viewport; counts are internally consistent (11 read, 3 missing, 1 unused). But it is a static picture (nothing responds), the 'read at' column is hidden below 880px so 768 and 390 lose the line-number evidence the lede promises, and the CI yml example sets STRIPE_SECRET_KEY while the table says it is not set in ci.yml.",
+      "craft": "1440 is well composed: headline left, lede and command bottom-aligned right, generous rhythm, clean ledger rules. Defects: nav links are 25px tall at every width; at 768 the 'read at' column is dropped although there is room; at 320 the census table overflows by 63px (page scrolls sideways); dark code blocks at 390 cut lines off ('secrets.DATABAS') behind internal scroll.",
+      "mobile": "390: ledger recomposed sensibly (verdict moves under the variable name, e.g. 'SESSION_SECRET / missing from .env.example'), no page overflow at 390, copy button 57px tall. But nav targets are 25px tall and as narrow as 16px ('CI'), the table only starts at the bottom edge of the first screen, code blocks need sideways scrolling, and the copy toast appears at the screen bottom (top 781) rather than at the button (top 485). 320: 63px horizontal page overflow.",
+      "honesty": "The ledger is never called an example: '~/code/orders-api $ envcensus' and 'scanned 212 files in 3 directories' read like a real run, and the only caption ('A run against a small Node service') sits below 12 rows. The help block is presented as exact ('This is what envcensus --help prints... If a flag is not listed below, it does not exist') although the brief supplies no help text. 'Where it stands' is candid but is a section listing what the project lacks.",
+      "interaction": "The only control besides nav is 'Copy': clicked at 1440, 768, 390 it copied 'npx envcensus' and showed a toast 'Copied npx envcensus' fixed at the bottom centre, ~440px from the button at 1440. Nav anchors Run it/CI/Help output scroll correctly. The ledger rows only fade in on load (disabled under reduced motion); nothing in the artifact can be operated.",
+      "copy": "Strong, concrete scenarios: 'gets a stack trace instead of a login page', 'the real failure waits for production', 'If it finds something in your code, that is the testimonial.' Headline and labels are precise. The main button is just 'Copy' (aria-label carries the object), and the ci.yml sample contradicts the ledger for STRIPE_SECRET_KEY.",
+      "first_screen": "1440: specific promise, the command with Copy, and six ledger rows including a red verdict in view: believable, though unlabelled. 390: headline, lede and command fill the viewport and the table header just appears at the bottom, so nothing in view yet shows the output."
+    },
+    "problems": [
+      "The census table is a static, unlabelled sample (reads as a real run of '~/code/orders-api', '212 files') and the invented help text is asserted as exact output",
+      "Nothing in the artifact can be operated; the only interaction is a Copy button whose toast appears at the bottom of the screen, far from the button",
+      "Mobile execution gaps: 25px nav targets, 'read at' evidence dropped below 880px, code blocks clipped behind sideways scroll, 63px page overflow at 320"
+    ],
+    "hard_fail_flags": []
+  },
+  "preference": "A",
+  "confidence": "medium",
+  "reason": "A puts a labelled, operable census in the first screen at 1440 that shows the product's actual job (one variable traced across code, .env.example and CI) and keeps every sample honestly labelled. B has the more distinctive typography and the cleaner headline, but its artifact is a static, unlabelled table and it asserts invented help text and language support as fact. B would win if its ledger were labelled as a sample and made selectable, and if its mobile targets and 320 overflow were fixed."
+}

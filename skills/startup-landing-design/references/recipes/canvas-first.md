@@ -4,7 +4,7 @@ All numbers are **recommended**, not measured from the references. Desktop obser
 
 Floors shared with the [default gate](../default-detector.md): display tracking no tighter than −0.04em; an H1 above about 6.5rem only when it is the page's signature and each line holds three words or fewer; Inter, Space Grotesk and Fraunces are so common as display faces that choosing one needs a stated product reason (Inter remains a sound body fallback).
 
-**Observed** across 328 measured startup homepages (2026-10-19): desktop h1 median 64px (middle half 54–76px, 90th percentile 96px), weight 500, tracking −0.025em; h1 about 3.7× the body size; body 17px at about 56 characters per line; phone h1 about 0.59× desktop (median 38px); two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.
+**Observed** across 330 measured startup homepages (2026-10-19): desktop h1 median 64px (middle half 54–76px, 90th percentile 96px), weight 500, tracking −0.025em; h1 about 3.6× the body size; body 17px at about 56 characters per line; phone h1 about 0.59× desktop (median 38px); two families. The recommended values below are deliberately at the bolder end; when in doubt, size the headline toward the median and let the artifact carry the page.
 
 **Observed in this family** (6 audited sites, 4 of them reference tier, measured 2026-10-19/20: Endra, Excalidraw, FLORA, Reflection AI, mmm.page, tldraw): desktop h1 median 56px at weight 400 and −0.02em; body 16.0px at about 44 characters per line; 6 sections; phone h1 40px; 2 of 6 on a dark ground.
 

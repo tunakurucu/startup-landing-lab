@@ -9,6 +9,7 @@
 // prefers-reduced-motion: reduce. At most --concurrency sites run at once (default 2: parallel loads through the
 // proxy drop stylesheets).
 import {chromium} from 'playwright';
+import {robotsBlocked} from './robots.mjs';
 import {readFileSync, appendFileSync, existsSync} from 'node:fs';
 
 const args = process.argv.slice(2);
@@ -626,21 +627,6 @@ function probe(opts) {
 }
 
 // ---------------------------------------------------------------------------------------------------------------
-async function robotsBlocked(ctx, url) {
-  try {
-    const r = await ctx.request.get(new URL('/robots.txt', url).href, {timeout: 10000});
-    if (!r.ok()) return false;
-    const txt = await r.text();
-    let star = false;
-    for (const raw of txt.split('\n')) {
-      const line = raw.split('#')[0].trim();
-      if (/^user-agent:\s*\*$/i.test(line)) star = true;
-      else if (/^user-agent:/i.test(line)) star = false;
-      else if (star && /^disallow:\s*\/\s*$/i.test(line)) return true;
-    }
-  } catch { /* no robots.txt reachable: proceed */ }
-  return false;
-}
 
 function attachScanner(page, found) {
   page.on('response', async resp => {
@@ -692,7 +678,7 @@ async function measureSite(site, record, blockWebGL, skipRobots) {
   record.confidence = {level: 'high', notes: []};
   const ctx = await browser.newContext({viewport: VIEWPORT, proxy: isLocal(site.url) ? undefined : proxy});
   record._contexts.push(ctx);
-  if (!skipRobots && await robotsBlocked(ctx, site.url)) { record.error = 'robots.txt disallows all agents'; return; }
+  if (!skipRobots && await robotsBlocked(ctx, site.url)) { record.error = 'robots.txt disallows this page'; return; }
   const found = {libs: Object.fromEntries(Object.keys(LIBS).map(k => [k, false])), evidence: {}, css: {}, scanned: 0};
   const tNav = Date.now();
   await ctx.addInitScript(probe, {blockWebGL});
