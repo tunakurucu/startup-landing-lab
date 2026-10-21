@@ -9,6 +9,13 @@ import r2gift from '../../evals/runs/2026-10-19-ab-round2/gift-grade.json';
 import r2renewal from '../../evals/runs/2026-10-19-ab-round2/renewal-grade.json';
 import r2practice from '../../evals/runs/2026-10-19-ab-round2/practice-grade.json';
 import r2checks from '../../evals/runs/2026-10-19-ab-round2/checker.json';
+import t3 from '../../evals/runs/2026-10-20-ab-round3/results/results.json';
+import t4 from '../../evals/runs/2026-10-20-ab-round4/results/results.json';
+import t5 from '../../evals/runs/2026-10-20-ab-round5/results/results.json';
+import t6 from '../../evals/runs/2026-10-20-ab-round6/results/results.json';
+import t7 from '../../evals/runs/2026-10-20-ab-round7/results/results.json';
+import t8 from '../../evals/runs/2026-10-20-ab-round8/results/results.json';
+import xfam from '../../evals/runs/2026-10-20-xfam/rows.json';
 
 /* Every number on this page is computed at build time from the committed run files: each grader's scores,
    the blind A/B key (mapping.json: "with" or "with2" is the skill page, "without" the other) and the skill's checker output. */
@@ -38,6 +45,50 @@ const BRIEFS:Record<string,{brand:string;topic:string}>={queue:{brand:'Drumbeat'
 const holdout=(brief:string)=>!round1.pairs.some(p=>p.brief===brief);
 const CRITERIA=Object.keys(round1.pairs[0].with);
 const OUT_OF=CRITERIA.length*10;
+
+/* Rounds 3 to 8: three graders per pair (designer, buyer, engineer), ten criteria out of 100, tallied by
+   evals/round3/scripts/tally.py into each run's results/results.json. */
+type Tally={tests:{brief_level:{wins:number;ties:number;losses:number;p_two_sided:number}};brief_verdicts:Record<string,string>;persona:Record<string,{prefers_with:number;prefers_without:number;mean_total_with:number;mean_total_without:number}>};
+type Later={n:number;version:string;commit:string;folder:string;what:string;tally:Tally};
+const later:Later[]=[
+  {n:3,version:'v0.4',commit:'1bd8387',folder:'2026-10-20-ab-round3',what:'Twelve new briefs, the first pre-registered round with three graders and adjudicated hard fails.',tally:t3},
+  {n:4,version:'v0.5',commit:'80d59dc',folder:'2026-10-20-ab-round4',what:'A written design statement before building.',tally:t4},
+  {n:5,version:'v0.6',commit:'51cd338',folder:'2026-10-20-ab-round5',what:'Eleven checks that operate the product demo on a phone. Target 87.',tally:t5},
+  {n:6,version:'v0.7',commit:'2492853',folder:'2026-10-20-ab-round6',what:'A second demo for whoever pays, length caps on phones. Target 87.',tally:t6},
+  {n:7,version:'v0.8',commit:'8861cb2',folder:'2026-10-20-ab-round7',what:'Round 6’s skill pages rebuilt on the graders’ notes, against the same pages without it. Target 91.',tally:t7},
+  {n:8,version:'v0.9',commit:'925ee3e',folder:'2026-10-20-ab-round8',what:'The builder reviews its own page as the graders would. Four briefs never used for tuning. Target 91.',tally:t8},
+];
+const personas=(t:Tally)=>Object.values(t.persona);
+const mean=(xs:number[])=>xs.reduce((a,b)=>a+b,0)/xs.length;
+const withMean=(t:Tally)=>mean(personas(t).map(p=>p.mean_total_with));
+const withoutMean=(t:Tally)=>mean(personas(t).map(p=>p.mean_total_without));
+const runsFor=(t:Tally)=>personas(t).reduce((n,p)=>n+p.prefers_with,0);
+const runsAll=(t:Tally)=>personas(t).reduce((n,p)=>n+p.prefers_with+p.prefers_without,0);
+const one=(n:number)=>n.toFixed(1);
+const span=(xs:number[])=>`${Math.round(Math.min(...xs))}–${Math.round(Math.max(...xs))}`;
+const recent=later.filter(r=>r.n>=5);
+const laterBriefs=new Set(later.flatMap(r=>Object.keys(r.tally.brief_verdicts))).size;
+const laterWins=later.reduce((n,r)=>n+r.tally.tests.brief_level.wins,0);
+const laterCount=later.reduce((n,r)=>n+Object.keys(r.tally.brief_verdicts).length,0);
+type XRow={gpt_pref:string;cl_pref:string};
+const xRows=xfam as XRow[];
+const xFor=xRows.filter(r=>r.gpt_pref==='with').length;
+const xAgree=xRows.filter(r=>r.gpt_pref===r.cl_pref).length;
+
+function LaterTable(){
+  return <div className="table-scroll" role="region" aria-label="Rounds 3 to 8 results" tabIndex={0}><table className="measure-table result-table later-table">
+    <caption>Rounds 3 to 8: briefs won, grader runs preferring the skill page, and mean totals out of 100</caption>
+    <thead><tr><th scope="col">Round</th><th scope="col">What changed</th><th scope="col">Briefs won / tied / lost</th><th scope="col">Graders for skill page</th><th scope="col">With skill /100</th><th scope="col">Without /100</th></tr></thead>
+    <tbody>{later.map(r=>{const b=r.tally.tests.brief_level;return <tr key={r.n}>
+      <th scope="row">{r.n}<span className="brief-key">{r.version} · {r.commit}</span></th>
+      <td>{r.what}</td>
+      <td>{b.wins} / {b.ties} / {b.losses}</td>
+      <td>{runsFor(r.tally)} of {runsAll(r.tally)}</td>
+      <td><strong className="won">{one(withMean(r.tally))}</strong></td>
+      <td>{one(withoutMean(r.tally))}</td>
+    </tr>})}</tbody>
+  </table></div>
+}
 const WORDS=['no','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
 const word=(n:number)=>WORDS[n]??String(n);
 const cap=(s:string)=>s[0].toUpperCase()+s.slice(1);
@@ -123,15 +174,28 @@ export function EvalsBody(){
   const honesty=critSum(round2,'honesty'),craft=critSum(round2,'craft');
   const margins=(r:Round)=>r.pairs.map(p=>p.withTotal-p.withoutTotal);
   return <>
-    <p className="page-intro">In blind side-by-side grading, the page built with the skill was preferred for {word(wins(round1))} of {word(round1.pairs.length)} briefs in round 1 and, after fixes, for {word(wins(round2))} of {word(round2.pairs.length)} in round 2, including a holdout brief neither side had seen.</p>
-    <p className="page-intro intro-caveat">That is {word(pairCount)} graded pairs; builders and graders were AI agents from one model family, and every grader rated its confidence {list(confidences)}. Read it as an early signal, not a general performance claim.</p>
+    <p className="page-intro">Over eight rounds of blind side-by-side grading, the page built with the skill won {laterWins} of {laterCount} briefs in rounds 3 to 8. In the last four rounds it averaged {span(recent.map(r=>withMean(r.tally)))} out of 100; the same brief built without it, {span(recent.map(r=>withoutMean(r.tally)))}.</p>
+    <p className="page-intro intro-caveat">Builders and graders were AI agents. GPT graders, re-grading rounds 3 and 4, preferred the skill page in {xFor} of {xRows.length} runs. The pre-registered target of 91 was not reached, and a stop rule written before round 8 ended the tuning. Read it as consistent evidence on one narrow task, not a general performance claim.</p>
     <a className="button outline" href={repo+'/blob/main/evals/run.md'}>Read the full run log <span>↗</span></a>
-    <div className="detail-meta">{rounds.map(r=><span key={r.n}>ROUND {r.n} / {wins(r)} OF {r.pairs.length} PREFERRED</span>)}<span>{pairCount} BLIND PAIRS / {CRITERIA.length} CRITERIA</span><span>ONE MODEL FAMILY / {list(confidences).toUpperCase()} CONFIDENCE</span></div>
+    <div className="detail-meta"><span>8 ROUNDS / {laterBriefs+briefCount} BRIEFS</span><span>ROUNDS 5–8 / {span(recent.map(r=>withMean(r.tally)))} WITH · {span(recent.map(r=>withoutMean(r.tally)))} WITHOUT</span><span>CLAUDE GRADERS / GPT CROSS-CHECK</span></div>
+
+    <section className="eval-round" aria-labelledby="rounds-later">
+      <div className="detail-split">
+        <div><h2 id="rounds-later">Rounds 3 to 8.<br/><i>A steady lead, then a plateau.</i></h2><p className="caption">Each round pre-registered before any build</p></div>
+        <div>
+          <p>From round 3 each pair went to three fresh graders, a senior designer, the brief’s buyer and the engineer who would maintain it, who scored ten criteria from 1 to 10. A separate blind adjudicator confirmed any hard fail (a broken main action, invented proof or an unreadable phone layout), which decides the brief whatever the scores.</p>
+          <LaterTable/>
+          <p>The lead held in every round, but the skill page’s own score stopped rising at about 84. Round 7 rebuilt the same pages and scored the same; its unchanged no-skill pages showed that one grader’s total moves about ±3 points on an identical page. Round 8 used briefs the skill was never tuned on and landed at the same level, so the result is not an artefact of tuning to those briefs.</p>
+          <p>GPT graders re-graded all of rounds 3 and 4 blind: they preferred the skill page in {xFor} of {xRows.length} runs and agreed with the Claude grader’s choice in {xAgree}.</p>
+          <a className="text-link" href={repo+'/tree/main/evals/runs/2026-10-20-xfam'}>Cross-family outputs and comparison ↗</a>
+        </div>
+      </div>
+    </section>
 
     <section className="detail-split">
-      <h2>How it<br/><i>was run.</i></h2>
+      <h2>Rounds 1 and 2:<br/><i>how they ran.</i></h2>
       <div>
-        <p>For each brief, fresh agents built one static page with the skill and one without: same model, same rules, no network and no invented proof. A separate grader per brief saw only the two pages, labelled A and B, with the brief and screenshots at 1440, 768 and 390 px. It operated both pages, scored each criterion from 1 to 10 and named a preference.</p>
+        <p>The first two rounds used an earlier rubric of {CRITERIA.length} criteria and one grader per brief. For each brief, fresh agents built one static page with the skill and one without: same model, same rules, no network and no invented proof. A separate grader per brief saw only the two pages, labelled A and B, with the brief and screenshots at 1440, 768 and 390 px. It operated both pages, scored each criterion from 1 to 10 and named a preference.</p>
         <ul className="pills criteria-pills">{CRITERIA.map(c=><li key={c}>{c}</li>)}</ul>
         <p className="caption">Totals are the graders’ scores summed as written in each grade file. Which page was A and which was B is recorded in each run’s mapping.json.</p>
       </div>
@@ -192,16 +256,17 @@ export function EvalsBody(){
       <h2>Where evidence ends.</h2>
       <div>
         <ul>
-          <li>{cap(word(pairCount))} pairs over {word(briefCount)} briefs. {cap(word(round2.pairs.length-round2.pairs.filter(p=>holdout(p.brief)).length))} of the {word(round2.pairs.length)} round-2 briefs were the ones the fixes targeted; only {round2.pairs.filter(p=>holdout(p.brief)).map(p=>p.brief).join(', ')} was new to both sides.</li>
-          <li>Builders and graders were AI agents from one model family.</li>
+          <li>Rounds 3 to 8 cover {laterBriefs} briefs; no round of four briefs can reach significance on its own (p = 0.125 at four of four), and round 3’s twelve briefs gave p = {t3.tests.brief_level.p_two_sided.toFixed(2)}.</li>
+          <li>Every build and most grades came from one model family; the GPT re-grade covers rounds 3 and 4 only, and its hard-fail flags were not adjudicated.</li>
+          <li>Rounds 1 and 2: {word(pairCount)} pairs over {word(briefCount)} briefs. {cap(word(round2.pairs.length-round2.pairs.filter(p=>holdout(p.brief)).length))} of the {word(round2.pairs.length)} round-2 briefs were the ones the fixes targeted; only {round2.pairs.filter(p=>holdout(p.brief)).map(p=>p.brief).join(', ')} was new to both sides.</li>
           <li>Every grader rated its confidence {list(confidences)}. Margins ran from {range(margins(round2))} points out of {OUT_OF} in round 2, and from {signed(Math.min(...margins(round1)))} to {signed(Math.max(...margins(round1)))} in round 1.</li>
           <li>On the skill’s own {checkCount} automatic checks, the pages built without it had {range(blockFailures(false))} block failures each and the skill pages {range(blockFailures(true))}. Those checks are the skill’s, so that comparison is not neutral.</li>
-          <li>The graders’ remaining complaints after round 2, an “illustrative API” label that made a developer tool look unsure of itself and a heading font that failed to load from disk, are fixed but not yet re-tested.</li>
         </ul>
         <h3>Sources</h3>
         <ul>
           <li><a href={repo+'/blob/main/evals/run.md'}>evals/run.md, the full run log ↗</a></li>
-          {rounds.map(r=><li key={r.n}><a href={runs+r.folder}>evals/runs/{r.folder}, round {r.n} outputs and grades ↗</a></li>)}
+          {[...rounds,...later].map(r=><li key={r.n}><a href={runs+r.folder}>evals/runs/{r.folder}, round {r.n} outputs and grades ↗</a></li>)}
+          <li><a href={runs+'2026-10-20-xfam'}>evals/runs/2026-10-20-xfam, the GPT re-grade ↗</a></li>
           <li><a href={repo+'/tree/main/evals/briefs'}>evals/briefs, the {word(briefCount)} briefs ↗</a></li>
         </ul>
       </div>

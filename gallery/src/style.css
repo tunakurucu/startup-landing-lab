@@ -119,6 +119,7 @@
 /* Column labels carry soft hyphens; they only break where the table would otherwise overflow (320 px phones). */
 .result-table thead th{hyphens:none}
 @media(max-width:370px){.result-table thead th{hyphens:manual}}
+.later-table td:nth-child(2){min-width:18ch;max-width:36ch;font-size:.85rem;line-height:1.5}
 .brief-key{display:block;font:.75rem var(--font-mono);color:#5f6452;margin-top:2px}
 .won{font-weight:600;background:var(--lime);padding:2px 6px;margin-left:-6px}
 .compare-note{margin:50px 0 18px}
