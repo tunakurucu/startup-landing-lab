@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenAPI contract checks on every pull request · Contractcheck</title>
+<meta name="description" content="Contractcheck is a GitHub App that runs your OpenAPI spec against your staging API on every pull request and fails the check when a response stops matching: a missing field, a changed type, an undocumented status code.">
+<meta name="theme-color" content="#f4f4f1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contractcheck: break the spec and the pull request fails">
+<meta property="og:description" content="A GitHub App that tests your staging API against your OpenAPI spec on every pull request. Free for public repos, $19 a month per private repo.">
+<meta property="og:image" content="https://contractcheck.example/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contractcheck: break the spec and the pull request fails">
+<meta name="twitter:description" content="A GitHub App that tests your staging API against your OpenAPI spec on every pull request.">
+<meta name="twitter:image" content="https://contractcheck.example/og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+@font-face{font-family:"CC Display";src:url(fonts/heros-cn-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"CC Text";src:url(fonts/heros-regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"CC Text";src:url(fonts/heros-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"CC Mono";src:url(fonts/dejavu-mono.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+:root{
+  --paper:#f4f4f1;          /* the page: print white with a cool whisper */
+  --sheet:#ffffff;          /* the product's own surfaces */
+  --ink:#0b0b0c;
+  --ink-2:#3d3e43;
+  --ink-3:#5f6066;
+  --rule:#d6d6d0;
+  --rule-2:#e6e6e1;
+  --red:#c8231a;            /* the one ink colour: a failing check, nothing else */
+  --red-wash:#fbe9e6;
+  --display:"CC Display","Arial Narrow",sans-serif;
+  --text:"CC Text",Helvetica,Arial,sans-serif;
+  --mono:"CC Mono",ui-monospace,Menlo,Consolas,monospace;
+  --s1:8px;--s2:12px;--s3:16px;--s4:24px;--s5:32px;--s6:48px;--s7:64px;--s8:96px;
+  --gutter:clamp(20px, 0.9rem + 3.3vw, 64px);
+  --maxw:1312px;
+  --sec:clamp(60px, 2.4rem + 5.9vw, 136px);
+  --radius:10px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --bar:64px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul,fieldset,legend,pre{margin:0}
+ol,ul{padding:0;list-style:none}
+fieldset{border:0;padding:0;min-width:0}
+legend{padding:0}
+img,svg,video,canvas{display:block;max-width:100%}
+input,button,textarea,select{font:inherit;color:inherit}
+:where(p,li,dd,td,output,[role=status]){overflow-wrap:break-word;min-width:0}
+html{scroll-padding-top:calc(var(--bar) + 8px);-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--text);font-size:1.0625rem;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit}
+code,.mono{font-family:var(--mono);font-size:.86em;letter-spacing:0}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:12px;top:-80px;padding:12px 16px;background:var(--ink);color:var(--paper);z-index:100;text-decoration:none;border-radius:8px}
+.skip:focus{top:12px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.wrap{width:100%;max-width:calc(var(--maxw) + 2 * var(--gutter));margin-inline:auto;padding-inline:var(--gutter)}
+
+/* ---------- buttons: soft rectangles ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:12px;font-family:var(--text);font-weight:700;font-size:.95rem;letter-spacing:.005em;text-decoration:none;white-space:nowrap;border:1px solid transparent;transition:transform .15s var(--ease),background-color .15s var(--ease)}
+.btn-primary{background:var(--ink);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 10px 24px -14px rgba(11,11,12,.6)}
+.btn-quiet{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn:active{transform:scale(.98)}
+@media (hover:hover) and (pointer:fine){
+  .btn-primary:hover{background:#26272b}
+  .btn-quiet:hover{background:rgba(11,11,12,.05)}
+}
+.btn-sm{min-height:44px;padding:0 18px;font-size:.9rem;border-radius:10px}
+
+/* ---------- header: hairline bar ---------- */
+.site{position:sticky;top:0;z-index:50;background:rgba(244,244,241,.92);border-bottom:1px solid var(--rule);transition:background-color .2s var(--ease)}
+@media (min-width:900px){@supports (backdrop-filter:blur(8px)){.site{background:rgba(244,244,241,.82);backdrop-filter:blur(10px)}}}
+.site.scrolled{background:var(--paper);box-shadow:0 1px 0 var(--rule)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s4);height:var(--bar)}
+.brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;text-decoration:none;font-family:var(--display);font-weight:700;font-size:1.5rem;letter-spacing:.005em;line-height:1}
+.brand svg{width:26px;height:26px}
+#site-menu{display:flex;align-items:center;gap:var(--s4)}
+#site-menu ul{display:flex;gap:4px}
+#site-menu ul a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;text-decoration:none;font-size:.95rem;color:var(--ink-2);border-radius:8px}
+@media (hover:hover) and (pointer:fine){#site-menu ul a:hover{color:var(--ink);background:rgba(11,11,12,.05)}}
+.menu-btn{display:none}
+
+@media (max-width:899px){
+  :root{--bar:56px}
+  .menu-btn{display:inline-flex;align-items:center;gap:10px;min-height:44px;min-width:44px;padding:0 12px;margin-right:-12px;background:none;border:0;border-radius:8px;cursor:pointer;font-size:.95rem;font-weight:700}
+  .menu-lines{position:relative;width:20px;height:12px}
+  .menu-lines i{position:absolute;left:0;right:0;height:2px;background:var(--ink);border-radius:2px;transition:transform .3s var(--ease)}
+  .menu-lines i:first-child{top:1px}
+  .menu-lines i:last-child{bottom:1px}
+  .menu-btn[aria-expanded=true] .menu-lines i:first-child{transform:translateY(4px) rotate(45deg)}
+  .menu-btn[aria-expanded=true] .menu-lines i:last-child{transform:translateY(-4px) rotate(-45deg)}
+  /* Without script the links stay in a row under the bar; with script they open as an overlay. */
+  .bar{flex-wrap:wrap;height:auto;min-height:var(--bar)}
+  html:not(.js) #site-menu{width:100%;flex-wrap:wrap;padding-bottom:8px}
+  html:not(.js) #site-menu ul{flex-wrap:wrap}
+  .js #site-menu{position:fixed;inset:var(--bar) 0 0 0;background:var(--paper);flex-direction:column;align-items:stretch;justify-content:flex-start;gap:var(--s5);padding:var(--s5) var(--gutter);border-top:1px solid var(--rule);overflow:auto}
+  .js #site-menu[hidden]{display:none}
+  .js #site-menu ul{flex-direction:column;gap:0}
+  .js #site-menu ul a{font-family:var(--display);font-weight:700;font-size:2.25rem;color:var(--ink);min-height:64px;padding:0;border-bottom:1px solid var(--rule);border-radius:0;width:100%}
+  .js #site-menu .btn{width:100%}
+}
+@media (max-width:899px) and (prefers-reduced-motion:no-preference){
+  .js #site-menu:not([hidden]) li,.js #site-menu:not([hidden]) .btn{animation:menu-in .5s var(--ease) both}
+  .js #site-menu:not([hidden]) li:nth-child(2){animation-delay:.06s}
+  .js #site-menu:not([hidden]) li:nth-child(3){animation-delay:.12s}
+  .js #site-menu:not([hidden]) li:nth-child(4){animation-delay:.18s}
+  .js #site-menu:not([hidden]) .btn{animation-delay:.24s}
+}
+@keyframes menu-in{from{transform:translateY(18px);opacity:.6}to{transform:none;opacity:1}}
+@media (min-width:900px){.js #site-menu[hidden]{display:flex}}
+
+/* ---------- hero: product window ---------- */
+.hero{padding-top:clamp(40px, 1rem + 5.5vw, 96px);overflow:clip}
+.hero-top{display:grid;gap:var(--s4) var(--s7);align-items:end}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(2.5rem, 1.43rem + 4.8vw, 5.75rem);line-height:.98;letter-spacing:-.012em;text-wrap:balance;overflow-wrap:break-word}
+.mask{display:block;overflow:hidden;padding-block:.04em .1em;margin-block:-.04em -.1em}
+.mask>span{display:block}
+.lede{font-size:clamp(1.0625rem, 1rem + .25vw, 1.1875rem);line-height:1.5;color:var(--ink-2);max-width:31em;text-wrap:pretty}
+.actions{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s5)}
+.terms{margin-top:var(--s3);font-size:.9375rem;color:var(--ink-3);max-width:34em}
+@media (min-width:1100px){
+  .hero-top{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+  .hero-side{padding-bottom:6px}
+}
+@media (min-width:900px) and (max-width:1099px){.hero-side{max-width:640px}}
+@media (max-width:899px){.lede{margin-top:var(--s1)}.actions{margin-top:var(--s4)}}
+@media (max-width:519px){.actions .btn{flex:1 1 100%}}
+
+/* The hero picture: the failing check, at full size. */
+.sheet-wrap{margin-top:clamp(36px, 1rem + 2.5vw, 56px)}
+.sheet{background:var(--sheet);border:1px solid var(--ink);border-radius:var(--radius);overflow:hidden;box-shadow:0 50px 90px -40px rgba(20,20,30,.28),0 2px 0 rgba(11,11,12,.04)}
+.sheet-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);padding:12px 20px;background:var(--ink);color:#fff}
+.sb-left{display:flex;align-items:center;gap:12px;min-width:0}
+.xsq{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:6px;background:var(--red);flex:none}
+.xsq svg{width:14px;height:14px}
+.sheet-bar .mono{font-size:.875rem}
+.tag{display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:999px;border:1px solid currentColor;font-family:var(--mono);font-size:.75rem;letter-spacing:.02em;line-height:1}
+.sheet-bar .tag{color:rgba(255,255,255,.78)}
+.sb-right{color:rgba(255,255,255,.82);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sheet-body{display:grid}
+.sum{padding:28px 28px 24px}
+.sum-mark{display:grid;place-items:center;width:56px;height:56px;border-radius:12px;background:var(--red);margin-bottom:20px}
+.sum-mark svg{width:24px;height:24px}
+.sum-title{font-family:var(--display);font-weight:700;font-size:clamp(2rem, 1.5rem + 1.6vw, 3rem);line-height:1;letter-spacing:-.005em}
+.sum-text{margin-top:12px;font-size:1.0625rem;color:var(--ink-2);line-height:1.45}
+.rows li{display:grid;gap:4px 20px;padding:18px 28px;border-top:1px solid var(--rule-2)}
+.kind{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+.req{font-size:.875rem;color:var(--ink-3)}
+.why{font-size:1.0625rem;line-height:1.4}
+.why code{background:#f1f1ee;padding:1px 5px;border-radius:4px}
+.loc{font-size:.8125rem;color:var(--ink-3)}
+.sheet-foot{padding:14px 28px;border-top:1px solid var(--rule-2);font-size:.8125rem;color:var(--ink-3);background:#fafaf8}
+@media (min-width:900px){
+  .sheet-body{grid-template-columns:minmax(260px,32%) 1fr}
+  .sum{padding:36px 36px 32px;border-right:1px solid var(--rule-2)}
+  .rows li:first-child{border-top:0}
+  .rows li{grid-template-columns:190px minmax(0,1fr) auto;grid-template-areas:"kind req loc" "kind why loc";padding:22px 32px;align-items:start}
+  .rows .kind{grid-area:kind;padding-top:3px}
+  .rows .req{grid-area:req}
+  .rows .why{grid-area:why;font-size:1.1875rem}
+  .rows .loc{grid-area:loc;padding-top:2px}
+}
+@media (max-width:899px){
+  .sheet-bar{padding:10px 14px}
+  .sb-right{display:none}
+  .sum{padding:20px 18px 16px;display:grid;grid-template-columns:44px 1fr;gap:4px 14px;align-items:center}
+  .sum-mark{width:44px;height:44px;margin:0;border-radius:10px;grid-row:span 2}
+  .sum-mark svg{width:18px;height:18px}
+  .sum-title{font-size:1.75rem}
+  .sum-text{margin:0;font-size:.9375rem}
+  .rows li{padding:14px 18px;grid-template-columns:1fr auto;grid-template-areas:"kind loc" "why why" "req req"}
+  .rows .kind{grid-area:kind}.rows .loc{grid-area:loc}.rows .why{grid-area:why;font-size:1rem}.rows .req{grid-area:req;font-size:.8125rem}
+  .sheet-foot{display:none}
+  .rows .req{display:none}
+}
+@media (max-width:599px){.checks-mini{display:none}.step{padding:var(--s4) 0}}
+
+/* ---------- sections ---------- */
+.sec{padding-block:var(--sec);border-top:1px solid var(--rule)}
+.hero + .sec{border-top:0}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(2.125rem, 1.6rem + 2.2vw, 3.75rem);line-height:1.02;letter-spacing:-.008em;text-wrap:balance}
+h3{font-family:var(--text);font-weight:700;font-size:1.1875rem;line-height:1.3}
+.sec-head p{margin-top:var(--s4);color:var(--ink-2);max-width:36em;text-wrap:pretty}
+.sec-head p + p{margin-top:var(--s3)}
+
+/* ---------- try it: the signature artifact ---------- */
+.try .sec-head{display:grid;gap:var(--s4) var(--s7);align-items:end;margin-bottom:var(--s6)}
+.try .sec-head p{margin-top:0}
+@media (min-width:1100px){.try .sec-head{grid-template-columns:minmax(0,1fr) minmax(0,440px)}}
+.demo{background:var(--sheet);border:1px solid var(--ink);border-radius:var(--radius);display:grid;box-shadow:0 40px 80px -50px rgba(20,20,30,.3)}
+.demo-label{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 24px;border-bottom:1px solid var(--rule-2);font-size:.9375rem;color:var(--ink-2)}
+.demo-label .tag{color:var(--ink)}
+.verdict{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:start;padding:22px 24px;border-bottom:1px solid var(--rule-2);min-height:132px}
+.v-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:10px;background:var(--red);grid-row:span 2}
+.v-icon svg{width:18px;height:18px}
+.verdict.is-pass .v-icon{background:var(--ink)}
+.v-title{font-family:var(--display);font-weight:700;font-size:1.75rem;line-height:1.1;align-self:center}
+.verdict.is-fail .v-title{color:var(--red)}
+.v-detail{font-size:1rem;color:var(--ink-2);line-height:1.5;grid-column:2}
+.v-detail .mono{display:block;color:var(--ink-3);font-size:.875rem;margin-bottom:2px}
+.choices{padding:20px 24px 24px;display:grid;gap:10px;align-content:start}
+.choices legend{float:left;width:100%;font-weight:700;font-size:1rem;margin-bottom:12px}
+.choice{position:relative;display:block;cursor:pointer}
+.choice input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}
+.c-box{display:flex;align-items:center;gap:14px;min-height:56px;padding:12px 16px;border:1px solid var(--rule);border-radius:12px;font-size:1rem;line-height:1.3;transition:border-color .15s var(--ease),background-color .15s var(--ease)}
+.c-dot{flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--ink-3);display:grid;place-items:center}
+.c-dot::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--ink);transform:scale(0);transition:transform .15s var(--ease)}
+.choice input:checked + .c-box{border-color:var(--ink);background:#f6f6f3;box-shadow:inset 0 0 0 1px var(--ink)}
+.choice input:checked + .c-box .c-dot{border-color:var(--ink)}
+.choice input:checked + .c-box .c-dot::after{transform:scale(1)}
+.choice input:focus-visible + .c-box{outline:3px solid var(--ink);outline-offset:3px}
+.c-hint{margin-left:auto;font-size:.8125rem;color:var(--ink-3);white-space:nowrap}
+.choice input:checked + .c-box .c-hint.bad{color:var(--red)}
+@media (hover:hover) and (pointer:fine){.c-box:hover{border-color:var(--ink-3)}}
+.reset{justify-self:start;min-height:44px;padding:0 16px;margin-top:6px;background:none;border:1px solid var(--rule);border-radius:10px;cursor:pointer;font-size:.9375rem;color:var(--ink-2)}
+@media (hover:hover) and (pointer:fine){.reset:hover{border-color:var(--ink-3);color:var(--ink)}}
+.evidence{display:grid;gap:0;border-top:1px solid var(--rule-2)}
+.pane{min-width:0}
+.pane + .pane{border-top:1px solid var(--rule-2)}
+.pane figcaption{display:flex;justify-content:space-between;gap:12px;padding:12px 24px 0;font-size:.875rem;color:var(--ink-3)}
+.pane figcaption b{color:var(--ink);font-family:var(--mono);font-weight:400}
+.code{font-family:var(--mono);font-size:.875rem;line-height:1.65;padding:10px 0 18px;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink)}
+.code .ln{display:block;padding:0 24px 0 24px;position:relative}
+.code.numbered .ln{padding-left:64px;text-indent:0}
+.code.numbered .ln::before{content:attr(data-n);position:absolute;left:24px;width:24px;text-align:right;color:#8b8c91}
+.code .gap{color:#8b8c91}
+.code .ln.hl{background:var(--red-wash);box-shadow:inset 3px 0 0 var(--red)}
+.code .note{color:var(--red)}
+@media (prefers-reduced-motion:no-preference){.code .ln.hl{animation:wash .5s var(--ease)}}
+@keyframes wash{from{background-color:rgba(251,233,230,0)}to{background-color:var(--red-wash)}}
+@media (min-width:1000px){
+  /* Control, then its result, in the left column; the evidence that explains the result on the right. */
+  .demo{grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-rows:auto auto 1fr;grid-template-areas:"label label" "choices evidence" "verdict evidence"}
+  .demo-label{grid-area:label}
+  .verdict{grid-area:verdict;align-self:stretch;align-content:start;border-bottom:0;border-top:1px solid var(--ink);margin:0 32px;padding:24px 0 32px}
+  .choices{grid-area:choices;padding:26px 32px 28px}
+  .evidence{grid-area:evidence;border-left:1px solid var(--rule-2);border-top:0}
+  .v-title{font-size:2rem}
+  .pane figcaption{padding-inline:32px}
+  .code .ln{padding-inline:32px}
+  .code.numbered .ln{padding-left:72px}
+  .code.numbered .ln::before{left:32px}
+}
+@media (max-width:519px){
+  .demo-label,.verdict,.choices{padding-inline:16px}
+  .pane figcaption{padding-inline:16px}
+  .code .ln{padding-inline:16px}
+  .code.numbered .ln{padding-left:48px}
+  .code.numbered .ln::before{left:12px}
+  .v-title{font-size:1.5rem}
+  .verdict{min-height:0}
+}
+
+/* ---------- setup ---------- */
+.setup-grid{display:grid;gap:var(--s6) var(--s7)}
+.setup-grid>*,.step>div,.reads-grid>*,.pricing-grid>*{min-width:0}
+@media (min-width:1000px){.setup-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}.setup .sec-head{position:sticky;top:calc(var(--bar) + 40px);align-self:start}}
+.steps{counter-reset:step;border-top:1px solid var(--ink)}
+.step{display:grid;grid-template-columns:56px 1fr;gap:var(--s4);padding:var(--s5) 0;border-bottom:1px solid var(--rule)}
+.num{font-family:var(--display);font-weight:700;font-size:2.75rem;line-height:.9;color:var(--ink)}
+.step p{margin-top:8px;color:var(--ink-2)}
+.link{overflow-wrap:anywhere;display:inline-flex;align-items:center;min-height:44px;margin-top:8px;color:var(--ink);text-underline-offset:4px;text-decoration-thickness:1px}
+.snippet{margin-top:var(--s3);background:var(--sheet);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.snippet figcaption{padding:10px 16px;border-bottom:1px solid var(--rule-2);font-size:.875rem;color:var(--ink-3)}
+.snippet pre{font-family:var(--mono);font-size:.875rem;line-height:1.7;padding:14px 16px;white-space:pre-wrap;overflow-wrap:anywhere}
+.snippet .cm{color:#6b6c72}
+.checks-mini{margin-top:var(--s3);background:var(--sheet);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.checks-mini p{padding:10px 16px;border-bottom:1px solid var(--rule-2);font-size:.875rem;color:var(--ink-3)}
+.checks-mini li{display:grid;grid-template-columns:22px auto 1fr;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--rule-2);font-size:.9375rem}
+.checks-mini li:first-child{border-top:0}
+.checks-mini .st{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;background:var(--ink)}
+.checks-mini .st svg{width:11px;height:11px}
+.checks-mini .st.bad{background:var(--red)}
+.checks-mini b{font-family:var(--mono);font-weight:400;font-size:.875rem}
+.checks-mini span.d{color:var(--ink-3)}
+.checks-mini li.fail span.d{color:var(--red)}
+
+/* ---------- reads: staging, never production ---------- */
+.reads-grid{display:grid;gap:var(--s6) var(--s7);align-items:center}
+@media (min-width:1000px){.reads-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}}
+.flow{display:grid;gap:14px;grid-template-columns:1fr;position:relative}
+.node{position:relative;background:var(--sheet);border:1px solid var(--ink);border-radius:10px;padding:16px 18px}
+.node b{display:block;font-size:1.0625rem}
+.node span{display:block;margin-top:2px;font-size:.9375rem;color:var(--ink-2)}
+.node .mono{display:inline;font-size:.875rem}
+.node.main{background:var(--ink);color:#fff}
+.node.main span{color:rgba(255,255,255,.78)}
+.node.prod{border-style:dashed;border-color:var(--ink-3);background:transparent}
+.node.prod b{color:var(--ink-2)}
+.node.prod .never{display:inline-flex;align-items:center;gap:6px;margin-top:8px;color:var(--red);font-weight:700;font-size:.875rem}
+.node.prod .never svg{width:12px;height:12px}
+.node.result{border-color:var(--red)}
+.node.result b{color:var(--red)}
+.arrow{display:flex;align-items:center;gap:8px;font-size:.875rem;color:var(--ink-3);padding-left:18px}
+.arrow svg{width:16px;height:16px;flex:none}
+@media (min-width:700px){
+  .flow{grid-template-columns:1fr 48px 1fr;grid-template-areas:"spec . staging" "cc cc cc" "a2 a2 a2" "result . prod";gap:0}
+  .f-spec{grid-area:spec}.f-staging{grid-area:staging}
+  .f-a1{display:none}
+  .f-cc{grid-area:cc;margin-top:44px}
+  .f-a2{grid-area:a2;padding:14px 0 14px 24px}
+  .f-result{grid-area:result}.f-prod{grid-area:prod}
+  .f-cc::before,.f-cc::after{content:"";position:absolute;top:-45px;height:44px;width:1px;background:var(--ink)}
+  .f-cc::before{left:25%}
+  .f-cc::after{right:25%}
+}
+
+/* ---------- pricing ---------- */
+.pricing-grid{display:grid;gap:var(--s6) var(--s7);align-items:start}
+@media (min-width:1000px){.pricing-grid{grid-template-columns:minmax(0,6fr) minmax(0,6fr)}}
+.notfor{padding-top:var(--s3);border-top:1px solid var(--rule);color:var(--ink-3)!important}
+.ratecard{background:var(--sheet);border:1px solid var(--ink);border-radius:var(--radius);overflow:hidden;box-shadow:0 40px 80px -50px rgba(20,20,30,.3)}
+.rc-row{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s3);padding:22px 28px;border-bottom:1px solid var(--rule-2);font-size:1.0625rem}
+.rc-row b{font-family:var(--display);font-weight:700;font-size:2.5rem;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rc-row b small{font-family:var(--text);font-weight:400;font-size:1rem;color:var(--ink-3)}
+.rc-approve{padding:8px 28px}
+.rc-approve div{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--rule-2)}
+.rc-approve div:last-child{border-bottom:0}
+.rc-approve dt{font-weight:700;font-size:.9375rem}
+.rc-approve dd{color:var(--ink-2);font-size:.9375rem}
+.rc-ex{padding:16px 28px;background:#fafaf8;border-top:1px solid var(--rule-2);font-size:.9375rem;color:var(--ink-2)}
+@media (max-width:519px){.rc-row,.rc-approve,.rc-ex{padding-inline:18px}.rc-row b{font-size:2rem}.rc-approve div{grid-template-columns:96px 1fr}}
+
+/* ---------- final ---------- */
+.final{background:var(--ink);color:#fff;border-top:0}
+.final h2{max-width:14em}
+.final .actions{margin-top:var(--s5)}
+.final .btn-primary{background:#fff;color:var(--ink);box-shadow:none}
+.final .btn-quiet{color:#fff;border-color:rgba(255,255,255,.7)}
+@media (hover:hover) and (pointer:fine){.final .btn-primary:hover{background:#e9e9e6}.final .btn-quiet:hover{background:rgba(255,255,255,.08)}}
+.final .terms{color:rgba(255,255,255,.72)}
+.final :focus-visible{outline-color:#fff}
+
+/* ---------- footer ---------- */
+.foot{background:var(--ink);color:#fff;border-top:1px solid rgba(255,255,255,.16);padding-block:var(--s6)}
+.foot-in{display:grid;gap:var(--s4)}
+@media (min-width:900px){.foot-in{grid-template-columns:auto 1fr;align-items:center}.foot ul{justify-content:flex-end}}
+.foot ul{display:flex;flex-wrap:wrap;gap:0 8px}
+.foot ul a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;text-decoration:none;color:rgba(255,255,255,.86)}
+@media (hover:hover) and (pointer:fine){.foot ul a:hover{color:#fff;text-decoration:underline}}
+.foot p{grid-column:1/-1;font-size:.875rem;color:rgba(255,255,255,.66);padding-top:var(--s4);border-top:1px solid rgba(255,255,255,.16)}
+.foot :focus-visible{outline-color:#fff}
+.foot .brand svg rect{fill:#fff}
+.foot .brand svg path{stroke:var(--ink)}
+
+/* ---------- motion: line-mask reveals and one clip-path wipe ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .hero h1 .mask>span{animation:line-up .9s var(--ease) both}
+  .hero h1 .mask:nth-child(2)>span{animation-delay:.08s}
+  .hero-side>*{animation:rise .8s var(--ease) both}
+  .hero-side>.lede{animation-delay:.16s}
+  .hero-side>.actions{animation-delay:.24s}
+  .hero-side>.terms{animation-delay:.3s}
+  .sheet{animation:wipe 1.1s var(--ease) .32s both}
+  .js .sec h2 .mask>span{transform:translateY(105%);transition:transform .9s var(--ease)}
+  .js .sec.in h2 .mask>span{transform:none}
+  .js .wipe{clip-path:inset(0 0 100% 0);transition:clip-path 1s var(--ease) .12s}
+  .js .sec.in .wipe{clip-path:inset(0 0 0 0)}
+}
+@keyframes line-up{from{transform:translateY(105%)}to{transform:none}}
+@keyframes rise{from{transform:translateY(18px);opacity:.6}to{transform:none;opacity:1}}
+@keyframes wipe{from{clip-path:inset(0 0 100% 0 round 10px)}to{clip-path:inset(0 0 0 0 round 10px)}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site" id="top">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="Contractcheck, back to top">
+      <svg viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="6" fill="#0b0b0c"/><path d="M9 6.5c-2 0-2.4 1-2.4 2.6v1.6c0 1.2-.5 2-1.6 2.3 1.1.3 1.6 1.1 1.6 2.3v1.6c0 1.6.4 2.6 2.4 2.6M17 6.5c2 0 2.4 1 2.4 2.6v1.6c0 1.2.5 2 1.6 2.3-1.1.3-1.6 1.1-1.6 2.3v1.6c0 1.6-.4 2.6-2.4 2.6" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/><path d="M10.3 13.2l1.9 1.9 3.6-4" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Contractcheck</span>
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu"><span class="menu-lines" aria-hidden="true"><i></i><i></i></span><span class="menu-label">Menu</span></button>
+    <nav id="site-menu" aria-label="Main">
+      <ul>
+        <li><a href="#try">Try it</a></li>
+        <li><a href="#setup">Setup</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="https://contractcheck.example/docs">Docs</a></li>
+      </ul>
+      <a class="btn btn-primary btn-sm" href="https://github.com/apps/contractcheck">Install the GitHub App</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap hero-top">
+      <h1 id="hero-h"><span class="mask"><span>Break the spec and</span></span> <span class="mask"><span>the pull request fails.</span></span></h1>
+      <div class="hero-side">
+        <p class="lede">A GitHub App for backend teams that tests your staging API against your OpenAPI spec on every pull request.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://github.com/apps/contractcheck">Install the GitHub App</a>
+          <a class="btn btn-quiet" href="https://contractcheck.example/docs">Read the docs</a>
+        </div>
+        <p class="terms">Free for public repos, $19 a month per private repo. Reads staging only, never production.</p>
+      </div>
+    </div>
+
+    <div class="wrap sheet-wrap">
+      <figure class="sheet" data-hero-visual role="img" aria-label="Example of a failing Contractcheck check on pull request 482: three responses no longer match openapi.yaml. customer_id is missing, total is a string instead of a number, and a 410 status is not documented.">
+        <div aria-hidden="true">
+          <div class="sheet-bar">
+            <span class="sb-left"><span class="xsq"><svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></span><span class="mono">contractcheck</span><span class="tag">Example</span></span>
+            <span class="sb-right mono">Pull request #482 · Orders API cleanup</span>
+          </div>
+          <div class="sheet-body">
+            <div class="sum">
+              <span class="sum-mark"><svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></span>
+              <p class="sum-title">Check failed</p>
+              <p class="sum-text">3 responses no longer match <span class="mono">openapi.yaml</span></p>
+            </div>
+            <ol class="rows">
+              <li><span class="kind">Missing field</span><span class="req mono">GET /orders/ord_8812 → 200</span><span class="why"><code>customer_id</code> is required by the spec and absent</span><span class="loc mono">openapi.yaml:33</span></li>
+              <li><span class="kind">Changed type</span><span class="req mono">GET /orders/ord_8812 → 200</span><span class="why"><code>total</code> should be a number; staging sent "42.50"</span><span class="loc mono">openapi.yaml:37</span></li>
+              <li><span class="kind">Undocumented status</span><span class="req mono">GET /orders/ord_0007 → 410</span><span class="why">410 isn’t in the spec for this operation (200, 404)</span><span class="loc mono">openapi.yaml:11</span></li>
+            </ol>
+          </div>
+          <p class="sheet-foot mono">Responses read from staging · compared with openapi.yaml at 9c41e2a</p>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec try" id="try" aria-labelledby="try-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="try-h"><span class="mask"><span>Change one response. Watch the check fail.</span></span></h2>
+        <p>Pick what pull request #482 changes. Contractcheck reads the staging response, compares it with the spec and reports what no longer matches.</p>
+      </div>
+
+      <div class="demo" data-signature>
+        <p class="demo-label"><span class="tag">Sample</span> A pull request written for this page. It runs in your browser; nothing is sent.</p>
+
+        <div class="verdict is-fail" id="verdict" role="status" aria-live="polite">
+          <span class="v-icon" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></span>
+          <p class="v-title">Check failed</p>
+          <p class="v-detail"><span class="mono">GET /orders/ord_8812 → 200</span><code>total</code> should be a number (openapi.yaml:37). Staging sent the string "42.50".</p>
+        </div>
+
+        <fieldset class="choices">
+          <legend>Pull request #482 changes…</legend>
+          <label class="choice"><input type="radio" name="change" value="rename"><span class="c-box"><span class="c-dot" aria-hidden="true"></span><span>Rename <code>customer_id</code></span></span></label>
+          <label class="choice"><input type="radio" name="change" value="string" checked><span class="c-box"><span class="c-dot" aria-hidden="true"></span><span>Send <code>total</code> as a string</span></span></label>
+          <label class="choice"><input type="radio" name="change" value="gone"><span class="c-box"><span class="c-dot" aria-hidden="true"></span><span>Return 410 for archived orders</span></span></label>
+          <label class="choice"><input type="radio" name="change" value="index"><span class="c-box"><span class="c-dot" aria-hidden="true"></span><span>Add a database index</span></span></label>
+          <button type="button" class="reset" id="reset">Reset the sample</button>
+        </fieldset>
+
+        <div class="evidence">
+          <figure class="pane">
+            <figcaption><span>Staging response</span><b id="req">GET /orders/ord_8812</b></figcaption>
+            <pre class="code" id="resp"><span class="ln">HTTP/1.1 200 OK</span><span class="ln">{</span><span class="ln">  "id": "ord_8812",</span><span class="ln">  "status": "paid",</span><span class="ln hl">  "total": "42.50", <span class="note">← spec: number</span></span><span class="ln">  "customer_id": "cus_301"</span><span class="ln">}</span></pre>
+          </figure>
+          <figure class="pane">
+            <figcaption><span>Your spec</span><b>openapi.yaml</b></figcaption>
+            <pre class="code numbered" id="spec"><span class="ln" data-n="9">/orders/{id}:</span><span class="ln" data-n="10">  get:</span><span class="ln" data-n="11">    responses:</span><span class="ln" data-n="12">      "200": { $ref: Order }</span><span class="ln" data-n="13">      "404": { $ref: NotFound }</span><span class="ln gap" data-n="">  …</span><span class="ln" data-n="31">Order:</span><span class="ln" data-n="32">  type: object</span><span class="ln" data-n="33">  required: [id, status, total, customer_id]</span><span class="ln" data-n="34">  properties:</span><span class="ln" data-n="35">    id: { type: string }</span><span class="ln" data-n="36">    status: { type: string }</span><span class="ln hl" data-n="37">    total: { type: number }</span><span class="ln" data-n="38">    customer_id: { type: string }</span></pre>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec setup" id="setup" aria-labelledby="setup-h">
+    <div class="wrap setup-grid">
+      <div class="sec-head">
+        <h2 id="setup-h"><span class="mask"><span>The spec you already have is the test.</span></span></h2>
+        <p>No Postman collection to keep in sync, and no waiting for a client team’s bug report. Three steps, and every pull request gets the check.</p>
+      </div>
+      <ol class="steps">
+        <li class="step">
+          <span class="num" aria-hidden="true">1</span>
+          <div>
+            <h3>Install the GitHub App</h3>
+            <p>Add it to the repositories that hold an API and its OpenAPI spec. Public repositories are free.</p>
+            <a class="link mono" href="https://github.com/apps/contractcheck">github.com/apps/contractcheck</a>
+          </div>
+        </li>
+        <li class="step">
+          <span class="num" aria-hidden="true">2</span>
+          <div>
+            <h3>Point it at your spec and staging</h3>
+            <p>Say which file is the spec and where staging answers.</p>
+            <figure class="snippet">
+              <figcaption>Example config. The key names are illustrative; the docs list the real ones.</figcaption>
+<pre><span class="cm"># .contractcheck.yml</span>
+spec: api/openapi.yaml
+staging_url: $STAGING_URL</pre>
+            </figure>
+          </div>
+        </li>
+        <li class="step">
+          <span class="num" aria-hidden="true">3</span>
+          <div>
+            <h3>Open a pull request</h3>
+            <p>The check runs next to your other checks and fails when a response stops matching the spec.</p>
+            <div class="checks-mini" role="img" aria-label="Example list of checks on a pull request: build passed, unit tests passed, contractcheck failed with three responses that don’t match openapi.yaml.">
+              <p aria-hidden="true">Example: checks on pull request #482</p>
+              <ul aria-hidden="true">
+                <li><span class="st"><svg viewBox="0 0 12 12"><path d="M2.5 6.3l2.3 2.2 4.7-5" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><b>build</b><span class="d">Passed</span></li>
+                <li><span class="st"><svg viewBox="0 0 12 12"><path d="M2.5 6.3l2.3 2.2 4.7-5" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><b>unit-tests</b><span class="d">Passed</span></li>
+                <li class="fail"><span class="st bad"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></span><b>contractcheck</b><span class="d">3 responses don’t match openapi.yaml</span></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec reads" id="reads" aria-labelledby="reads-h">
+    <div class="wrap reads-grid">
+      <div class="sec-head">
+        <h2 id="reads-h"><span class="mask"><span>It reads staging responses. Never production.</span></span></h2>
+        <p>Contractcheck runs your spec against the staging API you name, reads the responses and compares them with what the spec promises. Production is never part of the run.</p>
+        <p>It only sees HTTP responses, so the language and framework behind your API make no difference.</p>
+      </div>
+      <figure class="flow wipe" role="img" aria-label="Diagram: on each pull request, Contractcheck takes your openapi.yaml and the responses from your staging API, compares them, and posts a passing or failing check on the pull request. Your production API is never read.">
+        <div class="node f-spec" aria-hidden="true"><b>Your spec</b><span><span class="mono">openapi.yaml</span> in the repository</span></div>
+        <div class="node f-staging" aria-hidden="true"><b>Your staging API</b><span>Its responses are read</span></div>
+        <div class="arrow f-a1" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 2v11M3.5 8.5L8 13l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>both go to</div>
+        <div class="node main f-cc" aria-hidden="true"><b>Contractcheck</b><span>Compares every response with the spec, on every pull request</span></div>
+        <div class="arrow f-a2" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 2v11M3.5 8.5L8 13l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>posts one check</div>
+        <div class="node result f-result" aria-hidden="true"><b>Check on the pull request</b><span>Fails on a missing field, a changed type or an undocumented status</span></div>
+        <div class="node prod f-prod" aria-hidden="true"><b>Your production API</b><span class="never"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Never read</span></div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec pricing" id="pricing" aria-labelledby="pricing-h">
+    <div class="wrap pricing-grid">
+      <div class="sec-head">
+        <h2 id="pricing-h"><span class="mask"><span>$19 a month per private repo. Public repos are free.</span></span></h2>
+        <p>For the team lead approving it: you pay for each private repository the app checks, by the month. Public repositories cost nothing.</p>
+        <p class="notfor">Not a fit yet if your API has no OpenAPI spec or no staging environment to test against.</p>
+      </div>
+      <div class="ratecard">
+        <div class="rc-row"><span>Public repository</span><b>Free</b></div>
+        <div class="rc-row"><span>Private repository</span><b>$19<small> / month</small></b></div>
+        <dl class="rc-approve">
+          <div><dt>Reads</dt><dd>Responses from your staging API</dd></div>
+          <div><dt>Never reads</dt><dd>Your production API</dd></div>
+          <div><dt>Posts</dt><dd>One check on each pull request</dd></div>
+        </dl>
+        <p class="rc-ex">Example: checking 4 private repositories comes to $76 a month.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec final" aria-labelledby="final-h">
+    <div class="wrap">
+      <h2 id="final-h"><span class="mask"><span>Put the check on your next pull request.</span></span></h2>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://github.com/apps/contractcheck">Install the GitHub App</a>
+        <a class="btn btn-quiet" href="https://contractcheck.example/docs">Read the docs</a>
+      </div>
+      <p class="terms">Installs from GitHub. Free for public repos, $19 a month per private repo.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <a class="brand" href="#top" aria-label="Contractcheck, back to top">
+      <svg viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="6" fill="#0b0b0c"/><path d="M9 6.5c-2 0-2.4 1-2.4 2.6v1.6c0 1.2-.5 2-1.6 2.3 1.1.3 1.6 1.1 1.6 2.3v1.6c0 1.6.4 2.6 2.4 2.6M17 6.5c2 0 2.4 1 2.4 2.6v1.6c0 1.2.5 2 1.6 2.3-1.1.3-1.6 1.1-1.6 2.3v1.6c0 1.6-.4 2.6-2.4 2.6" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/><path d="M10.3 13.2l1.9 1.9 3.6-4" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Contractcheck</span>
+    </a>
+    <ul>
+      <li><a href="https://github.com/apps/contractcheck">Install on GitHub</a></li>
+      <li><a href="https://contractcheck.example/docs">Docs</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#try">Try the sample</a></li>
+    </ul>
+    <p>Contractcheck tests staging API responses against OpenAPI specs on pull requests. It never reads production.</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  /* Header: hairline bar turns solid once the page scrolls. */
+  const site = document.querySelector('.site');
+  const onScroll = () => site.classList.toggle('scrolled', scrollY > 8);
+  addEventListener('scroll', onScroll, {passive: true}); onScroll();
+
+  /* Phone menu. */
+  const b = document.querySelector('.menu-btn'), m = document.getElementById('site-menu');
+  const mq = matchMedia('(max-width: 899px)');
+  const lbl = b.querySelector('.menu-label');
+  const set = open => { b.setAttribute('aria-expanded', String(open)); lbl.textContent = open ? 'Close' : 'Menu'; m.hidden = !open; document.body.style.overflow = open && mq.matches ? 'hidden' : ''; };
+  set(false);
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && b.getAttribute('aria-expanded') === 'true') { set(false); b.focus(); } });
+  document.addEventListener('click', e => { if (mq.matches && b.getAttribute('aria-expanded') === 'true' && !m.contains(e.target) && !b.contains(e.target)) set(false); });
+  m.addEventListener('focusout', e => { if (mq.matches && e.relatedTarget && !m.contains(e.relatedTarget) && !b.contains(e.relatedTarget)) set(false); });
+  m.addEventListener('click', e => { if (mq.matches && e.target.closest('a')) set(false); });
+  mq.addEventListener('change', () => set(false));
+
+  /* Sections reveal their heading once, when reached. */
+  const secs = document.querySelectorAll('.sec');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {rootMargin: '0px 0px -12% 0px'});
+    secs.forEach(s => io.observe(s));
+  } else secs.forEach(s => s.classList.add('in'));
+
+  /* The sample pull request. */
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const ok = {id: '"ord_8812"', status: '"paid"', total: '42.5', cid: '"cus_301"'};
+  const body = (o, hl = {}) => [
+    ['HTTP/1.1 200 OK'], ['{'],
+    [`  "id": ${o.id},`], [`  "status": ${o.status},`],
+    [`  "total": ${o.total},`, hl.total],
+    [`  "${o.cidKey || 'customer_id'}": ${o.cid}`, hl.cid],
+    ['}']
+  ];
+  const CASES = {
+    rename: {
+      pass: false, req: 'GET /orders/ord_8812',
+      line: 'GET /orders/ord_8812 → 200',
+      detail: '<code>customer_id</code> is required (openapi.yaml:33) and missing. The response now sends <code>customerId</code>.',
+      resp: body({...ok, cidKey: 'customerId'}, {cid: 'spec requires customer_id'}),
+      spec: [33, 38]
+    },
+    string: {
+      pass: false, req: 'GET /orders/ord_8812',
+      line: 'GET /orders/ord_8812 → 200',
+      detail: '<code>total</code> should be a number (openapi.yaml:37). Staging sent the string "42.50".',
+      resp: body({...ok, total: '"42.50"'}, {total: 'spec: number'}),
+      spec: [37]
+    },
+    gone: {
+      pass: false, req: 'GET /orders/ord_0007',
+      line: 'GET /orders/ord_0007 → 410',
+      detail: 'Status 410 isn’t documented for this operation. The spec lists 200 and 404 (openapi.yaml:11).',
+      resp: [['HTTP/1.1 410 Gone', 'not in the spec'], ['{'], ['  "error": "order_archived"'], ['}']],
+      spec: [11, 12, 13]
+    },
+    index: {
+      pass: true, req: 'GET /orders/ord_8812',
+      line: 'GET /orders/ord_8812 → 200',
+      detail: 'The response matches the Order schema. An index changes nothing the API returns, so the check passes.',
+      resp: body(ok),
+      spec: []
+    }
+  };
+  const SPEC = [[9, '/orders/{id}:'], [10, '  get:'], [11, '    responses:'], [12, '      "200": { $ref: Order }'], [13, '      "404": { $ref: NotFound }'], ['', '  …'],
+    [31, 'Order:'], [32, '  type: object'], [33, '  required: [id, status, total, customer_id]'], [34, '  properties:'], [35, '    id: { type: string }'], [36, '    status: { type: string }'], [37, '    total: { type: number }'], [38, '    customer_id: { type: string }']];
+  const X = '<svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  const V = '<svg viewBox="0 0 14 14"><path d="M2.8 7.4l2.8 2.7 5.6-6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const verdict = document.getElementById('verdict'), resp = document.getElementById('resp'), spec = document.getElementById('spec'), req = document.getElementById('req');
+  const radios = [...document.querySelectorAll('input[name=change]')];
+  const DEFAULT = 'string';
+  const render = key => {
+    const c = CASES[key] || CASES[DEFAULT];
+    verdict.className = 'verdict ' + (c.pass ? 'is-pass' : 'is-fail');
+    verdict.innerHTML = `<span class="v-icon" aria-hidden="true">${c.pass ? V : X}</span><p class="v-title">${c.pass ? 'Check passed' : 'Check failed'}</p><p class="v-detail"><span class="mono">${esc(c.line)}</span>${c.detail}</p>`;
+    req.textContent = c.req;
+    resp.innerHTML = c.resp.map(([t, note]) => `<span class="ln${note ? ' hl' : ''}">${esc(t)}${note ? ` <span class="note">← ${esc(note)}</span>` : ''}</span>`).join('');
+    spec.innerHTML = SPEC.map(([n, t]) => `<span class="ln${n === '' ? ' gap' : ''}${c.spec.includes(n) ? ' hl' : ''}" data-n="${n}">${esc(t)}</span>`).join('');
+  };
+  radios.forEach(r => r.addEventListener('change', () => { if (r.checked) render(r.value); }));
+  document.getElementById('reset').addEventListener('click', () => {
+    const d = radios.find(r => r.value === DEFAULT); d.checked = true; render(DEFAULT);
+  });
+  render((radios.find(r => r.checked) || {}).value || DEFAULT);
+})();
+</script>
+</body>
+</html>

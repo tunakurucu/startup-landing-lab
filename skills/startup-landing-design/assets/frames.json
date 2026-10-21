@@ -1,46 +1,319 @@
 {
-  "note": "Frame options dealt by scripts/deal.mjs. Each option is a pattern seen working on reference-tier startup sites or in the person-judged bake-off; none is a default. 'fits' lists the lanes it suits; an empty list means any lane.",
-  "lanes": ["developer", "b2b-sales", "b2b-self-serve", "consumer", "marketplace"],
-  "nav": [
-    {"id": "floating-pill", "name": "Floating pill", "what": "A pill detached 16–24px from the top, centred, as wide as its contents, with a hairline and a soft blurred background.", "fits": ["consumer", "b2b-self-serve", "marketplace"]},
-    {"id": "hairline-bar", "name": "Hairline bar", "what": "A full-width bar on the hero's own ground: wordmark left, links and one action right, a 1px hairline underneath, turning solid once the page scrolls.", "fits": []},
-    {"id": "split-corners", "name": "Split corners", "what": "No bar: the wordmark in the top-left corner, one action in the top-right, links behind a Menu button or in a quiet second row.", "fits": ["consumer", "marketplace", "developer"]},
-    {"id": "docs-bar", "name": "Docs bar", "what": "A compact bar in the manner of a docs site: wordmark, Docs, Pricing, Changelog, and Install or Get a key as the action; links are plain text, the action a small solid button.", "fits": ["developer"]},
-    {"id": "side-rail", "name": "Side rail", "what": "From 1200px, a thin vertical rail on the left holds the wordmark and section links, with the action pinned at its foot; on smaller screens, a plain top bar.", "fits": ["b2b-sales", "developer", "b2b-self-serve"]}
-  ],
-  "hero": [
-    {"id": "editorial-split", "name": "Editorial split", "what": "Large type in the left half; the picture and one example card on the right, overlapping slightly, one tilted 2–3°.", "fits": []},
-    {"id": "centred-poster", "name": "Centred poster", "what": "Headline, sentence and buttons centred; a wide picture below them, rising into view and bleeding off the bottom of the first screen.", "fits": ["b2b-self-serve", "developer", "consumer"]},
-    {"id": "full-bleed", "name": "Full-bleed picture", "what": "The picture fills the screen; the headline and buttons sit on its calmest area, with a soft scrim only if contrast needs it.", "fits": ["consumer", "marketplace"]},
-    {"id": "card-cascade", "name": "Card cascade", "what": "Headline left; two or three product cards stacked in depth on the right, slightly rotated, each showing one state of the result.", "fits": ["b2b-self-serve", "consumer", "b2b-sales"]},
-    {"id": "monumental-type", "name": "Monumental type", "what": "A very large headline across the width, set tight; the picture as a band below it or cut into the letters.", "fits": ["developer", "consumer"]},
-    {"id": "product-window", "name": "Product window", "what": "A short headline and buttons above a large product screen that fills the lower half and crops at the fold, so the visitor scrolls into it.", "fits": ["b2b-sales", "b2b-self-serve", "developer"]}
-  ],
-  "look": [
-    {"id": "soft-editorial", "name": "Soft editorial", "what": "Warm cream or bone ground, espresso ink, a high-contrast serif headline with one italic phrase, a quiet grotesk for text.", "fits": ["consumer", "marketplace", "b2b-self-serve"]},
-    {"id": "soft-structural", "name": "Soft structural", "what": "Near-white or pale silver ground, near-black ink, a confident grotesk headline, one accent colour, soft wide shadows.", "fits": []},
-    {"id": "dark-glass", "name": "Dark glass", "what": "Deep black ground with one or two very soft colour washes behind the hero, white text at 92%, white/10 hairlines, a wide grotesk.", "fits": ["developer", "b2b-self-serve"]},
-    {"id": "colour-field", "name": "Colour field", "what": "One saturated brand colour as the ground of the hero (deep green, cobalt, terracotta, plum) with cream type; the rest of the page on a light ground with that colour as the accent.", "fits": ["consumer", "marketplace", "b2b-sales"]},
-    {"id": "print-mono", "name": "Print mono", "what": "Paper white and true black with one ink colour, visible grid lines and rules, type doing most of the work, like a well-set printed sheet.", "fits": ["developer", "b2b-sales", "consumer"]},
-    {"id": "warm-dark", "name": "Warm dark", "what": "A dark warm grey or espresso ground with amber or cream accents, soft light falling on the product picture.", "fits": ["b2b-sales", "consumer", "developer"]}
-  ],
-  "type": [
-    {"id": "serif-display", "name": "Serif display, grotesk text", "what": "A high-contrast serif headline (Instrument Serif, Newsreader, PP Editorial New or a Palatino cut) with a neutral grotesk for text.", "fits": []},
-    {"id": "one-grotesk", "name": "One grotesk, two weights", "what": "One grotesk family (Geist, Satoshi, General Sans, Plus Jakarta Sans) for everything, headline at 500–600 tracked tight, text at 400.", "fits": []},
-    {"id": "wide-plus-mono", "name": "Wide grotesk with mono labels", "what": "A wide or extended grotesk headline, a regular grotesk for text, and a mono only for short labels and code.", "fits": ["developer", "b2b-self-serve"]},
-    {"id": "humanist-serif", "name": "Humanist serif throughout", "what": "One readable serif family for headline and text, at different sizes and weights, with a small grotesk only for labels.", "fits": ["consumer", "marketplace", "b2b-sales"]},
-    {"id": "condensed-display", "name": "Condensed display", "what": "A condensed or compressed headline face in capitals or sentence case, set large, with a plain grotesk for text.", "fits": ["consumer", "marketplace", "developer"]},
-    {"id": "rounded-friendly", "name": "Rounded and friendly", "what": "A rounded or soft grotesk headline with generous spacing, for products that should feel warm rather than technical.", "fits": ["consumer", "marketplace"]}
-  ],
-  "buttons": [
-    {"id": "pill-icon", "name": "Pill with icon circle", "what": "Full pills; the trailing arrow sits in its own circle flush with the right padding.", "fits": []},
-    {"id": "soft-rect", "name": "Soft rectangle", "what": "12–14px radius, 48–52px tall, label only, a faint inner highlight on the filled button.", "fits": []},
-    {"id": "sharp-solid", "name": "Sharp and solid", "what": "2–4px radius, heavy fill, uppercase or semibold label, like a stamped label; the secondary action is an underlined text link.", "fits": ["developer", "b2b-sales", "consumer"]}
-  ],
-  "motion": [
-    {"id": "staged-build", "name": "Staged build", "what": "The hero builds itself block by block on load; sections rise once as you reach them.", "fits": []},
-    {"id": "pinned-handoff", "name": "Pinned handoff", "what": "The hero picture stays pinned while the page scrolls and becomes the working demo, or steps through its states.", "fits": ["b2b-self-serve", "b2b-sales", "consumer"]},
-    {"id": "line-mask", "name": "Line-mask reveal", "what": "Headlines reveal line by line from behind a mask; pictures uncover with a clip-path wipe; everything else is still.", "fits": ["consumer", "marketplace", "developer"]},
-    {"id": "horizontal-band", "name": "Horizontal band", "what": "One section scrolls sideways as the visitor scrolls down (steps, examples or cases), pinned for at most two screens.", "fits": ["consumer", "marketplace", "b2b-self-serve"]}
-  ]
+ "note": "Frame options dealt by scripts/deal.mjs. Each option is a pattern seen working on reference-tier startup sites or in the person-judged bake-off; none is a default. 'fits' lists the lanes it suits; an empty list means any lane. 'weight' is how often an option is dealt relative to others: 3 for options a person preferred in blind checks, 1 for untested, 0.3 for options that lost; 'not_for' lists lanes where it lost. Update after every person-judged check.",
+ "lanes": [
+  "developer",
+  "b2b-sales",
+  "b2b-self-serve",
+  "consumer",
+  "marketplace"
+ ],
+ "nav": [
+  {
+   "id": "floating-pill",
+   "name": "Floating pill",
+   "what": "A pill detached 16–24px from the top, centred, as wide as its contents, with a hairline and a soft blurred background.",
+   "fits": [
+    "consumer",
+    "b2b-self-serve",
+    "marketplace"
+   ],
+   "weight": 3
+  },
+  {
+   "id": "hairline-bar",
+   "name": "Hairline bar",
+   "what": "A full-width bar on the hero's own ground: wordmark left, links and one action right, a 1px hairline underneath, turning solid once the page scrolls.",
+   "fits": [],
+   "weight": 1
+  },
+  {
+   "id": "split-corners",
+   "name": "Split corners",
+   "what": "No bar: the wordmark in the top-left corner, one action in the top-right, links behind a Menu button or in a quiet second row.",
+   "fits": [
+    "consumer",
+    "marketplace",
+    "developer"
+   ],
+   "weight": 1
+  },
+  {
+   "id": "docs-bar",
+   "name": "Docs bar",
+   "what": "A compact bar in the manner of a docs site: wordmark, Docs, Pricing, Changelog, and Install or Get a key as the action; links are plain text, the action a small solid button.",
+   "fits": [
+    "developer"
+   ],
+   "weight": 1
+  },
+  {
+   "id": "side-rail",
+   "name": "Side rail",
+   "what": "From 1200px, a thin vertical rail on the left holds the wordmark and section links, with the action pinned at its foot; on smaller screens, a plain top bar.",
+   "fits": [
+    "b2b-sales",
+    "developer",
+    "b2b-self-serve"
+   ],
+   "weight": 1
+  }
+ ],
+ "hero": [
+  {
+   "id": "editorial-split",
+   "name": "Editorial split",
+   "what": "Large type in the left half; the picture and one example card on the right, overlapping slightly, one tilted 2–3°.",
+   "fits": [],
+   "weight": 3
+  },
+  {
+   "id": "centred-poster",
+   "name": "Centred poster",
+   "what": "Headline, sentence and buttons centred; a wide picture below them, rising into view and bleeding off the bottom of the first screen.",
+   "fits": [
+    "b2b-self-serve",
+    "developer",
+    "consumer"
+   ],
+   "weight": 1
+  },
+  {
+   "id": "full-bleed",
+   "name": "Full-bleed picture",
+   "what": "The picture fills the screen; the headline and buttons sit on its calmest area, with a soft scrim only if contrast needs it.",
+   "fits": [
+    "consumer",
+    "marketplace"
+   ],
+   "weight": 1
+  },
+  {
+   "id": "card-cascade",
+   "name": "Card cascade",
+   "what": "Headline left; two or three product cards stacked in depth on the right, slightly rotated, each showing one state of the result.",
+   "fits": [
+    "b2b-self-serve",
+    "consumer",
+    "b2b-sales"
+   ],
+   "weight": 3
+  },
+  {
+   "id": "monumental-type",
+   "name": "Monumental type",
+   "what": "A very large headline across the width, set tight; the picture as a band below it or cut into the letters.",
+   "fits": [
+    "developer",
+    "consumer"
+   ],
+   "weight": 1
+  },
+  {
+   "id": "product-window",
+   "name": "Product window",
+   "what": "A short headline and buttons above a large product screen that fills the lower half and crops at the fold, so the visitor scrolls into it.",
+   "fits": [
+    "b2b-sales",
+    "b2b-self-serve",
+    "developer"
+   ],
+   "weight": 1
+  }
+ ],
+ "look": [
+  {
+   "id": "soft-editorial",
+   "name": "Soft editorial",
+   "what": "Warm cream or bone ground, espresso ink, a high-contrast serif headline with one italic phrase, a quiet grotesk for text.",
+   "fits": [
+    "consumer",
+    "marketplace",
+    "b2b-self-serve"
+   ],
+   "weight": 3
+  },
+  {
+   "id": "soft-structural",
+   "name": "Soft structural",
+   "what": "Near-white or pale silver ground, near-black ink, a confident grotesk headline, one accent colour, soft wide shadows.",
+   "fits": [],
+   "weight": 3
+  },
+  {
+   "id": "dark-glass",
+   "name": "Dark glass",
+   "what": "Deep black ground with one or two very soft colour washes behind the hero, white text at 92%, white/10 hairlines, a wide grotesk.",
+   "fits": [
+    "developer",
+    "b2b-self-serve"
+   ],
+   "weight": 1
+  },
+  {
+   "id": "colour-field",
+   "name": "Colour field",
+   "what": "One saturated brand colour as the ground of the hero (deep green, cobalt, terracotta, plum) with cream type; the rest of the page on a light ground with that colour as the accent.",
+   "fits": [
+    "consumer",
+    "marketplace",
+    "b2b-sales"
+   ],
+   "weight": 1
+  },
+  {
+   "id": "print-mono",
+   "name": "Print mono",
+   "what": "Paper white and true black with one ink colour, visible grid lines and rules, type doing most of the work, like a well-set printed sheet.",
+   "fits": [
+    "developer",
+    "b2b-sales",
+    "consumer"
+   ],
+   "weight": 0.3,
+   "not_for": [
+    "developer"
+   ]
+  },
+  {
+   "id": "warm-dark",
+   "name": "Warm dark",
+   "what": "A dark warm grey or espresso ground with amber or cream accents, soft light falling on the product picture.",
+   "fits": [
+    "b2b-sales",
+    "consumer",
+    "developer"
+   ],
+   "weight": 1
+  }
+ ],
+ "type": [
+  {
+   "id": "serif-display",
+   "name": "Serif display, grotesk text",
+   "what": "A high-contrast serif headline (Instrument Serif, Newsreader, PP Editorial New or a Palatino cut) with a neutral grotesk for text.",
+   "fits": [],
+   "weight": 3
+  },
+  {
+   "id": "one-grotesk",
+   "name": "One grotesk, two weights",
+   "what": "One grotesk family (Geist, Satoshi, General Sans, Plus Jakarta Sans) for everything, headline at 500–600 tracked tight, text at 400.",
+   "fits": [],
+   "weight": 1
+  },
+  {
+   "id": "wide-plus-mono",
+   "name": "Wide grotesk with mono labels",
+   "what": "A wide or extended grotesk headline, a regular grotesk for text, and a mono only for short labels and code.",
+   "fits": [
+    "developer",
+    "b2b-self-serve"
+   ],
+   "weight": 1
+  },
+  {
+   "id": "humanist-serif",
+   "name": "Humanist serif throughout",
+   "what": "One readable serif family for headline and text, at different sizes and weights, with a small grotesk only for labels.",
+   "fits": [
+    "consumer",
+    "marketplace",
+    "b2b-sales"
+   ],
+   "weight": 1
+  },
+  {
+   "id": "condensed-display",
+   "name": "Condensed display",
+   "what": "A condensed or compressed headline face in capitals or sentence case, set large, with a plain grotesk for text.",
+   "fits": [
+    "consumer",
+    "marketplace",
+    "developer"
+   ],
+   "weight": 0.3,
+   "not_for": [
+    "developer"
+   ]
+  },
+  {
+   "id": "rounded-friendly",
+   "name": "Rounded and friendly",
+   "what": "A rounded or soft grotesk headline with generous spacing, for products that should feel warm rather than technical.",
+   "fits": [
+    "consumer",
+    "marketplace"
+   ],
+   "weight": 1
+  }
+ ],
+ "buttons": [
+  {
+   "id": "pill-icon",
+   "name": "Pill with icon circle",
+   "what": "Full pills; the trailing arrow sits in its own circle flush with the right padding.",
+   "fits": [],
+   "weight": 3
+  },
+  {
+   "id": "soft-rect",
+   "name": "Soft rectangle",
+   "what": "12–14px radius, 48–52px tall, label only, a faint inner highlight on the filled button.",
+   "fits": [],
+   "weight": 1
+  },
+  {
+   "id": "sharp-solid",
+   "name": "Sharp and solid",
+   "what": "2–4px radius, heavy fill, uppercase or semibold label, like a stamped label; the secondary action is an underlined text link.",
+   "fits": [
+    "developer",
+    "b2b-sales",
+    "consumer"
+   ],
+   "weight": 1
+  }
+ ],
+ "motion": [
+  {
+   "id": "staged-build",
+   "name": "Staged build",
+   "what": "The hero builds itself block by block on load; sections rise once as you reach them.",
+   "fits": [],
+   "weight": 1
+  },
+  {
+   "id": "pinned-handoff",
+   "name": "Pinned handoff",
+   "what": "The hero picture stays pinned while the page scrolls and becomes the working demo, or steps through its states.",
+   "fits": [
+    "b2b-self-serve",
+    "b2b-sales",
+    "consumer"
+   ],
+   "weight": 1
+  },
+  {
+   "id": "line-mask",
+   "name": "Line-mask reveal",
+   "what": "Headlines reveal line by line from behind a mask; pictures uncover with a clip-path wipe; everything else is still.",
+   "fits": [
+    "consumer",
+    "marketplace",
+    "developer"
+   ],
+   "weight": 1
+  },
+  {
+   "id": "horizontal-band",
+   "name": "Horizontal band",
+   "what": "One section scrolls sideways as the visitor scrolls down (steps, examples or cases), pinned for at most two screens.",
+   "fits": [
+    "consumer",
+    "marketplace",
+    "b2b-self-serve"
+   ],
+   "weight": 1
+  }
+ ]
 }

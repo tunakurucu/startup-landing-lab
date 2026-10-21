@@ -1,0 +1,30 @@
+[
+ {
+  "product": "Tallyhall",
+  "lane": "b2b-self-serve",
+  "seed": 832787386,
+  "frame": {
+   "nav": "floating-pill",
+   "hero": "editorial-split",
+   "look": "dark-glass",
+   "type": "wide-plus-mono",
+   "buttons": "pill-icon",
+   "motion": "pinned-handoff"
+  },
+  "dealt_on": "2026-10-21"
+ },
+ {
+  "product": "Contractcheck",
+  "lane": "developer",
+  "seed": 3117165061,
+  "frame": {
+   "nav": "hairline-bar",
+   "hero": "product-window",
+   "look": "print-mono",
+   "type": "condensed-display",
+   "buttons": "soft-rect",
+   "motion": "line-mask"
+  },
+  "dealt_on": "2026-10-21"
+ }
+]

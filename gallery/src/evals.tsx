@@ -174,6 +174,10 @@ export function EvalsBody(){
   const honesty=critSum(round2,'honesty'),craft=critSum(round2,'craft');
   const margins=(r:Round)=>r.pairs.map(p=>p.withTotal-p.withoutTotal);
   return <>
+    <p className="page-intro"><strong>Judged blind by a person,</strong> the current skill’s pages won two briefs, tied one and lost one against the strongest page built another way. Earlier versions, tuned to AI graders, lost all four.</p>
+    <p className="page-intro intro-caveat">One judge, four briefs, still images of the first screen and a scroll recording of each page. Read it as direction, not measurement.</p>
+    <a className="button outline" href={repo+'/tree/main/evals/runs/2026-10-21-bakeoff'}>See the person-judged bake-off <span>↗</span></a>
+    <h2 className="ai-rounds">Before that: eight rounds of AI grading</h2>
     <p className="page-intro">Over eight rounds of blind side-by-side grading, the page built with the skill won {laterWins} of {laterCount} briefs in rounds 3 to 8. In the last four rounds it averaged {span(recent.map(r=>withMean(r.tally)))} out of 100; the same brief built without it, {span(recent.map(r=>withoutMean(r.tally)))}.</p>
     <p className="page-intro intro-caveat">Builders and graders were AI agents. GPT graders, re-grading rounds 3 and 4, preferred the skill page in {xFor} of {xRows.length} runs. The pre-registered target of 91 was not reached, and a stop rule written before round 8 ended the tuning. </p>
     <p className="page-intro intro-caveat"><strong>A human check disagrees.</strong> Shown the four round 8 pairs blind, first screens only, the maintainer picked the page built without the skill in all four and found the skill’s first screens cluttered. These scores show what AI graders preferred on this rubric, not how the pages look to people. The next version is judged by people first. <a className="text-link" href={repo+'/blob/main/evals/runs/2026-10-20-ab-round8/HUMAN-CHECK.md'}>The human check ↗</a></p>

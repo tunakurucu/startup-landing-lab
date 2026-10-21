@@ -49,3 +49,14 @@ v1.1 added the visual system adapted from Taste classics, sections read at a gla
 | swaptide | "interesting… looks cool" | "looks good" | "looks good" |
 
 v1.1 beat the winner on staplepress and tied it on swaptide, which meets the bar set beforehand ("tie or beat on both"). The preferences were milder than in the bake-off, so this shows the skill has caught up with the best-looking skill tested, not that it has passed it. Both v1.1 pages used the floating pill nav because they were built before the frame deal (v1.2), which now varies the nav, hero, look, type, buttons and motion per product.
+
+## Lane check: v1.2 on two new lanes (judged 2026-10-21)
+
+v1.2 added lanes (chosen from how the product is bought) and a frame dealt per product. It was built once each on contractcheck (developer lane) and tallyhall (B2B self-serve), with a shared deal history, and judged blind against the round 8 no-skill pages.
+
+| Brief | Frame dealt | Picked |
+| --- | --- | --- |
+| contractcheck | hairline bar, product window, print mono, condensed display type, soft rectangles, line mask | **no skill.** He liked v1.2's button placement and its more readable picture, but preferred the other page's type and feel. |
+| tallyhall | floating pill, editorial split, soft structural (swapped from dark glass, with the reason recorded), wide grotesk with mono labels, pill buttons, pinned handoff | **v1.2,** "looks cool"; the two pages "look very different". |
+
+Across the latest version against the best alternative on each brief: two wins, one tie with the strongest outside skill, one loss. The loss came from the dealt frame (print mono with condensed type), so frame options now carry weights from these checks: preferred options are dealt three times as often, losing ones rarely and never in the lane where they lost.

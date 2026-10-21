@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Staplepress: small-run zine printing</title>
+<meta name="description" content="Staplepress prints zines and art books in runs of 25 to 500. Upload a print-ready PDF and within two working days we post a photo of your proof, straight off the press, before anything is bound.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F2F3EF'/%3E%3Cpath d='M7 20V12h18v8' fill='none' stroke='%23000' stroke-width='3.5'/%3E%3C/svg%3E">
+<style>
+:root{
+  --paper:#F2F3EF;
+  --sheet:#FBFBF9;
+  --ink:#000;
+  --grey:#5E605C;
+  --blue:#A9DCEE;
+  --pencil:#1D6684;
+  --steel:#474B4F;
+  --sans:"Gill Sans","Gill Sans MT","Gill Sans Nova",Seravek,Calibri,"Trebuchet MS",sans-serif;
+  --serif:Charter,"Bitstream Charter","Iowan Old Style","Sitka Text",Cambria,Georgia,serif;
+  --measure:36rem;
+  --gutter:clamp(1rem,4vw,3rem);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:1.125rem/1.6 var(--serif);font-kerning:normal;font-variant-numeric:oldstyle-nums proportional-nums}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.18em}
+a:hover{text-decoration-color:var(--pencil)}
+:focus-visible{outline:3px solid var(--pencil);outline-offset:3px}
+h1,h2,h3{font-family:var(--sans);font-weight:600;line-height:1.08;margin:0;letter-spacing:-.005em}
+p{margin:0 0 1em;max-width:var(--measure)}
+.wrap{max-width:76rem;margin-left:auto;margin-right:auto;padding-left:var(--gutter);padding-right:var(--gutter)}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--paper);padding:.5rem 1rem;font-family:var(--sans)}
+.skip:focus{left:1rem;top:1rem;z-index:10}
+
+/* buttons */
+.btn{display:inline-block;font:600 1.0625rem/1 var(--sans);text-decoration:none;background:var(--ink);color:var(--paper);padding:.95rem 1.4rem .9rem;border-radius:2px;letter-spacing:.01em}
+.btn:hover{background:var(--pencil)}
+.btn-small{font-size:.9375rem;padding:.7rem 1rem .65rem}
+
+/* masthead */
+.masthead{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:1.25rem;padding-bottom:1.25rem}
+.mark{display:flex;align-items:center;gap:.55rem;font:600 1.5rem/1 var(--sans);text-decoration:none;letter-spacing:-.01em}
+.mark svg{width:1.6rem;height:auto}
+.nav{display:flex;align-items:center;gap:1.75rem;font:1rem/1 var(--sans)}
+.nav a:not(.btn){text-decoration:none;color:var(--grey)}
+.nav a:not(.btn):hover{color:var(--ink);text-decoration:underline}
+@media (max-width:52rem){.nav a:not(.btn){display:none}}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(2rem,5vw,4.5rem);align-items:center;padding-top:clamp(1.5rem,4vw,3.5rem);padding-bottom:clamp(3rem,7vw,6rem)}
+.hero h1{font-size:clamp(2.6rem,5.6vw,4.5rem);line-height:1.02;letter-spacing:-.02em;margin-bottom:1.75rem;max-width:11ch}
+.hero .lede{font-size:1.25rem;line-height:1.55;max-width:31rem;margin-bottom:2rem}
+.hero .actions{display:flex;flex-wrap:wrap;align-items:center;gap:1.25rem 1.75rem;font-family:var(--sans)}
+.hero .actions a:not(.btn){font-size:1.0625rem}
+.bed{background:var(--steel);border-radius:3px;padding:clamp(1.25rem,4vw,2.75rem) clamp(1.5rem,5vw,3.5rem);margin:0;position:relative;overflow:hidden}
+.bed::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 2px,transparent 2px 7px);pointer-events:none}
+.proof{position:relative;max-width:25rem;margin:0 auto;transform:rotate(-2.4deg);filter:drop-shadow(0 18px 22px rgba(0,0,0,.38)) drop-shadow(0 2px 3px rgba(0,0,0,.3))}
+.bed figcaption{position:relative;color:#E7EDEE;font:1rem/1.45 var(--sans);margin-top:1.75rem;max-width:30rem}
+.bed figcaption b{color:var(--blue);font-weight:600}
+@media (prefers-reduced-motion:no-preference){
+  .proof{animation:feed 1.1s cubic-bezier(.2,.7,.2,1) .15s both}
+  @keyframes feed{from{transform:translateY(-55%) rotate(0deg);opacity:0}35%{opacity:1}to{transform:translateY(0) rotate(-2.4deg)}}
+}
+@media (max-width:52rem){
+  .hero{grid-template-columns:1fr}
+  .hero h1{max-width:13ch}
+}
+
+/* sections */
+section{padding-top:clamp(3.5rem,8vw,6.5rem)}
+.sec-head{display:grid;grid-template-columns:minmax(0,16rem) minmax(0,1fr);gap:1rem 3rem;margin-bottom:2.5rem}
+.sec-head h2{font-size:clamp(1.9rem,3.4vw,2.6rem)}
+.sec-head p{margin:0;color:var(--grey)}
+@media (max-width:52rem){.sec-head{grid-template-columns:1fr}}
+
+/* steps: a real sequence */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;counter-reset:step;border-top:2px solid var(--ink)}
+.steps li{counter-increment:step;padding:1.25rem 1.5rem 0 0;position:relative}
+.steps li::before{content:counter(step);display:block;font:300 3.25rem/1 var(--sans);margin-bottom:1rem;color:var(--ink)}
+.steps li:nth-child(2)::before{color:var(--pencil);font-weight:600}
+.steps h3{font-size:1.3rem;margin-bottom:.6rem}
+.steps p{font-size:1.0625rem;line-height:1.55;color:#262725;margin:0}
+.steps li:nth-child(2) h3{color:var(--pencil)}
+@media (max-width:52rem){
+  .steps{grid-template-columns:1fr 1fr;row-gap:2rem}
+}
+@media (max-width:34rem){
+  .steps{grid-template-columns:1fr}
+  .steps li{display:grid;grid-template-columns:3rem 1fr;column-gap:.75rem;padding-right:0}
+  .steps li::before{grid-row:span 2;font-size:2.5rem}
+}
+
+/* prices: a job ticket */
+.prices{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:start}
+.ticket{background:var(--sheet);border:1.5px solid var(--ink);font-family:var(--sans);max-width:28rem;position:relative}
+.ticket h3{font-size:1.05rem;font-weight:600;padding:.9rem 1.25rem;border-bottom:1.5px solid var(--ink);display:flex;justify-content:space-between;gap:1rem}
+.ticket h3 span{font-weight:400;color:var(--grey)}
+.ticket dl{margin:0;padding:.5rem 1.25rem 1.1rem;display:grid;grid-template-columns:auto 1fr;column-gap:0}
+.ticket dt,.ticket dd{padding:.55rem 0;border-bottom:1px dashed #A7AAA4;margin:0;font-size:1.0625rem}
+.ticket dt{color:var(--grey)}
+.ticket dd{text-align:right;padding-left:1rem;font-variant-numeric:lining-nums tabular-nums}
+.ticket .total dt,.ticket .total dd{border-bottom:0;padding-top:1rem;font-size:1.35rem;font-weight:600;color:var(--ink)}
+.ticket .each dd{font-size:1.35rem;font-weight:600}
+.prices .notes p:first-child{font-size:1.25rem;line-height:1.5}
+.prices .notes ul{margin:0 0 1.5rem;padding:0;list-style:none;max-width:var(--measure)}
+.prices .notes li{padding-left:1.25rem;position:relative;margin-bottom:.4rem}
+.prices .notes li::before{content:"";position:absolute;left:0;top:.72em;width:.6rem;height:2px;background:var(--pencil)}
+@media (max-width:52rem){.prices{grid-template-columns:1fr}}
+
+/* page count checker */
+.checker{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:start}
+.field label{display:block;font:600 1.15rem/1.3 var(--sans);margin-bottom:.6rem}
+.field .hint{font-size:1rem;color:var(--grey);margin:.6rem 0 0}
+.count{display:flex;align-items:stretch;max-width:20rem}
+.count input{font:600 2.25rem/1 var(--sans);width:100%;min-width:0;padding:.55rem .9rem;border:2px solid var(--ink);border-right:0;border-radius:2px 0 0 2px;background:var(--sheet);color:var(--ink);font-variant-numeric:lining-nums}
+.count input:focus-visible{outline:3px solid var(--pencil);outline-offset:0}
+.count span{display:flex;align-items:center;padding:0 1rem;border:2px solid var(--ink);border-radius:0 2px 2px 0;font:1.1rem/1 var(--sans);background:var(--paper)}
+.result{background:var(--sheet);border-left:4px solid var(--blue);padding:1.25rem 1.5rem;min-height:9rem}
+.result p{margin:0 0 .6rem}
+.result .verdict{font:600 1.3rem/1.3 var(--sans)}
+.result .verdict.warn{color:var(--pencil)}
+@media (max-width:52rem){.checker{grid-template-columns:1fr;gap:1.5rem}}
+.fold{margin-top:1rem;height:56px}
+.fold svg{height:56px;width:auto}
+
+/* limits */
+.limits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem clamp(1.5rem,4vw,3rem)}
+.limits h3{font-size:1.3rem;margin-bottom:.6rem}
+.limits p{font-size:1.0625rem;line-height:1.55}
+.limits svg{width:7.5rem;height:auto;margin-bottom:1rem}
+@media (max-width:52rem){.limits{grid-template-columns:1fr}}
+
+/* between */
+.between{display:grid;grid-template-columns:minmax(0,16rem) minmax(0,1fr);gap:1rem 3rem}
+.between h2{font-size:clamp(1.9rem,3.4vw,2.6rem)}
+.between .body p{font-size:1.25rem;line-height:1.55;max-width:38rem}
+.between .body p.quiet{font-size:1.125rem;color:var(--grey)}
+@media (max-width:52rem){.between{grid-template-columns:1fr}}
+
+/* closing */
+.closing{margin-top:clamp(4rem,9vw,7rem);background:var(--ink);color:var(--paper)}
+.closing .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem 3rem;padding-top:clamp(2.5rem,6vw,4rem);padding-bottom:clamp(2.5rem,6vw,4rem)}
+.closing h2{font-size:clamp(1.9rem,3.6vw,2.8rem);max-width:20ch}
+.closing p{color:#C9CCC6;margin:.75rem 0 0;font-size:1.0625rem}
+.closing .btn{background:var(--paper);color:var(--ink)}
+.closing .btn:hover{background:var(--blue)}
+.closing :focus-visible{outline-color:var(--blue)}
+footer .small{background:var(--ink);color:#9EA19B;font:.9375rem/1.5 var(--sans)}
+footer .small .wrap{padding-top:1.25rem;padding-bottom:2rem;border-top:1px solid #33352f;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 2rem}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="wrap masthead">
+  <a class="mark" href="#top" aria-label="Staplepress, home">
+    <svg viewBox="0 0 26 14" aria-hidden="true"><path d="M2 13V2h22v11" fill="none" stroke="currentColor" stroke-width="3"/></svg>
+    Staplepress
+  </a>
+  <nav class="nav" aria-label="Main">
+    <a href="#how">How it works</a>
+    <a href="#prices">Prices</a>
+    <a href="#pages">Page count</a>
+    <a href="#limits">What we can't print</a>
+    <a class="btn btn-small" href="https://staplepress.example/start">Upload your PDF</a>
+  </nav>
+</header>
+
+<main id="main">
+<div class="wrap hero" id="top">
+  <div>
+    <h1>See your zine on press before we staple it.</h1>
+    <p class="lede">We print zines and art books in runs of 25 to 500. Upload a print-ready PDF, and within two working days we post a photo of your proof, straight off our press, before anything is bound.</p>
+    <div class="actions">
+      <a class="btn" href="https://staplepress.example/start">Upload your PDF</a>
+      <a href="#prices">From $2.10 a copy</a>
+    </div>
+  </div>
+
+  <figure class="bed">
+    <svg class="proof" viewBox="0 0 320 450" role="img" aria-labelledby="proof-title">
+      <title id="proof-title">Drawing of a proof sheet: two spreads of a 24-page A5 zine printed in black on one sheet, with crop marks, registration targets and a density strip, not yet folded or trimmed.</title>
+      <defs>
+        <pattern id="hatch" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="3" height="3" fill="#fbfbf9"/><rect width="1.1" height="3" fill="#000"/></pattern>
+        <pattern id="dots" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#fbfbf9"/><circle cx="2" cy="2" r="1.15" fill="#000"/></pattern>
+        <g id="cm" stroke="#000" stroke-width=".35" fill="none"><path d="M-10 0h-0M-11 0H-3M0 -11V-3"/></g>
+        <g id="reg" stroke="#000" stroke-width=".35" fill="none"><circle r="3.2"/><path d="M-5.5 0h11M0 -5.5v11"/><circle r="1.4" fill="#000"/></g>
+      </defs>
+      <rect width="320" height="450" fill="#FBFBF9"/>
+      <!-- trim: A3 at 11.5,15 size 297x420; two A5 spreads 297x210 -->
+      <!-- top spread printed head-to-head: pages 22 | 3 -->
+      <g transform="rotate(180 160 120)">
+        <!-- (after rotation this occupies y 15..225) ; page 22 left, page 3 right -->
+        <g transform="translate(11.5 15)">
+          <!-- page 22: text page -->
+          <g fill="#000">
+            <rect x="20" y="24" width="66" height="2.4"/>
+            <g opacity=".85">
+              <rect x="20" y="36" width="108" height="1.4"/><rect x="20" y="41" width="104" height="1.4"/><rect x="20" y="46" width="108" height="1.4"/><rect x="20" y="51" width="96" height="1.4"/><rect x="20" y="56" width="108" height="1.4"/><rect x="20" y="61" width="101" height="1.4"/><rect x="20" y="66" width="62" height="1.4"/>
+              <rect x="20" y="76" width="108" height="1.4"/><rect x="20" y="81" width="105" height="1.4"/><rect x="20" y="86" width="108" height="1.4"/><rect x="20" y="91" width="99" height="1.4"/><rect x="20" y="96" width="108" height="1.4"/><rect x="20" y="101" width="40" height="1.4"/>
+            </g>
+            <rect x="20" y="114" width="108" height="66" fill="url(#dots)"/>
+            <text x="74" y="198" font-family="Gill Sans, Calibri, sans-serif" font-size="5" text-anchor="middle">22</text>
+          </g>
+          <!-- page 3: drawing page -->
+          <g transform="translate(148.5 0)">
+            <rect x="18" y="22" width="112" height="140" fill="url(#hatch)"/>
+            <path d="M18 162 C44 120 60 140 78 104 S112 70 130 52 V162 Z" fill="#000"/>
+            <circle cx="102" cy="58" r="15" fill="#FBFBF9" stroke="#000" stroke-width="2"/>
+            <rect x="18" y="170" width="70" height="1.4" fill="#000"/><rect x="18" y="175" width="52" height="1.4" fill="#000"/>
+            <text x="74" y="198" font-family="Gill Sans, Calibri, sans-serif" font-size="5" text-anchor="middle">3</text>
+          </g>
+        </g>
+      </g>
+      <!-- bottom spread: back cover 24 | front cover 1 -->
+      <g transform="translate(11.5 225)">
+        <!-- page 24, back cover -->
+        <g fill="#000">
+          <rect x="44" y="150" width="60" height="1.4"/><rect x="50" y="155" width="48" height="1.4"/><rect x="56" y="160" width="36" height="1.4"/>
+          <path d="M66 176h16v6H66z"/>
+        </g>
+        <!-- page 1, front cover: art kept inside a white margin (no full bleed) -->
+        <g transform="translate(148.5 0)">
+          <rect x="12" y="12" width="124.5" height="186" fill="#000"/>
+          <circle cx="74" cy="84" r="38" fill="#FBFBF9"/>
+          <circle cx="74" cy="84" r="38" fill="url(#dots)" opacity=".55"/>
+          <path d="M36 84a38 38 0 0 0 76 0z" fill="#000"/>
+          <g fill="#FBFBF9"><rect x="24" y="146" width="88" height="9"/><rect x="24" y="160" width="58" height="9"/><rect x="24" y="182" width="34" height="2.4"/></g>
+        </g>
+      </g>
+      <!-- fold line between pages (non-printing, drawn in margin only) and cut between spreads -->
+      <g stroke="#000" stroke-width=".35">
+        <path d="M160 4v8M160 438v8" stroke-dasharray="1.5 1.2"/>
+        <path d="M2 225h7M311 225h7"/>
+      </g>
+      <!-- crop marks at the four trim corners -->
+      <g stroke="#000" stroke-width=".35" fill="none">
+        <path d="M0 15h8.5M11.5 0v12M311.5 15h8.5M308.5 0v12M0 435h8.5M11.5 438v12M311.5 435h8.5M308.5 438v12"/>
+      </g>
+      <use href="#reg" x="5" y="120"/>
+      <use href="#reg" x="315" y="330"/>
+      <!-- density strip: black ink only -->
+      <g transform="translate(40 440.5)">
+        <rect width="8" height="7" fill="#000"/><rect x="8" width="8" height="7" fill="#333"/><rect x="16" width="8" height="7" fill="#666"/><rect x="24" width="8" height="7" fill="#999"/><rect x="32" width="8" height="7" fill="#ccc"/><rect x="40" width="8" height="7" fill="#e6e6e6"/>
+      </g>
+      <text x="200" y="446" font-family="Gill Sans, Calibri, sans-serif" font-size="4.6" fill="#000">sheet 1 of 6, side A</text>
+      <!-- blue pencil marks: what the press adds when photographing -->
+      <g stroke="#7FC4DE" fill="none" stroke-width="1.1" stroke-linecap="round">
+        <circle cx="236" cy="309" r="45"/>
+      </g>
+      <text x="16" y="10" font-family="Gill Sans, Calibri, sans-serif" font-size="6.2" fill="#3A8FB0" font-style="italic">proof, 10.42, not yet folded</text>
+    </svg>
+    <figcaption><b>What a proof photo shows.</b> Your real pages, printed in our ink on your paper, with the crop marks still on. Drawn here, because the zines we print aren't ours to show.</figcaption>
+  </figure>
+</div>
+
+<section id="how" class="wrap" aria-labelledby="how-h">
+  <div class="sec-head">
+    <h2 id="how-h">How a job goes</h2>
+    <p>Nothing gets folded, stapled or trimmed until you've seen the printed sheet.</p>
+  </div>
+  <ol class="steps">
+    <li>
+      <h3>Upload a print-ready PDF</h3>
+      <p>Tell us how many copies you want, from 25 to 500, and whether it's black ink or colour.</p>
+    </li>
+    <li>
+      <h3>We print a proof</h3>
+      <p>Within two working days we run your pages on our press and post a photo of the sheet.</p>
+    </li>
+    <li>
+      <h3>You check it</h3>
+      <p>Look at the real ink on the real paper. Approve it, or send a corrected PDF.</p>
+    </li>
+    <li>
+      <h3>We print, staple and send</h3>
+      <p>The whole run is printed, folded, stapled through the spine and trimmed, then packed for you.</p>
+    </li>
+  </ol>
+</section>
+
+<section id="prices" class="wrap" aria-labelledby="prices-h">
+  <div class="sec-head">
+    <h2 id="prices-h">Prices</h2>
+    <p>Our simplest job, priced in full.</p>
+  </div>
+  <div class="prices">
+    <div class="ticket">
+      <h3>Job ticket <span>example</span></h3>
+      <dl>
+        <dt>Size</dt><dd>A5</dd>
+        <dt>Pages</dt><dd>24, covers included</dd>
+        <dt>Ink</dt><dd>Black</dd>
+        <dt>Paper</dt><dd>Uncoated</dd>
+        <dt>Copies</dt><dd>50</dd>
+        <div class="each" style="display:contents"><dt>Per copy</dt><dd>$2.10</dd></div>
+        <div class="total" style="display:contents"><dt>The run</dt><dd>$105.00</dd></div>
+      </dl>
+    </div>
+    <div class="notes">
+      <p>$2.10 a copy is where prices start: 50 copies of a 24-page A5 zine in black ink on uncoated paper.</p>
+      <ul>
+        <li>Colour costs more.</li>
+        <li>Other sizes cost more.</li>
+        <li>Larger runs cost more.</li>
+      </ul>
+      <p>To price your own job, start an upload with your PDF and the number of copies.</p>
+      <a class="btn" href="https://staplepress.example/start">Upload your PDF</a>
+    </div>
+  </div>
+</section>
+
+<section id="pages" class="wrap" aria-labelledby="pages-h">
+  <div class="sec-head">
+    <h2 id="pages-h">Check your page count</h2>
+    <p>A stapled book is made of sheets folded in half, and every sheet gives you four pages. Check yours while the PDF is open.</p>
+  </div>
+  <div class="checker">
+    <div class="field">
+      <label for="pagecount">How many pages is your PDF, covers included?</label>
+      <div class="count">
+        <input id="pagecount" type="number" inputmode="numeric" min="4" step="1" value="24" aria-describedby="pagehint">
+        <span>pages</span>
+      </div>
+      <p class="hint" id="pagehint">Count front and back covers, inside and out.</p>
+    </div>
+    <div class="result" aria-live="polite" id="result">
+      <p class="verdict">24 pages works.</p>
+      <p>That's 6 sheets, folded and stapled through the middle. No blank pages needed.</p>
+    </div>
+  </div>
+</section>
+
+<section id="limits" class="wrap" aria-labelledby="limits-h">
+  <div class="sec-head">
+    <h2 id="limits-h">What we can't print</h2>
+    <p>Better you hear it here than after you've uploaded.</p>
+  </div>
+  <div class="limits">
+    <div>
+      <svg viewBox="0 0 120 80" aria-hidden="true">
+        <rect x="30" y="4" width="54" height="72" fill="#FBFBF9" stroke="#000" stroke-width="1.5"/>
+        <rect x="36" y="10" width="42" height="60" fill="#000"/>
+        <rect x="24" y="0" width="66" height="80" fill="none" stroke="#3A8FB0" stroke-width="1.2" stroke-dasharray="3 2.5"/>
+      </svg>
+      <h3>Full-bleed covers</h3>
+      <p>We can't print cover art that runs off the edge of the page yet. Leave a white margin around your cover artwork.</p>
+    </div>
+    <div>
+      <svg viewBox="0 0 120 80" aria-hidden="true">
+        <g fill="#FBFBF9" stroke="#000" stroke-width="1.5"><rect x="36" y="22" width="40" height="54"/><rect x="42" y="16" width="40" height="54"/><rect x="48" y="10" width="40" height="54"/></g>
+        <path d="M58 37h20" stroke="#3A8FB0" stroke-width="2.5"/>
+      </svg>
+      <h3>Fewer than 25 copies</h3>
+      <p>Below 25, setting up the press costs more than the copies are worth to you. A good copy shop is the better call.</p>
+    </div>
+    <div>
+      <svg viewBox="0 0 120 80" aria-hidden="true">
+        <g fill="#FBFBF9" stroke="#000" stroke-width="1.5"><rect x="22" y="38" width="76" height="38"/><path d="M22 38l10-14h56l10 14"/></g>
+        <path d="M44 57h32M60 41v32" stroke="#3A8FB0" stroke-width="2.5"/>
+      </svg>
+      <h3>More than 500 copies</h3>
+      <p>Our runs stop at 500. Past that, a large printer built for thousands is the right place for your book.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" aria-labelledby="between-h">
+  <div class="between">
+    <h2 id="between-h">Why a press, not a shop</h2>
+    <div class="body">
+      <p>Copy shops are quick, but the blacks print grey and the pages drift. Big online printers want 1,000 copies and never show you a proof. We print the runs in between, on our own press, and show you the sheet before we bind a single copy.</p>
+      <p class="quiet">We've printed for about 120 artists since last year. You won't find their names or their work on this page. It's theirs, and we haven't asked to show it.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="closing">
+    <div class="wrap">
+      <div>
+        <h2>Got your PDF open? Send it to the press.</h2>
+        <p>Runs of 25 to 500. Proof photo within two working days.</p>
+      </div>
+      <a class="btn" href="https://staplepress.example/start">Upload your PDF</a>
+    </div>
+  </div>
+  <div class="small">
+    <div class="wrap">
+      <span>Staplepress prints zines and art books for independent artists.</span>
+      <a href="#top">Back to top</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var input=document.getElementById('pagecount');
+  var out=document.getElementById('result');
+  if(!input||!out) return;
+  function plural(n,one,many){return n+' '+(n===1?one:many);}
+  function fold(sheets){
+    var shown=Math.min(sheets,24), w=18+shown*5, s='<svg viewBox="0 0 '+w+' 56" aria-hidden="true">';
+    for(var i=0;i<shown;i++){
+      var x=6+i*5, h=50-i*0.6;
+      s+='<path d="M'+(x+10)+' '+(28-h/2)+' L'+x+' 28 L'+(x+10)+' '+(28+h/2)+'" fill="none" stroke="'+(i===0?'#000':'#5E605C')+'" stroke-width="1.4"/>';
+    }
+    s+='<path d="M5 20v16" stroke="#1D6684" stroke-width="2.4"/></svg>';
+    return '<div class="fold">'+s+'</div>';
+  }
+  function render(){
+    var raw=input.value.trim();
+    var n=Number(raw);
+    if(raw===''||!isFinite(n)||n<1||Math.floor(n)!==n){
+      out.innerHTML='<p class="verdict warn">Enter a whole number of pages.</p><p>Count every page in the PDF, covers included.</p>';
+      return;
+    }
+    if(n<4){
+      out.innerHTML='<p class="verdict warn">'+plural(n,'page','pages')+' is too few for a stapled book.</p><p>One folded sheet makes 4 pages, so 4 is the smallest book we can staple.</p>';
+      return;
+    }
+    var sheets=Math.ceil(n/4), blanks=sheets*4-n;
+    if(blanks===0){
+      out.innerHTML='<p class="verdict">'+n+' pages works.</p><p>That\'s '+plural(sheets,'sheet','sheets')+', folded and stapled through the middle. No blank pages needed.</p>'+fold(sheets);
+    } else {
+      out.innerHTML='<p class="verdict warn">'+n+' pages isn\'t a multiple of 4.</p><p>'+plural(sheets,'sheet makes','sheets make').replace(/^(\d+) sheets? makes?/,function(m){return m;})+' '+(sheets*4)+' pages, so '+plural(blanks,'page','pages')+' would print blank. Add '+(blanks===1?'it':'them')+' to your PDF where you want '+(blanks===1?'it':'them')+', often just inside the back cover, or trim your PDF to '+((sheets-1)*4)+' pages.</p>'+fold(sheets);
+    }
+  }
+  input.addEventListener('input',render);
+  render();
+})();
+</script>
+</body>
+</html>

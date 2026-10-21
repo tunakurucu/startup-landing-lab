@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shift swaps for hospital nursing units | Swaptide</title>
+<meta name="description" content="Swaptide is a shift-swap app for hospital nursing units. Nurses post and pick up swaps from their phones, staffing rules are checked first, and the unit manager approves or declines in one tap.">
+<meta name="theme-color" content="#f3f6f5">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Swaptide: swap a shift on break, approved by handoff">
+<meta property="og:description" content="A shift-swap app for hospital nursing units. Staffing rules get checked first; the unit manager approves or declines in one tap.">
+<meta property="og:image" content="https://swaptide.example/og.png">
+<meta property="og:url" content="https://swaptide.example/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Swaptide: swap a shift on break, approved by handoff">
+<meta name="twitter:description" content="A shift-swap app for hospital nursing units. Staffing rules get checked first; the unit manager approves or declines in one tap.">
+<meta name="twitter:image" content="https://swaptide.example/og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --ground:#f3f6f5; --paper:#ffffff; --ink:#13201d; --ink-2:#47544f; --line:#d3dcd8; --line-2:#e4eae7;
+  --go:#0d6a4f; --go-ink:#0a5640; --go-soft:#dcefe6;
+  --flag:#b3321f; --flag-soft:#fbe7e2;
+  --night:#121c2e; --night-2:#1c2a42; --on-night:#eef2f7; --on-night-2:#b9c4d6; --strike:#ff7d63;
+  --marker:#2350a6; --note:#f6e07a;
+  --face: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --s-1:.5rem; --s-2:.75rem; --s-3:1rem; --s-4:1.5rem; --s-5:2rem; --s-6:3rem; --s-7:4.5rem; --s-8:7.5rem;
+  --radius:14px; --wrap:1320px;
+  --ease:cubic-bezier(.16,1,.3,1); --ease-ui:cubic-bezier(.2,.7,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul{margin:0}
+ol,ul{padding:0;list-style:none}
+img,svg,video,canvas{display:block;max-width:100%}
+input,button,textarea,select{font:inherit;color:inherit}
+:where(p,li,dd,td,output,[role=status]){overflow-wrap:break-word;min-width:0}
+html{scroll-padding-top:88px;-webkit-text-size-adjust:100%}
+body{background:var(--ground);color:var(--ink);font-family:var(--face);font-size:1.0625rem;line-height:1.55;font-variant-numeric:tabular-nums}
+a{color:inherit}
+.skip{position:absolute;left:12px;top:-60px;padding:12px 16px;background:var(--ink);color:var(--paper);z-index:100;border-radius:10px;text-decoration:none}
+.skip:focus{top:12px}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(1rem,.6rem + 2vw,2.5rem)}
+h1,h2,h3{text-wrap:balance;letter-spacing:-.025em;line-height:1.08;font-weight:650}
+h2{font-size:clamp(1.75rem,1.35rem + 1.55vw,2.5rem);letter-spacing:-.022em}
+h3{font-size:1.0625rem;letter-spacing:-.005em;line-height:1.3;font-weight:650}
+p{text-wrap:pretty}
+.lead{font-size:1.1875rem;line-height:1.5;color:var(--ink-2);max-width:34em}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:52px;padding:0 26px;border-radius:999px;font-size:1rem;font-weight:600;text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:transform .15s var(--ease-ui),background-color .15s var(--ease-ui)}
+.btn-go{background:var(--go);color:#fff}
+.btn-quiet{background:transparent;color:var(--ink);border-color:#9fb0aa}
+.btn:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.btn-go:hover{background:var(--go-ink)} .btn-quiet:hover{background:#e6ece9}}
+
+/* Header */
+.site-head{position:sticky;top:0;z-index:20;background:rgba(243,246,245,.92);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid transparent}
+.head-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:72px}
+.brand{display:inline-flex;align-items:center;gap:.6rem;font-weight:700;font-size:1.25rem;letter-spacing:-.03em;text-decoration:none;min-height:44px}
+.brand svg{width:28px;height:28px}
+.menu-btn{display:none;min-height:44px;min-width:44px;padding:0 16px;border-radius:999px;border:1.5px solid #9fb0aa;background:var(--paper);font-weight:600;cursor:pointer}
+#site-menu{display:flex;align-items:center;gap:.25rem;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px}
+#site-menu a:not(.btn){display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;text-decoration:none;font-size:.9375rem;font-weight:500;color:var(--ink-2)}
+@media (hover:hover) and (pointer:fine){#site-menu a:not(.btn):hover{background:var(--ground);color:var(--ink)}}
+#site-menu .btn{display:none}
+.head-cta{min-height:46px;padding:0 20px;font-size:.9375rem}
+
+/* Hero */
+.hero{padding-top:clamp(2.5rem,1.2rem + 3vw,3.5rem);overflow-x:clip;position:relative;z-index:1}
+.hero-grid{display:grid;grid-template-columns:minmax(0,620px) minmax(0,1fr);gap:clamp(2rem,4vw,4rem);align-items:center}
+.hero-copy{padding-bottom:clamp(0rem,3vw,3rem)}
+.hero h1{font-size:clamp(2.5rem,1.9rem + 2.2vw,3.5rem);line-height:1.06;letter-spacing:-.032em;font-weight:650}
+.hero h1 em{font-style:normal;color:var(--go)}
+.hero h1 span,.hero h1 em{display:block}
+.hero .five{margin-top:var(--s-4);font-size:clamp(1.0625rem,1rem + .3vw,1.25rem);line-height:1.5;color:var(--ink-2);max-width:30em}
+.actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:var(--s-5)}
+.beside{margin-top:var(--s-3);font-size:.9375rem;color:var(--ink-2)}
+
+/* Hero picture */
+.pic{position:relative;height:clamp(420px,50vw,690px);min-width:0}
+.board{position:absolute;left:-7%;top:4%;width:104%;transform:rotate(-2.2deg);transform-origin:70% 20%;filter:drop-shadow(0 30px 40px rgba(19,32,29,.10)) drop-shadow(0 4px 8px rgba(19,32,29,.06))}
+.board{container-type:inline-size}
+.board img{width:100%;height:auto}
+.phone{position:absolute;right:-3%;bottom:-70px;width:clamp(210px,21vw,300px);aspect-ratio:330/670;background:#0f1716;border-radius:clamp(30px,3.4vw,46px);padding:clamp(8px,.9vw,12px);box-shadow:0 40px 60px -20px rgba(19,32,29,.35),0 10px 20px rgba(19,32,29,.12);transform:rotate(2deg)}
+.screen{height:100%;background:#f7f9f8;border-radius:clamp(22px,2.6vw,36px);overflow:hidden;display:flex;flex-direction:column;font-size:clamp(9.5px,.95vw,13.5px);line-height:1.35}
+.sb{display:flex;justify-content:space-between;align-items:center;padding:1.1em 1.8em .4em;font-weight:600}
+.sb i{display:block;width:5.5em;height:1.5em;background:#0f1716;border-radius:1em}
+.sb b{font-weight:600}
+.appbar{padding:.6em 1.4em .9em;display:flex;justify-content:space-between;align-items:baseline}
+.appbar strong{font-size:1.55em;letter-spacing:-.02em}
+.appbar span{color:var(--ink-2)}
+.cardp{margin:0 1em .8em;background:#fff;border:1px solid var(--line);border-radius:1.2em;padding:1.1em 1.2em}
+.cardp.done{border-color:#9cc9b4;box-shadow:0 8px 20px -10px rgba(13,106,79,.35)}
+.chip{display:inline-block;font-weight:600;font-size:.9em;padding:.25em .75em;border-radius:999px;background:var(--go-soft);color:var(--go-ink)}
+.chip.open{background:#e9eef6;color:#2f3f5c}
+.when{color:var(--ink-2);margin-top:.7em}
+.who{font-size:1.75em;font-weight:650;letter-spacing:-.02em;margin-top:.15em}
+.ok{list-style:none;margin-top:.8em;display:grid;gap:.45em}
+.ok li{display:flex;gap:.6em;align-items:flex-start}
+.ok li::before{content:"";flex:none;width:1.25em;height:1.25em;border-radius:50%;background:var(--go) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-7' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat;margin-top:.05em}
+.by{margin-top:.9em;padding-top:.8em;border-top:1px solid var(--line-2);color:var(--ink-2)}
+.by b{color:var(--ink)}
+.muted{opacity:.75}
+
+/* Sections */
+section{scroll-margin-top:80px}
+.sec{padding:var(--s-8) 0}
+.sec-head{max-width:640px}
+.sec-head p{margin-top:var(--s-3)}
+
+/* Signature artifact */
+#try{padding-top:clamp(4rem,2.5rem + 2vw,4.5rem)}
+.demo{margin-top:var(--s-6);background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 1px 0 rgba(19,32,29,.04),0 24px 48px -32px rgba(19,32,29,.25)}
+.demo-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.75rem;padding:14px 22px;border-bottom:1px solid var(--line-2);background:#fafcfb;font-size:.9375rem;color:var(--ink-2)}
+.demo-top strong{color:var(--ink);font-weight:600}
+.reset{margin-top:16px;min-height:44px;padding:0 18px;border-radius:999px;border:1.5px solid #9fb0aa;background:var(--paper);font-weight:600;font-size:.9375rem;cursor:pointer;color:var(--ink)}
+.demo-grid{display:grid;grid-template-columns:1.15fr 1fr 1fr}
+.col{padding:26px 24px 28px;min-width:0}
+.col + .col{border-left:1px solid var(--line-2)}
+.col h3{display:flex;align-items:center;gap:.5rem}
+.col h3 small{font-size:.875rem;font-weight:500;color:var(--ink-2);letter-spacing:0}
+.post{margin-top:14px;border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;background:var(--ground)}
+.post .who{font-size:1.125rem;margin:0}
+.post p{color:var(--ink-2);font-size:.9375rem;margin-top:2px}
+.post .shift{display:inline-block;margin-top:8px;font-weight:600;color:var(--ink);font-size:1rem}
+fieldset{border:0;padding:0;margin:18px 0 0;min-width:0}
+legend{font-weight:600;font-size:1rem;padding:0;margin-bottom:10px}
+.picks{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pick{position:relative;display:block;min-height:64px;padding:11px 14px 11px 14px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;background:var(--paper);transition:border-color .16s var(--ease-ui),background-color .16s var(--ease-ui)}
+.pick input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;width:100%;height:100%}
+.pick b{display:block;font-weight:650;font-size:1.0625rem}
+.pick span{display:block;font-size:.875rem;color:var(--ink-2);line-height:1.35}
+.pick:has(input:checked){border-color:var(--ink);background:#f1f5f3;box-shadow:inset 0 0 0 1px var(--ink)}
+.pick:has(input:focus-visible){outline:3px solid var(--ink);outline-offset:3px}
+.verdict{display:flex;gap:10px;align-items:flex-start;margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--go-soft);color:var(--go-ink);font-weight:600;line-height:1.4;min-height:48px}
+.verdict.has-flag{background:var(--flag-soft);color:#8c2616}
+.checks{margin-top:14px;display:grid;gap:0}
+.check{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:12px 0;border-top:1px solid var(--line-2)}
+.check:first-child{border-top:0}
+.mark{width:24px;height:24px;border-radius:50%;margin-top:1px;background:var(--go) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-7' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.check.flag .mark{background:var(--flag) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 5v6' stroke='%23fff' stroke-width='2.6' stroke-linecap='round'/%3E%3Ccircle cx='10' cy='14.6' r='1.5' fill='%23fff'/%3E%3C/svg%3E") center/100% no-repeat}
+.check h4{font-size:.9375rem;font-weight:650;line-height:1.35}
+.check p{font-size:.9375rem;color:var(--ink-2);line-height:1.4;margin-top:2px}
+.check.flag p{color:#8c2616}
+.rules{margin-top:12px;font-size:.875rem;color:var(--ink-2);line-height:1.45}
+.kim{margin-top:14px;border:1px solid var(--line);border-radius:var(--radius);padding:16px;background:var(--ground)}
+.kim .ask{font-weight:650;font-size:1.0625rem;line-height:1.3}
+.kim .sum{margin-top:4px;font-size:.9375rem;color:var(--ink-2)}
+.kim .sum.has-flag{color:#8c2616;font-weight:600}
+.decide{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.decide button{min-height:52px;border-radius:12px;font-weight:650;cursor:pointer;border:1.5px solid var(--ink);background:var(--paper);transition:background-color .16s var(--ease-ui),transform .15s var(--ease-ui)}
+.decide button:active{transform:scale(.97)}
+.decide .yes{background:var(--go);border-color:var(--go);color:#fff}
+.decide button[aria-pressed=true]{box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--ink)}
+.outcome{margin-top:12px;font-weight:600;min-height:1.5em;line-height:1.4}
+.outcome.approved{color:var(--go-ink)} .outcome.declined{color:#8c2616}
+.crew{margin-top:16px;border-top:1px solid var(--line-2);padding-top:12px}
+.crew h4{font-size:.875rem;font-weight:600;color:var(--ink-2)}
+.crew ul{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:8px}
+.crew li{font-size:.9375rem;padding:4px 10px;border-radius:8px;background:var(--ground);border:1px solid var(--line-2)}
+.crew li.slot{border-color:var(--ink);font-weight:600}
+.crew li.slot s{color:var(--ink-2);font-weight:400;margin-right:4px}
+.crew li.slot.pending{border-style:dashed}
+.swap-in{transition:opacity .18s var(--ease-ui)}
+
+/* Night section */
+.night{background:var(--night);color:var(--on-night)}
+.night .lead{color:var(--on-night-2)}
+.ruler{margin-top:var(--s-6);position:relative}
+.ruler svg{width:100%;height:auto;overflow:visible}
+.events{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-top:22px}
+.ev{position:relative;padding-top:14px;border-top:2px solid #3a4d6c}
+.ev .t{display:flex;align-items:center;gap:10px;font-size:1.5rem;font-weight:650;letter-spacing:-.02em;color:#fff}
+.ev .n{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#f2c26b;color:#1b2333;font-size:.875rem;font-weight:700;letter-spacing:0}
+.ev h3{margin-top:6px;font-size:1.0625rem;color:#fff}
+.ev p{margin-top:4px;color:var(--on-night-2);font-size:.9688rem;line-height:1.5}
+.ev.go{border-top-color:#59c39a}
+.instead{margin-top:var(--s-7);display:grid;grid-template-columns:auto 1fr;gap:20px 40px;align-items:start;padding-top:var(--s-5);border-top:1px solid #2c3c58}
+.instead h3{color:#fff;font-size:1.0625rem;padding-top:2px}
+.instead ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 32px}
+.instead li{position:relative;color:var(--on-night);font-size:1rem;line-height:1.45;padding-bottom:4px}
+.instead li svg{position:absolute;left:-4px;right:-4px;top:.3em;width:calc(100% + 8px);height:1.6em;pointer-events:none}
+.legend-sample{margin-top:14px;font-size:.875rem;color:var(--on-night-2)}
+
+/* Managers */
+.mgr-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2rem,6vw,6rem);align-items:start}
+.mgr-grid .sec-head{position:sticky;top:110px}
+.qa{border-top:1px solid var(--line)}
+.qa div{display:grid;grid-template-columns:minmax(0,15em) minmax(0,1fr);gap:8px 32px;padding:22px 0;border-bottom:1px solid var(--line)}
+.qa dt{font-weight:650;font-size:1.0625rem;line-height:1.4}
+.qa dd{color:var(--ink-2);line-height:1.55}
+.qa dd strong{color:var(--ink);font-weight:650}
+
+/* Pilot */
+.pilot{padding:var(--s-8) 0}
+.pilot-card{background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:clamp(2rem,1rem + 4vw,4.5rem);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:start}
+.pilot-card p{margin-top:var(--s-3);color:var(--ink-2);max-width:32em}
+.pilot-card .actions{margin-top:var(--s-5)}
+.qs h3{font-size:1rem;color:var(--ink-2);font-weight:600}
+.qs ol{margin-top:12px;counter-reset:q}
+.qs li{counter-increment:q;display:grid;grid-template-columns:36px 1fr;gap:10px;padding:16px 0;border-top:1px solid var(--line-2);font-size:1.0625rem;line-height:1.45}
+.qs li::before{content:counter(q);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--ink);font-weight:650;font-size:.875rem}
+
+/* Footer */
+.foot{border-top:1px solid var(--line);padding:var(--s-6) 0 var(--s-6)}
+.foot-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem 2rem}
+.foot nav ul{display:flex;flex-wrap:wrap;gap:0 .5rem}
+.foot nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;text-decoration:none;color:var(--ink-2);font-size:.9375rem}
+.foot nav a:hover{color:var(--ink);text-decoration:underline}
+.foot small{display:block;color:var(--ink-2);font-size:.875rem;margin-top:var(--s-3)}
+
+/* Motion: entrance and the night ruler, only when motion is welcome */
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .js .rise{animation:rise .85s var(--ease) both}
+  .js .rise.d1{animation-delay:.07s} .js .rise.d2{animation-delay:.14s} .js .rise.d3{animation-delay:.21s}
+  @keyframes rise{from{transform:translateY(20px);opacity:.6}to{transform:none;opacity:1}}
+  .js .pic.rise{animation-name:rise-pic}
+  @keyframes rise-pic{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+  .js .ruler.armed .progress{transform:scaleX(0)}
+  .js .ruler.armed .dot{opacity:0;transform:scale(.6)}
+  .js .ruler.run .progress{transform:scaleX(1);transition:transform 1.8s var(--ease)}
+  .js .ruler.run .dot{opacity:1;transform:none;transition:opacity .3s var(--ease-ui),transform .4s var(--ease)}
+  .js .ruler.run .dot.d1{transition-delay:.1s} .js .ruler.run .dot.d2{transition-delay:.62s} .js .ruler.run .dot.d3{transition-delay:1.04s} .js .ruler.run .dot.d4{transition-delay:1.6s}
+}
+.progress{transform-box:fill-box;transform-origin:left center}
+.dot{transform-box:fill-box;transform-origin:center}
+.ruler-v{display:none}
+.sr,.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Tablet */
+@media (max-width:1080px){
+  .demo-grid{grid-template-columns:1fr 1fr}
+  .col.c3{grid-column:1 / -1;border-left:0;border-top:1px solid var(--line-2)}
+  .c3-in{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  .c3-in .crew{margin-top:14px}
+  .instead{grid-template-columns:1fr}
+  .mgr-grid{grid-template-columns:1fr}
+  .mgr-grid .sec-head{position:static}
+  .pilot-card{grid-template-columns:1fr}
+}
+@media (max-width:900px){
+  .menu-btn{display:inline-flex;align-items:center}
+  .head-cta{display:none}
+  .head-row{position:relative}
+  #site-menu{position:absolute;top:calc(100% + 6px);right:0;left:0;flex-direction:column;align-items:stretch;border-radius:18px;padding:8px;box-shadow:0 20px 40px -12px rgba(19,32,29,.3)}
+  .js #site-menu[hidden]{display:none}
+  html:not(.js) #site-menu{position:static;box-shadow:none;flex-direction:row;flex-wrap:wrap;margin-bottom:8px}
+  html:not(.js) .head-row{flex-wrap:wrap}
+  #site-menu a:not(.btn){min-height:48px;font-size:1.0625rem;color:var(--ink)}
+  #site-menu .btn{display:inline-flex;margin-top:6px}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-copy{padding-top:0}
+  .pic{height:auto;aspect-ratio:1.12;margin-top:var(--s-5)}
+  .board{top:0}
+  .board{width:94%;left:0}
+  .phone{width:44%;right:2%;bottom:0}
+  .screen{font-size:clamp(7.5px,2.15vw,13.5px)}
+  .events{grid-template-columns:1fr 1fr}
+}
+/* Phone */
+@media (max-width:760px){
+  .head-row{min-height:64px}
+  .hero h1{max-width:none}
+  .hero h1 span,.hero h1 em{display:inline}
+  .actions .btn{flex:1 1 150px;padding:0 18px}
+  .pic{aspect-ratio:1/1.04}
+  .board{width:112%;left:-6%;top:0}
+  .phone{width:54%;right:0;bottom:0}
+  .screen{font-size:clamp(7.5px,2.45vw,13.5px)}
+  .sec{padding:var(--s-7) 0}
+  .demo{margin-top:var(--s-5);border-radius:18px;margin-left:-4px;margin-right:-4px}
+  .demo-top{padding:12px 16px}
+  .demo-grid{grid-template-columns:1fr}
+  .col{padding:18px 16px 20px}
+  .col + .col{border-left:0;border-top:1px solid var(--line-2)}
+  .col.c2{padding-top:12px}
+  .c3-in{grid-template-columns:1fr;gap:0}
+  .post{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;padding:12px 14px}
+  .post .shift{margin-top:0}
+  fieldset{margin-top:14px}
+  .ruler-h{display:none}
+  .ruler-v{display:block;width:56px;height:100%}
+  .ruler{margin-top:var(--s-5);display:grid;grid-template-columns:56px 1fr;gap:12px}
+  .events{grid-template-columns:1fr;gap:0;margin-top:0}
+  .ev{border-top:0;padding:0 0 22px}
+  .ev .t{font-size:1.25rem}
+  .instead ul{grid-template-columns:1fr;gap:14px}
+  .qa div{grid-template-columns:1fr;padding:18px 0}
+  .pilot{padding:var(--s-7) 0}
+  .pilot-card{border-radius:20px;padding:28px 20px}
+}
+@media (max-width:380px){ .picks{grid-template-columns:1fr 1fr;gap:8px} .pick{padding:10px 11px} }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap head-row">
+    <a class="brand" href="#main" aria-label="Swaptide, back to top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="29" rx="8" fill="#13201d"/><path d="M8 12.5h13.5l-3.2-3.2M24 19.5H10.5l3.2 3.2" fill="none" stroke="#f3f6f5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24.2" cy="12.5" r="2.2" fill="#59c39a"/></svg>
+      Swaptide
+    </a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Main">
+      <a href="#try">Try a swap</a>
+      <a href="#night">A night shift</a>
+      <a href="#managers">For managers</a>
+      <a href="#pilot">Pilot</a>
+      <a class="btn btn-go" href="https://swaptide.example/pilot">Book a pilot call</a>
+    </nav>
+    <a class="btn btn-go head-cta" href="https://swaptide.example/pilot">Book a pilot call</a>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 id="h1" class="rise"><span>Swap a shift on break.</span> <em>Approved by handoff.</em></h1>
+        <p class="five rise d1">A shift-swap app for hospital nursing units. Staffing rules get checked first; the unit manager approves or declines in one tap.</p>
+        <div class="actions rise d2">
+          <a class="btn btn-go" href="https://swaptide.example/pilot">Book a pilot call</a>
+          <a class="btn btn-quiet" href="#try">Try a swap</a>
+        </div>
+        <p class="beside rise d2">Piloted on one medical-surgical unit for three months.</p>
+      </div>
+
+      <div class="pic rise d3" data-hero-visual role="img" aria-label="The break-room whiteboard of night shifts, with Priya's Thursday crossed out and a sticky note asking for cover. In front of it, a phone shows the same swap settled: Thursday 7p to 7a, Priya to Dana, three staffing checks passed, approved by Kim, the unit manager, at 7:04 a.m.">
+        <div class="board" aria-hidden="true">
+          <img src="whiteboard.svg" width="680" height="470" alt="" fetchpriority="high">
+        </div>
+
+        <div class="phone" aria-hidden="true">
+          <div class="screen">
+            <div class="sb"><b>7:04</b><i></i><b>●●●</b></div>
+            <div class="appbar"><strong>Swaps</strong><span>4 West</span></div>
+            <div class="cardp done">
+              <span class="chip">Approved</span>
+              <div class="when">Thursday · 7p–7a</div>
+              <div class="who">Priya → Dana</div>
+              <ul class="ok">
+                <li>Charge-trained RN on nights</li>
+                <li>1st twelve in a row</li>
+                <li>Off since Wed 7:30a</li>
+              </ul>
+              <div class="by"><b>Kim</b>, unit manager · approved 7:04a</div>
+            </div>
+            <div class="cardp muted">
+              <span class="chip open">Open</span>
+              <div class="when">Saturday · 7a–7p</div>
+              <div class="who" style="font-size:1.25em">Lee needs cover</div>
+            </div>
+            <div class="cardp muted">
+              <span class="chip open">Open</span>
+              <div class="when">Sunday · 7p–7a</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="try" class="sec" aria-labelledby="try-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="try-h">Pick who covers Priya’s Thursday night</h2>
+        <p class="lead">Each pick runs the unit’s staffing rules before Kim, the manager, sees it. Then she decides.</p>
+      </div>
+
+      <div class="demo" data-signature>
+        <div class="demo-top">
+          <span><strong>Sample unit.</strong> Names and rules are made up for this page; nothing is sent.</span>
+        </div>
+        <p class="sr-only" id="announce" role="status" aria-live="polite"></p>
+        <div class="demo-grid">
+          <div class="col c1">
+            <h3>Priya’s post <small>nurse, on break</small></h3>
+            <div class="post">
+              <div class="who">Priya can’t work</div>
+              <span class="shift">Thursday 7p–7a</span>
+              <p>She’s the charge nurse that night.</p>
+            </div>
+            <fieldset>
+              <legend>Who picks it up?</legend>
+              <div class="picks">
+                <label class="pick"><input type="radio" name="pick" value="dana" checked><b>Dana</b><span>Mon and Tue nights, off Wed</span></label>
+                <label class="pick"><input type="radio" name="pick" value="marcus"><b>Marcus</b><span>Mon to Wed nights</span></label>
+                <label class="pick"><input type="radio" name="pick" value="ren"><b>Ren</b><span>RN, 4 months on the unit</span></label>
+                <label class="pick"><input type="radio" name="pick" value="jo"><b>Jo</b><span>Works Thursday 7a–7p</span></label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="col c2">
+            <h3>Checked first <small>before Kim sees it</small></h3>
+            <div class="verdict" id="verdict">All 3 checks pass. Sent to Kim to decide.</div>
+            <div class="checks swap-in" id="checks">
+              <div class="check"><span class="mark" aria-hidden="true"></span><div><h4>Charge-trained RN on the night</h4><p>Dana is charge-trained.</p></div></div>
+              <div class="check"><span class="mark" aria-hidden="true"></span><div><h4>Three twelves in a row, at most</h4><p>Thursday would be Dana’s 1st in a row.</p></div></div>
+              <div class="check"><span class="mark" aria-hidden="true"></span><div><h4>10 hours off before the shift</h4><p>Dana is off from Wednesday 7:30a.</p></div></div>
+            </div>
+            <p class="rules">Sample rules for this page. Your unit’s skill-mix and hours rules go here.</p>
+          </div>
+
+          <div class="col c3">
+            <h3>Kim’s phone <small>unit manager</small></h3>
+            <div class="c3-in">
+              <div class="kim">
+                <div class="ask" id="ask">Priya → Dana, Thursday 7p–7a</div>
+                <div class="sum" id="sum">3 of 3 checks pass</div>
+                <div class="decide">
+                  <button type="button" class="yes" id="approve" aria-pressed="false">Approve</button>
+                  <button type="button" class="no" id="decline" aria-pressed="false">Decline</button>
+                </div>
+                <p class="outcome" id="outcome">Waiting for Kim.</p>
+              </div>
+              <div class="crew">
+                <h4>Thursday night, 4 West</h4>
+                <ul id="crew">
+                  <li class="slot pending" id="slot">Priya <span>· swap to Dana pending</span></li>
+                  <li>Sam</li><li>Lee</li><li>Ana</li>
+                </ul>
+                <button type="button" class="reset" id="reset">Start over</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="night" class="sec night" aria-labelledby="night-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="night-h">Posted on one break, picked up on another</h2>
+        <p class="lead">A swap fits inside a single night shift, so nobody chases it at 2 a.m. and Kim sees it before it happens.</p>
+      </div>
+
+      <div class="ruler" id="ruler">
+        <svg class="ruler-h" viewBox="0 0 1200 96" role="img" aria-label="A night shift from 7 p.m. to 7:30 a.m., with four moments marked: 7 p.m., 11:40 p.m., 3:10 a.m. and 7:04 a.m.">
+          <defs>
+            <linearGradient id="sky" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#4b4f7d"/><stop offset=".14" stop-color="#26355a"/><stop offset=".55" stop-color="#16223a"/><stop offset=".84" stop-color="#2d3e66"/><stop offset=".95" stop-color="#c98a62"/><stop offset="1" stop-color="#f2c26b"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="18" width="1200" height="40" rx="20" fill="url(#sky)"/>
+          <g fill="#eef2f7" opacity=".85"><circle cx="300" cy="30" r="1.4"/><circle cx="420" cy="44" r="1.1"/><circle cx="560" cy="27" r="1.3"/><circle cx="690" cy="47" r="1"/><circle cx="820" cy="31" r="1.2"/><circle cx="215" cy="46" r="1"/></g>
+          <path d="M520 26 a12 12 0 1 0 12 18 a9.5 9.5 0 1 1 -12 -18z" fill="#e9edf5"/>
+          <rect class="progress" x="20" y="36" width="1160" height="4" rx="2" fill="#59c39a"/>
+          <g class="ticks" fill="#b9c4d6" font-family="system-ui, sans-serif" font-size="15" font-weight="500">
+            <text x="20" y="86">7p</text><text x="205" y="86">9p</text><text x="391" y="86">11p</text><text x="577" y="86">1a</text><text x="763" y="86">3a</text><text x="949" y="86">5a</text><text x="1135" y="86">7a</text>
+          </g>
+          <g font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#1b2333">
+            <g class="dot d1"><circle cx="24" cy="38" r="14" fill="#f2c26b"/><text x="24" y="42.5" text-anchor="middle">1</text></g>
+            <g class="dot d2"><circle cx="453" cy="38" r="14" fill="#f2c26b"/><text x="453" y="42.5" text-anchor="middle">2</text></g>
+            <g class="dot d3"><circle cx="778" cy="38" r="14" fill="#f2c26b"/><text x="778" y="42.5" text-anchor="middle">3</text></g>
+            <g class="dot d4"><circle cx="1156" cy="38" r="14" fill="#59c39a"/><text x="1156" y="42.5" text-anchor="middle">4</text></g>
+          </g>
+        </svg>
+        <svg class="ruler-v" viewBox="0 0 56 640" preserveAspectRatio="none" role="img" aria-label="The same night shift drawn top to bottom, from 7 p.m. to 7:30 a.m.">
+          <defs>
+            <linearGradient id="skyv" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#4b4f7d"/><stop offset=".14" stop-color="#26355a"/><stop offset=".55" stop-color="#16223a"/><stop offset=".84" stop-color="#2d3e66"/><stop offset=".95" stop-color="#c98a62"/><stop offset="1" stop-color="#f2c26b"/>
+            </linearGradient>
+          </defs>
+          <rect x="16" y="0" width="24" height="640" rx="12" fill="url(#skyv)"/>
+        </svg>
+        <ol class="events">
+          <li class="ev"><div class="t"><span class="n">1</span>7:00p</div><h3>Handoff</h3><p>Priya and Dana start Tuesday night on 4 West.</p></li>
+          <li class="ev"><div class="t"><span class="n">2</span>11:40p</div><h3>Priya posts, on her break</h3><p>She can’t do Thursday night. It goes up in Swaptide, not on the whiteboard.</p></li>
+          <li class="ev"><div class="t"><span class="n">3</span>3:10a</div><h3>Dana picks it up, on hers</h3><p>Skill mix and hours limits are checked right then. All three pass.</p></li>
+          <li class="ev go"><div class="t"><span class="n">4</span>7:04a</div><h3>Kim approves in one tap</h3><p>Before morning handoff ends. Thursday’s board already shows Dana.</p></li>
+        </ol>
+      </div>
+      <p class="legend-sample">A sample night, written for this page.</p>
+
+      <div class="instead">
+        <h3>What it replaces</h3>
+        <ul>
+          <li>A name crossed out on the whiteboard by the break room<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 12 C 50 8, 120 15, 198 9" stroke="#ff7d63" stroke-width="2.4" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg></li>
+          <li>“Can anyone take Thu night??” in the group text<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 10 C 60 14, 140 6, 198 11" stroke="#ff7d63" stroke-width="2.4" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg></li>
+          <li>A swap Kim hears about after it already happened<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 11 C 70 7, 130 15, 198 10" stroke="#ff7d63" stroke-width="2.4" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="managers" class="sec" aria-labelledby="mgr-h">
+    <div class="wrap mgr-grid">
+      <div class="sec-head">
+        <h2 id="mgr-h">Every swap reaches you already checked</h2>
+        <p class="lead">For nurse managers and directors of nursing: you see each swap before it happens, with the rule checks on it, and you make the call.</p>
+      </div>
+      <dl class="qa">
+        <div><dt>Who decides?</dt><dd><strong>The unit manager, every time.</strong> Each swap waits for you to approve or decline it in one tap. Swaptide shows what it found; it never approves a swap on its own.</dd></div>
+        <div><dt>What gets checked?</dt><dd>Staffing rules: skill mix, such as a charge-trained nurse on the shift, and hours limits. The checks run before the swap reaches you.</dd></div>
+        <div><dt>Does it override our union agreement?</dt><dd>No. It flags; it doesn’t decide. Your agreement and your decision stand as they are.</dd></div>
+        <div><dt>Does it handle payroll?</dt><dd>No. Payroll stays exactly where it is today.</dd></div>
+        <div><dt>Who buys it?</dt><dd>Nurse managers and directors of nursing, from a department budget. Nurses on the unit use it on their phones.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="pilot" class="pilot" aria-labelledby="pilot-h">
+    <div class="wrap">
+      <div class="pilot-card">
+        <div>
+          <h2 id="pilot-h">Start with one unit, like the first one</h2>
+          <p>One medical-surgical unit has piloted Swaptide for three months. We don’t have measured results to share yet, so the call is about your unit and whether a pilot fits.</p>
+          <div class="actions">
+            <a class="btn btn-go" href="https://swaptide.example/pilot">Book a pilot call</a>
+          </div>
+        </div>
+        <div class="qs">
+          <h3>Questions the first call answers</h3>
+          <ol>
+            <li>Which unit would pilot it, and how do swaps happen there today?</li>
+            <li>Which skill-mix and hours rules should be checked for that unit?</li>
+            <li>Who approves swaps, and how long should the pilot run?</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-row">
+      <a class="brand" href="#main">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="29" rx="8" fill="#13201d"/><path d="M8 12.5h13.5l-3.2-3.2M24 19.5H10.5l3.2 3.2" fill="none" stroke="#f3f6f5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24.2" cy="12.5" r="2.2" fill="#59c39a"/></svg>
+        Swaptide
+      </a>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="#try">Try a swap</a></li>
+          <li><a href="#night">A night shift</a></li>
+          <li><a href="#managers">For managers</a></li>
+          <li><a href="https://swaptide.example/pilot">Book a pilot call</a></li>
+        </ul>
+      </nav>
+    </div>
+    <small>Shift swaps for hospital nursing units. Swaptide does not handle payroll. © 2026 Swaptide.</small>
+  </div>
+</footer>
+
+<script>
+(() => {
+  // Menu
+  const b = document.querySelector('.menu-btn'), m = document.getElementById('site-menu');
+  const mq = matchMedia('(max-width: 900px)');
+  const set = open => { b.setAttribute('aria-expanded', String(open)); m.hidden = mq.matches ? !open : false; };
+  set(false);
+  mq.addEventListener('change', () => set(false));
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && b.getAttribute('aria-expanded') === 'true') { set(false); b.focus(); } });
+  document.addEventListener('click', e => { if (mq.matches && !m.contains(e.target) && e.target !== b) set(false); });
+  m.addEventListener('focusout', e => { if (mq.matches && !m.contains(e.relatedTarget) && e.relatedTarget !== b) set(false); });
+  m.addEventListener('click', e => { if (mq.matches && e.target.closest('a')) set(false); });
+
+  // Sample swap: one post, four people, three rules, one manager decision.
+  const P = {
+    dana:   {name: 'Dana',   checks: [[1, 'Dana is charge-trained.'], [1, 'Thursday would be Dana’s 1st in a row.'], [1, 'Dana is off from Wednesday 7:30a.']]},
+    marcus: {name: 'Marcus', checks: [[1, 'Marcus is charge-trained.'], [0, 'Thursday would be Marcus’s 4th night in a row.'], [1, 'Marcus gets 11½ hours off after Wednesday night.']]},
+    ren:    {name: 'Ren',    checks: [[0, 'Ren isn’t charge-trained yet, and nobody else on Thursday night is.'], [1, 'Thursday would be Ren’s 3rd in a row.'], [1, 'Ren gets 11½ hours off after Wednesday night.']]},
+    jo:     {name: 'Jo',     checks: [[1, 'Jo is charge-trained.'], [1, 'Thursday night would be Jo’s 3rd twelve in a row, counting Friday night.'], [0, 'Jo’s day shift ends at 7p, when this one starts.']]}
+  };
+  const RULES = ['Charge-trained RN on the night', 'Three twelves in a row, at most', '10 hours off before the shift'];
+  const FLAGS = ['no charge-trained RN on the night', 'more than three twelves in a row', 'under 10 hours off before the shift'];
+  const $ = id => document.getElementById(id);
+  const verdict = $('verdict'), checks = $('checks'), ask = $('ask'), sum = $('sum'), outcome = $('outcome'), slot = $('slot');
+  const approve = $('approve'), decline = $('decline');
+  let who = 'dana', decision = null;
+
+  const put = (el, cls, html) => { if (cls !== null && el.className !== cls) el.className = cls; if (el.innerHTML !== html) el.innerHTML = html; };
+  const announce = $('announce');
+  function render(say) {
+    const p = P[who], flags = p.checks.filter(c => !c[0]).length, bad = p.checks.findIndex(c => !c[0]);
+    put(checks, null, p.checks.map((c, i) => `<div class="check${c[0] ? '' : ' flag'}"><span class="mark" aria-hidden="true"></span><div><h4>${RULES[i]}</h4><p>${c[0] ? '' : '<span class="sr">Flagged: </span>'}${c[1]}</p></div></div>`).join(''));
+    const v = flags ? `1 flag: ${FLAGS[bad]}. Sent to Kim with the flag showing.` : 'All 3 checks pass. Sent to Kim to decide.';
+    put(verdict, 'verdict' + (flags ? ' has-flag' : ''), v);
+    put(ask, null, `Priya → ${p.name}, Thursday 7p–7a`);
+    put(sum, 'sum' + (flags ? ' has-flag' : ''), flags ? `2 of 3 checks pass · 1 flag` : '3 of 3 checks pass');
+    approve.setAttribute('aria-pressed', String(decision === 'yes'));
+    decline.setAttribute('aria-pressed', String(decision === 'no'));
+    let o;
+    if (decision === 'yes') { o = `Approved. ${p.name} is on Thursday night.`; put(outcome, 'outcome approved', o); put(slot, 'slot', `<s>Priya</s> ${p.name}`); }
+    else if (decision === 'no') { o = 'Declined. Priya keeps Thursday night.'; put(outcome, 'outcome declined', o); put(slot, 'slot', 'Priya'); }
+    else { o = 'Waiting for Kim.'; put(outcome, 'outcome', o); put(slot, 'slot pending', `Priya <span>· swap to ${p.name} pending</span>`); }
+    if (say === 'pick') announce.textContent = v;
+    else if (say === 'decide') announce.textContent = o;
+    else if (say === 'reset') announce.textContent = 'Back to the start: Dana picked, waiting for Kim.';
+  }
+  document.querySelectorAll('input[name=pick]').forEach(r => r.addEventListener('change', () => { who = r.value; decision = null; render('pick'); }));
+  approve.addEventListener('click', () => { decision = 'yes'; render('decide'); });
+  decline.addEventListener('click', () => { decision = 'no'; render('decide'); });
+  $('reset').addEventListener('click', () => {
+    who = 'dana'; decision = null;
+    document.querySelector('input[name=pick][value=dana]').checked = true;
+    render('reset');
+  });
+  render();
+
+  // The night ruler draws once when it comes into view (motion only when welcome).
+  const ruler = $('ruler');
+  if (matchMedia('(prefers-reduced-motion: no-preference)').matches && 'IntersectionObserver' in window) {
+    ruler.classList.add('armed');
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { ruler.classList.add('run'); ruler.classList.remove('armed'); io.disconnect(); }
+    }), {threshold: .2});
+    io.observe(ruler);
+  }
+})();
+</script>
+</body>
+</html>

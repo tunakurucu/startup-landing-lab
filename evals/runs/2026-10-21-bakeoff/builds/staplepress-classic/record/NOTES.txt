@@ -1,0 +1,47 @@
+Staplepress home page: working record
+=====================================
+
+Skill: high-end-visual-design (/home/claude/bk/skills/classic/SKILL.md)
+
+Direction ("variance engine" roll)
+- Vibe: Editorial Luxury. Warm paper (#F4EFE4), espresso ink (#221C16), one spot colour
+  (press red #C2452D), sage status dot, fixed multiply film-grain overlay. It fits "made by
+  people who run a press" better than glass/SaaS archetypes.
+- Layout: Editorial Split hero (big serif headline left) with a Z-Axis Cascade on the right:
+  a proof "photo" on the press bed and an example job ticket, stacked and rotated (-3deg / 2deg).
+  Asymmetric offset grids for the steps, the comparison (bento) and the limits.
+  Everything collapses to one column below 768px, with no rotation or overlap.
+- Type: serif stack Iowan Old Style / Palatino Linotype / Palatino / TeX Gyre Pagella.
+  Mono stack SF Mono / Menlo / Consolas / DejaVu Sans Mono for job-ticket labels.
+  No banned fonts. Verified via CDP getPlatformFontsForNode: Pagella + DejaVu Sans Mono render here.
+- Components: double-bezel tray+sheet cards, pill CTAs with a nested arrow island,
+  floating island nav (not edge-to-edge), hamburger that morphs to an X, full-screen blurred
+  overlay with staggered link reveal, eyebrow pills, custom cubic-bezier (0.32,0.72,0,1).
+- Reveals use IntersectionObserver plus transform/opacity only. Content is fully visible
+  without JS, and prefers-reduced-motion is honoured.
+- Deviation from the skill: the skill's entry fade uses blur, but its own guardrail says to
+  animate only transform/opacity, so I dropped the blur. Mobile section padding is 4.5rem
+  rather than py-8, which is too tight for this content.
+
+Content decisions (sticking to the brief)
+- No artist names, testimonials or work samples. The only "zine" shown is a drawn house test
+  sheet, captioned "Illustration · our own test sheet". A limits card explains why
+  (about 120 artists, no permission).
+- Full-bleed covers are stated as not possible yet.
+- Price: from $2.10 a copy for 50 x 24pp A5, black on uncoated. The run total of $105 is simple
+  arithmetic. Colour, other sizes and larger runs are listed as costing more, with no
+  invented numbers.
+- Every CTA links to https://staplepress.example/start. No invented address, turnaround for
+  shipping, paper names or binding specs.
+
+Verification (record/verify.mjs, Playwright Chromium, file:// URL)
+- Viewports 1440, 820, 390, 320: no horizontal overflow, no console errors, zero network
+  requests, all reveals fire, the menu opens (aria-expanded=true) and closes on Esc,
+  axe-core reports 0 violations. The page also renders with JS disabled (shots/nojs-full.png).
+- Fixes made during verification: the hero headline was too large and pushed the lede below
+  the fold; a floating chip covered the ticket price, so I removed it; the proof caption was
+  hidden under the ticket, so I moved it to the top; ink-3 contrast was 4.3:1, so I darkened it;
+  removed aria-label on <p>; the eyebrow overflowed at 320px; fixed an awkward
+  "1,000-" line break.
+- Note: the fixed nav shows mid-page in full-page screenshots. That is a capture artifact
+  only.

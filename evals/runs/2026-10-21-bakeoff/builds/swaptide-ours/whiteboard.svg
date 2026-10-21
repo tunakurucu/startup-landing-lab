@@ -1,0 +1,33 @@
+<svg viewBox="0 0 680 470" xmlns="http://www.w3.org/2000/svg" width="680" height="470">
+            <defs>
+              <linearGradient id="alu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9dfdd"/><stop offset="1" stop-color="#a9b4b0"/></linearGradient>
+            </defs>
+            <rect x="4" y="4" width="672" height="446" rx="10" fill="url(#alu)"/>
+            <rect x="14" y="14" width="652" height="426" rx="4" fill="#fdfefe"/>
+            <path d="M40 40 L640 34" stroke="#eef2f1" stroke-width="30" stroke-linecap="round" opacity=".7"/>
+            <!-- tray and markers -->
+            <rect x="160" y="448" width="360" height="14" rx="3" fill="#a9b4b0"/>
+            <rect x="200" y="438" width="74" height="12" rx="6" fill="#2350a6"/><rect x="262" y="438" width="14" height="12" rx="3" fill="#183a7a"/>
+            <rect x="300" y="438" width="74" height="12" rx="6" fill="#c1392b"/><rect x="362" y="438" width="14" height="12" rx="3" fill="#8f2419"/>
+            <path d="M36 124 C 200 121, 420 127, 640 122" stroke="#2350a6" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+<path d="M124 92 C 125 200, 122 300, 125 410 M212 92 C 211 200, 214 300, 212 410 M300 92 C 302 200, 299 300, 301 410 M388 92 C 387 200, 390 300, 388 410 M476 92 C 477 200, 474 300, 476 410 M564 92 C 563 200, 566 300, 565 410" stroke="#2350a6" stroke-width="1.6" fill="none" opacity=".55"/>
+            <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+<text x="40" y="66" font-size="27" font-weight="700" fill="#2350a6" transform="rotate(-1.5 40 66)">4 WEST · NIGHTS 7p–7a</text>
+<g font-size="17" font-weight="600" fill="#1d3f86"><text x="44" y="112">Mon</text><text x="132" y="112">Tue</text><text x="220" y="112">Wed</text><text x="308" y="112">Thu</text><text x="396" y="112">Fri</text><text x="484" y="112">Sat</text><text x="572" y="112">Sun</text></g>
+<g font-size="16.5" font-weight="500" fill="#2350a6"><text x="42" y="160">Marcus★</text><text x="42" y="200">Dana</text><text x="42" y="240">Sam</text><text x="42" y="280">Ana</text><text x="130" y="160">Marcus</text><text x="130" y="200">Priya★</text><text x="130" y="240">Dana</text><text x="130" y="280">Ren</text><text x="218" y="160">Marcus★</text><text x="218" y="200">Ren</text><text x="218" y="240">Lee</text><text x="218" y="280">Ana</text><text x="306" y="160">Priya★</text><text x="306" y="200">Sam</text><text x="306" y="240">Lee</text><text x="306" y="280">Ana</text><text x="394" y="160">Jo★</text><text x="394" y="200">Sam</text><text x="394" y="240">Kai</text><text x="394" y="280">Lee</text><text x="482" y="160">Priya★</text><text x="482" y="200">Ana</text><text x="482" y="240">Kai</text><text x="482" y="280">Marcus</text><text x="570" y="160">Priya</text><text x="570" y="200">Dana★</text><text x="570" y="240">Ren</text><text x="570" y="280">Sam</text></g>
+<text x="318" y="330" font-size="34" font-weight="700" fill="#c1392b" transform="rotate(-8 318 330)">??</text>
+</g>
+<!-- red marker: crossed out and question marks -->
+            <path d="M304 150 C 330 147, 360 158, 382 152 M306 160 C 332 152, 356 150, 380 160" stroke="#c1392b" stroke-width="3" fill="none" stroke-linecap="round"/>
+            
+            <path d="M330 300 C 336 250, 345 200, 352 168" stroke="#c1392b" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+            <path d="M344 178 L352 166 L358 180" stroke="#c1392b" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- sticky note -->
+            <g transform="rotate(-4 200 340)">
+              <rect x="130" y="300" width="160" height="118" fill="#f6e07a"/>
+              <path d="M130 300 h160 v14 h-160z" fill="#efd35e"/>
+              
+            </g>
+            <circle cx="212" cy="304" r="9" fill="#2b3a37"/><circle cx="209" cy="301" r="3" fill="#6a7975"/>
+          <g transform="rotate(-4 200 340)" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="600" fill="#3b3315"><text x="144" y="340">Can anyone</text><text x="144" y="362">take Thu night??</text><text x="144" y="384">text me</text><text x="230" y="404">– P</text></g>
+</svg>

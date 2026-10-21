@@ -161,3 +161,7 @@
 .criteria-axis>span>span:nth-child(3){right:0}
 @media(max-width:1050px){.criteria-board{grid-template-columns:1fr}}
 @media(max-width:700px){.eval-round{padding:35px 0}.result-table{font-size:.8rem}.result-table th,.result-table td{padding-right:8px}.result-table thead th{font-size:.75rem}.won{padding:1px 4px;margin-left:-4px}.compare-note{margin-top:35px}.compare-list{gap:34px}.compare figcaption .text-link{margin-left:0}.fix-list>li{grid-template-columns:30px 1fr;gap:10px}.detail-split .fix-list h3{font-size:1.2rem}.criteria-board{padding:28px 20px;margin-top:40px}.criteria dl>div{grid-template-columns:4.6rem 1fr}.criteria-axis{grid-template-columns:4.6rem 1fr 2.4rem}}
+
+.demo-list.judged{margin-bottom:70px}.demo-list.judged .demo-card{border-top:1px solid var(--ink);padding-top:6px}.demo-list.judged .demo-caption>div a{min-height:44px;display:inline-flex;align-items:center}h2.earlier{font-size:clamp(2rem,3.4vw,3.3rem);margin:20px 0 10px}
+.evals-page h2.ai-rounds{font-size:clamp(1.6rem,2.6vw,2.4rem);margin:10px 0 0}
+h1,h2,h3{text-wrap:balance}.demo-list.judged h2{font-size:1.8rem;margin-bottom:15px}@media(max-width:700px){.evals-page .intro-caveat{font-size:1rem}}

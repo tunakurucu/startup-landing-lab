@@ -2,7 +2,7 @@
 
 **Great design skills already exist. This one takes the best rules from thirteen of them, adds what YC partners, operators and web research say a startup homepage must do, grounds it in dated measurements of real startup sites, and turns it into 116 checks built for one job: startup landing pages. It can build a page, change one part of it, or audit the one you already have.**
 
-AI-built landing pages keep coming out the same: centred headline, framed screenshot, three adjective cards, a gradient blob. Version 0.5 makes every page commit to one ownable statement (a character with a job, an inhabited world, the product as a toy, the trade's own notation, monumental type), dealt from a catalogue so the first idea is not the habitual one, and then checks that a stranger still understands the page in five seconds. Good general design skills help, but none of them is about the specific decisions a startup homepage has to make. This skill takes the rules that hold up from the skills listed below, specialises them for landing pages, and grounds them in pages from YC, a16z speedrun and Pear companies that were opened, measured and dated.
+AI-built landing pages keep coming out the same: centred headline, framed screenshot, three adjective cards, a gradient blob. Version 1.2 starts from how the product is bought (five lanes: developer, B2B sales-led, B2B self-serve, consumer, marketplace), makes the first screen a calm poster with the working demo one scroll down, deals each product its own frame (nav, hero composition, look, type, buttons, motion) so no two sites share a template, and holds every page to craft rules a person preferred in blind tests. Then it checks that the page works, says nothing the brief didn't, and reads in five seconds.
 
 [Explore the live field guide](https://tunakurucu.github.io/startup-landing-lab/) · [Install the skill](docs/installation.md) · [The 116 checks](skills/startup-landing-design/references/checklist.md) · [Read the research](research/README.md)
 
@@ -85,17 +85,19 @@ The workflow: understand the product → select reference principles → compare
 
 [Read the skill](skills/startup-landing-design/SKILL.md) or try [consumer and B2B prompts](docs/installation.md).
 
-## Three original experiments
+## Examples
 
-| Demo | Direction | Working behavior |
-| --- | --- | --- |
+Three pages built by an agent with v1.1–v1.2 and judged blind by a person against pages built another way: [Staplepress](https://tunakurucu.github.io/startup-landing-lab/examples/staplepress/) (zine printing, preferred over four alternatives), [Swaptide](https://tunakurucu.github.io/startup-landing-lab/examples/swaptide/) (shift swaps for nurses, tied with the strongest outside skill) and [Tallyhall](https://tunakurucu.github.io/startup-landing-lab/examples/tallyhall/) (church bookkeeping, preferred over the page built without the skill). Fictional brands with sample data.
+
+Earlier experiments, built with v0.x and kept for the record:
+
 | Demo | Direction | Type | Working behavior |
 | --- | --- | --- | --- |
 | [Relayline](https://tunakurucu.github.io/startup-landing-lab/#/demo/relayline) | Technical instrument: the working trace *is* the hero | Inter, IBM Plex Mono | Switch failure scenarios, inspect each attempt, export sample JSON |
 | [Sidequest](https://tunakurucu.github.io/startup-landing-lab/#/demo/sidequest) | Playful creative ritual | Bricolage Grotesque, Instrument Serif italic | Deal an original three-part brief; keep it as a text file |
 | [Fieldwork](https://tunakurucu.github.io/startup-landing-lab/#/demo/ledger) | Editorial operations | Instrument Serif, IBM Plex Sans | Compare structured and informal handoffs; export the working brief |
 
-All three pass the skill's automatic checks with no block failures (a few warnings are kept on purpose, each with its reason), use self-hosted open-licence type, and carry motion written as contracts — trigger, purpose, fallback, duration — that reduced-motion removes without hiding anything. Fictional brands, original code and copy, no fabricated customers, figures or testimonials. [Design decisions, motion contracts and an honest diversity review](docs/demo-decisions.md).
+All three passed v0.8's automatic checks; they predate the calm first screen and are no longer gated against v1.x. They use self-hosted open-licence type, and carry motion written as contracts — trigger, purpose, fallback, duration — that reduced-motion removes without hiding anything. Fictional brands, original code and copy, no fabricated customers, figures or testimonials. [Design decisions, motion contracts and an honest diversity review](docs/demo-decisions.md).
 
 ![Relayline at desktop width: the trace explorer is the hero](docs/screenshots/demo-relayline-1440.png)
 
@@ -108,6 +110,21 @@ Tablet layouts and real-device behaviour remain unverified. This is a dated samp
 The gallery uses original abstract composition studies and links to source websites. It does not redistribute third-party screenshots or assets.
 
 ## Does the skill work?
+
+### Judged by a person (v1.0–v1.2)
+
+Eight rounds of AI grading (below) said the skill's pages were better. Then a person looked at round 8's pairs blind and picked the page built *without* the skill in all four: the skill had learned to please graders from the same model family, and its first screens were cluttered. The skill was rewritten around his eye: a calm first screen, a visual system adapted from the best-looking outside skill, sections that read at a glance, lanes and dealt frames. Every new page was judged by him, blind, from first-screen images and a scroll recording.
+
+| Brief (lane) | Compared against | Result for the current skill |
+| --- | --- | --- |
+| Staplepress (consumer) | No skill, Taste v2, Taste classics, Anthropic frontend-design | **Preferred** (v1.1) |
+| Swaptide (B2B sales-led) | Same four | **Tied** with Taste classics, ahead of the rest (v1.1) |
+| Tallyhall (B2B self-serve) | No skill | **Preferred** (v1.2) |
+| Contractcheck (developer) | No skill | **Lost**: the dealt look (print mono with condensed type) didn't land. Frame options are now weighted by these results. |
+
+One judge and four briefs is direction, not measurement. The bake-off, its keys and every page: [`evals/runs/2026-10-21-bakeoff`](evals/runs/2026-10-21-bakeoff/README.md); the check that started it: [`HUMAN-CHECK.md`](evals/runs/2026-10-20-ab-round8/HUMAN-CHECK.md).
+
+### Before that: AI graders (v0.3–v0.9)
 
 Tested blind. Fresh agents built the same product brief twice, once with the skill and once without, and a separate grader saw only "page A" and "page B", operated both at desktop and phone width, and scored eight criteria.
 

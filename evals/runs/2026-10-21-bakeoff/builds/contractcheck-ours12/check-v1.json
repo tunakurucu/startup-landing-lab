@@ -1,0 +1,846 @@
+{
+  "status": "ran",
+  "target": "file:///home/claude/bk/work/contractcheck-ours12/index.html",
+  "checked_on": "2026-10-21",
+  "checks": [
+    {
+      "id": "PS-06",
+      "check": "There is one primary action, worded the same wherever it appears.",
+      "severity": "warn",
+      "pass": true,
+      "detail": [
+        "skip to content",
+        "install the github app"
+      ]
+    },
+    {
+      "id": "CP-01",
+      "check": "The h1 has 3–12 words and says more than the product or company name.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "h1": "Break the spec and the pull request fails.",
+        "words": 8,
+        "only_the_brand": false
+      }
+    },
+    {
+      "id": "CP-02",
+      "check": "A subhead of one or two sentences, at most 40 words, follows the h1 and is visible without scrolling.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "subhead": "A GitHub App for backend teams that tests your staging API against your OpenAPI spec on every pull request.",
+        "element": "p",
+        "words": 19,
+        "sentences": 1,
+        "top_px": 160,
+        "visible_without_scrolling": true
+      }
+    },
+    {
+      "id": "CP-07",
+      "check": "The first screen contains none of the generic marketing phrases on the list (for example seamless, supercharge, unlock, unleash, streamline, effortless, all-in-one, next-gen, cutting-edge, revolutionize, \"AI-powered\", \"not just X, it's Y\", \"say goodbye to\").",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "CP-08",
+      "check": "No superlative (best, #1, leading, fastest, world's first, unmatched) appears unless its block also holds a source link or citation.",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "CP-11",
+      "check": "Body copy scores Flesch–Kincaid grade 9 or below, or the record gives the audience reason.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "flesch_kincaid_grade": 5.7,
+        "words": 385,
+        "sentences": 44
+      }
+    },
+    {
+      "id": "CP-12",
+      "check": "No notes to the builder or the client reach the page: nothing like \"the brief\", \"confirm with the client\", \"placeholder\", \"TODO\", \"lorem ipsum\" or a bracketed \"[Company]\".",
+      "severity": "block",
+      "pass": true,
+      "detail": "no builder or client notes found in the visible text"
+    },
+    {
+      "id": "CP-13",
+      "check": "Every date shown with a weekday is a real date: the weekday matches the day, month and year.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "dates_with_weekdays": 0,
+        "wrong_weekday": [],
+        "years_assumed_when_none_given": [
+          2026
+        ]
+      }
+    },
+    {
+      "id": "HR-01",
+      "check": "The headline and primary action are visible without scrolling at 1440×900 and 390×844.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "at": "390×844",
+        "h1_top": 97,
+        "first_action_top": -80
+      }
+    },
+    {
+      "id": "HR-02",
+      "check": "The primary action's label starts with a verb and names the outcome in 2–5 words; \"Get started\", \"Learn more\", \"Start now\" or \"Try it now\" alone fail. \"Book a demo\" and \"Join the waitlist\" pass.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "primary_action": "Install the GitHub App",
+        "starts_with_verb": true,
+        "words": 4
+      }
+    },
+    {
+      "id": "HR-03",
+      "check": "The headline has no single-word last line at 390 or 1440.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "no single-word last line at 390 or 1440"
+    },
+    {
+      "id": "HR-04",
+      "check": "A headline above about 6.5rem is the signature of the page and keeps each line to three words or fewer.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "h1_px": 92,
+        "words": 8,
+        "lines": 2
+      }
+    },
+    {
+      "id": "HR-05",
+      "check": "The first screen is not a false floor: at 1440×900 and 390×844 some content below the hero, or a hero element cut by the fold, shows in the bottom 15% of the viewport.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "390×844": "span.kind \"MISSING FIELD\" shows at 704–722px",
+        "1440×900": "the hero ends at 847px, above the fold"
+      }
+    },
+    {
+      "id": "HR-07",
+      "check": "The signature artifact (marked `data-signature`) shows at least 280px of itself, or all of itself, within the first two screens at 390×844 and at 1440×900: right after the hero, not five sections down.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "at": "390×844, first two screens",
+        "signature": "div.demo \"Sample A pull request written fo\"",
+        "marked": true,
+        "top_px": 1321,
+        "visible_px": 367,
+        "needed_px": 280
+      }
+    },
+    {
+      "id": "HR-08",
+      "check": "The 1440 first screen has no empty block of 320×140px or more, covering 8% of it, reaching the middle of the page: no action floating in an empty column, no hole above the headline.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "largest_empty_block": "936×120px at (0, 72)",
+        "share_of_first_screen": 0.1
+      }
+    },
+    {
+      "id": "HR-09",
+      "check": "The first screen is calm: at 1440×900 and 390×844, at most 60 words show outside the site header and the pictures (the hero picture marked `data-hero-visual`, drawings and anything hidden from assistive tech), not counting the next section peeking in at the bottom.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "words_outside_header_and_hero_picture": {
+          "1440×900": 49,
+          "390×844": 52
+        },
+        "limit": 60,
+        "fix": "one headline, one sentence and the action; move the rest below the first screen",
+        "hero_picture": "figure.sheet \"contractcheck Example Pull reque\""
+      }
+    },
+    {
+      "id": "HR-10",
+      "check": "The first screen holds no table, form field, tab list or slider, at most two actions outside the header, and no controls inside the hero picture.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "actions": [
+          "Install the GitHub App",
+          "Read the docs"
+        ],
+        "note": "no table, field or tab list; at most two actions"
+      }
+    },
+    {
+      "id": "ST-01",
+      "check": "Cost is easy to find: a header or footer link to pricing or plans, or visible prices; otherwise the record says how cost is disclosed and why.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "pricing_link": "Pricing",
+        "visible_price": "e for public repos, $19 a month per private",
+        "free_statement": null
+      }
+    },
+    {
+      "id": "ST-02",
+      "check": "Within 5 seconds at 390×844, no dialog or fixed overlay covers more than 30% of the viewport, except a legally required consent prompt named in the record.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "overlays_at_5s": []
+      }
+    },
+    {
+      "id": "ST-03",
+      "check": "Clickable things look clickable: the primary action has a fill or a border with at least 3:1 contrast against its surroundings, and links inside paragraphs are underlined or differ from body text by at least 3:1.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "primary_action": {
+          "action": "Install the GitHub App",
+          "fill_contrast": 17.85,
+          "border_contrast": 1
+        },
+        "inline_links_checked": 1,
+        "links_not_underlined_and_under_3_to_1": []
+      }
+    },
+    {
+      "id": "ST-05",
+      "check": "The conversion form shows at most three fields before submit, no textarea and at most one select.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "no conversion form on the page"
+    },
+    {
+      "id": "ST-06",
+      "check": "For developer products, the first two screenfuls show an install command or code sample, and the header links to docs or a quickstart; other products are n/a.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "detected_by": "code \"customer_id\"",
+        "code_or_install_in_first_two_screens": true,
+        "header_docs_link": "Docs"
+      }
+    },
+    {
+      "id": "TY-01",
+      "check": "Exactly one h1.",
+      "severity": "block",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "id": "TY-02",
+      "check": "Heading levels never skip (no h1 → h3).",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "TY-03",
+      "check": "The h1 and the first h2 are each at least 1.25× the body size.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "h1_to_body": 2.45,
+        "h2_to_body": 2.01
+      }
+    },
+    {
+      "id": "TY-04",
+      "check": "Headline letter-spacing is no tighter than −0.04em.",
+      "severity": "block",
+      "pass": true,
+      "detail": "-0.012em"
+    },
+    {
+      "id": "TY-05",
+      "check": "Body text is at least 16px on phones.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "17px"
+    },
+    {
+      "id": "TY-06",
+      "check": "No readable text below 12px, superscripts and labels included.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "TY-07",
+      "check": "Body paragraphs stay under about 80 rendered characters per line.",
+      "severity": "warn",
+      "pass": true,
+      "detail": [
+        55
+      ]
+    },
+    {
+      "id": "TY-08",
+      "check": "Body line-height is at least 1.35.",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "TY-09",
+      "check": "Weights under 400 appear only at 28px and up; smaller text is 400 or heavier.",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "TY-10",
+      "check": "A display face that is everywhere (Inter, Space Grotesk, Fraunces, Roboto, Poppins, Montserrat) has a stated reason, and every face has a role (display, text, data).",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "display_face": "CC Display",
+        "faces": [
+          "CC Text",
+          "CC Display",
+          "CC Mono"
+        ]
+      }
+    },
+    {
+      "id": "TY-11",
+      "check": "Every face renders as named for visitors: a named face is shipped with @font-face or is on every major platform, and never falls back to a browser default (Times, Arial, DejaVu, Liberation).",
+      "severity": "block",
+      "pass": true,
+      "detail": "3 font stack(s) render as named"
+    },
+    {
+      "id": "LY-01",
+      "check": "No horizontal scroll at 390px, at 1× and at 3× pixel density.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "at": "390 at 1× and 3× pixel density",
+        "scroll_width_3x": 390
+      }
+    },
+    {
+      "id": "LY-02",
+      "check": "No horizontal scroll at 320px.",
+      "severity": "block",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "LY-03",
+      "check": "No text is cut off by its container.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "LY-04",
+      "check": "Body text keeps at least 12px from the screen edge on phones.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "LY-05",
+      "check": "No boxed card sits inside another boxed card.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 nested card(s)"
+    },
+    {
+      "id": "LY-06",
+      "check": "In-page anchor targets and focused controls are never hidden under a sticky or fixed element, tabbing forward or back, at 1440 and 390.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "at": "390×844, Tab then Shift+Tab",
+        "focus_stops": 45,
+        "focused_controls_hidden": []
+      }
+    },
+    {
+      "id": "LY-07",
+      "check": "A footer exists and holds real destinations.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "footer": true,
+        "links": 5
+      }
+    },
+    {
+      "id": "LY-08",
+      "check": "A 200-character unbroken string typed into any text field and submitted causes no sideways scroll at 390px.",
+      "severity": "block",
+      "pass": true,
+      "detail": "n/a: no text field"
+    },
+    {
+      "id": "LY-09",
+      "check": "Buttons that sit side by side share their height and their vertical centre, within 2px, at 1440 and 390.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "buttons that sit side by side share height and centre"
+    },
+    {
+      "id": "CO-01",
+      "check": "Text meets WCAG AA contrast (4.5:1, or 3:1 for 24px+ or 18.66px+ bold); text over images or gradients is sampled at its worst point.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "axe_violations": [],
+        "sampled_over_images_or_gradients": 0,
+        "sampled_failures": [],
+        "not_sampled": [],
+        "method": "axe color-contrast; text axe cannot resolve is screenshotted with the text hidden and judged at the worst 4×4 px cell of its background"
+      }
+    },
+    {
+      "id": "CO-02",
+      "check": "No gradient-filled text and no coloured glow used as decoration.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "gradient_text": 0,
+        "coloured_glow": 0
+      }
+    },
+    {
+      "id": "CO-03",
+      "check": "The ground colour is chosen from where the product is used; cream with a serif display needs a reason.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "cream_ground": false,
+        "serif_display": false,
+        "face": "CC Display"
+      }
+    },
+    {
+      "id": "TT-01",
+      "check": "No row of three equal cards with short adjective headings standing in for a product explanation.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 row(s) of adjective cards"
+    },
+    {
+      "id": "TT-02",
+      "check": "No icon tile stacked above every card heading.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 row(s) of icon-topped cards"
+    },
+    {
+      "id": "TT-03",
+      "check": "No small tracked-caps label above nearly every section heading.",
+      "severity": "warn",
+      "pass": true,
+      "detail": "0 of 5 h2s have a tracked-caps label above"
+    },
+    {
+      "id": "TT-04",
+      "check": "No thick coloured side stripe on cards and no grid, dot or stripe background used as filler.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "side_stripes": 0,
+        "pattern_fill_backgrounds": 0
+      }
+    },
+    {
+      "id": "MO-01",
+      "check": "With reduced motion, nothing translates, scales or zooms and nothing is hidden; short fades are allowed.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "moving": [],
+        "moving_count": 0,
+        "script_motion": [],
+        "hidden_text": 0,
+        "hidden_sample": [],
+        "note": "opacity-only fades are allowed"
+      }
+    },
+    {
+      "id": "MO-02",
+      "check": "After loading and one scroll, no text is still invisible.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "share": "0%",
+        "sample": []
+      }
+    },
+    {
+      "id": "MO-03",
+      "check": "No transition: all.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "MO-04",
+      "check": "Only transform, translate, scale, rotate and opacity animate; never layout properties.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "keyframes": [],
+        "transitions": 0
+      }
+    },
+    {
+      "id": "MO-05",
+      "check": "Nothing that moves or changes by itself runs longer than 5 seconds without a visible pause control, and the h1 and primary action never change by themselves.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "still_changing_after_5s": [],
+        "pause_control": null,
+        "h1_changed": null,
+        "primary_action_changed": null
+      }
+    },
+    {
+      "id": "MO-06",
+      "check": "Overshoot or bounce easing appears only in playful archetypes; entrances never start from scale(0) or ease-in.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "overshoot": [],
+        "from_scale_0": [],
+        "ease_in_entrances": 0
+      }
+    },
+    {
+      "id": "MB-01",
+      "check": "The viewport meta never disables zoom.",
+      "severity": "block",
+      "pass": true,
+      "detail": "width=device-width, initial-scale=1"
+    },
+    {
+      "id": "MB-02",
+      "check": "On phones, the primary action and navigation controls are at least 44×44px.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "under_44x44": []
+      }
+    },
+    {
+      "id": "MB-03",
+      "check": "Every other control is at least 24×24px or has enough space around it (WCAG 2.5.8); links inside sentences are exempt.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "targets_measured": 14,
+        "under_24_without_spacing": [],
+        "note": "links inside sentences are exempt; WCAG 2.5.8 spacing: a 24px circle on each undersized target must not touch another target or its circle"
+      }
+    },
+    {
+      "id": "MB-04",
+      "check": "Inputs use at least 16px text, so phones do not zoom on focus.",
+      "severity": "warn",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "id": "MB-05",
+      "check": "If the nav collapses on phones, a working menu control replaces it, and without JavaScript the menu never covers the headline.",
+      "severity": "block",
+      "pass": true,
+      "detail": "menu control reveals the navigation"
+    },
+    {
+      "id": "MB-07",
+      "check": "On phones, every control in the signature artifact answers in view: after a tap, something other than the control itself changes on screen, and no control is dead.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "controls_used": 4,
+        "feedback_off_screen": [],
+        "dead_controls": [],
+        "method": "each control used from the keyboard at 390×844, where it sits in the first screen or else centred; a change counts when content (not another control) at least 16px tall changes and is at least half on screen"
+      }
+    },
+    {
+      "id": "MB-08",
+      "check": "Escape closes an open menu and returns focus to the button that opened it.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "closed_on_escape": true,
+        "focus_returned_to_button": true
+      }
+    },
+    {
+      "id": "MB-09",
+      "check": "On phones, controls inside the signature artifact are at least 44×44px.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "under_44x44": []
+      }
+    },
+    {
+      "id": "MB-10",
+      "check": "The phone page is at most eight screens tall (6,752px at 390×844) and the signature artifact at most two (1,688px); a longer page cuts repeats and groups long lists.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "page_height_px": 6724,
+        "screens": 8,
+        "signature_height_px": 1341,
+        "limits": "page at most 8 screens (6,752px); the signature artifact at most 2 screens (1,688px): group, collapse or page a long list"
+      }
+    },
+    {
+      "id": "MB-11",
+      "check": "The signature artifact has at most three controls (a radio group counts once): one choice and one result, not a form.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "controls_in_artifact": 2,
+        "limit": 3,
+        "note": "a radio group counts once; one decision and one result reads at a glance, a form does not",
+        "controls": [
+          "Reset the sample",
+          "Rename customer_id",
+          "Return 410 for archived orders",
+          "Add a database index"
+        ]
+      }
+    },
+    {
+      "id": "AX-01",
+      "check": "Every link and button has an accessible name.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-02",
+      "check": "Every image has alt text, empty only when decorative.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-03",
+      "check": "Every focusable control shows a focus indicator from the keyboard: an outline at least 2px with at least 3:1 contrast against adjacent colours.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "controls_tabbed": 18,
+        "without_2px_3_to_1_indicator": []
+      }
+    },
+    {
+      "id": "AX-04",
+      "check": "Nothing is clickable without being a link or button.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-05",
+      "check": "Every form control has a label.",
+      "severity": "block",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "id": "AX-06",
+      "check": "The html element declares a language and the page has a main landmark.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "lang": "en",
+        "main_landmark": true
+      }
+    },
+    {
+      "id": "AX-07",
+      "check": "No script errors, console errors or malformed markup (an attribute left open by a missing quote) while loading.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-08",
+      "check": "Links point somewhere real: no empty href, \"#\" or missing anchor or file.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "empty": [],
+        "missing_anchor": [],
+        "missing_file": []
+      }
+    },
+    {
+      "id": "AX-09",
+      "check": "No broken images.",
+      "severity": "block",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "AX-11",
+      "check": "With WCAG 1.4.12 text spacing applied (line-height 1.5, paragraph spacing 2em, letter-spacing 0.12em, word-spacing 0.16em), no text is clipped or overlaps.",
+      "severity": "block",
+      "pass": true,
+      "detail": "no new clipping, overlap or sideways scroll with WCAG 1.4.12 spacing at 390 and 1440"
+    },
+    {
+      "id": "AX-12",
+      "check": "Using a signature-artifact control from the keyboard never drops focus to the page body (a control that disables itself hands focus on).",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "focus_dropped_to_body_after": []
+      }
+    },
+    {
+      "id": "AX-13",
+      "check": "The first Tab stop (usually the skip link) is visible on screen when focused.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "first_tab_stop": "a.skip \"Skip to content\"",
+        "size": "144×50px",
+        "on_screen": true,
+        "opacity": 1
+      }
+    },
+    {
+      "id": "PF-01",
+      "check": "Images declare width and height or an aspect-ratio, and images below the first screen load lazily.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "unsized": 0,
+        "eager_below_the_fold": 0
+      }
+    },
+    {
+      "id": "PF-02",
+      "check": "The largest element in the first screen (LCP) is not lazy-loaded or injected after load, and an LCP image has fetchpriority=\"high\" or a preload.",
+      "severity": "block",
+      "pass": true,
+      "detail": {
+        "element": "p.lede \"A GitHub App for backend teams t\"",
+        "tag": "P",
+        "url": null,
+        "t": 272,
+        "image": false,
+        "file": null,
+        "present_at_load": true,
+        "after_load_ms": 18,
+        "lazy": false,
+        "fetchpriority": null,
+        "preload": false,
+        "in_initial_html": "n/a (text)",
+        "problems": []
+      }
+    },
+    {
+      "id": "PF-03",
+      "check": "Web fonts use font-display swap or optional.",
+      "severity": "warn",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "PF-04",
+      "check": "Layout shift (CLS) through load, one scroll and one interaction stays at or under 0.1.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "cls": 0,
+        "clicked": "button#reset.reset \"Reset the sample\"",
+        "largest_shifts": []
+      }
+    },
+    {
+      "id": "PF-05",
+      "check": "On a throttled mobile profile, lab LCP is at or under 2.5 seconds (a lab estimate, not field data).",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "lab_lcp_ms": 436,
+        "runs": [
+          460,
+          336,
+          436
+        ],
+        "element": "p",
+        "profile": "390×844, 4× CPU slowdown, 1.6 Mbps down, 750 kbps up, 150 ms RTT, cold cache",
+        "note": "median of 3 runs; a lab estimate, not field data; served from a temporary local server so the network throttle applies"
+      }
+    },
+    {
+      "id": "PF-06",
+      "check": "The page has a title and a meta description; for an unknown brand the title leads with the category or audience.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "title": "OpenAPI contract checks on every pull request · Contractcheck",
+        "description": "Contractcheck is a GitHub App that runs your OpenAPI spec against your staging API on ever"
+      }
+    },
+    {
+      "id": "PF-07",
+      "check": "Sharing works: og:title, og:description, an absolute og:image, twitter:card, a favicon and an apple-touch-icon are present, and theme-color matches the page background.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "missing": [],
+        "og_image": "https://contractcheck.example/og.png",
+        "twitter_card": "summary_large_image",
+        "theme_color": "#f4f4f1",
+        "note": "opened from disk: tags and files were checked, but a share card can only be verified on a public URL"
+      }
+    },
+    {
+      "id": "HP-05",
+      "check": "No false urgency or scarcity: no countdown timer, \"only N left\" or \"spots filling fast\" unless it is true and sourced.",
+      "severity": "warn",
+      "pass": true,
+      "detail": {
+        "urgency_phrases": [],
+        "countdown_elements": [],
+        "ticking_text": []
+      }
+    }
+  ],
+  "failures": [],
+  "warnings": [],
+  "not_run": [],
+  "facts": {
+    "first_screen_text": {
+      "390": "Contractcheck | Menu | Break the spec and | the pull request fails. | A GitHub App for backend teams that tests your staging API against your OpenAPI spec on every pull request. | Install the GitHub App | Read the docs | Free for public repos, $19 a month per private repo. Reads staging only, never production. | contractcheck | Example | Check failed | 3 responses no longer match openapi.yaml | openapi.yaml | MISSING FIELD | customer_id is required by the spec and absent | customer_id | openapi.yaml:33 | CHANGED TYPE | total should be a number; staging sent \"42.50\" | total | openapi.yaml:37",
+      "1440": "Contractcheck | Try it | Setup | Pricing | Docs | Install the GitHub App | Break the spec and | the pull request fails. | A GitHub App for backend teams that tests your staging API against your OpenAPI spec on every pull request. | Read the docs | Free for public repos, $19 a month per private repo. Reads staging only, never production. | contractcheck | Example | Pull request #482 · Orders API cleanup | Check failed | 3 responses no longer match openapi.yaml | openapi.yaml | MISSING FIELD | GET /orders/ord_8812 → 200 | customer_id is required by the spec and absent | customer_id | openapi.yaml:33 | CHANGED TYPE | total should be a number; staging sent \"42.50\" | total | openapi.yaml:37 | UNDOCUMENTED STATUS | GET /orders/ord_0007 → 410 | 410 isn’t in the spec for this operation (200, 404) | openapi.yaml:11 | Responses read from staging · compared with openapi.yaml at 9c41e2a"
+    }
+  },
+  "runtime_s": 44.5,
+  "summary": "85 passed, 0 block failures, 0 warnings, 0 not run, of 85 automatic checks"
+}

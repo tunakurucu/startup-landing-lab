@@ -10,13 +10,13 @@ const KEPT:Record<string,string[]>={
   '/':GALLERY,
   '/references':[...INDEX,'CP-11'],
   '/skill':[...GALLERY,'CP-11'],
-  '/demos':[...INDEX,'CP-11'],
+  '/demos':[...GALLERY,'ST-03','HR-03'],
   '/evals':GALLERY,
   '/reference/resend':[...GALLERY,'CP-11'],
-  '/demo/relayline':['TY-10','ST-06'],
-  '/demo/sidequest':['TY-10','TT-03','MO-06'],
-  '/demo/ledger':[],
 };
+// The three /demo/* pages were built with v0.x and are kept as earlier experiments, not gated against v1.x checks.
+// The judged example pages under gallery/public/examples were checked when they were built (check.json in
+// evals/runs/2026-10-21-bakeoff/builds).
 // PF-05 is a lab timing (median LCP of three throttled runs), so it is budgeted rather than matched exactly:
 // every page must meet the checker's own 2.5 s, except a record page, which paints its frame first and the
 // record catalog chunk second (about 3 s; the reason is recorded with the other kept warnings).

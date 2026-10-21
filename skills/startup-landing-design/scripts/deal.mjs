@@ -53,10 +53,12 @@ const AXES = [['nav', 'Nav'], ['hero', 'Hero composition'], ['look', 'Look'], ['
 const frame = {};
 out.push('', `Frame dealt${lane ? ` for the **${lane}** lane` : ''} (take each, or swap one for its alternate with a product reason in the record):`, '');
 for (const [axis, label] of AXES) {
-  const fit = frames[axis].filter(o => !lane || !o.fits.length || o.fits.includes(lane));
+  const fit = frames[axis].filter(o => (!lane || !o.fits.length || o.fits.includes(lane)) && !(lane && o.not_for?.includes(lane)));
+  // Weighted draw without replacement: options people preferred come up more often, untested ones still appear.
+  const wpick = list => { const tot = list.reduce((n, o) => n + (o.weight ?? 1), 0); let r = rand() * tot; for (const o of list) { r -= o.weight ?? 1; if (r <= 0) return o; } return list[list.length - 1]; };
   const fresh = fit.filter(o => !recent.some(h => h.frame?.[axis] === o.id));
-  const pick = shuffle(fresh.length ? fresh : fit)[0];
-  const alt = shuffle(fit.filter(o => o.id !== pick.id))[0];
+  const pick = wpick(fresh.length ? fresh : fit);
+  const rest = fit.filter(o => o.id !== pick.id), alt = rest.length ? wpick(rest) : null;
   frame[axis] = pick.id;
   out.push(`- **${label}: ${pick.name}** (\`${pick.id}\`). ${pick.what}${alt ? ` Alternate: ${alt.name} (\`${alt.id}\`).` : ''}`);
 }

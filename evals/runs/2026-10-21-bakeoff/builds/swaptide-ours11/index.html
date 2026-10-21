@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shift-swap app for hospital nursing units | Swaptide</title>
+<meta name="description" content="Swaptide is a shift-swap app for hospital nursing units. Nurses post and pick up swaps on their phones; the unit manager approves or declines each one in a tap, with skill mix and hours limits checked first.">
+<meta name="theme-color" content="#F4F5F7">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Swaptide: shift swaps you see before they happen">
+<meta property="og:description" content="A shift-swap app for hospital nursing units. Nurses trade shifts on their phones; the manager approves or declines each one in a tap.">
+<meta property="og:image" content="https://swaptide.example/og.png">
+<meta property="og:url" content="https://swaptide.example/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Swaptide: shift swaps you see before they happen">
+<meta name="twitter:description" content="A shift-swap app for hospital nursing units, with skill mix and hours limits checked before the manager taps approve or decline.">
+<meta name="twitter:image" content="https://swaptide.example/og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+@font-face{font-family:"Adventor";src:url("fonts/texgyreadventor-regular.woff") format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Adventor";src:url("fonts/texgyreadventor-bold.woff") format("woff");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/Inter-Regular.woff") format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/Inter-SemiBold.woff") format("woff");font-weight:600;font-style:normal;font-display:swap}
+
+:root{
+  --ground:#F4F5F7; --surface:#FFFFFF; --shell:rgba(21,26,48,.04);
+  --ink:#151A30; --ink-2:#4A5068; --ink-3:#5E6479;
+  --line:rgba(21,26,48,.09); --line-2:rgba(21,26,48,.16);
+  --night:#1A2046; --night-2:#2B3368; --dawn:#F2B48C; --coral:#C8502A; --coral-soft:#FBE5DA;
+  --ok:#1D6B4B; --ok-bg:#E2F1E9; --flag:#8A4A00; --flag-bg:#FCEDD5; --no:#A12A35; --no-bg:#F8E2E4;
+  --display:"Adventor","Century Gothic","Avant Garde",sans-serif;
+  --text:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --s-1:.5rem; --s-2:.75rem; --s-3:1rem; --s-4:1.5rem; --s-5:2rem; --s-6:3rem; --s-7:4.5rem; --s-8:7.5rem;
+  --radius-shell:30px; --radius-core:24px;
+  --shadow:0 30px 60px -24px rgba(26,32,70,.18),0 10px 20px -12px rgba(26,32,70,.10);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd,ol,ul,fieldset,legend{margin:0}
+ol,ul{padding:0;list-style:none}
+fieldset{border:0;padding:0;min-width:0}
+legend{padding:0}
+img,svg,video,canvas{display:block;max-width:100%}
+input,button,textarea,select{font:inherit;color:inherit}
+:where(p,li,dd,td,output,[role=status]){overflow-wrap:break-word;min-width:0}
+html{scroll-padding-top:96px;-webkit-text-size-adjust:100%}
+body{background:var(--ground);color:var(--ink);font-family:var(--text);font-size:1.0625rem;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:8px;box-shadow:0 0 0 6px #fff}
+.skip{position:absolute;left:12px;top:-80px;padding:12px 16px;background:var(--ink);color:#fff;z-index:200;border-radius:12px;text-decoration:none;font-weight:600}
+.skip:focus{top:12px}
+.wrap{width:min(1200px,100% - 48px);margin-inline:auto}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;letter-spacing:-.025em}
+h2{font-size:clamp(2rem,1.55rem + 1.9vw,3.25rem);line-height:1.06}
+h3{font-size:1.375rem;line-height:1.2;letter-spacing:-.01em}
+p{text-wrap:pretty}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- nav ---------- */
+.site-head{position:fixed;top:16px;left:0;right:0;z-index:50;display:flex;justify-content:center;pointer-events:none;padding-inline:16px}
+.bar{pointer-events:auto;display:flex;align-items:center;gap:var(--s-4);padding:6px 6px 6px 18px;border-radius:999px;background:rgba(255,255,255,.78);border:1px solid var(--line);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);box-shadow:0 12px 30px -18px rgba(26,32,70,.25)}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em;min-height:44px}
+.brand svg{width:26px;height:26px;flex:none}
+#site-menu{display:flex;align-items:center;gap:4px}
+#site-menu a:not(.btn){display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;text-decoration:none;font-size:.9375rem;font-weight:400;color:var(--ink-2)}
+#site-menu a:not(.btn):hover{color:var(--ink);background:var(--shell)}
+.menu-btn{display:none}
+html:not(.js) .site-head{position:relative;top:0;padding-top:16px}
+html:not(.js) .hero{padding-top:40px}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:52px;padding:0 8px 0 24px;border-radius:999px;font-size:1rem;font-weight:600;text-decoration:none;line-height:1;border:1px solid transparent;cursor:pointer;transition:transform .15s var(--ease),background-color .2s var(--ease)}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:#000}
+.btn .arrow{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:999px;background:rgba(255,255,255,.14);transition:transform .2s var(--ease)}
+.btn .arrow svg{width:16px;height:16px}
+@media (hover:hover) and (pointer:fine){.btn:hover .arrow{transform:translate(2px,-2px)}}
+.btn-quiet{background:transparent;color:var(--ink);border-color:var(--line-2);padding:0 24px}
+.btn-quiet:hover{background:var(--surface)}
+.btn-small{min-height:44px;font-size:.9375rem;padding:0 6px 0 18px}
+.btn-small .arrow{width:32px;height:32px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding-top:120px;padding-bottom:var(--s-5);overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:minmax(0,560px) minmax(0,1fr);gap:28px;align-items:center;min-height:min(780px,calc(100svh - 120px))}
+.hero-copy{padding-block:var(--s-5)}
+.hero h1{font-size:clamp(2.5rem,1.7rem + 3vw,4rem);line-height:1.04;letter-spacing:-.035em;max-width:none}
+.hero h1 em{font-style:normal;color:var(--coral)}
+.lede{margin-top:28px;font-size:1.1875rem;line-height:1.5;color:var(--ink-2);max-width:31em}
+.actions{margin-top:36px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.beside{margin-top:18px;font-size:.9375rem;color:var(--ink-3);max-width:30em}
+
+.hero-visual{position:relative;height:720px;margin-right:calc((100vw - min(1200px,100vw - 48px)) / -2)}
+.sky{position:absolute;inset:0 0 0 0;border-radius:36px 0 0 36px;background:linear-gradient(172deg,#1A2046 0%,#2B3368 38%,#7A6A9A 66%,#E7A985 88%,#F6CFB2 100%);overflow:hidden}
+.sky .sun{position:absolute;left:-10%;right:-10%;bottom:-38%;height:60%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,226,196,.9),rgba(255,226,196,0))}
+.sky-times{position:absolute;left:32px;top:28px;right:32px;display:flex;justify-content:space-between;font-size:.8125rem;letter-spacing:.06em;color:rgba(255,255,255,.72);font-variant-numeric:tabular-nums}
+.phone{position:absolute;left:38%;top:64px;width:316px;height:640px;border-radius:48px;background:#0E1124;padding:11px;box-shadow:0 50px 80px -30px rgba(10,12,30,.6),inset 0 0 0 1.5px rgba(255,255,255,.12);transform:rotate(-3deg)}
+.screen{position:relative;height:100%;border-radius:38px;background:#F7F7FA;overflow:hidden;padding:46px 18px 18px;display:flex;flex-direction:column;gap:12px}
+.notch{position:absolute;top:12px;left:50%;width:92px;height:24px;margin-left:-46px;border-radius:999px;background:#0E1124}
+.app-top{display:flex;justify-content:space-between;font-size:.75rem;color:var(--ink-3);font-weight:600;letter-spacing:.02em}
+.app-title{font-family:var(--display);font-size:1.5rem;letter-spacing:-.02em;line-height:1.1}
+.shift{border-radius:20px;background:var(--night);color:#fff;padding:16px 16px 14px}
+.shift .day{font-size:.8125rem;color:rgba(255,255,255,.72);font-weight:600}
+.shift .name{font-family:var(--display);font-size:1.625rem;line-height:1.1;margin-top:2px}
+.shift .time{font-size:1.0625rem;margin-top:2px;font-variant-numeric:tabular-nums}
+.clock{margin-top:12px;height:10px;border-radius:999px;background:linear-gradient(90deg,rgba(255,255,255,.22) 0 50%,rgba(255,255,255,.08) 50% 100%);position:relative}
+.clock span{position:absolute;left:50%;right:0;top:-3px;bottom:-3px;border-radius:999px;background:var(--dawn)}
+.clock-labels{display:flex;justify-content:space-between;font-size:.6875rem;margin-top:6px;color:rgba(255,255,255,.66);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.people{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px}
+.person{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:.8125rem;line-height:1.25}
+.person small{color:var(--ink-3);font-size:.75rem}
+.av{width:40px;height:40px;border-radius:999px;display:grid;place-items:center;font-weight:600;font-size:.875rem;color:var(--night);background:#DFE3F3}
+.av.b{background:var(--coral-soft);color:#8A3214}
+.swap-arrow svg{width:28px;height:28px;color:var(--coral)}
+.mini-checks{display:grid;gap:6px}
+.mini-checks li{display:flex;align-items:center;gap:8px;font-size:.8125rem;background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px 12px}
+.tick{flex:none;width:20px;height:20px;border-radius:999px;display:grid;place-items:center;background:var(--ok-bg);color:var(--ok)}
+.tick svg{width:12px;height:12px}
+.approved{margin-top:auto;border-radius:18px;background:var(--ok);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px;font-size:.875rem;line-height:1.3}
+.approved strong{display:block;font-size:1rem}
+.approved .tick{background:rgba(255,255,255,.2);color:#fff;width:28px;height:28px}
+
+.ribbon{position:absolute;left:3%;bottom:56px;width:360px;padding:7px;border-radius:26px;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:var(--shadow);transform:rotate(2deg)}
+.ribbon-core{background:#fff;border-radius:20px;padding:16px 18px 14px}
+.ribbon-title{font-family:var(--display);font-size:1.0625rem;letter-spacing:-.01em}
+.ribbon-band{position:relative;display:flex;height:14px;margin-top:14px;border-radius:999px}
+.ribbon-band .rn{flex:1;border-radius:999px 0 0 999px;background:linear-gradient(90deg,#1A2046,#2B3368 85%,#7A6A9A)}
+.ribbon-band .rd{flex:1;border-radius:0 999px 999px 0;background:linear-gradient(90deg,#F2C9AE,#F7EAD9 30%,#ECE8E0)}
+.rp{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:999px;background:var(--ink);border:3px solid #fff;box-shadow:0 0 0 1px var(--line-2)}
+.rp.coral{background:var(--coral)}.rp.green{background:var(--ok)}
+.ribbon-hours{display:flex;justify-content:space-between;margin-top:6px;font-size:.75rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.ribbon-ev{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);display:grid;gap:5px;font-size:.8125rem;color:var(--ink-2)}
+.ribbon-ev b{display:inline-block;width:44px;color:var(--ink);font-weight:600}
+/* ---------- section rhythm ---------- */
+section{position:relative}
+.sec{padding-block:var(--s-8)}
+.sec-head{max-width:640px}
+.sec-head p{margin-top:var(--s-4);color:var(--ink-2);font-size:1.125rem;max-width:36em}
+.sample{display:inline-flex;align-items:center;gap:8px;font-size:.8125rem;font-weight:600;color:var(--ink-2);letter-spacing:.01em}
+.sample::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--coral);transform:rotate(45deg)}
+
+/* ---------- try (signature) ---------- */
+.try{padding-top:var(--s-7);padding-bottom:var(--s-8)}
+.try .sec-head{margin-bottom:var(--s-6)}
+.demo{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:24px;padding:8px;border-radius:var(--radius-shell);background:var(--shell);border:1px solid var(--line)}
+.demo-pick,.demo-result{background:var(--surface);border-radius:var(--radius-core);padding:28px;box-shadow:inset 0 1px 0 #fff}
+.demo-pick .sample{margin-bottom:18px}
+.demo legend{font-family:var(--display);font-size:1.375rem;letter-spacing:-.01em;margin-bottom:6px}
+.legend-note{font-size:.9375rem;color:var(--ink-2);margin-bottom:18px}
+.takers{display:grid;gap:10px}
+.taker{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;min-height:64px;padding:10px 16px 10px 12px;border-radius:18px;border:1.5px solid var(--line);background:#FBFBFC;cursor:pointer;transition:border-color .18s var(--ease),background-color .18s var(--ease)}
+.taker input{position:absolute;opacity:0;width:1px;height:1px}
+.taker:has(input:checked){border-color:var(--coral);background:var(--coral-soft)}
+.taker:has(input:focus-visible){outline:3px solid var(--ink);outline-offset:3px}
+.taker .av{width:42px;height:42px}
+.taker-name{font-weight:600;font-size:1rem;line-height:1.25}
+.taker-meta{display:block;font-size:.875rem;color:var(--ink-2);line-height:1.35}
+.taker-hrs{font-size:.875rem;color:var(--ink-2);text-align:right;font-variant-numeric:tabular-nums;line-height:1.3}
+.taker-hrs b{display:block;color:var(--ink);font-weight:600;font-size:1rem}
+.rules{margin-top:18px;font-size:.875rem;color:var(--ink-2)}
+
+.demo-result{display:flex;flex-direction:column;gap:18px}
+.res-shift{display:flex;align-items:center;justify-content:space-between;gap:16px;border-radius:20px;background:var(--night);color:#fff;padding:18px 20px}
+.res-shift .day{font-size:.875rem;color:rgba(255,255,255,.74);font-weight:600}
+.res-shift .name{font-family:var(--display);font-size:1.5rem;line-height:1.15}
+.res-shift .time{font-variant-numeric:tabular-nums;font-size:1rem}
+.res-pair{display:flex;align-items:center;gap:10px;font-size:.9375rem;white-space:nowrap}
+.res-pair .av{width:38px;height:38px;font-size:.8125rem}
+.res-pair svg{width:22px;height:22px;color:var(--dawn)}
+.verdict{border-radius:16px;padding:14px 16px;font-weight:600;font-size:1.0625rem;line-height:1.35;display:flex;gap:12px;align-items:flex-start;background:var(--ok-bg);color:var(--ok);transition:background-color .2s var(--ease)}
+.verdict[data-tone="flag"]{background:var(--flag-bg);color:var(--flag)}
+.verdict[data-tone="no"]{background:var(--no-bg);color:var(--no)}
+.verdict[data-tone="wait"]{background:#EEF0F5;color:var(--ink)}
+.verdict .sub{display:block;font-weight:400;font-size:.9375rem;color:var(--ink-2);margin-top:2px}
+.vdot{flex:none;width:12px;height:12px;border-radius:999px;margin-top:6px;background:currentColor}
+.checks{display:grid;gap:10px}
+.check{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:14px 16px;border-radius:16px;border:1px solid var(--line)}
+.check .ic{width:26px;height:26px;border-radius:999px;display:grid;place-items:center;margin-top:1px}
+.check .ic svg{width:14px;height:14px}
+.check[data-state="ok"] .ic{background:var(--ok-bg);color:var(--ok)}
+.check[data-state="flag"] .ic{background:var(--flag-bg);color:var(--flag)}
+.check[data-state="flag"]{border-color:rgba(138,74,0,.28);background:#FFFBF4}
+.check h3{font-family:var(--text);font-size:.8125rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.check p{font-size:1rem;line-height:1.4;margin-top:2px}
+.decide{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--line);margin-top:auto}
+.decide-who{font-size:.9375rem;color:var(--ink-2);line-height:1.35}
+.decide-who b{display:block;color:var(--ink);font-weight:600}
+.decide-btns{display:flex;gap:10px}
+.tap{min-height:48px;min-width:112px;padding:0 20px;border-radius:999px;font-weight:600;font-size:1rem;border:1.5px solid var(--line-2);background:#fff;cursor:pointer;transition:transform .15s var(--ease),background-color .18s var(--ease),border-color .18s var(--ease)}
+.tap:active{transform:scale(.97)}
+.tap.approve[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.tap.decline[aria-pressed="true"]{background:var(--no);border-color:var(--no);color:#fff}
+.flash{animation:none}
+
+/* ---------- night strip ---------- */
+.night{background:var(--surface);border-block:1px solid var(--line)}
+.strip-card{margin-top:var(--s-6);padding:8px;border-radius:var(--radius-shell);background:var(--shell);border:1px solid var(--line)}
+.strip-core{border-radius:var(--radius-core);background:#fff;padding:28px 32px 32px}
+.strip-top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.strip-top p{font-size:.9375rem;color:var(--ink-2)}
+.strip{position:relative;height:290px}
+.band{position:absolute;left:0;right:0;top:118px;height:24px;border-radius:999px;overflow:hidden;display:flex}
+.band .n{flex:1;background:linear-gradient(90deg,#1A2046,#2B3368 85%,#7A6A9A)}
+.band .d{flex:1;background:linear-gradient(90deg,#F2C9AE,#F7EAD9 30%,#F4F1EA)}
+.hours{position:absolute;left:0;right:0;top:150px;display:flex;justify-content:space-between;font-size:.8125rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.hours span{width:40px;text-align:center}
+.hours span:first-child{text-align:left}.hours span:last-child{text-align:right}
+.ev{position:absolute;width:210px;transform:translateX(-12px)}
+.ev::before{content:"";position:absolute;left:11px;width:2px;background:var(--line-2)}
+.ev .pin{position:absolute;left:5px;width:14px;height:14px;border-radius:999px;border:3px solid #fff;background:var(--ink);box-shadow:0 0 0 1px var(--line-2)}
+.ev.up{bottom:calc(100% - 100px)}
+.ev.up::before{top:100%;height:30px}
+.ev.up .pin{top:calc(100% + 23px)}
+.ev.down{top:184px}
+.ev.down::before{top:-54px;height:50px}
+.ev.down .pin{top:-61px}
+.ev b{display:block;font-variant-numeric:tabular-nums;font-size:.9375rem}
+.ev span{display:block;font-size:.9375rem;color:var(--ink-2);line-height:1.35}
+.ev.right{transform:translateX(calc(-100% + 12px));text-align:right}
+.ev.right::before{left:auto;right:11px}
+.ev.right .pin{left:auto;right:5px}
+.ev.coral .pin{background:var(--coral)}
+.ev.green .pin{background:var(--ok)}
+.before-line{margin-top:28px;padding-top:20px;border-top:1px dashed var(--line-2);display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;font-size:1rem;color:var(--ink-2);max-width:780px}
+.before-line b{color:var(--ink);font-weight:600}
+.note{display:inline-block;font-family:var(--display);font-size:.9375rem;color:var(--ink);background:#FFF6B8;padding:8px 12px;border-radius:4px;transform:rotate(-2deg);box-shadow:0 6px 12px -8px rgba(0,0,0,.3);white-space:nowrap}
+
+/* ---------- managers ---------- */
+.mgr-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:72px;align-items:center}
+.mgr-list{margin-top:var(--s-5);display:grid;gap:14px}
+.mgr-list li{display:grid;grid-template-columns:auto 1fr;gap:14px;font-size:1.0625rem;color:var(--ink-2)}
+.mgr-list b{color:var(--ink);font-weight:600}
+.mgr-list .ic{width:28px;height:28px;border-radius:999px;display:grid;place-items:center;background:var(--night);color:#fff;margin-top:1px}
+.mgr-list .ic svg{width:14px;height:14px}
+.queue{padding:8px;border-radius:var(--radius-shell);background:var(--shell);border:1px solid var(--line);box-shadow:var(--shadow)}
+.queue-core{background:#fff;border-radius:var(--radius-core);padding:24px}
+.queue-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.queue-head h3{font-size:1.25rem}
+.queue-head p{font-size:.875rem;color:var(--ink-2)}
+.qrow{display:grid;grid-template-columns:116px 1fr auto;gap:18px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)}
+.qrow:last-child{border-bottom:0;padding-bottom:4px}
+.qwhen b{display:block;font-weight:600;font-variant-numeric:tabular-nums;font-size:.9375rem}
+.qwhen span{font-size:.875rem;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.qwho{font-size:.9375rem;line-height:1.4}
+.qwho span{display:block;color:var(--ink-2);font-size:.875rem}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:.8125rem;font-weight:600;white-space:nowrap}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+.pill.flag{background:var(--flag-bg);color:var(--flag)}
+
+/* ---------- pilot ---------- */
+.pilot{background:var(--night);color:#fff;border-radius:40px;margin-inline:16px;overflow:hidden;position:relative}
+.pilot .wrap{position:relative}
+.pilot-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:72px;align-items:start}
+.pilot h2{color:#fff}
+.pilot .lead{margin-top:var(--s-4);font-size:1.125rem;color:rgba(255,255,255,.82);max-width:34em}
+.pilot .actions{margin-top:var(--s-5)}
+.pilot .btn-primary{background:#fff;color:var(--ink)}
+.pilot .btn-primary:hover{background:#F2F3F7}
+.pilot .btn-primary .arrow{background:var(--ink);color:#fff}
+.pilot .beside{color:rgba(255,255,255,.72)}
+.pilot :focus-visible{outline-color:#fff;box-shadow:0 0 0 6px var(--night)}
+.agenda{padding:8px;border-radius:var(--radius-shell);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+.agenda-core{border-radius:var(--radius-core);background:rgba(255,255,255,.06);padding:24px 26px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.agenda h3{font-size:1.25rem;color:#fff}
+.agenda ol{margin-top:14px;display:grid;gap:4px;counter-reset:q}
+.agenda li{counter-increment:q;display:grid;grid-template-columns:28px 1fr;gap:10px;padding:10px 0;border-top:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.88);font-size:1rem}
+.agenda li::before{content:counter(q);font-variant-numeric:tabular-nums;color:var(--dawn);font-weight:600}
+.faq{margin-top:var(--s-6);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.faq details{border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 52px 18px 20px;font-weight:600;font-size:1rem;line-height:1.35;position:relative;min-height:44px;border-radius:20px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";position:absolute;right:22px;top:24px;width:10px;height:10px;border-right:2px solid var(--dawn);border-bottom:2px solid var(--dawn);transform:rotate(45deg);transition:transform .2s var(--ease)}
+.faq details[open] summary::after{transform:rotate(225deg);top:28px}
+.faq details p{padding:0 20px 20px;color:rgba(255,255,255,.82);font-size:.9375rem}
+
+/* ---------- footer ---------- */
+.foot{padding-block:var(--s-7) var(--s-6)}
+.foot-grid{display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap}
+.foot p{color:var(--ink-2);font-size:.9375rem;margin-top:6px}
+.foot nav ul{display:flex;flex-wrap:wrap;gap:4px 8px}
+.foot nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:999px;text-decoration:none;color:var(--ink-2);font-size:.9375rem}
+.foot nav a:hover{color:var(--ink);background:var(--shell)}
+.fine{margin-top:var(--s-5);padding-top:var(--s-4);border-top:1px solid var(--line);font-size:.875rem;color:var(--ink-3)}
+
+/* ---------- motion (enhancement only) ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .js .rise{opacity:.6;transform:translateY(20px)}
+  .js .rise.pic{opacity:1;transform:translateY(24px)}
+  .js.loaded .rise{opacity:1;transform:none;transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:calc(var(--i,0) * 80ms)}
+  .js .strip .band{opacity:0}
+  .js .strip .ev{transform:translate(-12px,12px)}
+  .js .strip .ev.right{transform:translate(calc(-100% + 12px),10px)}
+  .js .strip.in .band{opacity:1;transition:opacity .6s var(--ease)}
+  .js .strip.in .ev{transform:translateX(-12px);transition:transform .7s var(--ease);transition-delay:calc(200ms + var(--i,0) * 70ms)}
+  .js .strip.in .ev.right{transform:translateX(calc(-100% + 12px))}
+  .js .queue .qrow{transform:translateY(14px)}
+  .js .queue.in .qrow{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:calc(var(--i,0) * 70ms)}
+  .check.pulse,.verdict.pulse{animation:pulse .32s var(--ease)}
+  @keyframes pulse{from{opacity:.55}to{opacity:1}}
+}
+
+/* ---------- tablet ---------- */
+@media (max-width:1100px){
+  .hero-grid{grid-template-columns:1fr;gap:40px;min-height:0}
+  .hero{padding-top:104px}
+  .hero-copy{padding-block:0}
+  .hero h1{max-width:13ch}
+  .hero-visual{margin-right:0;height:640px}
+  .sky{border-radius:36px}
+  .phone{left:auto;right:12%;top:40px}
+  .ribbon{left:6%;bottom:56px}
+  .mgr-grid,.pilot-grid{grid-template-columns:1fr;gap:48px}
+  .faq{grid-template-columns:1fr}
+}
+@media (max-width:900px){
+  .demo{grid-template-columns:1fr}
+  .strip-core{padding:20px 18px 24px}
+  .strip{height:auto;padding-left:44px}
+  .band{left:0;right:auto;top:0;bottom:0;width:20px;height:auto;flex-direction:column}
+  .band .n{background:linear-gradient(180deg,#1A2046,#2B3368 85%,#7A6A9A)}
+  .band .d{background:linear-gradient(180deg,#F2C9AE,#F7EAD9 30%,#F4F1EA)}
+  .hours{display:none}
+  .ev,.ev.up,.ev.down,.ev.right{position:relative;left:auto!important;top:auto;bottom:auto;width:auto;transform:none;text-align:left;padding:0 0 22px 0}
+  .ev::before,.ev.right::before{display:none}
+  .ev .pin,.ev.right .pin,.ev.up .pin,.ev.down .pin{left:-38px;right:auto;top:4px}
+  .ev.handover{padding-block:6px 28px}
+  .js .strip .ev,.js .strip .ev.right,.js .strip.in .ev,.js .strip.in .ev.right{transform:none}
+}
+
+/* ---------- phone ---------- */
+@media (max-width:760px){
+  .wrap{width:calc(100% - 40px)}
+  .bar{width:100%;justify-content:space-between;padding:6px 6px 6px 16px;position:relative}
+  .menu-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;min-width:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line-2);background:#fff;font-weight:600;font-size:.9375rem;cursor:pointer}
+  .menu-btn .lines{position:relative;width:16px;height:10px}
+  .menu-btn .lines::before,.menu-btn .lines::after{content:"";position:absolute;left:0;right:0;height:2px;border-radius:2px;background:currentColor;transition:transform .25s var(--ease),top .25s var(--ease)}
+  .menu-btn .lines::before{top:0}.menu-btn .lines::after{top:8px}
+  .menu-btn[aria-expanded="true"] .lines::before{top:4px;transform:rotate(45deg)}
+  .menu-btn[aria-expanded="true"] .lines::after{top:4px;transform:rotate(-45deg)}
+  #site-menu{position:static;flex-direction:column;align-items:stretch;gap:0}
+  .js #site-menu{position:absolute;top:calc(100% + 10px);left:0;right:0;padding:12px;border-radius:28px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+  .js #site-menu[hidden]{display:none}
+  #site-menu a:not(.btn){min-height:52px;font-size:1.125rem;color:var(--ink);padding:0 16px}
+  #site-menu .btn{margin-top:8px}
+  html:not(.js) .menu-btn{display:none}
+  html:not(.js) .bar{flex-wrap:wrap;border-radius:28px;gap:4px}
+  html:not(.js) #site-menu{flex-direction:row;flex-wrap:wrap;width:100%}
+  html:not(.js) #site-menu a:not(.btn){min-height:44px;font-size:1rem;padding:0 12px}
+  html:not(.js) #site-menu .btn{margin:4px 0 0;width:100%}
+  .hero{padding-top:104px}
+  .hero-copy{padding:0}
+  .hero h1{font-size:clamp(2.5rem,1.6rem + 3.4vw,4.25rem);max-width:none}
+  .lede{margin-top:20px;font-size:1.0625rem}
+  .actions{margin-top:28px}
+  .actions .btn{flex:1 1 100%}
+  .beside{margin-top:14px}
+  .hero-grid{gap:32px}
+  .hero-visual{height:470px;margin-inline:-20px;overflow:hidden;border-radius:28px}
+  .sky{border-radius:28px}
+  .sky-times{left:20px;right:20px;top:18px}
+  .phone{right:auto;left:50%;margin-left:-118px;top:52px;width:250px;height:510px;border-radius:40px;padding:9px;transform:rotate(-2deg)}
+  .screen{border-radius:32px;padding:40px 14px 14px;gap:9px}
+  .notch{top:10px;height:20px;width:76px;margin-left:-38px}
+  .app-title{font-size:1.25rem}
+  .shift{padding:12px}
+  .shift .name{font-size:1.3rem}
+  .people{padding:9px}
+  .av{width:34px;height:34px;font-size:.75rem}
+  .mini-checks li{padding:7px 10px;font-size:.75rem}
+  .approved{padding:11px 12px;font-size:.75rem}
+  .approved strong{font-size:.875rem}
+  .ribbon{display:none}
+  .mini-checks,.app-title{display:none}
+  .approved{margin-top:4px}
+  .phone{top:44px}
+  .sec{padding-block:var(--s-7)}
+  .try{padding-top:var(--s-5);padding-bottom:var(--s-7)}
+  .try .sec-head{margin-bottom:var(--s-4)}
+  .try .sec-head p{margin-top:var(--s-3);font-size:1.0625rem}
+  .demo{padding:6px;gap:6px;border-radius:26px}
+  .demo-pick,.demo-result{padding:18px 16px;border-radius:20px}
+  .demo legend{font-size:1.1875rem}
+  .legend-note{display:none}
+  .takers{grid-template-columns:1fr 1fr;gap:8px}
+  .taker{grid-template-columns:1fr;gap:2px;min-height:64px;padding:10px 12px}
+  .taker .av{display:none}
+  .taker-hrs{text-align:left}
+  .taker-hrs b{display:inline;font-size:.875rem}
+  .taker-meta{font-size:.8125rem}
+  .rules{margin-top:12px;font-size:.8125rem}
+  .demo-result{gap:12px}
+  .res-shift{display:none}
+  .demo-pick{padding-bottom:6px}
+  .res-shift{padding:14px 16px;flex-direction:column;align-items:flex-start;gap:10px}
+  .res-shift .name{font-size:1.25rem}
+  .verdict{font-size:1rem;padding:12px 14px}
+  .check{padding:12px 14px}
+  .check p{font-size:.9375rem}
+  .decide-btns{width:100%}
+  .tap{flex:1}
+  .before-line{grid-template-columns:1fr;gap:12px}
+  .qrow{grid-template-columns:1fr auto;gap:6px 12px}
+  .qwhen{grid-column:1 / -1;display:flex;gap:8px;align-items:baseline}
+  .queue-core{padding:18px 16px}
+  .pilot{margin-inline:8px;border-radius:28px}
+  .pilot .actions .btn{flex:1 1 100%}
+}
+@media (max-width:380px){
+  .taker-name{font-size:.9375rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="bar">
+    <a class="brand" href="#top" aria-label="Swaptide, back to top">
+      <svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="#F2B48C"/><path d="M13 1a12 12 0 0 0 0 24z" fill="#1A2046"/><path d="M8 9.5h8.5l-2-2M18 16.5H9.5l2 2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Swaptide
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu"><span class="lines" aria-hidden="true"></span>Menu</button>
+    <nav id="site-menu" aria-label="Main">
+      <a href="#try">Try a swap</a>
+      <a href="#night">On break</a>
+      <a href="#managers">For managers</a>
+      <a class="btn btn-primary btn-small" href="https://swaptide.example/pilot">Book a pilot call<span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<section class="hero" id="top" aria-labelledby="hero-h">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1 id="hero-h" class="rise" style="--i:0">Shift swaps you see <em>before</em> they happen.</h1>
+      <p class="lede rise" style="--i:1">A shift-swap app for hospital units: nurses trade shifts on their phones, and you approve or decline each one in a tap.</p>
+      <div class="actions rise" style="--i:2">
+        <a class="btn btn-primary" href="https://swaptide.example/pilot">Book a pilot call<span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="btn btn-quiet" href="#try">Try a sample swap</a>
+      </div>
+      <p class="beside rise" style="--i:3">For nurse managers and directors. The call starts with one of your units and its staffing rules.</p>
+    </div>
+
+    <figure class="hero-visual rise pic" style="--i:2" data-hero-visual role="img" aria-label="A nurse's phone shows Priya Shah's Thursday night shift, 19:00 to 07:00, swapped to Dana Okafor and approved by the unit manager after skill mix and hours were checked.">
+      <div class="sky" aria-hidden="true">
+        <div class="sky-times"><span>19:00</span><span>07:00</span></div>
+        <div class="sun"></div>
+      </div>
+      <div class="phone" aria-hidden="true">
+        <div class="screen">
+          <span class="notch"></span>
+          <div class="app-top"><span>4 West · Med-Surg</span><span class="num">13:05</span></div>
+          <p class="app-title">Your swap</p>
+          <div class="shift">
+            <p class="day">Thu 12 Nov</p>
+            <p class="name">Night shift</p>
+            <p class="time">19:00 – 07:00</p>
+            <div class="clock"><span></span></div>
+            <div class="clock-labels"><span>07</span><span>19</span><span>07</span></div>
+          </div>
+          <div class="people">
+            <div class="person"><span class="av">PS</span><span>Priya</span><small>gives</small></div>
+            <div class="swap-arrow"><svg viewBox="0 0 28 28"><path d="M5 10h16l-4-4M23 18H7l4 4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="person"><span class="av b">DO</span><span>Dana</span><small>takes</small></div>
+          </div>
+          <ul class="mini-checks">
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="m2.5 6.2 2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Skill mix: charge RN on nights</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="m2.5 6.2 2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Hours: Dana at 36 of 48 h</li>
+          </ul>
+          <div class="approved"><span class="tick"><svg viewBox="0 0 12 12"><path d="m2.5 6.2 2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><strong>Approved</strong>by Renee Carter, nurse manager</span></div>
+        </div>
+      </div>
+      <div class="ribbon" aria-hidden="true">
+        <div class="ribbon-core">
+          <p class="ribbon-title">Mon night into Tue, 4 West</p>
+          <div class="ribbon-band"><span class="rn"></span><span class="rd"></span>
+            <i class="rp coral" style="left:34%"></i><i class="rp" style="left:73.6%"></i><i class="rp green" style="left:75.3%"></i>
+          </div>
+          <div class="ribbon-hours"><span>19:00</span><span>07:00</span><span>19:00</span></div>
+          <ul class="ribbon-ev">
+            <li><b class="num">03:10</b> Priya posts on her break</li>
+            <li><b class="num">12:40</b> Dana picks it up, checks run</li>
+            <li><b class="num">13:05</b> Renee approves in one tap</li>
+          </ul>
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="try" id="try" aria-labelledby="try-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="try-h">Try it: hand off Priya’s Thursday night</h2>
+      <p>Priya Shah is the charge nurse on Thursday’s night shift and needs it covered. Choose who picks it up, then make Renee’s call.</p>
+    </div>
+
+    <div class="demo" data-signature>
+      <div class="demo-pick">
+        <p class="sample">Sample unit and nurses, written for this page</p>
+        <fieldset>
+          <legend>Who picks up the shift?</legend>
+          <p class="legend-note">Each pick runs the unit’s staffing checks before Renee sees it.</p>
+          <div class="takers" id="takers"></div>
+        </fieldset>
+        <p class="rules">Sample unit rules: a charge-trained RN on every night, and at most 48 hours in a week.</p>
+      </div>
+
+      <div class="demo-result" aria-labelledby="res-h">
+        <h3 id="res-h" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">What Renee sees</h3>
+        <div class="res-shift">
+          <div>
+            <p class="day">Thu 12 Nov · 4 West</p>
+            <p class="name">Night shift</p>
+            <p class="time">19:00 – 07:00</p>
+          </div>
+          <div class="res-pair" aria-label="Priya Shah gives the shift to the nurse you picked">
+            <span class="av">PS</span>
+            <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 10h16l-4-4M23 18H7l4 4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="av b" id="res-av">DO</span>
+            <span id="res-name">Dana Okafor</span>
+          </div>
+        </div>
+
+        <p class="verdict" id="verdict" role="status" aria-live="polite" data-tone="ok"><span class="vdot" aria-hidden="true"></span><span><span id="v-main">Sent to Renee: Dana passes both checks.</span><span class="sub" id="v-sub">Waiting for her approve or decline.</span></span></p>
+
+        <div class="checks">
+          <div class="check" id="c-skill" data-state="ok">
+            <span class="ic" aria-hidden="true"></span>
+            <div><h3>Skill mix</h3><p id="c-skill-t">Dana is charge-trained, so the night keeps its charge RN.</p></div>
+          </div>
+          <div class="check" id="c-hours" data-state="ok">
+            <span class="ic" aria-hidden="true"></span>
+            <div><h3>Hours limit</h3><p id="c-hours-t"><span class="num">24 h</span> this week now, <span class="num">36 h</span> with this shift. Limit <span class="num">48 h</span>.</p></div>
+          </div>
+        </div>
+
+        <div class="decide">
+          <p class="decide-who"><b>Renee Carter decides</b>Swaptide flags; it never approves on its own.</p>
+          <div class="decide-btns">
+            <button type="button" class="tap approve" id="approve" aria-pressed="false">Approve</button>
+            <button type="button" class="tap decline" id="decline" aria-pressed="false">Decline</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec night" id="night" aria-labelledby="night-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="night-h">Posted on a night break, approved by lunch</h2>
+      <p>Nurses post and pick up swaps from their phones, in the gaps a 12-hour shift actually has. Here is the same sample swap across one night and the day after it.</p>
+    </div>
+
+    <div class="strip-card">
+      <div class="strip-core">
+        <div class="strip-top">
+          <p class="sample">Sample swap on 4 West, Mon 9 to Tue 10 Nov</p>
+          <p>Night shift 19:00–07:00, then day shift 07:00–19:00</p>
+        </div>
+        <ol class="strip" id="strip">
+          <li class="band" aria-hidden="true"><span class="n"></span><span class="d"></span></li>
+          <li class="ev up coral" style="left:34.0%;--i:0"><span class="pin" aria-hidden="true"></span><b>Tue 03:10</b><span>Priya posts Thursday’s night on her break.</span></li>
+          <li class="ev down handover" style="left:50%;--i:1"><span class="pin" aria-hidden="true"></span><b>07:00</b><span>Handover. Nobody chases the swap.</span></li>
+          <li class="ev up right" style="left:73.6%;--i:2"><span class="pin" aria-hidden="true"></span><b>12:40</b><span>Dana picks it up on her lunch break. Skill mix and hours are checked.</span></li>
+          <li class="ev down green" style="left:75.3%;--i:3"><span class="pin" aria-hidden="true"></span><b>13:05</b><span>Renee approves in one tap.</span></li>
+          <li class="hours" aria-hidden="true"><span>19:00</span><span>23:00</span><span>03:00</span><span></span><span>11:00</span><span>15:00</span><span>19:00</span></li>
+        </ol>
+        <div class="before-line">
+          <span class="note" aria-hidden="true">Can anyone take my Thu N?? – P</span>
+          <p><b>The same swap without Swaptide:</b> a note on the whiteboard by the break room, a group text, and Renee hearing about it on Thursday night.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="managers" aria-labelledby="mgr-h">
+  <div class="wrap mgr-grid">
+    <div>
+      <h2 id="mgr-h">Every swap waits for your tap</h2>
+      <ul class="mgr-list">
+        <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="m2.5 6.2 2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Checked before it reaches you.</b> Skill mix and hours limits run first, so a flag shows up beside the swap, not on the floor.</span></li>
+        <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M6 2.5v7M2.5 6h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span><b>One tap to approve or decline.</b> A flag is information. You can still approve a flagged swap, or decline a clean one.</span></li>
+        <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3 3 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span><b>Your rules still govern.</b> Your union agreement and your decision stand over every swap. Swaptide doesn’t handle payroll.</span></li>
+      </ul>
+    </div>
+
+    <div class="queue" id="queue">
+      <div class="queue-core">
+        <div class="queue-head">
+          <h3>Renee’s swaps to decide</h3>
+          <p class="sample">Sample queue, Tue 10 Nov</p>
+        </div>
+        <ul>
+          <li class="qrow" style="--i:0">
+            <p class="qwhen"><b>Thu 12 Nov</b><span>Night 19–07</span></p>
+            <p class="qwho">Priya Shah → Dana Okafor<span>Picked up 12:40</span></p>
+            <span class="pill ok">Both checks pass</span>
+          </li>
+          <li class="qrow" style="--i:1">
+            <p class="qwhen"><b>Sat 14 Nov</b><span>Day 07–19</span></p>
+            <p class="qwho">Ana Ruiz → Marcus Lee<span>Picked up 09:15</span></p>
+            <span class="pill ok">Both checks pass</span>
+          </li>
+          <li class="qrow" style="--i:2">
+            <p class="qwhen"><b>Sun 15 Nov</b><span>Night 19–07</span></p>
+            <p class="qwho">Tom Becker → Jo Alvarez<span>Jo would reach 60 of 48 h</span></p>
+            <span class="pill flag">Hours flag</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec pilot" id="pilot" aria-labelledby="pilot-h">
+  <div class="wrap">
+    <div class="pilot-grid">
+      <div>
+        <h2 id="pilot-h">Start with one unit and a pilot call</h2>
+        <p class="lead">One medical-surgical unit has run its swaps through Swaptide for three months. We don’t have measured results we can share yet, so the call is about your unit, not ours.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://swaptide.example/pilot">Book a pilot call<span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </div>
+        <p class="beside">Opens the booking page at swaptide.example/pilot.</p>
+      </div>
+      <div class="agenda">
+        <div class="agenda-core">
+          <h3>What the first call works out</h3>
+          <ol>
+            <li>Which unit pilots first, and how its swaps run today.</li>
+            <li>The staffing rules to check: skill mix, hours limits.</li>
+            <li>Who approves, and who covers when they’re off.</li>
+            <li>How long the pilot runs and what it costs.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary>Does Swaptide ever approve a swap by itself?</summary>
+        <p>No. It runs the staffing checks and shows the result. The manager approves or declines every swap.</p>
+      </details>
+      <details>
+        <summary>Does it override our union agreement?</summary>
+        <p>No. Your agreement and the manager’s decision still govern every swap. Swaptide shows the swap and its checks so the decision is made before the shift, not after it.</p>
+      </details>
+      <details>
+        <summary>Does it handle payroll?</summary>
+        <p>No. Swaptide covers posting, picking up and approving swaps. Payroll stays where it is today.</p>
+      </details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="#top" aria-label="Swaptide, back to top">
+          <svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="#F2B48C"/><path d="M13 1a12 12 0 0 0 0 24z" fill="#1A2046"/><path d="M8 9.5h8.5l-2-2M18 16.5H9.5l2 2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Swaptide
+        </a>
+        <p>Shift swaps for hospital nursing units.</p>
+      </div>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="#try">Try a sample swap</a></li>
+          <li><a href="#night">On break</a></li>
+          <li><a href="#managers">For managers</a></li>
+          <li><a href="https://swaptide.example/pilot">Book a pilot call</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="fine">© 2026 Swaptide. Names, units and times on this page are samples. Swaptide does not handle payroll.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* menu */
+  var b=document.querySelector('.menu-btn'), m=document.getElementById('site-menu');
+  var mq=window.matchMedia('(max-width:760px)');
+  function set(open){ b.setAttribute('aria-expanded', open); m.hidden = mq.matches ? !open : false; }
+  set(false);
+  mq.addEventListener ? mq.addEventListener('change',function(){set(false)}) : mq.addListener(function(){set(false)});
+  b.addEventListener('click',function(){ set(b.getAttribute('aria-expanded')!=='true'); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && b.getAttribute('aria-expanded')==='true'){ set(false); b.focus(); } });
+  document.addEventListener('click',function(e){ if(mq.matches && !m.contains(e.target) && !b.contains(e.target)) set(false); });
+  m.addEventListener('focusout',function(e){ if(mq.matches && !m.contains(e.relatedTarget) && e.relatedTarget!==b) set(false); });
+  m.addEventListener('click',function(e){ if(e.target.closest('a') && mq.matches) set(false); });
+
+  /* demo */
+  var TICK='<svg viewBox="0 0 12 12"><path d="m2.5 6.2 2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var FLAG='<svg viewBox="0 0 12 12"><path d="M6 2.2v4.6M6 9.3v.1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  var people=[
+    {id:'dana', first:'Dana', name:'Dana Okafor', ini:'DO', role:'RN · charge-trained', now:24,
+     skill:{ok:true, t:'Dana is charge-trained, so the night keeps its charge RN.'}},
+    {id:'marcus', first:'Marcus', name:'Marcus Lee', ini:'ML', role:'RN · not charge-trained', now:24,
+     skill:{ok:false, t:'Priya is the night’s only charge-trained RN. With Marcus, Thursday night has none.'}},
+    {id:'jo', first:'Jo', name:'Jo Alvarez', ini:'JA', role:'RN · charge-trained', now:48,
+     skill:{ok:true, t:'Jo is charge-trained, so the night keeps its charge RN.'}},
+    {id:'sam', first:'Sam', name:'Sam Whitley', ini:'SW', role:'LPN', now:12,
+     skill:{ok:false, t:'This is an RN slot and Sam is an LPN. The night would also lose its charge RN.'}}
+  ];
+  var LIMIT=48, SHIFT=12;
+  var wrap=document.getElementById('takers');
+  wrap.innerHTML=people.map(function(p,i){
+    return '<label class="taker"><input type="radio" name="taker" value="'+p.id+'"'+(i===0?' checked':'')+'>'+
+      '<span class="av'+(i%2?'':' b')+'" aria-hidden="true">'+p.ini+'</span>'+
+      '<span><span class="taker-name">'+p.name+'</span><span class="taker-meta">'+p.role+'</span></span>'+
+      '<span class="taker-hrs"><b class="num">'+p.now+' h</b> this week</span></label>';
+  }).join('');
+  var state={who:people[0], call:null};
+  var $=function(id){return document.getElementById(id)};
+  function pulse(el){ el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse'); }
+  function render(){
+    var p=state.who, after=p.now+SHIFT, hoursOk=after<=LIMIT, flags=[];
+    if(!p.skill.ok) flags.push('skill mix');
+    if(!hoursOk) flags.push('hours');
+    $('res-name').textContent=p.name; $('res-av').textContent=p.ini;
+    var cs=$('c-skill'), ch=$('c-hours');
+    cs.dataset.state=p.skill.ok?'ok':'flag'; cs.querySelector('.ic').innerHTML=p.skill.ok?TICK:FLAG;
+    $('c-skill-t').textContent=p.skill.t;
+    ch.dataset.state=hoursOk?'ok':'flag'; ch.querySelector('.ic').innerHTML=hoursOk?TICK:FLAG;
+    $('c-hours-t').innerHTML=p.first+': <span class="num">'+p.now+' h</span> this week now, <span class="num">'+after+' h</span> with this shift. Limit <span class="num">'+LIMIT+' h</span>.'+(hoursOk?'':' Over by <span class="num">'+(after-LIMIT)+' h</span>.');
+    var v=$('verdict'), main, sub, tone;
+    if(state.call==='approve'){
+      tone='ok'; main='Approved by Renee at 13:05. '+p.first+' works Thursday night.';
+      sub=flags.length?'Renee approved with the '+flags.join(' and ')+' flag in front of her.':'Priya is off Thursday night.';
+    } else if(state.call==='decline'){
+      tone='no'; main='Declined by Renee at 13:05. Priya keeps Thursday night.';
+      sub='Priya can post the shift again for someone else to pick up.';
+    } else if(flags.length){
+      tone='flag'; main='Sent to Renee: '+p.first+' is flagged for '+flags.join(' and ')+'.';
+      sub='She sees the flag before she decides.';
+    } else {
+      tone='ok'; main='Sent to Renee: '+p.first+' passes both checks.'; sub='Waiting for her approve or decline.';
+    }
+    v.dataset.tone=tone; $('v-main').textContent=main; $('v-sub').textContent=sub;
+    $('approve').setAttribute('aria-pressed', state.call==='approve');
+    $('decline').setAttribute('aria-pressed', state.call==='decline');
+    pulse(v); pulse(cs); pulse(ch);
+  }
+  wrap.addEventListener('change',function(e){
+    var p=people.filter(function(x){return x.id===e.target.value})[0];
+    if(p){ state.who=p; state.call=null; render(); }
+  });
+  $('approve').addEventListener('click',function(){ state.call = state.call==='approve'?null:'approve'; render(); });
+  $('decline').addEventListener('click',function(){ state.call = state.call==='decline'?null:'decline'; render(); });
+  render();
+  ['verdict','c-skill','c-hours'].forEach(function(id){ $(id).classList.remove('pulse'); });
+
+  /* reveals */
+  function reveal(el){
+    if(!el) return;
+    if(!('IntersectionObserver' in window)){ el.classList.add('in'); return; }
+    var io=new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ el.classList.add('in'); io.disconnect(); } }); },{rootMargin:'0px 0px -12% 0px'});
+    io.observe(el);
+  }
+  reveal(document.getElementById('strip'));
+  reveal(document.getElementById('queue'));
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.documentElement.classList.add('loaded'); }); });
+})();
+</script>
+</body>
+</html>

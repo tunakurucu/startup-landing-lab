@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Staplepress — small-run zine printing, proofed before it's bound</title>
+<meta name="description" content="Staplepress prints zines and art books in runs of 25 to 500 copies. Upload a print-ready PDF and within two working days we post a photo of your proof, straight off the press, before anything is bound.">
+<meta name="theme-color" content="#F4EFE4">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23221C16'/%3E%3Cpath d='M9 11h14M9 21h14' stroke='%23F4EFE4' stroke-width='2.4' stroke-linecap='round'/%3E%3Cpath d='M9 11v-1.5M23 11v-1.5M9 21v1.5M23 21v1.5' stroke='%23C2452D' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  /* ---------- Tokens ---------- */
+  :root {
+    --paper: #F4EFE4;
+    --paper-2: #EDE6D6;
+    --sheet: #FBF8F1;
+    --ink: #221C16;
+    --ink-2: #4A4038;
+    --ink-3: #685D51;
+    --hair: rgba(34, 28, 22, 0.10);
+    --hair-2: rgba(34, 28, 22, 0.06);
+    --spot: #C2452D;          /* one spot colour: press red */
+    --spot-soft: rgba(194, 69, 45, 0.10);
+    --sage: #7D8670;
+    --bed: #2A2622;            /* press bed / cutting mat */
+
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", "TeX Gyre Pagella", "URW Palladio L", Georgia, serif;
+    --mono: "SFMono-Regular", "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+
+    --spring: cubic-bezier(0.32, 0.72, 0, 1);
+    --settle: cubic-bezier(0.22, 1, 0.36, 1);
+
+    --r-shell: 2rem;
+    --bezel: 0.4rem;
+    --r-core: calc(var(--r-shell) - var(--bezel));
+
+    --shadow-soft: 0 1px 1px rgba(34, 28, 22, 0.03), 0 12px 24px -12px rgba(34, 28, 22, 0.10), 0 40px 80px -40px rgba(34, 28, 22, 0.16);
+    --shadow-lift: 0 2px 2px rgba(34, 28, 22, 0.03), 0 24px 48px -20px rgba(34, 28, 22, 0.16), 0 60px 120px -50px rgba(34, 28, 22, 0.22);
+
+    --gutter: clamp(1rem, 4vw, 3.5rem);
+    --max: 78rem;
+
+    --z-overlay: 30;
+    --z-nav: 40;
+    --z-grain: 50;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 6rem; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  body.menu-open { overflow: hidden; }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+  p { margin: 0; }
+  h1, h2, h3 { margin: 0; font-weight: 400; letter-spacing: -0.02em; line-height: 1.02; }
+  ::selection { background: var(--spot); color: var(--sheet); }
+
+  /* Paper grain: fixed, non-interactive, never on a scrolling container */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-grain);
+    pointer-events: none;
+    opacity: 0.06;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.13 0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .skip {
+    position: absolute; left: 1rem; top: -4rem; z-index: calc(var(--z-overlay) + 1);
+    background: var(--ink); color: var(--sheet); padding: 0.6rem 1rem; border-radius: 999px;
+    font-family: var(--mono); font-size: 0.8rem; text-decoration: none;
+    transition: transform 500ms var(--spring);
+  }
+  .skip:focus { transform: translateY(5rem); }
+  :focus-visible { outline: 2px solid var(--spot); outline-offset: 3px; border-radius: 6px; }
+
+  /* ---------- Type helpers ---------- */
+  .mono { font-family: var(--mono); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    padding: 0.38rem 0.85rem 0.38rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(34, 28, 22, 0.045);
+    box-shadow: inset 0 0 0 1px var(--hair-2);
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+  .eyebrow::before {
+    content: ""; width: 0.42rem; height: 0.42rem; border-radius: 50%;
+    background: var(--spot);
+    box-shadow: 0 0 0 3px var(--spot-soft);
+  }
+  .h2 { font-size: clamp(2.4rem, 5.4vw, 4.6rem); margin-top: 1.4rem; max-width: 16ch; }
+  .h2 em, .h1 em { font-style: italic; color: var(--ink-2); }
+  .lede { font-size: clamp(1.15rem, 1.6vw, 1.35rem); color: var(--ink-2); max-width: 36rem; line-height: 1.55; }
+  .small { font-size: 0.95rem; color: var(--ink-3); }
+
+  /* ---------- Buttons: pill with nested icon island ---------- */
+  .btn {
+    --bg: var(--ink); --fg: var(--sheet); --island: rgba(251, 248, 241, 0.12);
+    display: inline-flex; align-items: center; gap: 0.9rem;
+    padding: 0.42rem 0.42rem 0.42rem 1.5rem;
+    min-height: 3.25rem;
+    border-radius: 999px;
+    background: var(--bg); color: var(--fg);
+    font-family: var(--serif); font-size: 1.05rem; letter-spacing: 0.005em;
+    text-decoration: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 14px 30px -14px rgba(34, 28, 22, 0.45);
+    transition: transform 600ms var(--spring), background-color 600ms var(--spring), box-shadow 600ms var(--spring);
+    will-change: auto;
+  }
+  .btn .island {
+    width: 2.45rem; height: 2.45rem; border-radius: 999px;
+    display: grid; place-items: center;
+    background: var(--island);
+    transition: transform 600ms var(--spring);
+  }
+  .btn .island svg { width: 1rem; height: 1rem; }
+  .btn:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 20px 40px -16px rgba(34, 28, 22, 0.5); }
+  .btn:hover .island { transform: translate(3px, -2px) scale(1.06); }
+  .btn:active { transform: scale(0.98); }
+  .btn.ghost {
+    --bg: transparent; --fg: var(--ink); --island: rgba(34, 28, 22, 0.06);
+    box-shadow: inset 0 0 0 1px var(--hair);
+  }
+  .btn.ghost:hover { --bg: rgba(34, 28, 22, 0.035); box-shadow: inset 0 0 0 1px rgba(34, 28, 22, 0.16); }
+  .btn.light { --bg: var(--sheet); --fg: var(--ink); --island: rgba(34, 28, 22, 0.07); box-shadow: inset 0 1px 0 #fff, 0 14px 30px -14px rgba(0, 0, 0, 0.5); }
+
+  /* ---------- Double-bezel: tray + sheet ---------- */
+  .shell {
+    padding: var(--bezel);
+    border-radius: var(--r-shell);
+    background: rgba(34, 28, 22, 0.035);
+    box-shadow: inset 0 0 0 1px var(--hair-2), var(--shadow-soft);
+  }
+  .core {
+    height: 100%;
+    border-radius: var(--r-core);
+    background: var(--sheet);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), inset 0 0 0 1px rgba(34, 28, 22, 0.035);
+  }
+  .shell.dark { background: rgba(251, 248, 241, 0.05); box-shadow: inset 0 0 0 1px rgba(251, 248, 241, 0.08), var(--shadow-lift); }
+  .shell.dark .core { background: var(--bed); color: var(--paper); box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08); }
+
+  /* ---------- Floating island nav ---------- */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: var(--z-nav);
+    display: flex; justify-content: center;
+    padding: 1.5rem 1rem 0;
+    pointer-events: none;
+  }
+  .nav-pill {
+    pointer-events: auto;
+    display: flex; align-items: center; gap: 0.35rem;
+    width: max-content; max-width: 100%;
+    padding: 0.4rem 0.4rem 0.4rem 1.1rem;
+    border-radius: 999px;
+    background: rgba(244, 239, 228, 0.72);
+    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    backdrop-filter: blur(18px) saturate(1.2);
+    box-shadow: inset 0 0 0 1px var(--hair), inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 18px 40px -24px rgba(34, 28, 22, 0.35);
+  }
+  .brand {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    text-decoration: none; font-size: 1.12rem; letter-spacing: -0.01em;
+    margin-right: 0.9rem;
+  }
+  .brand-mark { width: 1.35rem; height: 1.35rem; flex: none; }
+  .nav-links { display: flex; gap: 0.15rem; list-style: none; margin: 0; padding: 0; }
+  .nav-links a {
+    display: block; padding: 0.5rem 0.85rem; border-radius: 999px;
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-2); text-decoration: none;
+    transition: background-color 500ms var(--spring), color 500ms var(--spring);
+  }
+  .nav-links a:hover { background: rgba(34, 28, 22, 0.06); color: var(--ink); }
+  .nav .btn { min-height: 2.6rem; padding: 0.3rem 0.3rem 0.3rem 1.05rem; font-size: 0.95rem; gap: 0.6rem; margin-left: 0.4rem; }
+  .nav .btn .island { width: 2rem; height: 2rem; }
+  .burger {
+    display: none;
+    position: relative;
+    width: 2.75rem; height: 2.75rem; border-radius: 999px; border: 0;
+    background: rgba(34, 28, 22, 0.06); cursor: pointer; margin-left: 0.25rem;
+    transition: background-color 500ms var(--spring);
+  }
+  .burger span {
+    position: absolute; left: 50%; top: 50%;
+    width: 1.1rem; height: 1.25px; background: var(--ink); border-radius: 2px;
+    transition: transform 700ms var(--spring);
+  }
+  .burger span:nth-child(1) { transform: translate(-50%, -4px); }
+  .burger span:nth-child(2) { transform: translate(-50%, 4px); }
+  .menu-open .burger span:nth-child(1) { transform: translate(-50%, 0) rotate(45deg); }
+  .menu-open .burger span:nth-child(2) { transform: translate(-50%, 0) rotate(-45deg); }
+
+  .overlay {
+    position: fixed; inset: 0; z-index: var(--z-overlay);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 7rem 1.5rem 3rem;
+    background: rgba(244, 239, 228, 0.86);
+    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(40px);
+    opacity: 0; visibility: hidden;
+    transition: opacity 600ms var(--spring), visibility 0s var(--spring) 600ms;
+  }
+  .menu-open .overlay { opacity: 1; visibility: visible; transition: opacity 600ms var(--spring), visibility 0s; }
+  .overlay ol { list-style: none; margin: 0; padding: 0; }
+  .overlay li { overflow: hidden; border-bottom: 1px solid var(--hair-2); }
+  .overlay li a {
+    display: flex; align-items: baseline; gap: 1rem;
+    padding: 1rem 0; font-size: clamp(2rem, 9vw, 3rem); line-height: 1.05; letter-spacing: -0.02em; text-decoration: none;
+    transform: translateY(3rem); opacity: 0;
+    transition: transform 800ms var(--spring), opacity 800ms var(--spring);
+  }
+  .overlay li a small { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.15em; color: var(--ink-3); }
+  .menu-open .overlay li a { transform: none; opacity: 1; }
+  .menu-open .overlay li:nth-child(1) a { transition-delay: 100ms; }
+  .menu-open .overlay li:nth-child(2) a { transition-delay: 150ms; }
+  .menu-open .overlay li:nth-child(3) a { transition-delay: 200ms; }
+  .menu-open .overlay li:nth-child(4) a { transition-delay: 250ms; }
+  .overlay .btn { margin-top: 2.5rem; align-self: flex-start; transform: translateY(2rem); opacity: 0; transition: transform 800ms var(--spring) 300ms, opacity 800ms var(--spring) 300ms; }
+  .menu-open .overlay .btn { transform: none; opacity: 1; }
+
+  /* ---------- Sections ---------- */
+  section { padding: clamp(6rem, 11vw, 10rem) 0; position: relative; }
+  .section-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); gap: 2rem 4rem; align-items: end; margin-bottom: clamp(3rem, 6vw, 5.5rem); }
+  .section-head .lede { justify-self: end; }
+
+  /* ---------- Hero: editorial split + z-axis cascade ---------- */
+  .hero { padding-top: clamp(8rem, 12vw, 9.5rem); padding-bottom: clamp(5rem, 9vw, 8rem); min-height: 100dvh; display: flex; align-items: center; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
+  .h1 { font-size: clamp(3rem, 6.2vw, 5.3rem); line-height: 0.98; letter-spacing: -0.03em; margin: 1.6rem 0 2rem; }
+  .h1 .line { display: block; }
+  .hero .lede { margin-bottom: 2.6rem; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; }
+  .hero-meta {
+    margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--hair);
+    display: flex; flex-wrap: wrap; gap: 1.2rem 2.5rem;
+    font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--ink-3); text-transform: uppercase;
+  }
+  .hero-meta b { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.6rem; letter-spacing: -0.01em; text-transform: none; color: var(--ink); margin-bottom: 0.15rem; }
+
+  .stack { position: relative; min-height: 34rem; }
+  .stack > * { position: absolute; }
+  .stack .photo { width: 88%; right: 2%; top: 0; transform: rotate(2deg); }
+  .stack .ticket { width: 64%; left: -4%; bottom: 0; transform: rotate(-3deg); z-index: 2; }
+  .stack .tilt { transition: transform 900ms var(--spring); }
+  .stack:hover .photo .tilt { transform: translateY(-6px) rotate(-0.5deg); }
+  .stack:hover .ticket .tilt { transform: translate(-6px, 4px) rotate(-1deg); }
+
+  .photo .core { overflow: hidden; }
+  .photo svg { width: 100%; height: auto; }
+  .photo figcaption {
+    display: flex; justify-content: space-between; gap: 1rem;
+    padding: 0.9rem 1.2rem 0.8rem;
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(244, 239, 228, 0.62);
+  }
+  .photo figcaption span:last-child { text-align: right; }
+  figure { margin: 0; }
+
+  .ticket .core { padding: 1.4rem 1.4rem 1.2rem; }
+  .ticket-top { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); padding-bottom: 0.9rem; border-bottom: 1px dashed rgba(34, 28, 22, 0.18); }
+  .ticket dl { margin: 0.9rem 0 0; font-family: var(--mono); font-size: 0.78rem; display: grid; grid-template-columns: auto 1fr; gap: 0.42rem 1rem; }
+  .ticket dt { color: var(--ink-3); }
+  .ticket dd { margin: 0; text-align: right; color: var(--ink); }
+  .ticket .status { margin-top: 1rem; padding-top: 0.9rem; border-top: 1px dashed rgba(34, 28, 22, 0.18); display: flex; align-items: center; gap: 0.55rem; font-family: var(--mono); font-size: 0.72rem; color: var(--ink-2); }
+  .dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--sage); box-shadow: 0 0 0 3px rgba(125, 134, 112, 0.18); flex: none; }
+
+
+  /* ---------- Process ---------- */
+  .process { background: linear-gradient(to bottom, transparent, rgba(34, 28, 22, 0.025) 30%, transparent); }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 1.5rem; }
+  .steps li:nth-child(1) { grid-column: 1 / span 5; }
+  .steps li:nth-child(2) { grid-column: 6 / span 7; margin-top: 4rem; }
+  .steps li:nth-child(3) { grid-column: 1 / span 7; margin-top: -1rem; }
+  .steps li:nth-child(4) { grid-column: 8 / span 5; margin-top: 3rem; }
+  .step .core { padding: clamp(1.6rem, 3vw, 2.6rem); display: flex; flex-direction: column; gap: 1rem; min-height: 15rem; }
+  .step-num { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); }
+  .step-num span:first-child { color: var(--spot); }
+  .step h3 { font-size: clamp(1.7rem, 2.6vw, 2.25rem); margin-top: auto; }
+  .step p { color: var(--ink-2); max-width: 32rem; }
+  .step.key .core { background: var(--ink); color: var(--paper); box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08); }
+  .step.key p { color: rgba(244, 239, 228, 0.74); }
+  .step.key .step-num { color: rgba(244, 239, 228, 0.5); }
+  .step.key .step-num span:first-child { color: #E58A6F; }
+  .step.key .shell { background: rgba(34, 28, 22, 0.07); }
+  .step code { font-family: var(--mono); font-size: 0.85em; background: rgba(34, 28, 22, 0.06); padding: 0.1em 0.4em; border-radius: 0.4em; }
+
+  /* ---------- Compare (bento) ---------- */
+  .bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: minmax(0, auto); gap: 1.5rem; }
+  .bento .us { grid-column: span 7; grid-row: span 2; }
+  .bento .them { grid-column: span 5; }
+  .bento .core { padding: clamp(1.6rem, 3vw, 2.6rem); display: flex; flex-direction: column; gap: 1rem; }
+  .bento .label { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); }
+  .bento h3 { font-size: clamp(1.6rem, 2.4vw, 2.1rem); }
+  .bento .them h3 { color: var(--ink-2); }
+  .bento p { color: var(--ink-2); }
+  .bento .us .core { gap: 1.5rem; }
+  .bento .us h3 { font-size: clamp(2.2rem, 3.6vw, 3.2rem); max-width: 14ch; }
+  .facts { list-style: none; margin: auto 0 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--hair); }
+  .facts li { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; padding: 0.95rem 0; border-bottom: 1px solid var(--hair); align-items: baseline; }
+  .facts li span:first-child { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+  .strike { text-decoration: line-through; text-decoration-color: var(--spot); text-decoration-thickness: 1.5px; }
+
+  /* ---------- Prices ---------- */
+  .h2-sm { font-size: clamp(2rem, 3.6vw, 3rem); max-width: 18ch; }
+  .price-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
+  .price-big { font-size: clamp(5.5rem, 15vw, 12rem); line-height: 0.85; letter-spacing: -0.05em; margin: 2rem 0 1.5rem; display: flex; align-items: flex-start; gap: 0.1em; }
+  .price-big sup { font-size: 0.32em; line-height: 1; margin-top: 0.18em; letter-spacing: 0; color: var(--ink-3); }
+  .price-big small { font-size: 0.16em; letter-spacing: 0.02em; align-self: flex-end; margin-bottom: 0.6em; color: var(--ink-3); font-family: var(--mono); text-transform: uppercase; }
+  .spec .core { padding: clamp(1.4rem, 3vw, 2.4rem); }
+  .spec-head { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); padding-bottom: 1rem; }
+  .spec table { width: 100%; border-collapse: collapse; font-size: 1.05rem; }
+  .spec th, .spec td { padding: 0.85rem 0; border-top: 1px solid var(--hair); text-align: left; font-weight: 400; vertical-align: baseline; }
+  .spec th { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); width: 42%; }
+  .spec td { text-align: right; }
+  .spec tr.total td, .spec tr.total th { border-top: 1.5px solid var(--ink); padding-top: 1.1rem; }
+  .spec tr.total td { font-size: 1.6rem; letter-spacing: -0.01em; }
+  .more { margin-top: 1.25rem; display: grid; gap: 0.6rem; }
+  .more li { list-style: none; display: flex; gap: 0.7rem; align-items: baseline; color: var(--ink-2); font-size: 1rem; }
+  .more li::before { content: "+"; font-family: var(--mono); color: var(--spot); }
+  .more { padding: 0; margin-bottom: 0; }
+  .range { margin-top: 2.5rem; }
+  .range-bar { position: relative; height: 3.2rem; border-radius: 999px; background: rgba(34, 28, 22, 0.04); box-shadow: inset 0 0 0 1px var(--hair-2); }
+  .range-fill { position: absolute; top: 0.35rem; bottom: 0.35rem; left: 0.35rem; right: 0.35rem; border-radius: 999px; background: var(--sheet); box-shadow: inset 0 1px 0 #fff, 0 6px 16px -10px rgba(34, 28, 22, 0.3); display: flex; justify-content: space-between; align-items: center; padding: 0 1.1rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--ink-2); }
+  .range-fill i { flex: 1; height: 1px; margin: 0 1rem; background: repeating-linear-gradient(to right, var(--ink-3) 0 4px, transparent 4px 9px); opacity: 0.6; }
+  .range-note { margin-top: 0.8rem; display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+
+  /* ---------- Limits ---------- */
+  .limits { background: var(--ink); color: var(--paper); }
+  .limits .eyebrow { background: rgba(244, 239, 228, 0.06); box-shadow: inset 0 0 0 1px rgba(244, 239, 228, 0.1); color: rgba(244, 239, 228, 0.7); }
+  .limits .h2 em { color: rgba(244, 239, 228, 0.7); }
+  .limits .lede { color: rgba(244, 239, 228, 0.72); }
+  .limit-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 1.5rem; }
+  .limit-list li { grid-column: span 4; }
+  .limit-list li:nth-child(2) { margin-top: 3rem; }
+  .limit-list li:nth-child(3) { margin-top: 6rem; }
+  .limits .shell { background: rgba(244, 239, 228, 0.04); box-shadow: inset 0 0 0 1px rgba(244, 239, 228, 0.08); }
+  .limits .core { background: #2C251F; color: var(--paper); box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.06); padding: clamp(1.6rem, 3vw, 2.4rem); display: flex; flex-direction: column; gap: 1rem; min-height: 19rem; }
+  .limits .core h3 { font-size: clamp(1.6rem, 2.3vw, 2rem); }
+  .limits .core p { color: rgba(244, 239, 228, 0.72); font-size: 1.02rem; }
+  .limits .tag { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: #E58A6F; }
+  .limits .core svg { width: 4.5rem; height: auto; margin-top: auto; color: rgba(244, 239, 228, 0.55); }
+
+  /* ---------- Final CTA ---------- */
+  .final .core { padding: clamp(2.2rem, 6vw, 5.5rem); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 2.5rem; align-items: end; position: relative; overflow: hidden; }
+  .final h2 { font-size: clamp(2.6rem, 6.4vw, 5.6rem); max-width: 12ch; }
+  .final .side { display: flex; flex-direction: column; gap: 1.6rem; align-items: flex-start; }
+  .final .url { font-family: var(--mono); font-size: 0.8rem; color: var(--ink-3); letter-spacing: 0.04em; word-break: break-all; }
+  .crop { position: absolute; width: 1.4rem; height: 1.4rem; color: rgba(34, 28, 22, 0.35); }
+  .crop.tl { top: 1.1rem; left: 1.1rem; }
+  .crop.tr { top: 1.1rem; right: 1.1rem; transform: scaleX(-1); }
+  .crop.bl { bottom: 1.1rem; left: 1.1rem; transform: scaleY(-1); }
+  .crop.br { bottom: 1.1rem; right: 1.1rem; transform: scale(-1, -1); }
+
+  footer { padding: 3rem 0 3.5rem; }
+  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.2rem 2rem; align-items: center; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); padding-top: 1.5rem; border-top: 1px solid var(--hair); }
+  .foot a { text-decoration: none; }
+  .foot a:hover { color: var(--ink); }
+
+  /* ---------- Scroll reveal (only when JS is running) ---------- */
+  .js .reveal { opacity: 0; transform: translateY(3.5rem); transition: opacity 1000ms var(--settle), transform 1100ms var(--spring); transition-delay: var(--d, 0ms); }
+  .js .reveal.in { opacity: 1; transform: none; }
+  .js .stack .reveal { transform: translateY(3.5rem) scale(0.98); }
+  .js .stack .reveal.in { transform: none; }
+  .js .h1 .line { opacity: 0; transform: translateY(0.6em); transition: opacity 1000ms var(--settle), transform 1100ms var(--spring); transition-delay: var(--d, 0ms); }
+  .js .loaded .h1 .line { opacity: 1; transform: none; }
+
+  /* ---------- Responsive ---------- */
+  .nav .btn.mob-cta { display: none; }
+  @media (max-width: 1080px) {
+    .nav-links { display: none; }
+    .burger { display: inline-block; }
+    .nav .btn.desk { display: none; }
+  }
+  @media (max-width: 960px) {
+    .hero-grid, .price-grid { grid-template-columns: minmax(0, 1fr); }
+    .stack { min-height: 0; max-width: 34rem; }
+    .section-head { grid-template-columns: minmax(0, 1fr); }
+    .section-head .lede { justify-self: start; }
+    .final .core { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 960px) and (min-width: 768px) {
+    .stack { min-height: 36rem; }
+  }
+  @media (max-width: 767px) {
+    :root { --r-shell: 1.6rem; --bezel: 0.35rem; }
+    body { font-size: 1.06rem; }
+    .wrap { padding: 0 1rem; }
+    section { padding: 4.5rem 0; }
+    .hero { min-height: 0; padding-top: 7.5rem; padding-bottom: 3.5rem; }
+    .h1 { font-size: clamp(2.6rem, 11.5vw, 3.6rem); }
+    .h2 { font-size: clamp(2.2rem, 10vw, 3rem); }
+    .hero-meta { gap: 1rem 1.6rem; }
+    /* Cascade collapses: no rotation, no overlap */
+    .stack { display: flex; flex-direction: column; gap: 1rem; }
+    .stack > * { position: static; width: 100% !important; transform: none !important; }
+    .stack:hover .tilt { transform: none !important; }
+    .steps, .bento, .limit-list { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+    .steps li, .bento .us, .bento .them, .limit-list li { grid-column: 1 / -1 !important; grid-row: auto !important; margin-top: 0 !important; }
+    .step .core { min-height: 0; }
+    .limits .core { min-height: 0; }
+    .limits .core svg { margin-top: 0.5rem; }
+    .facts li { grid-template-columns: minmax(0, 1fr); gap: 0.2rem; }
+    .nav { padding-top: 1rem; }
+    .nav-pill { padding-left: 1rem; }
+    .brand { margin-right: 0.4rem; }
+    .cta-row .btn { width: 100%; justify-content: space-between; }
+    .final .btn { width: 100%; justify-content: space-between; }
+    .final .side { align-items: stretch; }
+    .price-big { margin: 1.5rem 0 1rem; }
+  }
+  @media (min-width: 381px) and (max-width: 1080px) {
+    .nav .btn.mob-cta { display: inline-flex; }
+  }
+
+  @media (max-width: 400px) {
+    .eyebrow { white-space: normal; letter-spacing: 0.14em; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: 1ms !important; transition-delay: 0ms !important; animation: none !important; }
+    .js .reveal, .js .h1 .line { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="top">
+  <nav class="nav-pill" aria-label="Main">
+    <a class="brand" href="#top" aria-label="Staplepress, back to top">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#221C16"/><path d="M9 11h14M9 21h14" stroke="#F4EFE4" stroke-width="2.4" stroke-linecap="round"/><path d="M9 11V9.5M23 11V9.5M9 21v1.5M23 21v1.5" stroke="#C2452D" stroke-width="2" stroke-linecap="round"/></svg>
+      Staplepress
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#why">Why us</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#limits">Can't do yet</a></li>
+    </ul>
+    <a class="btn desk" href="https://staplepress.example/start">Upload a PDF <span class="island" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11 11 5M6 5h5v5"/></svg></span></a>
+    <a class="btn mob-cta" href="https://staplepress.example/start">Upload <span class="island" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11 11 5M6 5h5v5"/></svg></span></a>
+    <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  </nav>
+</header>
+
+<div class="overlay" id="menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <ol>
+    <li><a href="#how"><small>01</small>How it works</a></li>
+    <li><a href="#why"><small>02</small>Why us</a></li>
+    <li><a href="#prices"><small>03</small>Prices</a></li>
+    <li><a href="#limits"><small>04</small>What we can't do yet</a></li>
+  </ol>
+  <a class="btn" href="https://staplepress.example/start">Upload your PDF <span class="island" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11 11 5M6 5h5v5"/></svg></span></a>
+</div>
+
+<main id="main">
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow reveal">Zines &amp; art books · 25–500 copies</span>
+        <h1 class="h1" id="hero-title">
+          <span class="line" style="--d:60ms">See your zine</span>
+          <span class="line" style="--d:160ms"><em>off the press</em></span>
+          <span class="line" style="--d:260ms">before it's bound.</span>
+        </h1>
+        <p class="lede reveal" style="--d:320ms">Upload a print-ready PDF. Within two working days we post a photo of your proof, straight off our press, before anything is bound. Then we print the rest of your run, from 25 copies to 500.</p>
+        <div class="cta-row reveal" style="--d:400ms">
+          <a class="btn" href="https://staplepress.example/start">Upload your PDF <span class="island" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11 11 5M6 5h5v5"/></svg></span></a>
+          <a class="btn ghost" href="#prices">See prices <span class="island" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></span></a>
+        </div>
+        <div class="hero-meta reveal" style="--d:480ms">
+          <div><b>From $2.10</b>a copy</div>
+          <div><b>2 working days</b>to your proof photo</div>
+          <div><b>25–500</b>copies a run</div>
+        </div>
+      </div>
+
+      <div class="stack" aria-label="What a Staplepress proof looks like">
+        <figure class="photo reveal" style="--d:200ms">
+          <div class="tilt">
+            <div class="shell dark"><div class="core">
+              <figcaption><span>Illustration · our own test sheet</span><span>Proof, not yet bound</span></figcaption>
+              <svg viewBox="0 0 520 400" role="img" aria-labelledby="proof-t proof-d">
+                <title id="proof-t">Illustration of a proof sheet on the press bed</title>
+                <desc id="proof-d">Our own house test sheet, an A5 page with crop marks, a registration target, text blocks, a halftone circle and a grey step wedge, lying on a dark press bed.</desc>
+                <defs>
+                  <pattern id="mat" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#3A342E" stroke-width="1"/></pattern>
+                  <radialGradient id="light" cx="45%" cy="35%" r="75%"><stop offset="0" stop-color="#fff" stop-opacity="0.10"/><stop offset="1" stop-color="#000" stop-opacity="0.25"/></radialGradient>
+                  <pattern id="dots" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="3.5" cy="3.5" r="2.2" fill="#221C16"/></pattern>
+                  <radialGradient id="fade" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+                  <mask id="ht"><circle cx="0" cy="0" r="52" fill="url(#fade)"/></mask>
+                  <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity="0.45"/></filter>
+                </defs>
+                <rect width="520" height="400" fill="#2A2622"/>
+                <rect width="520" height="400" fill="url(#mat)"/>
+                <g transform="translate(262 205) rotate(-4)">
+                  <!-- sheet (A5 ratio ≈ 1:1.414) -->
+                  <rect x="-125" y="-176" width="250" height="353" fill="#F7F2E6" filter="url(#sh)"/>
+                  <!-- crop marks -->
+                  <g stroke="#221C16" stroke-width="0.8">
+                    <path d="M-118 -160h-6M-108 -168v-6M118 -160h6M108 -168v-6M-118 161h-6M-108 169v6M118 161h6M108 169v6"/>
+                  </g>
+                  <!-- registration target -->
+                  <g transform="translate(0 -162)" stroke="#221C16" stroke-width="0.8" fill="none"><circle r="5"/><path d="M-9 0h18M0 -9v18"/></g>
+                  <!-- trim area content -->
+                  <text x="-92" y="-118" font-family="Palatino, 'TeX Gyre Pagella', Georgia, serif" font-size="30" fill="#221C16" letter-spacing="-0.5">House test</text>
+                  <text x="-92" y="-100" font-family="Menlo, 'DejaVu Sans Mono', monospace" font-size="7.5" fill="#4A4038" letter-spacing="1.2">STAPLEPRESS · A5 · 24PP · K / UNCOATED</text>
+                  <g fill="#221C16" opacity="0.78">
+                    <rect x="-92" y="-84" width="184" height="3.4" rx="1"/><rect x="-92" y="-76" width="176" height="3.4" rx="1"/><rect x="-92" y="-68" width="182" height="3.4" rx="1"/><rect x="-92" y="-60" width="120" height="3.4" rx="1"/>
+                  </g>
+                  <g transform="translate(-40 0)" mask="url(#ht)"><rect x="-56" y="-56" width="112" height="112" fill="url(#dots)"/></g>
+                  <g fill="#221C16" opacity="0.78">
+                    <rect x="26" y="-40" width="66" height="3.4" rx="1"/><rect x="26" y="-32" width="62" height="3.4" rx="1"/><rect x="26" y="-24" width="66" height="3.4" rx="1"/><rect x="26" y="-16" width="58" height="3.4" rx="1"/><rect x="26" y="-8" width="66" height="3.4" rx="1"/><rect x="26" y="0" width="40" height="3.4" rx="1"/>
+                    <rect x="26" y="16" width="66" height="3.4" rx="1"/><rect x="26" y="24" width="60" height="3.4" rx="1"/><rect x="26" y="32" width="64" height="3.4" rx="1"/>
+                  </g>
+                  <text x="-92" y="86" font-family="Palatino, 'TeX Gyre Pagella', Georgia, serif" font-style="italic" font-size="13" fill="#221C16">Does the black hold on uncoated?</text>
+                  <!-- step wedge -->
+                  <g transform="translate(-92 112)">
+                    <rect x="0" width="18.4" height="18" fill="#221C16" opacity="1"/><rect x="18.4" width="18.4" height="18" fill="#221C16" opacity="0.88"/><rect x="36.8" width="18.4" height="18" fill="#221C16" opacity="0.76"/><rect x="55.2" width="18.4" height="18" fill="#221C16" opacity="0.64"/><rect x="73.6" width="18.4" height="18" fill="#221C16" opacity="0.52"/><rect x="92" width="18.4" height="18" fill="#221C16" opacity="0.40"/><rect x="110.4" width="18.4" height="18" fill="#221C16" opacity="0.28"/><rect x="128.8" width="18.4" height="18" fill="#221C16" opacity="0.18"/><rect x="147.2" width="18.4" height="18" fill="#221C16" opacity="0.10"/><rect x="165.6" width="18.4" height="18" fill="none" stroke="#221C16" stroke-width="0.5" opacity="0.5"/>
+                    <text x="0" y="30" font-family="Menlo, 'DejaVu Sans Mono', monospace" font-size="6" fill="#4A4038" letter-spacing="1">100 · 90 · 80 · 70 · 60 · 50 · 40 · 30 · 20 · 0</text>
+                  </g>
+                  <text x="-92" y="160" font-family="Menlo, 'DejaVu Sans Mono', monospace" font-size="6.5" fill="#C2452D" letter-spacing="1.5">PROOF · NOT YET BOUND</text>
+                  <text x="92" y="160" text-anchor="end" font-family="Menlo, 'DejaVu Sans Mono', monospace" font-size="6.5" fill="#4A4038" letter-spacing="1">P. 01</text>
+                </g>
+                <rect width="520" height="400" fill="url(#light)"/>
+              </svg>
+            </div></div>
+          </div>
+        </figure>
+
+        <div class="ticket reveal" style="--d:340ms">
+          <div class="tilt">
+            <div class="shell"><div class="core">
+              <div class="ticket-top"><span>Example job</span><span>Ticket</span></div>
+              <dl>
+                <dt>Run</dt><dd>50 copies</dd>
+                <dt>Format</dt><dd>A5 · 24 pp</dd>
+                <dt>Ink</dt><dd>Black</dd>
+                <dt>Paper</dt><dd>Uncoated</dd>
+                <dt>Per copy</dt><dd>$2.10</dd>
+              </dl>
+              <div class="status"><span class="dot" aria-hidden="true"></span>Proof posted · not yet bound</div>
+            </div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== How it works ===== -->
+  <section class="process" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">How it works</span>
+          <h2 class="h2 reveal" id="how-title" style="--d:80ms">Four steps. <em>One of them is you looking.</em></h2>
+        </div>
+        <p class="lede reveal" style="--d:160ms">You already have the PDF open. That's most of the work. The rest happens on our press, and you see it before it's finished.</p>
+      </div>
+
+      <ol class="steps">
+        <li class="step reveal">
+          <div class="shell"><div class="core">
+            <div class="step-num"><span>01</span><span>You</span></div>
+            <h3>Upload a print-ready PDF</h3>
+            <p>Start at <code>staplepress.example/start</code>. Zines and art books, 25 to 500 copies.</p>
+          </div></div>
+        </li>
+        <li class="step reveal" style="--d:100ms">
+          <div class="shell"><div class="core">
+            <div class="step-num"><span>02</span><span>Us</span></div>
+            <h3>We print your proof on our press</h3>
+            <p>Not a screen preview and not a mock-up. Your actual pages, printed on our press.</p>
+          </div></div>
+        </li>
+        <li class="step key reveal">
+          <div class="shell"><div class="core">
+            <div class="step-num"><span>03</span><span>Within 2 working days</span></div>
+            <h3>We post a photo of the proof</h3>
+            <p>Straight off the press, before anything is bound. Put it next to the PDF on your laptop and check what the ink actually did: the blacks, the fine lines, the type near the edge.</p>
+          </div></div>
+        </li>
+        <li class="step reveal" style="--d:100ms">
+          <div class="shell"><div class="core">
+            <div class="step-num"><span>04</span><span>Us</span></div>
+            <h3>We print and bind the run</h3>
+            <p>Then the rest of your copies come off the press, and get bound once you've seen what they look like.</p>
+          </div></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== Why ===== -->
+  <section id="why" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">Why Staplepress</span>
+          <h2 class="h2 reveal" id="why-title" style="--d:80ms">Between the copy shop and <em>the <span style="white-space:nowrap">1,000-copy</span> minimum.</em></h2>
+        </div>
+        <p class="lede reveal" style="--d:160ms">Small runs used to mean choosing between bad printing and too many copies. We run a press for the part in the middle.</p>
+      </div>
+
+      <div class="bento">
+        <article class="us reveal">
+          <div class="shell"><div class="core">
+            <span class="label">Staplepress</span>
+            <h3>A real press, a small run, and a proof you can see.</h3>
+            <p>We print zines and art books for independent artists and small-press publishers, and we show you the proof before we bind a single copy.</p>
+            <ul class="facts">
+              <li><span>Run size</span><span>25 to 500 copies</span></li>
+              <li><span>Proof</span><span>A photo straight off the press, within two working days</span></li>
+              <li><span>Before binding</span><span>Yes. You see the proof first.</span></li>
+              <li><span>Starts at</span><span>$2.10 a copy</span></li>
+            </ul>
+          </div></div>
+        </article>
+        <article class="them reveal" style="--d:120ms">
+          <div class="shell"><div class="core">
+            <span class="label">The copy shop</span>
+            <h3>Small runs, <span class="strike">printed well</span>.</h3>
+            <p>Happy to do fifty copies. Less happy about grey blacks, banding across your drawings and pages that drift off square.</p>
+          </div></div>
+        </article>
+        <article class="them reveal" style="--d:200ms">
+          <div class="shell"><div class="core">
+            <span class="label">The big online printer</span>
+            <h3>Good printing, <span class="strike">small runs</span>.</h3>
+            <p>Wants 1,000 copies before it gets interested, and you never see a proof. The first copy you hold is one of a thousand.</p>
+          </div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Prices ===== -->
+  <section id="prices" aria-labelledby="prices-title">
+    <div class="wrap price-grid">
+      <div>
+        <span class="eyebrow reveal">Prices</span>
+        <h2 class="h2 h2-sm reveal" id="prices-title" style="--d:80ms">What a small run costs.</h2>
+        <p class="price-big reveal" style="--d:140ms"><span class="sr">From $2.10 a copy</span><sup aria-hidden="true">$</sup><span aria-hidden="true">2.10</span><small aria-hidden="true">/copy</small></p>
+        <p class="lede reveal" style="--d:200ms">For 50 copies of a 24-page A5 zine, black ink on uncoated paper. That's where prices begin.</p>
+        <div class="range reveal" style="--d:260ms" aria-label="Runs from 25 to 500 copies">
+          <div class="range-bar"><div class="range-fill"><span>25</span><i></i><span>500 copies</span></div></div>
+          <div class="range-note"><span>Smallest run</span><span>Largest run</span></div>
+        </div>
+      </div>
+
+      <div class="spec reveal" style="--d:160ms">
+        <div class="shell"><div class="core">
+          <div class="spec-head"><span>Starting job</span><span>Price per copy</span></div>
+          <table>
+            <caption class="small" style="caption-side: bottom; text-align: left; padding-top: 1rem;">50 × $2.10. Colour, other sizes and larger runs cost more.</caption>
+            <tbody>
+              <tr><th scope="row">Copies</th><td>50</td></tr>
+              <tr><th scope="row">Pages</th><td>24</td></tr>
+              <tr><th scope="row">Size</th><td>A5</td></tr>
+              <tr><th scope="row">Ink</th><td>Black</td></tr>
+              <tr><th scope="row">Paper</th><td>Uncoated</td></tr>
+              <tr><th scope="row">Per copy</th><td>$2.10</td></tr>
+              <tr class="total"><th scope="row">Run of 50</th><td>$105</td></tr>
+            </tbody>
+          </table>
+          <ul class="more">
+            <li>Colour costs more</li>
+            <li>Other sizes cost more</li>
+            <li>Larger runs cost more</li>
+          </ul>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Limits ===== -->
+  <section class="limits" id="limits" aria-labelledby="limits-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">Before you upload</span>
+          <h2 class="h2 reveal" id="limits-title" style="--d:80ms">What we can't do <em>yet.</em></h2>
+        </div>
+        <p class="lede reveal" style="--d:160ms">A press is a set of real limits. Here are ours, so you find out now and not on the proof.</p>
+      </div>
+
+      <ul class="limit-list">
+        <li class="reveal">
+          <div class="shell"><div class="core">
+            <span class="tag">Covers</span>
+            <h3>No full-bleed covers yet.</h3>
+            <p>We can't print a cover where the artwork runs right off the edge of the page. Design your cover with a white border all the way round, or wait until we can.</p>
+            <svg viewBox="0 0 72 96" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><rect x="0.5" y="0.5" width="71" height="95"/><rect x="9" y="9" width="54" height="78" stroke-dasharray="3 3"/><path d="M20 70 32 50l8 10 6-8 10 18z" stroke-width="0.9"/></svg>
+          </div></div>
+        </li>
+        <li class="reveal" style="--d:100ms">
+          <div class="shell"><div class="core">
+            <span class="tag">Run size</span>
+            <h3>25 copies at least, 500 at most.</h3>
+            <p>Our runs start at 25 copies and stop at 500. If you need fewer or more than that, we're not the right press for the job.</p>
+            <svg viewBox="0 0 96 40" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M2 20h92"/><path d="M14 12v16M82 12v16"/><path d="M14 20h68" stroke-width="2.4"/></svg>
+          </div></div>
+        </li>
+        <li class="reveal" style="--d:200ms">
+          <div class="shell"><div class="core">
+            <span class="tag">Other people's work</span>
+            <h3>We won't show you anyone else's zine.</h3>
+            <p>We've printed for about 120 artists since last year. We don't have their permission to name them or show their work, so we don't. The only sheet on this page is our own test page.</p>
+            <svg viewBox="0 0 96 40" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><rect x="2" y="6" width="22" height="28"/><rect x="37" y="6" width="22" height="28"/><rect x="72" y="6" width="22" height="28"/><path d="M2 20h92" stroke-width="5" stroke-linecap="butt"/></svg>
+          </div></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Final CTA ===== -->
+  <section aria-labelledby="final-title">
+    <div class="wrap final">
+      <div class="shell reveal"><div class="core">
+        <svg class="crop tl" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M8 0v6M0 8h6"/></svg>
+        <svg class="crop tr" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M8 0v6M0 8h6"/></svg>
+        <svg class="crop bl" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M8 0v6M0 8h6"/></svg>
+        <svg class="crop br" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M8 0v6M0 8h6"/></svg>
+        <div>
+          <span class="eyebrow">Ready when your PDF is</span>
+          <h2 class="h2" id="final-title">Send us the PDF. <em>We'll send you the proof.</em></h2>
+        </div>
+        <div class="side">
+          <p class="lede">Upload a print-ready PDF and you'll see a photo of your proof within two working days, before anything is bound.</p>
+          <a class="btn" href="https://staplepress.example/start">Upload your PDF <span class="island" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11 11 5M6 5h5v5"/></svg></span></a>
+          <span class="url">staplepress.example/start</span>
+        </div>
+      </div></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>Staplepress · small-run zines &amp; art books</span>
+    <span>25–500 copies · proof photo before binding</span>
+    <a href="https://staplepress.example/start">Start an upload ↗</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+
+  // Hero headline line reveal after first paint
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () { document.body.classList.add('loaded'); });
+  });
+
+  // Scroll reveals (IntersectionObserver only; no scroll listeners)
+  var items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  // Menu
+  var body = document.body;
+  var burger = document.querySelector('.burger');
+  var menu = document.getElementById('menu');
+  function setMenu(open) {
+    body.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (open) { var first = menu.querySelector('a'); if (first) setTimeout(function () { first.focus(); }, 50); }
+  }
+  burger.addEventListener('click', function () { setMenu(!body.classList.contains('menu-open')); });
+  menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && body.classList.contains('menu-open')) { setMenu(false); burger.focus(); }
+  });
+  window.matchMedia('(min-width: 1081px)').addEventListener('change', function (m) { if (m.matches) setMenu(false); });
+})();
+</script>
+</body>
+</html>

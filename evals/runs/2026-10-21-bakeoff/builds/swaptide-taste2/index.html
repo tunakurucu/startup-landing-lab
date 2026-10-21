@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swaptide: shift swaps for hospital nurses</title>
+<meta name="description" content="Nurses post and pick up shift swaps from their phones. Skill mix and hours limits are checked first, then the unit manager approves or declines in one tap.">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<main id="top">
+
+<div class="split">
+
+  <div class="read">
+
+    <header class="hero">
+      <nav class="hero__nav" aria-label="Main">
+        <a class="link" href="#how">How it works</a>
+        <a class="wordmark" href="#top" aria-label="Swaptide, back to top">Swaptide</a>
+        <a class="link" href="#questions">Questions</a>
+      </nav>
+
+      <div class="hero__body">
+        <h1 class="display lines">
+          <span class="line"><span data-line style="--i:0">Swap a shift</span></span>
+          <span class="line"><span data-line style="--i:1">on your break</span></span>
+        </h1>
+        <p class="hero__lead" data-load style="--d:420ms">Nurses trade shifts from their phones. Skill mix and hours are checked first, so the unit manager approves or declines in one tap.</p>
+        <p class="hero__act" data-load style="--d:480ms"><a class="button" href="https://swaptide.example/pilot">Book a pilot call</a></p>
+      </div>
+
+      <p class="hero__foot" data-load style="--d:560ms">Three months on one medical-surgical unit so far. <a class="link-plain" href="#try">Try a swap below</a></p>
+    </header>
+
+    <section class="intro" id="today" aria-labelledby="today-h" data-stage="1">
+      <h2 class="head" id="today-h" data-reveal>The whiteboard by the break room</h2>
+      <div class="intro__text">
+        <p class="intro__first" data-reveal style="--i:1">Today a swap starts as a line on the whiteboard, or a message to the unit group text at 02:47, and ends when somebody says yes.</p>
+        <p data-reveal style="--i:2">Nobody checks whether Saturday night still has a charge nurse, or whether the nurse picking it up would be on her fourth night in a row.</p>
+        <p data-reveal style="--i:3">Often the manager hears about it at handover, after it has already happened, and has to choose between undoing it and signing it off.</p>
+        <p data-reveal style="--i:4">Swaptide moves the same conversation onto the phones nurses already carry, and puts the unit’s rules and the manager back into it before anyone changes their plans.</p>
+      </div>
+    </section>
+
+    <section class="how" id="how" aria-labelledby="how-h">
+      <div class="how__words">
+        <h2 class="head" id="how-h" data-reveal>One swap, one day shift</h2>
+        <p data-reveal style="--i:1">Maya can’t work Saturday night. Here is her swap, from her morning break to the 19:00 handover.</p>
+      </div>
+
+      <div class="slip" data-reveal style="--i:2">
+        <ol class="slip__list">
+          <li class="slip__group" data-stage="2">
+            <p class="slip__time">Morning break, 10:15</p>
+            <p class="slip__row"><span>Maya posts her Saturday night</span><i aria-hidden="true"></i><span class="nums">10:16</span></p>
+            <p class="slip__row"><span>Six nurses pass the checks and are told</span><i aria-hidden="true"></i><span class="nums">10:16</span></p>
+          </li>
+          <li class="slip__group" data-stage="3">
+            <p class="slip__time">Lunch, 13:30</p>
+            <p class="slip__row"><span>Jordan takes it, offers a day next week</span><i aria-hidden="true"></i><span class="nums">13:34</span></p>
+            <p class="slip__row"><span>Hours, rest and skill mix checked for both</span><i aria-hidden="true"></i><span class="nums">13:34</span></p>
+          </li>
+          <li class="slip__group" data-stage="4">
+            <p class="slip__time">Mid-afternoon, 15:00</p>
+            <p class="slip__row"><span>The manager opens one card, taps Approve</span><i aria-hidden="true"></i><span class="nums">15:02</span></p>
+            <p class="slip__row"><span>Schedule updated, Maya and Jordan told</span><i aria-hidden="true"></i><span class="nums">15:02</span></p>
+          </li>
+          <li class="slip__group slip__group--end" data-stage="5">
+            <p class="slip__total"><span>Settled before the 19:00 handover</span><span>4 h 46 min</span></p>
+          </li>
+        </ol>
+        <svg class="slip__edge" viewBox="0 0 480 14" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,0 480,0 480,2 468,14 456,2 444,14 432,2 420,14 408,2 396,14 384,2 372,14 360,2 348,14 336,2 324,14 312,2 300,14 288,2 276,14 264,2 252,14 240,2 228,14 216,2 204,14 192,2 180,14 168,2 156,14 144,2 132,14 120,2 108,14 96,2 84,14 72,2 60,14 48,2 36,14 24,2 12,14 0,2"/></svg>
+      </div>
+    </section>
+
+  </div>
+
+  <aside class="stage" aria-label="Swaptide on a nurse’s phone, following the swap">
+    <div class="stage__field">
+      <div class="phone-wrap">
+        <div class="phone" data-ui>
+          <div class="phone__screen">
+
+            <!-- 0. Jordan's open swaps, at the visitor's own time -->
+            <div class="scr is-on" data-screen="0" data-ui>
+              <div class="sb"><span class="sb__time" data-clock>13:30</span><span>Med-surg</span></div>
+              <div class="scr__top">
+                <p class="t-xl">Hi Jordan</p>
+                <p class="t-muted" data-handover>On days. 5 h 30 min to the 19:00 handover.</p>
+              </div>
+              <p class="t-sec">Open swaps on your unit <span class="count">3</span></p>
+              <div class="card">
+                <div class="card__row"><span class="t-b">Sat night</span><span class="nums">19:00–07:30</span></div>
+                <p class="t-muted">Maya R. wants a day next week</p>
+                <p class="ok">You can take this</p>
+              </div>
+              <div class="card">
+                <div class="card__row"><span class="t-b">Tue day</span><span class="nums">07:00–19:30</span></div>
+                <p class="t-muted">Sam O. is giving it away</p>
+                <p class="no">You’d be at 64 of 60 h</p>
+              </div>
+              <div class="card">
+                <div class="card__row"><span class="t-b">Thu night</span><span class="nums">19:00–07:30</span></div>
+                <p class="t-muted">Elena V. wants Sunday day</p>
+                <p class="ok">You can take this</p>
+              </div>
+              <p class="t-sec">Your next shifts</p>
+              <div class="card">
+                <div class="card__row"><span>Thu day</span><span class="nums">07:00–19:30</span></div>
+                <div class="card__row"><span>Mon day</span><span class="nums">07:00–19:30</span></div>
+              </div>
+              <div class="scr__foot"><span class="btn btn--ink">Post a swap</span></div>
+              <div class="tabbar"><span class="is-cur">Swaps</span><span>Schedule</span><span>Me</span></div>
+            </div>
+
+            <!-- 1. the group text -->
+            <div class="scr scr--chat" data-screen="1" data-ui>
+              <div class="sb"><span class="sb__time">18:52</span><span>Messages</span></div>
+              <div class="chat__head"><p class="t-b">Unit nurses</p><p class="t-muted">38 people</p></div>
+              <div class="chat">
+                <p class="day">Tuesday</p>
+                <div class="msg"><p class="who">Maya R. <span>02:47</span></p><p>Anyone able to take my Sat night?? Will swap for any day next week</p></div>
+                <div class="msg"><p class="who">Dee K. <span>03:05</span></p><p>not me sorry</p></div>
+                <div class="msg"><p class="who">Sam O. <span>06:58</span></p><p>I could but I’m on Sat day</p></div>
+                <div class="msg"><p class="who">Priya S. <span>07:41</span></p><p>I’ll take it if nobody else does</p></div>
+                <p class="day">Thursday</p>
+                <div class="msg msg--mgr"><p class="who">Unit manager <span>18:52</span></p><p>Who is charge Saturday night? Schedule still says Maya.</p></div>
+              </div>
+            </div>
+
+            <!-- 2. Maya posts, 10:16 -->
+            <div class="scr" data-screen="2" data-ui>
+              <div class="sb"><span class="sb__time">10:16</span><span>Med-surg</span></div>
+              <div class="scr__top"><p class="t-xl">Swap posted</p><p class="t-muted">Maya R., charge-qualified RN</p></div>
+              <div class="card card--hi">
+                <p class="t-muted">Giving away</p>
+                <div class="card__row"><span class="t-b">Saturday night</span><span class="nums">19:00–07:30</span></div>
+                <p class="t-muted">Wants back: any day shift next week</p>
+              </div>
+              <p class="t-sec">Who could take it</p>
+              <div class="card">
+                <div class="card__row"><span>Pass every check</span><span class="t-b hue">6 nurses</span></div>
+                <div class="card__row"><span>Already on Saturday</span><span class="nums">5</span></div>
+                <div class="card__row"><span>Would break a rule</span><span class="nums">9</span></div>
+              </div>
+              <p class="t-muted note">Only the six are told. Nothing changes on the schedule until the manager approves.</p>
+              <div class="scr__foot"><span class="btn btn--grey">Edit swap</span></div>
+            </div>
+
+            <!-- 3. Jordan takes it, 13:34 -->
+            <div class="scr" data-screen="3" data-ui>
+              <div class="sb"><span class="sb__time">13:34</span><span>Med-surg</span></div>
+              <div class="scr__top"><p class="t-xl">Take Maya’s Saturday night?</p><p class="t-muted">19:00–07:30, 12 h, as charge</p></div>
+              <p class="t-sec">Checked for you</p>
+              <div class="card checks">
+                <div class="card__row"><span>Same role</span><span class="ok">RN for RN</span></div>
+                <div class="card__row"><span>Charge cover, Sat night</span><span class="ok">Kept</span></div>
+                <div class="card__row"><span>Hours in 7 days</span><span class="ok">36 of 60 h</span></div>
+                <div class="card__row"><span>Rest before it</span><span class="ok">47½ h</span></div>
+                <div class="card__row"><span>Shifts in a row</span><span class="ok">1, limit 3</span></div>
+              </div>
+              <p class="t-sec">You give back</p>
+              <div class="card"><div class="card__row"><span class="t-b">Next Tue day</span><span class="nums">07:00–19:30</span></div><p class="ok">Maya passes the checks for it</p></div>
+              <div class="scr__foot"><span class="btn btn--ink">Send to manager</span></div>
+            </div>
+
+            <!-- 4. The manager, 15:02 -->
+            <div class="scr" data-screen="4" data-ui>
+              <div class="sb"><span class="sb__time">15:02</span><span>Manager</span></div>
+              <div class="scr__top"><p class="t-xl">Swap requests</p><p class="t-muted">1 waiting, checked 13:34</p></div>
+              <div class="card card--hi">
+                <p class="t-b">Maya R. and Jordan T.</p>
+                <div class="card__row"><span>Sat night 19:00</span><span>Jordan in</span></div>
+                <div class="card__row"><span>Next Tue day 07:00</span><span>Maya in</span></div>
+                <p class="ok">5 of 5 checks pass for both</p>
+                <p class="t-muted">Saturday night keeps 1 charge nurse and 5 RNs.</p>
+              </div>
+              <div class="decide"><span class="btn btn--grey">Decline</span><span class="btn btn--ink is-pressed">Approve</span></div>
+              <p class="t-muted note">You can decline any swap, even one that passes every check.</p>
+            </div>
+
+            <!-- 5. On the schedule, 15:03 -->
+            <div class="scr" data-screen="5" data-ui>
+              <div class="sb"><span class="sb__time">15:03</span><span>Med-surg</span></div>
+              <div class="scr__top"><p class="t-xl">Approved</p><p class="t-muted">by the unit manager at 15:02</p></div>
+              <p class="t-sec">Saturday night, 19:00–07:30</p>
+              <div class="card roster">
+                <div class="card__row"><span class="t-b">Jordan T.</span><span class="hue">Charge</span></div>
+                <div class="card__row"><span>Ana P.</span><span class="t-muted">RN</span></div>
+                <div class="card__row"><span>Luis M.</span><span class="t-muted">RN</span></div>
+                <div class="card__row"><span>Dee K.</span><span class="t-muted">RN</span></div>
+                <div class="card__row"><span>Kim W.</span><span class="t-muted">RN</span></div>
+              </div>
+              <p class="t-muted note">Maya and Jordan were told at 15:02. Handover is in 3 h 58 min.</p>
+              <div class="tabbar"><span>Swaps</span><span class="is-cur">Schedule</span><span>Me</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="stage__bar"><span>Days 07:00–19:30</span><span>Nights 19:00–07:30</span></p>
+  </aside>
+
+</div>
+
+<section class="try" id="try" aria-labelledby="try-h">
+  <div class="try__plate" data-reveal>
+    <div class="plate" data-ui>
+      <div class="plate__head"><p class="t-b">Cover against the minimum</p><p class="t-muted">Med-surg, this week. Figures are nurses above the minimum.</p></div>
+      <table class="matrix">
+        <thead><tr><th scope="col"><span class="sr-only">Shift</span></th><th scope="col">Sun</th><th scope="col">Mon</th><th scope="col">Tue</th><th scope="col">Wed</th><th scope="col">Thu</th><th scope="col">Fri</th><th scope="col" class="is-today">Sat</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Day RNs <span>needs 6</span></th><td>+1</td><td>0</td><td>+1</td><td>+2</td><td>0</td><td>+1</td><td>0</td></tr>
+          <tr><th scope="row">Day charge <span>needs 1</span></th><td>+1</td><td>0</td><td>0</td><td>+1</td><td>0</td><td>0</td><td>+1</td></tr>
+          <tr><th scope="row">Night RNs <span>needs 5</span></th><td>0</td><td>+1</td><td>0</td><td>0</td><td>+1</td><td>0</td><td class="is-sel" data-cell="rn">0</td></tr>
+          <tr><th scope="row">Night charge <span>needs 1</span></th><td>0</td><td>0</td><td>+1</td><td>0</td><td>0</td><td>0</td><td class="is-sel" data-cell="charge">0</td></tr>
+        </tbody>
+      </table>
+      <p class="plate__sum" data-plate-sum>If Jordan takes it, Saturday night stays at its minimum and keeps a charge nurse.</p>
+      <div class="plate__roster">
+        <p class="t-b">Saturday night, 19:00–07:30</p>
+        <ul>
+          <li class="is-out"><span>Maya R.</span><span>Charge, giving it away</span></li>
+          <li class="is-in"><span data-roster-name>Jordan T.</span><span data-roster-role>Charge, taking it</span></li>
+          <li><span>Ana P.</span><span>RN</span></li>
+          <li><span>Luis M.</span><span>RN</span></li>
+          <li><span>Dee K.</span><span>RN</span></li>
+          <li><span>Kim W.</span><span>RN</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="try__side">
+    <div class="try__words">
+      <h2 class="head" id="try-h" data-reveal>Who can take Saturday night?</h2>
+      <p data-reveal style="--i:1">Maya’s night needs a nurse. Pick a colleague and see what Swaptide checks before the manager is ever asked.</p>
+    </div>
+
+    <div class="pick" data-reveal style="--i:2">
+      <div class="pick__tabs" role="tablist" aria-label="Who takes the shift">
+        <button role="tab" id="tab-jordan" aria-controls="res-jordan" aria-selected="true">Jordan T.</button>
+        <button role="tab" id="tab-priya" aria-controls="res-priya" aria-selected="false">Priya S.</button>
+        <button role="tab" id="tab-sam" aria-controls="res-sam" aria-selected="false">Sam O.</button>
+        <button role="tab" id="tab-elena" aria-controls="res-elena" aria-selected="false">Elena V.</button>
+      </div>
+
+      <div class="results">
+        <div class="result is-on" id="res-jordan" role="tabpanel" aria-labelledby="tab-jordan" data-rn="0" data-charge="0" data-name="Jordan T." data-role="Charge, taking it" data-sum="If Jordan takes it, Saturday night stays at its minimum and keeps a charge nurse.">
+          <h3 class="result__title">Jordan: goes to the manager</h3>
+          <p>Every check passes. The manager sees one card with both schedules, and decides.</p>
+          <ul class="checks">
+            <li><span>Same role</span><span>RN for RN</span></li>
+            <li><span>Charge cover, Saturday night</span><span>Kept</span></li>
+            <li><span>Hours in 7 days</span><span>36 of 60 h</span></li>
+            <li><span>Rest before the shift</span><span>47½ h</span></li>
+            <li><span>Shifts in a row</span><span>1, limit 3</span></li>
+          </ul>
+        </div>
+        <div class="result" id="res-priya" role="tabpanel" aria-labelledby="tab-priya" data-rn="0" data-charge="-1" data-name="Priya S." data-role="RN, taking it" data-sum="If Priya takes it, Saturday night has its five RNs but no charge-qualified nurse.">
+          <h3 class="result__title">Priya: stopped before the manager</h3>
+          <p>Saturday night would have no charge-qualified nurse. Priya is told why, and Maya’s swap stays open.</p>
+          <ul class="checks">
+            <li><span>Same role</span><span>RN for RN</span></li>
+            <li class="is-stop"><span>Charge cover, Saturday night</span><span>None left</span></li>
+            <li><span>Hours in 7 days</span><span>36 of 60 h</span></li>
+            <li><span>Rest before the shift</span><span>35½ h</span></li>
+            <li><span>Shifts in a row</span><span>1, limit 3</span></li>
+          </ul>
+        </div>
+        <div class="result" id="res-sam" role="tabpanel" aria-labelledby="tab-sam" data-rn="0" data-charge="0" data-name="Sam O." data-role="Charge, already on Sat day" data-sum="Cover would hold, but Sam would work Saturday day and night back to back.">
+          <h3 class="result__title">Sam: stopped before the manager</h3>
+          <p>Sam is on Saturday day until 19:30. Taking the night would mean 24 hours on the unit.</p>
+          <ul class="checks">
+            <li><span>Same role</span><span>RN for RN</span></li>
+            <li><span>Charge cover, Saturday night</span><span>Kept</span></li>
+            <li><span>Hours in 7 days</span><span>48 of 60 h</span></li>
+            <li class="is-stop"><span>Rest before the shift</span><span>None</span></li>
+            <li><span>Shifts in a row</span><span>2, limit 3</span></li>
+          </ul>
+        </div>
+        <div class="result" id="res-elena" role="tabpanel" aria-labelledby="tab-elena" data-rn="0" data-charge="0" data-name="Elena V." data-role="Charge, fourth night" data-sum="Cover would hold, but Elena would work four nights in a row.">
+          <h3 class="result__title">Elena: stopped before the manager</h3>
+          <p>It would be Elena’s fourth night in a row, and the unit allows three. She sees the rule, not just a no.</p>
+          <ul class="checks">
+            <li><span>Same role</span><span>RN for RN</span></li>
+            <li><span>Charge cover, Saturday night</span><span>Kept</span></li>
+            <li><span>Hours in 7 days</span><span>48 of 60 h</span></li>
+            <li><span>Rest before the shift</span><span>11½ h</span></li>
+            <li class="is-stop"><span>Shifts in a row</span><span>4, limit 3</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cells" data-reveal style="--i:3">
+      <a class="cell cell--ink" href="https://swaptide.example/pilot">Book a pilot call</a>
+      <a class="cell" href="#rules">See every rule</a>
+    </div>
+  </div>
+</section>
+
+<section class="rules" id="rules" aria-labelledby="rules-h">
+  <div class="rules__head">
+    <h2 class="display" id="rules-h">The rules</h2>
+    <p>Each swap is checked against the rules your unit already works by, before it reaches the manager. Your policy and your agreement set them. Swaptide only applies them.</p>
+  </div>
+
+  <div class="rules__list">
+    <article class="rule" data-reveal>
+      <h3 class="rule__title">Skill mix</h3>
+      <div class="rule__pair">
+        <div class="mini" data-ui>
+          <p class="t-b">Sat night</p>
+          <p class="t-muted">needs 5 RNs, 1 charge</p>
+          <ul class="mini__list">
+            <li><span>Jordan T.</span><span class="hue">Charge</span></li>
+            <li><span>Ana P.</span><span>RN</span></li>
+            <li><span>Luis M.</span><span>RN</span></li>
+            <li><span>Dee K.</span><span>RN, year 1</span></li>
+            <li><span>Kim W.</span><span>RN</span></li>
+          </ul>
+          <p class="ok">Cover kept</p>
+        </div>
+        <ul class="rule__lines">
+          <li>A charge-qualified nurse on every shift</li>
+          <li>Never a shift left to first-year nurses alone</li>
+          <li>Competencies the unit needs, such as telemetry</li>
+          <li>Days and nights set separately</li>
+          <li>Checked for both nurses in a trade</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="rule rule--flip" data-reveal>
+      <h3 class="rule__title">Hours limits</h3>
+      <div class="rule__pair">
+        <div class="mini" data-ui>
+          <p class="t-b">Jordan T., this week</p>
+          <p class="t-muted">limit 60 h in any 7 days</p>
+          <div class="bar" role="img" aria-label="36 of 60 hours"><span style="width:60%"></span></div>
+          <ul class="mini__list">
+            <li><span>Mon day</span><span>12 h</span></li>
+            <li><span>Thu day</span><span>12 h</span></li>
+            <li><span class="t-b">Sat night</span><span class="hue">12 h</span></li>
+            <li><span class="t-b">Total</span><span class="t-b">36 h</span></li>
+          </ul>
+        </div>
+        <ul class="rule__lines">
+          <li>Hours in any 7 days, against the unit’s limit</li>
+          <li>Twelve-hour shifts in a row, usually three</li>
+          <li>Overtime shown to the manager, never hidden</li>
+          <li>Counted from the schedule, not from memory</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="rule" data-reveal>
+      <h3 class="rule__title">Rest between shifts</h3>
+      <div class="rule__pair">
+        <div class="mini" data-ui>
+          <p class="t-b">Sam O., Saturday</p>
+          <p class="t-muted">minimum rest 10 h</p>
+          <ul class="mini__list">
+            <li><span>Day</span><span class="nums">07:00–19:30</span></li>
+            <li><span>Night</span><span class="nums">19:00–07:30</span></li>
+          </ul>
+          <div class="span" aria-hidden="true"><span class="span__a"></span><span class="span__b"></span></div>
+          <p class="no">Overlaps by 30 min</p>
+        </div>
+        <ul class="rule__lines">
+          <li>No day shift straight after a night</li>
+          <li>The unit’s minimum rest between shifts</li>
+          <li>No overlap with a shift already worked</li>
+          <li>Turnarounds shown in hours, so nobody does the arithmetic at 03:00</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="rule rule--flip" data-reveal>
+      <h3 class="rule__title">The manager’s call</h3>
+      <div class="rule__pair">
+        <div class="mini" data-ui>
+          <p class="t-b">Maya R. and Jordan T.</p>
+          <p class="t-muted">Sat night and next Tue day</p>
+          <p class="ok">5 of 5 checks pass</p>
+          <div class="mini__btns"><span class="btn btn--grey">Decline</span><span class="btn btn--ink">Approve</span></div>
+        </div>
+        <ul class="rule__lines">
+          <li>A swap that breaks a rule stops, and the nurse is told which one</li>
+          <li>Every other swap waits for the manager</li>
+          <li>One card per swap, both schedules on it</li>
+          <li>Approve or decline in one tap, with a reason if wanted</li>
+          <li>Nothing moves on the schedule until then</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="pilot" id="pilot" aria-labelledby="pilot-h">
+  <h2 class="head" id="pilot-h" data-reveal>The pilot so far</h2>
+  <div class="pilot__cols" data-reveal style="--i:1">
+    <ul>
+      <li class="kind">Where it runs</li>
+      <li>One medical-surgical unit</li>
+      <li>Days and nights</li>
+      <li>Three months so far</li>
+    </ul>
+    <ul>
+      <li class="kind">Who uses it</li>
+      <li>Staff nurses</li>
+      <li>Charge nurses</li>
+      <li>The unit manager</li>
+    </ul>
+    <ul>
+      <li class="kind">What it checks</li>
+      <li>Skill mix</li>
+      <li>Hours in 7 days</li>
+      <li>Shifts in a row</li>
+      <li>Rest between shifts</li>
+      <li>Role and competencies</li>
+    </ul>
+    <ul>
+      <li class="kind">What it leaves alone</li>
+      <li>Payroll</li>
+      <li>Pay rates and premiums</li>
+      <li>Union agreements</li>
+      <li>The manager’s decision</li>
+    </ul>
+  </div>
+  <p class="pilot__note" data-reveal style="--i:2">No measured results yet. The pilot unit’s numbers are theirs to publish, and we will not round them up for a web page.</p>
+</section>
+
+<section class="faq" id="questions" aria-labelledby="faq-h">
+  <h2 class="head" id="faq-h" data-reveal>Questions</h2>
+  <div class="faq__text" data-reveal style="--i:1">
+    <p><strong>Does Swaptide handle payroll?</strong> No. It records the swap and the manager’s decision. Hours, pay and premiums stay with your payroll and timekeeping systems.</p>
+    <p><strong>Can it override our union agreement?</strong> No. The rules it checks are taken from your unit’s policy and agreements. It can stop a swap that breaks one, or pass it on to the manager. It never approves anything by itself.</p>
+    <p><strong>Who makes the final decision?</strong> The unit manager, every time. A swap that passes every check still waits for the manager, who can decline it.</p>
+    <p><strong>What happens when a swap breaks a rule?</strong> It stops before the manager sees it, and the nurse is told which rule and why, in plain words, so she can try someone else.</p>
+    <p><strong>Who sets the rules?</strong> The unit does. On the pilot call we go through the limits you already use: hours, shifts in a row, rest, charge cover and competencies.</p>
+    <p><strong>Who approves when the manager is away?</strong> Whoever your unit names. We set that up with you at the start of a pilot.</p>
+    <p><strong>Does it work on nights?</strong> It is built around twelve-hour days and nights, including the half-hour handover overlap and the night that ends on the next morning.</p>
+    <p><strong>How long is a pilot?</strong> The first one has run for three months on one medical-surgical unit. One unit for about that long is a sensible start.</p>
+    <p><strong>Who is it for?</strong> Nurse managers and directors of nursing buy it from a department budget. Nurses on the unit use it, usually on a break.</p>
+    <p><strong>What does the pilot call cover?</strong> How swaps happen on your unit now, which rules apply, who approves, and what a pilot would need from you. Pricing too.</p>
+  </div>
+</section>
+
+<section class="cta" id="pilot-call" aria-labelledby="cta-h">
+  <h2 class="sr-only" id="cta-h">Book a pilot call</h2>
+  <p class="cta__line" data-reveal>Tell us how swaps happen on your unit now, and we will show you one going through.</p>
+  <p data-reveal style="--i:1"><a class="button" href="https://swaptide.example/pilot">Book a pilot call</a></p>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot__pic" aria-hidden="true">
+    <div class="big" data-ui>
+      <p class="big__t">Swap requests</p>
+      <div class="big__card">
+        <p class="t-b">Maya R. and Jordan T.</p>
+        <div class="big__row"><span>Sat night 19:00</span><span>Jordan in</span></div>
+        <div class="big__row"><span>Next Tue day 07:00</span><span>Maya in</span></div>
+        <p class="ok">5 of 5 checks pass for both</p>
+        <div class="big__btns"><span class="btn btn--grey">Decline</span><span class="btn btn--ink">Approve</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot__menu">
+    <a class="wordmark wordmark--small" href="#top">Swaptide</a>
+    <nav aria-label="Footer">
+      <ul class="foot__links">
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#try">Try a swap</a></li>
+        <li><a href="#rules">The rules</a></li>
+        <li><a href="#pilot">The pilot</a></li>
+        <li><a href="#questions">Questions</a></li>
+        <li><a href="https://swaptide.example/pilot">Book a pilot call</a></li>
+      </ul>
+    </nav>
+    <div class="foot__blocks">
+      <p>Pilot calls are booked at <a class="link-plain" href="https://swaptide.example/pilot">swaptide.example/pilot</a>.</p>
+      <p>Swaptide does not handle payroll and never overrides your agreements or your manager.</p>
+    </div>
+    <p class="foot__legal">© 2026 Swaptide. Names, schedules and rule limits shown are samples.</p>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

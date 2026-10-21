@@ -3,7 +3,7 @@ name: startup-landing-design
 description: Build, redesign, revise or audit a startup landing page that makes one ownable statement (a character with a job, an inhabited world, the product as a toy, an object, the trade's own notation, monumental type) while staying clear in five seconds, using dated evidence from real startup sites, positioning and copy rules, archetype recipes and 116 checks (85 automatic, 31 judged from screenshots, code or the record). Use for a new startup homepage, a landing-page redesign, a change to one section, a review of an existing site ("audit my homepage"), a request to make a page bold, memorable or less generic, or to avoid generic AI website patterns. Preserves existing brand and framework constraints.
 license: MIT
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # Startup landing design

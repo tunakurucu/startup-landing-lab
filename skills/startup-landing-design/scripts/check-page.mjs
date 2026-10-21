@@ -1045,6 +1045,7 @@ try {
       const e = comp.empty;
       // The page's own side margins do not count: the block must reach into the middle half of the screen.
       const central = !!e && e.left < 1440 * 0.75 && e.left + e.width > 1440 * 0.25;
+      if (v6.sigAt?.none) check('HR-08', true, `declared none: ${v6.sigAt.none} (an index or document page)`); else
       check('HR-08', !(central && e.width >= 320 && e.height >= 140 && e.share >= 0.08), e ? {largest_empty_block: `${e.width}×${e.height}px at (${e.left}, ${e.top})`, share_of_first_screen: e.share, note: central && e.share >= 0.08 && e.width >= 320 && e.height >= 140 ? 'a hole in the first screen: move the action, the status line or the artifact into it, or tighten the grid' : undefined} : 'no empty block');
 
       // HR-09 and HR-10: the calm first screen, at 1440 and 390.
