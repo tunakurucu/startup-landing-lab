@@ -1,6 +1,6 @@
-# The 117 checks
+# The 116 checks
 
-Generated from `assets/checks.json`. **86 auto** checks are decided by `scripts/check-page.mjs`; **13 screenshot**, **3 code** and **15 record** checks are answered in the `## Checklist` section of `DESIGN-RECORD.md`, one line each: `ID | pass, fail or n/a | evidence`. `scripts/verify-record.mjs` refuses to finish while any of them is unanswered.
+Generated from `assets/checks.json`. **85 auto** checks are decided by `scripts/check-page.mjs`; **13 screenshot**, **3 code** and **15 record** checks are answered in the `## Checklist` section of `DESIGN-RECORD.md`, one line each: `ID | pass, fail or n/a | evidence`. `scripts/verify-record.mjs` refuses to finish while any of them is unanswered.
 
 **block** = fix before calling the page done, or end with DONE_WITH_CONCERNS. **warn** = fix, or record the product reason it stays.
 
@@ -63,7 +63,6 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | ST-04 | Real proof, when supplied, appears within the first two screenfuls or beside the claim it supports, and every quote carries name, role and company. | record | warn | EM CXL NNG |
 | ST-05 | The conversion form shows at most three fields before submit, no textarea and at most one select. | auto | warn | HUB BAY NNG |
 | ST-06 | For developer products, the first two screenfuls show an install command or code sample, and the header links to docs or a quickstart; other products are n/a. | auto | warn | SO EM |
-| ST-07 | Every section after the first screen is understood at a glance: at most 90 words outside the demo, the pictures and closed details, so the heading and a line or two carry it and the details sit behind a disclosure, a table or another page. | auto | block | SLL |
 
 ## Type
 
@@ -142,7 +141,7 @@ Credits: **IMP** Impeccable (Paul Bakaus); **GST** gstack design-review (Garry T
 | MB-08 | Escape closes an open menu and returns focus to the button that opened it. | auto | block | APG WCAG |
 | MB-09 | On phones, controls inside the signature artifact are at least 44×44px. | auto | block | APL GST |
 | MB-10 | The phone page is at most eight screens tall (6,752px at 390×844) and the signature artifact at most two (1,688px); a longer page cuts repeats and groups long lists. | auto | block | SLL |
-| MB-11 | The signature artifact asks for at most four decisions (a radio group counts once): one choice and one result, not a form. | auto | block | SLL |
+| MB-11 | The signature artifact has at most three controls (a radio group counts once): one choice and one result, not a form. | auto | block | SLL |
 
 ## Accessibility and robustness
 

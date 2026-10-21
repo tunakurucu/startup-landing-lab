@@ -220,18 +220,6 @@ function helpers() {
     }
     return [...new Set(off)].slice(0, 6);
   };
-  // ST-07: words per section after the first screen, outside the demo, pictures and closed details.
-  var sectionWords = () => {
-    const top = [...document.querySelectorAll('section')].filter(x => !x.parentElement.closest('section'));
-    const secs = top.length >= 3 ? top : [...(document.querySelector('main') || document.body).children].filter(x => !/^(HEADER|FOOTER|NAV|SCRIPT|STYLE)$/.test(x.tagName));
-    const skip = el => !!el.closest('[data-signature],[data-hero-visual],svg,canvas,[aria-hidden=true],[role=img],footer,nav,header');
-    return secs.map(sec => {
-      let w = 0;
-      for (const el of sec.querySelectorAll('*')) { if (!seen(el) || skip(el)) continue; w += (ownText(el).match(/[\p{L}\p{N}][\p{L}\p{N}'’.,:%$€£-]*/gu) || []).length; }
-      const hd = sec.querySelector('h1,h2,h3');
-      return {section: (hd ? hd.textContent : describe(sec)).replace(/\s+/g, ' ').trim().slice(0, 40), words: w, hero: !!sec.querySelector('h1')};
-    }).filter(x => !x.hero);
-  };
   // The calm first screen (HR-09, HR-10): what a visitor sees before scrolling, outside the site header and the hero picture.
   var calm = () => {
     scrollTo({top: 0, behavior: 'instant'});
@@ -742,7 +730,7 @@ try {
         part.sig390 = sig;
         check('HR-07', sig.visible >= need(sig), {at: '390×844, first two screens', signature: sig.el, marked: sig.marked || 'no: guessed from the controls; mark it with data-signature', top_px: sig.top, visible_px: sig.visible, needed_px: need(sig)});
         check('MB-09', sig.small.length === 0, {under_44x44: sig.small.slice(0, 8)});
-        check('MB-11', sig.decisions <= 4, {controls_in_artifact: sig.decisions, limit: 4, note: 'a radio group counts once; one decision and one result reads at a glance, a form does not', controls: sig.labels.slice(0, 8)});
+        check('MB-11', sig.decisions <= 3, {controls_in_artifact: sig.decisions, limit: 3, note: 'a radio group counts once; one decision and one result reads at a glance, a form does not', controls: sig.labels.slice(0, 8)});
         // MB-07 and AX-12: use each control from the keyboard, centred in the viewport, and watch what changes.
         const off = [], dead = [], dropped = [], probed = [];
         for (let i = 0; i < sig.n; i++) {
@@ -892,7 +880,7 @@ try {
 
   // ======================= 1440 × 900 =======================
   let d = null;
-  await section('the 1440px pass', ['HR-01', 'HR-02', 'HR-04', 'PS-06', 'CP-01', 'CP-02', 'CP-07', 'CP-08', 'CP-11', 'ST-01', 'ST-03', 'ST-05', 'ST-06', 'TY-07', 'TY-10', 'LY-01', 'LY-05', 'LY-06', 'LY-07', 'CO-02', 'CO-03', 'TT-01', 'TT-02', 'TT-03', 'TT-04', 'MO-04', 'MO-06', 'PF-03', 'PF-06', 'PF-07', 'AX-03', 'HR-07', 'TY-11', 'CP-12', 'CP-13', 'CO-01', 'HR-03', 'HR-08', 'HR-09', 'HR-10', 'ST-07', 'LY-09'], async () => {
+  await section('the 1440px pass', ['HR-01', 'HR-02', 'HR-04', 'PS-06', 'CP-01', 'CP-02', 'CP-07', 'CP-08', 'CP-11', 'ST-01', 'ST-03', 'ST-05', 'ST-06', 'TY-07', 'TY-10', 'LY-01', 'LY-05', 'LY-06', 'LY-07', 'CO-02', 'CO-03', 'TT-01', 'TT-02', 'TT-03', 'TT-04', 'MO-04', 'MO-06', 'PF-03', 'PF-06', 'PF-07', 'AX-03', 'HR-07', 'TY-11', 'CP-12', 'CP-13', 'CO-01', 'HR-03', 'HR-08', 'HR-09', 'HR-10', 'LY-09'], async () => {
     const {ctx: c, page: p} = await open({width: 1440, height: 900});
     try {
       d = await run(p, () => {
@@ -1070,11 +1058,8 @@ try {
           check('HR-10', bad.length === 0, bad.length ? Object.fromEntries(bad.map(([w, c]) => [w, {tables_fields_or_tabs: c.fields, actions: c.actions, controls_inside_hero_picture: c.picture_controls}])) : {actions: c14.actions, note: 'no table, field or tab list; at most two actions'});
         }
       }
-      // ST-07 and LY-09.
+      // LY-09.
       {
-        const sw = await run(p, () => sectionWords());
-        const long = sw.filter(x => x.words > 90);
-        check('ST-07', long.length === 0, {words_per_section: sw.map(x => `${x.section}: ${x.words}`), limit: 90, note: long.length ? 'each section is understood at a glance: a heading and one or two lines; put the details in a closed <details>, a table further down or a separate page' : undefined});
         const a14 = await run(p, () => alignRows()), all = [...a14.map(x => '1440: ' + x), ...(part.align390 || []).map(x => '390: ' + x)];
         check('LY-09', all.length === 0, all.length ? {misaligned_buttons: all} : 'buttons that sit side by side share height and centre');
       }

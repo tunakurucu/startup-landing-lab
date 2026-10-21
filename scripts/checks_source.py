@@ -98,7 +98,6 @@ CHECKS = [
   ('ST-04', 'Real proof, when supplied, appears within the first two screenfuls or beside the claim it supports, and every quote carries name, role and company.', 'record', 'warn', 'EM CXL NNG'),
   ('ST-05', 'The conversion form shows at most three fields before submit, no textarea and at most one select.', 'auto', 'warn', 'HUB BAY NNG'),
   ('ST-06', 'For developer products, the first two screenfuls show an install command or code sample, and the header links to docs or a quickstart; other products are n/a.', 'auto', 'warn', 'SO EM'),
-  ('ST-07', 'Every section after the first screen is understood at a glance: at most 90 words outside the demo, the pictures and closed details, so the heading and a line or two carry it and the details sit behind a disclosure, a table or another page.', 'auto', 'block', 'SLL'),
   # Type
   ('TY-01', 'Exactly one h1.', 'auto', 'block', 'GST VWG'),
   ('TY-02', 'Heading levels never skip (no h1 → h3).', 'auto', 'block', 'IMP VWG'),
@@ -153,7 +152,7 @@ CHECKS = [
   ('MB-08', 'Escape closes an open menu and returns focus to the button that opened it.', 'auto', 'block', 'APG WCAG'),
   ('MB-09', 'On phones, controls inside the signature artifact are at least 44×44px.', 'auto', 'block', 'APL GST'),
   ('MB-10', 'The phone page is at most eight screens tall (6,752px at 390×844) and the signature artifact at most two (1,688px); a longer page cuts repeats and groups long lists.', 'auto', 'block', 'SLL'),
-  ('MB-11', 'The signature artifact asks for at most four decisions (a radio group counts once): one choice and one result, not a form.', 'auto', 'block', 'SLL'),
+  ('MB-11', 'The signature artifact has at most three controls (a radio group counts once): one choice and one result, not a form.', 'auto', 'block', 'SLL'),
   # Accessibility and robustness
   ('AX-01', 'Every link and button has an accessible name.', 'auto', 'block', 'VWG'),
   ('AX-02', 'Every image has alt text, empty only when decorative.', 'auto', 'block', 'VWG'),

@@ -1,6 +1,6 @@
 # Startup Landing Lab
 
-**Great design skills already exist. This one takes the best rules from thirteen of them, adds what YC partners, operators and web research say a startup homepage must do, grounds it in dated measurements of real startup sites, and turns it into 117 checks built for one job: startup landing pages. It can build a page, change one part of it, or audit the one you already have.**
+**Great design skills already exist. This one takes the best rules from thirteen of them, adds what YC partners, operators and web research say a startup homepage must do, grounds it in dated measurements of real startup sites, and turns it into 116 checks built for one job: startup landing pages. It can build a page, change one part of it, or audit the one you already have.**
 
 AI-built landing pages keep coming out the same: centred headline, framed screenshot, three adjective cards, a gradient blob. Version 0.5 makes every page commit to one ownable statement (a character with a job, an inhabited world, the product as a toy, the trade's own notation, monumental type), dealt from a catalogue so the first idea is not the habitual one, and then checks that a stranger still understands the page in five seconds. Good general design skills help, but none of them is about the specific decisions a startup homepage has to make. This skill takes the rules that hold up from the skills listed below, specialises them for landing pages, and grounds them in pages from YC, a16z speedrun and Pear companies that were opened, measured and dated.
 
@@ -30,28 +30,28 @@ Every rule here is rewritten in this project's own words and credited to where t
 
 Beyond skills, the copy, structure and audit rules draw on Paul Graham and Y Combinator's partners, April Dunford, Julian Shapiro, Harry Dry, Copyhackers, Jason Cohen, Patrick McKenzie, Peep Laja, Nielsen Norman Group, WCAG 2.2, web.dev and peer-reviewed research on first impressions and credibility, and the craft rules draw on design-engineering writing from Linear, Vercel, Stripe, GitHub, Figma and Granola and practitioners such as Rauno Freiberg, Sara Soueidan and Ryan Mulligan. Each reference file lists its sources.
 
-What this project adds: a dated casebook of real startup homepages with measured type, layout and motion; seven archetype recipes; a decision record that maps each visitor doubt to a product artifact; two hero variants scored before any code; and a script that refuses to call the page done until all 117 checks are answered.
+What this project adds: a dated casebook of real startup homepages with measured type, layout and motion; seven archetype recipes; a decision record that maps each visitor doubt to a product artifact; two hero variants scored before any code; and a script that refuses to call the page done until all 116 checks are answered.
 
-## The 117 checks
+## The 116 checks
 
 | Group | Checks | Examples |
 | --- | --- | --- |
 | Product and story | 9 | A stranger can say what it does in five seconds; each visitor doubt has an artifact |
 | Copy and positioning | 13 | Headline beats the visitor's current alternative; no generic marketing phrases; no builder notes on the page; dates agree with their weekdays |
 | Hero | 10 | A calm first screen: at most 60 words, two actions, no tables, fields or monospace; the working demo within the first two screens; no single-word last line; no false floor |
-| Structure and conversion | 7 | Cost is findable; no covering pop-ups; short forms; every section understood at a glance; install command and docs for developer tools |
+| Structure and conversion | 6 | Cost is findable; no covering pop-ups; short forms; install command and docs for developer tools |
 | Type | 11 | Hierarchy ratio, tracking floor, 12px minimum, measure, overused faces, no silent fallback to a default face |
 | Layout | 9 | No overflow at 390 or 320, even after a 200-character paste; no clipped text, no nested cards, side-by-side buttons aligned |
 | Colour | 4 | WCAG AA contrast, no gradient text or glows, a ground chosen for the product |
 | Template tells | 6 | No adjective card rows or icon tiles; the logo-swap test; nothing copied from references |
 | Motion | 8 | Reduced motion removes movement and hides nothing; nothing moves by itself without a pause |
-| Mobile and input | 11 | Every artifact control answers in view on a phone, 44px artifact targets, a demo of four decisions at most, Escape closes the menu, eight screens at most |
+| Mobile and input | 11 | Every artifact control answers in view on a phone, 44px artifact targets, a demo of three controls at most, Escape closes the menu, eight screens at most |
 | Accessibility | 13 | Names, alt, a focus ring with real contrast, focus never dropped to the body, a visible skip link, text spacing survives |
 | Performance and metadata | 7 | Hero never lazy-loaded, layout shift, lab LCP, title, description and share card |
 | Honesty and proof | 5 | No unsupplied logos or testimonials, no unsourced numbers, no fake urgency |
 | Process | 4 | Screenshots opened, one structural revision, `verify-record` passes |
 
-86 are checked automatically by [`check-page.mjs`](skills/startup-landing-design/scripts/check-page.mjs). The other 31 need eyes, so the agent answers them in its decision record, and [`verify-record.mjs`](skills/startup-landing-design/scripts/verify-record.mjs) will not let it finish while any are open. This site runs the same automatic checks on every page in CI.
+85 are checked automatically by [`check-page.mjs`](skills/startup-landing-design/scripts/check-page.mjs). The other 31 need eyes, so the agent answers them in its decision record, and [`verify-record.mjs`](skills/startup-landing-design/scripts/verify-record.mjs) will not let it finish while any are open. This site runs the same automatic checks on every page in CI.
 
 ## Audit your own homepage
 
@@ -150,7 +150,7 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-The browser suite covers every route at 1440/768/390 with axe, the skill's 86 automatic checks on nine routes, each motion contract with and without reduced motion, 320 px stress, filters, navigation, demo controls and downloads. See [the evaluation](docs/evaluation.md) for what actually ran and what did not. [Architecture](docs/architecture.md) explains the single-source data flow and hash routing for Pages.
+The browser suite covers every route at 1440/768/390 with axe, the skill's 85 automatic checks on nine routes, each motion contract with and without reduced motion, 320 px stress, filters, navigation, demo controls and downloads. See [the evaluation](docs/evaluation.md) for what actually ran and what did not. [Architecture](docs/architecture.md) explains the single-source data flow and hash routing for Pages.
 
 ## Help improve it
 

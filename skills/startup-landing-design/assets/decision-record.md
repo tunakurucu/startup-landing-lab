@@ -88,7 +88,7 @@ Each screenshot cell is a relative `.png` path, or `unavailable: "<decisive erro
 - Optional tools (Impeccable detect, web-design-guidelines): result, or "not run: <reason>":
 
 ## Checklist
-The other 86 checks run automatically in `check-page.mjs`. Answer each of these from the screenshots, the code or this record: `pass`, `fail`, `n/a`, or `unverified` when the evidence could not be produced (for example, no render). A block-severity `fail` or any `unverified` rules out DONE. See `references/checklist.md` for severity and credit.
+The other 85 checks run automatically in `check-page.mjs`. Answer each of these from the screenshots, the code or this record: `pass`, `fail`, `n/a`, or `unverified` when the evidence could not be produced (for example, no render). A block-severity `fail` or any `unverified` rules out DONE. See `references/checklist.md` for severity and credit.
 
 <!-- checklist:start -->
 | ID | Check | Verdict (pass / fail / n/a / unverified) | Evidence |

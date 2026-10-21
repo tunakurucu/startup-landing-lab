@@ -47,13 +47,13 @@ Section padding is 96–160px at 1440 and 64–96px at 390. Gaps between cards a
 
 His most repeated note was "a lot of text, I'm lost". Every section after the hero follows the same contract:
 
-- **A heading that makes the point in eight words or fewer,** and one or two supporting lines. ST-07 fails any section over 90 words outside the demo and pictures.
+- **A heading that makes the point in eight words or fewer,** then short paragraphs. Count pieces, not words: the winning pages ran 70–160 words a section and still read at a glance, because each section had one heading, one card and one idea. A section holding a diagram, a grid of cells and a form was called confusing at half the words.
 - **One picture or card that shows what the heading says,** readable in a second. A drawing whose proportions need explaining is cut, or replaced by a product card.
 - **Details live behind a door:** a closed `<details>` question list, a "See all prices" link or a second page. The reader who wants them opens them.
-- **The demo asks for one decision and shows one result** (MB-11 allows four at most). Choosing a nurse from four is one decision; a file input plus a stepper plus toggles plus a reset is a form.
+- **The demo asks for one decision and shows one result** (MB-11 allows three controls at most). Choosing a nurse from four is one decision; a file input plus a stepper plus toggles plus a reset is a form.
 
 ## Checks before you finish
 
-- Look at every row of buttons at 1440 and 390: same height, same centre, nothing a few pixels off (LY-09).
+- Look at every row of buttons at 1440 and 390: same height, same centre (LY-09). Stacked controls share one left edge; a button that starts at the margin under a field indented by its label looks misaligned.
 - Squint at each section: can you say its point without reading the body text?
 - Name the one thing on the page a person will remember. If it's a paragraph, start again.
