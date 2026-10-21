@@ -38,3 +38,14 @@ The rankings are read from his notes, best first. The key was revealed only afte
 - **frontend-design** was called basic or boring on staplepress, and on swaptide he hated its title face, buttons and density.
 
 What he asked for across both briefs: each section understandable in a glance, in a few words, with details available for those who want them; creativity, but well executed; type with character; motion that builds the page in pieces.
+
+## Follow-up: v1.1 against the winner (judged 2026-10-21)
+
+v1.1 added the visual system adapted from Taste classics, sections read at a glance, a demo capped at three controls, and aligned buttons. It was built once per brief (`claude-opus-5-5`, same prompt). He judged three pages per brief blind (A–C): v1.1, the Taste classics page that won, and v1.0.
+
+| Brief | v1.1 | Taste classics | v1.0 |
+| --- | --- | --- | --- |
+| staplepress | **preferred** ("yeah, I like A") | decent, as before | decent, as before |
+| swaptide | "interesting… looks cool" | "looks good" | "looks good" |
+
+v1.1 beat the winner on staplepress and tied it on swaptide, which meets the bar set beforehand ("tie or beat on both"). The preferences were milder than in the bake-off, so this shows the skill has caught up with the best-looking skill tested, not that it has passed it. Both v1.1 pages used the floating pill nav because they were built before the frame deal (v1.2), which now varies the nav, hero, look, type, buttons and motion per product.
