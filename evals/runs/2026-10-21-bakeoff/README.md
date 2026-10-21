@@ -18,6 +18,23 @@ Written before the judging. After the human check in round 8 (`../2026-10-20-ab-
   - Builders used fonts installed on the build machine, and some pages render in fallback faces that visitors would not get.
   - One judge and two briefs: this is a direction check, not a measurement.
 
-## Results
+## Results (judged 2026-10-21)
 
-Added after judging: the ranking, his reasons, the key and the builds.
+The rankings are read from his notes, best first. The key was revealed only after both briefs were judged.
+
+| Brief | 1st | 2nd | 3rd | 4th | 5th |
+| --- | --- | --- | --- | --- | --- |
+| staplepress | Taste classics | Taste v2 | **this skill, v1.0** | frontend-design | no skill |
+| swaptide | Taste classics | **this skill, v1.0** | Taste v2 | frontend-design / no skill (both disliked) | |
+
+- **Taste classics won both briefs.** He liked the floating pill nav, the editorial serif with an italic phrase, pages that build up one block at a time as they load, an example card he could read at a glance, and the clearest message of what to do ("send us the PDF, we'll send you the proof").
+- **This skill's v1.0 placed third and second, above the no-skill page both times.** In round 8 he picked the no-skill page over v0.9 in all four pairs; the same no-skill pages now ranked last on staplepress and were called "the definition of AI slop" on swaptide. His complaints about v1.0:
+  - too much text in the sections after the hero;
+  - a demo with too many inputs and boxes;
+  - a misaligned reset button;
+  - drawings whose proportions made them hard to read at a glance;
+  - on staplepress, a page that didn't quite look like a startup.
+- **Taste v2** was the most striking (an excellent scroll on staplepress) but read as e-commerce on one brief and as cluttered, with an awkward colour field, on the other. Both of its pages invented commercial details the briefs did not give.
+- **frontend-design** was called basic or boring on staplepress, and on swaptide he hated its title face, buttons and density.
+
+What he asked for across both briefs: each section understandable in a glance, in a few words, with details available for those who want them; creativity, but well executed; type with character; motion that builds the page in pieces.
