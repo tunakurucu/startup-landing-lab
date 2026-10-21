@@ -4,7 +4,7 @@
 
 AI-built landing pages keep coming out the same: centred headline, framed screenshot, three adjective cards, a gradient blob. Version 0.5 makes every page commit to one ownable statement (a character with a job, an inhabited world, the product as a toy, the trade's own notation, monumental type), dealt from a catalogue so the first idea is not the habitual one, and then checks that a stranger still understands the page in five seconds. Good general design skills help, but none of them is about the specific decisions a startup homepage has to make. This skill takes the rules that hold up from the skills listed below, specialises them for landing pages, and grounds them in pages from YC, a16z speedrun and Pear companies that were opened, measured and dated.
 
-[Explore the live field guide](https://tunakurucu.github.io/startup-landing-lab/) · [Install the skill](docs/installation.md) · [The 100 checks](skills/startup-landing-design/references/checklist.md) · [Read the research](research/README.md)
+[Explore the live field guide](https://tunakurucu.github.io/startup-landing-lab/) · [Install the skill](docs/installation.md) · [The 116 checks](skills/startup-landing-design/references/checklist.md) · [Read the research](research/README.md)
 
 ![The Startup Landing Lab field guide](docs/screenshots/home-1440.png)
 

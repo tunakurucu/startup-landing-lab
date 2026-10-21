@@ -36,6 +36,7 @@ Copy this file next to the page as `DESIGN-RECORD.md` and replace every prompt w
 - Idea sentence ("[inventory thing] becomes [the move]"):
 - The same sentence with the nearest competitor, and why it fails:
 - Statement level (quiet, bold or loud) and why:
+- Lane and frame (lane, modifiers, the dealt nav, hero, look, type, buttons and motion, and any swap with its product reason):
 - First viewport at 1440 (the poster: headline, sentence, buttons, the hero picture and its share of the screen, what moved to section two):
 - First viewport at 390:
 - Name test (the one with the …, eight words or fewer):

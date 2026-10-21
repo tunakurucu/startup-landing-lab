@@ -1,15 +1,20 @@
 // Deal statement directions for a landing page, so the first idea is not the model's habitual one.
 // No dependencies; Node 18+.
-// Usage: node scripts/deal.mjs "<product name>" [--seed <n>] [--level quiet|bold|loud] [--exclude id,id]
+// Usage: node scripts/deal.mjs "<product name>" [--lane developer|b2b-sales|b2b-self-serve|consumer|marketplace] [--seed <n>] [--level quiet|bold|loud] [--exclude id,id] [--no-history]
 // Prints a Markdown block to paste into the record's "Statement" section: three statement moves and two worlds to
 // draw from, dealt deterministically from the seed (default: a hash of the product name), plus the canon exit.
 // Pick one move, or say why none fits and use canon; never redeal to reach a favourite. Record the seed.
-import {readFileSync} from 'node:fs';
+// It also deals the page's frame (nav, hero composition, look, type, buttons, motion) from assets/frames.json, filtered
+// by lane, and skips any option this machine was dealt in its last two deals (history in SLD_HISTORY, default
+// ~/.config/startup-landing-design/history.json), so two products built by the same person do not share a frame.
+import {readFileSync, writeFileSync, mkdirSync} from 'node:fs';
+import {homedir} from 'node:os';
+import {dirname, join} from 'node:path';
 
 const args = process.argv.slice(2);
 const flag = (name, dflt) => { const i = args.indexOf(name); return i > -1 ? args[i + 1] : dflt; };
-const name = args.find((a, i) => !a.startsWith('--') && !['--seed', '--level', '--exclude'].includes(args[i - 1]));
-if (!name) { console.error('usage: deal.mjs "<product name>" [--seed n] [--level quiet|bold|loud] [--exclude id,id]'); process.exit(2); }
+const name = args.find((a, i) => !a.startsWith('--') && !['--seed', '--level', '--exclude', '--lane'].includes(args[i - 1]));
+if (!name) { console.error('usage: deal.mjs "<product name>" [--lane <lane>] [--seed n] [--level quiet|bold|loud] [--exclude id,id] [--no-history]'); process.exit(2); }
 const level = flag('--level', 'bold');
 if (!['quiet', 'bold', 'loud'].includes(level)) { console.error('--level must be quiet, bold or loud'); process.exit(2); }
 const exclude = new Set((flag('--exclude', '') || '').split(',').filter(Boolean));
@@ -34,4 +39,29 @@ const out = [`Dealt for "${name}" with seed ${seed} (node scripts/deal.mjs "${na
 moves.forEach((m, i) => out.push(`${i + 1}. **${m.name}** (\`${m.id}\`). ${m.what} Fits: ${m.fits} Avoid when: ${m.avoid_when} First screen: ${m.first_screen}`));
 out.push(`4. **${catalog.canon.name}** (\`canon\`). ${catalog.canon.what} ${catalog.canon.use_when}`, '',
   `Draw the subject inventory from: ${worlds.join('; ')}.`);
+
+// The frame.
+const frames = JSON.parse(readFileSync(new URL('../assets/frames.json', import.meta.url), 'utf8'));
+const lane = flag('--lane', null);
+if (lane && !frames.lanes.includes(lane)) { console.error(`--lane must be one of ${frames.lanes.join(', ')}`); process.exit(2); }
+const histPath = process.env.SLD_HISTORY || join(homedir(), '.config', 'startup-landing-design', 'history.json');
+const useHistory = !args.includes('--no-history');
+let history = [];
+if (useHistory) { try { history = JSON.parse(readFileSync(histPath, 'utf8')); } catch { history = []; } }
+const recent = history.filter(h => h.product !== name).slice(-2);
+const AXES = [['nav', 'Nav'], ['hero', 'Hero composition'], ['look', 'Look'], ['type', 'Type'], ['buttons', 'Buttons'], ['motion', 'Motion signature']];
+const frame = {};
+out.push('', `Frame dealt${lane ? ` for the **${lane}** lane` : ''} (take each, or swap one for its alternate with a product reason in the record):`, '');
+for (const [axis, label] of AXES) {
+  const fit = frames[axis].filter(o => !lane || !o.fits.length || o.fits.includes(lane));
+  const fresh = fit.filter(o => !recent.some(h => h.frame?.[axis] === o.id));
+  const pick = shuffle(fresh.length ? fresh : fit)[0];
+  const alt = shuffle(fit.filter(o => o.id !== pick.id))[0];
+  frame[axis] = pick.id;
+  out.push(`- **${label}: ${pick.name}** (\`${pick.id}\`). ${pick.what}${alt ? ` Alternate: ${alt.name} (\`${alt.id}\`).` : ''}`);
+}
+if (useHistory) {
+  try { mkdirSync(dirname(histPath), {recursive: true}); writeFileSync(histPath, JSON.stringify([...history, {product: name, lane, seed, frame, dealt_on: new Date().toISOString().slice(0, 10)}].slice(-20), null, 1)); }
+  catch { out.push('', `(Could not write the history file at ${histPath}; frames are not kept apart across products on this machine.)`); }
+}
 console.log(out.join('\n'));
