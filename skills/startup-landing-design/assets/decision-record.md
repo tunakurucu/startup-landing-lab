@@ -36,7 +36,7 @@ Copy this file next to the page as `DESIGN-RECORD.md` and replace every prompt w
 - Idea sentence ("[inventory thing] becomes [the move]"):
 - The same sentence with the nearest competitor, and why it fails:
 - Statement level (quiet, bold or loud) and why:
-- First viewport at 1440 (placement, sizes, live thing, refused default):
+- First viewport at 1440 (the poster: headline, sentence, buttons, the hero picture and its share of the screen, what moved to section two):
 - First viewport at 390:
 - Name test (the one with the …, eight words or fewer):
 
@@ -88,7 +88,7 @@ Each screenshot cell is a relative `.png` path, or `unavailable: "<decisive erro
 - Optional tools (Impeccable detect, web-design-guidelines): result, or "not run: <reason>":
 
 ## Checklist
-The other 81 checks run automatically in `check-page.mjs`. Answer each of these from the screenshots, the code or this record: `pass`, `fail`, `n/a`, or `unverified` when the evidence could not be produced (for example, no render). A block-severity `fail` or any `unverified` rules out DONE. See `references/checklist.md` for severity and credit.
+The other 83 checks run automatically in `check-page.mjs`. Answer each of these from the screenshots, the code or this record: `pass`, `fail`, `n/a`, or `unverified` when the evidence could not be produced (for example, no render). A block-severity `fail` or any `unverified` rules out DONE. See `references/checklist.md` for severity and credit.
 
 <!-- checklist:start -->
 | ID | Check | Verdict (pass / fail / n/a / unverified) | Evidence |

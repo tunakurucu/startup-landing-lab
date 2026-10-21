@@ -1,5 +1,7 @@
 # Hero artifacts observed
 
+> **How to use these in v1.0.** These are what real pages showed near the top. In this skill, the working version with its controls goes in section two, right after the hero. The hero itself shows a still, finished picture of the result ([the first screen](first-screen.md)). Most of the strongest pages below do the same: the operable part sits one scroll down, or the first screen shows it without controls.
+
 First-screen artifacts from the first 94 records in `research/sites.json` (the 41 records added on October 20 are not yet classified here) (one browser, one date each), grouped by what the artifact is. Pair with [product storytelling](product-storytelling.md) and [motion and responsive](motion-and-responsive.md). Counts are records whose observations fit; "below" marks an artifact under the first screen. Across 8 records (Vercel, Modal, Supabase, Elyra, Sparkles, Runway, Traverse, Known) the first screen shows no product, and the record lists that as a risk.
 
 ## 1. The real thing, operable (7 records)

@@ -9,11 +9,12 @@ After step 7.3 (the checker is clean) and 7.4, and before the structural revisio
 ## How
 
 1. **Open the evidence, not your memory of the code:** the 1440, 768 and 390 screenshots, the first-screen captures, and the artifact operated through its states at 1440 and 390.
-2. **Read three times, each as one person, and write one sentence per pass:**
+2. **First, the five-second look.** View only the 1440 and 390 first screens for five seconds, as a visitor who will never read the rest. Write what you remember and whether you'd want to scroll. If you remember a table, chips or a paragraph, the first screen fails before anything else is scored.
+3. **Read three times, each as one person, and write one sentence per pass:**
    - **Senior product designer** who reviews startup sites weekly. Does the page have a point of view that comes from this product? Does the first screen earn attention? Does the execution hold at every width and in every state? Is anything decoration without a job?
    - **The buyer the brief describes**, arriving cold on their usual device, and then **the founder** deciding whether to put the page live under their name. Do I know what I get, is my first real doubt answered, do I trust it, and do I know what the button does?
    - **The front-end engineer** who will maintain it. Does it work by keyboard, by touch and without network? Do edge inputs, reduced motion and 200% zoom hold up? Is the code something they'd keep?
-3. **Score each criterion 1–10, as the strictest of the three readers.** 3 means visibly weak, 6 competent but generic or flawed, 9 nothing important left to improve. Use 10 only when you can name nothing to improve.
+4. **Score each criterion 1–10, as the strictest of the three readers.** 3 means visibly weak, 6 competent but generic or flawed, 9 nothing important left to improve. Use 10 only when you can name nothing to improve.
 
 | Criterion | The question |
 | --- | --- |
@@ -26,10 +27,10 @@ After step 7.3 (the checker is clean) and 7.4, and before the structural revisio
 | Honesty | Is every example labelled where it appears, and does the action say what happens before the click? |
 | Interaction | Does every control work by mouse, touch and keyboard, with empty, error, reset and edge states? |
 | Copy | Are the words specific to the customer's world, with no filler, no repetition and every button saying what happens? |
-| First screen | At both widths, does one viewport hold a specific outcome for a named audience, an artifact that makes it believable, and a matching action? |
+| First screen | At both widths, is the first screen a calm poster (one headline, one sentence, one or two buttons, one beautiful picture of the result, room around them) that you'd want to scroll past and would put live under your name? A table, a row of chips or a paragraph in it caps this at 5. |
 
-4. **For every criterion under 8, write what a 9 would need**, concretely: "the hero has a 500 × 300 hole right of the headline; move the result strip there", not "improve the composition".
-5. **Redesign the lowest one structurally** in step 7.6: composition, artifact, section order or drawing, not a colour tweak. Then rerender, operate the artifact again and re-score every criterion. If any criterion is still under 8 and you can name the fix, do one more pass. Stop after two passes, and record what remains in Remaining weaknesses.
+5. **For every criterion under 8, write what a 9 would need**, concretely: "the hero has a 500 × 300 hole right of the headline; move the result strip there", not "improve the composition".
+6. **Redesign the lowest one structurally** in step 7.6: composition, artifact, section order or drawing, not a colour tweak. Then rerender, operate the artifact again and re-score every criterion. If any criterion is still under 8 and you can name the fix, do one more pass. Stop after two passes, and record what remains in Remaining weaknesses.
 
 ## Keep it honest
 

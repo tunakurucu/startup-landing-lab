@@ -288,7 +288,7 @@
  },
  {
   "id": "HR-07",
-  "check": "The signature artifact (marked `data-signature`) shows at least 280px of itself, or all of itself, in the first screen at 390×844 and at 1440×900.",
+  "check": "The signature artifact (marked `data-signature`) shows at least 280px of itself, or all of itself, within the first two screens at 390×844 and at 1440×900: right after the hero, not five sections down.",
   "verify": "auto",
   "severity": "block",
   "credit": [
@@ -303,6 +303,28 @@
   "severity": "warn",
   "credit": [
    "SLL"
+  ]
+ },
+ {
+  "id": "HR-09",
+  "check": "The first screen is calm: at 1440×900 and 390×844, at most 45 words show outside the site header and the hero picture (marked `data-hero-visual`).",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "SLL",
+   "TST",
+   "AFD"
+  ]
+ },
+ {
+  "id": "HR-10",
+  "check": "The first screen holds no table, form field, tab list, slider, monospace text or tracked-caps label above the headline, at most two actions outside the header, and no controls inside the hero picture.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "SLL",
+   "TST",
+   "AFD"
   ]
  },
  {

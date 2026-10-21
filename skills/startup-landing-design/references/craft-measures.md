@@ -5,7 +5,7 @@ Fifteen measurable rules for the two criteria blind graders marked lowest on thi
 ## First screen
 
 1. **No hole bigger than about a quarter of the screen.** Below the nav, no empty rectangle covers more than 28% of the first screen. When the headline sits in the left third, the right side holds the demo, a picture, a fact or the action, not plain ground. [Taste; HR-08 checks a stricter version]
-2. **One dominant element, at least 40% of the first screen.** The live artifact (or a real picture) covers 40% or more of the 1440 × 900 area, ideally bleeding off one edge. A grid of many small things is not a focal point. [Taste, OpenAI]
+2. **One dominant element, at least 40% of the first screen.** The hero picture covers 40% or more of the 1440 × 900 area, ideally bleeding off one edge. A grid of many small things is not a focal point. [Taste, OpenAI]
 3. **The button lives in the headline's column,** 32–48px below the supporting sentence, on the headline's left edge. No first-screen row has content at both edges with 45% or more of the width empty between them. [Taste, Every Layout]
 4. **Even margins, real rhythm.** Left and right content margins differ by less than 16px. The gap between sections is 120–240px (72–112px on a phone), the gap between groups is at least twice the gap within a group, and a heading has at least twice as much space above it as below. There's no blank vertical stretch taller than 42% of the viewport, and cards in a row share their bottoms. [Taste, Jakub Krehel, Impeccable]
 5. **No stray word, short headlines.** The last line of any heading or paragraph holds at least two words: use `text-wrap: balance` on headings and `pretty` on paragraphs. Headlines are two lines or fewer at every width; the hero headline is at most about 7 words and about 42 characters. If wrapping doesn't fix it, cut a word rather than shrink the type. [Impeccable, Jakub Krehel, Taste; HR-03]
@@ -13,7 +13,7 @@ Fifteen measurable rules for the two criteria blind graders marked lowest on thi
 
 ## Around the artifact
 
-7. **The artifact is the hero, not a picture in a frame.** It's a real working fragment at true size (about 620px wide, labels 13–15px) on one flat stage. Use no browser or laptop frame, no card around the headline or the demo, and no pill or eyebrow above the headline. [Taste, OpenAI, Impeccable]
+7. **The hero picture shows the finished result at true size.** Use a product screen in a phone or tablet frame, floating cards cut from the product, a finished illustration or a supplied photograph, with no controls in it (HR-10). Use no fake browser window, no card around the headline, and no pill or eyebrow above the headline. The working demo with its controls comes right after the hero (HR-07). [Taste, OpenAI, Impeccable; this project's human check]
 8. **Vary the sections and count them.** Give each section a one-word layout (list, split, statement, band, mosaic, table, strip). No two neighbours share one, none appears three times, and there's no row of three identical cards. Aim for about six sections, three to five different picture placements, and one deliberate break in the system. [Taste, OpenAI, Hallmark]
 
 ## Text and data inside the artifact

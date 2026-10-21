@@ -203,6 +203,32 @@ function helpers() {
     return {lines, words: onLast.length, text: onLast.map(t => t.word).join(' ')};
   };
   var textRects = el => { const r = [];for (const n of el.childNodes) if (n.nodeType === 3 && n.textContent.trim()) { const g = document.createRange(); g.selectNodeContents(n); r.push(...[...g.getClientRects()].filter(q => q.width > 0 && q.height > 0)); } return r; };
+
+  // The calm first screen (HR-09, HR-10): what a visitor sees before scrolling, outside the site header and the hero picture.
+  var calm = () => {
+    scrollTo({top: 0, behavior: 'instant'});
+    const s = signature(); if (s?.none) return {none: s.none};
+    const vh = innerHeight, hd = document.querySelector('header,[role=banner]');
+    const pics = [...document.querySelectorAll('[data-hero-visual]')];
+    const out = el => (hd && hd.contains(el)) || pics.some(v => v.contains(el));
+    const inView = r => r.bottom > 0 && r.top < vh && r.width > 0 && r.height > 0;
+    let words = 0; const mono = new Set(), eyebrow = [];
+    const h = h1El(), hb = h ? box(h) : null;
+    for (const el of textEls()) {
+      if (out(el)) continue;
+      const rects = textRects(el).filter(inView); if (!rects.length) continue;
+      const t = ownText(el); words += (t.match(/[\p{L}\p{N}][\p{L}\p{N}'’.,:%$€£-]*/gu) || []).length;
+      const st = cs(el);
+      if (/mono|courier|consolas|menlo/i.test(st.fontFamily.split(',')[0])) mono.add(t.slice(0, 30));
+      if (hb && st.textTransform === 'uppercase' && parseFloat(st.letterSpacing) > 0.5 && rects[0].bottom <= hb.top + 2 && hb.top - rects[0].bottom < 140) eyebrow.push(t.slice(0, 30));
+    }
+    const fields = [...document.querySelectorAll('input:not([type=hidden]),select,textarea,table,[role=table],[role=grid],[role=tablist],[role=slider]')]
+      .filter(el => seen(el) && !out(el) && inView(box(el))).map(el => describe(el));
+    const isBtn = el => { const st = cs(el), b = box(el); return el.tagName === 'BUTTON' || (b.height >= 32 && (toRGBA(st.backgroundColor)[3] > 0.5 || parseFloat(st.borderTopWidth) > 0) && parseFloat(st.paddingLeft) >= 8); };
+    const actions = [...document.querySelectorAll('a[href],button,[role=button]')].filter(el => seen(el) && !out(el) && inView(box(el)) && isBtn(el)).map(el => (label(el) || el.tagName).slice(0, 30));
+    const picCtl = pics.flatMap(v => [...v.querySelectorAll('a[href],button,input,select,textarea,[tabindex]:not([tabindex="-1"])')]).filter(seen).length;
+    return {words, mono: [...mono].slice(0, 5), eyebrow: eyebrow.slice(0, 3), fields: fields.slice(0, 5), actions, picture: pics.length ? describe(pics[0]) : null, picture_controls: picCtl};
+  };
 }
 /* eslint-enable no-unused-vars */
 const HELPERS = helpers.toString().replace(/^[^{]*\{/, '').replace(/\}\s*$/, '');
@@ -628,7 +654,7 @@ try {
 
   // ======================= 390 × 844: the signature artifact, keyboard and stress =======================
   // Fresh pages, so nothing the main pass clicked carries over. Each probe that could navigate reloads the page after.
-  await section('the 390px interaction pass', ['HR-07', 'MB-07', 'MB-08', 'MB-09', 'MB-10', 'AX-12', 'AX-13', 'LY-08', 'LY-06', 'MB-05', 'HR-03'], async () => {
+  await section('the 390px interaction pass', ['HR-07', 'MB-07', 'MB-08', 'MB-09', 'MB-10', 'AX-12', 'AX-13', 'LY-08', 'LY-06', 'MB-05', 'HR-03', 'HR-09', 'HR-10'], async () => {
     let {ctx, page} = await open({width: 390, height: 844});
     const fresh = async () => { await ctx.close(); ({ctx, page} = await open({width: 390, height: 844})); };
     try {
@@ -652,13 +678,15 @@ try {
       if (sigH === -1) check('MB-10', true, {page_height_px: height, note: 'declared no signature artifact (an index or document page): length not limited'});
       else check('MB-10', height <= 6752 && (sigH === null || sigH <= 1688), {page_height_px: height, screens: +(height / 844).toFixed(1), signature_height_px: sigH, limits: 'page at most 8 screens (6,752px); the signature artifact at most 2 screens (1,688px): group, collapse or page a long list'});
 
+      // HR-09 and HR-10 at 390.
+      part.calm390 = await run(page, () => calm());
       // HR-07 at 390, and the signature's controls.
       const sig = await run(page, () => {
         scrollTo({top: 0, behavior: 'instant'});
         const s = signature(); if (!s) return null;
         if (s.none) return {none: s.none};
         const b = box(s.el);
-        const visible = Math.max(0, Math.min(b.bottom, innerHeight) - Math.max(b.top, 0));
+        const visible = Math.max(0, Math.min(b.bottom, 2 * innerHeight) - Math.max(b.top, 0));
         const C = [...s.el.querySelectorAll(CTL_SEL + ',a[href]')].filter(c => seen(c) && !c.disabled && visibleOpacity(c) > 0.1 && cs(c).pointerEvents !== 'none');
         const inSentence = el => cs(el).display === 'inline' && !!el.parentElement?.closest('p,li,dd,td,figcaption');
         const small = C.filter(c => !inSentence(c) && !(['checkbox', 'radio'].includes(c.type) && c.labels?.length)).map(c => ({c, b: box(c)})).filter(x => x.b.width + 0.5 < 44 || x.b.height + 0.5 < 44)
@@ -679,7 +707,7 @@ try {
         for (const id of ['HR-07', 'MB-07', 'MB-09', 'AX-12']) check(id, false, 'no signature artifact found: mark the product artifact with data-signature');
       } else {
         part.sig390 = sig;
-        check('HR-07', sig.visible >= need(sig), {at: '390×844', signature: sig.el, marked: sig.marked || 'no: guessed from the controls; mark it with data-signature', top_px: sig.top, visible_px: sig.visible, needed_px: need(sig)});
+        check('HR-07', sig.visible >= need(sig), {at: '390×844, first two screens', signature: sig.el, marked: sig.marked || 'no: guessed from the controls; mark it with data-signature', top_px: sig.top, visible_px: sig.visible, needed_px: need(sig)});
         check('MB-09', sig.small.length === 0, {under_44x44: sig.small.slice(0, 8)});
         // MB-07 and AX-12: use each control from the keyboard, centred in the viewport, and watch what changes.
         const off = [], dead = [], dropped = [], probed = [];
@@ -830,7 +858,7 @@ try {
 
   // ======================= 1440 × 900 =======================
   let d = null;
-  await section('the 1440px pass', ['HR-01', 'HR-02', 'HR-04', 'PS-06', 'CP-01', 'CP-02', 'CP-07', 'CP-08', 'CP-11', 'ST-01', 'ST-03', 'ST-05', 'ST-06', 'TY-07', 'TY-10', 'LY-01', 'LY-05', 'LY-06', 'LY-07', 'CO-02', 'CO-03', 'TT-01', 'TT-02', 'TT-03', 'TT-04', 'MO-04', 'MO-06', 'PF-03', 'PF-06', 'PF-07', 'AX-03', 'HR-07', 'TY-11', 'CP-12', 'CP-13', 'CO-01', 'HR-03', 'HR-08'], async () => {
+  await section('the 1440px pass', ['HR-01', 'HR-02', 'HR-04', 'PS-06', 'CP-01', 'CP-02', 'CP-07', 'CP-08', 'CP-11', 'ST-01', 'ST-03', 'ST-05', 'ST-06', 'TY-07', 'TY-10', 'LY-01', 'LY-05', 'LY-06', 'LY-07', 'CO-02', 'CO-03', 'TT-01', 'TT-02', 'TT-03', 'TT-04', 'MO-04', 'MO-06', 'PF-03', 'PF-06', 'PF-07', 'AX-03', 'HR-07', 'TY-11', 'CP-12', 'CP-13', 'CO-01', 'HR-03', 'HR-08', 'HR-09', 'HR-10'], async () => {
     const {ctx: c, page: p} = await open({width: 1440, height: 900});
     try {
       d = await run(p, () => {
@@ -892,7 +920,7 @@ try {
         scrollTo({top: 0, behavior: 'instant'});
         const s = signature(); let sigAt = null;
         if (s?.none) sigAt = {none: s.none};
-        else if (s) { const b = box(s.el); sigAt = {el: describe(s.el), marked: s.marked, top: Math.round(b.top), height: Math.round(b.height), visible: Math.round(Math.max(0, Math.min(b.bottom, innerHeight) - Math.max(b.top, 0)))}; }
+        else if (s) { const b = box(s.el); sigAt = {el: describe(s.el), marked: s.marked, top: Math.round(b.top), height: Math.round(b.height), visible: Math.round(Math.max(0, Math.min(b.bottom, 2 * innerHeight) - Math.max(b.top, 0)))}; }
         // Which family in a stack actually renders: the first one whose glyph widths differ from both generic baselines.
         const cx = document.createElement('canvas').getContext('2d');
         const W = f => { cx.font = `48px ${f}`; return cx.measureText('Hamburgefonstiv 0123 QWxyz').width; };
@@ -951,7 +979,7 @@ try {
       }, Number(out.checked_on.slice(0, 4)));
       if (v6.sigAt?.none) check('HR-07', true, `declared none: ${v6.sigAt.none}`);
       else if (!v6.sigAt) check('HR-07', false, 'no signature artifact found at 1440: mark the product artifact with data-signature');
-      else check('HR-07', v6.sigAt.visible >= Math.min(280, v6.sigAt.height - 1), {at: '1440×900', signature: v6.sigAt.el, marked: v6.sigAt.marked || 'no: guessed; mark it with data-signature', top_px: v6.sigAt.top, visible_px: v6.sigAt.visible, needed_px: Math.min(280, v6.sigAt.height - 1)});
+      else check('HR-07', v6.sigAt.visible >= Math.min(280, v6.sigAt.height - 1), {at: '1440×900, first two screens', signature: v6.sigAt.el, marked: v6.sigAt.marked || 'no: guessed; mark it with data-signature', top_px: v6.sigAt.top, visible_px: v6.sigAt.visible, needed_px: Math.min(280, v6.sigAt.height - 1)});
       check('TY-11', v6.fallbacks.length === 0 && v6.unshipped.length === 0, v6.fallbacks.length || v6.unshipped.length ? {falls_back: v6.fallbacks.map(f => `"${f.named}" is missing; renders as ${f.renders}`), installed_here_not_shipped: v6.unshipped.map(f => `"${f}" is on this machine but the page does not ship it, so most visitors get the fallback`), fix: 'ship the face with @font-face (a woff2 or woff file next to the page) or name a face every major platform has'} : `${v6.stacks} font stack(s) render as named`);
       check('CP-12', v6.leaks.length === 0, v6.leaks.length ? {builder_notes_on_page: v6.leaks} : 'no builder or client notes found in the visible text');
       check('CP-13', v6.wrong.length === 0, {dates_with_weekdays: v6.datesSeen, wrong_weekday: v6.wrong, years_assumed_when_none_given: v6.years});
@@ -997,6 +1025,17 @@ try {
       const central = !!e && e.left < 1440 * 0.75 && e.left + e.width > 1440 * 0.25;
       check('HR-08', !(central && e.width >= 320 && e.height >= 140 && e.share >= 0.08), e ? {largest_empty_block: `${e.width}×${e.height}px at (${e.left}, ${e.top})`, share_of_first_screen: e.share, note: central && e.share >= 0.08 && e.width >= 320 && e.height >= 140 ? 'a hole in the first screen: move the action, the status line or the artifact into it, or tighten the grid' : undefined} : 'no empty block');
 
+      // HR-09 and HR-10: the calm first screen, at 1440 and 390.
+      {
+        const c14 = await run(p, () => calm()), c39 = part.calm390;
+        if (c14?.none) { check('HR-09', true, `declared none: ${c14.none}`); check('HR-10', true, `declared none: ${c14.none}`); }
+        else {
+          const at = {'1440×900': c14, '390×844': c39 || {}};
+          check('HR-09', Object.values(at).every(c => (c.words ?? 0) <= 45), {words_outside_header_and_hero_picture: {'1440×900': c14.words, '390×844': c39?.words}, limit: 45, fix: 'one headline, one sentence and the action; move the rest below the first screen', hero_picture: c14.picture || 'none marked: mark the hero picture with data-hero-visual so its own text is not counted'});
+          const bad = Object.entries(at).filter(([, c]) => c.fields?.length || c.mono?.length || c.eyebrow?.length || (c.actions?.length ?? 0) > 2 || c.picture_controls);
+          check('HR-10', bad.length === 0, bad.length ? Object.fromEntries(bad.map(([w, c]) => [w, {tables_fields_or_tabs: c.fields, monospace_text: c.mono, label_above_headline: c.eyebrow, actions: c.actions, controls_inside_hero_picture: c.picture_controls}])) : {actions: c14.actions, note: 'no table, field, monospace text or label above the headline; at most two actions'});
+        }
+      }
       // CO-01 at 1440 too: header buttons and wide layouts get their own colours at desktop widths.
       const axeMod1440 = await load('@axe-core/playwright', {optional: true});
       const Axe1440 = axeMod1440 ? (axeMod1440.AxeBuilder || axeMod1440.default?.AxeBuilder || axeMod1440.default?.default || axeMod1440.default) : null;
