@@ -90,7 +90,7 @@ CHECKS = [
   ('HR-07', 'The signature artifact (marked `data-signature`) shows at least 280px of itself, or all of itself, within the first two screens at 390×844 and at 1440×900: right after the hero, not five sections down.', 'auto', 'block', 'SLL NNG'),
   ('HR-08', 'The 1440 first screen has no empty block of 320×140px or more, covering 8% of it, reaching the middle of the page: no action floating in an empty column, no hole above the headline.', 'auto', 'warn', 'SLL'),
   ('HR-09', 'The first screen is calm: at 1440×900 and 390×844, at most 60 words show outside the site header and the pictures (the hero picture marked `data-hero-visual`, drawings and anything hidden from assistive tech), not counting the next section peeking in at the bottom.', 'auto', 'block', 'SLL TST AFD'),
-  ('HR-10', 'The first screen holds no table, form field, tab list, slider, monospace text or tracked-caps label above the headline, at most two actions outside the header, and no controls inside the hero picture.', 'auto', 'block', 'SLL TST AFD'),
+  ('HR-10', 'The first screen holds no table, form field, tab list or slider, at most two actions outside the header, and no controls inside the hero picture.', 'auto', 'block', 'SLL TST AFD'),
   # Structure and conversion
   ('ST-01', 'Cost is easy to find: a header or footer link to pricing or plans, or visible prices; otherwise the record says how cost is disclosed and why.', 'auto', 'warn', 'NNG SO HS'),
   ('ST-02', 'Within 5 seconds at 390×844, no dialog or fixed overlay covers more than 30% of the viewport, except a legally required consent prompt named in the record.', 'auto', 'warn', 'GOOG NNG'),
@@ -98,6 +98,7 @@ CHECKS = [
   ('ST-04', 'Real proof, when supplied, appears within the first two screenfuls or beside the claim it supports, and every quote carries name, role and company.', 'record', 'warn', 'EM CXL NNG'),
   ('ST-05', 'The conversion form shows at most three fields before submit, no textarea and at most one select.', 'auto', 'warn', 'HUB BAY NNG'),
   ('ST-06', 'For developer products, the first two screenfuls show an install command or code sample, and the header links to docs or a quickstart; other products are n/a.', 'auto', 'warn', 'SO EM'),
+  ('ST-07', 'Every section after the first screen is understood at a glance: at most 90 words outside the demo, the pictures and closed details, so the heading and a line or two carry it and the details sit behind a disclosure, a table or another page.', 'auto', 'block', 'SLL'),
   # Type
   ('TY-01', 'Exactly one h1.', 'auto', 'block', 'GST VWG'),
   ('TY-02', 'Heading levels never skip (no h1 → h3).', 'auto', 'block', 'IMP VWG'),
@@ -119,6 +120,7 @@ CHECKS = [
   ('LY-06', 'In-page anchor targets and focused controls are never hidden under a sticky or fixed element, tabbing forward or back, at 1440 and 390.', 'auto', 'block', 'VWG JK WCAG'),
   ('LY-07', 'A footer exists and holds real destinations.', 'auto', 'warn', 'SLL'),
   ('LY-08', 'A 200-character unbroken string typed into any text field and submitted causes no sideways scroll at 390px.', 'auto', 'block', 'SLL'),
+  ('LY-09', 'Buttons that sit side by side share their height and their vertical centre, within 2px, at 1440 and 390.', 'auto', 'warn', 'SLL'),
   # Colour
   ('CO-01', 'Text meets WCAG AA contrast (4.5:1, or 3:1 for 24px+ or 18.66px+ bold); text over images or gradients is sampled at its worst point.', 'auto', 'block', 'IMP VWG GST WCAG'),
   ('CO-02', 'No gradient-filled text and no coloured glow used as decoration.', 'auto', 'warn', 'IMP AFD'),
@@ -151,6 +153,7 @@ CHECKS = [
   ('MB-08', 'Escape closes an open menu and returns focus to the button that opened it.', 'auto', 'block', 'APG WCAG'),
   ('MB-09', 'On phones, controls inside the signature artifact are at least 44×44px.', 'auto', 'block', 'APL GST'),
   ('MB-10', 'The phone page is at most eight screens tall (6,752px at 390×844) and the signature artifact at most two (1,688px); a longer page cuts repeats and groups long lists.', 'auto', 'block', 'SLL'),
+  ('MB-11', 'The signature artifact asks for at most four decisions (a radio group counts once): one choice and one result, not a form.', 'auto', 'block', 'SLL'),
   # Accessibility and robustness
   ('AX-01', 'Every link and button has an accessible name.', 'auto', 'block', 'VWG'),
   ('AX-02', 'Every image has alt text, empty only when decorative.', 'auto', 'block', 'VWG'),

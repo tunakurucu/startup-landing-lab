@@ -18,7 +18,7 @@ Fifteen measurable rules for the two criteria blind graders marked lowest on thi
 
 ## Text and data inside the artifact
 
-9. **Size and contrast floors.** Nothing under 11px; secondary lines 12px; data and labels 13–14px; marketing copy 16px or more. Small grey labels reach 4.5:1, and the weight is 400 or more below 18px. Use no monospace outside real code and IDs: use the text face with `font-variant-numeric: tabular-nums`. *Decision: Taste bans mono labels and Hallmark uses them; graders marked grey mono down, so follow Taste.* [Taste, Jakub Krehel]
+9. **Size and contrast floors.** Nothing under 11px; secondary lines 12px; data and labels 13–14px; marketing copy 16px or more. Small grey labels reach 4.5:1, and the weight is 400 or more below 18px. Monospace only for short labels inside cards and tags (12px and up), never for sentences or captions; numbers in the text face with `font-variant-numeric: tabular-nums`. *Decision, revised after the bake-off: grey mono captions were marked down, while mono row labels on a well-made example card were liked.* [Taste, Jakub Krehel]
 10. **Size grids for the data shown.** Show 6–25 data points in a hero fragment. Rows are 44–56px with 16–24px cell padding. Numbers are right-aligned and tabular, units are grey, and there are no zebra stripes. Change type size, padding and row height together, never type alone. [Taste]
 
 ## Drawings

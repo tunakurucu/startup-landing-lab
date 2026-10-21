@@ -40,7 +40,7 @@ Scroll revision (v0.5): the first version revealed the handoff columns, the chap
 
 ## Gate warnings we kept, and why
 
-The skill's checker (v1.0) runs 83 automatic checks on every page in CI. No page has a block failure. The warnings below stay, each with the product reason the checklist asks for; `tests/browser/skill-gate.spec.ts` lists exactly these per route and fails if any other warning appears or any of these goes away unrecorded; PF-05, a lab timing, is held to a per-route budget there instead of matched exactly.
+The skill's checker (v1.0) runs 86 automatic checks on every page in CI. No page has a block failure. The warnings below stay, each with the product reason the checklist asks for; `tests/browser/skill-gate.spec.ts` lists exactly these per route and fails if any other warning appears or any of these goes away unrecorded; PF-05, a lab timing, is held to a per-route budget there instead of matched exactly.
 
 | Page | Check | Why it stays |
 | --- | --- | --- |

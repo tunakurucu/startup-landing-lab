@@ -318,7 +318,7 @@
  },
  {
   "id": "HR-10",
-  "check": "The first screen holds no table, form field, tab list, slider, monospace text or tracked-caps label above the headline, at most two actions outside the header, and no controls inside the hero picture.",
+  "check": "The first screen holds no table, form field, tab list or slider, at most two actions outside the header, and no controls inside the hero picture.",
   "verify": "auto",
   "severity": "block",
   "credit": [
@@ -388,6 +388,15 @@
   "credit": [
    "SO",
    "EM"
+  ]
+ },
+ {
+  "id": "ST-07",
+  "check": "Every section after the first screen is understood at a glance: at most 90 words outside the demo, the pictures and closed details, so the heading and a line or two carry it and the details sit behind a disclosure, a table or another page.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "SLL"
   ]
  },
  {
@@ -571,6 +580,15 @@
   "check": "A 200-character unbroken string typed into any text field and submitted causes no sideways scroll at 390px.",
   "verify": "auto",
   "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "LY-09",
+  "check": "Buttons that sit side by side share their height and their vertical centre, within 2px, at 1440 and 390.",
+  "verify": "auto",
+  "severity": "warn",
   "credit": [
    "SLL"
   ]
@@ -847,6 +865,15 @@
  {
   "id": "MB-10",
   "check": "The phone page is at most eight screens tall (6,752px at 390×844) and the signature artifact at most two (1,688px); a longer page cuts repeats and groups long lists.",
+  "verify": "auto",
+  "severity": "block",
+  "credit": [
+   "SLL"
+  ]
+ },
+ {
+  "id": "MB-11",
+  "check": "The signature artifact asks for at most four decisions (a radio group counts once): one choice and one result, not a form.",
   "verify": "auto",
   "severity": "block",
   "credit": [

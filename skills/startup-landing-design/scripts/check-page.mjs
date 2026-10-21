@@ -204,6 +204,34 @@ function helpers() {
   };
   var textRects = el => { const r = [];for (const n of el.childNodes) if (n.nodeType === 3 && n.textContent.trim()) { const g = document.createRange(); g.selectNodeContents(n); r.push(...[...g.getClientRects()].filter(q => q.width > 0 && q.height > 0)); } return r; };
 
+  // LY-09: buttons that sit side by side share their height and their vertical centre.
+  var alignRows = () => {
+    const isBtn = el => { const st = cs(el), b = box(el); return el.tagName === 'BUTTON' || (el.tagName === 'A' && b.height >= 32 && (toRGBA(st.backgroundColor)[3] > 0.5 || parseFloat(st.borderTopWidth) > 0) && parseFloat(st.paddingLeft) >= 8); };
+    const off = [];
+    for (const parent of document.querySelectorAll('body *')) {
+      const kids = [...parent.children].filter(k => seen(k) && isBtn(k)); if (kids.length < 2) continue;
+      for (let i = 1; i < kids.length; i++) {
+        const a = box(kids[i - 1]), b = box(kids[i]);
+        const sameRow = Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) < Math.max(a.height, b.height) / 2 && b.left >= a.right - 1;
+        if (!sameRow) continue;
+        const dh = Math.abs(a.height - b.height), dc = Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2);
+        if (dh > 2 || dc > 2) off.push(`${(label(kids[i - 1]) || 'button').slice(0, 20)} | ${(label(kids[i]) || 'button').slice(0, 20)}: heights ${Math.round(a.height)}/${Math.round(b.height)}px, centres ${Math.round(dc)}px apart`);
+      }
+    }
+    return [...new Set(off)].slice(0, 6);
+  };
+  // ST-07: words per section after the first screen, outside the demo, pictures and closed details.
+  var sectionWords = () => {
+    const top = [...document.querySelectorAll('section')].filter(x => !x.parentElement.closest('section'));
+    const secs = top.length >= 3 ? top : [...(document.querySelector('main') || document.body).children].filter(x => !/^(HEADER|FOOTER|NAV|SCRIPT|STYLE)$/.test(x.tagName));
+    const skip = el => !!el.closest('[data-signature],[data-hero-visual],svg,canvas,[aria-hidden=true],[role=img],footer,nav,header');
+    return secs.map(sec => {
+      let w = 0;
+      for (const el of sec.querySelectorAll('*')) { if (!seen(el) || skip(el)) continue; w += (ownText(el).match(/[\p{L}\p{N}][\p{L}\p{N}'’.,:%$€£-]*/gu) || []).length; }
+      const hd = sec.querySelector('h1,h2,h3');
+      return {section: (hd ? hd.textContent : describe(sec)).replace(/\s+/g, ' ').trim().slice(0, 40), words: w, hero: !!sec.querySelector('h1')};
+    }).filter(x => !x.hero);
+  };
   // The calm first screen (HR-09, HR-10): what a visitor sees before scrolling, outside the site header and the hero picture.
   var calm = () => {
     scrollTo({top: 0, behavior: 'instant'});
@@ -657,7 +685,7 @@ try {
 
   // ======================= 390 × 844: the signature artifact, keyboard and stress =======================
   // Fresh pages, so nothing the main pass clicked carries over. Each probe that could navigate reloads the page after.
-  await section('the 390px interaction pass', ['HR-07', 'MB-07', 'MB-08', 'MB-09', 'MB-10', 'AX-12', 'AX-13', 'LY-08', 'LY-06', 'MB-05', 'HR-03', 'HR-09', 'HR-10'], async () => {
+  await section('the 390px interaction pass', ['HR-07', 'MB-07', 'MB-08', 'MB-09', 'MB-10', 'AX-12', 'AX-13', 'LY-08', 'LY-06', 'MB-05', 'HR-03', 'HR-09', 'HR-10', 'MB-11', 'LY-09'], async () => {
     let {ctx, page} = await open({width: 390, height: 844});
     const fresh = async () => { await ctx.close(); ({ctx, page} = await open({width: 390, height: 844})); };
     try {
@@ -683,6 +711,7 @@ try {
 
       // HR-09 and HR-10 at 390.
       part.calm390 = await run(page, () => calm());
+      part.align390 = await run(page, () => alignRows());
       // HR-07 at 390, and the signature's controls.
       const sig = await run(page, () => {
         scrollTo({top: 0, behavior: 'instant'});
@@ -699,19 +728,21 @@ try {
         // A radio that is already checked does nothing when chosen again; it is skipped, not counted as dead.
         const probe = [...C, ...viaLabel].filter(c => c.tagName !== 'A' && !(c.type === 'radio' && c.checked) && !(c.tagName === 'LABEL' && c.control?.type === 'radio' && c.control.checked) && !['date', 'time', 'datetime-local', 'month', 'week', 'color', 'file', 'hidden'].includes(c.type) && !(c.type === 'submit' && c.form && c.form.getAttribute('action'))).slice(0, 12);
         probe.forEach((c, i) => c.setAttribute('data-sll-ctl', String(i)));
-        return {marked: s.marked, el: describe(s.el), top: Math.round(b.top), height: Math.round(b.height), visible: Math.round(visible), small, n: probe.length,
+        const groups = new Set([...C, ...viaLabel].map(c => { const t = c.tagName === 'LABEL' ? c.control : c; return t && t.type === 'radio' && t.name ? 'radio:' + t.name : t; }));
+        return {decisions: groups.size, marked: s.marked, el: describe(s.el), top: Math.round(b.top), height: Math.round(b.height), visible: Math.round(visible), small, n: probe.length,
           kinds: probe.map(c => c.tagName === 'LABEL' ? 'label' : c.tagName === 'SELECT' ? 'select' : c.tagName === 'TEXTAREA' ? 'text' : c.tagName === 'INPUT' ? (['checkbox', 'radio'].includes(c.type) ? 'toggle' : c.type === 'range' ? 'range' : ['text', 'search', 'number', 'email', 'url', 'tel', ''].includes(c.type) ? 'text' : 'click') : (c.getAttribute('role') === 'slider' ? 'range' : 'click')),
           labels: probe.map(c => (label(c) || c.getAttribute('name') || c.tagName.toLowerCase()).slice(0, 30))};
       });
       const need = s => Math.min(280, s.height - 1);
       if (sig?.none) {
-        for (const id of ['HR-07', 'MB-07', 'MB-09', 'AX-12']) check(id, true, `declared none: ${sig.none} (an index or document page; verify-record does not accept this for a landing page)`);
+        for (const id of ['HR-07', 'MB-07', 'MB-09', 'AX-12', 'MB-11']) check(id, true, `declared none: ${sig.none} (an index or document page; verify-record does not accept this for a landing page)`);
       } else if (!sig) {
-        for (const id of ['HR-07', 'MB-07', 'MB-09', 'AX-12']) check(id, false, 'no signature artifact found: mark the product artifact with data-signature');
+        for (const id of ['HR-07', 'MB-07', 'MB-09', 'AX-12', 'MB-11']) check(id, false, 'no signature artifact found: mark the product artifact with data-signature');
       } else {
         part.sig390 = sig;
         check('HR-07', sig.visible >= need(sig), {at: '390×844, first two screens', signature: sig.el, marked: sig.marked || 'no: guessed from the controls; mark it with data-signature', top_px: sig.top, visible_px: sig.visible, needed_px: need(sig)});
         check('MB-09', sig.small.length === 0, {under_44x44: sig.small.slice(0, 8)});
+        check('MB-11', sig.decisions <= 4, {controls_in_artifact: sig.decisions, limit: 4, note: 'a radio group counts once; one decision and one result reads at a glance, a form does not', controls: sig.labels.slice(0, 8)});
         // MB-07 and AX-12: use each control from the keyboard, centred in the viewport, and watch what changes.
         const off = [], dead = [], dropped = [], probed = [];
         for (let i = 0; i < sig.n; i++) {
@@ -861,7 +892,7 @@ try {
 
   // ======================= 1440 × 900 =======================
   let d = null;
-  await section('the 1440px pass', ['HR-01', 'HR-02', 'HR-04', 'PS-06', 'CP-01', 'CP-02', 'CP-07', 'CP-08', 'CP-11', 'ST-01', 'ST-03', 'ST-05', 'ST-06', 'TY-07', 'TY-10', 'LY-01', 'LY-05', 'LY-06', 'LY-07', 'CO-02', 'CO-03', 'TT-01', 'TT-02', 'TT-03', 'TT-04', 'MO-04', 'MO-06', 'PF-03', 'PF-06', 'PF-07', 'AX-03', 'HR-07', 'TY-11', 'CP-12', 'CP-13', 'CO-01', 'HR-03', 'HR-08', 'HR-09', 'HR-10'], async () => {
+  await section('the 1440px pass', ['HR-01', 'HR-02', 'HR-04', 'PS-06', 'CP-01', 'CP-02', 'CP-07', 'CP-08', 'CP-11', 'ST-01', 'ST-03', 'ST-05', 'ST-06', 'TY-07', 'TY-10', 'LY-01', 'LY-05', 'LY-06', 'LY-07', 'CO-02', 'CO-03', 'TT-01', 'TT-02', 'TT-03', 'TT-04', 'MO-04', 'MO-06', 'PF-03', 'PF-06', 'PF-07', 'AX-03', 'HR-07', 'TY-11', 'CP-12', 'CP-13', 'CO-01', 'HR-03', 'HR-08', 'HR-09', 'HR-10', 'ST-07', 'LY-09'], async () => {
     const {ctx: c, page: p} = await open({width: 1440, height: 900});
     try {
       d = await run(p, () => {
@@ -1035,9 +1066,17 @@ try {
         else {
           const at = {'1440×900': c14, '390×844': c39 || {}};
           check('HR-09', Object.values(at).every(c => (c.words ?? 0) <= 60), {words_outside_header_and_hero_picture: {'1440×900': c14.words, '390×844': c39?.words}, limit: 60, fix: 'one headline, one sentence and the action; move the rest below the first screen', hero_picture: c14.picture || 'none marked: mark the hero picture with data-hero-visual so its own text is not counted'});
-          const bad = Object.entries(at).filter(([, c]) => c.fields?.length || c.mono?.length || c.eyebrow?.length || (c.actions?.length ?? 0) > 2 || c.picture_controls);
-          check('HR-10', bad.length === 0, bad.length ? Object.fromEntries(bad.map(([w, c]) => [w, {tables_fields_or_tabs: c.fields, monospace_text: c.mono, label_above_headline: c.eyebrow, actions: c.actions, controls_inside_hero_picture: c.picture_controls}])) : {actions: c14.actions, note: 'no table, field, monospace text or label above the headline; at most two actions'});
+          const bad = Object.entries(at).filter(([, c]) => c.fields?.length || (c.actions?.length ?? 0) > 2 || c.picture_controls);
+          check('HR-10', bad.length === 0, bad.length ? Object.fromEntries(bad.map(([w, c]) => [w, {tables_fields_or_tabs: c.fields, actions: c.actions, controls_inside_hero_picture: c.picture_controls}])) : {actions: c14.actions, note: 'no table, field or tab list; at most two actions'});
         }
+      }
+      // ST-07 and LY-09.
+      {
+        const sw = await run(p, () => sectionWords());
+        const long = sw.filter(x => x.words > 90);
+        check('ST-07', long.length === 0, {words_per_section: sw.map(x => `${x.section}: ${x.words}`), limit: 90, note: long.length ? 'each section is understood at a glance: a heading and one or two lines; put the details in a closed <details>, a table further down or a separate page' : undefined});
+        const a14 = await run(p, () => alignRows()), all = [...a14.map(x => '1440: ' + x), ...(part.align390 || []).map(x => '390: ' + x)];
+        check('LY-09', all.length === 0, all.length ? {misaligned_buttons: all} : 'buttons that sit side by side share height and centre');
       }
       // CO-01 at 1440 too: header buttons and wide layouts get their own colours at desktop widths.
       const axeMod1440 = await load('@axe-core/playwright', {optional: true});

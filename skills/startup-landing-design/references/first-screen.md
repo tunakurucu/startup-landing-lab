@@ -8,7 +8,7 @@ The first screen is judged in seconds, by eye, before anyone reads. Make it a po
 
 At 1440 × 900 and at 390 × 844:
 
-1. **The site header.** A wordmark, three to five links, and one action. A centred pill-shaped nav bar floating over the hero is a good default; a plain bar works too.
+1. **The site header.** A wordmark, three to five links, and one action, in the floating pill nav from [the visual system](visual-system.md). Optionally, one small pill tag above the headline saying what the product is in five words or fewer.
 2. **One headline.** Eight words at most, two lines at 1440, three lines at 390. Use a display face with character at weight 400–600, tracked −0.02 to −0.04em. You may set one or two words in a single accent colour, or in the italic of the same family. That's the only flourish allowed.
 3. **One sentence under it.** Twenty-two words at most, in plain words: who it's for, what it does and what changes. This is the five-second line.
 4. **One or two buttons.** One is filled, the second (if any) quiet. Make them soft and well proportioned: 48–56px tall, horizontal padding 24–32px, a full pill or a 12–16px radius, 15–16px labels at weight 500–600. The label says what happens ("Upload your PDF", "Book a pilot call").
@@ -19,7 +19,7 @@ At 1440 × 900 and at 390 × 844:
 
    It may move gently (a slow float, a crossfade between two states), but it holds no buttons, fields, tabs or chips. It's a picture.
 
-That's all. HR-09 counts the words (60 at most outside the header and the pictures). HR-10 fails any table, form field, tab list, slider, monospace text or tracked-caps label above the headline, more than two actions, or a control inside the picture.
+That's all, plus the optional stat row of brief-supplied numbers under the buttons ([visual system](visual-system.md)). HR-09 counts the words (60 at most outside the header and the pictures). HR-10 fails any table, form field, tab list or slider, more than two actions, or a control inside the picture. A small tag or mono labels inside a card are fine; a mono paragraph is not.
 
 ## What moves out of the first screen
 
@@ -55,4 +55,4 @@ All of these have a place, just not in the poster:
 
 Look at the first screen for five seconds, then look away. You should be able to say what the product is, who it's for and what the button does, and you should *want* to scroll. If you remember a table, a row of chips or a paragraph, cut it. Then ask the founder's question: would I put this live under my name today?
 
-Sources: this project's human check (round 8) and reference-tier measurements; Taste Skill v2.1 (Leonxlnx, MIT): one headline of two lines or fewer, one action, one dominant visual, no eyebrow or mono; Anthropic frontend-design (2026-09): spend boldness in one place, no element rather than a weak one; Hallmark (Nutlope): a distinct display face; Emil Kowalski: strong ease-out, short stagger.
+Sources: this project's human check (round 8) and reference-tier measurements; Taste Skill v2.1 (Leonxlnx, MIT): one headline of two lines or fewer, one action, one dominant visual; Taste classics (`high-end-visual-design`, MIT): the floating nav, nested cards, pill buttons and staged entrance that won the bake-off; Anthropic frontend-design (2026-09): spend boldness in one place, no element rather than a weak one; Hallmark (Nutlope): a distinct display face; Emil Kowalski: strong ease-out, short stagger.
