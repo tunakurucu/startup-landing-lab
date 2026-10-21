@@ -19,7 +19,7 @@ At 1440 × 900 and at 390 × 844:
 
    It may move gently (a slow float, a crossfade between two states), but it holds no buttons, fields, tabs or chips. It's a picture.
 
-That's all. HR-09 counts the words (45 at most outside the header and the picture). HR-10 fails any table, form field, tab list, slider, monospace text or tracked-caps label above the headline, more than two actions, or a control inside the picture.
+That's all. HR-09 counts the words (60 at most outside the header and the pictures). HR-10 fails any table, form field, tab list, slider, monospace text or tracked-caps label above the headline, more than two actions, or a control inside the picture.
 
 ## What moves out of the first screen
 

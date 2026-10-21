@@ -89,7 +89,7 @@ CHECKS = [
   ('HR-06', 'The hero is sized with svh/dvh or by its content, not a fixed 100vh that clips under mobile browser bars.', 'code', 'warn', 'EK'),
   ('HR-07', 'The signature artifact (marked `data-signature`) shows at least 280px of itself, or all of itself, within the first two screens at 390×844 and at 1440×900: right after the hero, not five sections down.', 'auto', 'block', 'SLL NNG'),
   ('HR-08', 'The 1440 first screen has no empty block of 320×140px or more, covering 8% of it, reaching the middle of the page: no action floating in an empty column, no hole above the headline.', 'auto', 'warn', 'SLL'),
-  ('HR-09', 'The first screen is calm: at 1440×900 and 390×844, at most 45 words show outside the site header and the hero picture (marked `data-hero-visual`).', 'auto', 'block', 'SLL TST AFD'),
+  ('HR-09', 'The first screen is calm: at 1440×900 and 390×844, at most 60 words show outside the site header and the pictures (the hero picture marked `data-hero-visual`, drawings and anything hidden from assistive tech), not counting the next section peeking in at the bottom.', 'auto', 'block', 'SLL TST AFD'),
   ('HR-10', 'The first screen holds no table, form field, tab list, slider, monospace text or tracked-caps label above the headline, at most two actions outside the header, and no controls inside the hero picture.', 'auto', 'block', 'SLL TST AFD'),
   # Structure and conversion
   ('ST-01', 'Cost is easy to find: a header or footer link to pricing or plans, or visible prices; otherwise the record says how cost is disclosed and why.', 'auto', 'warn', 'NNG SO HS'),

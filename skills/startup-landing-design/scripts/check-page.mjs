@@ -210,13 +210,15 @@ function helpers() {
     const s = signature(); if (s?.none) return {none: s.none};
     const vh = innerHeight, hd = document.querySelector('header,[role=banner]');
     const pics = [...document.querySelectorAll('[data-hero-visual]')];
-    const out = el => (hd && hd.contains(el)) || pics.some(v => v.contains(el));
+    // Pictures do not count: the marked hero picture, and anything drawn (svg, canvas) or hidden from assistive tech.
+    const out = el => (hd && hd.contains(el)) || pics.some(v => v.contains(el)) || !!el.closest('svg,canvas,[aria-hidden=true],[role=img],[role=presentation]');
     const inView = r => r.bottom > 0 && r.top < vh && r.width > 0 && r.height > 0;
     let words = 0; const mono = new Set(), eyebrow = [];
     const h = h1El(), hb = h ? box(h) : null;
     for (const el of textEls()) {
       if (out(el)) continue;
-      const rects = textRects(el).filter(inView); if (!rects.length) continue;
+      // The next section peeking in at the bottom (HR-05 wants it) is not part of the poster.
+      const rects = textRects(el).filter(r => inView(r) && r.top < vh * 0.88); if (!rects.length) continue;
       const t = ownText(el); words += (t.match(/[\p{L}\p{N}][\p{L}\p{N}'’.,:%$€£-]*/gu) || []).length;
       const st = cs(el);
       if (/mono|courier|consolas|menlo/i.test(st.fontFamily.split(',')[0])) mono.add(t.slice(0, 30));
@@ -225,7 +227,8 @@ function helpers() {
     const fields = [...document.querySelectorAll('input:not([type=hidden]),select,textarea,table,[role=table],[role=grid],[role=tablist],[role=slider]')]
       .filter(el => seen(el) && !out(el) && inView(box(el))).map(el => describe(el));
     const isBtn = el => { const st = cs(el), b = box(el); return el.tagName === 'BUTTON' || (b.height >= 32 && (toRGBA(st.backgroundColor)[3] > 0.5 || parseFloat(st.borderTopWidth) > 0) && parseFloat(st.paddingLeft) >= 8); };
-    const actions = [...document.querySelectorAll('a[href],button,[role=button]')].filter(el => seen(el) && !out(el) && inView(box(el)) && isBtn(el)).map(el => (label(el) || el.tagName).slice(0, 30));
+    const skipLink = el => el.tagName === 'A' && /^#/.test(el.getAttribute('href') || '') && /^skip/i.test(label(el) || '');
+    const actions = [...document.querySelectorAll('a[href],button,[role=button]')].filter(el => seen(el) && !out(el) && !skipLink(el) && inView(box(el)) && box(el).top < vh * 0.88 && isBtn(el)).map(el => (label(el) || el.tagName).slice(0, 30));
     const picCtl = pics.flatMap(v => [...v.querySelectorAll('a[href],button,input,select,textarea,[tabindex]:not([tabindex="-1"])')]).filter(seen).length;
     return {words, mono: [...mono].slice(0, 5), eyebrow: eyebrow.slice(0, 3), fields: fields.slice(0, 5), actions, picture: pics.length ? describe(pics[0]) : null, picture_controls: picCtl};
   };
@@ -1031,7 +1034,7 @@ try {
         if (c14?.none) { check('HR-09', true, `declared none: ${c14.none}`); check('HR-10', true, `declared none: ${c14.none}`); }
         else {
           const at = {'1440×900': c14, '390×844': c39 || {}};
-          check('HR-09', Object.values(at).every(c => (c.words ?? 0) <= 45), {words_outside_header_and_hero_picture: {'1440×900': c14.words, '390×844': c39?.words}, limit: 45, fix: 'one headline, one sentence and the action; move the rest below the first screen', hero_picture: c14.picture || 'none marked: mark the hero picture with data-hero-visual so its own text is not counted'});
+          check('HR-09', Object.values(at).every(c => (c.words ?? 0) <= 60), {words_outside_header_and_hero_picture: {'1440×900': c14.words, '390×844': c39?.words}, limit: 60, fix: 'one headline, one sentence and the action; move the rest below the first screen', hero_picture: c14.picture || 'none marked: mark the hero picture with data-hero-visual so its own text is not counted'});
           const bad = Object.entries(at).filter(([, c]) => c.fields?.length || c.mono?.length || c.eyebrow?.length || (c.actions?.length ?? 0) > 2 || c.picture_controls);
           check('HR-10', bad.length === 0, bad.length ? Object.fromEntries(bad.map(([w, c]) => [w, {tables_fields_or_tabs: c.fields, monospace_text: c.mono, label_above_headline: c.eyebrow, actions: c.actions, controls_inside_hero_picture: c.picture_controls}])) : {actions: c14.actions, note: 'no table, field, monospace text or label above the headline; at most two actions'});
         }

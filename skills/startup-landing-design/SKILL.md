@@ -32,7 +32,7 @@ Write the promise as **who / what changes / how**. Record the positioning inputs
 
 ## 2. Write the first screen
 
-Read [the first screen](references/first-screen.md) and [copy and positioning](references/copy-and-positioning.md). Draft the headline (eight words at most), the one sentence under it and one or two action labels from the positioning inputs. That's all the first screen holds besides the header and the picture: 45 words at most (HR-09). Run the copy gate on every headline and section heading. The headline must be false or odd on the current alternative's page.
+Read [the first screen](references/first-screen.md) and [copy and positioning](references/copy-and-positioning.md). Draft the headline (eight words at most), the one sentence under it and one or two action labels from the positioning inputs. That's all the first screen holds besides the header and the picture: 60 words at most (HR-09), and less is better. Run the copy gate on every headline and section heading. The headline must be false or odd on the current alternative's page.
 
 The headline may be the statement; then the **five-second line**, the one sentence, carries the facts. It names who the product is for and what kind of thing it is in plain words ("A payroll app for restaurants with tipped staff"), sits in the first screen at every width, and is quoted exactly in the record, where `verify-record` checks it against the text the checker read. A clever headline with the audience buried in body copy is the commonest way this skill's pages lost on clarity in blind tests. The test for the first screen: someone who saw it for five seconds can say the category, the outcome and the customer in their own words; repeating the headline back does not count.
 

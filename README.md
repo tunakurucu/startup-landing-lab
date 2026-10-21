@@ -38,7 +38,7 @@ What this project adds: a dated casebook of real startup homepages with measured
 | --- | --- | --- |
 | Product and story | 9 | A stranger can say what it does in five seconds; each visitor doubt has an artifact |
 | Copy and positioning | 13 | Headline beats the visitor's current alternative; no generic marketing phrases; no builder notes on the page; dates agree with their weekdays |
-| Hero | 10 | A calm first screen: at most 45 words, two actions, no tables, fields or monospace; the working demo within the first two screens; no single-word last line; no false floor |
+| Hero | 10 | A calm first screen: at most 60 words, two actions, no tables, fields or monospace; the working demo within the first two screens; no single-word last line; no false floor |
 | Structure and conversion | 6 | Cost is findable; no covering pop-ups; short forms; install command and docs for developer tools |
 | Type | 11 | Hierarchy ratio, tracking floor, 12px minimum, measure, overused faces, no silent fallback to a default face |
 | Layout | 8 | No overflow at 390 or 320, even after a 200-character paste; no clipped text, no nested cards |

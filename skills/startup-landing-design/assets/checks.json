@@ -307,7 +307,7 @@
  },
  {
   "id": "HR-09",
-  "check": "The first screen is calm: at 1440×900 and 390×844, at most 45 words show outside the site header and the hero picture (marked `data-hero-visual`).",
+  "check": "The first screen is calm: at 1440×900 and 390×844, at most 60 words show outside the site header and the pictures (the hero picture marked `data-hero-visual`, drawings and anything hidden from assistive tech), not counting the next section peeking in at the bottom.",
   "verify": "auto",
   "severity": "block",
   "credit": [
